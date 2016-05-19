@@ -38,7 +38,7 @@ public class MPPayment: NSObject {
         ]
         
         if self.tokenId != nil && self.tokenId?.characters.count > 0 {
-                obj["card_token"] = self.tokenId!
+                obj["token"] = self.tokenId!
         }
         
         obj["installments"] = self.installments
