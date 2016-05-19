@@ -105,8 +105,8 @@ public class MPStepBuilder : NSObject {
         return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)
     }
     
-    public class func startErrorViewController(error : MPError, callback : (Void -> Void)? = nil) -> UIViewController {
-        return ErrorViewController(error: error, callback: callback)
+    public class func startErrorViewController(error : MPError, callback : (Void -> Void)? = nil, callbackCancel : (Void -> Void)? = nil) -> UIViewController {
+        return ErrorViewController(error: error, callback: callback, callbackCancel: callbackCancel)
     }
     
     private class func getIssuers(paymentMethod : PaymentMethod, cardToken : CardToken, ccf : MercadoPagoUIViewController, callback : (paymentMethod: PaymentMethod, token: Token, issuer:Issuer) -> Void){

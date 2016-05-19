@@ -214,7 +214,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     }
     
     internal func displayFailure(mpError : MPError){
-        let errorVC = MPStepBuilder.startErrorViewController(mpError)
+        let errorVC = MPStepBuilder.startErrorViewController(mpError, callback: nil, callbackCancel: self.callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.presentViewController(errorVC, animated: true, completion: {})
         } else {

@@ -19,15 +19,13 @@ public class ErrorViewController: MercadoPagoUIViewController {
     var error : MPError!
     var callback : (Void -> Void)?
     
-    public init(error : MPError!, callback : (Void -> Void)?){
+    public init(error : MPError!, callback : (Void -> Void)?, callbackCancel : (Void -> Void)? = nil){
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
         self.error = error
         self.callbackCancel = {
             self.dismissViewControllerAnimated(true, completion: {
-                if self.navigationController != nil {
-                    self.navigationController!.popToRootViewControllerAnimated(true)
-                } else {
-                    self.dismissViewControllerAnimated(true, completion: {})
+                if callbackCancel != nil {
+                    callbackCancel!()
                 }
             })
         }
