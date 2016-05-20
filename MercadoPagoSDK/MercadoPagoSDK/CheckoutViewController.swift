@@ -66,7 +66,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     public override func viewDidAppear(animated: Bool) {
-
+        super.viewDidAppear(animated)
         self.showLoading()
         if preference == nil {
             self.loadPreference()
