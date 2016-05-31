@@ -31,7 +31,9 @@ class Utils {
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
+        let space = NSAttributedString(string: " ", attributes: smallAttributes)
         attributedSymbol.appendAttributedString(attributedAmount)
+        attributedSymbol.appendAttributedString(space)
         attributedSymbol.appendAttributedString(attributedCents)
         return attributedSymbol
     }
@@ -47,7 +49,9 @@ class Utils {
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
+        let space = NSAttributedString(string: " ", attributes: smallAttributes)
         attributedSymbol.appendAttributedString(attributedAmount)
+        attributedSymbol.appendAttributedString(space)
         attributedSymbol.appendAttributedString(attributedCents)
         return attributedSymbol
     }
@@ -66,7 +70,7 @@ class Utils {
         
         stringToWrite.appendAttributedString(NSMutableAttributedString(string: installments + " de ".localized, attributes: descriptionAttributes))
         
-        stringToWrite.appendAttributedString(Utils.getAttributedAmount(String(installmentAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpTurquesaColor))
+        stringToWrite.appendAttributedString(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:mpTurquesaColor))
         
         stringToWrite.appendAttributedString(additionalString)
         

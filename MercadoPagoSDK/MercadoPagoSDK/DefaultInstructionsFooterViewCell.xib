@@ -19,7 +19,7 @@
                         <rect key="frame" x="8" y="0.0" width="313" height="80"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRd-Qj-jJo" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="15" y="8" width="283" height="22"/>
+                                <rect key="frame" x="15" y="12" width="283" height="22"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Te enviamos los datos a tu e-mail.">
                                         <attributes>
@@ -32,14 +32,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="cEd-VJ-Idm">
-                                <rect key="frame" x="15" y="44" width="16" height="16"/>
+                                <rect key="frame" x="15" y="48" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="WGH-x5-qer"/>
                                     <constraint firstAttribute="height" constant="16" id="bZC-ct-leG"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Se acreditará en menos de 1 hora." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTx-cp-Yw6" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="36" y="42" width="224" height="20"/>
+                                <rect key="frame" x="36" y="46" width="224" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="6ci-sI-t8G"/>
                                 </constraints>
@@ -56,7 +56,7 @@
                             <constraint firstItem="LTx-cp-Yw6" firstAttribute="top" secondItem="FRd-Qj-jJo" secondAttribute="bottom" constant="12" id="TVq-R3-20i"/>
                             <constraint firstItem="cEd-VJ-Idm" firstAttribute="leading" secondItem="36Q-El-BD6" secondAttribute="leading" constant="15" id="cRn-ex-0ai"/>
                             <constraint firstItem="cEd-VJ-Idm" firstAttribute="top" secondItem="FRd-Qj-jJo" secondAttribute="bottom" constant="14" id="gNY-6T-prj"/>
-                            <constraint firstItem="FRd-Qj-jJo" firstAttribute="top" secondItem="36Q-El-BD6" secondAttribute="top" constant="8" id="huA-l8-tna"/>
+                            <constraint firstItem="FRd-Qj-jJo" firstAttribute="top" secondItem="36Q-El-BD6" secondAttribute="top" constant="12" id="huA-l8-tna"/>
                             <constraint firstAttribute="trailing" secondItem="FRd-Qj-jJo" secondAttribute="trailing" constant="15" id="ukD-rW-28Z"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

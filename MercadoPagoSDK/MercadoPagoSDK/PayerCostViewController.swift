@@ -126,8 +126,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         tableView.tableFooterView = UIView()
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        let installmentNib = UINib(nibName: "PayerCostTableViewCell", bundle: self.bundle)
-        self.tableView.registerNib(installmentNib, forCellReuseIdentifier: "PayerCostTableViewCell")
+        let installmentNib = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
+        self.tableView.registerNib(installmentNib, forCellReuseIdentifier: "installmentCell")
         // Do any additional setup after loading the view.
         updateCardSkin()
     
@@ -176,35 +176,9 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-
-
-        let installmentCell = tableView.dequeueReusableCellWithIdentifier("PayerCostTableViewCell", forIndexPath: indexPath) as! PayerCostTableViewCell
-        
-        
-        
         let payerCost : PayerCost = payerCosts![indexPath.row]
-        
-        let mpLightGrayColor = UIColor(netHex: 0x999999)
-        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
-       let noRateAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
-       
-        let additionalText = NSMutableAttributedString(string : "")
-        if payerCost.installmentRate > 0 && payerCost.installments > 1 {
-            let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
-            let totalAmount = Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor)
-            totalAmountStr.appendAttributedString(totalAmount)
-            totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
-            additionalText.appendAttributedString(totalAmountStr)
-        } else {
-            if payerCost.installments > 1 {
-                additionalText.appendAttributedString(NSAttributedString(string: " Sin interes".localized, attributes: noRateAttributes))
-            }
-        }
-        
-        installmentCell.payerCostDetail.attributedText =  Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, additionalString: additionalText)
-        
-        
-            //= payerCosts![indexPath.row].recommendedMessage
+        let installmentCell = tableView.dequeueReusableCellWithIdentifier("installmentCell", forIndexPath: indexPath) as! InstallmentSelectionTableViewCell
+        installmentCell.fillCell(payerCost)
         return installmentCell
     }
     

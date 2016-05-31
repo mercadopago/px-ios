@@ -93,7 +93,7 @@ class ExamplesUtils {
     }
  
     class var PREF_ID_NO_EXCLUSIONS : String {
-        return "150216849-e131b785-10d3-48c0-a58b-2910935512e0"
+        return "150216849-ceed1ee4-8ab9-4449-869f-f4a8565d386f"
     }
     
     class var PREF_ID_TICKET_EXCLUDED : String {
