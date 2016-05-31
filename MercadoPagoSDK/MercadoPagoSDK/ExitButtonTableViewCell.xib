@@ -16,9 +16,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ymm-p4-4K8" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="116" y="8" width="92" height="22"/>
+                        <rect key="frame" x="102" y="8" width="120" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="22" id="km2-Ra-PMo"/>
+                            <constraint firstAttribute="width" constant="120" id="6Jh-Mf-4re"/>
+                            <constraint firstAttribute="height" constant="30" id="km2-Ra-PMo"/>
                         </constraints>
                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                         <state key="normal">

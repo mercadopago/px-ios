@@ -100,7 +100,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.01
+        return (section == 2) ? 25 : 0.01
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -118,7 +118,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             case 1:
                 return (self.congratsLayout[self.layoutTemplate]!["bodyHeight"] as! CGFloat)
             default :
-                return 100
+                return 120
             }
     }
 

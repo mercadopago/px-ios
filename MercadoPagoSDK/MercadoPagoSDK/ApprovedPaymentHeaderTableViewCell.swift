@@ -29,14 +29,12 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     }
     
     func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
-        let email : String
+        var subtitle : String = ""
         if (payment.payer != nil) {
-            email = payment.payer!.email ?? ""
-        } else {
-            email = "tu mail".localized
+            subtitle = payment.payer!.email ?? ""
         }
         
-        self.subtitle.text = "Te enviaremos los datos a ".localized + email
+        self.subtitle.text = subtitle
         return self
     }
     

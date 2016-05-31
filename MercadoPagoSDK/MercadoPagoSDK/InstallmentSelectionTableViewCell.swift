@@ -23,7 +23,7 @@ class InstallmentSelectionTableViewCell: UITableViewCell {
     
     func fillCell(payerCost : PayerCost) {
         let mpLightGrayColor = UIColor(netHex: 0x999999)
-        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
+        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 20)!,NSForegroundColorAttributeName:mpLightGrayColor]
         let noRateAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
         
         let additionalText = NSMutableAttributedString(string : "")

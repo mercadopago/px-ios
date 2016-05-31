@@ -116,7 +116,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             return 48
         } else if indexPath.row == 2 {
             if self.paymentMethod == nil || (self.paymentMethod != nil && self.paymentMethod!.isOfflinePaymentMethod()){
-                return 150
+                return 160
             }
             return 50
         }
@@ -159,7 +159,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     let paymentSearchCell = tableView.dequeueReusableCellWithIdentifier("paymentSelectedCell", forIndexPath: indexPath) as! PaymentMethodSelectedTableViewCell
                     paymentSearchCell.paymentIcon.image = MercadoPago.getImageFor(self.paymentMethod!, forCell: true)
                     paymentSearchCell.paymentDescription.text = "terminada en ".localized + self.token!.lastFourDigits
-                    ViewUtils.drawBottomLine(47, width: self.view.bounds.width, inView: paymentSearchCell)
+                    ViewUtils.drawBottomLine(y : 47, width: self.view.bounds.width, inView: paymentSearchCell)
                     return paymentSearchCell
                 }
                 

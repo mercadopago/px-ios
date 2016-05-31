@@ -38,7 +38,8 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         let greenLabelColor = UIColor(red: 67, green: 176,blue: 0)
         
         self.creditCardLabel.text = "terminada en ".localized + payment.card.lastFourDigits!
-        let additionalTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
+        let additionalTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22)!]
+        let noRateTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
         let additionalString = NSMutableAttributedString(string: " ")
         
         if payment.feesDetails != nil && payment.feesDetails.count > 0 {
@@ -49,7 +50,7 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
                 additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
             } else {
                 if payment.installments != 1 {
-                    additionalString.appendAttributedString(NSAttributedString(string: "Sin interes".localized, attributes : additionalTextAttributes))
+                    additionalString.appendAttributedString(NSAttributedString(string: "Sin interes".localized, attributes : noRateTextAttributes))
                 }
             }
         }

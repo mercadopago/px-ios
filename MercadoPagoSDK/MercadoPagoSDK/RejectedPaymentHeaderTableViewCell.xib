@@ -22,14 +22,21 @@
                             <constraint firstAttribute="height" constant="60" id="i9F-hZ-f1b"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="g0C-Jp-kcu" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="15" y="135" width="429" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="g0C-Jp-kcu" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="15" y="135" width="429" height="17"/>
                         <attributedString key="attributedText">
-                            <fragment content="Usa otra tarjeta o medio de pago.">
+                            <fragment content="Usa otra tarjeta u otro medio de pago">
                                 <attributes>
                                     <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="21" maximumLineHeight="21" lineHeightMultiple="21" tighteningFactorForTruncation="0.0"/>
+                                    <integer key="NSLigature" value="0"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" defaultTabInterval="26.449999999999999" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                        <tabStops>
+                                            <textTab alignment="left" location="26.450000762939453">
+                                                <options/>
+                                            </textTab>
+                                        </tabStops>
+                                    </paragraphStyle>
                                 </attributes>
                             </fragment>
                         </attributedString>

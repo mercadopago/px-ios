@@ -9,45 +9,54 @@
 import Foundation
 import UIKit
 
-public class MercadoPagoService : NSObject {
+public class MercadoPagoService : NSObject, NSURLConnectionDataDelegate {
 
     static let MP_BASE_URL = "https://api.mercadopago.com"
-    
+    var delegate : NSURLConnectionDataDelegate!
     var baseURL : String!
+    
     init (baseURL : String) {
         super.init()
         self.baseURL = baseURL
+        
     }
-    
+
     public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, success: (jsonResult: AnyObject?) -> Void,
         failure: ((error: NSError) -> Void)?) {
         
+        delegate = self
         var url = baseURL + uri
         if params != nil {
             url += "?" + params!
         }
         
         let finalURL: NSURL = NSURL(string: url)!
-        let request: NSMutableURLRequest = NSMutableURLRequest()
-        request.URL = finalURL
-        request.HTTPMethod = method
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let request = NSURLRequest(URL: finalURL, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringCacheData, timeoutInterval: 60.0) //NSMutableURLRequest = NSMutableURLRequest()
+        //request.URL = finalURL
+        //request.HTTPMethod = method
+        //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if headers !=  nil && headers!.count > 0 {
             for header in headers! {
-                request.setValue(header.value as! String, forHTTPHeaderField: header.key as! String)
+          //      request.setValue(header.value as! String, forHTTPHeaderField: header.key as! String)
             }
         }
         
         if body != nil {
-            request.HTTPBody = (body as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
+            //request.HTTPBody = (body as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
         }
 
 		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 		
+        
+        //request.cachePolicy = NSURLRequestCachePolicy
         let requestBeganAt  = NSDate()
         print("*************** REQUEST AT " + String(requestBeganAt) + " *************")
         print(request)
+
+
 		NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) in
+            
+            
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 				if error == nil {
 					do
@@ -78,4 +87,18 @@ public class MercadoPagoService : NSObject {
                 }
         }
     }
+    
+    public func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
+        print("***** STATUS CODE RESPONSE ******")
+        if response.isKindOfClass(NSHTTPURLResponse) {
+            let statusCode = (response as! NSHTTPURLResponse).statusCode
+            print("***** " + String(statusCode) + " *****")
+        }
+    }
+    
+    public func connection(connection: NSURLConnection, didReceiveData data: NSData) {
+        let receivedData = NSMutableData(data: data)
+    
+    }
+    
 }
