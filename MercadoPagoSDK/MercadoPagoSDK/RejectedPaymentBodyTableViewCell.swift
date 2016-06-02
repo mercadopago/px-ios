@@ -10,7 +10,7 @@ import UIKit
 
 class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(120)
+    static let ROW_HEIGHT = CGFloat(122)
     
     @IBOutlet weak var payAgainButton: MPButton!
     
@@ -19,19 +19,19 @@ class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         self.payAgainButton.layer.cornerRadius = 5
         self.payAgainButton.layer.borderWidth = 1
         self.payAgainButton.layer.borderColor = UIColor().blueMercadoPago().CGColor
-        ViewUtils.drawBottomLine(122, width : self.bounds.width, inView: self)
+        self.payAgainButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
+        ViewUtils.drawBottomLine(20, y: 122, width : self.bounds.width-40, inView: self)
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callbackCancel : (Void -> Void)?) -> UITableViewCell {
-        self.callbackCancel = callbackCancel!
-        self.payAgainButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+    func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
+        self.defaultCallback = callback
         return self
     }
+
     
 }

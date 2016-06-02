@@ -18,7 +18,7 @@ public class MPFlowBuilder : NSObject {
         
     }
     
-    public class func startCheckoutViewController(preferenceId: String, callback: (Payment) -> Void) -> UINavigationController {
+    public class func startCheckoutViewController(preferenceId: String, callback: (Payment) -> Void) -> MPNavigationController {
             let checkoutVC = CheckoutViewController(preferenceId: preferenceId, callback: { (payment : Payment) -> Void in
             callback(payment)
         })
@@ -26,13 +26,13 @@ public class MPFlowBuilder : NSObject {
     }
     
     
-    public class func startPaymentVaultViewController(amount: Double, purchaseTitle : String!, currencyId : String!,paymentPreference : PaymentPreference, pictureUrl : String = "", callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
+    public class func startPaymentVaultViewController(amount: Double, currencyId : String!,paymentPreference : PaymentPreference, pictureUrl : String = "", callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
         
-        let paymentVault = PaymentVaultViewController(amount: amount, purchaseTitle : purchaseTitle, currencyId : currencyId, pictureUrl : pictureUrl, paymentPreference : paymentPreference, callback: callback)
+        let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentPreference : paymentPreference, callback: callback)
 
-        paymentVault.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void in
+        paymentVault.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
             paymentVault.dismissViewControllerAnimated(true, completion: { () -> Void in
-                callback(paymentMethod: paymentMethod, token: token, issuer: issuer, installments: installments)
+                callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
             })
         }
         
@@ -40,9 +40,9 @@ public class MPFlowBuilder : NSObject {
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
     
-    internal class func startPaymentVaultInCheckout(amount: Double, purchaseTitle : String!, currencyId : String!, pictureUrl : String, paymentSettings: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
+    internal class func startPaymentVaultInCheckout(amount: Double, currencyId : String!, paymentSettings: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
         
-        let paymentVault = PaymentVaultViewController(amount: amount, purchaseTitle : purchaseTitle, currencyId : currencyId, pictureUrl : pictureUrl, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true, callback: callback)
+        let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true, callback: callback)
         
         paymentVault.modalTransitionStyle = .CrossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
@@ -50,60 +50,47 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) -> UINavigationController {
+    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
     
-        var cardVC : UINavigationController?
+        var cardVC : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         
+        if (callbackCancel == nil){
+            callbackCancel = { cardVC?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            }) }
+        }
         cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer) -> Void in
             
+            (ccf.navigationController as! MPNavigationController).showLoading()
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
-                
-                let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, minInstallments: nil, callback: { (payerCost) -> Void in
-                    callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
-                })
-                
-                ccf.navigationController!.pushViewController(pcvc, animated: false)
+                 (ccf.navigationController as! MPNavigationController).hideLoading()
+                let payerCostSelected = paymentSettings?.autoSelectPayerCost(installments![0].payerCosts)
+                    if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
+                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, maxInstallments: paymentSettings?.maxAcceptedInstallments, installment:installments![0] ,callback: { (payerCost) -> Void in
+                            callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
+                        })
+                        pcvc.callbackCancel = callbackCancel
+                        
+                        ccf.navigationController!.pushViewController(pcvc, animated: false)
+
+                    }else{
+                         callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCostSelected)
+                    }
+
                 
                 }, failure: { (error) -> Void in
-                    
+                     (ccf.navigationController as! MPNavigationController).hideLoading()
             })
+
             
             }, callbackCancel : callbackCancel)
     
         ccf = cardVC?.viewControllers[0] as! CardFormViewController
     
         cardVC!.modalTransitionStyle = .CrossDissolve
-    
-    
-    
-    return cardVC!
-    
-    
+        return cardVC!
+
     }
 
- 
-
-    
-    /*public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
-        
-
-        let cardVC = MPStepBuilder.startCreditCardForm(paymentSettings , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
-            
-            let step = MPStepBuilder.startCreditCardForm(PaymentType(paymentTypeId: paymentSettings.defaultPaymentTypeId , amount: amount, token:token, callback: { (paymentMethod, token, issuer, installment) -> Void in
-
-                })
-
-                MPFlowController.sharedInstance.currentNavigationController?.pushViewController(step, animated: true)
-
-
-           
-        })
-        
-        cardVC.modalTransitionStyle = .CrossDissolve
-        return MPFlowController.createNavigationControllerWith(cardVC)
-        
-        
-    }*/
 
 }

@@ -63,7 +63,7 @@ public class CheckoutPreference : Equatable {
             return "No hay información de payer".localized
         }
         
-        if self.payer.email == nil || self.payer.email.characters.count > 0 {
+        if self.payer.email == nil || self.payer.email.characters.count == 0 {
             return "Se requiere email de comprador".localized
         }
         

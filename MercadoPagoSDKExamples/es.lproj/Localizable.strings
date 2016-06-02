@@ -21,9 +21,9 @@
 "step3_title" = "Pagos con cuotas";
 "step4_title" = "Pagos con medios off-line";
 "step5_title" = "Flujo de pagos completo";
-"step6_title" = "Checkout";
+"step6_title" = "Checkout : PK PROD";
 "step7_title" = "F2 - Selección de método de pago";
-"step8_title" = "Checkout : ticket excluído";
+"step8_title" = "Checkout - PK TEST";
 "step9_title" = "Checkout : solo tarjeta de crédito";
 "step10_title" = "Checkout : rapipago y carga virtual";
 "step11_title" = "Checkout : solo pagofacil";

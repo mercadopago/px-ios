@@ -14,7 +14,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak private var tableview : UITableView!
 	
     let examples : [String] = ["step1_title".localized, "step2_title".localized, "step3_title".localized, "step4_title".localized,
-    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized, "step11_title".localized, "step11_title".localized]
+    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized, "step11_title".localized, "step11_title".localized, "step13_title".localized]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -90,16 +90,18 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 5:
+            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
             self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment:Payment) -> Void in
                 
             }))
         case 6:
 
-            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, purchaseTitle : "Compra", currencyId : "ARS", paymentPreference: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "ARS", paymentPreference: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
 
             }))
         case 7:
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_TICKET_EXCLUDED, callback: { (MerchantPayment) -> Void in
+            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment:Payment) -> Void in
                 
             }))
         case 8:
@@ -117,21 +119,13 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             }))
             
         case 11:
-            let payment = Payment()
-            payment.status = "approved"
-            //payment.statusDetail = "cc_rejected_call_for_authorize"
-            payment.paymentMethodId = "visa"
-            payment.transactionAmount = 200
-            payment.transactionDetails = TransactionDetails()
-            payment.installments = 6
-            payment.transactionDetails.totalPaidAmount = 200.0
-            payment.transactionDetails.installmentAmount = 20
-
+           print("yeah!")
+        case 12:
+            let error = MPError(message : "Esto deberia ser titulo", messageDetail : "messageDetail", retry : false)
             
-            payment._id = 333555
-            let congrats = MPStepBuilder.startPaymentCongratsStep(payment)
-            self.navigationController!.pushViewController(congrats, animated: true)
-
+            self.showViewController(MPStepBuilder.startErrorViewController(error, callback: {
+                print("yeah!")
+            }))
         default:
             print("Otra opcion")
         }

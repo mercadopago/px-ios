@@ -44,7 +44,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
         
         if amountRange != nil {
             let attributedTitle = NSMutableAttributedString(string: title.substringToIndex((amountRange?.startIndex)!))
-            let attributedAmount = Utils.getAttributedAmount(amountStr, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor().UIColorFromRGB(0x666666))
+            let attributedAmount = Utils.getAttributedAmount(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor().UIColorFromRGB(0x666666))
             attributedTitle.appendAttributedString(attributedAmount)
             let endingTitle = NSAttributedString(string: title.substringFromIndex((amountRange?.endIndex)!))
             attributedTitle.appendAttributedString(endingTitle)

@@ -10,7 +10,7 @@ import UIKit
 
 class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(176)
+    static let ROW_HEIGHT = CGFloat(186)
     
     
     @IBOutlet weak var title: MPLabel!
@@ -31,10 +31,13 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment : Payment, callbackCancel : (Void -> Void)?) -> UITableViewCell {
-        let title = payment.paymentMethodId.localized + " no proceso el pago."
+    func fillCell(payment : Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
+        
+        
+        let title = ((payment.statusDetail + "_title").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.title.text = title
-        self.subtitle.text = "Usa otra tarjeta o medio de pago".localized
+        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId.rawValue).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
+        self.subtitle.text = subtitle
         return self
     }
  

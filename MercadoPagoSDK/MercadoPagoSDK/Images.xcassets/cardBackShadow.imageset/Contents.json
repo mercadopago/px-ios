@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "cardBackShadow.png",
+      "filename" : "reflejo.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "cardBackShadow@2x.png",
+      "filename" : "reflejo@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "cardBackShadow@3x.png",
+      "filename" : "reflejo@3x.png",
       "scale" : "3x"
     }
   ],

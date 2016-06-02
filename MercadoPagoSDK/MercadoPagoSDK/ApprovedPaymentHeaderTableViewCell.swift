@@ -15,6 +15,7 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     @IBOutlet weak var subtitle: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         self.layer.shadowOffset = CGSizeMake(0, 1)
         self.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
         self.layer.shadowRadius = 3
@@ -28,15 +29,13 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
-        let email : String
+    func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
+        var subtitle : String = ""
         if (payment.payer != nil) {
-            email = payment.payer!.email ?? ""
-        } else {
-            email = "tu mail".localized
+            subtitle = payment.payer!.email ?? ""
         }
         
-        self.subtitle.text = "Te enviaremos los datos a ".localized + email
+        self.subtitle.text = subtitle
         return self
     }
     

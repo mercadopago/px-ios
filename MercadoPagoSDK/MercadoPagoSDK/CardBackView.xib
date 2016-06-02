@@ -54,7 +54,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OC4-D3-Fd2">
                             <rect key="frame" x="154" y="0.0" width="40" height="24"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVV" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-5j-2uD">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVV" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-5j-2uD">
                                     <rect key="frame" x="0.0" y="0.0" width="40" height="24"/>
                                     <fontDescription key="fontDescription" name="Fipps-Regular" family="Fipps" pointSize="17"/>
                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -98,7 +98,10 @@
                     </variation>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="oeN-nM-QeG">
-                    <rect key="frame" x="0.0" y="0.0" width="128" height="140"/>
+                    <rect key="frame" x="0.0" y="0.0" width="160" height="140"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="160" id="pd4-oh-9Xw"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.99607843137254903" green="0.90980392156862744" blue="0.52156862745098043" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -127,6 +130,7 @@
             </userDefinedRuntimeAttributes>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="Xu4-75-f3A"/>
                     <exclude reference="Q99-lj-oOC"/>
                 </mask>
             </variation>
@@ -134,6 +138,6 @@
         </view>
     </objects>
     <resources>
-        <image name="cardBackShadow" width="128" height="144"/>
+        <image name="cardBackShadow" width="335" height="322"/>
     </resources>
 </document>

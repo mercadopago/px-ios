@@ -149,7 +149,7 @@ public class Payment : NSObject {
 			payment.couponAmount = JSON(json["coupon_amount"]!).asDouble!
 		}
 		if json["differential_pricing_id"] != nil && !(json["differential_pricing_id"]! is NSNull) {
-			payment.differentialPricingId = NSNumber(longLong: (json["differential_pricing_id"] as? NSString)!.longLongValue)
+			payment.differentialPricingId = NSNumber(longLong: (json["differential_pricing_id"]!.longLongValue))
 		}
 		
 		if json["issuer_id"] != nil && !(json["issuer_id"]! is NSNull) {
@@ -183,6 +183,10 @@ public class Payment : NSObject {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         var dateArr = string.characters.split {$0 == "T"}.map(String.init)
         return dateFormatter.dateFromString(dateArr[0])
+    }
+    
+    public func isRejected() -> Bool {
+        return self.status == PaymentStatus.REJECTED.rawValue
     }
 }
 

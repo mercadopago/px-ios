@@ -15,23 +15,24 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="358" height="517"/>
+            <rect key="frame" x="0.0" y="0.0" width="358" height="695"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hv1-co-VlU">
-                    <rect key="frame" x="40" y="20" width="278" height="167"/>
-                    <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="40" y="79" width="278" height="167"/>
+                    <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Hv1-co-VlU" secondAttribute="height" multiplier="278:167" id="HEs-Ge-Sfd"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="5"/>
+                            <integer key="value" value="10"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gm6-dD-cT3">
-                    <rect key="frame" x="0.0" y="197" width="358" height="320"/>
+                    <rect key="frame" x="0.0" y="375" width="358" height="320"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="320" id="iwL-jX-Y97"/>
@@ -41,28 +42,56 @@
                         <outlet property="delegate" destination="-1" id="OHb-Rg-1q0"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YPI-to-6ir">
+                    <rect key="frame" x="0.0" y="325" width="358" height="50"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="VQZ-XV-8Ft"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Heu-S0-dAB">
+                    <rect key="frame" x="0.0" y="0.0" width="358" height="79"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6QT-cH-8mN">
+                    <rect key="frame" x="0.0" y="246" width="358" height="79"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.35294117650000001" green="0.74509803919999995" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="Hv1-co-VlU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="4I5-kk-tt5"/>
+                <constraint firstAttribute="trailing" secondItem="6QT-cH-8mN" secondAttribute="trailing" id="22f-Zi-5wL"/>
+                <constraint firstItem="6QT-cH-8mN" firstAttribute="top" secondItem="Hv1-co-VlU" secondAttribute="bottom" id="3dw-Mu-PI8"/>
+                <constraint firstItem="Hv1-co-VlU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4I5-kk-tt5"/>
                 <constraint firstItem="Hv1-co-VlU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="5mV-qK-QQH"/>
+                <constraint firstItem="Heu-S0-dAB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="EYs-h3-TIg"/>
+                <constraint firstItem="gm6-dD-cT3" firstAttribute="top" secondItem="YPI-to-6ir" secondAttribute="bottom" id="FCX-J2-usS"/>
                 <constraint firstAttribute="bottom" secondItem="gm6-dD-cT3" secondAttribute="bottom" id="Hfv-Zp-fMs"/>
+                <constraint firstItem="6QT-cH-8mN" firstAttribute="height" secondItem="Heu-S0-dAB" secondAttribute="height" id="Lay-nv-kTP"/>
                 <constraint firstItem="Hv1-co-VlU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="T1T-uQ-hoH"/>
+                <constraint firstAttribute="trailing" secondItem="YPI-to-6ir" secondAttribute="trailing" id="Wy8-sy-ynt"/>
                 <constraint firstItem="gm6-dD-cT3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Xxm-sL-TFv"/>
                 <constraint firstItem="Hv1-co-VlU" firstAttribute="centerX" secondItem="gm6-dD-cT3" secondAttribute="centerX" id="dHH-Y1-VpE"/>
                 <constraint firstAttribute="trailing" secondItem="gm6-dD-cT3" secondAttribute="trailing" id="e7R-TF-yje"/>
+                <constraint firstItem="YPI-to-6ir" firstAttribute="top" secondItem="6QT-cH-8mN" secondAttribute="bottom" id="heX-on-tdZ"/>
+                <constraint firstItem="Heu-S0-dAB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="i2K-Sl-4Bf"/>
                 <constraint firstItem="gm6-dD-cT3" firstAttribute="top" secondItem="Hv1-co-VlU" secondAttribute="bottom" constant="10" id="kFH-4R-45t"/>
+                <constraint firstItem="Hv1-co-VlU" firstAttribute="top" secondItem="Heu-S0-dAB" secondAttribute="bottom" id="kcj-Pe-4y4"/>
+                <constraint firstAttribute="trailing" secondItem="Heu-S0-dAB" secondAttribute="trailing" id="uPn-wI-Y3d"/>
                 <constraint firstAttribute="trailing" secondItem="Hv1-co-VlU" secondAttribute="trailing" constant="40" id="wBG-WF-low"/>
+                <constraint firstItem="YPI-to-6ir" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wpb-4y-0cQ"/>
+                <constraint firstItem="6QT-cH-8mN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="z47-YT-lfo"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="4I5-kk-tt5"/>
                     <exclude reference="5mV-qK-QQH"/>
                     <exclude reference="kFH-4R-45t"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="190" y="258.5"/>
+            <point key="canvasLocation" x="204" y="328.5"/>
         </view>
     </objects>
 </document>

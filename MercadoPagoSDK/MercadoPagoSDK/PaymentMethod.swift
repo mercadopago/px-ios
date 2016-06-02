@@ -93,6 +93,7 @@ public class PaymentMethod : Equatable  {
         let paymentMethod : PaymentMethod = PaymentMethod()
         paymentMethod._id = self._id
         paymentMethod.name = self.name
+        paymentMethod.paymentTypeId = self.paymentTypeId
         paymentMethod.additionalInfoNeeded = self.additionalInfoNeeded
         if(Setting.getSettingByBin(self.settings, bin: bin) != nil){
             paymentMethod.settings = [Setting.getSettingByBin(self.settings, bin: bin)!]

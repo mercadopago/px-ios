@@ -27,6 +27,10 @@ public class FeesDetail : Equatable {
         return fd
     }
     
+    func isFinancingFeeType() -> Bool {
+        return self.type == "financing_fee"
+    }
+    
 }
 
 public func ==(obj1: FeesDetail, obj2: FeesDetail) -> Bool {
