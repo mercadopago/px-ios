@@ -31,4 +31,26 @@ public class MPTextView: UITextView {
             self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
         }
     }
+    
+    func addCharactersSpacing(spacing:CGFloat) {
+        let attributedString = NSMutableAttributedString()
+        if self.attributedText != nil {
+            attributedString.appendAttributedString(self.attributedText!)
+        }
+        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSMakeRange(0, self.attributedText!.length))
+        self.attributedText = attributedString
+    }
+    
+    func addLineSpacing(lineSpacing : Float){
+        let attributedString = NSMutableAttributedString()
+        if self.attributedText != nil {
+            attributedString.appendAttributedString(self.attributedText!)
+        }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = CGFloat(lineSpacing)
+        paragraphStyle.alignment = .Center
+        attributedString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        self.attributedText = attributedString
+        
+    }
 }

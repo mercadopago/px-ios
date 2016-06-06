@@ -7,7 +7,17 @@
 //
 
 import UIKit
-
+public class MPNavigationController : UINavigationController {
+    internal func showLoading(){
+        
+        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.whiteColor())
+    }
+    
+    internal func hideLoading(){
+        LoadingOverlay.shared.hideOverlayView()
+    }
+    
+}
 public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     internal var displayPreferenceDescription = false
@@ -51,7 +61,10 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+    
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
+        
         
         self.loadMPStyles()
      
@@ -61,12 +74,15 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.clearMercadoPagoStyle()
+  
+        
     }
     
     internal func loadMPStyles(){
         
         if self.navigationController != nil {
 
+            
             //Navigation bar colors
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
@@ -75,11 +91,10 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+                self.navigationController?.navigationBar.barTintColor = UIColor(red: 48, green: 175, blue: 226)
                 self.navigationController?.navigationBar.removeBottomLine()
-                
+                  self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons
-                rightButtonShoppingCart()
                 displayBackButton()
             }
         }
@@ -100,24 +115,17 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         //Navigation bar colors
         self.navigationController?.navigationBar.titleTextAttributes = nil
         self.navigationController?.navigationBar.barTintColor = nil
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        
       
     }
     
     internal func invokeCallbackCancel(){
-        self.callbackCancel!()
-    }
-    
-    internal func togglePreferenceDescription(table : UITableView){
-        if displayPreferenceDescription {
-            self.rightButtonShoppingCart()
-        } else {
-            self.rightButtonClose()
+        if(self.callbackCancel != nil){
+            self.callbackCancel!()
         }
-        displayPreferenceDescription = !displayPreferenceDescription
-        let range = NSMakeRange(0, 1)
-        table.reloadSections(NSIndexSet(indexesInRange: range), withRowAnimation: .Middle)
-    }
 
+    }
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -179,8 +187,33 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     }
     
     internal func showLoading(){
-        LoadingOverlay.shared.showOverlay(self.view)
+        LoadingOverlay.shared.showOverlay(self.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.whiteColor())
     }
+    
+    var fistResponder : UITextField?
+    
+    internal func hideKeyboard(view: UIView) -> Bool{
+        if let textField = view as? UITextField {
+            // if (textField.isFirstResponder()){
+            fistResponder = textField
+            textField.resignFirstResponder()
+            //   return true
+            // }
+        }
+        for subview in view.subviews {
+            if (hideKeyboard(subview)){
+                return true
+            }
+        }
+        return false
+    }
+    internal func showKeyboard(){
+        if (fistResponder != nil){
+            fistResponder?.becomeFirstResponder()
+        }
+        fistResponder = nil
+    }
+    
     
     internal func hideLoading(){
         LoadingOverlay.shared.hideOverlayView()
@@ -193,6 +226,24 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
                 return true
         }
         return false
+    }
+    
+    internal func requestFailure(error : NSError, callback : (Void -> Void)? = nil) {
+        let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: callback)
+        if self.navigationController != nil {
+            self.navigationController?.presentViewController(errorVC, animated: true, completion: {})
+        } else {
+            self.presentViewController(errorVC, animated: true, completion: {})
+        }
+    }
+    
+    internal func displayFailure(mpError : MPError){
+        let errorVC = MPStepBuilder.startErrorViewController(mpError, callback: nil, callbackCancel: self.callbackCancel)
+        if self.navigationController != nil {
+            self.navigationController?.presentViewController(errorVC, animated: true, completion: {})
+        } else {
+            self.presentViewController(errorVC, animated: true, completion: {})
+        }
     }
 
 }

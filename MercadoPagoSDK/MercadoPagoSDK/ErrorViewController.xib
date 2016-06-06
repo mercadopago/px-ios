@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="errorIcon" destination="Lo5-cf-7x0" id="PHO-yf-rpa"/>
+                <outlet property="errorTitle" destination="ODG-43-ocD" id="qea-2D-Pj5"/>
+                <outlet property="exitButton" destination="895-Ju-YJT" id="2i8-Jn-LFk"/>
+                <outlet property="retryButton" destination="W9v-lm-yGm" id="agk-gQ-deg"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODG-43-ocD" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <rect key="frame" x="223" y="100" width="154" height="20"/>
+                    <attributedString key="attributedText">
+                        <fragment content="Ha ocurrido un error">
+                            <attributes>
+                                <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_rejected" translatesAutoresizingMaskIntoConstraints="NO" id="Lo5-cf-7x0">
+                    <rect key="frame" x="270" y="170" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="gqQ-qH-yFV"/>
+                        <constraint firstAttribute="width" constant="60" id="xqz-Gu-ar5"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9v-lm-yGm" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <rect key="frame" x="265" y="280" width="71" height="30"/>
+                    <state key="normal" title="Reintentar"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="895-Ju-YJT" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <rect key="frame" x="285" y="340" width="30" height="30"/>
+                    <state key="normal" title="Salir"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="ODG-43-ocD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="7xi-Ed-VT6"/>
+                <constraint firstItem="W9v-lm-yGm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="B3o-fm-4WW"/>
+                <constraint firstItem="Lo5-cf-7x0" firstAttribute="top" secondItem="ODG-43-ocD" secondAttribute="bottom" constant="50" id="GN4-lL-bh0"/>
+                <constraint firstItem="895-Ju-YJT" firstAttribute="top" secondItem="W9v-lm-yGm" secondAttribute="bottom" constant="30" id="Idq-Gd-loS"/>
+                <constraint firstItem="W9v-lm-yGm" firstAttribute="top" secondItem="Lo5-cf-7x0" secondAttribute="bottom" constant="50" id="PTQ-6t-5Qb"/>
+                <constraint firstItem="895-Ju-YJT" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="R5u-RF-Bsl"/>
+                <constraint firstItem="Lo5-cf-7x0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lfk-uO-hIT"/>
+                <constraint firstItem="ODG-43-ocD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="sje-DT-3Fw"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_rejected" width="48" height="48"/>
+    </resources>
+</document>

@@ -30,15 +30,23 @@ public class MPPayment: NSObject {
     }
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
+        var obj:[String:AnyObject] = [
             "public_key": self.publicKey,
             "email": self.email,
             "payment_method_id": self.paymentMethodId,
             "pref_id" : self.preferenceId,
-            "installments" : self.installments == 0 ? JSON.null : self.installments,
-            "issuer_id" : self.issuerId == nil ? JSON.null : self.issuerId!,
-            "token_id" : self.tokenId == nil ? JSON.null : self.tokenId!
         ]
+        
+        if self.tokenId != nil && self.tokenId?.characters.count > 0 {
+                obj["token"] = self.tokenId!
+        }
+        
+        obj["installments"] = self.installments
+        
+        if self.issuerId != nil && self.issuerId?.characters.count > 0 {
+            obj["issuer_id"] = self.issuerId
+        }
+        
         return JSON(obj).toString()
     }
     

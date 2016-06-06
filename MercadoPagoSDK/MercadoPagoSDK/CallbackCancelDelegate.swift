@@ -11,9 +11,17 @@ import UIKit
 public class CallbackCancelTableViewCell : UITableViewCell {
 
     var callbackCancel : (Void -> Void)?
+    var defaultCallback : (Void -> Void)?
     
     func invokeCallbackCancel() {
         self.callbackCancel!()
     }
 
+    func invokeDefaultCallback(){
+        if self.defaultCallback != nil {
+            self.defaultCallback!()
+        }
+    }
+
+    
 }

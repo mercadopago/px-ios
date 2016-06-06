@@ -8,10 +8,14 @@
 
 import Foundation
 
-public class SecurityCode : Equatable {
+public class SecurityCode : NSObject {
     public var length : Int = 0
     public var cardLocation : String!
     public var mode : String!
+    
+    public override init(){
+        super.init()
+    }
     
     public class func fromJSON(json : NSDictionary) -> SecurityCode {
         let securityCode : SecurityCode = SecurityCode()

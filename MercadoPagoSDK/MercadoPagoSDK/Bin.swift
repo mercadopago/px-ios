@@ -8,11 +8,14 @@
 
 import Foundation
 
-public class BinMask : Equatable {
+public class BinMask : NSObject {
     public var exclusionPattern : String!
     public var installmentsPattern : String!
     public var pattern : String!
     
+    public override init(){
+        super.init()
+    }
 
     public class func fromJSON(json : NSDictionary) -> BinMask {
         let binMask : BinMask = BinMask()

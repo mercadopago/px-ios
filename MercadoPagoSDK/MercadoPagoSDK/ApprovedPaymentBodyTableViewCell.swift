@@ -9,19 +9,19 @@
 import UIKit
 
 class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
-
-    static let ROW_HEIGHT = CGFloat(200)
     
     @IBOutlet weak var creditCardIcon: UIImageView!
     
+    @IBOutlet weak var creditCardLabel: MPLabel!
     @IBOutlet weak var amountDescription: UILabel!
     @IBOutlet weak var cancelButton: MPButton!
+    @IBOutlet weak var subtitle: MPLabel!
     
     @IBOutlet weak var voucherId: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let overLinewView = UIView(frame: CGRect(x: 0, y: 120, width: self.bounds.width, height: 1))
+        let overLinewView = UIView(frame: CGRect(x: 0, y: 140, width: self.bounds.width, height: 1))
         overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
         self.addSubview(overLinewView)
 
@@ -29,27 +29,39 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+        self.subtitle.addLineSpacing(6, centered: false)
     }
     
-    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
         self.creditCardIcon.image = MercadoPago.getImage(payment.paymentMethodId)
         self.voucherId.text = "Comprobante".localized + " " + String(payment._id)
         let greenLabelColor = UIColor(red: 67, green: 176,blue: 0)
         
-        let additionalTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
+        self.creditCardLabel.text = "terminada en ".localized + payment.card.lastFourDigits!
+        let additionalTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!]
+        let noRateTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!]
         let additionalString = NSMutableAttributedString(string: " ")
         
-        if payment.transactionAmount < payment.transactionDetails.totalPaidAmount {
-            additionalString.appendAttributedString(NSAttributedString(string : "(", attributes: additionalTextAttributes))
-            additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: greenLabelColor, fontSize : 22))
-            additionalString.appendAttributedString(NSAttributedString(string : ")", attributes: additionalTextAttributes))
-        } else {
-            additionalString.appendAttributedString(NSAttributedString(string: "Sin intereses".localized, attributes : additionalTextAttributes))
+        if payment.feesDetails != nil && payment.feesDetails.count > 0 {
+            let financingFee = payment.feesDetails.filter({ return $0.isFinancingFeeType()})
+            if financingFee.count > 0 {
+                additionalString.appendAttributedString(NSAttributedString(string : "( ", attributes: additionalTextAttributes))
+                additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: greenLabelColor, fontSize : 14, baselineOffset: 3))
+                additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
+            } else {
+                if payment.installments != 1 {
+                    additionalString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes : noRateTextAttributes))
+                }
+            }
+
         }
+        
         self.amountDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payment.installments), installmentAmount: payment.transactionDetails.installmentAmount, additionalString: additionalString)
         return self
+    }
+    
+    func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
+        return 206
     }
     
 }

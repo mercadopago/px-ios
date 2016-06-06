@@ -64,4 +64,8 @@ class InstructionsAtmViewCell: UITableViewCell, InstructionsFillmentDelegate {
         return self
     }
     
+    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+        return 388
+    }
+    
 }

@@ -15,13 +15,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="327" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="oxxo" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
-                        <rect key="frame" x="8" y="7" width="52" height="43"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="rapipago" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                        <rect key="frame" x="8" y="7" width="88" height="45"/>
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="V8d-TI-NL9"/>
+                        </constraints>
                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOb-BJ-hW9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="65" y="8" width="120" height="45"/>
+                        <rect key="frame" x="101" y="8" width="120" height="47"/>
                         <attributedString key="attributedText">
                             <fragment content="Método de Pago">
                                 <attributes>
@@ -34,10 +37,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Y8d-Nr-Ptp" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="8" y="50" width="311" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="OUd-LC-a28"/>
-                        </constraints>
+                        <rect key="frame" x="8" y="52" width="311" height="19"/>
                         <attributedString key="attributedText">
                             <fragment content="Se acreditará en 7 días">
                                 <attributes>
@@ -53,12 +53,14 @@
                     <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="top" secondItem="N1r-JA-UCo" secondAttribute="bottom" id="7ap-S3-Rvt"/>
                     <constraint firstItem="vOb-BJ-hW9" firstAttribute="leading" secondItem="N1r-JA-UCo" secondAttribute="trailing" constant="5" id="EfR-TP-zwo"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Y8d-Nr-Ptp" secondAttribute="trailing" id="MHS-3g-u6a"/>
-                    <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="NRN-S7-Wkm"/>
+                    <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="RS8-Uq-kR0"/>
                     <constraint firstItem="N1r-JA-UCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="XHx-am-Hzd"/>
                     <constraint firstItem="vOb-BJ-hW9" firstAttribute="baseline" secondItem="N1r-JA-UCo" secondAttribute="baseline" id="Xs7-I2-wEr"/>
                     <constraint firstItem="vOb-BJ-hW9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="biM-CV-3jE"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="N1r-JA-UCo" secondAttribute="leading" id="fDq-JL-BNO"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Y8d-Nr-Ptp" secondAttribute="bottom" id="gJ8-cw-IGW"/>
                     <constraint firstItem="N1r-JA-UCo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ofq-qN-7vU"/>
+                    <constraint firstItem="N1r-JA-UCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="vS3-gl-Dft"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -71,6 +73,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="oxxo" width="52" height="24"/>
+        <image name="rapipago" width="88" height="17"/>
     </resources>
 </document>

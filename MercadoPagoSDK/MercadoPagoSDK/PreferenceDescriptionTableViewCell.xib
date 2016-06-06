@@ -32,7 +32,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0Y-hG-NaU" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="123" y="8" width="158" height="70"/>
+                        <rect key="frame" x="119" y="16" width="162" height="48"/>
                         <attributedString key="attributedText">
                             <fragment content="Item de Preferencia Con description eterna para testeo de dos lineas">
                                 <attributes>
@@ -45,23 +45,23 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$1,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="q9l-s5-Umy" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="123" y="78" width="158" height="24"/>
+                        <rect key="frame" x="123" y="72" width="158" height="24"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="q9l-s5-Umy" secondAttribute="bottom" constant="10" id="5sL-Tb-sZD"/>
-                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="9er-Xz-pe0"/>
+                    <constraint firstItem="q9l-s5-Umy" firstAttribute="top" secondItem="D0Y-hG-NaU" secondAttribute="bottom" constant="8" id="2in-6C-yDG"/>
+                    <constraint firstItem="DYB-02-qLc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="3RN-xd-mNi"/>
+                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="9er-Xz-pe0"/>
                     <constraint firstItem="B2E-SA-UmH" firstAttribute="centerY" secondItem="DYB-02-qLc" secondAttribute="centerY" id="Fxd-SU-dkz"/>
                     <constraint firstItem="B2E-SA-UmH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ipx-E0-ih1"/>
                     <constraint firstItem="B2E-SA-UmH" firstAttribute="centerX" secondItem="DYB-02-qLc" secondAttribute="centerX" id="KaN-9w-OI2"/>
-                    <constraint firstItem="q9l-s5-Umy" firstAttribute="top" secondItem="D0Y-hG-NaU" secondAttribute="bottom" id="PTA-PM-bXn"/>
                     <constraint firstItem="DYB-02-qLc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RQa-5w-L7d"/>
                     <constraint firstItem="DYB-02-qLc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="bhd-8b-fhS"/>
                     <constraint firstAttribute="trailingMargin" secondItem="D0Y-hG-NaU" secondAttribute="trailing" constant="10" id="lRV-my-5rr"/>
-                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="leading" secondItem="DYB-02-qLc" secondAttribute="trailing" constant="15" id="lb7-eH-xjD"/>
+                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="leading" secondItem="DYB-02-qLc" secondAttribute="trailing" constant="11" id="lb7-eH-xjD"/>
                     <constraint firstItem="q9l-s5-Umy" firstAttribute="leading" secondItem="DYB-02-qLc" secondAttribute="trailing" constant="15" id="nsu-vg-PX8"/>
                     <constraint firstAttribute="trailingMargin" secondItem="q9l-s5-Umy" secondAttribute="trailing" constant="10" id="qtK-JV-0rF"/>
                 </constraints>

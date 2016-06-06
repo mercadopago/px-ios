@@ -9,12 +9,13 @@
 import UIKit
 import MercadoPagoSDK
 
+
 class ExamplesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak private var tableview : UITableView!
 	
     let examples : [String] = ["step1_title".localized, "step2_title".localized, "step3_title".localized, "step4_title".localized,
-    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized, "step11_title".localized, "step11_title".localized]
+    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized, "step11_title".localized, "step11_title".localized, "step13_title".localized]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -66,9 +67,34 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         switch indexPath.row {
         case 0:
 
+            let pm = PaymentMethod()
+            pm._id = "master"
+            pm.name = "Mastercard"
+            pm.paymentTypeId = PaymentTypeId.CREDIT_CARD
             
-         
-            self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
+            
+            
+            let bin = BinMask()
+            bin.pattern = "^5"
+            bin.exclusionPattern = "^(589562)"
+            bin.installmentsPattern = "^5"
+            
+            let cardNumber = CardNumber()
+            cardNumber.length = 16
+            cardNumber.validation = "standard"
+                            
+            let securityCode = SecurityCode()
+            securityCode.mode = "mandatory"
+            securityCode.length = 3
+            securityCode.cardLocation = "back"
+            let setting = Setting()
+            setting.securityCode = securityCode
+            setting.cardNumber =  cardNumber
+            setting.binMask = bin
+
+            pm.settings = [setting]
+
+            self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 1, paymentMethods: [pm], callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
                 print("OK!!")
             }))
 
@@ -90,16 +116,18 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 5:
+            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
             self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment:Payment) -> Void in
                 
             }))
         case 6:
 
-            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, purchaseTitle : "Compra", currencyId : "ARS", paymentPreference: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "ARS", paymentPreference: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
 
             }))
         case 7:
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_TICKET_EXCLUDED, callback: { (MerchantPayment) -> Void in
+            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment:Payment) -> Void in
                 
             }))
         case 8:
@@ -118,20 +146,27 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             
         case 11:
             let payment = Payment()
-            payment.status = "approved"
-            //payment.statusDetail = "cc_rejected_call_for_authorize"
-            payment.paymentMethodId = "visa"
+            payment._id = 123
             payment.transactionAmount = 200
-            payment.transactionDetails = TransactionDetails()
-            payment.installments = 6
-            payment.transactionDetails.totalPaidAmount = 200.0
-            payment.transactionDetails.installmentAmount = 20
-
+            payment.status = "rejected"
+            payment.statusDetail = "cc_rejected_insufficient_amount"
             
-            payment._id = 333555
-            let congrats = MPStepBuilder.startPaymentCongratsStep(payment)
-            self.navigationController!.pushViewController(congrats, animated: true)
-
+            let pm = PaymentMethod()
+            pm.paymentTypeId = PaymentTypeId.DEBIT_CARD
+            pm.name = "Visa"
+            
+            
+            let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod: pm, callback: { (Void) -> Void in
+                self.navigationController!.popViewControllerAnimated(true)
+            })
+            self.navigationController!.pushViewController(congratsVC, animated: true)
+        case 12:
+            
+            let error = MPError(message : "Esto deberia ser titulo", messageDetail : "messageDetail", retry : false)
+            
+            self.showViewController(MPStepBuilder.startErrorViewController(error, callback: {
+                print("yeah!")
+            }))
         default:
             print("Otra opcion")
         }

@@ -43,4 +43,8 @@ class InstructionsTwoLabelsViewCell: UITableViewCell, InstructionsFillmentDelega
         return self
     }
     
+    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+        return 166
+    }
+    
 }

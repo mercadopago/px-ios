@@ -13,7 +13,7 @@ class MPCellValidator: NSObject {
 
     class func fillInstructionReference(reference : InstructionReference, label : MPLabel, referenceValueLabel : MPLabel) {
         if reference.value != nil && reference.value.count > 0 && reference.label != nil {
-            label.text = reference.label
+            label.text = reference.label.uppercaseString
             referenceValueLabel.text = reference.getFullReferenceValue()
         } else {
             label.text = ""

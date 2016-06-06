@@ -49,14 +49,16 @@ public class MPLabel: UILabel {
         self.attributedText = attributedString
     }
     
-    func addLineSpacing(lineSpacing : Float){
+    func addLineSpacing(lineSpacing : Float, centered : Bool = true){
         let attributedString = NSMutableAttributedString()
         if self.attributedText != nil {
             attributedString.appendAttributedString(self.attributedText!)
         }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = CGFloat(lineSpacing)
-        paragraphStyle.alignment = .Center
+        if centered {
+            paragraphStyle.alignment = .Center
+        }
         attributedString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         self.attributedText = attributedString
     

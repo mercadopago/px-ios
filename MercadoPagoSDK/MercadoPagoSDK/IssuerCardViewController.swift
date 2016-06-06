@@ -19,10 +19,10 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     var paymentMethod : PaymentMethod?
     var issuerList : [Issuer]?
     var cardFront : CardFrontView?
-    let defaultColorText = UIColor(netHex:0x333333)
+    var fontColor = UIColor(netHex:0x333333)
 
     
-    public init(paymentMethod: PaymentMethod,  cardToken: CardToken , callback : (( issuer: Issuer) -> Void)) {
+    public init(paymentMethod: PaymentMethod,  cardToken: CardToken , issuerList: [Issuer]? = nil, callback : (( issuer: Issuer) -> Void)) {
         
         super.init(nibName: "IssuerCardViewController", bundle: MercadoPago.getBundle())
         
@@ -30,15 +30,34 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         self.cardToken = cardToken
         self.callback = callback
         self.paymentMethod = paymentMethod
-        MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
-            self.issuerList = issuers
-            self.tableView.reloadData()
-            }) { (error) -> Void in
-                print("error")
-        }
-        
+        self.issuerList = issuerList
         
     }
+    
+    override func loadMPStyles(){
+        
+        if self.navigationController != nil {
+            
+            
+            //Navigation bar colors
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            
+            if self.navigationController != nil {
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+                self.navigationItem.hidesBackButton = true
+                self.navigationController!.interactivePopGestureRecognizer?.delegate = self
+                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+                self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
+                self.navigationController?.navigationBar.removeBottomLine()
+                self.navigationController?.navigationBar.translucent = false
+                //Create navigation buttons
+                displayBackButton()
+            }
+        }
+        
+    }
+
+    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)
@@ -51,6 +70,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+         tableView.tableFooterView = UIView()
         let issuerNib = UINib(nibName: "IssuerTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(issuerNib, forCellReuseIdentifier: "issuerCell")
         cardFront = CardFrontView(frame: self.cardView.bounds)
@@ -58,6 +78,27 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         self.updateCardSkin()
         // Do any additional setup after loading the view.
     }
+    
+    
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        
+        self.showLoading()
+        if(issuerList == nil){
+            MPServicesBuilder.getIssuers(self.paymentMethod!, bin: self.cardToken!.getBin(), success: { (issuers) -> Void in
+                self.issuerList = issuers
+                self.tableView.reloadData()
+                self.hideLoading()
+            }) { (error) -> Void in
+                // HANDLE ERROR
+            }
+        }else{
+            self.tableView.reloadData()
+        }
+
+    }
+
 
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -102,16 +143,17 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)
             self.cardView.backgroundColor = MercadoPago.getColorFor(self.paymentMethod!)
             self.cardFront?.cardLogo.alpha = 1
+             self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
             
-            
-            cardFront?.cardNumber.text = (self.cardToken?.getBin())! as String
+            cardFront?.cardNumber.text = "XXXX XXXX XXXX " + String(((self.cardToken?.cardNumber)! as String).characters.suffix(4))
             
             cardFront?.cardName.text = self.cardToken?.cardholder!.name
             cardFront?.cardExpirationDate.text = self.cardToken?.getExpirationDateFormated() as? String
             
-            cardFront?.cardNumber.textColor =  defaultColorText
-            cardFront?.cardName.textColor =  defaultColorText
-            cardFront?.cardExpirationDate.textColor =  defaultColorText
+           
+            cardFront?.cardNumber.textColor =  fontColor
+            cardFront?.cardName.textColor =  fontColor
+            cardFront?.cardExpirationDate.textColor =  fontColor
             
         }
         

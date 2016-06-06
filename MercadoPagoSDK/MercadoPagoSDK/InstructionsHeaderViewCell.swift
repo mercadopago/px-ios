@@ -25,6 +25,19 @@ class InstructionsHeaderViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    func getCellHeight(title : String) -> CGFloat {
+        var constraintSize = CGSize()
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        constraintSize.width = screenSize.width - 46
+        
+        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 24)!]
+        
+        let frame = (title as NSString).boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attributes, context: nil)
+        
+        let stringSize = frame.size
+        return 128 + stringSize.height
+    }
+    
     func fillCell(title : String, amount : Double, currency : Currency?) -> UITableViewCell {
         // Assign default values in case there are none in Currency
         var currencySymbol = "$"
@@ -44,7 +57,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
         
         if amountRange != nil {
             let attributedTitle = NSMutableAttributedString(string: title.substringToIndex((amountRange?.startIndex)!))
-            let attributedAmount = Utils.getAttributedAmount(amountStr, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor().UIColorFromRGB(0x666666))
+            let attributedAmount = Utils.getAttributedAmount(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor().UIColorFromRGB(0x666666))
             attributedTitle.appendAttributedString(attributedAmount)
             let endingTitle = NSAttributedString(string: title.substringFromIndex((amountRange?.endIndex)!))
             attributedTitle.appendAttributedString(endingTitle)
