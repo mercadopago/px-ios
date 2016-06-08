@@ -41,7 +41,7 @@ public class Currency : NSObject {
     }
     
     public func getDecimalSeparatorOrDefault() -> Character {
-        return self.decimalSeparator ?? "."
+        return self.decimalSeparator ?? ","
     }
 
 }

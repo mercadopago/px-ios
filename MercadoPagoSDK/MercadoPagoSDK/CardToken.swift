@@ -207,7 +207,7 @@ public class CardToken : NSObject {
                 let min = identificationType!.minLength
                 let max = identificationType!.maxLength
                 if min != 0 && max != 0 {
-                    if len > max && len < min {
+                    if len > max || len < min {
                         return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
                     } else {
                         return nil

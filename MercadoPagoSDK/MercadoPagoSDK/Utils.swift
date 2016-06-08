@@ -31,10 +31,13 @@ class Utils {
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
+        let space = NSAttributedString(string: " ", attributes: smallAttributes)
         attributedSymbol.appendAttributedString(attributedAmount)
+        attributedSymbol.appendAttributedString(space)
         attributedSymbol.appendAttributedString(attributedCents)
         return attributedSymbol
     }
+    
     
     class func getAttributedAmount(amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
@@ -46,7 +49,9 @@ class Utils {
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
+        let space = NSAttributedString(string: " ", attributes: smallAttributes)
         attributedSymbol.appendAttributedString(attributedAmount)
+        attributedSymbol.appendAttributedString(space)
         attributedSymbol.appendAttributedString(attributedCents)
         return attributedSymbol
     }
@@ -65,13 +70,18 @@ class Utils {
         
         stringToWrite.appendAttributedString(NSMutableAttributedString(string: installments + " de ".localized, attributes: descriptionAttributes))
         
-        stringToWrite.appendAttributedString(Utils.getAttributedAmount(String(installmentAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpTurquesaColor))
+        stringToWrite.appendAttributedString(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:mpTurquesaColor))
         
         stringToWrite.appendAttributedString(additionalString)
         
         return stringToWrite
     }
     
+    /**
+     Returns cents string formatted
+     Ex: formattedString = "100.2", decimalSeparator = "."
+     returns 20
+     **/
     class func getCentsFormatted(formattedString : String, decimalSeparator : String) -> String {
         let range = formattedString.rangeOfString(decimalSeparator)
         var cents = ""
@@ -90,13 +100,13 @@ class Utils {
         return cents
     }
     
-    
+    /**
+     Returns amount string formatted according to separators
+     Ex: formattedString = "10200.90", decimalSeparator = ".", thousandSeparator: ","
+     returns 10,200.90
+     **/
     class func getAmountFormatted(formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
-        
-  /*      if formattedString.containsString(thousandSeparator){
-            return formattedString
-        }
-    */
+ 
         let amount = self.getAmountDigits(formattedString, decimalSeparator : decimalSeparator)
         let length = amount.characters.count
         if length <= 3 {

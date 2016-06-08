@@ -60,7 +60,7 @@ extension UIColor {
     
     public func blueMercadoPago() -> UIColor
     {
-    return UIColorFromRGB(0x00B2EB)
+    return UIColorFromRGB(0x5ABEE7)
     }
     
     public func grayBaseText() -> UIColor

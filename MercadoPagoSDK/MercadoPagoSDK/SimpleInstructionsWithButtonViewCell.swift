@@ -38,4 +38,7 @@ class SimpleInstructionWithButtonViewCell: UITableViewCell, InstructionsFillment
         return self
     }
     
+    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+        return 208
+    }
 }

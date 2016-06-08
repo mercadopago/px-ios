@@ -58,6 +58,10 @@ class InstructionsTwoLabelsAndButtonViewCell: UITableViewCell, InstructionsFillm
         return self
     }
     
+    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+        return 258
+    }
+    
     internal func openUrl(){
         UIApplication.sharedApplication().openURL(NSURL(string: self.button.actionLink!)!)
     }

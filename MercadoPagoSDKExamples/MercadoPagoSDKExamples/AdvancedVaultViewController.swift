@@ -186,7 +186,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
                     self.advancedCallback!(paymentMethod: self.selectedPaymentMethod!, token: token?._id, issuer: self.selectedIssuer, installments: installments)
                 }, failure: nil)
             } else {
-                print("Invalid data")
+
                 return
             }
         } else {

@@ -8,18 +8,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="384" id="KGk-i7-Jjw" customClass="InstructionsAtmViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="379" height="384"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="398" id="KGk-i7-Jjw" customClass="InstructionsAtmViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="383" height="398"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="379" height="383"/>
+                <rect key="frame" x="0.0" y="0.0" width="383" height="397"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jC1-2I-Wcp">
-                        <rect key="frame" x="8" y="0.0" width="363" height="383"/>
+                        <rect key="frame" x="8" y="0.0" width="367" height="396"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primero sigue estos pasos en el cajero:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzf-6T-KP1" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="16" y="12" width="331" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primero sigue estos pasos en el cajero:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qzf-6T-KP1" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <rect key="frame" x="15" y="15" width="337" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="y1y-Et-ILN"/>
                                 </constraints>
@@ -28,7 +28,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Ingresa a Pagos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPo-OI-T8s" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="50" width="320" height="22"/>
+                                <rect key="frame" x="27" y="53" width="324" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="weh-1R-UYK"/>
                                 </constraints>
@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. Pago de impuestos y servicios" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y49-mj-e4O" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="72" width="320" height="22"/>
+                                <rect key="frame" x="27" y="75" width="324" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="8VP-hd-T2o"/>
                                 </constraints>
@@ -46,7 +46,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3. Rubro Cobranzas" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQN-4a-3gY" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="94" width="320" height="22"/>
+                                <rect key="frame" x="27" y="97" width="324" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="6Y4-xP-spZ"/>
                                 </constraints>
@@ -55,7 +55,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Luego te irá pidiendo estos datos:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bpf-pI-NrH" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="16" y="132" width="331" height="22"/>
+                                <rect key="frame" x="16" y="135" width="335" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="gA5-MK-dcO"/>
                                 </constraints>
@@ -64,18 +64,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CODIGO DE LINK PAGOS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBG-ZH-GRb" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="170" width="320" height="13"/>
+                                <rect key="frame" x="27" y="173" width="324" height="13"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b6b-5e-vr8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="183" width="320" height="28"/>
+                                <rect key="frame" x="27" y="186" width="324" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="fMK-Y1-3Y0"/>
+                                </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="0600 2222 4444 5555">
                                         <attributes>
                                             <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                            <font key="NSFont" size="22" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="2" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -83,57 +86,57 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONCEPTO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0u-1N-qZO" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="223" width="320" height="13"/>
+                                <rect key="frame" x="27" y="228" width="324" height="13"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXe-P7-9my" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="236" width="320" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JXe-P7-9my" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <rect key="frame" x="27" y="241" width="324" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="sIF-Wl-c1a"/>
+                                    <constraint firstAttribute="height" constant="30" id="sIF-Wl-c1a"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="MercadoLibre - MercadoPago">
+                                    <fragment content="0600 2222 4444 5555">
                                         <attributes>
                                             <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="16" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="2" tighteningFactorForTruncation="0.0"/>
+                                            <font key="NSFont" size="22" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="2" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NUMERO DE REFERENCIA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7m-77-oSS" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="270" width="320" height="13"/>
+                                <rect key="frame" x="27" y="283" width="324" height="13"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6h-pX-So5" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="283" width="320" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="x6h-pX-So5" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <rect key="frame" x="27" y="296" width="324" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="Ybc-jl-0AY"/>
+                                    <constraint firstAttribute="height" constant="30" id="Ybc-jl-0AY"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="MPAGO: COMPRA">
+                                    <fragment content="0600 2222 4444 5555">
                                         <attributes>
                                             <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="16" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="2" tighteningFactorForTruncation="0.0"/>
+                                            <font key="NSFont" size="22" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="2" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NUMERO DE REFERENCIA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ur1-Xw-5qD" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="317" width="320" height="13"/>
+                                <rect key="frame" x="27" y="338" width="324" height="13"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kr8-YL-vNb" userLabel="Fourth Reference Value" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="27" y="330" width="320" height="30"/>
+                                <rect key="frame" x="27" y="351" width="324" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ygh-2t-Pfj"/>
                                 </constraints>
@@ -141,7 +144,7 @@
                                     <fragment content="0600 2222 4444 5555">
                                         <attributes>
                                             <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                            <font key="NSFont" size="22" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="2" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -149,14 +152,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qzf-6T-KP1" firstAttribute="leading" secondItem="jC1-2I-Wcp" secondAttribute="leading" constant="16" id="1kk-JM-4ow"/>
+                            <constraint firstItem="qzf-6T-KP1" firstAttribute="leading" secondItem="jC1-2I-Wcp" secondAttribute="leading" constant="15" id="1kk-JM-4ow"/>
                             <constraint firstItem="zQN-4a-3gY" firstAttribute="leading" secondItem="jC1-2I-Wcp" secondAttribute="leading" constant="27" id="2dn-GK-W44"/>
                             <constraint firstItem="bpf-pI-NrH" firstAttribute="top" secondItem="zQN-4a-3gY" secondAttribute="bottom" constant="16" id="2gD-WO-xn7"/>
                             <constraint firstAttribute="trailing" secondItem="x6h-pX-So5" secondAttribute="trailing" constant="16" id="5VZ-ch-Sx5"/>
-                            <constraint firstItem="qzf-6T-KP1" firstAttribute="top" secondItem="jC1-2I-Wcp" secondAttribute="top" constant="12" id="5rk-CU-JDh"/>
-                            <constraint firstAttribute="trailing" secondItem="qzf-6T-KP1" secondAttribute="trailing" constant="16" id="73l-Vq-rEu"/>
+                            <constraint firstItem="qzf-6T-KP1" firstAttribute="top" secondItem="jC1-2I-Wcp" secondAttribute="top" constant="15" id="5rk-CU-JDh"/>
+                            <constraint firstAttribute="trailing" secondItem="qzf-6T-KP1" secondAttribute="trailing" constant="15" id="73l-Vq-rEu"/>
                             <constraint firstItem="O0u-1N-qZO" firstAttribute="leading" secondItem="jC1-2I-Wcp" secondAttribute="leading" constant="27" id="9F3-tP-1Z9"/>
                             <constraint firstItem="x6h-pX-So5" firstAttribute="leading" secondItem="jC1-2I-Wcp" secondAttribute="leading" constant="27" id="FR3-6v-Qq1"/>
                             <constraint firstAttribute="trailing" secondItem="zPo-OI-T8s" secondAttribute="trailing" constant="16" id="Ibp-y2-Tjt"/>
@@ -169,8 +172,8 @@
                             <constraint firstItem="zPo-OI-T8s" firstAttribute="leading" secondItem="jC1-2I-Wcp" secondAttribute="leading" constant="27" id="UjY-wi-iJf"/>
                             <constraint firstItem="Ur1-Xw-5qD" firstAttribute="leading" secondItem="jC1-2I-Wcp" secondAttribute="leading" constant="27" id="W4A-QE-7Pm"/>
                             <constraint firstAttribute="trailing" secondItem="b6b-5e-vr8" secondAttribute="trailing" constant="16" id="YzD-1J-uiV"/>
-                            <constraint firstAttribute="bottom" secondItem="kr8-YL-vNb" secondAttribute="bottom" constant="23" id="ZQ1-pV-uLO"/>
                             <constraint firstItem="b7m-77-oSS" firstAttribute="top" secondItem="JXe-P7-9my" secondAttribute="bottom" constant="12" id="aHb-8N-f1U"/>
+                            <constraint firstAttribute="bottom" secondItem="kr8-YL-vNb" secondAttribute="bottom" constant="15" id="aN3-GS-HJW"/>
                             <constraint firstItem="Ur1-Xw-5qD" firstAttribute="top" secondItem="x6h-pX-So5" secondAttribute="bottom" constant="12" id="aRB-7h-Pkg"/>
                             <constraint firstAttribute="trailing" secondItem="kr8-YL-vNb" secondAttribute="trailing" constant="16" id="bNm-Hd-2ss"/>
                             <constraint firstItem="zPo-OI-T8s" firstAttribute="top" secondItem="qzf-6T-KP1" secondAttribute="bottom" constant="16" id="cM0-Nb-0Oa"/>
@@ -198,7 +201,6 @@
                 <constraints>
                     <constraint firstItem="jC1-2I-Wcp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="16C-b6-Se2"/>
                     <constraint firstAttribute="trailingMargin" secondItem="jC1-2I-Wcp" secondAttribute="trailing" constant="8" id="GFH-UG-Tyc"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="jC1-2I-Wcp" secondAttribute="bottom" id="W8C-5F-OLc"/>
                     <constraint firstItem="jC1-2I-Wcp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fE0-o0-xQt"/>
                 </constraints>
                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
@@ -219,7 +221,7 @@
                 <outlet property="thirdReferenceLabel" destination="b7m-77-oSS" id="MEJ-3v-wRF"/>
                 <outlet property="thirdReferenceValue" destination="x6h-pX-So5" id="M6e-Db-Cly"/>
             </connections>
-            <point key="canvasLocation" x="333.5" y="368"/>
+            <point key="canvasLocation" x="335.5" y="375"/>
         </tableViewCell>
     </objects>
 </document>

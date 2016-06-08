@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAx-cI-Sup">
-                        <rect key="frame" x="8" y="0.0" width="340" height="172"/>
+                        <rect key="frame" x="8" y="0.0" width="340" height="174"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n4f-Df-OUm" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                                 <rect key="frame" x="15" y="12" width="310" height="44"/>
@@ -58,16 +58,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="ljZ-V3-wZ9">
-                                <rect key="frame" x="15" y="146" width="16" height="16"/>
+                                <rect key="frame" x="15" y="148" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="DOm-9c-ax1"/>
                                     <constraint firstAttribute="width" constant="16" id="QQB-Db-2w0"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Se acreditará en menos de 1 hora." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8B-8M-37j" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="36" y="146" width="239" height="19"/>
+                                <rect key="frame" x="36" y="146" width="239" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="19" id="Kvy-r5-K9v"/>
+                                    <constraint firstAttribute="height" constant="20" id="Kvy-r5-K9v"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                 <color key="textColor" red="0.69803921570000005" green="0.56470588239999997" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,11 +85,11 @@
                             <constraint firstItem="g7e-cP-gQZ" firstAttribute="leading" secondItem="XAx-cI-Sup" secondAttribute="leading" constant="15" id="YbA-Ip-xzv"/>
                             <constraint firstItem="l8B-8M-37j" firstAttribute="leading" secondItem="ljZ-V3-wZ9" secondAttribute="trailing" constant="5" id="YmY-ur-rqH"/>
                             <constraint firstItem="ljZ-V3-wZ9" firstAttribute="leading" secondItem="XAx-cI-Sup" secondAttribute="leading" constant="15" id="ZTQ-u9-Ttn"/>
-                            <constraint firstAttribute="height" constant="172" id="fYF-w3-g0e"/>
+                            <constraint firstAttribute="height" constant="174" id="fYF-w3-g0e"/>
                             <constraint firstAttribute="trailing" secondItem="n4f-Df-OUm" secondAttribute="trailing" constant="15" id="gxu-ZQ-hFe"/>
                             <constraint firstItem="n4f-Df-OUm" firstAttribute="top" secondItem="XAx-cI-Sup" secondAttribute="top" constant="12" id="r5t-Hf-V5a"/>
                             <constraint firstItem="g7e-cP-gQZ" firstAttribute="top" secondItem="z5C-fu-p98" secondAttribute="bottom" id="sh2-Wx-2dP"/>
-                            <constraint firstItem="ljZ-V3-wZ9" firstAttribute="top" secondItem="g7e-cP-gQZ" secondAttribute="bottom" constant="12" id="wxJ-hQ-Dv4"/>
+                            <constraint firstItem="ljZ-V3-wZ9" firstAttribute="top" secondItem="g7e-cP-gQZ" secondAttribute="bottom" constant="14" id="wxJ-hQ-Dv4"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColorIB">

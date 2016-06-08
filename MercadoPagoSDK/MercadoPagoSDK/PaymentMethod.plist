@@ -5,89 +5,141 @@
 	<key>debmaster</key>
 	<dict>
 		<key>first_color</key>
-		<string>ffeb96</string>
+		<string>405B72</string>
+		<key>image_name</key>
+		<string>icoTc_master</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+	</dict>
+	<key>master</key>
+	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>first_color</key>
+		<string>405B72</string>
 		<key>image_name</key>
 		<string>icoTc_master</string>
 	</dict>
 	<key>debvisa</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string>2591d9</string>
+		<string>001D77</string>
 		<key>image_name</key>
 		<string>icoTc_visa</string>
 	</dict>
 	<key>visa</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string>2591d9</string>
+		<string>001D77</string>
 		<key>image_name</key>
 		<string>icoTc_visa</string>
 	</dict>
-	<key>master</key>
-	<dict>
-		<key>first_color</key>
-		<string>ffeb96</string>
-		<key>image_name</key>
-		<string>icoTc_master</string>
-	</dict>
 	<key>amex</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
-		<string>a6e2ca</string>
+		<string>A1CCAA</string>
 		<key>image_name</key>
 		<string>icoTc_amex</string>
 	</dict>
 	<key>naranja</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string></string>
+		<string>FF723F</string>
 		<key>image_name</key>
 		<string>icoTc_naranja</string>
 	</dict>
 	<key>nativa</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string></string>
+		<string>013C76</string>
 		<key>image_name</key>
 		<string>icoTc_nativa</string>
 	</dict>
 	<key>tarshop</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string></string>
+		<string>3D4064</string>
 		<key>image_name</key>
 		<string>icoTc_tarshop</string>
 	</dict>
 	<key>cencosud</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
-		<string></string>
+		<string>F7F7F7</string>
 		<key>image_name</key>
 		<string>icoTc_cencosud</string>
 	</dict>
 	<key>cabal</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
-		<string></string>
+		<string>D4B44B</string>
 		<key>image_name</key>
 		<string>icoTc_cabal</string>
 	</dict>
 	<key>diners</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
-		<string></string>
+		<string>CECECE</string>
 		<key>image_name</key>
 		<string>icoTc_diners</string>
 	</dict>
 	<key>argencard</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string></string>
+		<string>405B72</string>
 		<key>image_name</key>
 		<string>icoTc_argencard</string>
 	</dict>
 	<key>pagofacil</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
 		<string></string>
 		<key>image_name</key>
@@ -95,6 +147,10 @@
 	</dict>
 	<key>rapipago</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
 		<string></string>
 		<key>image_name</key>
@@ -102,6 +158,10 @@
 	</dict>
 	<key>redlink</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
 		<string></string>
 		<key>image_name</key>
@@ -109,6 +169,10 @@
 	</dict>
 	<key>bapropagos</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
 		<string></string>
 		<key>image_name</key>
@@ -116,6 +180,10 @@
 	</dict>
 	<key>cargavirtual</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
 		<string></string>
 		<key>image_name</key>
@@ -123,24 +191,47 @@
 	</dict>
 	<key>cordobesa</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
-		<string></string>
+		<string>5BAB97</string>
 		<key>image_name</key>
-		<string></string>
+		<string>icoTc_cordobesa</string>
 	</dict>
 	<key>cordial</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>font_color</key>
+		<string>333333</string>
 		<key>first_color</key>
-		<string></string>
+		<string>CBD8DF</string>
 		<key>image_name</key>
-		<string></string>
+		<string>icoTc_cordial</string>
 	</dict>
 	<key>cmr</key>
 	<dict>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string></string>
+		<string>3D7D4E</string>
 		<key>image_name</key>
-		<string></string>
+		<string>icoTc_cmr</string>
+	</dict>
+	<key>mercadopago_cc</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTC_mppa</string>
+		<key>first_color</key>
+		<string>dcddd9</string>
+		<key>font_color</key>
+		<string>333333</string>
+		<key>editing_font_color</key>
+		<string>333333</string>
 	</dict>
 </dict>
 </plist>

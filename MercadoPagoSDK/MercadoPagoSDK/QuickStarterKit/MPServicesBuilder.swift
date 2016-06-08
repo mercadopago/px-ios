@@ -16,7 +16,7 @@ public class MPServicesBuilder : NSObject {
 
     public class func createNewCardToken(cardToken : CardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {
         cardToken.device = Device()
-        let service : GatewayService = GatewayService(baseURL: MercadoPagoService.MP_BASE_URL)
+        let service = GatewayService(baseURL: MercadoPagoService.MP_BASE_URL)
         service.getToken(public_key: MercadoPagoContext.publicKey(), cardToken: cardToken, success: {(jsonResult: AnyObject?) -> Void in
             var token : Token? = nil
             if let tokenDic = jsonResult as? NSDictionary {
@@ -65,7 +65,6 @@ public class MPServicesBuilder : NSObject {
                         }
                     }
                 } else {
-                    print(jsonResult)
                     let paymentMethods = jsonResult as? NSArray
                     var pms : [PaymentMethod] = [PaymentMethod]()
                     if paymentMethods != nil {
@@ -108,38 +107,17 @@ public class MPServicesBuilder : NSObject {
        
     }
     
-    public class func getInstallments(bin: String, amount: Double, issuer: Issuer?, paymentTypeId: PaymentTypeId, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func getInstallments(bin: String, amount: Double, issuer: Issuer?, paymentTypeId: PaymentTypeId, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)) {
         
             let service : PaymentService = PaymentService(baseURL: MercadoPagoService.MP_BASE_URL)
-            service.getInstallments(public_key:MercadoPagoContext.publicKey(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_type_id: paymentTypeId.rawValue, success: {(jsonResult: AnyObject?) -> Void in
-                
-                if let errorDic = jsonResult as? NSDictionary {
-                    if errorDic["error"] != nil {
-                        if failure != nil {
-                            failure!(error: NSError(domain: "mercadopago.sdk.getInstallments", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as [NSObject : AnyObject]))
-                        }
-                    }
-                } else {
-                    let paymentMethods = jsonResult as? NSArray
-                    var installments : [Installment] = [Installment]()
-                    if paymentMethods != nil && paymentMethods?.count > 0 {
-                        if let dic = paymentMethods![0] as? NSDictionary {
-                            installments.append(Installment.fromJSON(dic))
-                        }
-                        success(installments: installments)
-                    } else {
-                        let error : NSError = NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_NOT_INSTALLMENTS_FOUND, userInfo: ["message": "NOT_INSTALLMENTS_FOUND".localized + "\(amount)"])
-                        failure?(error: error)
-                    }
-                }
-                }, failure: failure)
+            service.getInstallments(public_key:MercadoPagoContext.publicKey(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_type_id: paymentTypeId.rawValue, success: success, failure: failure)
         
     }
     
     public class func getIssuers(paymentMethod : PaymentMethod, bin: String? = nil, success: (issuers: [Issuer]?) -> Void, failure: ((error: NSError) -> Void)?) {
         
             let service : PaymentService = PaymentService(baseURL: MercadoPagoService.MP_BASE_URL)
-        service.getIssuers(public_key: MercadoPagoContext.publicKey(), payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
+            service.getIssuers(public_key: MercadoPagoContext.publicKey(), payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
 
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
@@ -209,9 +187,9 @@ public class MPServicesBuilder : NSObject {
             }, failure: failure)
     }
 
-    public class func searchPaymentMethods(excludedPaymentTypeIds : Set<PaymentTypeId>?, excludedPaymentMethodIds : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func searchPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<PaymentTypeId>?, excludedPaymentMethodIds : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?) {
         let paymentMethodSearchService = PaymentMethodSearchService()
-        paymentMethodSearchService.getPaymentMethods(excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure)
+        paymentMethodSearchService.getPaymentMethods(amount, excludedPaymentTypeIds: excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure!)
     
     }
     

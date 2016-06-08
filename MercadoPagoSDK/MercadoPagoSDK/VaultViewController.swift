@@ -314,7 +314,7 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
                             MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
                     })
                 } else {
-                    print("Invalid data")
+
                     return
                 }
             } else {

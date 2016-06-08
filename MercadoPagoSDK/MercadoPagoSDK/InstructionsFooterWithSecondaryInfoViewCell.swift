@@ -42,4 +42,8 @@ class InstructionsFooterWithSecondaryInfoViewCell: UITableViewCell, Instructions
         
     }
     
+    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+        return 120
+    }
+    
 }

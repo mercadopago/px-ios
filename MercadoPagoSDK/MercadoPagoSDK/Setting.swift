@@ -8,10 +8,14 @@
 
 import Foundation
 
-public class Setting : Equatable {
+public class Setting : NSObject {
     public var binMask : BinMask!
     public var cardNumber : CardNumber!
     public var securityCode : SecurityCode!
+    
+    public override init(){
+        super.init()
+    }
     
     public class func getSettingByBin(settings: [Setting]!, bin: String!) -> Setting? {
         var selectedSetting : Setting? = nil

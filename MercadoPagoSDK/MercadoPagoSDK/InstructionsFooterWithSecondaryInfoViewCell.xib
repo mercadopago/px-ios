@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="41D-hd-MLF">
-                        <rect key="frame" x="8" y="0.0" width="387" height="126"/>
+                        <rect key="frame" x="8" y="0.0" width="387" height="128"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Iy-n7-Zmy" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                                 <rect key="frame" x="15" y="47" width="357" height="44"/>
@@ -41,7 +41,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="SPw-T8-EjX">
-                                <rect key="frame" x="15" y="103" width="16" height="16"/>
+                                <rect key="frame" x="15" y="105" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="bE3-kQ-ILs"/>
                                     <constraint firstAttribute="width" constant="16" id="g5d-AM-USm"/>
@@ -71,9 +71,9 @@
                             <constraint firstAttribute="trailing" secondItem="ZhC-tP-w0C" secondAttribute="trailing" constant="15" id="WpU-HX-iDA"/>
                             <constraint firstItem="ZhC-tP-w0C" firstAttribute="top" secondItem="41D-hd-MLF" secondAttribute="top" constant="13" id="ckI-v1-D8Y"/>
                             <constraint firstItem="9Iy-n7-Zmy" firstAttribute="top" secondItem="ZhC-tP-w0C" secondAttribute="bottom" constant="12" id="oYv-8Q-gEt"/>
-                            <constraint firstItem="SPw-T8-EjX" firstAttribute="top" secondItem="9Iy-n7-Zmy" secondAttribute="bottom" constant="12" id="och-9M-wet"/>
+                            <constraint firstItem="SPw-T8-EjX" firstAttribute="top" secondItem="9Iy-n7-Zmy" secondAttribute="bottom" constant="14" id="och-9M-wet"/>
                             <constraint firstItem="cx9-db-AyN" firstAttribute="leading" secondItem="SPw-T8-EjX" secondAttribute="trailing" constant="5" id="qzE-IT-CNV"/>
-                            <constraint firstAttribute="height" constant="126" id="rXf-An-bd2"/>
+                            <constraint firstAttribute="height" constant="128" id="rXf-An-bd2"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColorIB">

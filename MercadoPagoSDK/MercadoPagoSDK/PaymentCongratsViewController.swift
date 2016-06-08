@@ -11,19 +11,25 @@ import UIKit
 public class PaymentCongratsViewController: MercadoPagoUIViewController , UITableViewDelegate, UITableViewDataSource {
 
     let congratsLayout =
-        ["approved" : ["header" : "approvedPaymentHeader", "headerHeight" : ApprovedPaymentBodyTableViewCell.ROW_HEIGHT, "body" : "approvedPaymentBody", "bodyHeight" : ApprovedPaymentBodyTableViewCell.ROW_HEIGHT],
-        "rejected" : ["header" : "rejectedPaymentHeader", "headerHeight" : RejectedPaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "rejectedPaymentBody", "bodyHeight" : RejectedPaymentBodyTableViewCell.ROW_HEIGHT],
-        "authorize" : ["header" : "authorizePaymentHeader", "headerHeight" : AuthorizePaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "authorizePaymentBody", "bodyHeight" : AuthorizePaymentBodyTableViewCell.ROW_HEIGHT]]
+        ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 210, green: 229, blue: 202)],
+        "rejected" : ["header" : "rejectedPaymentHeader", "body" : "rejectedPaymentBody", "headerColor" : UIColor(red: 248, green: 218, blue: 218)],
+        "authorize" : ["header" : "authorizePaymentHeader", "body" : "authorizePaymentBody", "headerColor" : UIColor(red: 190, green: 230, blue: 245)],
+        "in_process" : ["header" : "pendingPaymentHeader", "body" : "", "headerColor" : UIColor(red: 245, green: 241, blue: 211)]
+        ]
     
     var bundle = MercadoPago.getBundle()
     var payment : Payment!
+    var paymentMethod : PaymentMethod!
     var layoutTemplate : String!
+    var callback : ((payment : Payment, status : String) -> Void)!
     
     @IBOutlet weak var congratsContentTable: UITableView!
 
-    init(payment: Payment){
+    init(payment: Payment, paymentMethod : PaymentMethod, callback : (payment : Payment, status : String) -> Void){
         super.init(nibName: "PaymentCongratsViewController", bundle : bundle)
         self.payment = payment
+        self.callback = callback
+        self.paymentMethod = paymentMethod
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -39,32 +45,26 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         
         self.congratsContentTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0,
             self.congratsContentTable.bounds.size.width, 0.01))
+        self.congratsContentTable.rowHeight = UITableViewAutomaticDimension
+        self.congratsContentTable.estimatedRowHeight = 160.0
+    
+    }
+    
+    override public func viewWillAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationItem.backBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
         
-        if self.callbackCancel == nil {
-            self.callbackCancel = {
-                if self.navigationController != nil {
-                    self.navigationController!.popViewControllerAnimated(true)
-                } else {
-                    self.dismissViewControllerAnimated(true, completion: {
-                        
-                    })
-                }
-            }
+        if self.navigationController != nil && self.navigationController?.navigationBar != nil {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            ViewUtils.addStatusBar(self.view, color: self.congratsLayout[self.layoutTemplate]!["headerColor"] as! UIColor)
         }
-        
     }
 
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-
-    public override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        if (self.navigationItem.rightBarButtonItem != nil) {
-           self.navigationItem.rightBarButtonItem = nil
-        }
-    }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
@@ -75,40 +75,62 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         if indexPath.section == 0 {
             let header = congratsLayout[self.layoutTemplate]!["header"] as! String
             let headerCell =  self.congratsContentTable.dequeueReusableCellWithIdentifier(header) as! CongratsFillmentDelegate
-            return headerCell.fillCell(self.payment, callbackCancel: nil)
+            return headerCell.fillCell(self.payment, paymentMethod : self.paymentMethod, callback: nil)
         } else if indexPath.section == 1 {
-            let body = congratsLayout[self.layoutTemplate]!["body"] as! String
-            let bodyCell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body) as! CongratsFillmentDelegate
-            return bodyCell.fillCell(self.payment, callbackCancel: self.callbackCancel)
+            let body = congratsLayout[self.layoutTemplate]!["body"] as? String
+            if body != nil && body?.characters.count > 0 {
+                let bodyCell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body!) as! CongratsFillmentDelegate
+                let callback = self.congratsCallback()
+                return bodyCell.fillCell(self.payment, paymentMethod : self.paymentMethod, callback: callback)
+            }
+            return UITableViewCell()
         }
         
-        // Exit button with callbackCancel action
         let exitButtonCell = self.congratsContentTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
-        exitButtonCell.callbackCancel = self.callbackCancel
+        exitButtonCell.exitButton.setAttributedTitle(NSAttributedString(string: "Seguir comprando".localized), forState: .Normal)
+        exitButtonCell.userInteractionEnabled = true
+        exitButtonCell.defaultCallback = {
+            self.invokeCallback("OK")
+        }
         return exitButtonCell
-        
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.01
     }
     
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+   
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
 
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let layoutTemplate = self.congratsLayout[self.layoutTemplate]
         switch indexPath.section {
-        case 0 :
-            return (self.congratsLayout[self.layoutTemplate]!["headerHeight"] as! CGFloat)
-        default:
-            return (self.congratsLayout[self.layoutTemplate]!["bodyHeight"] as! CGFloat)
-        }
+            case 0 :
+                let header = layoutTemplate!["header"] as! String
+                let cell = self.congratsContentTable.dequeueReusableCellWithIdentifier(header) as! CongratsFillmentDelegate
+                return cell.getCellHeight(self.payment, paymentMethod: self.paymentMethod)
+            case 1:
+                let body = layoutTemplate!["body"] as! String
+                if body.characters.count > 0 {
+                    let cell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body) as! CongratsFillmentDelegate
+                    return cell.getCellHeight(self.payment, paymentMethod: self.paymentMethod)
+                }
+                // No body found
+                return 0
+            default :
+                return 44
+            }
     }
+
     
     private func registerCells(){
         let approvedPaymentHeader = UINib(nibName: "ApprovedPaymentHeaderTableViewCell", bundle: self.bundle)
@@ -127,6 +149,9 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         let authorizePaymentBody = UINib(nibName: "AuthorizePaymentBodyTableViewCell", bundle: self.bundle)
         self.congratsContentTable.registerNib(authorizePaymentBody, forCellReuseIdentifier: "authorizePaymentBody")
         
+        let pendingPaymentHeader = UINib(nibName: "PendingPaymentHeaderTableViewCell", bundle: self.bundle)
+        self.congratsContentTable.registerNib(pendingPaymentHeader, forCellReuseIdentifier: "pendingPaymentHeader")
+        
         let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
         self.congratsContentTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
         
@@ -138,20 +163,40 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             if payment.statusDetail != nil && payment.statusDetail == "cc_rejected_call_for_authorize" {
                 return "authorize"
             }
-            return "rejected"
         }
         
-        if payment.status == PaymentStatus.APPROVED.rawValue {
-            return "approved"
-        }
-        
-        //TODO : falta pending y esto no deberia ser default
-        return "rejected"
+        return payment.status
     }
+
+    override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
+    internal func invokeCallback(status : String){
+        self.callback(payment: self.payment, status: status)
+    }
+    
+    func congratsCallback() -> (Void -> Void){
+        return {
+            var status = ""
+            if self.payment.status == PaymentStatus.REJECTED.rawValue {
+                if self.payment.statusDetail == "cc_rejected_call_for_authorize" {
+                    status = "AUTH"
+                } else {
+                    status = "CANCEL"
+                }
+            } else {
+                status = "OK"
+            }
+            self.invokeCallback(status)
+        }
+    }
+    
 
 }
 
 enum PaymentStatus : String {
     case APPROVED = "approved"
     case REJECTED = "rejected"
+    case IN_PROCESS = "in_process"
 }
