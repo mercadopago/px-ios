@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Refund : Equatable {
+public class Refund : NSObject {
     public var amount : Double = 0
     public var dateCreated : NSDate!
     public var _id : Int = 0

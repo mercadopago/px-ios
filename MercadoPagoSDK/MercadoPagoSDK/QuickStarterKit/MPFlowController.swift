@@ -10,9 +10,9 @@ import UIKit
 
 class MPFlowController: NSObject {
 
-    public class func createNavigationControllerWith(rootViewController : UIViewController) -> UINavigationController {
+    public class func createNavigationControllerWith(rootViewController : UIViewController) -> MPNavigationController {
         
-        let nav = UINavigationController(rootViewController : rootViewController)
+        let nav = MPNavigationController(rootViewController : rootViewController)
         
         return nav
     }

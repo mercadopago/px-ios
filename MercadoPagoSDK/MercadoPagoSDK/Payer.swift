@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Payer : Equatable {
+public class Payer : NSObject {
     public var email : String!
     public var _id : NSNumber = 0
     public var identification : Identification!

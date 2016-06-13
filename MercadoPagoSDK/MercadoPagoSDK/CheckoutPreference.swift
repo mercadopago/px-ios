@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CheckoutPreference : Equatable {
+public class CheckoutPreference : NSObject {
     
     public var _id : String!
     public var items : [Item]? // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
@@ -17,7 +17,7 @@ public class CheckoutPreference : Equatable {
                                 // currency no nula
                                 // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
     public var payer : Payer!
-    public var paymentPreference : PaymentPreference? //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
+    public var paymentPreference : PaymentPreference! //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
                                                         // excluded_payment_method < payment_methods
                                                         //excluded_payment_types < payment_types
     
@@ -63,7 +63,7 @@ public class CheckoutPreference : Equatable {
             return "No hay información de payer".localized
         }
         
-        if self.payer.email == nil || self.payer.email.characters.count > 0 {
+        if self.payer.email == nil || self.payer.email.characters.count == 0 {
             return "Se requiere email de comprador".localized
         }
         

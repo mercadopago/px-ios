@@ -8,18 +8,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="200" id="KGk-i7-Jjw" customClass="ApprovedPaymentBodyTableViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="390" height="199"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="206" id="KGk-i7-Jjw" customClass="ApprovedPaymentBodyTableViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="205"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="390" height="198"/>
+                <rect key="frame" x="0.0" y="0.0" width="390" height="204"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cbr-KY-HPt">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="179"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="189"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAv-vt-373" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="62" y="16" width="318" height="21"/>
+                                <rect key="frame" x="63" y="23" width="317" height="21"/>
                                 <attributedString key="attributedText">
                                     <fragment content="terminada en 0123">
                                         <attributes>
@@ -31,27 +31,15 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="visa" translatesAutoresizingMaskIntoConstraints="NO" id="ov0-kE-AA9">
-                                <rect key="frame" x="23" y="16" width="29" height="19"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="master" translatesAutoresizingMaskIntoConstraints="NO" id="ov0-kE-AA9">
+                                <rect key="frame" x="23" y="23" width="30" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="29" id="eek-8s-YbR"/>
-                                    <constraint firstAttribute="height" constant="19" id="g8h-hy-bda"/>
+                                    <constraint firstAttribute="width" constant="30" id="eek-8s-YbR"/>
+                                    <constraint firstAttribute="height" constant="20" id="g8h-hy-bda"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQY-gr-8cb" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="22" y="84" width="358" height="33"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="En tu estado de cuenta verás el cargo como MERCADOPAGO.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comprobante 01234567" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMr-uI-zyh" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="23" y="148" width="344" height="21"/>
+                                <rect key="frame" x="23" y="158" width="344" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="XHq-gI-hl2"/>
                                 </constraints>
@@ -60,7 +48,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvo-y8-NJi" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="23" y="48" width="108" height="28"/>
+                                <rect key="frame" x="23" y="56" width="108" height="28"/>
                                 <attributedString key="attributedText">
                                     <fragment content="12 de $89">
                                         <attributes>
@@ -71,10 +59,16 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En tu estado de cuenta verás el cargo como MERCADOPAGO." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQY-gr-8cb" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <rect key="frame" x="22" y="92" width="358" height="33"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="KAv-vt-373" firstAttribute="top" secondItem="cbr-KY-HPt" secondAttribute="top" constant="16" id="8GW-lJ-aDD"/>
+                            <constraint firstItem="KAv-vt-373" firstAttribute="top" secondItem="cbr-KY-HPt" secondAttribute="top" constant="23" id="8GW-lJ-aDD"/>
                             <constraint firstItem="KAv-vt-373" firstAttribute="leading" secondItem="ov0-kE-AA9" secondAttribute="trailing" constant="10" id="AMC-t6-xQz"/>
                             <constraint firstItem="ov0-kE-AA9" firstAttribute="leading" secondItem="cbr-KY-HPt" secondAttribute="leading" constant="23" id="Ejd-na-61L"/>
                             <constraint firstItem="eQY-gr-8cb" firstAttribute="top" secondItem="wvo-y8-NJi" secondAttribute="bottom" constant="8" id="JKb-dT-3qW"/>
@@ -84,15 +78,15 @@
                             <constraint firstItem="vMr-uI-zyh" firstAttribute="leading" secondItem="cbr-KY-HPt" secondAttribute="leading" constant="23" id="Yrc-9e-F3c"/>
                             <constraint firstAttribute="trailing" secondItem="KAv-vt-373" secondAttribute="trailing" constant="10" id="Z18-Gh-KrI"/>
                             <constraint firstItem="wvo-y8-NJi" firstAttribute="top" secondItem="ov0-kE-AA9" secondAttribute="bottom" constant="13" id="feK-NC-MOm"/>
-                            <constraint firstItem="ov0-kE-AA9" firstAttribute="top" secondItem="cbr-KY-HPt" secondAttribute="top" constant="16" id="hXF-Sl-wgG"/>
+                            <constraint firstItem="ov0-kE-AA9" firstAttribute="top" secondItem="cbr-KY-HPt" secondAttribute="top" constant="23" id="hXF-Sl-wgG"/>
                             <constraint firstAttribute="trailing" secondItem="vMr-uI-zyh" secondAttribute="trailing" constant="23" id="kuB-xo-w99"/>
-                            <constraint firstItem="vMr-uI-zyh" firstAttribute="top" secondItem="eQY-gr-8cb" secondAttribute="bottom" constant="31" id="nVH-g7-iIk"/>
+                            <constraint firstItem="vMr-uI-zyh" firstAttribute="top" secondItem="eQY-gr-8cb" secondAttribute="bottom" constant="33" id="nVH-g7-iIk"/>
                             <constraint firstItem="eQY-gr-8cb" firstAttribute="leading" secondItem="cbr-KY-HPt" secondAttribute="leading" constant="22" id="qJ8-3u-1fh"/>
                         </constraints>
                         <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="voucherClipped" translatesAutoresizingMaskIntoConstraints="NO" id="UQY-Qs-1Oo">
-                        <rect key="frame" x="0.0" y="179" width="390" height="15"/>
+                        <rect key="frame" x="0.0" y="189" width="390" height="15"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.39406866776315785" green="0.0" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -111,13 +105,15 @@
             <connections>
                 <outlet property="amountDescription" destination="wvo-y8-NJi" id="JAn-cr-WMP"/>
                 <outlet property="creditCardIcon" destination="ov0-kE-AA9" id="Eff-Qw-8sZ"/>
+                <outlet property="creditCardLabel" destination="KAv-vt-373" id="SQk-h4-ows"/>
+                <outlet property="subtitle" destination="eQY-gr-8cb" id="shT-Yd-gyq"/>
                 <outlet property="voucherId" destination="vMr-uI-zyh" id="XY9-qf-dp6"/>
             </connections>
-            <point key="canvasLocation" x="240" y="76.5"/>
+            <point key="canvasLocation" x="240" y="79.5"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="visa" width="57" height="19"/>
+        <image name="master" width="49" height="30"/>
         <image name="voucherClipped" width="1091" height="15"/>
     </resources>
 </document>

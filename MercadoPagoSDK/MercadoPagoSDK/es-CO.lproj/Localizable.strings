@@ -18,3 +18,42 @@
 "cuotas sin interés" = "mensualidades sin interés";
 "NOT_INSTALLMENTS_FOUND" = "No se encontraron mensualidades disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
+
+"visa"="Visa";
+"master"="Mastercard";
+"amex"="Amex";
+
+
+"rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
+"cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
+"cc_rejected_other_reason_title"="%0 no procesó el pago";
+"cc_rejected_max_attempts_title"= "Llegaste al límite de intentos permitidos";
+"cc_rejected_duplicated_payment_title"="%0 no procesó el pago";
+"cc_rejected_card_disabled_title"="Llama a %0 para que active tu tarjeta";
+"cc_rejected_bad_filled_other_title"="Uy, no pudimos procesar el pago";
+"cc_rejected_bad_filled_card_number_title"="Uy, no pudimos procesar el pago";
+"cc_rejected_bad_filled_security_code_title"="Uy, no pudimos procesar el pago";
+"cc_rejected_bad_filled_date_title"="Uy, no pudimos procesar el pago";
+
+
+"rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";
+"cc_rejected_insufficient_amount_subtitle_credit_card" = "¡No te desanimes! Puedes elegir otro medio de pago.";
+"cc_rejected_other_reason_subtitle_credit_card"="Usar otra tarjeta u otro medio de pago.";
+"cc_rejected_max_attempts_subtitle_credit_card"= "Elige otra tarjeta u otro medio de pago.";
+"cc_rejected_duplicated_payment_subtitle_credit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
+"cc_rejected_card_disabled_subtitle_credit_card"="El teléfono está al dorso de tu tarjeta.";
+"cc_rejected_bad_filled_other_subtitle_credit_card"="Algún dato de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_card_number_title"="El número de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_security_code_subtitle_credit_card"="El código de seguridad no es el correcto.";
+"cc_rejected_bad_filled_date_subtitle_credit_card"="La fecha de vencimiento no es la correcta.";
+
+"rejected_high_risk_subtitle_debit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";
+"cc_rejected_insufficient_amount_subtitle_debit_card" = "¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. O si prefieres, puedes elegir otro medio de pago.";
+"cc_rejected_other_reason_subtitle_debit_card"="Usar otra tarjeta u otro medio de pago.";
+"cc_rejected_max_attempts_subtitle_debit_card"= "Elige otra tarjeta u otro medio de pago.";
+"cc_rejected_duplicated_payment_subtitle_debit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
+"cc_rejected_card_disabled_subtitle_debitcard"="El teléfono está al dorso de tu tarjeta.";
+"cc_rejected_bad_filled_other_subtitle_debit_card"="Algún dato de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_card_number_title"="El número de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_security_code_subtitle_debit_card"="El código de seguridad no es el correcto.";
+"cc_rejected_bad_filled_date_subtitle_debit_card"="La fecha de vencimiento no es la correcta.";

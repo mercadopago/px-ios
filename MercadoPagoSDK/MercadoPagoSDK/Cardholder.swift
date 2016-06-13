@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Cardholder : Equatable {
+public class Cardholder : NSObject {
     public var name : String?
     public var identification : Identification?
     

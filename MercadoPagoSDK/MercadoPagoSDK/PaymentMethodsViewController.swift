@@ -88,7 +88,7 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
         
         let paymentMethod : PaymentMethod = items[indexPath.row]
         pmcell.setLabel(paymentMethod.name)
-        pmcell.setImageWithName("icoTc_" + paymentMethod._id)
+        pmcell.setImageWithName(paymentMethod._id)
         
         return pmcell
     }

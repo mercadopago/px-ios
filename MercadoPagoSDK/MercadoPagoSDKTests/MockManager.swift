@@ -17,7 +17,6 @@ class MockManager: NSObject {
             let mockObj = try MockManager.convertStringToDictionary(dictPM?.valueForKey(name) as! String)!
             return mockObj
         } catch {
-            print("Hubo un error")
         }
         return nil
     }

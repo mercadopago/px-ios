@@ -8,47 +8,48 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="176" id="KGk-i7-Jjw" customClass="RejectedPaymentHeaderTableViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="455" height="225"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="186" id="KGk-i7-Jjw" customClass="RejectedPaymentHeaderTableViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="459" height="186"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="455" height="224"/>
+                <rect key="frame" x="0.0" y="0.0" width="459" height="185"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconError" translatesAutoresizingMaskIntoConstraints="NO" id="43x-vX-lYh">
-                        <rect key="frame" x="198" y="24" width="60" height="60"/>
+                        <rect key="frame" x="200" y="26" width="60" height="60"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="bkS-Pe-232"/>
                             <constraint firstAttribute="height" constant="60" id="i9F-hZ-f1b"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0C-Jp-kcu" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="15" y="135" width="425" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="TId-Ot-Izk"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="g0C-Jp-kcu" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="15" y="144" width="429" height="17"/>
                         <attributedString key="attributedText">
                             <fragment content="Usa otra tarjeta u otro medio de pago">
                                 <attributes>
                                     <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    <integer key="NSLigature" value="0"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" defaultTabInterval="26.449999999999999" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                        <tabStops>
+                                            <textTab alignment="left" location="26.450000762939453">
+                                                <options/>
+                                            </textTab>
+                                        </tabStops>
+                                    </paragraphStyle>
                                 </attributes>
                             </fragment>
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3y-Es-nD9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="15" y="98" width="425" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="32" id="vhP-mh-iLB"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="p3y-Es-nD9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="15" y="102" width="429" height="32"/>
                         <attributedString key="attributedText">
-                            <fragment content="Mastercard no proceso el pago">
+                            <fragment content="Visa no procesó tu pago">
                                 <attributes>
                                     <color key="NSColor" red="0.72549019607843135" green="0.29019607843137252" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="22" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="32" maximumLineHeight="32" lineHeightMultiple="32" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -57,13 +58,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="p3y-Es-nD9" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="A8w-9s-PC7"/>
+                    <constraint firstItem="43x-vX-lYh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="26" id="CUQ-Gk-hRz"/>
+                    <constraint firstAttribute="trailing" secondItem="g0C-Jp-kcu" secondAttribute="trailing" constant="15" id="NzR-ET-w49"/>
                     <constraint firstItem="43x-vX-lYh" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Qeq-1A-mbe"/>
-                    <constraint firstItem="p3y-Es-nD9" firstAttribute="top" secondItem="43x-vX-lYh" secondAttribute="bottom" constant="14" id="S8m-ff-xoh"/>
-                    <constraint firstItem="g0C-Jp-kcu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="Wun-3A-gtQ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="g0C-Jp-kcu" secondAttribute="trailing" constant="15" id="fLM-db-dRd"/>
+                    <constraint firstItem="p3y-Es-nD9" firstAttribute="top" secondItem="43x-vX-lYh" secondAttribute="bottom" constant="16" id="S8m-ff-xoh"/>
+                    <constraint firstItem="g0C-Jp-kcu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="UkF-9d-zOn"/>
                     <constraint firstItem="p3y-Es-nD9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="fyq-lk-l3Z"/>
-                    <constraint firstItem="43x-vX-lYh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="24" id="i7N-xF-hka"/>
-                    <constraint firstItem="g0C-Jp-kcu" firstAttribute="top" secondItem="p3y-Es-nD9" secondAttribute="bottom" constant="5" id="ofZ-wa-PtL"/>
+                    <constraint firstItem="g0C-Jp-kcu" firstAttribute="top" secondItem="p3y-Es-nD9" secondAttribute="bottom" constant="10" id="ofZ-wa-PtL"/>
                     <constraint firstAttribute="trailingMargin" secondItem="p3y-Es-nD9" secondAttribute="trailing" constant="15" id="xev-UJ-ztQ"/>
                     <constraint firstItem="g0C-Jp-kcu" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="zsp-Dz-mC8"/>
                 </constraints>
@@ -75,7 +76,7 @@
                 <outlet property="subtitle" destination="g0C-Jp-kcu" id="aXC-Mr-eXV"/>
                 <outlet property="title" destination="p3y-Es-nD9" id="Pga-20-AOm"/>
             </connections>
-            <point key="canvasLocation" x="420.5" y="245.5"/>
+            <point key="canvasLocation" x="422.5" y="257"/>
         </tableViewCell>
     </objects>
     <resources>

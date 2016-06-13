@@ -15,8 +15,8 @@ import UIKit
     @IBOutlet weak var cardLogo: UIImageView!
     @IBOutlet weak var cardExpirationDate: MPLabel!
     @IBOutlet weak var cardName: MPLabel!
-   @IBOutlet weak var cardNumber: MPLabel!
-    @IBOutlet weak var cardCVV: MPLabel!
+   @IBOutlet weak var cardNumber: UILabel!
+    @IBOutlet weak var cardCVV: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,11 +35,35 @@ import UIKit
         view.frame = bounds
  //       view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(view);
+        /*
+        cardNumber.adjustsFontSizeToFitWidth = true
+        cardNumber.numberOfLines = 0
+        cardName.adjustsFontSizeToFitWidth = true
+        cardName.numberOfLines = 0
+        cardExpirationDate.adjustsFontSizeToFitWidth = true
+        cardExpirationDate.numberOfLines = 0
+        */
         
-        
-        
+        cardNumber.numberOfLines = 0
+        cardName.numberOfLines = 0
+        cardExpirationDate.numberOfLines = 0
+        cardCVV.numberOfLines = 0
     }
     
+    public func finishLoad(){
+     
+     // var context = NSStringDrawingContext().actualScaleFactor
+        
+   //     let actualFontSize : CGFloat = self.cardNumber.font.pointSize * ;
+
+        
+     //   let size = cardNumber.sizeThatFits(CGSize(width: cardNumber.bounds.width, height: cardNumber.bounds.height))
+        cardNumber.adjustsFontSizeToFitWidth = false
+        cardName.adjustsFontSizeToFitWidth = false
+        cardCVV.adjustsFontSizeToFitWidth = false
+        cardExpirationDate.adjustsFontSizeToFitWidth = false
+
+    }
        
     
 }

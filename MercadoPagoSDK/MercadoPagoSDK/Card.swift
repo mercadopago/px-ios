@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class Card : Equatable {
+public class Card : NSObject {
     
     public var cardHolder : Cardholder?
     public var customerId : String?

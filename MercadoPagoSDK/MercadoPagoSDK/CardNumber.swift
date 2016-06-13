@@ -8,9 +8,13 @@
 
 import Foundation
 
-public class CardNumber : Equatable {
+public class CardNumber : NSObject {
     public var length : Int = 0
     public var validation : String!
+    
+    public override init(){
+        super.init()
+    }
     
     public class func fromJSON(json : NSDictionary) -> CardNumber {
         let cardNumber : CardNumber = CardNumber()

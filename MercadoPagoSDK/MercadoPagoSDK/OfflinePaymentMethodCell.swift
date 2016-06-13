@@ -21,7 +21,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.addSubview(ViewUtils.getTableCellSeparatorLineView(self.iconImage.frame.minX, y: 0, width: self.frame.width, height: 1))
+        self.addSubview(ViewUtils.getTableCellSeparatorLineView(0, y: 0, width: self.bounds.width, height: 1))
 
     }
 
@@ -35,8 +35,8 @@ class OfflinePaymentMethodCell: UITableViewCell {
         self.paymentItemDescription.text = paymentItemDescription
     }
     
-    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem, displayCustomIndicator : Bool = true) {
-        self.iconImage.image = MercadoPago.getImageFor(paymentMethod)
+    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem) {
+        self.iconImage.image = MercadoPago.getImageFor(paymentMethod, forCell: true)
         if paymentMethodSearchItemSelected.comment?.characters.count > 0 {
             self.comment.text = paymentMethodSearchItemSelected.comment
         } else {
@@ -44,22 +44,6 @@ class OfflinePaymentMethodCell: UITableViewCell {
         }
         
         self.paymentItemDescription.text = paymentMethodSearchItemSelected.description
-        
-        if displayCustomIndicator {
-            let customAccesoryIndicator = UIView(frame: CGRect(x: self.bounds.minX, y: 0, width: 18, height: 18))
-            let iconImage = MercadoPago.getImage("edit")!
-            let editImage = UIImageView(frame: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: 18, height: 18))
-            
-            
-            editImage.image = iconImage.imageWithRenderingMode(.AlwaysTemplate)
-            editImage.tintColor = UIColor().blueMercadoPago()
-            
-            customAccesoryIndicator.addSubview(editImage)
-            self.accessoryView = customAccesoryIndicator
-        } else {
-            self.selectionStyle = UITableViewCellSelectionStyle.None
-            self.accessoryType = .None
-        }
         
     }
 }

@@ -258,7 +258,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
                 self.view.addSubview(self.loadingView)
                 mercadoPago.createToken(savedCardToken, success: getCreatePaymentCallback(), failure: nil)
             } else {
-                print("Invalid data")
+               
                 return
             }
         } else {

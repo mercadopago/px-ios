@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentPreference: Equatable {
+public class PaymentPreference: NSObject {
     
     public var excludedPaymentMethodIds : Set<String>?
     public var excludedPaymentTypeIds : Set<PaymentTypeId>?
@@ -21,6 +21,31 @@ public class PaymentPreference: Equatable {
     // excluded_payment_method < payment_methods
     //excluded_payment_types < payment_types
     
+    public func autoSelectPayerCost(payerCostList:[PayerCost])-> PayerCost?
+    {
+        if (payerCostList.count == 0){
+            return nil
+        }
+        if (payerCostList.count == 1){
+            return payerCostList.first
+        }
+        if((defaultInstallments != nil)&&(defaultInstallments > 0)){
+            for payercost in payerCostList{
+                if (payercost.installments == defaultInstallments){
+                    return payercost
+                }
+            }
+        }
+        if ((payerCostList.first?.installments <= maxAcceptedInstallments)
+            && (payerCostList[1].installments > maxAcceptedInstallments)){
+                return payerCostList.first
+        }else{
+            return nil
+        }
+        
+        return nil
+    }
+
     public func validate() -> Bool{
         if (maxAcceptedInstallments <= 0){
             return false
@@ -33,7 +58,7 @@ public class PaymentPreference: Equatable {
     }
     
     
-    public init(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = 0, defaultInstallments : Int? = 0){
+    public init(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil){
         self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
         self.excludedPaymentTypeIds = excludedPaymentTypesIds
         self.defaultPaymentMethodId = defaultPaymentMethodId
@@ -43,7 +68,7 @@ public class PaymentPreference: Equatable {
     }
     
     
-    public func addSettings(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = 0, defaultInstallments : Int? = 0) -> PaymentPreference {
+    public func addSettings(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil) -> PaymentPreference {
         
         if(excludedPaymentMethodsIds != nil){
            self.excludedPaymentMethodIds =  excludedPaymentMethodsIds

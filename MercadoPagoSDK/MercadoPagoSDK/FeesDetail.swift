@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FeesDetail : Equatable {
+public class FeesDetail : NSObject {
     public var amount : Double = 0
     public var amountRefunded : Double = 0
     public var feePayer : String!
@@ -25,6 +25,10 @@ public class FeesDetail : Equatable {
             fd.amountRefunded = JSON(json["amount_refunded"]!).asDouble!
         }
         return fd
+    }
+    
+    func isFinancingFeeType() -> Bool {
+        return self.type == "financing_fee"
     }
     
 }

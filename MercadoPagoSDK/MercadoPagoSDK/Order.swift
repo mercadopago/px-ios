@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Order : Equatable {
+public class Order : NSObject {
     public var _id : Int = 0
     public var type : String!
     

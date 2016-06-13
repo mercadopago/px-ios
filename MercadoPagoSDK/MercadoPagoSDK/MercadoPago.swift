@@ -15,6 +15,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     
     public static let DEFAULT_FONT_NAME = "ProximaNova-Light"
+    
     public class var PUBLIC_KEY : String {
         return "public_key"
     }
@@ -42,11 +43,15 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         return -4
     }
     
+    public class var ERROR_INSTRUCTIONS : Int {
+        return -4
+    }
+    
     let BIN_LENGTH : Int = 6
     
     static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
     static let MP_CUSTOMER_URI = "/customers?preference_id="
-    static let MP_PAYMENTS_URI = "/beta/checkout/native_payment"
+    static let MP_PAYMENTS_URI = "/v1/checkout/payments"
     
     public var privateKey : String?
     public var publicKey : String?
@@ -160,38 +165,14 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
-    public func getInstallments(bin: String, amount: Double, issuerId: NSNumber?, paymentTypeId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    @available(*, deprecated=2.0)
+    public func getInstallments(bin: String, amount: Double, issuerId: NSNumber?, paymentTypeId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)) {
         
         if self.publicKey != nil {
             let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
-            service.getInstallments(public_key: self.publicKey!, bin: bin, amount: amount, issuer_id: issuerId, payment_type_id: paymentTypeId, success: {(jsonResult: AnyObject?) -> Void in
-                
-                if let errorDic = jsonResult as? NSDictionary {
-                    if errorDic["error"] != nil {
-                        if failure != nil {
-                            failure!(error: NSError(domain: "mercadopago.sdk.getInstallments", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as [NSObject : AnyObject]))
-                        }
-                    }
-                } else {
-                    let paymentMethods = jsonResult as? NSArray
-                    var installments : [Installment] = [Installment]()
-                    if paymentMethods != nil && paymentMethods?.count > 0 {
-                        if let dic = paymentMethods![0] as? NSDictionary {
-                            installments.append(Installment.fromJSON(dic))
-                        }
-                        success(installments: installments)
-                    } else {
-                        let error : NSError = NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_NOT_INSTALLMENTS_FOUND, userInfo: ["message": "NOT_INSTALLMENTS_FOUND".localized + "\(amount)"])
-                        failure?(error: error)
-                    }
-                }
-                }, failure: failure)
-        } else {
-            if failure != nil {
-                failure!(error: NSError(domain: "mercadopago.sdk.getInstallments", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
-            }
-        }
+            service.getInstallments(public_key: self.publicKey!, bin: bin, amount: amount, issuer_id: issuerId, payment_type_id: paymentTypeId, success: success, failure: failure)
         
+        }
     }
     
     public func getIssuers(paymentMethodId : String, success: (issuers: [Issuer]?) -> Void, failure: ((error: NSError) -> Void)?) {
@@ -313,8 +294,14 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
-    public class func getImageFor(paymentMethod : PaymentMethod) -> UIImage?{
-        return MercadoPago.getImage(paymentMethod._id.lowercaseString)
+
+    public class func getImageFor(paymentMethod : PaymentMethod, forCell: Bool? = false) -> UIImage?{
+        if (forCell == true) {
+            return MercadoPago.getImage(paymentMethod._id.lowercaseString)
+        }else{
+            return MercadoPago.getImage("icoTc_"+paymentMethod._id.lowercaseString)
+        }
+
     }
     
     public class func getColorFor(paymentMethod : PaymentMethod) -> UIColor?{
@@ -328,10 +315,42 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         
     }
     
-    public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token?, payerCost: PayerCost?, issuer: Issuer?, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func getFontColorFor(paymentMethod : PaymentMethod) -> UIColor?{
+        let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
         
+        let pmConfig = dictPM?.valueForKey(paymentMethod._id) as! NSDictionary
+        let stringColor = pmConfig.valueForKey("font_color") as! String
+        //let intColor = Int(stringColor)
+        return UIColor(netHex:Int(stringColor, radix: 16)!)
         
-        let mpPayment = MPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id)
+    }
+    
+    public class func getEditingFontColorFor(paymentMethod : PaymentMethod) -> UIColor?{
+        let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let pmConfig = dictPM?.valueForKey(paymentMethod._id) as! NSDictionary
+        let stringColor = pmConfig.valueForKey("editing_font_color") as! String
+        //let intColor = Int(stringColor)
+        return UIColor(netHex:Int(stringColor, radix: 16)!)
+        
+    }
+    
+    public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+    
+        var issuerId = ""
+        if issuer != nil {
+            issuerId = String(issuer!._id!.integerValue)
+        }
+
+        
+        var tokenId = ""
+        if token != nil {
+            tokenId = token!._id
+        }
+        
+        let mpPayment = MPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId)
         let service : MerchantService = MerchantService()
         service.createMPPayment(payment: mpPayment, success: { (jsonResult) in
             var payment : Payment? = nil
@@ -339,20 +358,22 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {
-                        failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as [NSObject : AnyObject]))
+                        failure!(error: NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podrido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : paymentDic["error"] as! String]))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
                         payment = Payment.fromJSON(paymentDic)
                         success(payment: payment!)
+                        // Clear payment key after post payment success
+                        MercadoPagoContext.clearPaymentKey()
                     } else {
-                        failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
+                        failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PAYMENT_ERROR".localized]))
                     }
                     
                 }
             } else {
                 if failure != nil {
-                    failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                    failure!(error: NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey : "No se ha podrido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido procesar el pago".localized]))
                 }
             }}, failure: failure)
 

@@ -8,7 +8,8 @@
 
 import Foundation
 
-public class Identification : Equatable {
+public class Identification : NSObject {
+    
     public var type : String?
     public var number : String?
 

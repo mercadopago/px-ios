@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Issuer : Equatable {
+public class Issuer : NSObject {
     public var _id : NSNumber?
     public var name : String?
     
