@@ -67,10 +67,47 @@ public class Instruction: NSObject {
     }
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
+        var obj:[String:AnyObject] = [
             "title": self.title,
             "accreditationMessage" : self.accreditationMessage
             ]
+        
+        var referencesJson = ""
+        for reference in references {
+            referencesJson = referencesJson + reference.toJSONString()
+        }
+        obj["references"] = referencesJson
+        
+        var infoJson = ""
+        for infoItem in info {
+            infoJson = infoJson + infoItem + ","
+        }
+        obj["info"] = infoJson.characters.count > 0 ? (infoJson as NSString).substringToIndex(infoJson.characters.count-1) : ""
+        
+        var secondaryInfoJson = ""
+        if secondaryInfo != nil {
+            for secondaryInfoItem in secondaryInfo! {
+                secondaryInfoJson = secondaryInfoJson + secondaryInfoItem + ","
+            }
+            obj["secondaryInfo"] = (secondaryInfoJson as NSString).substringToIndex(secondaryInfoJson.characters.count-1)
+        }
+        
+        var tertiaryInfoJson = ""
+        if tertiaryInfo != nil {
+            for tertiaryInfoItem in tertiaryInfo! {
+                tertiaryInfoJson = tertiaryInfoJson + tertiaryInfoItem + ","
+            }
+            obj["tertiaryInfo"] = (tertiaryInfoJson as NSString).substringToIndex(tertiaryInfoJson.characters.count-1)
+        }
+        
+        var actionsJson = ""
+        if self.actions != nil {
+            for actionItem in self.actions! {
+                actionsJson = actionsJson + actionItem.toJSONString()
+            }
+            obj["actions"] = actionsJson
+        }
+        
         return JSON(obj).toString()
     }
 }

@@ -29,6 +29,17 @@ public class InstructionAction : Equatable {
         }
         return action
     }
+    
+    public func toJSONString() -> String {
+        
+        let obj:[String:AnyObject] = [
+            "label": self.label,
+            "url": self.url,
+            "tag" : self.tag
+        ]
+        
+        return JSON(obj).toString()
+    }
 }
 
 public enum ActionTag : String {
