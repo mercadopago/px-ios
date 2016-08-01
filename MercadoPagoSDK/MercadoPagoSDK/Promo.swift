@@ -20,13 +20,13 @@ public class Promo : NSObject {
 	public class func fromJSON(json : NSDictionary) -> Promo {
 		
 		let promo : Promo = Promo()
-		promo.promoId = json["id"] as? String
+        promo.promoId = json["id"] == nil ? "" : json["id"]?.stringValue
 		
 		if let issuerDic = json["issuer"] as? NSDictionary {
 			promo.issuer = Issuer.fromJSON(issuerDic)
 		}
 
-		promo.recommendedMessage = json["recommended_message"] as? String
+        promo.recommendedMessage = json["recommended_message"] == nil ? "" : json["recommended_message"]!.stringValue
 		
 		if let picDic = json["picture"] as? NSDictionary {
 			promo.url = picDic["url"] as? String
@@ -43,7 +43,7 @@ public class Promo : NSObject {
 		
 		promo.paymentMethods = paymentMethods
 		
-		promo.legals = json["legals"] as? String
+        promo.legals = json["legals"] == nil ? "" : json["legals"]?.stringValue
 		
 		return promo
 	}
