@@ -398,6 +398,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     self.displayFailure(mpError)
                 } else {
                     self.preference = preference
+                    self.preference?.loadingImageWithCallback({ (void) in
+                        self.checkoutTable.reloadData()
+                    })
                     self.loadGroupsAndStartPaymentVault(false)
                 }
             }, failure: { (error) in

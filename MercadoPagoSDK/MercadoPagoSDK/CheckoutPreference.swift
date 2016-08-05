@@ -25,6 +25,8 @@ public class CheckoutPreference : NSObject {
     public var siteId : String = "MLA"
     
     
+    public var choImage : UIImage?
+    
     //shipments
     
     public func validate() -> String?{
@@ -92,8 +94,28 @@ public class CheckoutPreference : NSObject {
             preference.paymentPreference = PaymentPreference.fromJSON(jsonPaymentPreference)
         }
         
+   
         return preference
     }
+    
+    
+    public func loadingImageWithCallback(callback :(Void -> Void)? = nil) -> Bool {
+        
+        if (choImage != nil){
+            return false
+        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            self.choImage = ViewUtils.loadImageFromUrl(self.getPictureUrl())
+            dispatch_async(dispatch_get_main_queue(), {
+                if (callback != nil){
+                    callback!()
+                }
+            })
+        })
+        return true
+        
+    }
+    
     
     public func toJSONString() -> String {
         var obj:[String:AnyObject] = [

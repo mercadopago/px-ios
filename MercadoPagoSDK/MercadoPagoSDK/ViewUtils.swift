@@ -54,6 +54,24 @@ class ViewUtils {
         })
     }
     
+    class func loadImageFromUrl(url : String) -> UIImage?{
+    
+            let url = NSURL(string: url)
+            if url != nil {
+                let data = NSData(contentsOfURL: url!)
+                if data != nil {
+                        let image = UIImage(data: data!)
+                        return image!
+                    }
+                else{
+                    return nil
+                }
+            }else{
+                return nil
+        }
+        
+    }
+    
     class func drawBottomLine(x : CGFloat = 0, y : CGFloat, width : CGFloat, inView view: UIView){
         let overLinewView = UIView(frame: CGRect(x: x, y: y, width: width, height: 1))
         overLinewView.backgroundColor = UIColor.UIColorFromRGB(0xDEDEDE)

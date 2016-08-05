@@ -56,7 +56,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     public func sdkVersion() -> String!{
-        return "0.9.1"
+        return "1.0.0"
     }
  
     var site = GAKey.MLA
