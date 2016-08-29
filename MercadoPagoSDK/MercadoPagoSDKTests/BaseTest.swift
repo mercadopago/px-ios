@@ -27,15 +27,13 @@ class BaseTest: XCTestCase {
     }
     
     func simulateViewDidLoadFor(viewController : UIViewController) -> UIViewController{
-        MercadoPagoTestContext.addExpectation(withDescription: BaseTest.WAIT_FOR_VIEW_LOADED)
-        let nav = UINavigationController()
-        nav.pushViewController(viewController, animated: false) {
-            MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_VIEW_LOADED)
-        }
+        let nav = UINavigationController(rootViewController : viewController)
         let _ = viewController.view
         viewController.viewWillAppear(false)
         viewController.viewDidAppear(false)
+        
         waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
+        
         return viewController
     }
     
