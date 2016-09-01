@@ -20,10 +20,5 @@ class MPServicesBuilderTest: BaseTest {
         super.tearDown()
     }
     
-    func testDefaultUris() {
-        XCTAssertEqual(MercadoPago.MP_API_BASE_URL, "https://api.mercadopago.com")
-        XCTAssertEqual(MercadoPago.MP_PAYMENTS_URI, MercadoPago.MP_ENVIROMENT + "/checkout/payments")
-    }
-    
     
 }
