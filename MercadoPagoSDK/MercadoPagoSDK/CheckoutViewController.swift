@@ -25,6 +25,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     override public var screenName : String { get{ return "REVIEW_AND_CONFIRM" } }
     private var reviewAndConfirmContent = Set<String>()
     
+    private var recover = false
+    private var auth = false
+    
     @IBOutlet weak var checkoutTable: UITableView!
     
     init(preferenceId : String, callback : (Payment -> Void),  callbackCancel : (Void -> Void)? = nil){
@@ -79,6 +82,15 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.title = "Revisa si está todo bien...".localized
                 self.checkoutTable.reloadData()
                 self.hideLoading()
+                if (recover){
+                    recover = false
+                    self.startRecoverCard()
+                }
+                if (auth){
+                    auth = false
+                    self.startAuthCard(self.token!)
+                }
+                
             } else {
                 self.displayBackButton()
                 self.navigationItem.leftBarButtonItem?.action = Selector("invokeCallbackCancel")
@@ -297,6 +309,37 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         
     }
     
+    internal func startRecoverCard(){
+         MPServicesBuilder.getPaymentMethods({ (paymentMethods) in
+        let cardFlow = MPFlowBuilder.startCardFlow(amount: (self.preference?.getAmount())!, cardInformation : nil, callback: { (paymentMethod, token, issuer, payerCost) in
+             self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : true)
+            }, callbackCancel: {
+                self.navigationController!.popToViewController(self, animated: true)
+        })
+        self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
+         }) { (error) in
+            
+        }
+        
+        
+    }
+    internal func startAuthCard(token:Token){
+       
+        MPServicesBuilder.getPaymentMethods({ (paymentMethods) in
+            let cardFlow = MPFlowBuilder.startCardFlow(amount: (self.preference?.getAmount())!, cardInformation : nil, paymentMethods: paymentMethods, token: token, callback: { (paymentMethod, token, issuer, payerCost) in
+                self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : true)
+                }, callbackCancel: {
+                    self.navigationController!.popToViewController(self, animated: true)
+            })
+             self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
+            }) { (error) in
+                
+        }
+       
+        
+    }
+    
+    
     internal func confirmPayment(){
         
         self.showLoading()
@@ -318,7 +361,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         
         self.paymentMethod = paymentMethod
         self.token = token
-        self.issuer = issuer
+        if (issuer != nil){
+            self.issuer = issuer
+        }
+
         self.payerCost = payerCost
     }
     
@@ -363,7 +409,17 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.paymentMethod = nil
                 self.navigationController!.viewControllers[0].title = ""
                 self.navigationController!.popToRootViewControllerAnimated(false)
-            } else {
+            } else  if status == MPStepBuilder.CongratsState.CANCEL_RECOVER {
+                self.navigationController!.setNavigationBarHidden(false, animated: false) 
+                self.navigationController!.viewControllers[0].title = ""
+                self.navigationController!.popToRootViewControllerAnimated(false)
+                self.recover = true
+            }else  if status == MPStepBuilder.CongratsState.CALL_FOR_AUTH {
+                self.navigationController!.setNavigationBarHidden(false, animated: false)
+                self.navigationController!.viewControllers[0].title = ""
+                self.navigationController!.popToRootViewControllerAnimated(false)
+                self.auth = true
+            }else {
                 self.dismissViewControllerAnimated(true, completion: {})
                 self.callback(payment)
             }
@@ -440,6 +496,5 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
  
     internal func exitCheckoutFlow(){
         self.callbackCancel!()
-        //    self.navigationController?.dismissViewControllerAnimated(true, completion: {})
     }
 }

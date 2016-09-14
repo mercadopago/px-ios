@@ -21,8 +21,6 @@ class OfflinePaymentMethodCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.addSubview(ViewUtils.getTableCellSeparatorLineView(0, y: 0, width: self.bounds.width, height: 1))
-
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

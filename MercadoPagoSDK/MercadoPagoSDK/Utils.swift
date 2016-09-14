@@ -219,5 +219,29 @@ class Utils {
         }
         return title
     }
+    
+    public static func getExpirationYearFromLabelText(mmyy : String) -> Int {
+        let stringMMYY = mmyy.stringByReplacingOccurrencesOfString("/", withString: "")
+        let validInt = Int(stringMMYY)
+        if(validInt == nil){
+            return 0
+        }
+        let floatMMYY = Float( validInt! / 100 )
+        let mm : Int = Int(floor(floatMMYY))
+        let yy = Int(stringMMYY)! - (mm*100)
+        return yy
+        
+    }
+    
+    public static func getExpirationMonthFromLabelText(mmyy : String) -> Int {
+        let stringMMYY = mmyy.stringByReplacingOccurrencesOfString("/", withString: "")
+        let validInt = Int(stringMMYY)
+        if(validInt == nil){
+            return 0
+        }
+        let floatMMYY = Float( validInt! / 100 )
+        let mm : Int = Int(floor(floatMMYY))
+        return mm
+    }
 
 }

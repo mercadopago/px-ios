@@ -11,6 +11,7 @@ import UIKit
 class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
 
     static let ROW_HEIGHT = CGFloat(150)
+    var authCallback : (Void -> Void)?
     
     @IBOutlet weak var completeCardButton: MPButton!
     @IBOutlet weak var cancelButton: MPButton!
@@ -28,12 +29,19 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
         self.defaultCallback = callback
         self.cancelButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
         self.completeCardButton.setTitle( ("Ya hablé con %1$s y me autorizó".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: paymentMethod.name), forState: .Normal)
-        self.completeCardButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
+        self.completeCardButton.addTarget(self, action: #selector(AuthorizePaymentBodyTableViewCell.invokeAuthCallback), forControlEvents: .TouchUpInside)
         return self
     }
     
     func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
         return 150
     }
+    
+    func invokeAuthCallback(){
+        if self.authCallback != nil {
+            self.authCallback!()
+        }
+    }
+
 
 }

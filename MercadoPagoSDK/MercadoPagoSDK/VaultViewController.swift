@@ -90,7 +90,7 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
 
 
             
-            MerchantServer.getCustomer(self.merchantBaseUrl!, success: { (customer: Customer) -> Void in
+            MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.cards = customer.cards
                 self.loadingView.removeFromSuperview()
                 self.tableview.reloadData()

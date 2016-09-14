@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class Card : NSObject {
+public class Card : NSObject, CardInformation {
     
     public var cardHolder : Cardholder?
     public var customerId : String?
@@ -89,6 +89,39 @@ public class Card : NSObject {
         } else {
             return false
         }
+    }
+
+    
+    public func getCardDescription() -> String {
+        return "terminada en " + lastFourDigits!
+    }
+    
+    public func getPaymentMethod() -> PaymentMethod {
+        return self.paymentMethod!
+    }
+    
+    public func getCardId() -> String {
+        return self.idCard.stringValue
+    }
+    
+    public func getPaymentMethodId() -> String {
+        return (self.paymentMethod?._id)!
+    }
+    
+    public func getCardSecurityCode() -> SecurityCode {
+        return self.securityCode!
+    }
+    
+    public func getCardBin() -> String? {
+        return self.firstSixDigits
+    }
+
+    public func getCardLastForDigits() -> String? {
+        return self.lastFourDigits
+    }
+    
+    public func setupPaymentMethodSettings(settings: [Setting]) {
+        self.paymentMethod?.settings = settings
     }
 }
 

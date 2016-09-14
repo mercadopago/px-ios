@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class SavedCardToken : NSObject {
+public class SavedCardToken : CardToken {
+    
     public var cardId : String?
-    public var securityCode : String?
-    public var device : Device?
     public var securityCodeRequired : Bool = true
     
     public init(cardId : String, securityCode : String) {
@@ -20,27 +19,31 @@ public class SavedCardToken : NSObject {
         self.securityCode = securityCode
     }
     
-    public init(card : Card, securityCode : String?, securityCodeRequired: Bool) {
+    public init(card : CardInformation, securityCode : String?, securityCodeRequired: Bool) {
         super.init()
-        self.cardId = card.idCard.stringValue
+        self.cardId = card.getCardId()
         self.securityCode = securityCode
         self.securityCodeRequired = securityCodeRequired
     }
     
-    public func validate() -> Bool {
-        return validateCardId() && (!securityCodeRequired || validateSecurityCode())
+    public override func validate() -> Bool {
+        return self.validateCardId() && (!securityCodeRequired || self.validateSecurityCodeNumbers())
     }
     
     public func validateCardId() -> Bool {
         return !String.isNullOrEmpty(cardId) && String.isDigitsOnly(cardId!)
     }
     
-    public func validateSecurityCode() -> Bool {
+    public func validateSecurityCodeNumbers() -> Bool {
         let isEmptySecurityCode : Bool = String.isNullOrEmpty(self.securityCode)
         return !isEmptySecurityCode && self.securityCode!.characters.count >= 3 && self.securityCode!.characters.count <= 4
     }
     
-    public func toJSONString() -> String {
+    public override func isCustomerPaymentMethod() -> Bool {
+        return true
+    }
+    
+    public override func toJSONString() -> String {
         let obj:[String:AnyObject] = [
             "card_id": String.isNullOrEmpty(self.cardId) ? JSON.null : self.cardId!,
             "security_code" : String.isNullOrEmpty(self.securityCode) ? JSON.null : self.securityCode!,

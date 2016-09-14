@@ -61,11 +61,16 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     static var MP_TEST_ENV = "/beta"
     static let MP_PROD_ENV = "/v1"
-    static let MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+    static let MP_ALPHA_ENV = "/gamma"
+    static let MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
     
     static let MP_OP_ENVIROMENT = "/v1"
     
-    static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
+    static let MP_ALPHA_API_BASE_URL : String =  "http://api.mp.internal.ml.com"
+    static let MP_API_BASE_URL_PROD : String =  "https://api.mercadopago.com"
+    
+    static let MP_API_BASE_URL : String =  MP_API_BASE_URL_PROD
+
     static let MP_CUSTOMER_URI = "/customers?preference_id="
     static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
     

@@ -14,8 +14,8 @@ class MercadoPagoUIViewControllerTest: BaseTest {
 
     override func setUp() {
         super.setUp()
-        MercadoPagoTestContext.addExpectation(withDescription: "MockExpectation")
-        MercadoPagoTestContext.fulfillExpectation("MockExpectation")
+        MercadoPagoTestContext.addExpectation(withDescription: "clearStyles")
+        MercadoPagoTestContext.fulfillExpectation("clearStyles")
         self.simulateViewDidLoadFor(self.viewController)
         
     }

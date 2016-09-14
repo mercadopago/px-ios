@@ -290,6 +290,10 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
     }
     
+    public class func isCustomerInfoAvailable() -> Bool {
+        return (self.sharedInstance.base_url.characters.count > 0 && self.sharedInstance.customer_uri.characters.count > 0 && self.sharedInstance.merchant_access_token.characters.count > 0)
+    }
+    
     public class func paymentKey() -> String {
         if sharedInstance.payment_key == "" {
             sharedInstance.payment_key = String(arc4random()) + String(NSDate().timeIntervalSince1970)

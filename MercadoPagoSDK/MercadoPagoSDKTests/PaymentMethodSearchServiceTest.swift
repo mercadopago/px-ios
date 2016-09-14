@@ -15,11 +15,6 @@ class PaymentMethodSearchServiceTest: BaseTest {
         MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
     }
     
-    func testProperURLS() {
-        XCTAssertEqual(MercadoPagoService.MP_BASE_URL, "https://api.mercadopago.com")
-        
-    }
-    
     
     func testMPServicePaymentMethodSearch() {
      /*   let expectation = expectationWithDescription("paymentMethodSearchService")

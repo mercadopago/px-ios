@@ -69,6 +69,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         if self.installments == nil {
             self.showLoading()
             self.getInstallments()
+        } else {
+            self.payerCosts = installments![0].payerCosts
         }
     }
     
@@ -104,10 +106,16 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.alpha = 1
             self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
             
-            cardFront?.cardNumber.text =  "XXXX XXXX XXXX " + (self.token!.lastFourDigits as String)
-        // TODO
+            
+            let lastFourDigits = (self.token!.lastFourDigits as String) ?? "XXXX "
+            cardFront?.cardNumber.text =  "XXXX XXXX XXXX " + lastFourDigits
         
-            cardFront?.cardName.text = self.token!.cardHolder!.name
+                
+            if self.token?.cardHolder != nil {
+                cardFront?.cardName.text = self.token!.cardHolder!.name
+                
+            }
+            
             cardFront?.cardExpirationDate.text = self.token!.getExpirationDateFormated() as String
             cardFront?.cardNumber.alpha = 0.7
             cardFront?.cardName.alpha = 0.7

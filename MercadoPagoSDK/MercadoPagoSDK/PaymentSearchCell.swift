@@ -28,7 +28,6 @@ class PaymentSearchCell: UITableViewCell {
     override func
         awakeFromNib() {
         super.awakeFromNib()
-        self.addSubview(ViewUtils.getTableCellSeparatorLineView(0, y: 0, width: self.frame.width, height: 1))
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -41,7 +40,6 @@ class PaymentSearchCell: UITableViewCell {
             let tintedImage = iconImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             self.paymentIcon.image = tintedImage
             self.paymentIcon.tintColor = MercadoPagoContext.getPrimaryColor()
-            //UIColor().blueMercadoPago()
         } else {
             self.paymentIcon.image = iconImage
             self.paymentTitle.hidden = true

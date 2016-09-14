@@ -133,7 +133,7 @@ public class PaymentMethod : NSObject  {
     
     public func secCodeMandatory() -> Bool {
         if (self.settings.count == 0){
-            return false // Si no tiene settings el codigo no es mandatorio
+            return true // Si no tiene settings el codigo no es mandatorio
         }
         let filterList = self.settings.filter({ return $0.securityCode.mode == self.settings[0].securityCode.mode })
         if (filterList.count == self.settings.count){
@@ -144,8 +144,8 @@ public class PaymentMethod : NSObject  {
     }
     
     public func secCodeLenght() -> Int {
-        if (self.settings.count == 0){
-            return 0 //Si no tiene settings la longitud es cero
+        if (self.settings != nil && self.settings.count == 0 || self.settings == nil){
+            return 3 //Si no tiene settings la longitud es cero
         }
         let filterList = self.settings.filter({ return $0.securityCode.length == self.settings[0].securityCode.length })
         if (filterList.count == self.settings.count){
@@ -155,7 +155,7 @@ public class PaymentMethod : NSObject  {
         }
     }
     public func cardNumberLenght() -> Int {
-        if (self.settings.count == 0){
+        if (self.settings.count == 0 || self.settings == nil){
             return 0 //Si no tiene settings la longitud es cero
         }
         let filterList = self.settings.filter({ return $0.cardNumber.length == self.settings[0].cardNumber.length })
@@ -167,7 +167,7 @@ public class PaymentMethod : NSObject  {
     }
     
     public func secCodeInBack() -> Bool {
-        if (self.settings.count == 0){
+        if (self.settings == nil || self.settings.count == 0){
             return true //si no tiene settings, por defecto el codigo de seguridad ira atras
         }
         let filterList = self.settings.filter({ return $0.securityCode.cardLocation == self.settings[0].securityCode.cardLocation })

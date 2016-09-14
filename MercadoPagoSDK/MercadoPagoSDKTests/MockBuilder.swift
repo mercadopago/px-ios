@@ -47,10 +47,25 @@ public class MockBuilder: NSObject {
         return "MERCHANT_ACCESS_TOKEN"
     }
     
+    class var CUSTOMER_ACCESS_TOKEN : String {
+        return "ACCESS_TOKEN"
+    }
+    
     class var INSTALLMENT_AMOUNT : Double {
         return 100.0
     }
     
+    class var AMEX_TEST_CARD_NUMBER : String {
+        return "371180303257522"
+    }
+    
+    class var MASTER_TEST_CARD_NUMBER : String {
+        return "5031755734530604"
+    }
+    
+    class var VISA_TEST_CARD_NUMBER : String {
+        return "4170068810108020"
+    }
     
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()
@@ -112,6 +127,10 @@ public class MockBuilder: NSObject {
         card.expirationMonth = 11
         card.expirationYear = 22
         card.cardHolder = buildCardholder()
+        card.securityCode = SecurityCode()
+        card.securityCode?.cardLocation = "cardLocation"
+        card.securityCode?.mode = "mandatory"
+        card.securityCode?.length = 3
         return card
     }
         

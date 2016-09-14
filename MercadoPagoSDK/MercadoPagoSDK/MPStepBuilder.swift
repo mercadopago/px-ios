@@ -17,6 +17,8 @@ public class MPStepBuilder : NSObject {
         case OK = 0
         case CANCEL_SELECT_OTHER = 1
         case CANCEL_RETRY = 2
+        case CANCEL_RECOVER = 3
+        case CALL_FOR_AUTH = 4
     }
     
     public class func startCustomerCardsStep(cards: [Card],
@@ -99,15 +101,22 @@ public class MPStepBuilder : NSObject {
     }
     
 
-    public class func startCreditCardForm(paymentSettings : PaymentPreference? = nil , amount: Double, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil ,
-                         callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void),
-                         callbackCancel : (Void -> Void)?) -> MPNavigationController {
-        
+
+    public class func startCreditCardForm(paymentSettings : PaymentPreference? = nil , amount: Double, cardInformation: CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> MPNavigationController {
         MercadoPagoContext.initFlavor2()
         var navigation : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
 
-        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, paymentMethods : paymentMethods, token: token, callback : { (paymentMethod, cardToken) -> Void in
+        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, cardInformation: cardInformation, paymentMethods : paymentMethods, token: token, callback : { (paymentMethod, cardToken) -> Void in
+            
+            if (token != nil){ // flujo token recuperable C4A
+                MPServicesBuilder.cloneToken(token!,securityCode:(cardToken?.securityCode)!, success: { (token) in
+                    callback(paymentMethod: paymentMethod, token: token, issuer: nil)
+                    }, failure: { (error) in
+                        
+                })
+                return
+            }
             
             if(paymentMethod.isIdentificationRequired()){
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
@@ -172,51 +181,68 @@ public class MPStepBuilder : NSObject {
     }
     
     private class func getIssuers(paymentMethod : PaymentMethod, cardToken : CardToken, ccf : MercadoPagoUIViewController,
-                         callback : (paymentMethod: PaymentMethod, token: Token, issuer:Issuer) -> Void){
+                         callback : (paymentMethod: PaymentMethod, token: Token, issuer:Issuer?) -> Void){
         MercadoPagoContext.initFlavor2()
         (ccf.navigationController as! MPNavigationController).showLoading()
-        MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
-                if(issuers!.count > 1){
-                    let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, callback: { (issuer) -> Void in
-                        (ccf.navigationController as! MPNavigationController).showLoading()
-                        self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer!, ccf : ccf, callback: callback)
-                    })
-                    issuerForm.callbackCancel = { Void -> Void in
-                        ccf.navigationController!.dismissViewControllerAnimated(true, completion: {})
+        if !cardToken.isCustomerPaymentMethod() {
+            MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
+                    if(issuers!.count > 1){
+                        let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, callback: { (issuer) -> Void in
+                            (ccf.navigationController as! MPNavigationController).showLoading()
+                            self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer!, ccf : ccf, callback: callback)
+                        })
+                        issuerForm.callbackCancel = { Void -> Void in
+                            ccf.navigationController!.dismissViewControllerAnimated(true, completion: {})
+                        }
+                        ccf.navigationController!.pushViewController(issuerForm, animated: false)
+                    } else {
+                        self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers![0], ccf: ccf, callback: callback)
                     }
-                    ccf.navigationController!.pushViewController(issuerForm, animated: false)
-                } else {
-                    self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers![0], ccf: ccf, callback: callback)
-                }
-            
-            }, failure: { (error) -> Void in
-                (ccf.navigationController as! MPNavigationController).hideLoading()
-                let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
-                    self.getIssuers(paymentMethod, cardToken: cardToken, ccf: ccf, callback: callback)
-                    }, callbackCancel: {
-                        ccf.navigationController?.dismissViewControllerAnimated(true, completion: {})
+                }, failure: { (error) -> Void in
+                    (ccf.navigationController as! MPNavigationController).hideLoading()
+                    let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
+                        self.getIssuers(paymentMethod, cardToken: cardToken, ccf: ccf, callback: callback)
+                        }, callbackCancel: {
+                            ccf.navigationController?.dismissViewControllerAnimated(true, completion: {})
+                    })
+                    ccf.navigationController?.presentViewController(errorVC, animated: true, completion: {})
                 })
-                ccf.navigationController?.presentViewController(errorVC, animated: true, completion: {})
-            })
+        } else {
+            self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: nil, ccf: ccf, callback: callback)
+        }
     }
     
     
-    private class func createNewCardToken(cardToken : CardToken, paymentMethod : PaymentMethod, issuer : Issuer, ccf : MercadoPagoUIViewController,
-                          callback : (paymentMethod: PaymentMethod, token: Token, issuer:Issuer) -> Void){
-
-        MPServicesBuilder.createNewCardToken(cardToken, success: {
-            (token) -> Void in
-            callback(paymentMethod: paymentMethod, token: token!, issuer: issuer)
-
-            ccf.hideLoading()
-        }) { (error) -> Void in
-            let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
-                ccf.dismissViewControllerAnimated(true, completion: {})
-                self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer, ccf : ccf, callback: callback)
-            })
-            errorVC.callbackCancel = { ccf.hideLoading() }
-            ccf.navigationController?.presentViewController(errorVC, animated: true, completion: {})
+    private class func createNewCardToken(cardToken : CardToken, paymentMethod : PaymentMethod, issuer : Issuer?, ccf : MercadoPagoUIViewController,
+                          callback : (paymentMethod: PaymentMethod, token: Token, issuer:Issuer?) -> Void){
+        
+        if cardToken.isCustomerPaymentMethod() {
+            MPServicesBuilder.createToken(cardToken as! SavedCardToken, success: { (token) in
+                callback(paymentMethod: paymentMethod, token: token!, issuer: issuer)
+                }, failure: { (error) in
+                    let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
+                    ccf.dismissViewControllerAnimated(true, completion: {})
+                        //                        self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer, ccf : ccf, callback: callback)
+                    })
+                    errorVC.callbackCancel = { ccf.hideLoading() }
+                    ccf.navigationController?.presentViewController(errorVC, animated: true, completion: {})
+                })
+        } else {
+            MPServicesBuilder.createNewCardToken(cardToken, success: {
+                (token) -> Void in
+                callback(paymentMethod: paymentMethod, token: token!, issuer: issuer!)
+                
+                ccf.hideLoading()
+            }) { (error) -> Void in
+                let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
+                    ccf.dismissViewControllerAnimated(true, completion: {})
+                    self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer, ccf : ccf, callback: callback)
+                })
+                errorVC.callbackCancel = { ccf.hideLoading() }
+                ccf.navigationController?.presentViewController(errorVC, animated: true, completion: {})
+            }
         }
+        
     }
     
     internal class func getInstallments(token : Token, amount : Double, issuer: Issuer, paymentTypeId : String, paymentMethod : PaymentMethod, ccf : MercadoPagoUIViewController,

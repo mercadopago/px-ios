@@ -13,7 +13,8 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
     var mpStylesLoaded = false
     var mpStylesCleared = false
     var optionSelected = false
-    
+    var paymentMethodIdSelected = ""
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.mpStylesLoaded = true
@@ -28,9 +29,10 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
         super.executeBack()
         
     }
-    
-    override internal func optionSelected(paymentSearchItemSelected: PaymentMethodSearchItem, animated: Bool? = true) {
-        self.optionSelected = true
-    }
 
+}
+
+class MockPaymentViewModel : PaymentVaultViewModel {
+    
+    
 }
