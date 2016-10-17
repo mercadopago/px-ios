@@ -200,6 +200,16 @@ open class CheckoutPreference : NSObject {
     }
     
     open func getTitle() -> String {
+        
+        if self.items!.count > 1 {
+            var title = self.items!.reduce("", { (result, element) -> String in
+                return element.title + ", " + result
+            })
+            let index = title.index(title.endIndex, offsetBy: -2)
+            title.remove(at: index)
+            return title
+        }
+        
         return self.items![0].title
     }
     

@@ -33,13 +33,13 @@ open class PromoTableViewCell: UITableViewCell {
 			let request: URLRequest = URLRequest(url: imgURL)
 			NSURLConnection.sendAsynchronousRequest(
 				request, queue: OperationQueue.main,
-				completionHandler: {(response: URLResponse?,data: Data?,error: NSError?) -> Void in
+				completionHandler: {(response: URLResponse?,data: Data?,error: Error?) -> Void in
 					if error == nil {
 						self.issuerImageView.image = UIImage(data: data!)
 					} else {
 						self.issuerImageView.image = UIImage(named: placeholderImage)
 					}
-			} as! (URLResponse?, Data?, Error?) -> Void)
+			})
 		}
 
 		self.sharesSubtitle.text = promo.recommendedMessage
