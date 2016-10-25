@@ -472,7 +472,7 @@ open class CheckoutViewModel {
     var paymentMethodSearch : PaymentMethodSearch?
     
     func isPaymentMethodSelectedCard() -> Bool {
-        return self.paymentMethod != nil && !paymentMethod!.isOfflinePaymentMethod() && self.paymentMethod!._id != "account_money"
+        return self.paymentMethod != nil && paymentMethod!.isCard()
     }
     
     func numberOfSections() -> Int {
@@ -497,9 +497,9 @@ open class CheckoutViewModel {
     }
     
     func paymentMethodSearchItemSelected() -> PaymentMethodSearchItem {
-        let paymentTypeIdEnum = PaymentTypeId(rawValue :self.paymentMethod!.paymentTypeId)!
+        let paymentTypeIdEnum = PaymentTypeId(rawValue : self.paymentMethod!.paymentTypeId)
         let paymentMethodSearchItemSelected : PaymentMethodSearchItem
-        if paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
+        if paymentTypeIdEnum != nil && paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
             paymentMethodSearchItemSelected = PaymentMethodSearchItem()
             paymentMethodSearchItemSelected.description = "Dinero en cuenta"
         } else {

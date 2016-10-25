@@ -70,7 +70,7 @@ open class MPStepBuilder : NSObject {
                                                callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
         
       MercadoPagoContext.initFlavor2()
-        if (paymentMethod.isOfflinePaymentMethod()){
+        if (!paymentMethod.isOnlinePaymentMethod()){
             return self.startInstructionsStep(payment, paymentTypeId: paymentMethod.paymentTypeId, callback: callback)
         } else {
             return self.startPaymentCongratsStep(payment, paymentMethod: paymentMethod, callback : callback)

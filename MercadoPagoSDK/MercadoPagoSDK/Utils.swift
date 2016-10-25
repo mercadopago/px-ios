@@ -172,7 +172,7 @@ class Utils {
         return formattedString
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
         for item in paymentMethodSearch.groups {
             if let result = self.findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
                 return result
@@ -181,11 +181,11 @@ class Utils {
         return nil
     }
     
-    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchItem : PaymentMethodSearchItem, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchItem : PaymentMethodSearchItem, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
         
         if paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId {
             return paymentMethodSearchItem
-        } else if (paymentMethodSearchItem.idPaymentMethodSearchItem.startsWith(paymentMethodId) && paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId.rawValue) {
+        } else if (paymentMethodSearchItem.idPaymentMethodSearchItem.startsWith(paymentMethodId)) {
             return paymentMethodSearchItem
         }
         
