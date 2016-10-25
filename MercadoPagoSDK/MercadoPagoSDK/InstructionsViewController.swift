@@ -19,11 +19,11 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = [
         "oxxo_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
-        "7eleven_ticket" : ["body" : "instructionsTwoLabelsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "banamex_ticket" : ["body" : "instructionsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "telecomm_ticket" : ["body" : "instructionsCell", "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "serfin_atm" : ["body" : "instructionsTwoLabelsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "bancomer_atm" : ["body" : "instructionsTwoLabelsCell" , "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "bacomer_7eleven" : ["body" : "instructionsTwoLabelsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "banamex_atm" : ["body" : "instructionsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "serfin_telecomm" : ["body" : "instructionsCell", "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
         "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell", "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell", "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell", "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
@@ -37,12 +37,13 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     ]
     
     var payment : Payment!
-    var paymentTypeId : PaymentTypeId!
+    //var paymentTypeId : PaymentTypeId!
+    var paymentTypeId : String!
     var callback : ((Payment) -> Void)!
     var bundle = MercadoPago.getBundle()
     
     
-    public init(payment : Payment, paymentTypeId : PaymentTypeId, callback : @escaping (Payment) -> Void) {
+    public init(payment : Payment, paymentTypeId : String, callback : @escaping (Payment) -> Void) {
         super.init(nibName: "InstructionsViewController", bundle: bundle)
         self.payment = payment
         self.callback = callback
@@ -114,7 +115,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
             return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.amountInfo!.amount!, currency: self.amountInfo!.currency!)
         }
         
-        let instructionsSelected = self.payment.paymentMethodId.lowercased() + "_" + self.paymentTypeId.rawValue.lowercased()
+        let instructionsSelected = self.payment.paymentMethodId.lowercased() + "_" + self.paymentTypeId.lowercased()
         if (indexPath as NSIndexPath).section == 1 {
             let bodyViewCell = self.resolveInstructionsBodyViewCell(instructionsSelected)!
             return bodyViewCell
@@ -143,7 +144,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> Float {
-        let instructionsSelected = self.payment.paymentMethodId.lowercased() + "_" + self.paymentTypeId.rawValue.lowercased()
+        let instructionsSelected = self.payment.paymentMethodId.lowercased() + "_" + self.paymentTypeId.lowercased()
         if (indexPath as NSIndexPath).section == 0 {
             let instructionsHeaderCell = self.congratsTable.dequeueReusableCell(withIdentifier: "instructionsHeaderCell") as! InstructionsHeaderViewCell
             
@@ -230,7 +231,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     }
     
     fileprivate func getInstructions(){
-        MPServicesBuilder.getInstructions(payment._id, paymentTypeId : self.paymentTypeId!.rawValue.lowercased(), success: { (instructionsInfo : InstructionsInfo) -> Void in
+        MPServicesBuilder.getInstructions(payment._id, paymentTypeId : self.paymentTypeId!.lowercased(), success: { (instructionsInfo : InstructionsInfo) -> Void in
             self.currentInstruction = instructionsInfo.instructions[0]
             self.amountInfo = instructionsInfo.amountInfo
             self.congratsTable.delegate = self

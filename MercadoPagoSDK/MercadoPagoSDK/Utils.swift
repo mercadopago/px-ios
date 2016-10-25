@@ -185,6 +185,8 @@ class Utils {
         
         if paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId {
             return paymentMethodSearchItem
+        } else if (paymentTypeId != nil && paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId!.rawValue) {
+            return paymentMethodSearchItem
         } else if (paymentMethodSearchItem.idPaymentMethodSearchItem.startsWith(paymentMethodId)) {
             return paymentMethodSearchItem
         }
