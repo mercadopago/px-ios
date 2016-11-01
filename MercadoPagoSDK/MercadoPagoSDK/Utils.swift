@@ -172,30 +172,46 @@ class Utils {
         return formattedString
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
-        for item in paymentMethodSearch.groups {
-            if let result = self.findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
-                return result
-            }
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
+        
+        if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+            return result
         }
         return nil
     }
     
-    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchItem : PaymentMethodSearchItem, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
-        
-        if paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId {
-            return paymentMethodSearchItem
-        } else if (paymentMethodSearchItem.idPaymentMethodSearchItem.startsWith(paymentMethodId) && paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId.rawValue) {
-            return paymentMethodSearchItem
+    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList : [PaymentMethodSearchItem], paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
+       
+        var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg : PaymentMethodSearchItem) -> Bool in
+            arg.idPaymentMethodSearchItem == paymentMethodId
         }
         
-        for item in paymentMethodSearchItem.children {
-            if let paymentMethodSearchItemFound = findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+        if filterPaymentMethodSearchFound.count > 0 {
+            return filterPaymentMethodSearchFound[0]
+        } else if paymentTypeId != nil {
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg : PaymentMethodSearchItem) -> Bool in
+                arg.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId!.rawValue
+            }
+            
+            if filterPaymentMethodSearchFound.count > 0 {
+                return filterPaymentMethodSearchFound[0]
+            }
+        } else {
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg : PaymentMethodSearchItem) -> Bool in
+                arg.idPaymentMethodSearchItem.startsWith(paymentMethodId)
+            }
+            if filterPaymentMethodSearchFound.count > 0 {
+                return filterPaymentMethodSearchFound[0]
+            }
+        }
+        
+        for item in paymentMethodSearchList {
+            if let paymentMethodSearchItemFound = findPaymentMethodSearchItemById(item.children, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
                 return paymentMethodSearchItemFound
             }
         }
         
-        if paymentMethodSearchItem.children.count == 0 {
+        if paymentMethodSearchList.count == 0 {
             return nil
         }
         return nil
