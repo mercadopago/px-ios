@@ -247,8 +247,6 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
             titleVisible = false
             self.title = self.viewModel.getTilte()
         }
-        ("tableView \(tableView.contentOffset)")
-        
         let visibleIndexPaths = self.tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
             if (index.section == 0){

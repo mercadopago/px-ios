@@ -65,6 +65,7 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
 
     }
     
+    var paymentEnabled = true
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -76,6 +77,7 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.showLoading()
+        paymentEnabled = true
         if preference == nil {
             self.displayBackButton()
             self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
@@ -251,8 +253,12 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     
     
     internal func confirmPayment(){
-        
+        guard paymentEnabled else {
+            return
+        }
+        paymentEnabled = false
         self.showLoading()
+        
         if self.viewModel!.isPaymentMethodSelectedCard(){
             self.confirmPaymentOn()
         } else {
@@ -419,6 +425,9 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
         case 2 :
             let termsAndConditionsButton = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseTermsAndConditions") as! TermsAndConditionsViewCell
             termsAndConditionsButton.paymentButton.addTarget(self, action: #selector(CheckoutViewController.confirmPayment), for: .touchUpInside)
+            if !paymentEnabled {
+                termsAndConditionsButton.paymentButton.isEnabled = false
+            }
             termsAndConditionsButton.delegate = self
             return termsAndConditionsButton
         default:
@@ -472,7 +481,7 @@ open class CheckoutViewModel {
     var paymentMethodSearch : PaymentMethodSearch?
     
     func isPaymentMethodSelectedCard() -> Bool {
-        return self.paymentMethod != nil && !paymentMethod!.isOfflinePaymentMethod() && self.paymentMethod!._id != "account_money"
+        return self.paymentMethod != nil && paymentMethod!.isCard()
     }
     
     func numberOfSections() -> Int {
@@ -497,9 +506,9 @@ open class CheckoutViewModel {
     }
     
     func paymentMethodSearchItemSelected() -> PaymentMethodSearchItem {
-        let paymentTypeIdEnum = PaymentTypeId(rawValue :self.paymentMethod!.paymentTypeId)!
+        let paymentTypeIdEnum = PaymentTypeId(rawValue :self.paymentMethod!.paymentTypeId)
         let paymentMethodSearchItemSelected : PaymentMethodSearchItem
-        if paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
+        if paymentTypeIdEnum != nil && paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
             paymentMethodSearchItemSelected = PaymentMethodSearchItem()
             paymentMethodSearchItemSelected.description = "Dinero en cuenta"
         } else {

@@ -27,7 +27,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
         if payment.status == "rejected"{
             
             if payment.statusDetail == "cc_rejected_call_for_authorize"{
-                var title = (payment.statusDetail + "_title")
+                let title = (payment.statusDetail + "_title")
                 self.title.text = title.localized
                 self.subtitile.text = ""
             } else {

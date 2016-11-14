@@ -35,8 +35,8 @@ open class PaymentMethod : NSObject  {
     }
     
     open func isCard() -> Bool {
-        let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)!
-        return paymentTypeId.isCard()
+        let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)
+        return paymentTypeId != nil && (paymentTypeId?.isCard())!
     }
     
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
@@ -183,8 +183,8 @@ open class PaymentMethod : NSObject  {
     }
     
     
-    open func isOfflinePaymentMethod() -> Bool {
-        return self.paymentTypeId != nil && PaymentTypeId(rawValue : self.paymentTypeId)!.isOfflinePayment()
+    open func isOnlinePaymentMethod() -> Bool {
+        return self.isCard() || self.isAccountMoney()
     }
     
     
@@ -193,6 +193,9 @@ open class PaymentMethod : NSObject  {
     }
     open func isMASTERCARD() -> Bool {
         return ((self._id == "master") && (self._id == "debmaster"))
+    }
+    open func isAccountMoney() -> Bool {
+        return (self._id == "account_money")
     }
 
     open func conformsPaymentPreferences(_ paymentPreference : PaymentPreference?) -> Bool{
