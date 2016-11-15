@@ -51,6 +51,26 @@ open class Payer : NSObject {
 	
 }
 
+public class GroupsPayer : Payer {
+    
+    override public func toJSONString() -> String {
+        let payerAccessToken = MercadoPagoContext.payerAccessToken()
+        if String.isNullOrEmpty(payerAccessToken) {
+            return ""
+        }
+    
+        
+        let payerObj:[String:Any] = [
+            "access_token": payerAccessToken
+        ]
+        
+        let obj:[String:Any] = [
+            "payer" : payerObj
+        ]
+        return JSONHandler.jsonCoding(obj)
+        
+    }
+}
 
 public func ==(obj1: Payer, obj2: Payer) -> Bool {
 	
