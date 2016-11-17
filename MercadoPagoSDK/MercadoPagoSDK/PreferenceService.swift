@@ -17,7 +17,7 @@ open class PreferenceService: MercadoPagoService {
     }
     
     internal func getPreference(_ preferenceId : String, success : @escaping (CheckoutPreference) -> Void, failure : @escaping ((_ error: NSError) -> Void)){
-        let params = "public_key=" + MercadoPagoContext.publicKey()
+        let params = "public_key=" + MercadoPagoContext.publicKey() + "&api_version=" + MercadoPago.API_VERSION
         self.request(uri: MP_PREFERENCE_URI + preferenceId, params: params, body: nil, method: "GET", success: { (jsonResult) in
             if let preferenceDic = jsonResult as? NSDictionary {
                 if preferenceDic["error"] != nil {

@@ -31,7 +31,8 @@ open class MerchantService : MercadoPagoService {
         let headers = NSMutableDictionary()
         headers.setValue(MercadoPagoContext.paymentKey() , forKey: "X-Idempotency-Key")
         
-        self.request(uri: MercadoPago.MP_PAYMENTS_URI, params: nil, body: payment.toJSONString() as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: failure)
+        let params = "api_version=" + MercadoPago.API_VERSION
+        self.request(uri: MercadoPago.MP_PAYMENTS_URI, params: params, body: payment.toJSONString() as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: failure)
     }
     
     open func createPreference(_ method : String = "POST", merchantParams : String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {

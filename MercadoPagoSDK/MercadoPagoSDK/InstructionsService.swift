@@ -41,6 +41,7 @@ open class InstructionsService: MercadoPagoService {
         if paymentTypeId != nil && paymentTypeId?.characters.count > 0 {
             params = params + "&payment_type=" + paymentTypeId!
         }
+        params = params + "&api_version=" + MercadoPago.API_VERSION
         self.request(uri: MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", cache: false, success: { (jsonResult) -> Void in
             let error = jsonResult?["error"] as? String
             if error != nil && error!.characters.count > 0 {
