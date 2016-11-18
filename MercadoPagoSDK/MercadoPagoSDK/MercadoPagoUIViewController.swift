@@ -11,9 +11,9 @@ import UIKit
 
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
-    internal var displayPreferenceDescription = false
     open var callbackCancel : ((Void) -> Void)? 
     public var timer : CountdownTimer?
+    var navBarTextColor = UIColor.systemFontColor()
     
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
@@ -30,6 +30,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var timerLabel : MPLabel?
     
     override open func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
         if self.timer != nil {
             self.timer!.delegate = self
@@ -70,8 +71,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         super.viewWillAppear(animated)
     
         UIApplication.shared.statusBarStyle = .lightContent
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-        
         
         self.loadMPStyles()
      
@@ -183,7 +182,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     internal func displayBackButton() {
         let backButton = UIBarButtonItem()
-        backButton.image = MercadoPago.getImage("left_arrow")
+        backButton.image = MercadoPago.getImage("back")
         backButton.style = .plain
         backButton.target = self
         backButton.tintColor = UIColor.systemFontColor()
@@ -260,6 +259,36 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if self.timerLabel != nil {
             self.timerLabel!.text = self.timer!.getCurrentTiming()
         }
+    }
+    
+    func showNavBar() {
+        
+        if navigationController != nil {
+            self.title = self.getNavigationBarTitle()
+            self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+            self.navigationController?.navigationBar.shadowImage = nil
+            self.navigationController?.navigationBar.tintColor = nil
+            self.navigationController?.navigationBar.isTranslucent = false
+ 
+            let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        }
+        
+    }
+    
+    func hideNavBar(){
+        if navigationController != nil {
+            self.title = ""
+            navigationController?.navigationBar.titleTextAttributes = nil
+           self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+           self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController?.navigationBar.isTranslucent = true
+        }
+    }
+    
+    func getNavigationBarTitle() -> String {
+        return ""
     }
     
     deinit {

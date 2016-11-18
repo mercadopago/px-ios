@@ -17,17 +17,16 @@ class ExamplesUtils {
     
     
     class var MERCHANT_PUBLIC_KEY : String {
-        return //"444a9ef5-8a6b-429f-abdf-587639155d88"
-            //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
-            // "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
-            // "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
-            // "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
-            // "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
-            
-            //"6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2"
-        //"TEST-9eb0be69-329a-417f-9dd5-aad772a4d50b"
-        "APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"
+		return //"444a9ef5-8a6b-429f-abdf-587639155d88"
+		 //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
+		 "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
+		// "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
+		// "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
+		// "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
         
+       //"444a9ef5-8a6b-429f-abdf-587639155d88"
+          //"APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"
+ 
         // "TEST-d7ecb23b-8cbd-4292-96d5-eccfe39748b5"
         // "TEST-2edbc541-4e19-43b9-8241-2cda72da6b6f"
         
@@ -39,7 +38,7 @@ class ExamplesUtils {
         return //"444a9ef5-8a6b-429f-abdf-587639155d88"
             //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
             // "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
-            // "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
+           //"6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
             // "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
             // "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
             

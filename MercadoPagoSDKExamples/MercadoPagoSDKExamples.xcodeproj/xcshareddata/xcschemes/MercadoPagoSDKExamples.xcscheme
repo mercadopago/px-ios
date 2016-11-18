@@ -7,7 +7,7 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
@@ -35,6 +35,16 @@
                BlueprintIdentifier = "76AFD39C1D34236A00A9DDAD"
                BuildableName = "MercadoPagoSDKExamplesUITests.xctest"
                BlueprintName = "MercadoPagoSDKExamplesUITests"
+               ReferencedContainer = "container:MercadoPagoSDKExamples.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0F98850D1AD2BCB900F750F0"
+               BuildableName = "MercadoPagoSDKExamplesTests.xctest"
+               BlueprintName = "MercadoPagoSDKExamplesTests"
                ReferencedContainer = "container:MercadoPagoSDKExamples.xcodeproj">
             </BuildableReference>
          </TestableReference>

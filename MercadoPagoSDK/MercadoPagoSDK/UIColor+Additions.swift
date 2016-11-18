@@ -68,7 +68,9 @@ extension UIColor {
     {
     return UIColorFromRGB(0x5ABEE7)
     }
-    
+    class public func lightBlue() -> UIColor {
+        return UIColorFromRGB(0x3F9FDA)
+    }
     class public func grayBaseText() -> UIColor
     {
     return UIColorFromRGB(0x333333)
@@ -105,7 +107,6 @@ extension UIColor {
     class public func installments() -> UIColor {
         return UIColorFromRGB(0x2BA2EC)
     }
-    
     
     class public func systemFontColor() -> UIColor{
         return MercadoPagoContext.getTextColor()

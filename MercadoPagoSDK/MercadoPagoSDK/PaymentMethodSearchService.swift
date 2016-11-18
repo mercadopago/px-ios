@@ -57,13 +57,9 @@ open class PaymentMethodSearchService: MercadoPagoService {
             params = params + "&customer_id=" + customerId!
         }
         
-        var accessTokenBody = ""
-        let payerAccessToken = MercadoPagoContext.payerAccessToken()
-        if payerAccessToken.characters.count > 0 {
-            accessTokenBody = JSONHandler.jsonCoding(["accessToken": payerAccessToken])
-        }
+        let groupsPayerBody = MercadoPagoContext.payerAccessToken().characters.count > 0 ? GroupsPayer().toJSONString() as AnyObject? : nil
         
-        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: accessTokenBody as AnyObject, method: "POST", success: { (jsonResult) -> Void in
+        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {

@@ -24,6 +24,11 @@ open class Card : NSObject, CardInformation {
     open var issuer : Issuer?
     open var securityCode : SecurityCode?
     
+    
+    public func getIssuer() -> Issuer? {
+        return self.issuer
+    }
+    
 
    open class func fromJSON(_ json : NSDictionary) -> Card {
         let card : Card = Card()

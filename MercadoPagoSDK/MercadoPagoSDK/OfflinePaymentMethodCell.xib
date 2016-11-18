@@ -1,78 +1,110 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="OfflinePaymentMethodCell" customModule="MercadoPagoSDK" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="360" height="80"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="258" id="KGk-i7-Jjw" customClass="OfflinePaymentMethodCell" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="258"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="327" height="79"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="257"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOb-BJ-hW9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="43" y="8" width="120" height="48"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="iconCash" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                        <rect key="frame" x="183" y="58" width="48" height="48"/>
+                        <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="48" id="3Ny-SD-LWP"/>
+                            <constraint firstAttribute="height" constant="48" id="cyR-Nj-nia"/>
+                        </constraints>
+                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1F9-NN-ufr">
+                        <rect key="frame" x="32" y="119" width="350.5" height="21"/>
                         <attributedString key="attributedText">
-                            <fragment content="Método de Pago">
+                            <fragment content="Pagarás $ 109 en PagoFacil">
                                 <attributes>
-                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="16" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="12" maximumLineHeight="12" tighteningFactorForTruncation="0.0"/>
+                                    <font key="NSFont" metaFont="system" size="17"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Y8d-Nr-Ptp" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="8" y="53" width="311" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6G-5w-j6M">
+                        <rect key="frame" x="120.5" y="150" width="173" height="14.5"/>
                         <attributedString key="attributedText">
-                            <fragment content="Se acreditará en 7 días">
+                            <fragment content="Se acreditará en 7 días hábiles">
                                 <attributes>
-                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="14" name="HelveticaNeue-Light"/>
+                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <font key="NSFont" size="12" name=".AppleSystemUIFont"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
-                        <color key="highlightedColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" image="cargavirtual" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
-                        <rect key="frame" x="8" y="7" width="30" height="46"/>
-                        <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="omM-He-gJw">
+                        <rect key="frame" x="97.5" y="150" width="16" height="16"/>
+                        <color key="tintColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="46" id="V8d-TI-NL9"/>
+                            <constraint firstAttribute="height" constant="16" id="OBS-re-oGv"/>
+                            <constraint firstAttribute="width" constant="16" id="ayK-oU-ChG"/>
                         </constraints>
-                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3YQ-q5-tZX">
+                        <rect key="frame" x="150" y="199.5" width="114" height="33.5"/>
+                        <state key="normal">
+                            <attributedString key="attributedTitle">
+                                <fragment content="Cambiar pago">
+                                    <attributes>
+                                        <color key="NSColor" red="0.0" green="0.61960784313725492" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                        </state>
+                    </button>
                 </subviews>
+                <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="top" secondItem="N1r-JA-UCo" secondAttribute="bottom" id="7ap-S3-Rvt"/>
-                    <constraint firstItem="vOb-BJ-hW9" firstAttribute="leading" secondItem="N1r-JA-UCo" secondAttribute="trailing" constant="5" id="EfR-TP-zwo"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Y8d-Nr-Ptp" secondAttribute="trailing" id="MHS-3g-u6a"/>
-                    <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="RS8-Uq-kR0"/>
-                    <constraint firstItem="N1r-JA-UCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="XHx-am-Hzd"/>
-                    <constraint firstItem="vOb-BJ-hW9" firstAttribute="baseline" secondItem="N1r-JA-UCo" secondAttribute="baseline" id="Xs7-I2-wEr"/>
-                    <constraint firstItem="vOb-BJ-hW9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="biM-CV-3jE"/>
-                    <constraint firstAttribute="leadingMargin" secondItem="N1r-JA-UCo" secondAttribute="leading" id="fDq-JL-BNO"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Y8d-Nr-Ptp" secondAttribute="bottom" id="gJ8-cw-IGW"/>
-                    <constraint firstItem="N1r-JA-UCo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ofq-qN-7vU"/>
-                    <constraint firstItem="N1r-JA-UCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="vS3-gl-Dft"/>
+                    <constraint firstItem="1F9-NN-ufr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="5u3-6B-9GU"/>
+                    <constraint firstItem="3YQ-q5-tZX" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="6cW-Rv-pbs"/>
+                    <constraint firstItem="3YQ-q5-tZX" firstAttribute="top" secondItem="d6G-5w-j6M" secondAttribute="bottom" constant="35" id="8Ih-Ee-su2"/>
+                    <constraint firstItem="1F9-NN-ufr" firstAttribute="top" secondItem="N1r-JA-UCo" secondAttribute="bottom" constant="13" id="8eF-6L-bCv"/>
+                    <constraint firstItem="1F9-NN-ufr" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="NKN-av-uff"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="1F9-NN-ufr" secondAttribute="trailing" constant="24" id="SQ2-XE-6QU"/>
+                    <constraint firstItem="d6G-5w-j6M" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="UMD-RS-mzN"/>
+                    <constraint firstItem="d6G-5w-j6M" firstAttribute="leading" secondItem="omM-He-gJw" secondAttribute="trailing" constant="7" id="ajl-5t-oYw"/>
+                    <constraint firstItem="N1r-JA-UCo" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="c88-4E-TpI"/>
+                    <constraint firstItem="omM-He-gJw" firstAttribute="top" secondItem="1F9-NN-ufr" secondAttribute="bottom" constant="10" id="dMC-VA-QyO"/>
+                    <constraint firstItem="N1r-JA-UCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="50" id="daO-MK-Vfa"/>
+                    <constraint firstItem="d6G-5w-j6M" firstAttribute="top" secondItem="1F9-NN-ufr" secondAttribute="bottom" constant="10" id="oex-qQ-kq5"/>
                 </constraints>
             </tableViewCellContentView>
             <edgeInsets key="layoutMargins" top="12" left="12" bottom="12" right="12"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
-                <outlet property="comment" destination="Y8d-Nr-Ptp" id="EFp-5M-bfU"/>
-                <outlet property="iconImage" destination="N1r-JA-UCo" id="Oyg-0Z-EUi"/>
-                <outlet property="paymentItemDescription" destination="vOb-BJ-hW9" id="EpB-jo-lId"/>
+                <outlet property="accreditationTimeIcon" destination="omM-He-gJw" id="A6R-Cb-4gJ"/>
+                <outlet property="acreditationTimeLabel" destination="d6G-5w-j6M" id="o1Q-BM-r0z"/>
+                <outlet property="changePaymentButton" destination="3YQ-q5-tZX" id="Xqd-Sw-PJ8"/>
+                <outlet property="iconCash" destination="N1r-JA-UCo" id="4EJ-Hk-FiZ"/>
+                <outlet property="paymentMethodDescription" destination="1F9-NN-ufr" id="fgj-bD-Fv2"/>
             </connections>
-            <point key="canvasLocation" x="413" y="405"/>
+            <point key="canvasLocation" x="440" y="494"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cargavirtual" width="30" height="30"/>
+        <image name="iconCash" width="48" height="48"/>
+        <image name="time" width="192" height="192"/>
     </resources>
 </document>

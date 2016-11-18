@@ -22,13 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
       
-        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
+        //MercadoPagoContext.setPublicKey("TEST-9eb0be69-329a-417f-9dd5-aad772a4d50b")
+        MercadoPagoContext.setPublicKey("TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a")
+        
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
-   //     MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
-        MercadoPagoContext.setCustomerURI("/get_customer")
+        MercadoPagoContext.setBaseURL("https://www.mercadopago.com/checkout/examples")
+        MercadoPagoContext.setCustomerURI("/getCustomer")
 
         //Pinto de rojo el color primerio
-        MercadoPagoContext.setupPrimaryColor(UIColor.red, complementaryColor: UIColor.red)
+
+        MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
+
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
         

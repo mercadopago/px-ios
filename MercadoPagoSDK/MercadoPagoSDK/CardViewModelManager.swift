@@ -43,7 +43,8 @@ class CardViewModelManager: NSObject {
         
         if customerCard != nil {
             self.customerCard = customerCard
-            self.guessedPMS?[0] = (customerCard?.getPaymentMethod())!
+            self.guessedPMS = [PaymentMethod]()
+            self.guessedPMS?.append((customerCard?.getPaymentMethod())!)
         }
         self.token = token
         self.paymentSettings = paymentSettings
@@ -169,8 +170,8 @@ class CardViewModelManager: NSObject {
     
     func matchedPaymentMethod (_ cardNumber : String) -> [PaymentMethod]? {
         if self.guessedPMS != nil {
-            //return self.paymentMethod
-            return nil
+            return self.guessedPMS
+
         }
         if(self.paymentMethods == nil){
             return nil
@@ -215,7 +216,11 @@ class CardViewModelManager: NSObject {
         return self.cardToken!
     }
     func getGuessedPM() -> PaymentMethod? {
-        return guessedPMS?[0]
+        if let card = customerCard {
+            return card.getPaymentMethod()
+        }else{
+           return guessedPMS?[0]
+        }
     }
     func hasGuessedPM() -> Bool{
         if guessedPMS == nil || guessedPMS?.count == 0{

@@ -32,36 +32,55 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
     static let ROW_HEIGHT = CGFloat(80)
     
-    @IBOutlet weak var iconImage: UIImageView!
-    
-    @IBOutlet weak var comment: MPLabel!
-    
-    @IBOutlet weak var paymentItemDescription: MPLabel!
+    @IBOutlet weak var iconCash: UIImageView!
+    @IBOutlet weak var paymentMethodDescription: MPLabel!
+   
+    @IBOutlet weak var acreditationTimeLabel: MPLabel!
 
+    @IBOutlet weak var changePaymentButton: MPButton!
+    
+    @IBOutlet weak var accreditationTimeIcon: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        var image = MercadoPago.getImage("time")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        self.accreditationTimeIcon.tintColor = UIColor.grayLight()
+        self.accreditationTimeIcon.image = image
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillRowWithPaymentMethod(_ paymentMethod : PaymentMethodSearchItem, image : UIImage, paymentItemDescription : String = "") {
-        self.iconImage.image = image
-        self.comment.text = (paymentMethod.comment!)
-        self.paymentItemDescription.text = paymentItemDescription
-    }
-    
-    internal func fillRowWithPaymentMethod(_ paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem) {
-        self.iconImage.image = MercadoPago.getImageFor(paymentMethod, forCell: true)
-        if paymentMethodSearchItemSelected.comment?.characters.count > 0 {
-            self.comment.text = paymentMethodSearchItemSelected.comment
+    internal func fillCell(_ paymentMethodMethodSearchItem : PaymentMethodSearchItem, amount : Double, paymentMethod : PaymentMethod, currency : Currency) {
+        
+        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText())
+        let attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized)
+        attributedTitle.append(attributedAmount)
+        
+        var currentTitle = ""
+        let titleI18N = "ryc_title_" + paymentMethodMethodSearchItem.idPaymentMethodSearchItem
+        if (titleI18N.existsLocalized()) {
+            currentTitle = titleI18N.localized
         } else {
-            self.comment.text = Utils.getAccreditationTitle(paymentMethod)
+            currentTitle = "ryc_title_default".localized
         }
         
-        self.paymentItemDescription.text = paymentMethodSearchItemSelected.description
+        attributedTitle.append(NSAttributedString(string : currentTitle))
         
+        let complementaryTitle = "ryc_complementary_" + paymentMethodMethodSearchItem.idPaymentMethodSearchItem
+        if complementaryTitle.existsLocalized() {
+            attributedTitle.append(NSAttributedString(string : complementaryTitle.localized))
+        }
+        attributedTitle.append(NSAttributedString(string : paymentMethod.name))
+        
+        self.paymentMethodDescription.attributedText = attributedTitle
+        
+        self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodMethodSearchItem.comment!)
     }
-}
+    
+    
+    
+  }

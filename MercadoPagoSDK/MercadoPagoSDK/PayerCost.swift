@@ -75,7 +75,9 @@ open class PayerCost : NSObject {
         return obj
     }
 
-    
+    public func hasInstallmentsRate() -> Bool {
+        return (self.installmentRate > 0 && self.installments > 1)
+    }
 }
 
 

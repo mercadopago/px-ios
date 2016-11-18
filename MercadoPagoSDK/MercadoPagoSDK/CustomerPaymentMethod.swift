@@ -9,6 +9,7 @@
 import UIKit
 
 open class CustomerPaymentMethod: NSObject, CardInformation {
+  
     
     var _id : String!
     var _description : String!
@@ -39,6 +40,11 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
         return customerPaymentMethod
     }
     
+    
+    public func getIssuer() -> Issuer? {
+        return nil
+    }
+
     
     open func toJSON() -> [String:Any] {
         let obj:[String:Any] = [

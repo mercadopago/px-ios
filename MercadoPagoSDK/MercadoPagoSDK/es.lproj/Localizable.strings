@@ -164,3 +164,16 @@
 "¿Cómo quieres pagar?"="¿Cómo quieres pagar?";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
+
+// PaymentTypes para RyC
+"ryc_title_default"=" en un ";
+"ryc_title_cargavirtual"=" en ";
+"ryc_title_redlink_bank_transfer"=" en ";
+"ryc_title_bancomer_bank_transfer"=" en tu ";
+"ryc_title_serfin_bank_transfer"=" en tu ";
+"ryc_title_banamex_bank_transfer"=" en tu ";
+
+"ryc_complementary_bancomer_bank_transfer"="Home Banking de ";
+"ryc_complementary_serfin_bank_transfer"="Home Banking de ";
+"ryc_complementary_banamex_bank_transfer"="Home Banking de ";
+"ryc_complementary_banamex_atm"="cajero automático de ";

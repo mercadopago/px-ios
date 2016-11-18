@@ -159,9 +159,6 @@
 		157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../MercadoPagoSDK/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUITest.swift; sourceTree = "<group>"; };
 		15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MercadoPagoSDK.xcodeproj; path = ../MercadoPagoSDK/MercadoPagoSDK.xcodeproj; sourceTree = "<group>"; };
-		4B9CFF7B1DBFD92300A2F3D6 /* iconoAcreditado.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconoAcreditado.png; path = ../../../Documents/iconoAcreditado.png; sourceTree = "<group>"; };
-		4B9CFF7C1DBFD92300A2F3D6 /* iconoAcreditado@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconoAcreditado@2x.png"; path = "../../../Documents/iconoAcreditado@2x.png"; sourceTree = "<group>"; };
-		4B9CFF7D1DBFD92400A2F3D6 /* iconoAcreditado@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconoAcreditado@3x.png"; path = "../../../Documents/iconoAcreditado@3x.png"; sourceTree = "<group>"; };
 		762713681D343424008DC3AB /* CardFlowTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlowTest.swift; sourceTree = "<group>"; };
 		7627136B1D343580008DC3AB /* CardFormActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFormActions.swift; sourceTree = "<group>"; };
 		7627136D1D343769008DC3AB /* CheckoutFlowTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutFlowTest.swift; sourceTree = "<group>"; };
@@ -412,9 +409,6 @@
 		766CDFE71D240E9D00F9FAD4 /* Component Examples */ = {
 			isa = PBXGroup;
 			children = (
-				4B9CFF7B1DBFD92300A2F3D6 /* iconoAcreditado.png */,
-				4B9CFF7C1DBFD92300A2F3D6 /* iconoAcreditado@2x.png */,
-				4B9CFF7D1DBFD92400A2F3D6 /* iconoAcreditado@3x.png */,
 				76EF7E701D24475F0087C785 /* Component Cells */,
 				766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */,
 				766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */,
@@ -770,6 +764,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -811,6 +806,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -823,6 +819,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = T9VUHG6RU2;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -840,7 +837,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -852,6 +849,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = T9VUHG6RU2;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -869,7 +867,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};

@@ -81,7 +81,9 @@ open class MPFlowBuilder : NSObject {
     
     open class func startCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, timer : CountdownTimer? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
+
         var cardVC : UINavigationController?
+
         var ccf : CardFormViewController = CardFormViewController()
         
         var currentCallbackCancel : ((Void) -> Void)

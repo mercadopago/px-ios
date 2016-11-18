@@ -50,6 +50,10 @@ class Utils {
         return dateFormatter.string(from: date)
     }
 
+    class func getAttributedAmount(_ amount : Double, currency : Currency, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+        return self.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color, fontSize : fontSize, baselineOffset : baselineOffset)
+    }
+    
     class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
@@ -89,18 +93,20 @@ class Utils {
         return attributedSymbol
     }
     
-    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString) -> NSAttributedString {
-        let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
+    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, baselineOffset : Int = 7) -> NSAttributedString {
+        let color = color ?? UIColor.lightBlue()
         
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22),NSForegroundColorAttributeName:mpTurquesaColor]
+        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName:color]
         
         let stringToWrite = NSMutableAttributedString()
         
-        stringToWrite.append(NSMutableAttributedString(string: installments + " de ".localized, attributes: descriptionAttributes))
+        stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
         
-        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:mpTurquesaColor))
+        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize, baselineOffset : baselineOffset))
         
-        stringToWrite.append(additionalString)
+        if additionalString != nil {
+            stringToWrite.append(additionalString!)
+        }
         
         return stringToWrite
     }
@@ -172,30 +178,46 @@ class Utils {
         return formattedString
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
-        for item in paymentMethodSearch.groups {
-            if let result = self.findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
-                return result
-            }
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
+ 
+        if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+            return result
         }
         return nil
     }
     
-    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchItem : PaymentMethodSearchItem, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList : [PaymentMethodSearchItem], paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
         
-        if paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId {
-            return paymentMethodSearchItem
-        } else if (paymentMethodSearchItem.idPaymentMethodSearchItem.startsWith(paymentMethodId) && paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId.rawValue) {
-            return paymentMethodSearchItem
+        var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg : PaymentMethodSearchItem) -> Bool in
+            arg.idPaymentMethodSearchItem == paymentMethodId
         }
         
-        for item in paymentMethodSearchItem.children {
-            if let paymentMethodSearchItemFound = findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+        if filterPaymentMethodSearchFound.count > 0 {
+            return filterPaymentMethodSearchFound[0]
+        } else if paymentTypeId != nil {
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg : PaymentMethodSearchItem) -> Bool in
+                arg.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId!.rawValue
+            }
+            
+            if filterPaymentMethodSearchFound.count > 0 {
+                return filterPaymentMethodSearchFound[0]
+            }
+        } else {
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg : PaymentMethodSearchItem) -> Bool in
+                arg.idPaymentMethodSearchItem.startsWith(paymentMethodId)
+            }
+            if filterPaymentMethodSearchFound.count > 0 {
+                return filterPaymentMethodSearchFound[0]
+            }
+        }
+        
+        for item in paymentMethodSearchList {
+            if let paymentMethodSearchItemFound = findPaymentMethodSearchItemById(item.children, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
                 return paymentMethodSearchItemFound
             }
         }
         
-        if paymentMethodSearchItem.children.count == 0 {
+        if paymentMethodSearchList.count == 0 {
             return nil
         }
         return nil

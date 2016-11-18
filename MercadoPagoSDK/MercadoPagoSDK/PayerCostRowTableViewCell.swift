@@ -15,17 +15,12 @@ class PayerCostRowTableViewCell: UITableViewCell {
     
     func fillCell(payerCost : PayerCost) {
         let currency = MercadoPagoContext.getCurrency()
-        if (payerCost.installmentRate != 0 && payerCost.installments != 1){
-            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName : UIColor(red: 153, green: 153, blue: 153)]))
-            attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor(red: 153, green: 153, blue: 153), fontSize:15))
-            attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName : UIColor(red: 153, green: 153, blue: 153)]))
-            
-            interestDescription.attributedText = attributedTotal
-            
+        if (payerCost.hasInstallmentsRate() || payerCost.installments == 1){
+            interestDescription.attributedText = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.grayLight())
         } else {
-            interestDescription.text = "Sin interés"
+            interestDescription.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
-        var installmentNumber:String = String(format:"%i", payerCost.installments)
+        var installmentNumber = String(format:"%i", payerCost.installments)
         installmentNumber = "\(installmentNumber) x "
         let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor(red: 51, green: 51, blue: 51))
         
@@ -33,13 +28,15 @@ class PayerCostRowTableViewCell: UITableViewCell {
         installmentLabel.append(totalAmount)
         installmentDescription.attributedText =  installmentLabel
     }
+    
     func addSeparatorLineToTop(width: Double, y: Float){
-        var lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
-        var line = UIView(frame: lineFrame)
+        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
+        let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.grayLight()
         addSubview(line)
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

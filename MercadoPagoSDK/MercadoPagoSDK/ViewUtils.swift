@@ -62,7 +62,7 @@ class ViewUtils {
                 let data = try? Data(contentsOf: url!)
                 if data != nil {
                         let image = UIImage(data: data!)
-                        return image!
+                        return image
                     }
                 else{
                     return nil
@@ -70,7 +70,14 @@ class ViewUtils {
             }else{
                 return nil
         }
-        
+    }
+    
+    func getSeparatorLineForTop(width: Double, y: Float) -> UIView{
+        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
+        let line = UIView(frame: lineFrame)
+        line.alpha = 0.6
+        line.backgroundColor = UIColor.grayLight()
+        return line
     }
     
     class func drawBottomLine(_ x : CGFloat = 0, y : CGFloat, width : CGFloat, inView view: UIView){
