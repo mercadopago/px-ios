@@ -3,7 +3,7 @@ language: objective-c
 cache: cocoapods
 osx_image: xcode8.1
 xcode_project: MercadoPagoSDK/MercadoPagoSDK.xcodeproj
-xcode_scheme: MercadoPagoSDK
+xcode_scheme: MercadoPagoSDKTests
 
 before_install:
   - xcrun simctl list
