@@ -135,7 +135,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     button.actionLink = instruction.actions![0].url
                     button.addTarget(self, action: #selector(self.goToURL), for: .touchUpInside)
                     self.view.addSubview(button)
-                    let views = ["label": button]
+                    let views = ["button": button]
                     Utils.setContrainsHorizontal(views: views, constrain: 60)
                     
                     Utils.setContrainsVertical(label: button, previus: previus, constrain: 30)
