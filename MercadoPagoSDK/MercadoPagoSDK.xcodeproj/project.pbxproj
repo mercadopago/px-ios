@@ -496,7 +496,6 @@
 		76151B961C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76151B931C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.swift */; };
 		76151B971C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B941C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib */; };
 		76151B981C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B941C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib */; };
-		7619E93B1DF05E2900CEFAC1 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7619E93A1DF05E2900CEFAC1 /* Array+Extension.swift */; };
 		761B893A1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */; };
 		761B893B1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */; };
 		761B89421C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89401C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift */; };
@@ -972,7 +971,6 @@
 		76151B8E1C74C8DA007DF0E3 /* SimpleInstructionsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleInstructionsViewCell.xib; sourceTree = "<group>"; };
 		76151B931C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsTwoLabelsViewCell.swift; sourceTree = "<group>"; };
 		76151B941C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsTwoLabelsViewCell.xib; sourceTree = "<group>"; };
-		7619E93A1DF05E2900CEFAC1 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUIViewController.swift; sourceTree = "<group>"; };
 		761B89401C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseDetailTableViewCell.swift; sourceTree = "<group>"; };
 		761B89411C637DBD0015D0BE /* PurchaseDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -1293,7 +1291,6 @@
 			isa = PBXGroup;
 			children = (
 				0F9883B71AD2AD1600F750F0 /* String+Additions.swift */,
-				7619E93A1DF05E2900CEFAC1 /* Array+Extension.swift */,
 				0F9883B81AD2AD1600F750F0 /* UIDevice+Additions.swift */,
 				0F9883B91AD2AD1600F750F0 /* UIColor+Additions.swift */,
 				76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */,
@@ -2521,7 +2518,6 @@
 				762B8C251D19752A00A86097 /* MPStepBuilder.swift in Sources */,
 				76743C781C45A24600120347 /* PaymentPreference.swift in Sources */,
 				0F9883951AD2AB6000F750F0 /* Setting.swift in Sources */,
-				7619E93B1DF05E2900CEFAC1 /* Array+Extension.swift in Sources */,
 				0F9883301AD2AB3C00F750F0 /* MercadoPago.swift in Sources */,
 				0F98844F1AD2AEEF00F750F0 /* MPPaymentMethodEmptyTableViewCell.swift in Sources */,
 				4BAA56221DB6B13B00501061 /* CardInfo.swift in Sources */,

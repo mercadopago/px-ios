@@ -15,7 +15,6 @@
 "cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
 "NOT_INSTALLMENTS_FOUND" = "No se encontraron cuotas disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
-"No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
 
 "visa"="Visa";
 "master"="Mastercard";
@@ -26,7 +25,7 @@
 
 //CONGRATS
 
-"Cancelar pago" = "Cancelar pago";
+"Cancelar pago y seguir comprando" = "Cancelar pago y seguir comprando";
 
 // -- CallForAuth
 
@@ -124,7 +123,7 @@
 
 //Instructions
 
-"Continuar"= "Continuar";//--
+"Seguir comprando"= "Seguir comprando";//--
 
 
 //--
@@ -160,7 +159,7 @@
 "Operación"="Operación";
 "Fecha"="Fecha";
 
-// RyC
+
 "Revisa si está todo bien..." = "Revisa si está todo bien...";
 "Total a pagar " = "Total a pagar ";
 "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago";

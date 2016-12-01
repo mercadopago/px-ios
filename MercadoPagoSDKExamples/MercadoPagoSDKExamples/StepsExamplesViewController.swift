@@ -98,8 +98,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
 */
         
         let pp = PaymentPreference()
-        pp.excludedPaymentTypeIds = ["ticket", "bank_transfer", "atm", "credit_card"]
-        pp.maxAcceptedInstallments = 3
+        pp.excludedPaymentTypeIds = ["atm"]
         let pv = MPFlowBuilder.startPaymentVaultViewController(1000, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
             print(paymentMethod._id)
             self.paymentMethod = paymentMethod

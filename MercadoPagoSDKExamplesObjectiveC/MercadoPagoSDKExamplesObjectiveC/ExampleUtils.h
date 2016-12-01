@@ -10,8 +10,8 @@
 
 @interface ExampleUtils : NSObject
 
-#define TEST_PUBLIC_KEY @"TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
 #define MERCHANT_PUBLIC_KEY @"TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
+#define TEST_PUBLIC_KEY @"TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
 //#define TEST_PUBLIC_KEY @"6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2"
 #define MERCHANT_MOCK_BASE_URL @"https://www.mercadopago.com"
 #define MERCHANT_MOCK_GET_CUSTOMER_URI @"/checkout/examples/getCustomer"

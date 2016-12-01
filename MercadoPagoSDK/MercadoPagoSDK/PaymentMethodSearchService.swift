@@ -62,17 +62,16 @@ open class PaymentMethodSearchService: MercadoPagoService {
         let groupsPayerBody = MercadoPagoContext.payerAccessToken().characters.count > 0 ? GroupsPayer().toJSONString() as AnyObject? : nil
 
         
-        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", cache: false , success: { (jsonResult) -> Void in
+        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
                     failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago".localized]))
                 } else {
-
-                    if paymentSearchDic.allKeys.count > 0  {
+                    if paymentSearchDic.allKeys.count > 0 {
                         let paymentSearch = PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
-                            success(paymentSearch)
-                    } else{
+                        success(paymentSearch)
+                    } else {
                         failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago".localized]))
                     }
                 }
