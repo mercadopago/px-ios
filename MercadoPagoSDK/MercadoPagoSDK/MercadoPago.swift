@@ -12,8 +12,7 @@ import UIKit
 
 
 
-open class MercadoPago : NSObject, UIAlertViewDelegate {
-    
+@objc open class MercadoPago : NSObject, UIAlertViewDelegate {
     
     
     open static let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"

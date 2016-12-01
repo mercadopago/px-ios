@@ -42,6 +42,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
     
+    static public var showBankDeals = true
     
     var inputButtons : UINavigationBar?
     var errorLabel : MPLabel?
@@ -80,7 +81,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 self.navigationController?.navigationBar.isTranslucent = false
                 self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
                 
-                if self.timer == nil {
+                if self.timer == nil && cardFormManager.showBankDeals(){
                     let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                     promocionesButton.tintColor = UIColor.systemFontColor()
                     self.navigationItem.rightBarButtonItem = promocionesButton

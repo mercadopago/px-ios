@@ -8,6 +8,7 @@
 
 #import "MPLoadingView.h"
 #import "UIView+RotateView.h"
+#import <MercadoPagoSDK/MercadoPagoSDK-Swift.h>
 
 @interface MPLoadingView ()
 
@@ -96,9 +97,9 @@
 
         
         
-		self.spinner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mpui-loading_default"]];
-        [self.spinner setFrame: CGRectMake(50, 50, 100, 100)];
-        //[MercadoPago getImage:@"mpui-loading_default"];
+        UIImage *image = [MercadoPago getImage:@"mpui-loading_default"];
+		self.spinner = [[UIImageView alloc] initWithImage:image];
+        
 		[self addSubview:self.spinner];
 		[self.spinner setTranslatesAutoresizingMaskIntoConstraints:NO];
 

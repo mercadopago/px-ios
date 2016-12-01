@@ -46,7 +46,10 @@ open class ErrorViewController: MercadoPagoUIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
-        self.errorSubtitle.text = error.messageDetail
+        
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)]
+                                                    
+        self.errorSubtitle.attributedText = NSAttributedString(string :error.messageDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
         
         if self.error.retry! {

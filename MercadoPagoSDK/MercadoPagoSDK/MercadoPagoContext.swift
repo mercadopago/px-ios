@@ -44,6 +44,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var currency : Currency!
     
+    var display_default_loading = true
+    
     open class var PUBLIC_KEY : String {
         return "public_key"
     }
@@ -111,6 +113,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
 
     open class func setSite(_ site : Site) {
         MercadoPagoContext.sharedInstance.setSite(site)
+    }
+    open class func getSite() -> String{
+        return MercadoPagoContext.sharedInstance.site.rawValue
     }
     
     open class func setSiteID(_ siteId : String) {
@@ -262,6 +267,11 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         sharedInstance.account_money_available = accountMoneyAvailable
     }
     
+    
+    open class func setDisplayDefaultLoading(flag : Bool){
+        sharedInstance.display_default_loading = flag
+    }
+    
     open class func merchantAccessToken() -> String {
         return sharedInstance.merchant_access_token
     }
@@ -305,6 +315,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
         return sharedInstance.payment_uri
         
+    }
+    
+    open class func shouldDisplayDefaultLoading() -> Bool {
+        return sharedInstance.display_default_loading
     }
     
 

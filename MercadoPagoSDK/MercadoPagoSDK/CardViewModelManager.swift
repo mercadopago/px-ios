@@ -229,4 +229,11 @@ class CardViewModelManager: NSObject {
             return true
         }
     }
+    func showBankDeals() -> Bool{
+        if MercadoPagoContext.getSite() == MercadoPagoContext.Site.MLA.rawValue{
+            return CardFormViewController.showBankDeals
+        } else {
+            return false
+        }
+    }
 }

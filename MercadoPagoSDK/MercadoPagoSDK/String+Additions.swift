@@ -42,6 +42,9 @@ extension String {
     }
     
     public func startsWith(_ prefix : String) -> Bool {
+        if prefix == self {
+            return true
+        }
         let startIndex = self.range(of: prefix)
         if startIndex == nil  || self.startIndex != startIndex?.lowerBound {
             return false

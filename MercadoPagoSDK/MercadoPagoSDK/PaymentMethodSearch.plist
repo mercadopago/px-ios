@@ -75,47 +75,47 @@
 	<key>nativa</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosNativa</string>
 	</dict>
 	<key>tarshop</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosShopping</string>
 	</dict>
 	<key>cencosud</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosCencosud</string>
 	</dict>
 	<key>cabal</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosCabal</string>
 	</dict>
 	<key>diners</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoDiners</string>
+		<string>mediosDiners</string>
 	</dict>
 	<key>argencard</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosArgencard</string>
 	</dict>
 	<key>cordial</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosCordial</string>
 	</dict>
 	<key>cordobesa</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosCordobesa</string>
 	</dict>
 	<key>cmr</key>
 	<dict>
 		<key>image_name</key>
-		<string></string>
+		<string>mediosCmr</string>
 	</dict>
 	<key>account_money</key>
 	<dict>

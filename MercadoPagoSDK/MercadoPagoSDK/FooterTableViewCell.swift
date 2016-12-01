@@ -18,7 +18,9 @@ class FooterTableViewCell: CallbackCancelTableViewCell {
     }
     func fillCell(payment: Payment){
         if payment.statusDetail.contains("cc_rejected_bad_filled"){
-            self.button.setTitle("Cancelar pago y seguir comprando".localized, for: UIControlState.normal)
+            self.button.setTitle("Cancelar pago".localized, for: UIControlState.normal)
+        } else{
+            self.button.setTitle("Continuar".localized, for: UIControlState.normal)
         }
     }
 }
