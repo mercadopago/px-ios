@@ -7,7 +7,7 @@
 //
 
 
-
+import Foundation
 open class PaymentTrackInfo: NSObject {
    
     static let PAYMENT_STATUS : UInt = 8

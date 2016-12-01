@@ -7,18 +7,28 @@
 //
 
 import XCTest
+//@testable import MercadoPagoSDK
 
 class CurrencyTest: BaseTest {
+
+    var currency = Currency(_id: "id", description: "description", symbol: "$", decimalPlaces: 2, decimalSeparator: ".", thousandSeparator: ",")
     
     func testInit(){
-        let currency = Currency(_id: "id", description: "description", symbol: "symbol", decimalPlaces: 2, decimalSeparator: ".", thousandSeparator: ",")
+        currency = Currency(_id: "id", description: "description", symbol: "$", decimalPlaces: 2, decimalSeparator: ".", thousandSeparator: ",")
         
         XCTAssertEqual(currency._id, "id")
         XCTAssertEqual(currency._description, "description")
-        XCTAssertEqual(currency.symbol, "symbol")
+        XCTAssertEqual(currency.symbol, "$")
         XCTAssertEqual(currency.decimalPlaces, 2)
         XCTAssertEqual(currency.decimalSeparator, ".")
         XCTAssertEqual(currency.thousandsSeparator, ",")
     }
+    func testGetThousandsSeparatorOrDefault(){
+        XCTAssertEqual(currency.getThousandsSeparatorOrDefault(), ",")
+    }
+    func testGetCurrencySymbolOrDefault(){
+        XCTAssertEqual(currency.getCurrencySymbolOrDefault(), "$")
+    }
+
     
 }

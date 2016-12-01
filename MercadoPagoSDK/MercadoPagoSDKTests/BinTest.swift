@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDK
 
 class BinTest: BaseTest {
     

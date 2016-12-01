@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDK
 
 class MaskElementTest: BaseTest {
     
@@ -63,9 +64,9 @@ class MaskElementTest: BaseTest {
     
     */
     func testEmptyElement(){
-        self.changeCharacterSpaceMask("X")
+        self.changeCharacterSpaceMask(charStr: "X")
         self.maskToTest.mask = "XXXX XXXX XXXX XXXX"
-        self.changeEmptyMaskElement("*")
+        self.changeEmptyMaskElement(charStr: "*")
         XCTAssertEqual(maskToTest.textMasked("2222"),"2222 **** **** ****")
         XCTAssertEqual(maskToTest.textMasked("22222"),"2222 2*** **** ****")
         XCTAssertEqual(maskToTest.textMasked("11112222333344445"),"1111 2222 3333 4444")
@@ -73,8 +74,8 @@ class MaskElementTest: BaseTest {
     }
     
     func testNoCompleteEmptySpaces(){
-        self.changeCharacterSpaceMask("X")
-        self.changeEmptyMaskElement("•")
+        self.changeCharacterSpaceMask(charStr: "X")
+        self.changeEmptyMaskElement(charStr: "•")
         self.noCompleteEmptySpaces()
         XCTAssertEqual(maskToTest.textMasked("2222"),"2222")
         XCTAssertEqual(maskToTest.textMasked("22222"),"2222 2")
