@@ -77,8 +77,8 @@ int installmentsSelected = 1;
 
 
 - (void)startCardFlow {
-    /*
-    UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod * pm, Token * token, Issuer * issuer, PayerCost * payercost) {
+    
+    UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT cardInformation:nil paymentMethods:nil token:nil timer:nil callback:^(PaymentMethod * pm, Token * token, Issuer * issuer, PayerCost * payercost) {
         currentToken = token;
         selectedIssuer = issuer;
         paymentMethod = pm;
@@ -88,13 +88,12 @@ int installmentsSelected = 1;
     }];
     
     [self presentViewController:cf animated:YES completion:^{}];
-*/
+
 }
 
 -(void)startCardForm {
-    
-    /*
-    UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
+
+    UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 cardInformation:nil paymentMethods:nil token:nil timer:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
         currentToken = token;
         selectedIssuer = issuer;
         paymentMethod = pm;
@@ -105,12 +104,12 @@ int installmentsSelected = 1;
    
     
     [self presentViewController:cf animated:YES completion:^{}];
-    */
+    
 }
 
 - (void)startPaymentMethods {
     
-    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStep:nil callback:^(PaymentMethod *pm) {
+    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStepWithPreference:nil callback:^(PaymentMethod * pm) {
         paymentMethod = pm;
         [self.navigationController popViewControllerAnimated:YES];
     }];
