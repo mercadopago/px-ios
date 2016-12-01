@@ -19,9 +19,9 @@ class InstructionReferenceTest: BaseTest {
         var result = instructionReference.getFullReferenceValue()
         XCTAssertEqual(result, "123")
         
-//        instructionReference.separator = "-"
-//        result = instructionReference.getFullReferenceValue()
-//        XCTAssertEqual(result, "1-2-3")
+        instructionReference.separator = "-"
+        result = instructionReference.getFullReferenceValue()
+        XCTAssertEqual(result, "1-2-3")
         
     }
 }
