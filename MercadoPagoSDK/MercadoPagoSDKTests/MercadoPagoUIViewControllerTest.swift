@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDK
 
 class MercadoPagoUIViewControllerTest: BaseTest {
     
@@ -15,8 +16,8 @@ class MercadoPagoUIViewControllerTest: BaseTest {
     override func setUp() {
         super.setUp()
         MercadoPagoTestContext.addExpectation(withDescription: "clearStyles")
-        MercadoPagoTestContext.fulfillExpectation("clearStyles")
-        self.simulateViewDidLoadFor(self.viewController)
+        MercadoPagoTestContext.fulfillExpectation(withKey: "clearStyles")
+        self.simulateViewDidLoadFor(viewController: self.viewController)
         
     }
 

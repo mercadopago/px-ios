@@ -5,10 +5,18 @@ osx_image: xcode8.1
 xcode_project: MercadoPagoSDK/MercadoPagoSDK.xcodeproj
 xcode_scheme: MercadoPagoSDK
 
+before_install:
+- xcrun simctl list
+- brew update
+
+install:
+- brew install coreutils
+- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+
 before_script:
 - cd MercadoPagoSDK
 
 script:
 # tests not working yet
-- xcodebuild  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO 
+- xcodebuild  build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c 
 #- runTests.sh

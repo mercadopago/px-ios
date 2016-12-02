@@ -30,16 +30,10 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.showNavBar()
         self.showLoading()
     }
 
 
-    override func getNavigationBarTitle() -> String {
-        return "Términos y Condiciones".localized
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

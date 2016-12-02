@@ -8,26 +8,20 @@
 
 import UIKit
 
-class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScrollable {
-    
-    internal func updateTitleFontSize(toSize: CGFloat) {
-        self.title.font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: toSize) ?? UIFont.systemFont(ofSize: toSize)
-    }
-
+class PaymentVaultTitleCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var title: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        title.text = "¿Cómo quiéres pagar?".localized
+        title.attributedText = NSAttributedString(string: "¿Cómo quiéres pagar?".localized)
         self.backgroundColor = MercadoPagoContext.getPrimaryColor()
     }
     
     func fillCell(){
-        title.text = "¿Cómo quiéres pagar?".localized
+        title.attributedText = NSAttributedString(string: "¿Cómo quiéres pagar?".localized)
         title.textColor = UIColor.systemFontColor()
         
     }
 
 }
-

@@ -29,8 +29,8 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         self.subtitleSearch.text = subtitle
         self.imageSearch.image = image
 
-        self.backgroundColor = UIColor.white()
-        self.titleSearch.textColor = UIColor.black
+        self.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        self.titleSearch.textColor = MercadoPagoContext.getTextColor()
         self.layoutIfNeeded()
     }
     
@@ -67,7 +67,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         let widthPerItem = availableWidth / 2
         
         let titleLabel = UILabel(frame: CGRect(x:0,y:0,width:widthPerItem,height:0))
-        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        titleLabel.font = UIFont.systemFont(ofSize: 17)
         titleLabel.text = title
         let subtitleLabel = UILabel(frame: CGRect(x:0,y:0,width:widthPerItem,height:0))
         subtitleLabel.font = UIFont.systemFont(ofSize: 15)

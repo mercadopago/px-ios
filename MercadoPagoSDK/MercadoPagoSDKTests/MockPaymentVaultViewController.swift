@@ -15,20 +15,20 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
     var optionSelected = false
     var paymentMethodIdSelected = ""
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.mpStylesLoaded = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.mpStylesCleared = true
-    }
-    
-    override internal func executeBack(){
-        super.executeBack()
-        
-    }
+//    override func viewWillDisappear(animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        self.mpStylesCleared = true
+//    }
+//    
+//    override internal func executeBack(){
+//        super.executeBack()
+//        
+//    }
 
 }
 

@@ -153,6 +153,7 @@ open class MPStepBuilder : NSObject {
             
             if(paymentMethod[0].isIdentificationRequired()){
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
+                    
                     cardToken?.cardholder?.identification = identification
                     
                     if !verifyPaymentMethods(paymentMethods: paymentMethod, cardToken: cardToken!, amount: amount, timer: timer, cardInformation: cardInformation, callback: callback, ccf: ccf, callbackCancel: callbackCancel){
@@ -236,6 +237,8 @@ open class MPStepBuilder : NSObject {
     fileprivate class func getIssuers(_ paymentMethod : PaymentMethod, cardToken : CardToken, customerCard : CardInformation? = nil, timer : CountdownTimer? = nil, ccf : MercadoPagoUIViewController,
                                       callback : @escaping (_ paymentMethod: PaymentMethod, _ token: Token, _ issuer:Issuer?) -> Void){
         MercadoPagoContext.initFlavor2()
+      //  ccf.navigationController?.showLoading()
+        ccf.showLoading()
 
         
         if !cardToken.isCustomerPaymentMethod() {
@@ -244,7 +247,7 @@ open class MPStepBuilder : NSObject {
                     if(issuers.count > 1){
                         let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, timer : timer, callback: { (issuer) -> Void in
                             if let nav = ccf.navigationController {
-                                
+                                nav.showLoading()
                             }
                             
                             self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer as? Issuer, ccf : ccf, callback: callback)
@@ -297,7 +300,7 @@ open class MPStepBuilder : NSObject {
                 (token) -> Void in
                 callback(paymentMethod, token!, issuer!)
                 
-                //ccf.hideLoading()
+                ccf.hideLoading()
             }) { (error) -> Void in
                 let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
                     ccf.dismiss(animated: true, completion: {})

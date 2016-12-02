@@ -131,20 +131,16 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         
     }
     open override func viewDidAppear(_ animated: Bool) {
+        self.showLoading()
         super.viewDidAppear(animated)
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
     }
 
-    open override func didReceiveMemoryWarning() {
+ open override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
     }
     
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.hideLoading()
-    }
 
     
 
@@ -230,7 +226,6 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     }
 
     func rightArrowKeyTapped(){
-        self.showLoading()
         let idnt = Identification(type: self.identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
         
         let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
