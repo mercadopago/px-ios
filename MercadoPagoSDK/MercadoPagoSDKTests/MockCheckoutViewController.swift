@@ -14,7 +14,7 @@ class MockCheckoutViewController: CheckoutViewController {
 
     var startPaymentVaultInvoked = false
     
-    override internal func startPaymentVault(animated : Bool = false){
+    override internal func startPaymentVault(_ animated : Bool = false){
         self.startPaymentVaultInvoked = true
         super.startPaymentVault()
     }

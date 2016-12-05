@@ -228,24 +228,20 @@ class Utils {
     internal static func findPaymentMethod(_ paymentMethods : [PaymentMethod], paymentMethodId : String) -> PaymentMethod {
         var paymentTypeSelected = ""
         
-        
         let paymentMethod = paymentMethods.filter({ (paymentMethod : PaymentMethod) -> Bool in
-            if (paymentMethodId.startsWith(paymentMethod._id)){
-                let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod._id)
-                
-                if paymentTypeIdRange != nil {
-                    paymentTypeSelected = paymentMethodId.substring(from: paymentTypeIdRange!.upperBound)
-                    if paymentTypeSelected.characters.count > 0 {
-                        paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
-                    }
+            let paymentMethodIdRange = paymentMethodId.range(of: paymentMethod._id)
+            if paymentMethodIdRange != nil {
+                paymentTypeSelected = paymentMethodId.substring(from: paymentMethodIdRange!.upperBound)
+                if paymentTypeSelected.characters.count > 0 {
+                    paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
                 }
                 return true
-                
             }
             return false
         })
         
-        if !String.isNullOrEmpty(paymentTypeSelected) {
+        
+        if paymentTypeSelected.characters.count > 0 {
             paymentMethod[0].paymentTypeId = paymentTypeSelected
         }
         

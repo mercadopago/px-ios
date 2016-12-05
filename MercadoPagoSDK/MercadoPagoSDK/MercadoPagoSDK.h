@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MPLoadingView.h"
+//#import "MPLoadingView.h"
 
 //! Project version number for MercadoPagoSDK.
 FOUNDATION_EXPORT double MercadoPagoSDKVersionNumber;

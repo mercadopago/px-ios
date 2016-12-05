@@ -11,9 +11,6 @@ import UIKit
 
 open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
 
-    static let kNavBarOffset = CGFloat(-64.0);
-    static let kDefaultNavBarOffset = CGFloat(0.0);
-    
     var preferenceId : String!
     var publicKey : String!
     var accessToken : String!
@@ -58,6 +55,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         super.viewDidLoad()
         
+        self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 0.01))
+        
         // Avoid account_money in F3
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: false)
         
@@ -68,31 +67,28 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showLoading()
         self.navigationItem.rightBarButtonItem = nil
         self.navBarBackgroundColor = UIColor.white()
         self.navBarTextColor = UIColor.blueMercadoPago()
-        
         
     }
 
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
         self.displayBackButton()
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
+        self.showLoading()
         
         if !self.viewModel.isPreferenceLoaded() {
             self.loadPreference()
         } else {
             if self.viewModel.paymentMethod != nil {
-                self.hideLoading()
                 self.checkoutTable.reloadData()
+                self.hideLoading()
                 if (recover){
                     recover = false
                     self.startRecoverCard()
@@ -111,9 +107,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         self.extendedLayoutIncludesOpaqueBars = true
         self.showNavBar()
-        self.titleCellHeight = 44
+        self.navBarHeight -= 10
     }
-
+    
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -233,7 +229,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                self.navigationController!.popViewController(animated: true)
             }
         }
-        
+        self.hideLoading()
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
         self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
         
@@ -267,8 +263,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     @objc fileprivate func confirmPayment(){
         
-        self.hideNavBar()
-        self.hideBackButton()
         self.showLoading()
         if self.viewModel.isPaymentMethodSelectedCard(){
             self.confirmPaymentOn()
@@ -284,7 +278,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.add(transition, forKey: nil)
         self.navigationController!.popToRootViewController(animated: animated)
-        
+        self.showLoading()
         
         self.viewModel.paymentMethod = paymentMethod
         self.token = token
@@ -432,7 +426,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra".localized)
         payerCostTitleTableViewCell.title.textColor = UIColor.blueMercadoPago()
         payerCostTitleTableViewCell.cell.backgroundColor = UIColor.white()
-        titleCell = payerCostTitleTableViewCell
+        
         return payerCostTitleTableViewCell
     }
     
@@ -512,7 +506,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     override func getNavigationBarTitle() -> String {
-        if (self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset) {
+        if (self.checkoutTable.contentOffset.y == -64) {
             return ""
         }
         return "Confirma tu compra".localized
@@ -520,11 +514,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
         self.didScrollInTable(scrollView)
-    }
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.hideLoading()
     }
 }
 

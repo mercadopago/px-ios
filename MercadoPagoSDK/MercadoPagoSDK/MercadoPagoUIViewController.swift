@@ -20,7 +20,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
-    var loadingInstance : UIView?
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -196,19 +195,12 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.navigationItem.leftBarButtonItem = backButton
     }
     
-    internal func hideBackButton() {
-        self.navigationItem.leftBarButtonItem = nil
-    }
-    
-    
     internal func executeBack(){
         self.navigationController!.popViewController(animated: true)
     }
     
     internal func showLoading(){
-        self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
-        self.view.bringSubview(toFront: self.loadingInstance!)
-        
+        LoadingOverlay.shared.showOverlay(self.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
     }
     
     var fistResponder : UITextField?
@@ -272,7 +264,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.timerLabel!.text = self.timer!.getCurrentTiming()
         }
     }
-    var navBarFontSize: CGFloat = 18
+    
     func showNavBar() {
         
         if navigationController != nil {
@@ -286,7 +278,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             if self.shouldDisplayBackButton {
                 self.displayBackButton()
             }
-            let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: navBarFontSize) ?? UIFont.systemFont(ofSize: navBarFontSize)
+            let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         }

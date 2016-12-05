@@ -21,7 +21,7 @@ open class InstructionReference: Equatable {
         if value.count == 0 {
             return ""
         }
-        let referenceFullValue : String = value.reduce("", {($0 as String) + self.separator + $1})
+        let referenceFullValue : String = value.reduce("", {($0 as String) + self.separator + ($1 as String)})
        // return referenceFullValue.substring(from: self.separator.characters.count)
         return referenceFullValue
     }

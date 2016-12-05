@@ -7,7 +7,7 @@
 //
 
 import XCTest
-
+@testable import MercadoPagoSDK
 
 class CardTest: BaseTest {
 

@@ -24,7 +24,6 @@
 "amex"="Amex";
 
 
-
 "rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
 "cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
 "cc_rejected_other_reason_title"="%0 no procesó el pago";

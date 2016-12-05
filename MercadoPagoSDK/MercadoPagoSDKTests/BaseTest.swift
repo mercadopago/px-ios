@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDK
 
 class BaseTest: XCTestCase {
     
@@ -40,15 +41,15 @@ class BaseTest: XCTestCase {
     
 }
 
-extension UINavigationController {
-    
-    func pushViewController(viewController: UIViewController,
-                            animated: Bool, completion: @escaping (@escaping Void) -> Void) {
-        
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        pushViewController(viewController, animated: animated)
-        CATransaction.commit()
-    }
-    
-}
+//extension UINavigationController {
+//    
+//    func pushViewController(viewController: UIViewController,
+//                            animated: Bool, completion: @escaping (@escaping Void) -> Void) {
+//        
+//        CATransaction.begin()
+//        CATransaction.setCompletionBlock(completion)
+//        pushViewController(viewController, animated: animated)
+//        CATransaction.commit()
+//    }
+//    
+//}
