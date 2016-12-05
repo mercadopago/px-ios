@@ -69,7 +69,7 @@ class Utils {
     
     class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
-        let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
+        let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
 
 
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
@@ -90,7 +90,7 @@ class Utils {
     
     class func getAttributedAmount(_ amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
-        let amount = getAmountFormatted(String(amount), thousandSeparator : thousandSeparator, decimalSeparator: ".")
+        let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator : thousandSeparator, decimalSeparator: ".")
         
 
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
@@ -160,23 +160,12 @@ class Utils {
         if length <= 3 {
             return amount
         }
-        
-        var finalAmountStr = ""
-        
-        var cantSeparators = length % 3 + (Int(length / 3))
-        var separatorPosition = length % 3
-        var initialPosition = amount.startIndex
-        
-        while cantSeparators > 0 && separatorPosition <= length {
-            let range = initialPosition..<amount.characters.index(amount.startIndex, offsetBy: separatorPosition)
-            finalAmountStr.append(amount.substring(with: range))
-            finalAmountStr.append(String(thousandSeparator))
-            cantSeparators = cantSeparators - 1
-            initialPosition = amount.characters.index(amount.startIndex, offsetBy: separatorPosition)
-            separatorPosition = separatorPosition + 3
-        }
 
-        return finalAmountStr.substring(to: finalAmountStr.characters.index(finalAmountStr.startIndex, offsetBy: finalAmountStr.characters.count-1))
+        let numberWithoutLastThreeDigits = String( Int(Double(formattedString)!/1000))
+        let lastThreeDigits = formattedString.lastCharacters(number: 3)
+        
+        return  getAmountFormatted(numberWithoutLastThreeDigits, thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(lastThreeDigits)
+
     }
     
     /**

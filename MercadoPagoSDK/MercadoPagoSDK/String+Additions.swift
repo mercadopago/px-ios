@@ -58,6 +58,13 @@ extension String {
         return ""
     }
     
+    
+    public func lastCharacters(number: Int) -> String {
+        print("El string es \(self)")
+        let trimmedString: String = (self as NSString).substring(from: max(self.characters.count - number,0))
+        return trimmedString
+    }
+    
     public func indexAt(_ theInt:Int)->String.Index {
         
         return self.characters.index(self.characters.startIndex, offsetBy: theInt)

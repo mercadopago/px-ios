@@ -32,7 +32,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    static public var cantCC = 3
+    static public var maxCustomerPaymentMethdos = 3
     
     static let VIEW_CONTROLLER_NIB_NAME : String = "PaymentVaultViewController"
     
@@ -490,7 +490,7 @@ class PaymentVaultViewModel : NSObject {
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
         if (self.customerCards != nil && self.customerCards?.count > 0) {
-            return (self.customerCards!.count <= PaymentVaultViewController.cantCC ? self.customerCards!.count : PaymentVaultViewController.cantCC)
+            return (self.customerCards!.count <= PaymentVaultViewController.maxCustomerPaymentMethdos ? self.customerCards!.count : PaymentVaultViewController.maxCustomerPaymentMethdos)
         }
         return 0
         

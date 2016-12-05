@@ -24,9 +24,14 @@
     
     [MercadoPagoContext setPublicKey: TEST_PUBLIC_KEY];
     [MercadoPagoContext setMerchantAccessToken: MERCHANT_ACCESS_TOKEN];
+
     [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
     [MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
     [MercadoPagoContext setSiteID:@"MLM"];
+
+   // [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
+    //[MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
+    //[MercadoPagoContext setSiteID:@"MLA"];
 
     //[MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
     

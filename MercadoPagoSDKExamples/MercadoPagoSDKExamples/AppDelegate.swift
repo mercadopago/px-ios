@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 
+        MercadoPagoContext.setDisplayDefaultLoading(flag: false)
+        
         let tracker = TrackerExample()
         
         MercadoPagoContext.setTrack(listener: tracker)
