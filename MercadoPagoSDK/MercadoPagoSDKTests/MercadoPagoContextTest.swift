@@ -14,7 +14,7 @@ class MercadoPagoContextTest: BaseTest {
         super.setUp()
     }
     
-    override func tearDown() {
+    /*override func tearDown() {
         super.tearDown()
         MercadoPagoContext.setCustomerURI("")
         MercadoPagoContext.setMerchantAccessToken("")
@@ -60,5 +60,5 @@ class MercadoPagoContextTest: BaseTest {
         MercadoPagoContext.setPrivateKey("")
         
         XCTAssertEqual(MercadoPagoContext.keyValue(), "public_key")
-    }
+    }*/
 }

@@ -11,7 +11,7 @@ import XCTest
 class InstructionReferenceTest: BaseTest {
     
 
-    func testGetFullReferenceValue() {
+   /* func testGetFullReferenceValue() {
         let instructionReference = InstructionReference()
         instructionReference.separator = ""
         instructionReference.value = ["1","2","3"]
@@ -22,5 +22,5 @@ class InstructionReferenceTest: BaseTest {
         result = instructionReference.getFullReferenceValue()
         XCTAssertEqual(result, "1-2-3")
         
-    }
+    }*/
 }

@@ -6,9 +6,9 @@
 // Copyright (c) 2014 MercadoPago. All rights reserved.
 //
 
-#import "MPLoadingView.h"
-#import "UIView+RotateView.h"
 #import <MercadoPagoSDK/MercadoPagoSDK-Swift.h>
+#import "UIView+RotateView.h"
+#import "MPLoadingView.h"
 
 @interface MPLoadingView ()
 

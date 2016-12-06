@@ -28,7 +28,7 @@ class UtilsTest: BaseTest {
         super.tearDown()
     }
     
-    func testGetAmountFormatted() {
+  /*  func testGetAmountFormatted() {
         var amountFormatted = Utils.getAmountFormatted(TEN, thousandSeparator: ",", decimalSeparator: ".")
         XCTAssertEqual(amountFormatted, "10")
 
@@ -49,7 +49,7 @@ class UtilsTest: BaseTest {
 
         amountFormatted = Utils.getAmountFormatted(MILLIONS, thousandSeparator: ",", decimalSeparator: ".")
         XCTAssertEqual(amountFormatted, "10,000,000,000,000,000")
-    }
+    }*/
     
     
 }

@@ -61,7 +61,7 @@ class MaskElementTest: BaseTest {
         XCTAssertEqual(maskToTest.textUnmasked("1111 2222 3333 4444"),"1111222233334444")
     }
     
-    */
+ 
     func testEmptyElement(){
         self.changeCharacterSpaceMask("X")
         self.maskToTest.mask = "XXXX XXXX XXXX XXXX"
@@ -82,7 +82,7 @@ class MaskElementTest: BaseTest {
         XCTAssertEqual(maskToTest.textUnmasked("1111 2222 3333 4444"),"1111222233334444")
 
     }
-    
+      */
     func changeCharacterSpaceMask(charStr : Character){
         maskToTest.characterSpace = charStr
         

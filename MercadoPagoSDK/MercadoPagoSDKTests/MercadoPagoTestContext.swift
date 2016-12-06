@@ -23,7 +23,7 @@ public class MercadoPagoTestContext : NSObject {
         return self.sharedInstance.expectations.count() > 0
     }
     
-    class func addExpectation(expectation : XCTestExpectation){
+   /* class func addExpectation(expectation : XCTestExpectation){
         self.sharedInstance.expectations.add(expectation)
     }
     
@@ -36,7 +36,7 @@ public class MercadoPagoTestContext : NSObject {
         if self.sharedInstance.expectations.count() > 0 {
             self.sharedInstance.expectations.fulfillExpectation(withKey)
         }
-    }
+    }*/
 
     
 }
@@ -62,7 +62,7 @@ struct ExpectationHash {
     mutating func fulfillExpectation(withKey : String) {
         if let expectation = items[withKey] {
            expectation.fulfill()
-           self.remove(withKey)
+          // self.remove(withKey)
         }
     }
 }

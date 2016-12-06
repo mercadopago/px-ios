@@ -11,7 +11,7 @@ import XCTest
 class GuessingFormTest: BaseTest {
 
     
-     var cardFormViewController : CardFormViewController?
+  /*   var cardFormViewController : CardFormViewController?
     
     
     override func setUp() {
@@ -231,5 +231,5 @@ class GuessingFormTest: BaseTest {
         
     }
 
- 
+ */
 }

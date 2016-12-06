@@ -10,7 +10,7 @@ import XCTest
 
 class PaymentVaultViewControllerTest: BaseTest {
     
-    var paymentVaultViewController : MockPaymentVaultViewController?
+  /*  var paymentVaultViewController : MockPaymentVaultViewController?
     var mpNavigationController : MPNavigationController?
     var paymentMethodSelected : PaymentMethod?
     var tokenCreated : Token?
@@ -598,7 +598,7 @@ class PaymentVaultViewModelTest: BaseTest {
         
     }
     
-
+*/
     
     
 }

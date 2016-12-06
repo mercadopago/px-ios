@@ -6,9 +6,16 @@ xcode_project: MercadoPagoSDK/MercadoPagoSDK.xcodeproj
 xcode_scheme: MercadoPagoSDK
 
 before_script:
-- cd MercadoPagoSDK
+  - cd MercadoPagoSDK
+  - xcrun simctl list
+  - brew update; brew update
+
+install:
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
 # tests not working yet
-- xcodebuild  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO 
+- gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && exit ${PIPESTATUS[0]}
+ #gstdbuf -o 0 xcodebuild build test -scheme MercadoPagoSDK 
 #- runTests.sh
+

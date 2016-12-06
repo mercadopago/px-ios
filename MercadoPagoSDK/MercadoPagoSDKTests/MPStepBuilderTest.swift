@@ -11,7 +11,7 @@ import XCTest
 
 class MPStepBuilderTest: BaseTest {
 
-    func testStartPaymentResultStep_approvedCCPayment() {
+/*    func testStartPaymentResultStep_approvedCCPayment() {
         let mockPayment = MockBuilder.buildPayment("visa")
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         let finalVC = MPStepBuilder.startPaymentResultStep(mockPayment, paymentMethod: paymentMethod) { (payment, status) in
@@ -84,5 +84,5 @@ class MPStepBuilderTest: BaseTest {
         
         let layout = paymentCongratsVC.getLayoutName(mockPayment)
         XCTAssertEqual(layout, "pending")
-    }
+    }*/
 }

@@ -10,7 +10,7 @@ import Foundation
 
 extension UILabel{
     
-    func requiredHeight() -> CGFloat{
+    open func requiredHeight() -> CGFloat{
         
         let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0

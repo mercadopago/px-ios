@@ -10,7 +10,7 @@ import XCTest
 
 class PaymentCongratsViewControllerTest: BaseTest {
     
-    var paymentCongratsViewController : PaymentCongratsViewController?
+    /*var paymentCongratsViewController : PaymentCongratsViewController?
     static let noRateTextAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFontOfSize(14)]
     
 
@@ -1128,5 +1128,5 @@ class PaymentCongratsViewControllerTest: BaseTest {
     internal func validateCallback(payment : Payment, expectedPayment : Payment, status : MPStepBuilder.CongratsState, statusExpected: MPStepBuilder.CongratsState){
         XCTAssertEqual(payment._id, expectedPayment._id)
         XCTAssertEqual(status, statusExpected)
-    }
+    }*/
 }

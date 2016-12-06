@@ -11,7 +11,7 @@ import XCTest
 
 class CheckoutViewControllerTest: BaseTest {
     
-    var checkoutViewController : MockCheckoutViewController?
+ /*   var checkoutViewController : MockCheckoutViewController?
     var preference : CheckoutPreference?
     var selectedPaymentMethod : PaymentMethod?
     var selectedPayerCost : PayerCost?
@@ -391,6 +391,6 @@ class CheckoutViewControllerTest: BaseTest {
         self.checkoutViewController!.confirmPayment()
         waitForExpectations(timeout: BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
 
-    }
+    }*/
     
 }

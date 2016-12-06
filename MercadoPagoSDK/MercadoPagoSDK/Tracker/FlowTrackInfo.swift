@@ -6,6 +6,7 @@
 //  Copyright © 2016 Demian Tejo. All rights reserved.
 //
 
+import Foundation
 
 open class FlowTrackInfo: NSObject {
     

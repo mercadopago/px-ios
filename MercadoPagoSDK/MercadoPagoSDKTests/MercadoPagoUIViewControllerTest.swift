@@ -12,7 +12,7 @@ class MercadoPagoUIViewControllerTest: BaseTest {
     
     let viewController = MercadoPagoUIViewController()
 
-    override func setUp() {
+/*    override func setUp() {
         super.setUp()
         MercadoPagoTestContext.addExpectation(withDescription: "clearStyles")
         MercadoPagoTestContext.fulfillExpectation("clearStyles")
@@ -31,5 +31,5 @@ class MercadoPagoUIViewControllerTest: BaseTest {
         XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.titleTextAttributes == nil)
         XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.barTintColor == nil)
     }
-    
+    */
 }
