@@ -317,7 +317,8 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
 	
 	func validateForm(_ cardToken : CardToken) -> Bool {
-		
+        return true
+		/*
 		var result : Bool = true
 
 		// Validate card number
@@ -375,6 +376,7 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		}
 		
 		return result
+ */
 	}
 	
 	func textFieldDidBeginEditing(_ textField: UITextField) {

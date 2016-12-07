@@ -1,0 +1,10 @@
+framework module MercadoPagoSDK {
+  umbrella header "MercadoPagoSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module MercadoPagoSDK.Swift {
+    header "MercadoPagoSDK-Swift.h"
+}

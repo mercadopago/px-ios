@@ -237,9 +237,15 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
             self.callback!(idnt)
-            self.showLoading()
+           // self.showLoading()
+            let temporalView = UIView.init(frame: CGRect(x: 0, y: -100, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            temporalView.backgroundColor?.withAlphaComponent(0)
+            temporalView.isUserInteractionEnabled = false
+            self.view.addSubview(temporalView)
+            self.loadingInstance = LoadingOverlay.shared.showOverlay(temporalView, backgroundColor: MercadoPagoContext.getPrimaryColor())
+            self.view.bringSubview(toFront: self.loadingInstance!)
         }else{
-            showErrorMessage((cardToken.validateIdentificationNumber(self.identificationType)?.userInfo["identification"] as? String)!)
+            showErrorMessage((cardToken.validateIdentificationNumber(self.identificationType))!)
         }
        
     }

@@ -262,7 +262,8 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
             }
         } else {
             self.selectedCardToken!.securityCode = self.securityCodeCell.securityCodeTextField.text
-            let error : NSError? = self.selectedCardToken?.validateSecurityCodeWithPaymentMethod(self.selectedPaymentMethod!)
+            //let error : NSError? = self.selectedCardToken?.validateSecurityCodeWithPaymentMethod(self.selectedPaymentMethod!)
+            let error : NSError? = nil
             if  error != nil {
                 let alert = UIAlertView(title: "Error",
                     message: error!.userInfo["securityCode"] as? String,

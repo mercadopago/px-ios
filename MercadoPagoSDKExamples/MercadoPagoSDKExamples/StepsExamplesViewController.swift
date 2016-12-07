@@ -96,12 +96,13 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
          
 */
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         let pp = PaymentPreference()
-     //   pp.excludedPaymentTypeIds = ["ticket", "bank_transfer", "atm"]
+        pp.excludedPaymentTypeIds = ["ticket",  "atm"]
         //pp.excludedPaymentMethodIds = ["master"]
         pp.maxAcceptedInstallments = 3
 
-        let pv = MPFlowBuilder.startPaymentVaultViewController(1000, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
+        let pv = MPFlowBuilder.startPaymentVaultViewController(5, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
             print(paymentMethod._id)
             self.paymentMethod = paymentMethod
             self.createdToken = token

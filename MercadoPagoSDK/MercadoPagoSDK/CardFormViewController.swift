@@ -448,6 +448,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func showErrorMessage(_ errorMessage:String){
+        
         errorLabel = MPLabel(frame: inputButtons!.frame)
         self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
         self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
@@ -500,7 +501,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         case cardNumberLabel! :
             if !validateCardNumber() {
                 if (cardFormManager.guessedPMS != nil){
-                    showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!)?.userInfo["cardNumber"] as? String)!)
+                    //showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!)?.userInfo["cardNumber"] as? String)!)
+                    showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!))!)
                 }else{
                     if (cardNumberLabel?.text?.characters.count == 0){
                         showErrorMessage("Ingresa el número de la tarjeta de crédito".localized)
@@ -532,7 +534,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 }
             }
             if (!self.validateExpirationDate()){
-                showErrorMessage((cardFormManager.cardToken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
+                showErrorMessage((cardFormManager.cardToken?.validateExpiryDate())!)
                 
                 return
             }

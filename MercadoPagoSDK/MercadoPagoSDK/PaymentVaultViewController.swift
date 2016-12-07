@@ -184,7 +184,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
             } else {
-                self.navigationController!.popToViewController(self, animated: true)
+                self.loadingGroups = false
+              //  self.navigationController!.popToViewController(self, animated: true)
                 self.callbackCancel!()
             }
         }
@@ -241,10 +242,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if (self.viewModel.defaultPaymentOption != nil && !defaultOptionSelected) {
-                self.viewModel.optionSelected(self.viewModel.defaultPaymentOption!,navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
-                defaultOptionSelected = true
-            } else if  self.viewModel.hasOnlyGroupsPaymentMethodAvailable() {
+            if  self.viewModel.hasOnlyGroupsPaymentMethodAvailable() {
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else if self.viewModel.hasOnlyCustomerPaymentMethodAvailable() {
                 let customerCardSelected = self.viewModel.customerCards![0] as CardInformation
@@ -592,7 +590,7 @@ class PaymentVaultViewModel : NSObject {
                     cancelPaymentCallback()
                 })
                 
-                navigationController.pushViewController(cardFlow.viewControllers[0], animated: animated)
+                navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
             } else {
                 navigationController.pushViewController(MPStepBuilder.startPaymentMethodsStep(callback: {    (paymentMethod : PaymentMethod) -> Void in
                     self.callback!(paymentMethod, nil, nil, nil)

@@ -319,13 +319,14 @@ open class NewCardViewController : MercadoPagoUIViewController, UITableViewDataS
 	}
 	
 	open func validateForm(_ cardToken : CardToken) -> Bool {
-		
+		return true
+        /*
 		var result : Bool = true
 		
 		// Validate card number
 		let errorCardNumber = cardToken.validateCardNumber(paymentMethod!)
 		if  errorCardNumber != nil {
-			self.cardNumberCell.setError(errorCardNumber!.userInfo["cardNumber"] as? String)
+		//	self.cardNumberCell.setError(errorCardNumber!.userInfo["cardNumber"] as? String)
 			result = false
 		} else {
 			self.cardNumberCell.setError(nil)
@@ -334,7 +335,7 @@ open class NewCardViewController : MercadoPagoUIViewController, UITableViewDataS
 		// Validate expiry date
 		let errorExpiryDate = cardToken.validateExpiryDate()
 		if errorExpiryDate != nil {
-			self.expirationDateCell.setError(errorExpiryDate!.userInfo["expiryDate"] as? String)
+		//	self.expirationDateCell.setError(errorExpiryDate!.userInfo["expiryDate"] as? String)
 			result = false
 		} else {
 			self.expirationDateCell.setError(nil)
@@ -369,6 +370,7 @@ open class NewCardViewController : MercadoPagoUIViewController, UITableViewDataS
 		}
 		
 		return result
+ */
 	}
 	
 }
