@@ -19,21 +19,22 @@ open class ErrorViewController: MercadoPagoUIViewController {
     @IBOutlet weak var exitButton: MPButton!
     
     @IBOutlet weak var retryButton: MPButton!
-    var error : MPError!
+    var error : MPSDKError!
     var callback : ((Void) -> Void)?
     
     override open var screenName : String { get { return "ERROR" } }
     
     open var exitErrorCallback : ((Void) -> Void)!
     
-    public init(error : MPError!, callback : ((Void) -> Void)?, callbackCancel : ((Void) -> Void)? = nil){
+    public init(error : MPSDKError!, callback : ((Void) -> Void)?, callbackCancel : ((Void) -> Void)? = nil){
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
         self.error = error
         self.exitErrorCallback = {
-            self.dismiss(animated: true, completion: {})
-            if self.callbackCancel != nil {
-                self.callbackCancel!()
-            }
+            self.dismiss(animated: true, completion: {
+                if self.callbackCancel != nil {
+                    self.callbackCancel!()
+                }
+            })
         }
         self.callbackCancel = callbackCancel
         self.callback = callback

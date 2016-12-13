@@ -359,7 +359,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         MPServicesBuilder.getPreference(self.preferenceId, success: { (preference) in
                 if let error = preference.validate() {
                     // Invalid preference - cannot continue
-                    let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error, retry: false)
+                    let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: error, retry: false)
                     self.displayFailure(mpError)
                 } else {
                     self.viewModel.preference = preference

@@ -22,7 +22,7 @@ open class MerchantServer : NSObject {
             if let custDic = jsonResult as? NSDictionary {
                 if custDic["error"] != nil {
                     if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: Any]))
+                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
                     }
                 } else {
                     cust = Customer.fromJSON(custDic)
@@ -44,7 +44,7 @@ open class MerchantServer : NSObject {
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: Any]))
+                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: AnyObject]))
                     }
                 } else {
 					if paymentDic.allKeys.count > 0 {

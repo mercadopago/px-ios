@@ -250,7 +250,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
     
     internal func requestFailure(_ error : NSError, callback : ((Void) -> Void)? = nil, callbackCancel : ((Void) -> Void)? = nil) {
-        let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: callback, callbackCancel: callbackCancel)
+        let errorVC = MPStepBuilder.startErrorViewController(MPSDKError.convertFrom(error), callback: callback, callbackCancel: callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.present(errorVC, animated: true, completion: {})
         } else {
@@ -258,7 +258,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         }
     }
     
-    internal func displayFailure(_ mpError : MPError){
+    internal func displayFailure(_ mpError : MPSDKError){
         let errorVC = MPStepBuilder.startErrorViewController(mpError, callback: nil, callbackCancel: self.callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.present(errorVC, animated: true, completion: {})

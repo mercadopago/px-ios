@@ -117,7 +117,7 @@ import UIKit
                         success(token)
                     } else {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
                         }
                     }
                 }
@@ -143,7 +143,7 @@ import UIKit
                         success(token)
                     } else {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
                         }
                     }
                 }
@@ -164,7 +164,7 @@ import UIKit
                 if let error = jsonResult as? NSDictionary {
                     if (error["status"]! as? Int) == 404 {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: AnyObject]))
                         }
                     }
                 } else {
@@ -205,7 +205,7 @@ import UIKit
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
                         }
                     }
                 } else {

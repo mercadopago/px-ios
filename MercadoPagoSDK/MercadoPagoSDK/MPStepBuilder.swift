@@ -231,7 +231,7 @@ open class MPStepBuilder : NSObject {
     }
     
     
-    open class func startErrorViewController(_ error : MPError,
+    open class func startErrorViewController(_ error : MPSDKError,
                                              callback : ((Void) -> Void)? = nil,
                                              callbackCancel : ((Void) -> Void)? = nil) -> ErrorViewController {
         MercadoPagoContext.initFlavor2()
@@ -267,7 +267,7 @@ open class MPStepBuilder : NSObject {
                         nav.hideLoading()
                     }
                     
-                    let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
+                    let errorVC = MPStepBuilder.startErrorViewController(MPSDKError.convertFrom(error), callback: { (Void) in
                         self.getIssuers(paymentMethod, cardToken: cardToken, ccf: ccf, callback: callback)
                         }, callbackCancel: {
                             ccf.navigationController?.dismiss(animated: true, completion: {})
@@ -290,7 +290,7 @@ open class MPStepBuilder : NSObject {
                 }
                 callback(paymentMethod, token!, issuer)
                 }, failure: { (error) in
-                    let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
+                    let errorVC = MPStepBuilder.startErrorViewController(MPSDKError.convertFrom(error), callback: { (Void) in
                         ccf.dismiss(animated: true, completion: {})
                         self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer, ccf : ccf, callback: callback)
                     })
@@ -304,7 +304,7 @@ open class MPStepBuilder : NSObject {
                 
                 //ccf.hideLoading()
             }) { (error) -> Void in
-                let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
+                let errorVC = MPStepBuilder.startErrorViewController(MPSDKError.convertFrom(error), callback: { (Void) in
                     ccf.dismiss(animated: true, completion: {})
                     self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer, ccf : ccf, callback: callback)
                 })
@@ -328,7 +328,7 @@ open class MPStepBuilder : NSObject {
             ccf.navigationController!.pushViewController(pcvc, animated: false)
             
             }, failure: { (error) -> Void in
-                let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
+                let errorVC = MPStepBuilder.startErrorViewController(MPSDKError.convertFrom(error), callback: { (Void) in
                     ccf.navigationController!.popViewController(animated: true)
                     self.getInstallments(token, amount: amount, issuer: issuer, paymentTypeId: paymentTypeId, paymentMethod: paymentMethod, ccf: ccf, callback: callback)
                 })
