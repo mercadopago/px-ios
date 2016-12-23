@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayerCostViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="cardView" destination="7nl-Xg-MIO" id="LaB-ql-QY7"/>
+                <outlet property="tableView" destination="9IB-ZA-8iJ" id="eAM-Ol-2Xj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="358" height="698"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7nl-Xg-MIO">
+                    <rect key="frame" x="40" y="81" width="278" height="167"/>
+                    <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="7nl-Xg-MIO" secondAttribute="height" multiplier="5:3" id="dKu-ww-ezb"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9IB-ZA-8iJ">
+                    <rect key="frame" x="0.0" y="378" width="358" height="320"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="320" id="Ma8-ga-CQh"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="JYK-EB-zvF"/>
+                        <outlet property="delegate" destination="-1" id="dIu-AM-7ot"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZNi-60-MQu">
+                    <rect key="frame" x="0.0" y="328" width="358" height="50"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Ggd-2G-cjr"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a0G-Lh-rki">
+                    <rect key="frame" x="0.0" y="0.0" width="358" height="81"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bf-3J-WMP">
+                    <rect key="frame" x="0.0" y="248" width="358" height="80"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.35294117650000001" green="0.74509803919999995" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="7nl-Xg-MIO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="1s5-Zf-DaF"/>
+                <constraint firstAttribute="bottom" secondItem="9IB-ZA-8iJ" secondAttribute="bottom" id="6sS-rt-iaE"/>
+                <constraint firstItem="ZNi-60-MQu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8nc-5I-IRk"/>
+                <constraint firstItem="a0G-Lh-rki" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="AfO-EL-eGu"/>
+                <constraint firstItem="9IB-ZA-8iJ" firstAttribute="top" secondItem="7nl-Xg-MIO" secondAttribute="bottom" constant="20" id="K77-lc-VnY"/>
+                <constraint firstAttribute="trailing" secondItem="ZNi-60-MQu" secondAttribute="trailing" id="MDR-la-0wG"/>
+                <constraint firstItem="7nl-Xg-MIO" firstAttribute="top" secondItem="a0G-Lh-rki" secondAttribute="bottom" id="USn-A4-g56"/>
+                <constraint firstAttribute="trailing" secondItem="a0G-Lh-rki" secondAttribute="trailing" id="Xds-YP-fIM"/>
+                <constraint firstItem="9IB-ZA-8iJ" firstAttribute="top" secondItem="ZNi-60-MQu" secondAttribute="bottom" id="gfu-HO-OUI"/>
+                <constraint firstItem="a0G-Lh-rki" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gtE-5f-YTc"/>
+                <constraint firstItem="5bf-3J-WMP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hOK-f1-yrI"/>
+                <constraint firstAttribute="trailing" secondItem="5bf-3J-WMP" secondAttribute="trailing" id="kR5-AP-9Nk"/>
+                <constraint firstItem="9IB-ZA-8iJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kq8-nU-MCr"/>
+                <constraint firstItem="5bf-3J-WMP" firstAttribute="height" secondItem="a0G-Lh-rki" secondAttribute="height" id="lD6-UJ-OZb"/>
+                <constraint firstAttribute="trailing" secondItem="9IB-ZA-8iJ" secondAttribute="trailing" id="mQ6-IY-ull"/>
+                <constraint firstItem="7nl-Xg-MIO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="mdb-ul-cke"/>
+                <constraint firstItem="ZNi-60-MQu" firstAttribute="top" secondItem="5bf-3J-WMP" secondAttribute="bottom" id="nGP-9d-avw"/>
+                <constraint firstAttribute="trailing" secondItem="7nl-Xg-MIO" secondAttribute="trailing" constant="40" id="x9Q-Nx-Y2l"/>
+                <constraint firstItem="5bf-3J-WMP" firstAttribute="top" secondItem="7nl-Xg-MIO" secondAttribute="bottom" id="zIU-W7-uXX"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="mdb-ul-cke"/>
+                    <exclude reference="K77-lc-VnY"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-349" y="255"/>
+        </view>
+    </objects>
+</document>

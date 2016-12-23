@@ -37,9 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
         //MercadoPagoContext.setCustomerURI("/get_customer")
 
-        
-
-        //MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
+                //MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         //Pinto de rojo el color primerio
 

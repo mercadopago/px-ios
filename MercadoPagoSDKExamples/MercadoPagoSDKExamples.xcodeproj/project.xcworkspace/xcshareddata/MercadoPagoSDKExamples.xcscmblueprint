@@ -10,7 +10,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BD987996-DA29-44BD-AA7D-7A8FD5123778",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "D183B1A2B483C99F723FA6DAB5ED095AF94239A5" : "..\/..\/MercadoPagoTracker",
-    "15C2D196126771C3D711597AE0E98C376E62B208" : "MercadoPagoSDK\/"
+    "15C2D196126771C3D711597AE0E98C376E62B208" : "px-ios\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "MercadoPagoSDKExamples",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,

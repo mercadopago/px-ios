@@ -1,0 +1,51 @@
+//
+//  CardTypeTableViewCell.swift
+//  MercadoPagoSDK
+//
+//  Created by Eden Torres on 10/18/16.
+//  Copyright © 2016 MercadoPago. All rights reserved.
+//
+
+import UIKit
+
+class CardTypeTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var cardTypeLable: UILabel!
+    var paymentMethod: PaymentMethod!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    func setText(text: String){
+        cardTypeLable.text = text
+    }
+    func setPaymentMethod(paymentMethod: PaymentMethod){
+        self.paymentMethod = paymentMethod
+        fillCell()
+    }
+    func getPaymentMethod() -> PaymentMethod{
+        return self.paymentMethod
+    }
+    func fillCell(){
+        if paymentMethod.paymentTypeId == "credit_card"{
+            cardTypeLable.text = "Crédito".localized
+        } else {
+            cardTypeLable.text = "Débito".localized
+        }
+    }
+    func addSeparatorLineToTop(width: Double, y: Float){
+        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
+        let line = UIView(frame: lineFrame)
+        line.alpha = 0.6
+        line.backgroundColor = UIColor.grayLight()
+        addSubview(line)
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+}

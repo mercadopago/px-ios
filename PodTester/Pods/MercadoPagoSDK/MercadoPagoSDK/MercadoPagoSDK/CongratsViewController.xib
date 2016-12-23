@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CongratsViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="icon" destination="rdH-hv-mZl" id="Jjy-xW-44j"/>
+                <outlet property="lblDescription" destination="b5C-q0-FIL" id="xgS-Yw-obi"/>
+                <outlet property="lblTitle" destination="4PC-s9-2rh" id="RgQ-GO-AgB"/>
+                <outlet property="tableView" destination="hr8-09-9hQ" id="4Wj-gl-Lhb"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="hr8-09-9hQ">
+                    <frame key="frameInset" minY="176" width="600" height="424"/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rMv-ul-NA1">
+                    <frame key="frameInset" width="600" height="176"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="¡Ups! Ocurrió un problema" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4PC-s9-2rh" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                            <frame key="frameInset" minX="175" minY="98" width="250" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="7xt-VI-HB3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
+                            <color key="textColor" red="0.72549019607843135" green="0.29019607843137252" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconError" translatesAutoresizingMaskIntoConstraints="NO" id="rdH-hv-mZl">
+                            <frame key="frameInset" minX="270" minY="24" width="60" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="eJJ-hG-WGC"/>
+                                <constraint firstAttribute="width" constant="60" id="gqL-yn-M42"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Em poucos minutos enviaremos por e-mail o resultado" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5C-q0-FIL" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                            <frame key="frameInset" minX="135" minY="135" width="330" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="Uze-Pz-45O"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.97254901960784312" green="0.9137254901960784" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="b5C-q0-FIL" firstAttribute="centerX" secondItem="rMv-ul-NA1" secondAttribute="centerX" id="68O-BS-Yg9"/>
+                        <constraint firstAttribute="height" constant="176" id="6sC-M4-fTV"/>
+                        <constraint firstItem="4PC-s9-2rh" firstAttribute="centerX" secondItem="rMv-ul-NA1" secondAttribute="centerX" id="PP3-td-cu8"/>
+                        <constraint firstItem="rdH-hv-mZl" firstAttribute="top" secondItem="rMv-ul-NA1" secondAttribute="top" constant="24" id="VS5-qp-ggY"/>
+                        <constraint firstItem="4PC-s9-2rh" firstAttribute="top" secondItem="rdH-hv-mZl" secondAttribute="bottom" constant="14" id="lZV-do-9VO"/>
+                        <constraint firstItem="rdH-hv-mZl" firstAttribute="centerX" secondItem="rMv-ul-NA1" secondAttribute="centerX" id="mIq-1B-RA6"/>
+                        <constraint firstItem="b5C-q0-FIL" firstAttribute="top" secondItem="4PC-s9-2rh" secondAttribute="bottom" constant="5" id="yi9-9E-LlB"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="rMv-ul-NA1" secondAttribute="trailing" id="5av-X2-kn6"/>
+                <constraint firstAttribute="bottom" secondItem="hr8-09-9hQ" secondAttribute="bottom" id="DVL-SH-x6t"/>
+                <constraint firstItem="rMv-ul-NA1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HJk-zg-Rvi"/>
+                <constraint firstItem="hr8-09-9hQ" firstAttribute="top" secondItem="rMv-ul-NA1" secondAttribute="bottom" id="PIf-Oo-3Vr"/>
+                <constraint firstAttribute="trailing" secondItem="hr8-09-9hQ" secondAttribute="trailing" id="bOF-ES-ru0"/>
+                <constraint firstItem="rMv-ul-NA1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tG4-nA-MUs"/>
+                <constraint firstItem="hr8-09-9hQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wW3-um-cKB"/>
+            </constraints>
+            <point key="canvasLocation" x="490" y="590"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="iconError" width="60" height="60"/>
+    </resources>
+</document>
