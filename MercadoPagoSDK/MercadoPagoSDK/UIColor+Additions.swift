@@ -35,7 +35,7 @@ extension UIColor {
     
     class public func mpDefaultColor() -> UIColor
     {
-        return UIColorFromRGB(0x30AFE2)
+        return UIColorFromRGB(0x009EE3)
     }
     
     class public func errorCellColor() -> UIColor
@@ -64,9 +64,9 @@ extension UIColor {
     return UIColorFromRGB(0xF5CC00)
     }
     
-    class public func blueMercadoPago() -> UIColor
+    class public func blueMercadoPagoSDK() -> UIColor
     {
-    return UIColorFromRGB(0x5ABEE7)
+    return UIColorFromRGB(0x009EE3)
     }
     class public func lightBlue() -> UIColor {
         return UIColorFromRGB(0x3F9FDA)

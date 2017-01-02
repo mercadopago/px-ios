@@ -71,7 +71,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.showLoading()
         self.navigationItem.rightBarButtonItem = nil
         self.navBarBackgroundColor = UIColor.white()
-        self.navBarTextColor = UIColor.blueMercadoPago()
+        self.navBarTextColor = UIColor.blueMercadoPagoSDK()
         
         
     }
@@ -84,7 +84,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
         self.displayBackButton()
-        self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
+        self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPagoSDK()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
         
         if !self.viewModel.isPreferenceLoaded() {
@@ -430,7 +430,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
         let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
         payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra".localized)
-        payerCostTitleTableViewCell.title.textColor = UIColor.blueMercadoPago()
+        payerCostTitleTableViewCell.title.textColor = UIColor.blueMercadoPagoSDK()
         payerCostTitleTableViewCell.cell.backgroundColor = UIColor.white()
         titleCell = payerCostTitleTableViewCell
         return payerCostTitleTableViewCell

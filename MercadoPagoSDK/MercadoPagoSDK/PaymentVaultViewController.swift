@@ -248,7 +248,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else if self.viewModel.hasOnlyCustomerPaymentMethodAvailable() {
                 let customerCardSelected = self.viewModel.customerCards![0] as CardInformation
-                self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: self.navigationController!, visibleViewController: self)
+                if let nav = self.navigationController { self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: nav, visibleViewController: self) }
             } else {
                 self.collectionSearch.delegate = self
                 self.collectionSearch.dataSource = self

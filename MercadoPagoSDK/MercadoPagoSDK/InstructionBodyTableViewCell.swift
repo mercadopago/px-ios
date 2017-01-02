@@ -129,7 +129,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     let button = MPButton(frame: CGRect(x: 0, y: 0, width: 160, height: 30))
                     button.titleLabel?.font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16) ?? UIFont.systemFont(ofSize: 16)
                     button.setTitle(instruction.actions![0].label, for: .normal)
-                    button.setTitleColor(UIColor.blueMercadoPago(), for: .normal)
+                    button.setTitleColor(UIColor.blueMercadoPagoSDK(), for: .normal)
                     button.translatesAutoresizingMaskIntoConstraints = false
                     
                     button.actionLink = instruction.actions![0].url
