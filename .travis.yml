@@ -25,3 +25,8 @@ script:
 after_success:
  - cd ..
  - slather coverage
+
+notifications:
+  slack: paymentexperience:yw3Tps5kxmYbUQ6k96KCrIlr
+  on_failure: always
+   
