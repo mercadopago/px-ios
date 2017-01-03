@@ -29,4 +29,4 @@ after_success:
 notifications:
   slack: paymentexperience:yw3Tps5kxmYbUQ6k96KCrIlr
   on_failure: always
-   
+  on_success: never   
