@@ -1,9 +1,9 @@
 ci_service: travis_pro
 coverage_access_token: VobxuRqFdQZjT7HOM0nbeImW6Aib0O3zF
 coverage_service: coveralls
-scheme: MercadoPagoSDKTests
+scheme: MercadoPagoSDK
 xcodeproj: MercadoPagoSDK/MercadoPagoSDK.xcodeproj
 workspace: MercadoPagoSDK/MercadoPagoSDK.xcworkspace
-build_directory: /Users/travis/Library/Developer/Xcode/DerivedData
-source_directory: MercadoPagoSDK/MercadoPagoSDKTests
+#build_directory: /Users/travis/Library/Developer/Xcode/DerivedData
+source_directory: MercadoPagoSDK/MercadoPagoSDK
 
