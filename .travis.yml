@@ -10,8 +10,8 @@ before_script:
   - cd MercadoPagoSDK
   - xcrun simctl list
   - brew update
-  - gem install coveralls
-  - gem install slather
+#  - gem install coveralls
+#  - gem install slather
 
 install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
@@ -20,7 +20,7 @@ script:
 # tests not working yet
 - gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c
 - cd ../scripts 
-- ./run_tests_on_devices.sh
+#- ./run_tests_on_devices.sh
 
 after_success:
  - cd ..
