@@ -24,7 +24,7 @@ script:
 
 after_success:
  - cd ..
- - slather
+ - slather coverage --scheme MercadoPagoSDK MercadoPagoSDK.xcodeproj
 
 notifications:
   slack: paymentexperience:yw3Tps5kxmYbUQ6k96KCrIlr
