@@ -146,7 +146,7 @@ open class MPFlowBuilder : NSObject {
             }, callbackCancel : currentCallbackCancel)
         
         ccf = cardVC?.viewControllers[0] as! CardFormViewController
-        
+        esto es un error
         
         cardVC!.modalTransitionStyle = .crossDissolve
         return cardVC!
