@@ -14,11 +14,11 @@ before_script:
   - gem install slather
 
 install:
-  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  #- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
 # tests not working yet
-- xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+- xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO # | xcpretty -c
 
 after_success:
  - cd ../scripts
