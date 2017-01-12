@@ -113,7 +113,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         numberTextField.becomeFirstResponder()
     }
     
-    override open func viewDidLoad() {
+    override open func viewDidLoad(){
         super.viewDidLoad()
         numberDocLabel.text = indentificationMask.textMasked("")
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
@@ -135,7 +135,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
     }
 
-    open override func didReceiveMemoryWarning() {
+    open override func didReceiveMemoryWarning(){
         super.didReceiveMemoryWarning()
 
     }
