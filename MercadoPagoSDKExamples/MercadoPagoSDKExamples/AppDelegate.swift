@@ -43,7 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //Pinto de rojo el color primerio
 
-        MercadoPagoContext.setupPrimaryColor(UIColor.green, complementaryColor: UIColor.black)
+        let decorationPreference = DecorationPreference()
+        decorationPreference.setBaseColor(color: UIColor.red)
+      //  MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
 
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
