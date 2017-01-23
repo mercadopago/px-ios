@@ -147,7 +147,7 @@ open class MPFlowBuilder : NSObject {
             }, callbackCancel : currentCallbackCancel)
         
         ccf = cardVC?.viewControllers[0] as! CardFormViewController
-        
+        ccf.sarasa()
         
         cardVC!.modalTransitionStyle = .crossDissolve
         return cardVC!

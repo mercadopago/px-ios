@@ -14,14 +14,19 @@ before_script:
   - gem install slather
 
 install:
-  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  #- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
 # tests not working yet
-- gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c
-- cd ../scripts 
-- ./run_tests_on_devices.sh
+- xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO # | xcpretty -c
 
 after_success:
+ - cd ../scripts
+ - ./run_tests_on_devices.sh
  - cd ..
- - slather coverage
+ - slather coverage --scheme MercadoPagoSDK MercadoPagoSDK/MercadoPagoSDK.xcodeproj
+
+notifications:
+  slack: paymentexperience:yw3Tps5kxmYbUQ6k96KCrIlr
+  on_failure: always
+  on_success: never   
