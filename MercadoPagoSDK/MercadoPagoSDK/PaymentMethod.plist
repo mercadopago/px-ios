@@ -22,7 +22,7 @@
 		<key>first_color</key>
 		<string>405B72</string>
 		<key>image_name</key>
-		<string>icoTc_master</string>
+		<string>icoTc_debmaster</string>
 		<key>font_color</key>
 		<string>FFFFFF</string>
 		<key>editing_font_color</key>
@@ -56,7 +56,7 @@
 		<key>first_color</key>
 		<string>001D77</string>
 		<key>image_name</key>
-		<string>icoTc_visa</string>
+		<string>icoTc_debvisa</string>
 		<key>label_mask</key>
 		<string>XXXX XXXX XXXX XXXX</string>
 		<key>editText_mask</key>

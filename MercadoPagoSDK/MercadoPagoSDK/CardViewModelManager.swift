@@ -36,6 +36,8 @@ class CardViewModelManager: NSObject {
     var cvvEmpty: Bool = true
     var cardholderNameEmpty: Bool = true
     
+    let animationDuration: Double = 0.6
+    
     var promos : [Promo]?
     
     init(amount : Double, paymentMethods : [PaymentMethod]?, paymentMethod : [PaymentMethod]? = nil, customerCard : CardInformation? = nil, token : Token? = nil, paymentSettings : PaymentPreference?){

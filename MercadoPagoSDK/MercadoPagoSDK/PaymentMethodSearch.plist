@@ -32,6 +32,16 @@
 		<key>image_name</key>
 		<string>mediosIconoTrasnferenciaAzul</string>
 	</dict>
+	<key>debmaster</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosMasterDebito</string>
+	</dict>
+	<key>debvisa</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosVisaDebito</string>
+	</dict>
 	<key>credit_card</key>
 	<dict>
 		<key>image_name</key>

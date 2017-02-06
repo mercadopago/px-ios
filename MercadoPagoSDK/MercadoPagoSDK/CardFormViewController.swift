@@ -363,7 +363,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_SECURITY_CODE")
         
         if(!self.cardFormManager.isAmexCard(self.cardNumberLabel!.text!)){
-            UIView.transition(from: self.cardFront!, to: self.cardBack!, duration: 1, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: { (completion) -> Void in
+            UIView.transition(from: self.cardFront!, to: self.cardBack!, duration: cardFormManager.animationDuration, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: { (completion) -> Void in
                 self.updateLabelsFontColors()
             })
             cvvLabel = cardBack?.cardCVV
@@ -538,7 +538,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             
         case cvvLabel! :
             if (self.cardFormManager.getGuessedPM()?.secCodeInBack())!{
-                UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (completion) -> Void in
+                UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: cardFormManager.animationDuration, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (completion) -> Void in
                 })
             }
             
@@ -773,7 +773,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 let errorCVV = cardFormManager.cardToken!.validateSecurityCode()
                 if((errorCVV) != nil){
                     markErrorLabel(cvvLabel!)
-                    UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 1, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: nil)
+                    UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: cardFormManager.animationDuration, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: nil)
                     return
                 }
             }
