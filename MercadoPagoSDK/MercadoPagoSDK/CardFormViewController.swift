@@ -37,6 +37,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     var editingLabel : UILabel?
     
+    static public var cardDefaultColor = UIColor(netHex: 0xEEEEEE)
+    
     var callback : (( _ paymentMethods: [PaymentMethod],_ cardtoken: CardToken?) -> Void)?
     
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
@@ -616,8 +618,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         UIView.animate(withDuration: 0.7, animations: { () -> Void in
             self.cardFront?.cardLogo.alpha =  0
-            self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
-            })
+            self.cardView.backgroundColor = CardFormViewController.cardDefaultColor
+        })
         self.cardFront?.cardLogo.image =  nil
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
         let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)

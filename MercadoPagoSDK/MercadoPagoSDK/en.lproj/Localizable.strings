@@ -10,6 +10,7 @@
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Check this information";
 "invalid_card_length" = "Enter the %1$s card numbers";
+"invalid_card_length_general" = "Enter all card numbers";
 "security_code" = "Security Code";
 "cod_seg_desc" = "Last %1$s digits code on the back of the card";
 "cod_seg_desc_amex" = "%1$s digits code on the front of the card";

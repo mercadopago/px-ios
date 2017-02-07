@@ -10,6 +10,7 @@
 "invalid_cvv_length" = "Digite os %1$s números do código de segurança";
 "invalid_field" = "Verifique este dado";
 "invalid_card_length" = "Digite os %1$s números do cartão de crédito";
+"invalid_card_length_general" = "Entre todos os números de cartão";
 "security_code" = "Código de segurança";
 "cod_seg_desc" = "Últimos %1$s dígitos do verso do cartão de crédito";
 "cod_seg_desc_amex" = "%1$s dígitos da frente do cartão de crédito";

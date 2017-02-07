@@ -362,5 +362,35 @@
 		<key>editText_mask</key>
 		<string>XXXX XXXX XXXX XXXX</string>
 	</dict>
+	<key>maestro</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_maestro</string>
+		<key>first_color</key>
+		<string>004883</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXXXXXXXXXXXXXXXXX</string>
+		<key>editText_mask</key>
+		<string>XXXXXXXXXXXXXXXXXXX</string>
+	</dict>
+	<key>debcabal</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_debcabal</string>
+		<key>first_color</key>
+		<string>D4B44B</string>
+		<key>font_color</key>
+		<string>333333</string>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
 </dict>
 </plist>

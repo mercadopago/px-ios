@@ -370,20 +370,28 @@ import UIKit
     open class func getColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
+        let defaultColor = CardFormViewController.cardDefaultColor
+       
+    
+        if dictPM?.value(forKey: paymentMethod._id) != nil{
+            let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
+            let stringColor = pmConfig.value(forKey: "first_color") as! String
+            //let intColor = Int(stringColor)
+            return UIColor(netHex:Int(stringColor, radix: 16)!)
+        }else {
+            return defaultColor
+        }
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let stringColor = pmConfig.value(forKey: "first_color") as! String
-        //let intColor = Int(stringColor)
-        return UIColor(netHex:Int(stringColor, radix: 16)!)
         
+
     }
     
     open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let etMask = pmConfig.value(forKey: "label_mask") as! String
+        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary
+        let etMask = pmConfig?.value(forKey: "label_mask") as? String
         
         return etMask
     }
@@ -392,8 +400,8 @@ import UIKit
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let etMask = pmConfig.value(forKey: "editText_mask") as! String
+        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary
+        let etMask = pmConfig?.value(forKey: "editText_mask") as? String
 
         return etMask
     }
@@ -402,22 +410,38 @@ import UIKit
     open class func getFontColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
+        let defaultColor = MPLabel.defaultColorText
+    
+
+        if dictPM?.value(forKey: paymentMethod._id) != nil{
+            let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
+            let stringColor = pmConfig.value(forKey: "font_color") as! String
+            //let intColor = Int(stringColor)
+            return UIColor(netHex:Int(stringColor, radix: 16)!)
+        }else {
+            return defaultColor
+        }
+
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let stringColor = pmConfig.value(forKey: "font_color") as! String
-        //let intColor = Int(stringColor)
-        return UIColor(netHex:Int(stringColor, radix: 16)!)
         
     }
     
     open class func getEditingFontColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
+        let defaultColor = MPLabel.highlightedColorText
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let stringColor = pmConfig.value(forKey: "editing_font_color") as! String
-        //let intColor = Int(stringColor)
-        return UIColor(netHex:Int(stringColor, radix: 16)!)
+        
+        if dictPM?.value(forKey: paymentMethod._id) != nil{
+            let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
+            let stringColor = pmConfig.value(forKey: "editing_font_color") as! String
+            //let intColor = Int(stringColor)
+            return UIColor(netHex:Int(stringColor, radix: 16)!)
+        }else {
+            return defaultColor
+        }
+        
+        
         
     }
     
