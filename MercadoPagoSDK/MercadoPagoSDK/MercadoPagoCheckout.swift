@@ -38,8 +38,12 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     
-    open static func addReviewble(cell: [MPCustomCells]){
-        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell = cell
+    open static func addConfirmAdditionalCells(_ cells: [MPCustomCells]){
+        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells = cells
+    }
+    
+    open static func addConfirmItemCells(_ cells: [MPCustomCells]){
+        MercadoPagoCheckoutViewModel.confirmItemsCells = cells
     }
     
     open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
