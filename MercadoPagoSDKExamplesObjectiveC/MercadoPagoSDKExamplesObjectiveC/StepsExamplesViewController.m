@@ -120,11 +120,11 @@ int installmentsSelected = 1;
 
 - (void)startPaymentMethods {
     
-    /*UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStepWithPreference:nil callback:^(PaymentMethod * pm) {
-        paymentMethod = pm;
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-    [self.navigationController pushViewController:paymentsStep animated:YES];*/
+//    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStepWithPreference:nil callback:^(PaymentMethod * pm) {
+//        paymentMethod = pm;
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }];
+//    [self.navigationController pushViewController:paymentsStep animated:YES];
 
 }
 
@@ -139,10 +139,10 @@ int installmentsSelected = 1;
 
 - (void)startInstallmentsStep{
     
-     /*UIViewController *installmentVC =[MPStepBuilder startInstallmentsStep:nil paymentPreference:nil amount:ITEM_UNIT_PRICE issuer:selectedIssuer paymentMethodId:@"visa" callback:^(PayerCost * _Nullable payerCost) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-     [self.navigationController pushViewController:installmentVC animated:YES];*/
+//     UIViewController *installmentVC =[MPStepBuilder startInstallmentsStep:nil paymentPreference:nil amount:ITEM_UNIT_PRICE issuer:selectedIssuer paymentMethodId:@"visa" callback:^(PayerCost * _Nullable payerCost) {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }];
+//     [self.navigationController pushViewController:installmentVC animated:YES];
 }
 
 - (void)createPayment {

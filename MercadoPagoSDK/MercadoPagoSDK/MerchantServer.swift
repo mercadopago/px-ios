@@ -38,8 +38,8 @@ open class MerchantServer : NSObject {
         }
     }
 
-    open class func createPayment(paymentBody : NSDictionary, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), URI: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI())
+    open class func createPayment(paymentUrl : String, paymentUri: String, paymentBody : NSDictionary, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        let service : MerchantService = MerchantService(baseURL: paymentUrl, URI: paymentUri)
         
         var body = ""
         if !NSDictionary.isNullOrEmpty(paymentBody){

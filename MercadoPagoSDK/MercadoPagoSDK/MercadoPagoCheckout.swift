@@ -238,9 +238,8 @@ open class MercadoPagoCheckout: NSObject {
         } else {
             paymentBody = self.viewModel.paymentData.toJSON()
         }
-        
-        print(paymentBody)
-        MerchantServer.createPayment(paymentBody : paymentBody as NSDictionary, success: {(payment : Payment) -> Void in
+    
+        MerchantServer.createPayment(paymentUrl : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), paymentUri : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentBody : paymentBody as NSDictionary, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
         }, failure: {(error : NSError) -> Void in
