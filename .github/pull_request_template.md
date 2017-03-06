@@ -4,6 +4,15 @@ Fix #{issueNumber}
 - Cambio 1
 - Cambio 2
 
+### Casos de Prueba
+- [ ] Account money, tarjetas guardada, tarjeta de credito, debito y medio off
+- [ ] Ingreasar directamente a RyC y deshabilitar RyC de la flowPreference
+- [ ] PaymentData callback
+- [ ] Cambiar medio de pago
+- [ ] Ingresar directamente con un paymentResult
+- [ ] Excluir todo salvo accountMoney
+- [ ] Excluir todo salvo tarjeta
+
 ### Revisión
 - [ ] Todos los textos se encuentran localizables
 - [ ] No se introducen warnings al proyecto
@@ -17,3 +26,4 @@ Fix #{issueNumber}
 - [ ] Test unitarios OK
 - [ ] Test funcionales OK
 - [ ] Documentación actualizada
+
