@@ -17,3 +17,10 @@ Fix #{issueNumber}
 - [ ] Test unitarios OK
 - [ ] Test funcionales OK
 - [ ] Documentación actualizada
+
+### Casos de Prueba
+- [ ] Account money, tarjetas guardada, tarjeta de credito, debito y medio off
+- [ ] Ingreasar directamente a RyC y deshabilitar RyC de la flowPreference
+- [ ] PaymentData callback
+- [ ] Cambiar medio de pago
+- [ ] Ingresar directamente con un paymentResult
