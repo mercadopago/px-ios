@@ -15,7 +15,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     var viewModel: PaymentResultViewModel!
     
     override open var screenName : String { get {
-        return "RESULT_" + viewModel.status().uppercased()
+        return "RESULT"
     } }
         
      override open func viewDidLoad() {
