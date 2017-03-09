@@ -129,6 +129,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        self.collectionSearch.allowsSelection = true
         self.getCustomerCards()
         self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
         if self.loadingGroups {
@@ -263,6 +265,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if indexPath.section == 1 {
             let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodOption
             collectionView.deselectItem(at: indexPath, animated: true)
+            collectionView.allowsSelection = false
             self.callback!(paymentSearchItemSelected)
         }
     }
