@@ -81,7 +81,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.showLoading()
+        //self.showLoading()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
@@ -90,7 +90,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         } else {
             //TODO : OJO TOKEN RECUPERABLE
             if self.viewModel.paymentData.paymentMethod != nil {
-                self.hideLoading()
+                //self.hideLoading()
               //  self.checkoutTable.reloadData()
                 if (recover){
                     recover = false
@@ -109,7 +109,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
         self.hideNavBar()
-        self.hideLoading()
+        //self.hideLoading()
      
     }
 
@@ -211,7 +211,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.hideNavBar()
         self.hideBackButton()
         self.hideTimer()
-        self.showLoading()
+        //self.showLoading()
         self.callbackConfirm(self.viewModel.paymentData)
     }
  
@@ -411,7 +411,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.hideLoading()
+        //self.hideLoading()
     }
     
     public func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void)) {

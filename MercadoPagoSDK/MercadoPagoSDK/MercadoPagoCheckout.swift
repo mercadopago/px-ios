@@ -323,6 +323,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createPayment() {
+        self.presentLoading()
         
         var paymentBody : [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
@@ -335,6 +336,7 @@ open class MercadoPagoCheckout: NSObject {
         MerchantServer.createPayment(paymentUrl : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), paymentUri : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentBody : paymentBody as NSDictionary, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
+            self.dismissLoading()
         }, failure: {(error : NSError) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createPayment()
