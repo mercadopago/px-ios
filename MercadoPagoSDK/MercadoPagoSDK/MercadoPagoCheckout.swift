@@ -28,7 +28,9 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController = navigationController
         
         if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers.last
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
+            }
+            viewControllerBase = newNavigationStack.last
         }
     }
     
