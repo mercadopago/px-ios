@@ -88,6 +88,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.clearMercadoPagoStyle()
   
         
+        
+        
+        
     }
     
     internal func loadMPStyles(){
