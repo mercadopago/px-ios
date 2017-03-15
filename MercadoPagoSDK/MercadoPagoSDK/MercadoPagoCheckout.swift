@@ -164,6 +164,8 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
             self.executeNextStep()
+        }, callbackCancel : {
+            self.finish()
         })
         
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)

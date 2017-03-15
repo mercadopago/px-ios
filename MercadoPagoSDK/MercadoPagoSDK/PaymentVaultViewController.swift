@@ -64,11 +64,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     fileprivate var callback : ((_ paymentMethodSelected : PaymentMethodOption) -> Void)!
     
-    init(viewModel : PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected : PaymentMethodOption) -> Void) {
+    init(viewModel : PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected : PaymentMethodOption) -> Void, callbackCancel: ((Void) -> Void)?) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
         self.viewModel = viewModel
         self.callback = callback
+        self.callbackCancel = callbackCancel
     }
     
     
