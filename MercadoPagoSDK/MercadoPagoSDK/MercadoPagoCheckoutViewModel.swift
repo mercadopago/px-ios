@@ -68,10 +68,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var customPaymentOptions : [CardInformation]?
     
     var rootVC = true
-    
-    var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
-    
-    let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
     var paymentData = PaymentData()
     var payment : Payment?
@@ -86,7 +82,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var needLoadPreference : Bool = false
     internal var readyToPay : Bool = false
     private var checkoutComplete = false
-    internal var reviewAndConfirm = false
     internal var initWithPaymentData = false
     
     init(checkoutPreference : CheckoutPreference, paymentData : PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
@@ -94,7 +89,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let pm = paymentData{
             if pm.isComplete() {
                 self.paymentData = pm
-                self.reviewAndConfirm = true
                 self.initWithPaymentData = true
             }
         }
@@ -215,12 +209,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if self.paymentOptionSelected!.isCustomerPaymentMethod() {
             self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
             if self.paymentOptionSelected!.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
-                self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+                //self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             }
         
         } else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
-            self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+            //self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
         }
         
     }
@@ -232,7 +226,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             needLoadPreference = false
             return .SEARCH_PREFERENCE
         }
-        
         
         if hasError() {
             return .ERROR
@@ -254,7 +247,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .PAYMENT_METHOD_SELECTION
         }
         
-        if reviewAndConfirm {
+        if readyToPay {
+            readyToPay = false
+            return .POST_PAYMENT
+        }
+
+        if needReviewAndConfirm() {
             return .REVIEW_AND_CONFIRM
         }
         
@@ -293,12 +291,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .CREATE_CARD_TOKEN
         }
         
-        if readyToPay {
-            readyToPay = false
-            return .POST_PAYMENT
-        }
         
-        return .REVIEW_AND_CONFIRM
+        return .FINISH
 
 
     }
@@ -346,12 +340,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     
     public func updateCheckoutModel(token : Token) {
-        let lastForDigits = self.paymentData.token?.lastFourDigits
+        
         self.paymentData.token = token
-        if lastForDigits != nil {
-           self.paymentData.token?.lastFourDigits = lastForDigits
+        let lastFourDigits = self.paymentData.token!.lastFourDigits
+        if lastFourDigits != nil {
+           self.paymentData.token?.lastFourDigits = lastFourDigits
         }
-        self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
     }
 
     public class func createMPPayment(_ email : String, preferenceId : String, paymentData : PaymentData, customerId : String? = nil) -> MPPayment {
@@ -383,7 +377,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.rootPaymentMethodOptions = paymentMethodOptions
         }
         self.paymentMethodOptions = self.rootPaymentMethodOptions
-        self.next = .PAYMENT_METHOD_SELECTION
     }
     
     func updateCheckoutModel(paymentData: PaymentData){
@@ -401,7 +394,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         } else {
             self.readyToPay = true
         }
-        self.reviewAndConfirm = false
+    
     }
     
     public func updateCheckoutModel(payment : Payment) {
