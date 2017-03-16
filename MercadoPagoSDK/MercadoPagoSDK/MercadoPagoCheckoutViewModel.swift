@@ -208,13 +208,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         
         if self.paymentOptionSelected!.isCustomerPaymentMethod() {
             self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
-            if self.paymentOptionSelected!.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
-                //self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
-            }
-        
         } else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
-            //self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
         }
         
     }
