@@ -20,6 +20,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         super.tearDown()
     }
     
+    
     func testNextStep_withCheckoutPreference_accountMoney() {
         
         // Set access_token
@@ -45,6 +46,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         
         // 4. Payment option selected : account_money => RyC
         MPCheckoutTestAction.selectAccountMoney(mpCheckout: mpCheckout)
+        
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.REVIEW_AND_CONFIRM, step)
         
@@ -62,10 +64,11 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.CONGRATS, step)
         
+        // 7. Finish
         step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.FINISH, step)
         
-        // 7. Siguiente step DEBERIA SER FINISH - NO LO ES
-      //  XCTAssertEqual(CheckoutStep.FINISH, step)
+      
         
     }
     
@@ -163,8 +166,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.CONGRATS, step)
         
-//        // 10. Siguiente step DEBERIA SER FINISH - NO LO ES
-//        //  XCTAssertEqual(CheckoutStep.FINISH, step)
+        // 11. Finish
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.FINISH, step)
+        
+        // Ejecutar finish
+        mpCheckout.executeNextStep()
 
     }
 
@@ -201,23 +208,21 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 4. Payment option selected : account_money => paymentDataCallback
         MPCheckoutTestAction.selectAccountMoney(mpCheckout : mpCheckout)
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.REVIEW_AND_CONFIRM, step)
+        XCTAssertEqual(CheckoutStep.FINISH, step)
 
-        
-        // 5. RyC pero no se muestra y se llama a paymentDataCallback
-        let accountMoneyPm = MockBuilder.buildPaymentMethod("account_money", name: "Dinero en cuenta", paymentTypeId: PaymentTypeId.ACCOUNT_MONEY.rawValue)
-        let paymentDataMock = MockBuilder.buildPaymentData(paymentMethod: accountMoneyPm)
-        mpCheckout.viewModel.updateCheckoutModel(paymentData: paymentDataMock)
-        
-        
+        // Setear paymentDataCallback
         let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
         MercadoPagoCheckout.setPaymentDataCallback { (paymentData : PaymentData) in
-            XCTAssertEqual(paymentData.paymentMethod._id, paymentDataMock.paymentMethod._id)
+            XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
+            XCTAssertNil(paymentData.issuer)
+            XCTAssertNil(paymentData.payerCost)
+            XCTAssertNil(paymentData.token)
             expectPaymentDataCallback.fulfill()
         }
         
-        mpCheckout.collectPaymentData()
-        step = mpCheckout.viewModel.nextStep()
+        // Ejecutar finish
+        mpCheckout.executeNextStep()
+        
         waitForExpectations(timeout: 10, handler: nil)
         
     }
@@ -226,6 +231,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         
         // Set access_token
         MercadoPagoContext.setPayerAccessToken("access_token")
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let accountMoneyPaymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId : "account_money")
@@ -260,10 +266,14 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.CONGRATS, step)
         
-        step = mpCheckout.viewModel.nextStep()
         
-        // 6. Siguiente step DEBERIA SER FINISH - NO LO ES
-        //  XCTAssertEqual(CheckoutStep.FINISH, step)
+        
+        // 6. Finish
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.FINISH, step)
+        
+        // Ejecutar finish
+        mpCheckout.executeNextStep()
 
     }
     
@@ -285,26 +295,20 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 1. Search preference
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
-//        
-//        // 2. Search Payment Methods
-//        step = mpCheckout.viewModel.nextStep()
-//        XCTAssertEqual(CheckoutStep.SEARCH_PAYMENT_METHODS, step)
-        
-        // Simular api call a grupos
-        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], customOptions : [accountMoneyOption])
-        mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
-
+  
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
         
         // 3. Muestra congrats
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.CONGRATS, step)
         
         // 4. Finish
-//        step = mpCheckout.viewModel.nextStep()
-//        XCTAssertEqual(CheckoutStep.FINISH, step)
-//        
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.FINISH, step)
+        
+        // Ejecutar finish
+        mpCheckout.executeNextStep()
+        
     }
     
     func testNextStep_withCustomerCard() {
@@ -325,19 +329,14 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PAYMENT_METHODS, step)
         
-        // Simular api call a grupos
-        let customerCardOption = MockBuilder.buildCustomerPaymentMethod("customerCardId", paymentMethodId: "visa")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
-        let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
-        mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
-
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
+        
         // 3. Display payment methods (no exclusions)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.PAYMENT_METHOD_SELECTION, step)
         
         // 4. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        MPCheckoutTestAction.selectCustomerCardOption(mpCheckout: mpCheckout)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.GET_PAYER_COSTS, step)
         mpCheckout.viewModel.installment = MockBuilder.buildInstallment()
@@ -358,10 +357,32 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 7. RyC
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.REVIEW_AND_CONFIRM, step)
+    
+        // Simular pago
+        let visaPaymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentDataMock = MockBuilder.buildPaymentData(paymentMethod: visaPaymentMethod)
+        paymentDataMock.issuer = MockBuilder.buildIssuer()
+        paymentDataMock.payerCost = MockBuilder.buildPayerCost()
+        paymentDataMock.token = MockBuilder.buildToken()
+        mpCheckout.viewModel.updateCheckoutModel(paymentData: paymentDataMock)
         
-//        // 9. Finish
-//        step = mpCheckout.viewModel.nextStep()
-//        XCTAssertEqual(CheckoutStep.FINISH, step)
+        // 8. Post Payment
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.POST_PAYMENT, step)
+        
+        // 9. Simular pago completo => Congrats
+        let paymentMock = MockBuilder.buildPayment("visa")
+        mpCheckout.viewModel.updateCheckoutModel(payment: paymentMock)
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.CONGRATS, step)
+        
+        // 10. Finish
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.FINISH, step)
+        
+        // Ejecutar finish
+        mpCheckout.executeNextStep()
+
         
     }
 
