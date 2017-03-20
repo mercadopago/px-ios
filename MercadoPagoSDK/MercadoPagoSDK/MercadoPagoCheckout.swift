@@ -22,8 +22,32 @@ open class MercadoPagoCheckout: NSObject {
     
 
     
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, navigationController : UINavigationController, paymentResult: PaymentResult? = nil) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: nil)
+        MercadoPagoCheckout.setPaymentDataConfirmCallback(paymentDataConfirmCallback: paymentDataCallback)
+        DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
+        self.navigationController = navigationController
+        
+        if self.navigationController.viewControllers.count > 0 {
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
+            }
+            viewControllerBase = newNavigationStack.last
+        }
+    }
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, exitCallback : @escaping (Void) -> Void, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: nil)
+        MercadoPagoCheckout.setCallback(callback: exitCallback)
+        DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
+        self.navigationController = navigationController
+        
+        if self.navigationController.viewControllers.count > 0 {
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
+            }
+            viewControllerBase = newNavigationStack.last
+        }
+    }
+    public init(checkoutPreferenceId : String, paymentData : PaymentData? = nil, paymentResult: PaymentResult? = nil, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreferenceId : checkoutPreferenceId, paymentData: paymentData, paymentResult: paymentResult)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
         
@@ -253,7 +277,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
-        self.presentLoading()
+        //self.presentLoading()
         
         let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
@@ -264,7 +288,7 @@ open class MercadoPagoCheckout: NSObject {
             }
             self.viewModel.updateCheckoutModel(token: token)
             self.executeNextStep()
-            self.dismissLoading()
+            //self.dismissLoading()
         }, failure: { (error) in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createCardToken()

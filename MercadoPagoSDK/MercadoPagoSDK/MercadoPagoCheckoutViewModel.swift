@@ -99,6 +99,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
         self.paymentResult = paymentResult
+    }
+    init(checkoutPreferenceId : String, paymentData : PaymentData?, paymentResult: PaymentResult?) {
+        self.checkoutPreference = CheckoutPreference()
+        self.checkoutPreference._id = checkoutPreferenceId
+        
+        if let pm = paymentData{
+            if pm.isComplete() {
+                self.paymentData = pm
+                self.reviewAndConfirm = true
+                self.initWithPaymentData = true
+            }
+        }
+        self.paymentResult = paymentResult
         if !String.isNullOrEmpty(self.checkoutPreference._id) {
             // Cargar información de preferencia en caso que tenga id
             needLoadPreference = true

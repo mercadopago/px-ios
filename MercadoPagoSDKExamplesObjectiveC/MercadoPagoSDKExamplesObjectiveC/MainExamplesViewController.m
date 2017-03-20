@@ -59,13 +59,13 @@
     [self setReviewScreenPreference];
     
     //Setear flowPreference
-    [self finishFlowBeforeRYC];
+    //[self finishFlowBeforeRYC];
     
     
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
     
     // Setear una preferencia hecha a mano
-    [self setCheckoutPref_WithId];
+    [self setCheckoutPref_CardsNotExcluded];
     
     // Setear PaymentData
     //[self setPaymentData];
@@ -86,7 +86,13 @@
     //[self setVoidCallback];
     
     
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData navigationController:self.navigationController paymentResult:self.paymentResult] start];
+[[[MercadoPagoCheckout alloc]initWithCheckoutPreference:self.pref paymentData:self.paymentData paymentDataCallback:^(PaymentData * paymentData) {
+    NSLog(@"PaymentMethod: %@", paymentData.paymentMethod._id);
+    NSLog(@"Token_id: %@", paymentData.token._id);
+    NSLog(@"Installemtns: %ld", paymentData.payerCost.installments);
+    NSLog(@"Issuer_id: %@", paymentData.issuer._id);
+} navigationController: self.navigationController] start];
+    //[[[MercadoPagoCheckout alloc]initWithCheckoutPreferenceId:@"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33" paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController] start];
     
 }
 
@@ -150,7 +156,7 @@
         [flowPreference enableReviewAndConfirmScreen];
         [MercadoPagoCheckout setFlowPreference:flowPreference];
         
-        [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController paymentResult:nil] start];
+    [[[MercadoPagoCheckout alloc]initWithCheckoutPreferenceId:@"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33" paymentData:paymentData paymentResult:nil navigationController:self.navigationController] start];
         
     }];
 }
