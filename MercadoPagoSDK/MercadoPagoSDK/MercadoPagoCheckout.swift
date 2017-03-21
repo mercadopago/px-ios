@@ -37,13 +37,6 @@ open class MercadoPagoCheckout: NSObject {
         executeNextStep()
     }
     
-    public func getRootViewController() -> UIViewController {
-        MercadoPagoCheckout.firstViewControllerPushed = false
-        self.pushRootLoading()
-        self.start()
-        return self.currentLoadingView!
-    }
-    
     func executeNextStep(){
         switch self.viewModel.nextStep() {
         case .SEARCH_PREFERENCE :
