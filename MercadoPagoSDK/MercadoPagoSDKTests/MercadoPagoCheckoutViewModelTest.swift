@@ -542,6 +542,46 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
          XCTAssertEqual(mpCheckoutViewModel.paymentOptionSelected!.getId(), accountMoneyOption.getCardId())
         
     }
+    
+    func testUpdateCheckoutModel_paymentData() {
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
+        mpCheckoutViewModel.updateCheckoutModel(paymentData: paymentData)
+        
+        XCTAssertTrue(mpCheckoutViewModel.readyToPay)
+        
+        paymentData.paymentMethod = nil
+        mpCheckoutViewModel.updateCheckoutModel(paymentData: paymentData)
+        
+        XCTAssertNil(mpCheckoutViewModel.paymentOptionSelected)
+        XCTAssertNil(mpCheckoutViewModel.search)
+        XCTAssertNil(mpCheckoutViewModel.issuers)
+        XCTAssertNil(mpCheckoutViewModel.installment)
+        XCTAssertNil(mpCheckoutViewModel.cardToken)
+        XCTAssertTrue(mpCheckoutViewModel.rootVC)
+        XCTAssertFalse(mpCheckoutViewModel.initWithPaymentData)
+        
+    }
+    
+    func testHandleCustomerPaymentMethod() {
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckoutViewModel: mpCheckoutViewModel)
+        
+        MPCheckoutTestAction.selectAccountMoney(mpCheckoutViewModel: mpCheckoutViewModel)
+        
+        mpCheckoutViewModel.handleCustomerPaymentMethod()
+        
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod._id, "account_money")
+        
+        MPCheckoutTestAction.selectCustomerCardOption(mpCheckoutViewModel: mpCheckoutViewModel)
+        
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod._id, "visa")
+    }
 
     
 }
