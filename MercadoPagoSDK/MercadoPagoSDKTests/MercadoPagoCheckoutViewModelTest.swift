@@ -16,7 +16,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
@@ -385,7 +384,55 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         
     }
-
+    
+    /****************************************************/
+    /********** ViewModel Builders Tests ****************/
+    /****************************************************/
+    
+    func testHasError(){
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        
+        XCTAssertFalse(mpCheckout.viewModel.hasError())
+        
+        let error = MPSDKError()
+        MercadoPagoCheckoutViewModel.error = error
+        
+        XCTAssertTrue(mpCheckout.viewModel.hasError())
+        
+        MercadoPagoCheckoutViewModel.error = nil
+        
+    }
+    
+    func testIssuerViewModel(){
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil)
+        
+        // Simular installments
+        let issuer = MockBuilder.buildIssuer()
+        mpCheckoutViewModel.issuers = [issuer]
+        mpCheckoutViewModel.installment = MockBuilder.buildInstallment()
+        
+        let issuerVM = mpCheckoutViewModel.issuerViewModel()
+        XCTAssertTrue(issuerVM.isKind(of: IssuerAdditionalStepViewModel.self))
+        XCTAssertEqual(issuerVM.amount, checkoutPreference.getAmount())
+        
+    }
+    
+    func testPayerCostViewModel(){
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil)
+        
+        let issuer = MockBuilder.buildIssuer()
+        mpCheckoutViewModel.issuers = [issuer]
+        mpCheckoutViewModel.installment = MockBuilder.buildInstallment()
+        
+        let payerCostVM = mpCheckoutViewModel.payerCostViewModel()
+        XCTAssertTrue(payerCostVM.isKind(of: PayerCostAdditionalStepViewModel.self))
+        XCTAssertEqual(payerCostVM.amount, checkoutPreference.getAmount())
+        
+        
+    }
     
     
 }
