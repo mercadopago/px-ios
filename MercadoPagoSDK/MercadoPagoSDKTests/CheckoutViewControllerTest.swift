@@ -11,7 +11,7 @@ import XCTest
 
 class CheckoutViewControllerTest: BaseTest {
     
- /*   var checkoutViewController : MockCheckoutViewController?
+    var checkoutViewController : MockCheckoutViewController?
     var preference : CheckoutPreference?
     var selectedPaymentMethod : PaymentMethod?
     var selectedPayerCost : PayerCost?
@@ -20,13 +20,13 @@ class CheckoutViewControllerTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        self.checkoutViewController = MockCheckoutViewController(preferenceId: MockBuilder.PREF_ID_NO_EXCLUSIONS, callback: { (payment) in
-            
-        })
+//        self.checkoutViewController = MockCheckoutViewController(preferenceId: MockBuilder.PREF_ID_NO_EXCLUSIONS, callback: { (payment) in
+//            
+//        })
 
     }
     
-    override func tearDown() {
+/*    override func tearDown() {
         super.tearDown()
     }
     
@@ -477,6 +477,21 @@ class CheckoutViewModelTest : BaseTest {
         let preference = MockBuilder.buildCheckoutPreference()
         self.instance!.preference = preference
         XCTAssertTrue(self.instance!.isPreferenceLoaded())
+    }
+    
+    func testGetTotalAmount() {
+        let paymentMethodCreditCard = MockBuilder.buildPaymentMethod("master", name: "master", paymentTypeId: PaymentTypeId.CREDIT_CARD.rawValue)
+        self.instance!.paymentData.paymentMethod = paymentMethodCreditCard
+        self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost()
+        self.instance!.paymentData.payerCost!.totalAmount = 10
+        var totalAmount = self.instance!.getTotalAmount()
+        XCTAssertEqual(totalAmount, self.instance!.paymentData.payerCost!.totalAmount)
+        
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        self.instance!.preference = checkoutPreference
+        self.instance!.paymentData.payerCost = nil
+        totalAmount = self.instance!.getTotalAmount()
+        XCTAssertEqual(totalAmount, checkoutPreference.getAmount())
     }
     
     func testShouldDisplayNoRate(){
