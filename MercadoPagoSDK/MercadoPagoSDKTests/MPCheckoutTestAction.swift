@@ -44,13 +44,16 @@ class MPCheckoutTestAction: NSObject {
     
     static func loadGroupsInViewModel(mpCheckoutViewModel : MercadoPagoCheckoutViewModel) {
         
+        
         let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
         let customerCardOption = MockBuilder.buildCustomerPaymentMethod("customerCardId", paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let offlineOption = MockBuilder.buildPaymentMethodSearchItem("off", type: PaymentMethodSearchItemType.PAYMENT_METHOD)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodAM = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
+        let offlinePaymentMethod = MockBuilder.buildPaymentMethod("off", paymentTypeId : PaymentTypeId.TICKET.rawValue)
         
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa, paymentMethodAM], customOptions : [customerCardOption, accountMoneyOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption, offlineOption], paymentMethods : [paymentMethodVisa, paymentMethodAM, offlinePaymentMethod], customOptions : [customerCardOption, accountMoneyOption])
         mpCheckoutViewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
     }
     

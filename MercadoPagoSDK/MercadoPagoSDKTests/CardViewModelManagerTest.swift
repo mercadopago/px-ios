@@ -14,6 +14,8 @@ class CardViewModelManagerTest: BaseTest {
     
     override func setUp() {
         super.setUp()
+        // Retomar valor default
+        CardFormViewController.showBankDeals = true
     }
     
     override func tearDown() {
@@ -130,6 +132,8 @@ class CardViewModelManagerTest: BaseTest {
         self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
         self.cardFormManager!.promos = [MockBuilder.buildPromo()]
         let result = self.cardFormManager!.showBankDeals()
+        
+        
         XCTAssertTrue(result)
     }
     
@@ -233,14 +237,14 @@ class CardViewModelManagerTest: BaseTest {
     
     func testBuildSavedCardToken(){
         let customerCard = MockBuilder.buildCard()
-     /*   self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: customerCard, token: nil, paymentSettings: nil)
-        self.cardFormManager?.buildSavedCardToken("cvv")
+        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: customerCard, token: nil, paymentSettings: nil)
+        self.cardFormManager!.buildSavedCardToken("cvv")
         
         let savedCardToken = self.cardFormManager!.cardToken as! SavedCardToken
         let savedCardtokenCardId = savedCardToken.cardId
-        //XCTAssertEqual(savedCardtokenCardId, customerCard.idCard)
+        XCTAssertEqual(savedCardtokenCardId, customerCard.getCardId())
         XCTAssertEqual(savedCardToken.securityCode, "cvv")
-        XCTAssertEqual(savedCardToken.securityCodeRequired, customerCard.isSecurityCodeRequired())*/
+        XCTAssertEqual(savedCardToken.securityCodeRequired, customerCard.isSecurityCodeRequired())
     }
     
     func testIsValidInputCVV() {
