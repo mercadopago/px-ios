@@ -305,7 +305,6 @@
 		4BAE1D551DCBE9340000ED5C /* PaymentResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D511DCBE9340000ED5C /* PaymentResultViewController.xib */; };
 		4BCDAC3B1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */; };
 		4BDE2D451E37B4AC00C1D614 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
-		4BDE2D461E37B4AC00C1D614 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
 		4BE51C201E2CFEC6004E5F7D /* DecorationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE51C1F1E2CFEC6004E5F7D /* DecorationPreference.swift */; };
 		4BEF80F61E53308C00797CD1 /* PaymentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEF80F51E53308C00797CD1 /* PaymentResult.swift */; };
 		4BEF80F71E53308C00797CD1 /* PaymentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEF80F51E53308C00797CD1 /* PaymentResult.swift */; };
@@ -465,6 +464,8 @@
 		76DA64601C8F50C2004F9A7C /* MPServicesBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA645F1C8F50C2004F9A7C /* MPServicesBuilderTest.swift */; };
 		76DA646C1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
 		76DDF9791E8AB2EA00EEB66D /* mpsdk_settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76DDF9781E8AB2EA00EEB66D /* mpsdk_settings.plist */; };
+		76DDF97A1E8AE78400EEB66D /* mpsdk_settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76DDF9781E8AB2EA00EEB66D /* mpsdk_settings.plist */; };
+		76DDF97B1E8AE8C900EEB66D /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
 		76EA63A01C9B3B9700808E11 /* InstructionsServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA639F1C9B3B9700808E11 /* InstructionsServiceTest.swift */; };
 		76EC47C41C85DCA10086FA53 /* AddressTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC47C31C85DCA10086FA53 /* AddressTest.swift */; };
 		76EC47C61C85E1EA0086FA53 /* BinTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC47C51C85E1EA0086FA53 /* BinTest.swift */; };
@@ -1952,6 +1953,7 @@
 				76FD247C1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
 				151A941B1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
 				76B085321CE51C6200C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */,
+				76DDF97A1E8AE78400EEB66D /* mpsdk_settings.plist in Resources */,
 				0FC4FC421B0FB83700CF7148 /* PromosTyCViewController.xib in Resources */,
 				760BD1F21C99ADE300FDA170 /* MockedResponse.plist in Resources */,
 				0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */,
@@ -2204,7 +2206,6 @@
 				76CD12091D6F308C0052350D /* InstructionsInfo.swift in Sources */,
 				76134AB91C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift in Sources */,
 				767254701C7CCBB400EB5EBA /* PaymentVaultViewControllerTest.swift in Sources */,
-				4BDE2D461E37B4AC00C1D614 /* ServicePreference.swift in Sources */,
 				7622E3311DF5F03E00490C4E /* HeaderCongratsTableViewCell.swift in Sources */,
 				4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */,
 				0FC4FC401B0FB83700CF7148 /* PromosTyCViewController.swift in Sources */,
@@ -2272,6 +2273,7 @@
 				7622E3221DF5EE3700490C4E /* MPTrackerDelegate.swift in Sources */,
 				0F9883A21AD2AB8000F750F0 /* GatewayService.swift in Sources */,
 				766012E31CEB963300897F9D /* MPSDKError.swift in Sources */,
+				76DDF97B1E8AE8C900EEB66D /* ServicePreference.swift in Sources */,
 				0F9883A61AD2AB8000F750F0 /* MerchantService.swift in Sources */,
 				0F98837E1AD2AB6000F750F0 /* Item.swift in Sources */,
 				0FE3E38E1AE7174600C27B97 /* Serializable.swift in Sources */,
