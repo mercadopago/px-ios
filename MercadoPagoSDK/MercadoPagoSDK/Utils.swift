@@ -31,6 +31,8 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class Utils {
     
+    private static let kSdkSettingsFile = "mpsdk_settings"
+    
     class func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
         let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         NSLayoutConstraint.activate(widthConstraints)
@@ -357,6 +359,12 @@ class Utils {
             return mm
         }
         return 0
+    }
+    
+    internal static func getSetting<T>(identifier : String) -> T {
+        let path = MercadoPago.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        return dictPM![identifier] as! T
     }
     
 }

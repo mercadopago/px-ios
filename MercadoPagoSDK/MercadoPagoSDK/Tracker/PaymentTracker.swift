@@ -22,7 +22,7 @@ public class PaymentTracker: NSObject {
 
     public class func trackToken(token: String!, delegate : MPTrackerDelegate!){
         
-        let obj:[String:Any] = ["public_key": delegate.publicKey() , "token":token! ,"sdk_flavor":(delegate.flavor()?.rawValue)! ,"sdk_platform":"iOS" ,"sdk_type":FlowTrackInfo.FLOW_SDK_TYPE ,"sdk_version":delegate.sdkVersion() ,"sdk_framework":"" ,"site_id":delegate.siteId() ]
+        let obj:[String:Any] = ["public_key": delegate.publicKey() , "token":token! ,"sdk_flavor":(delegate.flavor()?.rawValue)! ,"sdk_platform":"iOS" ,"sdk_type":FlowTrackInfo.getSdkType() ,"sdk_version":delegate.sdkVersion() ,"sdk_framework":"" ,"site_id":delegate.siteId() ]
     
             
             self.request(url: PaymentTracker.MP_TRACK_TOKEN_URL, params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (jsonResult) -> Void in
@@ -37,7 +37,7 @@ public class PaymentTracker: NSObject {
     
     public class func trackPaymentOff(paymentId: String!, delegate : MPTrackerDelegate!){
         
-        let obj:[String:Any] = ["public_key":delegate.publicKey() , "payment_id":paymentId!,"sdk_flavor":(delegate.flavor()?.rawValue)!,"sdk_platform":"iOS" ,"sdk_type":FlowTrackInfo.FLOW_SDK_TYPE ,"sdk_version":delegate.sdkVersion() ,"sdk_framework":"" ,"site_id" :delegate.siteId() ]
+        let obj:[String:Any] = ["public_key":delegate.publicKey() , "payment_id":paymentId!,"sdk_flavor":(delegate.flavor()?.rawValue)!,"sdk_platform":"iOS" ,"sdk_type":FlowTrackInfo.getSdkType() ,"sdk_version":delegate.sdkVersion() ,"sdk_framework":"" ,"site_id" :delegate.siteId() ]
         
         self.request(url: PaymentTracker.MP_TRACK_PAYMENTOFF_URL, params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (jsonResult) -> Void in
             

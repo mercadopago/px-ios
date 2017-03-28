@@ -25,7 +25,7 @@ open class ServicePreference : NSObject{
     static let MP_PROD_ENV = "/v1"
     static let API_VERSION = "1.3.X"
     
-    static let MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+    static var MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
     
     static let MP_OP_ENVIROMENT = "/v1"
     
@@ -47,10 +47,17 @@ open class ServicePreference : NSObject{
     static let MP_INSTRUCTIONS_URI = MP_ENVIROMENT + "/payments/${payment_id}/results"
     static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
     
+    private static let kIsProdApiEnvironemnt = "prod_mp_api_environment"
+    
     private var useDefaultPaymentSettings = true
     
     var baseURL: String = MP_API_BASE_URL
     var gatewayURL: String?
+    
+    public override init(){
+        super.init()
+        ServicePreference.setupMPEnvironment()
+    }
     
     public func setGetCustomer(baseURL: String, URI: String , additionalInfo: [String:String] = [:]) {
         customerURL = baseURL
@@ -159,4 +166,12 @@ open class ServicePreference : NSObject{
         return !String.isNullOrEmpty(self.customerURL) && !String.isNullOrEmpty(self.customerURI) && customerAdditionalInfo != nil
     }
 
+    static public func setupMPEnvironment() {
+        let isProdEnvironment : Bool = Utils.getSetting(identifier: ServicePreference.kIsProdApiEnvironemnt)
+        if isProdEnvironment {
+            ServicePreference.MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+        } else {
+            ServicePreference.MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
+        }
+    }
 }

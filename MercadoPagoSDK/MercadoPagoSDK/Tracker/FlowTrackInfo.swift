@@ -10,10 +10,6 @@ import Foundation
 
 open class FlowTrackInfo: NSObject {
     
-    static let FLOW_SDK_TYPE_NATIVE = "native"
-    static let FLOW_SDK_TYPE_HYBRID = "hybrid"
-    static let FLOW_SDK_TYPE = FLOW_SDK_TYPE_NATIVE
-    
     static let FLOW_FLAVOR : UInt = 1
     static let FLOW_TYPE : UInt = 2
     static let FLOW_FRAMEWORK : UInt = 3
@@ -26,14 +22,24 @@ open class FlowTrackInfo: NSObject {
     var sdkVersion : String!
     var publicKey : String!
     
+    static let kIsFlowSdkHybrid = "flow_sdk_type_hybrid"
+    
     init(flavor : Flavor!, framework : String!, sdkVersion : String!, publicKey : String!){
         
         self.flavor = flavor
-        self.type = FlowTrackInfo.FLOW_SDK_TYPE
+        self.type = FlowTrackInfo.getSdkType()
         self.framework = framework
         self.sdkVersion = sdkVersion
         self.publicKey = publicKey
         
+    }
+    
+    open static func getSdkType() -> String {
+        let isHybridFlowType : Bool = Utils.getSetting(identifier: FlowTrackInfo.kIsFlowSdkHybrid)
+        if isHybridFlowType {
+            return "hybrid"
+        }
+        return "native"
     }
     
     
