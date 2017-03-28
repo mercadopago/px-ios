@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>flow_sdk_type_hybrid</key>
+	<false/>
+	<key>prod_mp_api_environment</key>
+	<false/>
+	<key>sdk_version</key>
+	<string>3.0.0-BETA-7</string>
+</dict>
+</plist>
