@@ -83,16 +83,16 @@ open class Payment : NSObject {
             payment.currencyId = currencyId
         }
         if let moneyReleaseDate = JSONHandler.attemptParseToString(json["money_release_date"]){
-            payment.moneyReleaseDate = getDateFromString(moneyReleaseDate)
+            payment.moneyReleaseDate = Utils.getDateFromString(moneyReleaseDate)
         }
         if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]){
-            payment.dateCreated = getDateFromString(dateCreated)
+            payment.dateCreated = Utils.getDateFromString(dateCreated)
         }
         if let dateLastUpdated = JSONHandler.attemptParseToString(json["date_last_updated"]){
-            payment.dateLastUpdated = getDateFromString(dateLastUpdated)
+            payment.dateLastUpdated = Utils.getDateFromString(dateLastUpdated)
         }
         if let dateApproved = JSONHandler.attemptParseToString(json["date_approved"]){
-            payment.dateApproved = getDateFromString(dateApproved)
+            payment.dateApproved = Utils.getDateFromString(dateApproved)
         }
         if let _description = JSONHandler.attemptParseToString(json["description"]){
             payment._description = _description
@@ -198,16 +198,6 @@ open class Payment : NSObject {
         ]
         
         return JSONHandler.jsonCoding(obj)
-    }
-    
-    open class func getDateFromString(_ string: String!) -> Date! {
-        if string == nil {
-            return nil
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        var dateArr = string.characters.split {$0 == "T"}.map(String.init)
-        return dateFormatter.date(from: dateArr[0])
     }
     
     open func isRejected() -> Bool {
