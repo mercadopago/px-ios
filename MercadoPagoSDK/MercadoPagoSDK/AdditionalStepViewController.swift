@@ -16,9 +16,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     let viewModel : AdditionalStepViewModel!
     
     
-    override open var screenName : String { get{
-        return viewModel.getScreenName()
-        } }
+    override open var screenName : String { get { return viewModel.getScreenName()} }
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -45,15 +43,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
     }
     
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.hideNavBar()
-        
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -87,50 +79,21 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        switch indexPath.section {
-        case 0:
-            return self.viewModel.getTitleCellHeight()
-        case 1:
-            return self.viewModel.getCardSectionCellHeight()
-        case 2:
-            return self.viewModel.getBodyCellHeight(row: indexPath.row)
-            
-        default:
-            return 60
-        }
-        
+        return self.viewModel.heightForRowAt(indexPath: indexPath)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if viewModel.showCardSection() == false{
-            if section == 0{
-                return 1
-            }else if section == 1{
-                return 0
-            }else{
-                return self.viewModel.numberOfCellsInBody()
-            }
-        } else{
-            if (section == 0 || section == 1){
-                return 1
-            } else {
-                return self.viewModel.numberOfCellsInBody()
-            }
-        }
-        
-        
+        return  self.viewModel.numberOfRowsInSection(section: section)
     }
-    
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellWidth = self.tableView.bounds.width
         
-        if (indexPath.section == 0){
+        if viewModel.isTitleCellFor(indexPath: indexPath) {
             
             let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! AdditionalStepTitleTableViewCell
             titleCell.selectionStyle = .none
@@ -140,7 +103,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             
             return titleCell
             
-        } else if (indexPath.section == 1){
+        } else if viewModel.isCardCellFor(indexPath: indexPath){
             if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
                 
                 let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
@@ -150,62 +113,40 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                 cardSectionCell.backgroundColor = UIColor.primaryColor()
                 
                 return cardSectionCell
-            
-            }else{
+                
+            } else {
                 let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
                 cardSectionCell.backgroundColor = UIColor.primaryColor()
                 return cardSectionCell
             }
             
+        } else if viewModel.isDiscountCellFor(indexPath: indexPath) {
+            let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
+            cell.contentView.viewWithTag(1)?.removeFromSuperview()
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+            discountBody.tag = 1
+            cell.contentView.addSubview(discountBody)
+            cell.selectionStyle = .none
+            return cell
+            
+        } else if viewModel.isTotalCellFor(indexPath: indexPath) {
+            let cellHeight = Double(viewModel.getAmountDetailCellHeight(indexPath: indexPath))
+            let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
+            totalCell.fillCell(total: self.viewModel.amount)
+            totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: cellHeight)
+            totalCell.selectionStyle = .none
+            return totalCell as UITableViewCell
             
         } else {
-            
-            if self.viewModel.showAmountDetailRow() {
-                if indexPath.row == 0 {
-                    
-                    if self.viewModel.showDiscountSection() {
-                        let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
-                        cell.contentView.viewWithTag(1)?.removeFromSuperview()
-                        let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
-                        discountBody.tag = 1
-                        cell.contentView.addSubview(discountBody)
-                        cell.selectionStyle = .none
-                        return cell
-                    }else {
-                        let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
-                        let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
-                        totalCell.fillCell(total: self.viewModel.amount)
-                        totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: Double(cellHeight))
-                        totalCell.selectionStyle = .none
-                        return totalCell as UITableViewCell
-                    }
-                } else{
-                    let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
-                    let cell = self.viewModel.dataSource[indexPath.row-1].getCell(width: Double(cellWidth), height: Double(cellHeight))
-                    return cell
-                }
-            } else{
-                let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
-                let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth), height: Double(cellHeight))
-                return cell
-            }
+            let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth), height: Double(viewModel.defaultRowCellHeight))
+            return cell
         }
     }
     
-    
-    
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if (indexPath.section == 2){
-            if self.viewModel.showTotalRow(){
-                if indexPath.row != 0{
-                    let callbackData: NSObject = self.viewModel.dataSource[indexPath.row - 1] as! NSObject
-                    self.viewModel.callback!(callbackData)
-                }
-            } else{
-                let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
-                self.viewModel.callback!(callbackData)
-            }
+        if indexPath.section == AdditionalStepViewModel.Sections.body.rawValue {
+            let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
+            self.viewModel.callback!(callbackData)
         }
     }
     
