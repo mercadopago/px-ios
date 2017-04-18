@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="55" id="EgF-Zm-UME" customClass="MPUserIdTableViewCell" customModule="MercadoPagoSDK">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EgF-Zm-UME" id="bHN-KV-nr0">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bA6-bw-aIQ">
+                        <rect key="frame" x="8" y="27" width="88" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="A6t-Vr-fJX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d8b-2x-9De">
+                        <rect key="frame" x="117" y="27" width="195" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="CnQ-ye-RKa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tipo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbA-4b-Avc" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="8" y="1" width="88" height="18"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Documento" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldV-cQ-hzn" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="117" y="1" width="195" height="18"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="MbA-4b-Avc" firstAttribute="leading" secondItem="bHN-KV-nr0" secondAttribute="leadingMargin" id="2eU-xH-8Vg"/>
+                    <constraint firstItem="MbA-4b-Avc" firstAttribute="top" secondItem="bHN-KV-nr0" secondAttribute="topMargin" constant="-7" id="4Q1-Dm-Z77"/>
+                    <constraint firstItem="ldV-cQ-hzn" firstAttribute="leading" secondItem="MbA-4b-Avc" secondAttribute="trailing" constant="21" id="8ZM-nc-0Or"/>
+                    <constraint firstItem="d8b-2x-9De" firstAttribute="height" secondItem="bA6-bw-aIQ" secondAttribute="height" id="8fD-Qx-0wS"/>
+                    <constraint firstItem="ldV-cQ-hzn" firstAttribute="top" secondItem="bHN-KV-nr0" secondAttribute="topMargin" constant="-7" id="A2w-30-Q4U"/>
+                    <constraint firstItem="d8b-2x-9De" firstAttribute="top" secondItem="ldV-cQ-hzn" secondAttribute="bottom" constant="8" id="BFJ-W9-N9S"/>
+                    <constraint firstItem="bA6-bw-aIQ" firstAttribute="leading" secondItem="bHN-KV-nr0" secondAttribute="leadingMargin" id="DAk-cS-hws"/>
+                    <constraint firstItem="ldV-cQ-hzn" firstAttribute="leading" secondItem="bHN-KV-nr0" secondAttribute="leadingMargin" constant="109" id="QlI-5Y-Bt6"/>
+                    <constraint firstItem="ldV-cQ-hzn" firstAttribute="top" secondItem="bHN-KV-nr0" secondAttribute="topMargin" constant="-7" id="RHj-Qz-JC1"/>
+                    <constraint firstItem="d8b-2x-9De" firstAttribute="leading" secondItem="bHN-KV-nr0" secondAttribute="leadingMargin" constant="109" id="Ugx-JF-83C"/>
+                    <constraint firstItem="d8b-2x-9De" firstAttribute="leading" secondItem="bA6-bw-aIQ" secondAttribute="trailing" constant="21" id="eaS-UT-90w"/>
+                    <constraint firstItem="bA6-bw-aIQ" firstAttribute="top" secondItem="MbA-4b-Avc" secondAttribute="bottom" constant="8" id="gn0-aY-tEJ"/>
+                    <constraint firstItem="ldV-cQ-hzn" firstAttribute="trailing" secondItem="bHN-KV-nr0" secondAttribute="trailingMargin" id="t6N-pR-RGc"/>
+                    <constraint firstItem="d8b-2x-9De" firstAttribute="trailing" secondItem="bHN-KV-nr0" secondAttribute="trailingMargin" id="zYZ-zd-arf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="userIdTypeLabel" destination="MbA-4b-Avc" id="xVM-El-m0L"/>
+                <outlet property="userIdTypeTextField" destination="bA6-bw-aIQ" id="j7I-Xs-TTL"/>
+                <outlet property="userIdValueLabel" destination="ldV-cQ-hzn" id="zhA-MU-LFU"/>
+                <outlet property="userIdValueTextField" destination="d8b-2x-9De" id="yvn-dy-x1L"/>
+            </connections>
+            <point key="canvasLocation" x="280" y="272.5"/>
+        </tableViewCell>
+    </objects>
+</document>

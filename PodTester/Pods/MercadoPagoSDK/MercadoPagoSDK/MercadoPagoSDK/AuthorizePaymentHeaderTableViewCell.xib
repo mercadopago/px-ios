@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="AuthorizePaymentHeaderTableViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="222"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="221"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconCall" translatesAutoresizingMaskIntoConstraints="NO" id="hzt-Zd-rkV">
+                        <rect key="frame" x="170" y="26" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="40J-Y8-ny9"/>
+                            <constraint firstAttribute="height" constant="60" id="MIt-cP-Miz"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0G-de-Jxy" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="15" y="102" width="370" height="64"/>
+                        <attributedString key="attributedText">
+                            <fragment content="Debes autorizar ante visa el pago de $1234 a MercadoPago">
+                                <attributes>
+                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="22" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="32" maximumLineHeight="32" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="El teléfono está al dorso de tu tarjeta" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKw-WQ-a2n" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="10" y="176" width="380" height="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.89411764705882346" green="0.94901960784313721" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="R0G-de-Jxy" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="3Am-6F-ogg"/>
+                    <constraint firstItem="GKw-WQ-a2n" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="3Cg-Yy-nc7"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="GKw-WQ-a2n" secondAttribute="trailing" constant="10" id="DK9-Qs-GVv"/>
+                    <constraint firstItem="hzt-Zd-rkV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="26" id="OO2-Zj-zRt"/>
+                    <constraint firstItem="R0G-de-Jxy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="T1P-iQ-6qJ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="R0G-de-Jxy" secondAttribute="trailing" constant="15" id="VzQ-9s-NZ3"/>
+                    <constraint firstItem="hzt-Zd-rkV" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Y5o-5U-LBL"/>
+                    <constraint firstItem="GKw-WQ-a2n" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="jPL-WH-xda"/>
+                    <constraint firstItem="GKw-WQ-a2n" firstAttribute="top" secondItem="R0G-de-Jxy" secondAttribute="bottom" constant="10" id="m3Y-2f-iSP"/>
+                    <constraint firstItem="R0G-de-Jxy" firstAttribute="top" secondItem="hzt-Zd-rkV" secondAttribute="bottom" constant="16" id="rVL-v4-LlA"/>
+                </constraints>
+                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.89411764705882346" green="0.94901960784313721" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+            <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+            <connections>
+                <outlet property="subtitle" destination="GKw-WQ-a2n" id="Htq-M9-Kzm"/>
+                <outlet property="title" destination="R0G-de-Jxy" id="94D-FG-t3u"/>
+            </connections>
+            <point key="canvasLocation" x="196" y="247"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="iconCall" width="60" height="60"/>
+    </resources>
+</document>

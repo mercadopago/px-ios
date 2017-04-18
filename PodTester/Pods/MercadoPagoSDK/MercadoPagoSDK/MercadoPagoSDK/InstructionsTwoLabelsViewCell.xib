@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="172" id="KGk-i7-Jjw" customClass="InstructionsTwoLabelsViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="413" height="172"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="413" height="171"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4LO-ql-Qvk">
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="b5V-Nu-HgE" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <attributedString key="attributedText">
+                                    <fragment content="Necesitarás estos datos:">
+                                        <attributes>
+                                            <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="16" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="22" maximumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Egg-41-tvn" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="zPB-mU-AJB"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="NÚMERO DE CUENTA">
+                                        <attributes>
+                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="11" name="HelveticaNeue-Light"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAN-hX-P6g" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="mZs-pP-0x7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REFERENCIA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5NQ-jo-2jq" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="t9u-Xh-wHs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0123 4567 8900" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2R-az-ntX" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="RSz-w4-st2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="b5V-Nu-HgE" firstAttribute="top" secondItem="4LO-ql-Qvk" secondAttribute="top" constant="15" id="60c-Mr-7MC"/>
+                            <constraint firstAttribute="trailing" secondItem="b5V-Nu-HgE" secondAttribute="trailing" constant="15" id="CDz-I6-DB7"/>
+                            <constraint firstItem="5NQ-jo-2jq" firstAttribute="leading" secondItem="4LO-ql-Qvk" secondAttribute="leading" constant="15" id="EyD-AT-2jQ"/>
+                            <constraint firstItem="5NQ-jo-2jq" firstAttribute="top" secondItem="nAN-hX-P6g" secondAttribute="bottom" constant="7" id="LcZ-Mi-LDa"/>
+                            <constraint firstItem="l2R-az-ntX" firstAttribute="leading" secondItem="4LO-ql-Qvk" secondAttribute="leading" constant="15" id="Lu0-2z-Bo5"/>
+                            <constraint firstAttribute="trailing" secondItem="nAN-hX-P6g" secondAttribute="trailing" constant="15" id="VZl-KD-FTM"/>
+                            <constraint firstItem="nAN-hX-P6g" firstAttribute="top" secondItem="Egg-41-tvn" secondAttribute="bottom" id="eQI-8r-WpE"/>
+                            <constraint firstAttribute="bottom" secondItem="l2R-az-ntX" secondAttribute="bottom" constant="15" id="j6H-Gc-7jl"/>
+                            <constraint firstItem="nAN-hX-P6g" firstAttribute="leading" secondItem="4LO-ql-Qvk" secondAttribute="leading" constant="15" id="jTG-lR-DMl"/>
+                            <constraint firstItem="Egg-41-tvn" firstAttribute="top" secondItem="b5V-Nu-HgE" secondAttribute="bottom" constant="12" id="lfD-Nw-Pcx"/>
+                            <constraint firstItem="b5V-Nu-HgE" firstAttribute="leading" secondItem="4LO-ql-Qvk" secondAttribute="leading" constant="15" id="qq2-t6-XIw"/>
+                            <constraint firstItem="Egg-41-tvn" firstAttribute="leading" secondItem="4LO-ql-Qvk" secondAttribute="leading" constant="15" id="sfN-km-g9w"/>
+                            <constraint firstAttribute="trailing" secondItem="l2R-az-ntX" secondAttribute="trailing" constant="15" id="uFg-HU-Z3Z"/>
+                            <constraint firstItem="l2R-az-ntX" firstAttribute="top" secondItem="5NQ-jo-2jq" secondAttribute="bottom" id="xe2-yI-GSP"/>
+                            <constraint firstAttribute="trailing" secondItem="Egg-41-tvn" secondAttribute="trailing" constant="15" id="xzN-H4-CmD"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="4LO-ql-Qvk" secondAttribute="trailing" constant="8" id="8ob-vC-Km1"/>
+                    <constraint firstItem="4LO-ql-Qvk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="fnH-M8-Iql"/>
+                    <constraint firstItem="4LO-ql-Qvk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="oxB-Uo-Bdq"/>
+                </constraints>
+                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="firstReferenceTitle" destination="Egg-41-tvn" id="58A-Cf-6tp"/>
+                <outlet property="firstReferenceValue" destination="nAN-hX-P6g" id="YLw-UP-2DC"/>
+                <outlet property="infoTitle" destination="b5V-Nu-HgE" id="FXU-r6-K4j"/>
+                <outlet property="secondReferenceTitle" destination="5NQ-jo-2jq" id="3yA-sl-Lef"/>
+                <outlet property="secondReferenceValue" destination="l2R-az-ntX" id="tTg-i8-sQO"/>
+            </connections>
+            <point key="canvasLocation" x="276.5" y="166"/>
+        </tableViewCell>
+    </objects>
+</document>

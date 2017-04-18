@@ -1768,6 +1768,7 @@
 					};
 					0F9883141AD2A97A00F750F0 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = ULW3UE3Q6Z;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -2485,7 +2486,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -2520,7 +2521,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
@@ -2533,6 +2534,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_HEADERS_RUN_UNIFDEF = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ULW3UE3Q6Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2559,6 +2561,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_HEADERS_RUN_UNIFDEF = NO;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ULW3UE3Q6Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
