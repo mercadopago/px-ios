@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,17 +18,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="591" height="393"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="iconCash" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
-                        <rect key="frame" x="271.5" y="58" width="48" height="48"/>
-                        <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="MPSDK_review_iconoDineroEnEfectivo" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                        <rect key="frame" x="271" y="58" width="50" height="50"/>
+
                         <constraints>
-                            <constraint firstAttribute="width" constant="48" id="3Ny-SD-LWP"/>
-                            <constraint firstAttribute="height" constant="48" id="cyR-Nj-nia"/>
+                            <constraint firstAttribute="width" constant="50" id="3Ny-SD-LWP"/>
+                            <constraint firstAttribute="height" constant="50" id="cyR-Nj-nia"/>
                         </constraints>
                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1F9-NN-ufr">
-                        <rect key="frame" x="32" y="119" width="527" height="24"/>
+                        <rect key="frame" x="32" y="121" width="527" height="24"/>
                         <attributedString key="attributedText">
                             <fragment content="Pagarás $ 109 en PagoFacil">
                                 <attributes>
@@ -40,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6G-5w-j6M">
-                        <rect key="frame" x="219" y="153" width="173" height="16"/>
+                        <rect key="frame" x="219" y="155" width="173" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="69U-DQ-clh"/>
                         </constraints>
@@ -56,7 +56,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="omM-He-gJw">
-                        <rect key="frame" x="196" y="153" width="16" height="16"/>
+                        <rect key="frame" x="196" y="155" width="16" height="16"/>
                         <color key="tintColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="e2x-qC-dpk"/>
@@ -64,20 +64,21 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YQ-q5-tZX">
-                        <rect key="frame" x="238.5" y="204" width="114" height="34"/>
+                        <rect key="frame" x="239" y="204" width="114" height="34"/>
+
                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                         <state key="normal" title="Cambiar pago">
                             <color key="titleColor" red="0.0" green="0.61960784313725492" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrK-2x-0Iz">
-                        <rect key="frame" x="8" y="153" width="188" height="16"/>
+                        <rect key="frame" x="8" y="155" width="188" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="QoM-uP-dtO"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WvV-5G-3hO">
-                        <rect key="frame" x="395" y="153" width="188" height="18"/>
+                        <rect key="frame" x="395" y="155" width="188" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="dyh-rS-ZW3"/>
                         </constraints>
@@ -118,7 +119,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="iconCash" width="48" height="48"/>
+        <image name="MPSDK_review_iconoDineroEnEfectivo" width="48" height="48"/>
         <image name="time" width="192" height="192"/>
     </resources>
 </document>

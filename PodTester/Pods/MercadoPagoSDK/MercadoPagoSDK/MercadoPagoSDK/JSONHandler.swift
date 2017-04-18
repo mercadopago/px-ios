@@ -130,16 +130,4 @@ extension String {
     }
 }
 
-extension NSDictionary {
-    
-    func parseToLiteral() -> [String:Any] {
-
-        var anyDict = [String: Any]()
-        
-        for (key, value) in self {
-            anyDict[key as! String] = value
-        }
-        return anyDict
-    }
-}
 

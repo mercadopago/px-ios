@@ -9,28 +9,30 @@
 import UIKit
 
 class TotalPayerCostRowTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var totalLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     public func fillCell(total: Double) {
         let currency = MercadoPagoContext.getCurrency()
-        
+        // amount currency color fontsize centfontsize baselineoffset
+        // (total, currency: currency, color : UIColor.black, fontSize: 16, centsFontSize: 12,  baselineOffset:3)
         let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "Total".localized + ": ", attributes: [NSForegroundColorAttributeName : UIColor.black]))
-        attributedTotal.append(Utils.getAttributedAmount(total, currency: currency, color : UIColor.black, fontSize: 16, centsFontSize: 12,  baselineOffset:3))
+        attributedTotal.append(Utils.getAttributedAmount(total, currency: currency, color: UIColor.black, fontSize: 16, centsFontSize: 12, baselineOffset: 3))
         totalLabel.attributedText = attributedTotal
     }
     
-    func addSeparatorLineToTop(width: Double, y: Float){
-        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
+    func addSeparatorLineToBottom(width: Double, height: Double){
+        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(height)), size: CGSize(width: width, height: 0.5))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.px_grayLight()
@@ -38,3 +40,4 @@ class TotalPayerCostRowTableViewCell: UITableViewCell {
     }
     
 }
+

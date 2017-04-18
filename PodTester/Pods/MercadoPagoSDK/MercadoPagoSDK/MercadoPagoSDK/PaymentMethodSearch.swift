@@ -77,6 +77,11 @@ open class PaymentMethodSearch: Equatable {
         
         return pmSearch
     }
+ 
+    func getPaymentOptionsCount() -> Int {
+        let customOptionsCount = (self.customerPaymentMethods != nil) ? self.customerPaymentMethods!.count : 0
+        return customOptionsCount + self.groups.count
+    }
     
 }
 

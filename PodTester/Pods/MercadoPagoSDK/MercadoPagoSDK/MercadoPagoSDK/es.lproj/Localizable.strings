@@ -14,6 +14,9 @@
 "security_code" = "Código de seguridad";
 "cod_seg_desc" = "Últimos %1$s números al dorso de la tarjeta";
 "cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
+"Selecciona la cantidad de cuotas" = "Selecciona la cantidad de cuotas";
+"Cuotas" = "Cuotas";
+"cuotas sin interés" = "cuotas sin interés";
 "NOT_INSTALLMENTS_FOUND" = "No se encontraron cuotas disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
 "No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
@@ -75,6 +78,10 @@
 "cc_rejected_max_attempts_subtitle_credit_card"= "Elige otra tarjeta u otro medio de pago.";
 "cc_rejected_duplicated_payment_subtitle_credit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
 "cc_rejected_card_disabled_subtitle_credit_card"="El teléfono está al dorso de tu tarjeta.";
+"cc_rejected_bad_filled_other_subtitle_credit_card"="Algún dato de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_card_number_subtitle_credit_card"="El número de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_security_code_subtitle_credit_card"="El código de seguridad no es el correcto.";
+"cc_rejected_bad_filled_date_subtitle_credit_card"="La fecha de vencimiento no es la correcta.";
 
 
 
@@ -175,6 +182,7 @@
 "¿Cómo quiéres pagar?"="¿Cómo quiéres pagar?";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
+"Con dinero en cuenta" = "Con dinero en cuenta";
 
 // PaymentTypes para RyC
 "ryc_title_default"=" en un ";
@@ -190,3 +198,17 @@
 "ryc_complementary_banamex_bank_transfer"="Home Banking de ";
 "ryc_complementary_banamex_atm"="cajero automático de ";
 "ryc_complementary_redlink_atm"="cajero automático de ";
+
+
+//Discount
+"Código de descuento"="Código de descuento";
+"Canejar"="Canejar";
+"Código inválido"="Código inválido";
+"de descuento"="de descuento";
+"Tengo un descuento"="Tengo un descuento";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor sin descuento disponible";
+"Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
+"Importe fuera del alcance"="Importe fuera del alcance";
+"La campaña expiró"="La campaña expiró";
+

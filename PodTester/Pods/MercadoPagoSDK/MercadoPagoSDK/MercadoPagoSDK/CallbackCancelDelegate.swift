@@ -12,16 +12,22 @@ open class CallbackCancelTableViewCell : UITableViewCell {
 
     var callbackCancel : ((Void) -> Void)?
     var defaultCallback : ((Void) -> Void)?
-    var callbackStatus: ((_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void)?
-    var payment: Payment?
+    var callbackStatusTracking: ((_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void)?
+    var callbackStatus: ((_ status : MPStepBuilder.CongratsState) -> Void)?
+    var paymentResult: PaymentResult?
     var status: MPStepBuilder.CongratsState?
     
-    func getCallbackStatus() -> ((_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
+    func getCallbackStatus() -> (( _ status : MPStepBuilder.CongratsState) -> Void){
         return callbackStatus!
     }
-    func setCallbackStatus(callback: @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void, payment: Payment,status: MPStepBuilder.CongratsState){
+    func setCallbackStatus(callback: @escaping ( _ status : MPStepBuilder.CongratsState) -> Void, status: MPStepBuilder.CongratsState){
         callbackStatus = callback
-        self.payment = payment
+        self.status = status
+    }
+    
+    func setCallbackStatusTracking(callback: @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void, paymentResult: PaymentResult,status: MPStepBuilder.CongratsState){
+        callbackStatusTracking = callback
+        self.paymentResult = paymentResult
         self.status = status
     }
     
@@ -35,11 +41,11 @@ open class CallbackCancelTableViewCell : UITableViewCell {
         }
     }
     func invokeCallback(){
-        if let callbackStatus = self.callbackStatus , let payment = payment , let status = status  {
-            callbackStatus(payment, status)
+        if let paymentResult = paymentResult, let callbackStatusTracking = self.callbackStatusTracking , let status = status{
+            callbackStatusTracking(paymentResult, status)
+        } else if let callbackStatus = self.callbackStatus , let status = status  {
+            callbackStatus(status)
         }
     }
-
-
     
 }

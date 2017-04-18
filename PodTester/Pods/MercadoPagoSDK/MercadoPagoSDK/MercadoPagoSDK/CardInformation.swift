@@ -30,6 +30,7 @@ public protocol CardInformation : CardInformationForm, PaymentOptionDrawable {
     func getIssuer() -> Issuer?
     
     func getFirstSixDigits() -> String!
+    
 
 }
 @objc
@@ -42,4 +43,6 @@ public protocol CardInformationForm : NSObjectProtocol {
     func getCardLastForDigits() -> String?
     
     func isIssuerRequired() -> Bool
+    
+    func canBeClone() -> Bool
 }

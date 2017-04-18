@@ -36,8 +36,11 @@ open class MPPayment: NSObject {
     open var installments : Int = 0
     open var issuerId : String?
     open var tokenId : String?
-    open var binaryMode = false
 
+    override init() {
+        super.init()
+    }
+    
     init(email : String, preferenceId : String, publicKey : String, paymentMethodId : String, installments : Int = 0, issuerId : String = "", tokenId : String = "") {
         self.preferenceId = preferenceId
         self.publicKey = publicKey
@@ -62,8 +65,6 @@ open class MPPayment: NSObject {
         if self.tokenId != nil && self.tokenId?.characters.count > 0 {
             obj["token"] = self.tokenId!
         }
-        
-        obj["binary_mode"] = self.binaryMode
         
         obj["installments"] = self.installments
         

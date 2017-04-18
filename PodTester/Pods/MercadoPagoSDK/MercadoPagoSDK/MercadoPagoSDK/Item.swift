@@ -17,8 +17,8 @@ open class Item : NSObject {
     // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
 
     open var _id : String!
-    open var quantity : Int = 0
-    open var unitPrice : Double = 0
+    open var quantity : Int!
+    open var unitPrice : Double!
     open var title : String!
     open var _description : String?
     open var currencyId : String!
@@ -26,30 +26,30 @@ open class Item : NSObject {
     open var pictureUrl : String!
     
     
-    open func validate() -> Bool{
+    open func validate() -> String?{
         
-        if(quantity <= 0){
-            return false
+        if title.isEmpty {
+            return "El título del item esta vacio".localized
         }
-        if(unitPrice <= 0){
-            return false
+        
+        if currencyId.isEmpty{
+            return "La currency del item esta vacia".localized
         }
-        //VALIDAR CADA ITEM
-        //VALIDAR PREFERENCE PAYMENT METHOD
-        return true
+        
+        return nil
     }
 
     
     
     
-    public init(_id: String? = nil, title : String? = nil, quantity: Int = 0, unitPrice: Double = 0, description : String? = "") {
+    public init(_id: String? = nil, title : String? = nil, quantity: Int = 0, unitPrice: Double = 0, description : String? = "", currencyId: String = "ARS") {
         super.init()
         self._id = _id
         self.title = title
         self.quantity = quantity
         self.unitPrice = unitPrice
         self._description = description ?? ""
-        
+        self.currencyId = currencyId
     }
     
     open func toJSONString() -> String {
@@ -65,7 +65,7 @@ open class Item : NSObject {
             "quantity" : self.quantity,
             "unit_price" : self.unitPrice,
             "title" : title,
-            "description" : self.description,
+            "description" : self._description,
             "currencyId" : currencyId,
             "categoryId" : categoryId,
             "pictureUrl" :pictureUrl,

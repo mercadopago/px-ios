@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,16 +15,18 @@
             <rect key="frame" x="0.0" y="0.0" width="434" height="305"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="434" height="304"/>
+                <rect key="frame" x="0.0" y="0.0" width="434" height="304"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconShoppingCart" translatesAutoresizingMaskIntoConstraints="NO" id="MTY-HS-TBY">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_iconoCarrito" translatesAutoresizingMaskIntoConstraints="NO" id="MTY-HS-TBY">
+                        <rect key="frame" x="193" y="58" width="48" height="48"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="48" id="I2P-1b-qjo"/>
                             <constraint firstAttribute="height" constant="48" id="rqJ-eI-bZs"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hX-Cr-Nbu">
+                        <rect key="frame" x="33" y="126" width="368" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Apple iPhone 6s Plus 128gb A9 3g ">
                                 <attributes>
@@ -34,11 +39,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En cuanto pruebas el iPhone 6s, tienes la sensación de no haber usado nunca nada igual lorem ipsum dolor. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DY6-7v-ukj">
+                        <rect key="frame" x="32" y="167" width="370" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKx-8L-Zdg">
+                        <rect key="frame" x="32" y="223" width="370" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Cantidad : 1">
                                 <attributes>
@@ -51,6 +58,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gs-mJ-oxp">
+                        <rect key="frame" x="32" y="244" width="370" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Precio Unitario : $ 870">
                                 <attributes>
@@ -95,6 +103,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="iconShoppingCart" width="48" height="48"/>
+        <image name="review_iconoCarrito" width="48" height="48"/>
     </resources>
 </document>

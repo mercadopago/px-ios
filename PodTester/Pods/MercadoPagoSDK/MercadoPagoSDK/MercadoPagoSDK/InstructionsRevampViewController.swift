@@ -9,13 +9,14 @@
 import UIKit
 
 open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     @IBOutlet weak var tableView: UITableView!
-    var payment : Payment!
-    var paymentTypeId : String!
-    var callback : (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void
+    var paymentResult : PaymentResult!
+    var callback : ( _ status : MPStepBuilder.CongratsState) -> Void
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
-    var instruction: Instruction?
+    var instructionsInfo: InstructionsInfo?
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,18 +55,18 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if instruction == nil {
+        if instructionsInfo == nil {
             self.showLoading()
             getInstructions()
         } else {
             self.tableView.reloadData()
         }
     }
-    public init(payment : Payment, paymentTypeId : String, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void) {
+    public init(paymentResult : PaymentResult, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
+        
         self.callback = callback
         super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
-        self.payment = payment
-        self.paymentTypeId = paymentTypeId
+        self.paymentResult = paymentResult
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -82,7 +83,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return (instruction != nil) ? 3 : 0
+        return (instructionsInfo != nil) ? 3 : 0
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,7 +100,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
         case 0:
             if indexPath.row == 0 {
                 let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-                headerCell.fillCell(payment: payment, paymentMethod: nil, color: color!, instruction: instruction)
+                headerCell.fillCell(instructionsInfo: instructionsInfo!, color: color!)
                 headerCell.selectionStyle = .none
                 return headerCell
             } else {
@@ -111,20 +112,20 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             let bodyCell = self.tableView.dequeueReusableCell(withIdentifier: "bodyNib") as! InstructionBodyTableViewCell
             bodyCell.selectionStyle = .none
             ViewUtils.drawBottomLine(y: bodyCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: bodyCell.contentView)
-            bodyCell.fillCell(instruction: self.instruction!, payment: self.payment)
+            bodyCell.fillCell(instruction: self.instructionsInfo!.instructions[0], paymentResult: paymentResult)
             return bodyCell
         default:
             if indexPath.row == 0{
                 let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-                confirmEmailCell.fillCell(payment: payment, instruction: instruction)
+                confirmEmailCell.fillCell(paymentResult: nil, instruction: instructionsInfo?.instructions[0])
                 confirmEmailCell.selectionStyle = .none
                 ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
                 return confirmEmailCell
             } else {
                 let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
                 footerNib.selectionStyle = .none
-                footerNib.setCallbackStatus(callback: callback, payment: payment, status: MPStepBuilder.CongratsState.ok)
-                footerNib.fillCell(payment: payment)
+                footerNib.setCallbackStatus(callback: callback, status: MPStepBuilder.CongratsState.ok)
+                footerNib.fillCell(paymentResult: paymentResult)
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
                 return footerNib
             }
@@ -132,17 +133,20 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     
     fileprivate func getInstructions(){
-        MPServicesBuilder.getInstructions(for: payment._id, paymentTypeId : self.paymentTypeId, success: { (instructionsInfo : InstructionsInfo) -> Void in
-            self.instruction = instructionsInfo.instructions[0]
-            self.tableView.reloadData()
-            self.hideLoading()
-        }, failure: { (error) -> Void in
-            self.requestFailure(error, callback: {
-                self.getInstructions()
-            }, callbackCancel: {
-                self.dismiss(animated: true, completion: {})
+        if let paymentId = paymentResult._id,
+            let paymentTypeId = self.paymentResult.paymentData?.paymentMethod.paymentTypeId {
+            MPServicesBuilder.getInstructions(for: paymentId, paymentTypeId : paymentTypeId, baseURL:MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (instructionsInfo : InstructionsInfo) -> Void in
+                self.instructionsInfo = instructionsInfo
+                self.tableView.reloadData()
+                self.hideLoading()
+            }, failure: { (error) -> Void in
+                self.requestFailure(error, callback: {
+                    self.getInstructions()
+                }, callbackCancel: {
+                    self.dismiss(animated: true, completion: {})
+                })
+                self.hideLoading()
             })
-            self.hideLoading()
-        })
+        }
     }
 }

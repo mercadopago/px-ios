@@ -158,6 +158,7 @@
 "Medio de pago" = "Meio de pagamento";
 "Operación" = "Operação";
 "Fecha" = "Data";
+"Con dinero en cuenta" = "Com dinheiro em mente";
 
 
 "Revisa si está todo bien..." = "Verifique para ver se está tudo bem...";
@@ -170,6 +171,13 @@
 "Términos y Condiciones"="Termos e Condições";
 "Verifique su conexión a internet e intente nuevamente"="Sem conexão";
 
+
+//Errores
+
+"El título del item esta vacio" = "O título do artigo é vazia";
+"La currency del item esta vacia" = "A moeda do item está vazia";
+"La preferencia no esta activa" = "A preferência não ativa";
+"La preferencia esta expirada" = "A preferência é expirado";
 "Pagáras " = "Você pagará ";
 
 "ryc_title_default"=" no ";
@@ -185,3 +193,17 @@
 "ryc_complementary_banamex_bank_transfer"="Internet Banking de ";
 "ryc_complementary_banamex_atm"="caixa eletrônico de ";
 "ryc_complementary_redlink_atm"="caixa eletrônico de ";
+
+
+//Discount
+"Código de descuento"="Código de desconto";
+"Canejar"="Aplicar";
+"Código inválido"="Código inválido";
+"de descuento"="de desconto";
+"Tengo un descuento"="Tenho um desconto";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor não tem desconto disponíveis";
+"Se agotó la cantidad de usos"="O número de pedidos esgotados";
+"Importe fuera del alcance"="Montante fora do alcance";
+"La campaña expiró"="Campanha expirado";
+

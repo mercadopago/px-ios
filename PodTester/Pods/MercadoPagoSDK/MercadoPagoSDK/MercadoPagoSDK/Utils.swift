@@ -9,23 +9,23 @@
 import Foundation
 import UIKit
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
 }
 
 fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l > r
+    default:
+        return rhs < lhs
+    }
 }
 
 
@@ -63,19 +63,17 @@ class Utils {
         return dateFormatter.string(from: date)
     }
     
-    class func getAttributedAmount(_ amount : Double, currency : Currency, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
-        return self.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset)
-    }
+
     
-    class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
         
         
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : getFont(size: fontSize),NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : getFont(size: 10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize),NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
         
-    
+        
         
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -88,20 +86,28 @@ class Utils {
         return attributedSymbol
     }
     
+    class func getAttributedAmount(_ amount : Double, currency: Currency, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7, negativeAmount: Bool = false) -> NSMutableAttributedString {
+        return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount)
+    }
     
-    class func getAttributedAmount(_ amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getAttributedAmount(_ amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7, negativeAmount: Bool = false) -> NSMutableAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator : thousandSeparator, decimalSeparator: ".")
         
         
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : getFont(size: fontSize),NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : getFont(size: centsFontSize),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize),NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
         
-        
-        let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
+        var symbols : String!
+        if (negativeAmount){
+            symbols = "-" + currencySymbol
+        }else{
+            symbols = currencySymbol
+        }
+        let attributedSymbol = NSMutableAttributedString(string: symbols, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
-        let space = NSAttributedString(string: String.NON_BREAKING_LINE_SPACE, attributes: smallAttributes)
+        let space = NSMutableAttributedString(string: String.NON_BREAKING_LINE_SPACE, attributes: smallAttributes)
         attributedSymbol.append(space)
         attributedSymbol.append(attributedAmount)
         attributedSymbol.append(space)
@@ -109,8 +115,9 @@ class Utils {
         return attributedSymbol
     }
     
-    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, centsFontSize : CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments : String,currency: Currency, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, centsFontSize : CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
+        let currency = MercadoPagoContext.getCurrency()
         
         let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : getFont(size: fontSize),NSForegroundColorAttributeName:color]
         
@@ -118,7 +125,8 @@ class Utils {
         
         stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
         
-        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset))
+
+        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault() , color:color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset))
         
         if additionalString != nil {
             stringToWrite.append(additionalString!)
@@ -127,14 +135,35 @@ class Utils {
         return stringToWrite
     }
     class func getFont(size: CGFloat) -> UIFont{
-        return UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+        return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
+    class func getLightFont(size: CGFloat) -> UIFont {
+        return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+    }
+    
+    class func append(firstJSON: String, secondJSON: String) -> String {
+        if firstJSON == "" && secondJSON == "" {
+            return ""
+        } else if secondJSON == "" {
+            return firstJSON
+        } else if firstJSON == "" {
+            return secondJSON
+        }
+        var firstJSON = firstJSON
+        var secondJSON = secondJSON
+        
+        secondJSON.remove(at: secondJSON.startIndex)
+        firstJSON.remove(at: firstJSON.index(before: firstJSON.endIndex))
+        
+        return firstJSON + secondJSON
     }
     /**
      Returns cents string formatted
      Ex: formattedString = "100.2", decimalSeparator = "."
      returns 20
      **/
-    class func getCentsFormatted(_ formattedString : String, decimalSeparator : String) -> String {
+    class func getCentsFormatted(_ formattedString : String, decimalSeparator : String, decimalPlaces: Int = MercadoPagoContext.getCurrency().decimalPlaces) -> String {
         let range = formattedString.range(of: decimalSeparator)
         var cents = ""
         if range != nil {
@@ -142,14 +171,14 @@ class Utils {
             cents = formattedString.substring(from: centsIndex)
         }
         
-        if cents.isEmpty || cents.characters.count < 2 {
-            var missingZeros = 2 - cents.characters.count
+        if cents.isEmpty || cents.characters.count < decimalPlaces {
+            var missingZeros = decimalPlaces - cents.characters.count
             while missingZeros > 0 {
                 cents.append("0")
                 missingZeros = missingZeros - 1
             }
-        } else if cents.characters.count > 2 {
-            let index1 = cents.index(cents.startIndex, offsetBy: 2)
+        } else if cents.characters.count > decimalPlaces {
+            let index1 = cents.index(cents.startIndex, offsetBy: decimalPlaces)
             cents = cents.substring(to: index1)
         }
         
@@ -197,11 +226,25 @@ class Utils {
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
         guard let _ = paymentMethodSearch.groups
             else {return nil}
-    
+        
         if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
             return result
         }
         return nil
+    }
+    
+    static internal func findCardInformationIn(customOptions : [CardInformation], paymentData : PaymentData) -> CardInformation? {
+        let customOptionsFound = customOptions.filter { (cardInformation : CardInformation) -> Bool in
+            if paymentData.paymentMethod.isAccountMoney(){
+                return  cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
+            } else {
+                if (paymentData.token != nil) {
+                    return paymentData.token!.cardId == cardInformation.getCardId()
+                }
+            }
+            return false
+        }
+        return !Array.isNullOrEmpty(customOptionsFound) ? customOptionsFound[0] : nil
     }
     
     static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList : [PaymentMethodSearchItem], paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
@@ -238,6 +281,25 @@ class Utils {
         if paymentMethodSearchList.count == 0 {
             return nil
         }
+        return nil
+    }
+    
+    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems : [PaymentMethodSearchItem], paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem?  {
+        
+        var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter{ (arg : PaymentMethodSearchItem) -> Bool in
+            arg.idPaymentMethodSearchItem == paymentTypeId.rawValue
+        }
+        
+        if !Array.isNullOrEmpty(filterPaymentMethodSearchFound) {
+            return filterPaymentMethodSearchFound[0]
+        }
+        
+        for item in paymentMethodSearchItems {
+            if let paymentMethodSearchItemFound = findPaymentMethodTypeId(item.children, paymentTypeId: paymentTypeId) {
+                return paymentMethodSearchItemFound
+            }
+        }
+        
         return nil
     }
     
@@ -295,4 +357,5 @@ class Utils {
     }
     
 }
+
 

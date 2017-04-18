@@ -20,17 +20,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var payer_access_token: String = ""
     
-    var base_url: String = ""
-
-    var customer_uri: String = ""
-    
     var merchant_access_token: String = ""
     
     var initialFlavor: Flavor?
-
-    var preference_uri: String = ""
-    
-    var payment_uri: String = ""
     
     var payment_key : String = ""
     
@@ -44,10 +36,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var display_default_loading = true
     
-    var decorationPreference = DecorationPreference()
 
-    var enableBinaryMode = false
-    
     var language: String = NSLocale.preferredLanguages[0]
     
     open class var PUBLIC_KEY : String {
@@ -55,15 +44,11 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
     
     open class var PRIVATE_KEY : String {
-        return "private_key"
+        return "access_token"
     }
 
     open class func isAuthenticatedUser() -> Bool{
         return !sharedInstance.payer_access_token.isEmpty
-    }
-    
-    open class func isBinaryModeEnabled() -> Bool{
-        return sharedInstance.enableBinaryMode
     }
 
     public func flavor() -> Flavor!{
@@ -79,15 +64,29 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     open func sdkVersion() -> String!{
-        return "2.2.11"
+        return "3.0.0-beta-9"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
+        //Argentina
         "MLA" : ["language" : "es", "currency" : "ARS","termsconditions" : "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
+        //Brasil
         "MLB" : ["language" : "pt", "currency" : "BRL","termsconditions" : "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300"],
-        "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
-        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"]
-     ]
+        //Chile
+
+        "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.cl/ayuda/terminos-y-condiciones_299"],
+        //Mexico
+        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"],
+        //Peru
+        "MPE" : ["language" : "es", "currency" : "PEN","termsconditions" : "https://www.mercadopago.com.pe/ayuda/terminos-condiciones-uso_2483"],
+        //Uruguay
+        "MLU" : ["language" : "es", "currency" : "UYU","termsconditions" : "https://www.mercadopago.com.uy/ayuda/terminos-y-condiciones-uy_2834"],
+        //Colombia
+        "MCO" : ["language" : "es-CO", "currency" : "COP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
+        //Venezuela
+        "MLV" : ["language" : "es", "currency" : "VEF","termsconditions" : "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
+]
+
 
     public enum Site : String {
         case MLA = "MLA"
@@ -105,12 +104,13 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     @objc public enum Languages : Int {
         case _SPANISH
         case _SPANISH_MEXICO
-        /*
         case _SPANISH_COLOMBIA
+        /*
         case _SPANISH_URUGUAY
         case _SPANISH_PERU
         case _SPANISH_VENEZUELA
- */
+        case _SPANISH_CHILE
+        */
         case _PORTUGUESE
         case _ENGLISH
         
@@ -118,11 +118,13 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
             switch self {
             case ._SPANISH : return "es"
             case ._SPANISH_MEXICO : return "es-MX"
-                /*
+                
             case ._SPANISH_COLOMBIA : return "es-CO"
+                /*
             case ._SPANISH_URUGUAY : return "es-UY"
             case ._SPANISH_PERU : return "es-PE"
             case ._SPANISH_VENEZUELA : return "es-VE"
+            case ._SPANISH_CHILE : return "es-CH"
                  */
             case ._PORTUGUESE : return "pt"
             case ._ENGLISH : return "en"
@@ -151,6 +153,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open class func setSite(_ site : Site) {
         MercadoPagoContext.sharedInstance.setSite(site)
     }
+    
     open class func getSite() -> String{
         return MercadoPagoContext.sharedInstance.site.rawValue
     }
@@ -196,54 +199,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getCurrency() -> Currency {
         return sharedInstance.currency
     }
-    open static func getDecorationPreference() -> DecorationPreference{
-        return sharedInstance.decorationPreference
-    }
+
     open func publicKey() -> String!{
         return self.public_key
     }
-    
-    fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
-
-    
-    fileprivate static var complementaryColor : UIColor = UIColor.px_blueMercadoPago()
-    fileprivate static var textColor : UIColor = UIColor.px_white()
-    
-    open static func setupPrimaryColor(_ color: UIColor, complementaryColor: UIColor? = nil){
-        MercadoPagoContext.primaryColor = color
-        if (complementaryColor != nil){
-            MercadoPagoContext.setupComplementaryColor(complementaryColor!)
-        }else{
-            if (color == UIColor.mpDefaultColor()){
-                MercadoPagoContext.setupComplementaryColor(UIColor.px_blueMercadoPago())
-            }else{
-                MercadoPagoContext.setupComplementaryColor(color.lighter())
-            }
-        }
-    }
-    open static func setupComplementaryColor(_ color: UIColor){
-        MercadoPagoContext.complementaryColor = color
-    }
-    
-    internal static func getPrimaryColor() -> UIColor {
-        return primaryColor
-    }
-    
-    internal static func getComplementaryColor() -> UIColor {
-        return complementaryColor
-    }
-    
-    internal static func getTextColor() -> UIColor {
-        return textColor
-    }
-    
-    open static func setDarkTextColor(){
-        textColor = UIColor.black
-    }
-    open static func setLightTextColor(){
-        textColor = UIColor.px_white()
-    }
-    
     
     fileprivate override init() {
         super.init()
@@ -254,7 +213,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open class func setPayerAccessToken(_ payerAccessToken : String){
         
         
-        sharedInstance.payer_access_token = payerAccessToken
+        sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
       _ = CardFrontView()
       _ = CardBackView()
         
@@ -274,122 +233,47 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_1
     }
+    
     public class func initFlavor2(){
         if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
             return
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_2
     }
+    
     public class func initFlavor3(){
         if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
             return
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
-   
-    
-    open class func setBaseURL(_ base_url : String){
-        
-        sharedInstance.base_url = base_url
-        
-    }
-    
-    open class func setCustomerURI(_ customer_uri : String){
-        
-        sharedInstance.customer_uri = customer_uri
-        
-    }
-    
-    open class func setPreferenceURI(_ preference_uri : String){
-        
-        sharedInstance.preference_uri = preference_uri
-        
-    }
-    
-    open class func setPaymentURI(_ payment_uri : String){
-        
-        sharedInstance.payment_uri = payment_uri
-        
-    }
-    
-    open class func setMerchantAccessToken(_ merchant_access_token : String){
-        
-        sharedInstance.merchant_access_token = merchant_access_token
-        
-    }
-    
-    open class func setEnableBinaryMode(flag : Bool) {
-        sharedInstance.enableBinaryMode = flag
-    }
     
     open class func setAccountMoneyAvailable(accountMoneyAvailable : Bool) {
         sharedInstance.account_money_available = accountMoneyAvailable
     }
     
-    
     open class func setDisplayDefaultLoading(flag : Bool){
         sharedInstance.display_default_loading = flag
-    }
-    
-    open class func setDecorationPreference(decorationPreference: DecorationPreference){
-        sharedInstance.decorationPreference = decorationPreference
     }
     
     open class func merchantAccessToken() -> String {
         return sharedInstance.merchant_access_token
     }
     
-
     open class func publicKey() -> String {
-        
         return sharedInstance.public_key
-        
     }
     
-    
     open class func payerAccessToken() -> String {
-        
         return sharedInstance.payer_access_token
-        
     }
     
     open class func accountMoneyAvailable() -> Bool {
         return sharedInstance.account_money_available
     }
     
-    open class func baseURL() -> String {
-        
-        return sharedInstance.base_url
-        
-    }
-    open class func customerURI() -> String {
-        
-        return sharedInstance.customer_uri
-        
-    }
-    
-    open class func preferenceURI() -> String {
-        
-        return sharedInstance.preference_uri
-        
-    }
-    
-    open class func paymentURI() -> String {
-        
-        return sharedInstance.payment_uri
-        
-    }
-    
     open class func shouldDisplayDefaultLoading() -> Bool {
         return sharedInstance.display_default_loading
-    }
-    
-
-
-    
-    
-    open class func isCustomerInfoAvailable() -> Bool {
-        return (self.sharedInstance.base_url.characters.count > 0 && self.sharedInstance.customer_uri.characters.count > 0 && self.sharedInstance.merchant_access_token.characters.count > 0)
     }
     
     open class func paymentKey() -> String {
@@ -411,10 +295,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
     }
     
-    open class func keyValue(_ forcingPublic : Bool = true) -> String{
-        if forcingPublic {
-            return MercadoPagoContext.publicKey()
-        }
+    open class func keyValue() -> String{
         if(MercadoPagoContext.isAuthenticatedUser()){
             return MercadoPagoContext.payerAccessToken()
         }else{

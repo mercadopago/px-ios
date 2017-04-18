@@ -13,7 +13,7 @@ open class Currency : NSObject {
     open var _id : String!
     open var _description : String!
     open var symbol : String!
-    open var decimalPlaces : Int = 0
+    open var decimalPlaces : Int!
     open var decimalSeparator : String!
     open var thousandsSeparator : String!
     
@@ -42,6 +42,10 @@ open class Currency : NSObject {
      **/
     open func getThousandsSeparatorOrDefault() -> String {
         return self.thousandsSeparator ?? ","
+    }
+    
+    open func getDecimalPlacesOrDefault() -> Int {
+        return self.decimalPlaces ?? 2
     }
     
     open func getDecimalSeparatorOrDefault() -> String {

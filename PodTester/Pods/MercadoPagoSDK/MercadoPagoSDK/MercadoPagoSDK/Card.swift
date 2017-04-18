@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-open class Card : NSObject, CardInformation {
+open class Card : NSObject, CardInformation, PaymentMethodOption {
+
     
     open var cardHolder : Cardholder?
     open var customerId : String?
@@ -157,6 +158,10 @@ open class Card : NSObject, CardInformation {
         return self.issuer == nil
     }
     
+    public func canBeClone() -> Bool {
+        return false
+    }
+    
     /** PaymentOptionDrawable implementation */
     
     public func getTitle() -> String {
@@ -171,6 +176,36 @@ open class Card : NSObject, CardInformation {
         return self.getPaymentMethodId()
     }
 
+    /** PaymentMethodOption implementation */
+    
+    public func getId() -> String {
+        return String(describing : self.idCard)
+    }
+    
+    public func getChildren() -> [PaymentMethodOption]? {
+        return nil
+    }
+    
+    public func hasChildren() -> Bool {
+        return false
+    }
+    
+    public func isCard() -> Bool {
+        return true
+    }
+    
+    public func isCustomerPaymentMethod() -> Bool {
+        return true
+    }
+    
+    public func getDescription() -> String {
+        return ""
+    }
+    
+    public func getComment() -> String {
+        return ""
+    }
+    
 }
 
 

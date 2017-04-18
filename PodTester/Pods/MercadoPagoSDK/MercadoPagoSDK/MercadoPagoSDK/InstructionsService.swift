@@ -30,12 +30,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class InstructionsService: MercadoPagoService {
 
-    open let MP_INSTRUCTIONS_URI = MercadoPago.MP_ENVIROMENT + "/payments/${payment_id}/results"
-    
-    public init(){
-        super.init(baseURL: MercadoPago.MP_API_BASE_URL)
-    }
-    
     @available(*, deprecated: 2.2.4, message: "Use getInstructions(_ paymentId : String, ...) instead. PaymentId can be greater than Int and might fail")
     open func getInstructions(_ paymentId : Int, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo : InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?){
         let paymentId = String(paymentId)
@@ -47,12 +41,12 @@ open class InstructionsService: MercadoPagoService {
         if paymentTypeId != nil && paymentTypeId?.characters.count > 0 {
             params = params + "&payment_type=" + paymentTypeId!
         }
-        params = params + "&api_version=" + MercadoPago.API_VERSION
+        params = params + "&api_version=" + ServicePreference.API_VERSION
         
         let headers = NSMutableDictionary()
         headers.setValue(MercadoPagoContext.getLanguage() , forKey: "Accept-Language")
         
-        self.request(uri: MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET",headers: headers, cache: false, success: { (jsonResult) -> Void in
+        self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET",headers: headers, cache: false, success: { (jsonResult) -> Void in
 
             let error = jsonResult?["error"] as? String
             if error != nil && error!.characters.count > 0 {

@@ -169,6 +169,7 @@
 "¿Cómo quiéres pagar?"="¿Cómo quiéres pagar?";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
+"Con dinero en cuenta" = "Con dinero en cuenta";
 
 // PaymentTypes para RyC
 "ryc_title_default"=" en un ";
@@ -184,3 +185,16 @@
 "ryc_complementary_banamex_bank_transfer"="Home Banking de ";
 "ryc_complementary_banamex_atm"="cajero automático de ";
 "ryc_complementary_redlink_atm"="cajero automático de ";
+
+//Discount
+"Código de descuento"="Código de descuento";
+"Canejar"="Canejar";
+"Código inválido"="Código inválido";
+"de descuento"="de descuento";
+"Tengo un descuento"="Tengo un descuento";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor sin descuento disponible";
+"Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
+"Importe fuera del alcance"="Importe fuera del alcance";
+"La campaña expiró"="La campaña expiró";
+

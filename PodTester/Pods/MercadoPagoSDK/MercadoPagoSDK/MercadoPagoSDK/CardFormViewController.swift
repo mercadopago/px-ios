@@ -56,6 +56,13 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     
     
+    public init(cardFormManager : CardViewModelManager, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel : ((Void) -> Void)? = nil){
+       super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
+        self.cardFormManager = cardFormManager
+        self.callback = callback
+    }
+    
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -69,9 +76,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             //Navigation bar colors
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
-            if let fontChosed = UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: 18) {
-                titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getDecorationPreference().getFontColor(), NSFontAttributeName:fontChosed]
-            }
+            let fontChosed = Utils.getFont(size: 18)
+            titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName:fontChosed]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -164,7 +170,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         
         if (self.cardFormManager.paymentMethods == nil){
-            MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+            MPServicesBuilder.getPaymentMethods(baseURL:  MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (paymentMethods) -> Void in
                 
 
                 self.cardFormManager.paymentMethods = paymentMethods
@@ -197,7 +203,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         self.cardView.frame = rectBackground
         cardFront?.frame = rect
         cardBack?.frame = rect
-        self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.cardView.backgroundColor = UIColor.mpLightGray()
         self.cardView.layer.cornerRadius = 11
         self.cardView.layer.masksToBounds = true
         self.cardBackground.addSubview(self.cardView)
@@ -221,7 +227,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     private func getPromos(){
-        MPServicesBuilder.getPromos({(promos : [Promo]?) -> Void in
+        MPServicesBuilder.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) -> Void in
             self.cardFormManager.promos = promos
             self.updateCardSkin()
         }, failure: { (error: NSError) in
@@ -471,7 +477,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         let toolbar = UIToolbar(frame: frame)
         
         toolbar.barStyle = UIBarStyle.default;
-        toolbar.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        toolbar.backgroundColor = UIColor.mpLightGray();
         toolbar.alpha = 1;
         toolbar.isUserInteractionEnabled = true
         
@@ -479,7 +485,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
         
-        let font = UIFont(name:MercadoPagoContext.getDecorationPreference().getFontName(), size: 14) ?? UIFont.systemFont(ofSize: 14)
+        let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
@@ -505,8 +511,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     func showErrorMessage(_ errorMessage:String){
         
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
-        self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
+        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
+        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)

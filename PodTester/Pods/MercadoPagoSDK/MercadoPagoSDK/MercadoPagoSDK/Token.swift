@@ -10,7 +10,7 @@ import Foundation
 
 open class Token : NSObject, CardInformationForm {
 	open var _id : String!
-	open var publicKey : String!
+	open var publicKey : String?
 	open var cardId : String!
 	open var luhnValidation : String!
 	open var status : String!
@@ -28,7 +28,7 @@ open class Token : NSObject, CardInformationForm {
     open var cardHolder : Cardholder?
     
     
-	public init (_id: String, publicKey: String, cardId: String!, luhnValidation: String!, status: String!,
+	public init (_id: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!,
         usedDate: String!, cardNumberLength: Int, creationDate: Date!,lastFourDigits : String!,firstSixDigit : String!,
 		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!,
         dueDate: Date?, cardHolder : Cardholder?) {
@@ -64,7 +64,7 @@ open class Token : NSObject, CardInformationForm {
 	open class func fromJSON(_ json : NSDictionary) -> Token {
         let literalJson = json
         let _id = JSONHandler.attemptParseToString(literalJson["id"])
-        let publicKey = JSONHandler.attemptParseToString(literalJson["public_key"])
+        let key = JSONHandler.attemptParseToString(literalJson[MercadoPagoContext.keyType()])
 		let cardId =  JSONHandler.attemptParseToString(literalJson["card_id"])
 		let status = JSONHandler.attemptParseToString(literalJson["status"])
 		let luhn = JSONHandler.attemptParseToString(literalJson["luhn_validation"],defaultReturn: "")
@@ -88,7 +88,7 @@ open class Token : NSObject, CardInformationForm {
         let creationDate = json.isKeyValid("date_created") ? Utils.getDateFromString(json["date_created"] as? String) : Date()
         
         
-		return Token(_id: _id!, publicKey: publicKey!, cardId: cardId, luhnValidation: luhn, status: status,
+		return Token(_id: _id!, publicKey: key, cardId: cardId, luhnValidation: luhn, status: status,
 			usedDate: usedDate, cardNumberLength: cardNumberLength!, creationDate: creationDate, lastFourDigits : lastFourDigits, firstSixDigit : firstSixDigits,
 			securityCodeLength: securityCodeLength!, expirationMonth: expMonth!, expirationYear: expYear!, lastModifiedDate: lastModifiedDate,
             dueDate: dueDate, cardHolder: cardHolder)
@@ -158,6 +158,10 @@ open class Token : NSObject, CardInformationForm {
     }
     
     public func isIssuerRequired() -> Bool {
+        return true
+    }
+    
+    public func canBeClone() -> Bool {
         return true
     }
 }

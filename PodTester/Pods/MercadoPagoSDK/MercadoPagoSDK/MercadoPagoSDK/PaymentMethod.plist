@@ -13,9 +13,9 @@
 		<key>editing_font_color</key>
 		<string>333333</string>
 		<key>label_mask</key>
-		<string>XXXX XXXXXX XXXX</string>
+		<string>XXXX XXXX XXXX XXXX</string>
 		<key>editText_mask</key>
-		<string>XXXX XXXXXX XXXX</string>
+		<string>XXXX XXXX XXXX XXXX</string>
 	</dict>
 	<key>debmaster</key>
 	<dict>
@@ -402,6 +402,81 @@
 		<string>333333</string>
 		<key>editing_font_color</key>
 		<string>333333</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
+	<key>oca</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_oca</string>
+		<key>first_color</key>
+		<string>297DC4</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
+	<key>lider</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_lider</string>
+		<key>first_color</key>
+		<string>375369</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
+	<key>codensa</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_codensa</string>
+		<key>first_color</key>
+		<string>D3B21D</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
+	<key>magna</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_magna</string>
+		<key>first_color</key>
+		<string>666666</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
+	<key>presto</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_presto</string>
+		<key>first_color</key>
+		<string>0071B2</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
 		<key>label_mask</key>
 		<string>XXXX XXXX XXXX XXXX</string>
 		<key>editText_mask</key>

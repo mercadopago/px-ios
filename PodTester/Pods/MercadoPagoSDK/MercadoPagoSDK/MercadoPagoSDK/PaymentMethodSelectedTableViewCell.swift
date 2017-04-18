@@ -24,11 +24,11 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     @IBOutlet weak var CFT: UILabel!
     @IBOutlet weak var noRateLabel: MPLabel!
     
+    @IBOutlet weak var changePaymentMethodCFTConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var totalAmountLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.layer.borderColor = UIColor.grayTableSeparator().cgColor
-        self.contentView.layer.borderWidth = 1.0
 
     }
 
@@ -44,35 +44,47 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.totalAmountLabel.attributedText = NSAttributedString(string : "")
         let currency = MercadoPagoContext.getCurrency()
 
-        self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
-        self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost!.installments), installmentAmount: payerCost!.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
+        self.paymentMethodIcon.image = MercadoPago.getImage("MPSDK_review_iconoTarjeta")
+        
+        if let payerCost = payerCost {
+            self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments),currency:currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
+            let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
+            let attributedAmountFinal = NSMutableAttributedString(string : "(")
+            attributedAmountFinal.append(attributedAmount)
+            attributedAmountFinal.append(NSAttributedString(string : ")"))
+            self.totalAmountLabel.attributedText = attributedAmountFinal
+            self.totalAmountLabel.attributedText = attributedAmountFinal
+        } else {
+             self.paymentDescription.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: UIColor.black, fontSize: 24, centsFontSize: 12, baselineOffset: 9)
+            self.totalAmountLabel.text = ""
+        }
         let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
         paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized + lastFourDigits!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
         self.paymentMethodDescription.attributedText = paymentMethodDescription
+        
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
+
+		
+		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+       		self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
+        	self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
+        	self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
+		} else {
+			self.selectOtherPaymentMethodButton.isHidden = true;
+		}
         
-        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
-        let attributedAmountFinal = NSMutableAttributedString(string : "(")
-        attributedAmountFinal.append(attributedAmount)
-        attributedAmountFinal.append(NSAttributedString(string : ")"))
-        self.totalAmountLabel.attributedText = attributedAmountFinal
-        
-        self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
-        self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
-        self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
-        
-        //CFT.font = Utils.getFont(size: CFT.font.pointSize)
-        //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
-        
+        CFT.font = Utils.getLightFont(size: CFT.font.pointSize)
         CFT.textColor = UIColor.px_grayDark()
+        TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
         TEALabel.textColor = UIColor.px_grayDark()
         
         if let CFTValue = payerCost?.getCFTValue() {
                 CFT.text = "CFT " + CFTValue
         } else {
             CFT.text = ""
+            self.changePaymentMethodCFTConstraint.constant = 10
         }
         if let TEAValue = payerCost?.getTEAValeu() {
             TEALabel.text = "TEA " + TEAValue
@@ -80,19 +92,28 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             TEALabel.text = ""
         }
         
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
+        
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
-        var height = DEFAULT_ROW_HEIGHT
-        
-        if let dic = payerCost?.getCFTValue() {
-            height += 65
-        }
-        
+		
+		var cellHeight = DEFAULT_ROW_HEIGHT
+		
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
-            return height + 20
+			cellHeight += 20
         }
-        return height
+
+		if !MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+			cellHeight -= 64
+		}
+
+        if let dic = payerCost?.getCFTValue() {
+            cellHeight += 74
+        }
+
+        return cellHeight
     }
     
 }

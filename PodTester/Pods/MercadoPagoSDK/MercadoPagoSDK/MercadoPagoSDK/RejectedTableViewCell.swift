@@ -8,48 +8,79 @@
 
 import UIKit
 
-class RejectedTableViewCell: CallbackCancelTableViewCell {
+class RejectedTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var titleSubtitleCoinstraint: NSLayoutConstraint!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subtitile: UILabel!
-    @IBOutlet weak var button: UIButton!
-
+    
+    var paymentTypeId: String?;
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        button.layer.cornerRadius = 3
         self.title.text = "¿Qué puedo hacer?".localized
         self.title.font = Utils.getFont(size: self.title.font.pointSize)
         self.subtitile.font = Utils.getFont(size: self.subtitile.font.pointSize)
-        self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
-        self.button.setTitle("Pagar con otro medio".localized, for: .normal)
-        self.button.titleLabel?.font = Utils.getFont(size: 16)
+        self.subtitile.text = ""
+        self.selectionStyle = .none
     }
-
-    func fillCell (payment: Payment){
+    
+    func fillCell (paymentResult: PaymentResult){
         
-        if payment.status == "rejected"{
+        if paymentResult.status == "rejected" {
             
-            if payment.statusDetail == "cc_rejected_call_for_authorize"{
-                let title = (payment.statusDetail + "_title")
+            if paymentResult.statusDetail == "cc_rejected_call_for_authorize"{
+                let title = (paymentResult.statusDetail + "_title")
                 self.title.text = title.localized
                 self.subtitile.text = ""
             } else {
-                var title = (payment.statusDetail + "_subtitle_" + payment.paymentTypeId)
+                
+                if let paymentTypeId = paymentResult.paymentData?.paymentMethod.paymentTypeId{
+                    self.paymentTypeId = paymentTypeId
+                } else {
+                    paymentTypeId = "credit_card"
+                }
+                
+                let title = (paymentResult.statusDetail + "_subtitle_" + paymentTypeId!)
                 
                 if !title.existsLocalized() {
-                    title = ""
-                }
-                self.subtitile.text = title.localized
-                if payment.statusDetail.contains("cc_rejected_bad_filled"){
-                    status = MPStepBuilder.CongratsState.cancel_RECOVER
-                    self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
+                    if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTitleDisable() {
+                        self.title.text = ""
+                        self .titleSubtitleCoinstraint.constant = 0
+                    } else if String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()) {
+                        self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()
+                    }
+                    
+                    if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTextDisable() {
+                        self.subtitile.text = ""
+                        self .titleSubtitleCoinstraint.constant = 0
+                    } else if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContentText()) {
+                        self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContentText()
+                    }
+
+                } else {
+                    self.subtitile.text = title.localized
                 }
             }
-        } else if payment.statusDetail == "pending_contingency"{
-            self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
-        } else {
-            self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+        } else if paymentResult.status == "in_process" {
+            self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContetTitle()
+            
+            if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPendingContentTextDisable() {
+                self.subtitile.text = ""
+                self .titleSubtitleCoinstraint.constant = 0
+                
+            } else {
+                if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()) {
+                    self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()
+                    
+                } else if paymentResult.statusDetail == "pending_contingency"{
+                    self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
+                    
+                } else {
+                    self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+                }
+            }
         }
     }
 }

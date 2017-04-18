@@ -28,8 +28,8 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
         
         self.termsAndConditionsText.linkTextAttributes = URLAttribute
     
-        self.contentView.layer.borderColor = UIColor.grayTableSeparator().cgColor
-        self.contentView.layer.borderWidth = 1.0
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: TermsAndConditionsViewCell.getCellHeight() - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
         
     }
     
@@ -81,5 +81,6 @@ protocol TermsAndConditionsDelegate {
     
     func openTermsAndConditions(_ title : String, url : URL)
 }
+
 
 

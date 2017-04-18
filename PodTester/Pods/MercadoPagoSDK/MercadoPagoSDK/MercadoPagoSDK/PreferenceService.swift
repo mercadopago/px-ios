@@ -10,15 +10,9 @@ import UIKit
 
 open class PreferenceService: MercadoPagoService {
     
-    fileprivate var MP_PREFERENCE_URI = MercadoPago.MP_ENVIROMENT + "/preferences/"
-    
-    init(){
-        super.init(baseURL: MercadoPago.MP_API_BASE_URL)
-    }
-    
     internal func getPreference(_ preferenceId : String, success : @escaping (CheckoutPreference) -> Void, failure : @escaping ((_ error: NSError) -> Void)){
-        let params = "public_key=" + MercadoPagoContext.publicKey() + "&api_version=" + MercadoPago.API_VERSION
-        self.request(uri: MP_PREFERENCE_URI + preferenceId, params: params, body: nil, method: "GET", success: { (jsonResult) in
+        let params = "public_key=" + MercadoPagoContext.publicKey() + "&api_version=" + ServicePreference.API_VERSION
+        self.request(uri: ServicePreference.MP_PREFERENCE_URI + preferenceId, params: params, body: nil, method: "GET", success: { (jsonResult) in
             if let preferenceDic = jsonResult as? NSDictionary {
                 if preferenceDic["error"] != nil {
                     failure(NSError(domain: "mercadopago.sdk.PreferenceService.getPreference", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener la preferencia".localized]))

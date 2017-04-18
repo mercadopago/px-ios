@@ -18,6 +18,10 @@ open class MercadoPagoService : NSObject {
         super.init()
         self.baseURL = baseURL
     }
+    override init (){
+        super.init()
+    }
+    
     
     public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, cache: Bool = true, success: @escaping (_ jsonResult: AnyObject?) -> Void,
         failure: ((_ error: NSError) -> Void)?) {

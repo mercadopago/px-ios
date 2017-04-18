@@ -1,5 +1,5 @@
 //
-//  SecurityCodeViewController.swift
+//  SecrurityCodeViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 11/3/16.
@@ -22,7 +22,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var cardBack : CardBackView!
     var ccvLabelEmpty : Bool = true
     
-     override open var screenName : String { get{ return "SECURITY_CODE" } }
+    override open var screenName : String { get{ return "SECURITY_CODE" } }
     
     
     override open func viewDidLoad() {
@@ -58,13 +58,6 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         // Dispose of any resources that can be recreated.
     }
     
-    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ){
-    
-        super.init(nibName: "SecurityCodeViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo, owner: self, callback: callback)
-        
-    }
-    
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -73,6 +66,11 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         super.init(coder: aDecoder)
     }
 
+    public init(viewModel : SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: CardInformation, _ securityCode: String) -> Void ) {
+        super.init(nibName: "SecurityCodeViewController", bundle: MercadoPago.getBundle())
+        self.viewModel = viewModel
+        self.viewModel.callback = collectSecurityCodeCallback
+    }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -87,6 +85,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     }
     
     override func loadMPStyles(){
+
         if self.navigationController != nil {
             self.navigationController!.interactivePopGestureRecognizer?.delegate = self
             self.navigationController?.navigationBar.tintColor = UIColor(red: 255, green: 255, blue: 255)
@@ -106,7 +105,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
             showErrorMessage()
             return
         }
-        self.viewModel.tokenAndCallback(secCode: securityCodeTextField.text)
+        self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
     }
     
     func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod?) {
@@ -187,27 +186,22 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         return true
         
     }
-
 }
 
 open class SecurityCodeViewModel: NSObject {
     var paymentMethod : PaymentMethod!
     var cardInfo : CardInformationForm!
-
-    unowned var vc : SecurityCodeViewController
     
-    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, owner: SecurityCodeViewController,  callback: ((_ token: Token?)->Void)! ){
-        self.vc = owner
+    var callback: ((_ cardInformation: CardInformation, _ securityCode: String) -> Void)?
+    
+    public init(paymentMethod : PaymentMethod, cardInfo : CardInformationForm){
         self.paymentMethod = paymentMethod
         self.cardInfo = cardInfo
-        self.callback = callback
     }
     
     public func showFrontCard() -> Bool {
         return !paymentMethod.secCodeInBack()
     }
-        
-    var callback : ((_ token: Token?) -> Void)!
     
     func secCodeInBack() -> Bool {
         return paymentMethod.secCodeInBack()
@@ -216,51 +210,12 @@ open class SecurityCodeViewModel: NSObject {
         return paymentMethod.secCodeLenght()
     }
     
-    
-    func tokenAndCallback(secCode : String!){
-        if let token = cardInfo as? Token {
-            self.cloneTokenAndCallback(secCode: secCode)
-        }else{
-            self.createTokenAndCallback(secCode: secCode)
-        }
+    func executeCallback(secCode : String!) {
+        callback!(cardInfo as! CardInformation, secCode)
     }
-    func cloneTokenAndCallback(secCode : String!) {
-        
-        self.vc.showLoading()
-        if let token = cardInfo as? Token {
-            MPServicesBuilder.cloneToken(token,securityCode:secCode, success: { (token) in
-                self.vc.hideLoading()
-                self.callback(token)
-                }, failure: { (error) in
-                    self.vc.hideLoading()
-                    let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: "", retry: false)
-                    self.vc.displayFailure(mpError)
-            })
-        }
-       
-    }
-    
-    func createTokenAndCallback(secCode : String!) {
-        
-        self.vc.showLoading()
-        let saveCardToken = SavedCardToken(card: cardInfo as! CardInformation, securityCode: secCode, securityCodeRequired: true)
-    
-           MPServicesBuilder.createToken(saveCardToken, success: { (token) in
-            self.vc.hideLoading()
-            self.callback(token)
-            }, failure: { (error) in
-                self.vc.hideLoading()
-                 let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: "", retry: false)
-                self.vc.displayFailure(mpError)
-           })
-
-        
-    }
-    
     
     func getCardHeight() -> CGFloat {
-        return getCardWidth()/12*7
-        return (UIScreen.main.bounds.height*0.27 )
+        return getCardWidth() / 12 * 7
     }
     
     func getCardWidth() -> CGFloat {

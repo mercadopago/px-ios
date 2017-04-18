@@ -8,8 +8,7 @@
 
 import UIKit
 
-open class CustomerPaymentMethod: NSObject, CardInformation {
-
+open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
     
     var _id : String!
     var _description : String!
@@ -130,6 +129,41 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     public func getImageDescription() -> String {
         return self.getPaymentMethodId()
     }
-
     
+    /** PaymentMethodOption  implementation */
+    
+    public func hasChildren() -> Bool {
+        return false
+    }
+    
+    public func getChildren() -> [PaymentMethodOption]? {
+        return nil
+    }
+    
+    public func getId() -> String {
+        return self._id
+    }
+    
+    public func isCustomerPaymentMethod() -> Bool {
+        return true
+    }
+    
+    public func isCard() -> Bool {
+        
+        return PaymentTypeId.isCard(paymentTypeId: self.paymentMethodTypeId)
+    }
+    
+    public func getDescription() -> String {
+        return self._description
+    }
+    
+    public func getComment() -> String {
+        return ""
+    }
+    
+    public func canBeClone() -> Bool {
+        return false
+    }
+    
+
 }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class PaymentMethod : NSObject  {
+open class PaymentMethod : NSObject , Cellable {
     
     open var _id : String!
 
@@ -29,6 +29,22 @@ open class PaymentMethod : NSObject  {
         super.init()
     }
     
+    public init(_id : String, name : String, paymentTypeId : String) {
+        self._id = _id
+        self.name = name
+        self.paymentTypeId = paymentTypeId
+    }
+    
+    open func getCell(width: Double, height: Double) -> UITableViewCell {
+        let bundle = MercadoPago.getBundle()
+        let cell: CardTypeTableViewCell = bundle!.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as! CardTypeTableViewCell
+        cell.setPaymentMethod(paymentMethod: self)
+        cell.addSeparatorLineToBottom(width: width, height: height)
+        cell.selectionStyle = .none
+        
+        return cell
+    }
+    
     open func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }
@@ -41,8 +57,18 @@ open class PaymentMethod : NSObject  {
     }
     
     open func isCard() -> Bool {
-        let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)
-        return paymentTypeId != nil && (paymentTypeId?.isCard())!
+        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+            return paymentTypeId.isCard()
+        }
+        return false
+    }
+    
+    open func isCreditCard() -> Bool {
+        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+            return paymentTypeId.isCreditCard()
+        }
+        return false
+        
     }
 
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
@@ -266,11 +292,7 @@ open class PaymentMethod : NSObject  {
         if(paymentPreference == nil){
             return true
         }
-        if(paymentPreference!.defaultPaymentTypeId != nil){
-            if (paymentPreference!.defaultPaymentTypeId != self.paymentTypeId){
-                return false
-            }
-        }
+        
         if (paymentPreference!.defaultPaymentMethodId != nil){
             if (self._id != paymentPreference!.defaultPaymentMethodId){
                 return false
@@ -289,6 +311,12 @@ open class PaymentMethod : NSObject  {
                 if (value == self._id){
                     return false
                 }
+            }
+        }
+        
+        if(paymentPreference!.defaultPaymentTypeId != nil){
+            if (paymentPreference!.defaultPaymentTypeId != self.paymentTypeId){
+                return false
             }
         }
         

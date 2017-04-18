@@ -90,6 +90,7 @@ open class CardToken : NSObject, CardInformationForm {
                 }
                 return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
             }
+
                 // Validate card length
                 
                 let filteredSettings = settings?.filter({return $0.cardNumber.length == cardNumber!.trimSpaces().characters.count})
@@ -359,6 +360,10 @@ open class CardToken : NSObject, CardInformationForm {
 
     public func isIssuerRequired() -> Bool {
         return true
+    }
+    
+    public func canBeClone() -> Bool {
+        return false
     }
 
 }

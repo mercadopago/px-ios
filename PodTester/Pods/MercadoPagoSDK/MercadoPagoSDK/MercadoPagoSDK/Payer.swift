@@ -10,12 +10,12 @@ import Foundation
 
 open class Payer : NSObject {
 	open var email : String!
-	open var _id : String!
-	open var identification : Identification!
+	open var _id : String?
+	open var identification : Identification?
 	
 	
 	
-	public init(_id : String? = nil, email: String? = nil, type : String? = nil, identification: Identification? = nil){
+	public init(_id : String? = nil, email: String = "", type : String? = nil, identification: Identification? = nil){
 		self._id = _id
 		self.email = email
 		self.identification = identification
@@ -44,7 +44,7 @@ open class Payer : NSObject {
     open func toJSON() -> [String:Any] {
         let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
         let _id : Any = self._id == nil ? JSONHandler.null : self._id
-        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification.toJSONString()
+        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSONString()
         let obj:[String:Any] = [
             "email": email,
             "_id": _id,

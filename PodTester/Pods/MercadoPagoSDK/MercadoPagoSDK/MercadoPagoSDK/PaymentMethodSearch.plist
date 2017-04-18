@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>account_moneyAzul</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoDineroEnCuentaAzul</string>
+	</dict>
 	<key>prepaid_card</key>
 	<dict>
 		<key>image_name</key>
@@ -162,11 +167,6 @@
 		<key>image_name</key>
 		<string>mediosCordobesa</string>
 	</dict>
-	<key>account_moneyAzul</key>
-	<dict>
-		<key>image_name</key>
-		<string>mediosIconoDineroEnCuentaAzul</string>
-	</dict>
 	<key>cmr</key>
 	<dict>
 		<key>image_name</key>
@@ -222,10 +222,155 @@
 		<key>image_name</key>
 		<string>pagoEfvoIconoOxxo</string>
 	</dict>
+	<key>pagoefectivo_atm_full_carga_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosFullCarga</string>
+	</dict>
+	<key>pagoefectivo_atm_scotiabank_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosScotiabank</string>
+	</dict>
+	<key>pagoefectivo_atm_interbank_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosInterbank</string>
+	</dict>
+	<key>pagoefectivo_atm_bcp_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosBCP</string>
+	</dict>
+	<key>pagoefectivo_atm_bbva_continental_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosBBVAContinental</string>
+	</dict>
+	<key>pagoefectivo_atm_western_union_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosWesternUnion</string>
+	</dict>
+	<key>pagoefectivo_atm_kasnet_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosKasnet</string>
+	</dict>
+	<key>pagoefectivo_atm_banbif_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosBanbif</string>
+	</dict>
+	<key>pagoefectivo_atm_pagoefectivo_atm</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosPagoEfectivo</string>
+	</dict>
+	<key>abitab</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosAbitab</string>
+	</dict>
+	<key>redpagos</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosRedPagos</string>
+	</dict>
+	<key>efecty</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosEfecty</string>
+	</dict>
+	<key>davivienda</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosDavivienda</string>
+	</dict>
+	<key>provincial</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosBBVAProvincial</string>
+	</dict>
+	<key>mercantil_atm</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosMercantil</string>
+	</dict>
+	<key>mercantil_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosMercantil</string>
+	</dict>
+	<key>pagoefectivo_atm_scotiabank_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>bankTransferScotiabank</string>
+	</dict>
+	<key>pagoefectivo_atm_interbank_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>bankTransferInterbank</string>
+	</dict>
+	<key>pagoefectivo_atm_bcp_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>bankTransferBCP</string>
+	</dict>
+	<key>pagoefectivo_atm_bbva_continental_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>bankTransferBBVAContinental</string>
+	</dict>
+	<key>oca</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosOca</string>
+	</dict>
+	<key>lider</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosLider</string>
+	</dict>
+	<key>codensa</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosCodensa</string>
+	</dict>
+	<key>movilred</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosMovilred</string>
+	</dict>
+	<key>viabaloto</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosViabaloto</string>
+	</dict>
 	<key>maestro</key>
 	<dict>
 		<key>image_name</key>
 		<string>mediosMaestro</string>
+	</dict>
+	<key>magna</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosMagna</string>
+	</dict>
+	<key>presto</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosPresto</string>
+	</dict>
+	<key>servipag</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosServipag</string>
+	</dict>
+	<key>webpay</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosWebpay</string>
 	</dict>
 	<key>debcabal</key>
 	<dict>

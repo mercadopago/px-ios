@@ -10,8 +10,8 @@ import UIKit
 
 open class AmountInfo: NSObject {
     
-    var amount : Double?
-    var currency : Currency?
+    var amount : Double!
+    var currency : Currency!
 
     override init(){
         super.init()

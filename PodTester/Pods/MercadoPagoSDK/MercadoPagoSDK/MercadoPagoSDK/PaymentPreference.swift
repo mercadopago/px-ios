@@ -44,7 +44,7 @@ open class PaymentPreference: NSObject {
     open var defaultPaymentMethodId : String?
     open var maxAcceptedInstallments : Int = 0
     open var defaultInstallments : Int = 0
-    open var defaultPaymentTypeId : String?
+    var defaultPaymentTypeId:String?
     
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
     // excluded_payment_method < payment_methods
@@ -90,6 +90,40 @@ open class PaymentPreference: NSObject {
         return true
     }
     
+    open func getExcludedPaymentTypesIds() -> Set<String>? {
+        if excludedPaymentTypeIds != nil {
+            return excludedPaymentTypeIds
+        }
+        return nil
+    }
+    
+    open func getDefaultInstallments() -> Int {
+        if defaultInstallments > 0 {
+            return defaultInstallments
+        }
+        return 0
+    }
+    
+    open func getMaxAcceptedInstallments() -> Int {
+        if maxAcceptedInstallments > 0 {
+            return maxAcceptedInstallments
+        }
+        return 0
+    }
+    
+    open func getExcludedPaymentMethodsIds() -> Set<String>? {
+        if excludedPaymentMethodIds != nil {
+            return excludedPaymentMethodIds
+        }
+        return nil
+    }
+    
+    open func getDefaultPaymentMethodId() -> String? {
+        if defaultPaymentMethodId != nil && defaultPaymentMethodId!.isNotEmpty {
+            return defaultPaymentMethodId
+        }
+        return nil
+    }
     
     open func addSettings(_ defaultPaymentTypeId: String? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil) -> PaymentPreference {
         
@@ -112,10 +146,12 @@ open class PaymentPreference: NSObject {
         if(defaultInstallments != nil){
             self.defaultInstallments = defaultInstallments!
         }
-       
+        
         if(defaultPaymentTypeId != nil){
-             self.defaultPaymentTypeId = defaultPaymentTypeId
+            self.defaultPaymentTypeId = defaultPaymentTypeId
         }
+
+       
         return self
     }
     

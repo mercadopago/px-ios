@@ -48,16 +48,55 @@ public enum PaymentTypeId :String {
     public func isCard() -> Bool {
         return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD
     }
+
+
+    public func isCreditCard() -> Bool {
+        return self == PaymentTypeId.CREDIT_CARD
+    }
     
-    public static func offlinePayments() -> [String] {
+    public func isOnlinePaymentType() -> Bool{
+        return PaymentTypeId.onlinePaymentTypes().contains(self.rawValue)
+    }
+
+    public func isOfflinePaymentType() -> Bool {
+        return PaymentTypeId.offlinePaymentTypes().contains(self.rawValue)
+
+    }
+    
+    public static func onlinePaymentTypes() -> [String] {
+        return [DEBIT_CARD.rawValue, CREDIT_CARD.rawValue, ACCOUNT_MONEY.rawValue, PREPAID_CARD.rawValue]
+    }
+    
+    public static func offlinePaymentTypes() -> [String] {
         return [ATM.rawValue, TICKET.rawValue, BANK_TRANSFER.rawValue]
     }
     
-    public func isOfflinePayment() -> Bool {
-        return PaymentTypeId.offlinePayments().contains(self.rawValue)
+    public static func isCard(paymentTypeId : String) -> Bool {
+        guard let paymentTypeIdEnum = PaymentTypeId(rawValue: paymentTypeId)
+            else {
+                return false
+            }
+        return paymentTypeIdEnum.isCard()
     }
     
+    public static func isOnlineType(paymentTypeId : String) -> Bool {
+        
+        guard let paymentTypeIdEnum = PaymentTypeId(rawValue: paymentTypeId)
+            else {
+                return false
+        }
+        return paymentTypeIdEnum.isOnlinePaymentType()
+    }
     
+    public static func isOfflineType(paymentTypeId : String) -> Bool {
+        
+        guard let paymentTypeIdEnum = PaymentTypeId(rawValue: paymentTypeId)
+            else {
+                return false
+        }
+        return paymentTypeIdEnum.isOfflinePaymentType()
+    }
+
     
 }
 

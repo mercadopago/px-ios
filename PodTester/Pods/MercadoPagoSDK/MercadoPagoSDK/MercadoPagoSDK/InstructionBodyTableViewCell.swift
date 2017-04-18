@@ -16,15 +16,16 @@ class InstructionBodyTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    var height = 0
     
-    func fillCell(instruction: Instruction, payment: Payment){
+    func fillCell(instruction: Instruction, paymentResult: PaymentResult){
             var previus: UIView?
-            var height = 0
+            height = 0
             
             for (index, info) in instruction.info.enumerated() {
                 var fontSize = 18
                 
-                if index>1 && index<5 && payment.paymentMethodId == "redlink" {
+                if index>1 && index<5 && paymentResult.paymentData?.paymentMethod._id == "redlink" {
                     fontSize = 16
                 }
                 let labelTitle = NSAttributedString(string: info, attributes: getAttributes(fontSize: fontSize, color: UIColor.gray))
@@ -41,7 +42,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     height += 30
                     NSLayoutConstraint.activate(heightConstraints)
                     
-                } else if payment.paymentMethodId == "redlink"{
+                } else if paymentResult.paymentData?.paymentMethod._id == "redlink"{
                     
                     if instruction.info[index-1] != ""{
                         Utils.setContrainsVertical(label: label, previus: previus, constrain: 0)
@@ -92,7 +93,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 
                 let views = ["label": label]
                 
-                if payment.paymentMethodId == "redlink" {
+                if paymentResult.paymentData?.paymentMethod._id == "redlink" {
                     Utils.setContrainsHorizontal(views: views, constrain: 15)
                 } else {
                     Utils.setContrainsHorizontal(views: views, constrain: 60)
@@ -150,6 +151,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
     func getAttributes(fontSize:Int, color:UIColor)-> [String:AnyObject] {
         return [NSFontAttributeName : Utils.getFont(size: CGFloat(fontSize)), NSForegroundColorAttributeName: color]
     }
+    
     
     func goToURL(sender:MPButton!)
     {   if let link = sender.actionLink {

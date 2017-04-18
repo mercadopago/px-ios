@@ -1,9 +1,6 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "filename" : "logoMastercardDebito.png",
       "scale" : "1x"

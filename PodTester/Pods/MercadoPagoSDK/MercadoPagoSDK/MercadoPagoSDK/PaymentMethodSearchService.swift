@@ -30,11 +30,10 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentMethodSearchService: MercadoPagoService {
     
-    open let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/payment_methods/search/options"
     
-    public init(){
-        super.init(baseURL: MercadoPago.MP_API_BASE_URL)
-    }
+//    public override init(){
+//        super.init(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL())
+//    }
     
     open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, customerId : String? = nil, defaultPaymenMethodId : String?, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
@@ -46,7 +45,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
         }
         
         
-        if newExcludedPaymentTypesIds != nil && newExcludedPaymentTypesIds?.count > 0 {
+        if newExcludedPaymentTypesIds != nil && newExcludedPaymentTypesIds!.count > 0 {
             let excludedPaymentTypesParams = newExcludedPaymentTypesIds!.map({$0}).joined(separator: ",")
             params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()
         }
@@ -68,7 +67,9 @@ open class PaymentMethodSearchService: MercadoPagoService {
             params = params + "&customer_id=" + customerId!
         }
         
-        params = params + "&api_version=" + MercadoPago.API_VERSION
+        params = params + "&site_id=" + MercadoPagoContext.getSite()
+        
+        params = params + "&api_version=" + ServicePreference.API_VERSION
 
         var groupsPayerBody : AnyObject? = nil
         if !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {
@@ -82,7 +83,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
         headers.setValue(MercadoPagoContext.getLanguage() , forKey: "Accept-Language")
        
         
-        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (jsonResult) -> Void in
+        self.request(uri: ServicePreference.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {

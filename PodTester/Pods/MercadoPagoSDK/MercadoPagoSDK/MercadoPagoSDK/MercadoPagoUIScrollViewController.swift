@@ -24,6 +24,7 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     
     func didScrollInTable(_ scrollView: UIScrollView) {
         navBarFontSize = 18
+        
         if let titleCell = titleCell {
             let fontSize = 18 - (scrollView.contentOffset.y + scrollPositionToShowNavBar())/(CGFloat(64) - scrollPositionToShowNavBar())*4
             
@@ -35,7 +36,7 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
             
         }
 
-        if (scrollView.contentOffset.y > -scrollPositionToShowNavBar() ) {
+        if self.shouldShowNavBar(scrollView) {
             showNavBar()
         } else {
             hideNavBar()
@@ -45,6 +46,10 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     
     override func getNavigationBarTitle() -> String {
         return ""
+    }
+    
+    internal func shouldShowNavBar(_ scrollView: UIScrollView) -> Bool {
+        return scrollView.contentOffset.y > -scrollPositionToShowNavBar()
     }
   
 }

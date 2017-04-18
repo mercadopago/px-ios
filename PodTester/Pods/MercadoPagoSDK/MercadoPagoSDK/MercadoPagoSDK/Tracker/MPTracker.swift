@@ -14,6 +14,8 @@ public enum Flavor : String {
     case Flavor_3 = "3"
 }
 
+
+
 /*
 public enum GAKey : String {
     case MLA = "UA-46085787-6"
@@ -70,6 +72,8 @@ open class MPTracker : NSObject {
    // static var siteGAKey : GAKey?
     
     static var flavor : Flavor? = nil
+
+    static let kGenericScreenName = "NO_SCREEN_DEFINED"
     
     fileprivate class func initialize (_ mpDelegate : MPTrackerDelegate!){
         MPTracker.initialized = true
@@ -78,7 +82,7 @@ open class MPTracker : NSObject {
         MPTracker.flavor = mpDelegate.flavor()
     }
     
-    open class func trackEvent(_ mpDelegate: MPTrackerDelegate!, screen: String! = "NO_SCREEN", action: String!, result: String?){
+    open class func trackEvent(_ mpDelegate: MPTrackerDelegate!, screen: String! = kGenericScreenName, action: String!, result: String?){
         if (!initialized){
             self.initialize(mpDelegate)
         }
@@ -117,6 +121,12 @@ open class MPTracker : NSObject {
     }
     
     open class func trackScreenName(_ mpDelegate : MPTrackerDelegate!, screenName: String!){
+        
+        if String.isNullOrEmpty(screenName) || screenName == MPTracker.kGenericScreenName {
+            // Don't track invalid screen names
+            return
+        }
+        
         if (!initialized){
             self.initialize(mpDelegate)
         }

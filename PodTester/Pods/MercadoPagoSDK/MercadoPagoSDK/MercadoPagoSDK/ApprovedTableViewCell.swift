@@ -9,7 +9,7 @@
 import UIKit
 
 class ApprovedTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var paymentId: UILabel!
     @IBOutlet weak var installments: UILabel!
     @IBOutlet weak var installmentRate: UILabel!
@@ -18,45 +18,145 @@ class ApprovedTableViewCell: UITableViewCell {
     @IBOutlet weak var lastFourDigits: UILabel!
     @IBOutlet weak var statement: UILabel!
     @IBOutlet weak var comprobante: UILabel!
+    @IBOutlet weak var idInstallmentConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var discountViewContent: UIView!
+    @IBOutlet weak var paymentMethodStatementDescriptionConstraint: NSLayoutConstraint!
+    @IBOutlet weak var paymentMethodTotalConstraint: NSLayoutConstraint!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        installmentRate.text = " Sin interés".localized
-        installmentRate.font = Utils.getFont(size: installmentRate.font.pointSize)
-        comprobante.text = "Comprobante".localized
-        comprobante.font = Utils.getFont(size: comprobante.font.pointSize)
+        
+        self.selectionStyle = .none
+        emptyTextLabel()
+        setFonts()
     }
-    func fillCell(payment: Payment){
-        paymentId.text = "Nº \(payment._id)"
-        paymentId.font = Utils.getFont(size: paymentId.font.pointSize)
+    
+    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?){
         
         let currency = MercadoPagoContext.getCurrency()
-        //let installmentNumber = "\(payment.installments) x "
-        let installmentNumber = "\(payment.installments) x "
-        let totalAmount = Utils.getAttributedAmount(payment.transactionDetails.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
-        let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: [NSFontAttributeName: Utils.getFont(size: 24)])
-        installmentLabel.append(totalAmount)
-        installments.attributedText =  installmentLabel
         
-        if payment.installments != 1{
-            if payment.transactionDetails.totalPaidAmount != payment.transactionAmount{
-                installmentRate.text = ""
+        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentIdDisable(){
+            fillID(id: paymentResult._id)
+        } else {
+            idInstallmentConstraint.constant = 0
+        }
+        
+        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isAmountDisable(){
+            if let payerCost = paymentResult.paymentData?.payerCost {
+                fillInstallmentLabel(amount: payerCost.totalAmount, payerCost: payerCost, currency: currency)
+                fillInterestLabel(payerCost: payerCost)
+                fillTotalLabel(payerCost: payerCost, currency: currency)
+                
+            } else if let amount = checkoutPreference?.getAmount() {
+                fillInstallmentLabel(amount: amount, currency: currency)
+                paymentMethodTotalConstraint.constant = 0
             }
+        } else {
+            paymentMethodTotalConstraint.constant = 0
+        }
+        
+        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentMethodDisable() {
+            
+            fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.paymentMethod)
+            
+            fillPaymentMethodDescriptionLabel(paymentMethod: paymentResult.paymentData?.paymentMethod, token: paymentResult.paymentData?.token)
+        } else {
+            paymentMethodTotalConstraint.constant = 0
+        }
+        
+        fillStatementDescriptionLabel(description: paymentResult.statementDescription)
+        
+        if let discount = paymentResult.paymentData?.discount {
+            let screenSize : CGRect = UIScreen.main.bounds
+            let screenWidth = screenSize.width
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : 84), coupon:discount, amount:(checkoutPreference?.getAmount())!)
+            discountViewContent.addSubview(discountBody)
+        } else
+        {
+             discountViewContent.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        }
+    }
+    
+    func fillID(id: String?){
+        if !String.isNullOrEmpty(id) {
+            comprobante.text = "Comprobante".localized
+            paymentId.text = "Nº \(id!)"
+            
+        } else {
+            idInstallmentConstraint.constant = 0
+        }
+    }
+    
+    func fillInstallmentLabel(amount: Double, payerCost: PayerCost? = nil, currency: Currency) {
+        var installmentNumber = ""
+        
+        if payerCost != nil && payerCost?.installments != 0 {
+            installmentNumber = "\(payerCost!.installments) x "
+        }
+        
+        let total = payerCost != nil ? payerCost!.installmentAmount : amount
+        
+        if amount != 0 {
+            
+            let totalAmount = Utils.getAttributedAmount(total, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
+            let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: [NSFontAttributeName: Utils.getFont(size: 24)])
+            installmentLabel.append(totalAmount)
+            self.installments.attributedText =  installmentLabel
+        }
+    }
+    
+    func fillInterestLabel(payerCost: PayerCost) {
+        if payerCost.installments > 1 && payerCost.installmentRate == 0 {
+            installmentRate.text = "Sin interés".localized
+        }
+    }
+    
+    func fillTotalLabel(payerCost: PayerCost, currency: Currency) {
+        if payerCost.totalAmount != 0 && payerCost.installments != 0{
             let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName : UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
-            attributedTotal.append(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor.black, fontSize:16, baselineOffset:4))
+            attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor.black, fontSize:16, baselineOffset:4))
             attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName : UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
             total.attributedText = attributedTotal
         } else {
-            total.text = ""
-            installmentRate.text = ""
+            paymentMethodTotalConstraint.constant = 0
         }
-        
-        paymentMethod.image = MercadoPago.getImage(payment.paymentMethodId)
-        
-        lastFourDigits.text = payment.paymentMethodId == "account_money" ? "Dinero en cuenta de MercadoPago".localized : "Terminada en ".localized + String(describing: payment.card.lastFourDigits!)
-        lastFourDigits.font = Utils.getFont(size: lastFourDigits.font.pointSize)
-        statement.text = ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(payment.statementDescriptor!)")
+    }
+    
+    func fillPaymentMethodIcon(paymentMethod: PaymentMethod?){
+        self.paymentMethod.image = MercadoPago.getImage(paymentMethod?._id)
+    }
+    
+    func fillPaymentMethodDescriptionLabel(paymentMethod: PaymentMethod?, token: Token?){
+        if let token = token {
+            self.lastFourDigits.text = "Terminada en ".localized + String(describing: token.lastFourDigits!)
+        } else if let paymentMethod = paymentMethod {
+            self.lastFourDigits.text = paymentMethod._id == "account_money" ? "Dinero en cuenta de MercadoPago".localized : ""
+        }
+    }
+    
+    func fillStatementDescriptionLabel(description: String?) {
+        if !String.isNullOrEmpty(description) {
+            statement.text = ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(description!)")
+        } else {
+            paymentMethodStatementDescriptionConstraint.constant = 0
+        }
+    }
+    
+    func emptyTextLabel() {
+        total.text = ""
+        installmentRate.text = ""
+        paymentId.text = ""
+        comprobante.text = ""
+        statement.text = ""
+        installments.text = ""
+        lastFourDigits.text = ""
+    }
+    
+    func setFonts() {
+        installmentRate.font = Utils.getFont(size: installmentRate.font.pointSize)
+        comprobante.font = Utils.getFont(size: comprobante.font.pointSize)
+        paymentId.font = Utils.getFont(size: paymentId.font.pointSize)
         statement.font = Utils.getFont(size: statement.font.pointSize)
-        
+        lastFourDigits.font = Utils.getFont(size: lastFourDigits.font.pointSize)
     }
 }

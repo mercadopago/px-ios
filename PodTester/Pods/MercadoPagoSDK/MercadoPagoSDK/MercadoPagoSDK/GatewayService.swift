@@ -10,15 +10,15 @@ import Foundation
 
 open class GatewayService : MercadoPagoService {
     
-    open func getToken(_ url : String = MercadoPago.MP_OP_ENVIROMENT + "/card_tokens", method : String = "POST", public_key : String, savedCardToken : SavedCardToken, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: url, params: "public_key=" + public_key, body: savedCardToken.toJSONString() as AnyObject?, method: method, success: success, failure: failure)
+    open func getToken(_ url : String = ServicePreference.MP_CREATE_TOKEN_URI, method : String = "POST", key : String, savedCardToken : SavedCardToken, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: savedCardToken.toJSONString() as AnyObject?, method: method, success: success, failure: failure)
     }
     
-    open func getToken(_ url : String = MercadoPago.MP_OP_ENVIROMENT + "/card_tokens", method : String = "POST", public_key : String, cardToken : CardToken, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: url, params: "public_key=" + public_key, body: cardToken.toJSONString() as AnyObject?, method: method, success: success, failure: failure)
+    open func getToken(_ url : String = ServicePreference.MP_CREATE_TOKEN_URI, method : String = "POST", key : String, cardToken : CardToken, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: cardToken.toJSONString() as AnyObject?, method: method, success: success, failure: failure)
     }
     
-    open func cloneToken(_ url : String = MercadoPago.MP_OP_ENVIROMENT + "/card_tokens", method : String = "POST", public_key : String, token : Token, securityCode:String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func cloneToken(_ url : String = ServicePreference.MP_CREATE_TOKEN_URI, method : String = "POST", public_key : String, token : Token, securityCode:String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         self.request(uri: url + "/" + token._id + "/clone", params: "public_key=" + public_key, body: nil, method: method, success: { (jsonResult) in
             var token : Token? = nil
             if let tokenDic = jsonResult as? NSDictionary {

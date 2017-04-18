@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable {
+open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable, PaymentMethodOption {
     
     open var idPaymentMethodSearchItem : String!
     open var type : PaymentMethodSearchItemType!
@@ -54,7 +54,7 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable {
     }
     
     open func isOfflinePayment() -> Bool {
-        return PaymentTypeId.offlinePayments().contains(self.idPaymentMethodSearchItem)
+        return PaymentTypeId.offlinePaymentTypes().contains(self.idPaymentMethodSearchItem)
     }
     
     open func isBitcoin() -> Bool {
@@ -83,6 +83,38 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable {
     
     public func getImageDescription() -> String{
         return self.idPaymentMethodSearchItem
+    }
+    
+    /*
+     * PaymentMethodOption implementation
+     */
+    
+    public func hasChildren() -> Bool {
+        return !Array.isNullOrEmpty(self.children)
+    }
+    
+    public func getChildren() -> [PaymentMethodOption]? {
+        return self.children
+    }
+    
+    public func isCard() -> Bool {
+        return PaymentTypeId.isCard(paymentTypeId: self.idPaymentMethodSearchItem.lowercased())
+    }
+    
+    public func getId() -> String {
+        return self.idPaymentMethodSearchItem
+    }
+    
+    public func isCustomerPaymentMethod() -> Bool {
+        return false
+    }
+    
+    public func getDescription() -> String {
+        return self._description
+    }
+    
+    public func getComment() -> String {
+        return self.comment ?? ""
     }
 }
 
