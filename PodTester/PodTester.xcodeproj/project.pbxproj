@@ -17,7 +17,6 @@
 		FCCDCC291E0B2265005E7095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCCDCC271E0B2265005E7095 /* LaunchScreen.storyboard */; };
 		FCCDCC341E0B2265005E7095 /* PodTesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC331E0B2265005E7095 /* PodTesterTests.swift */; };
 		FCCDCC3F1E0B2265005E7095 /* PodTesterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC3E1E0B2265005E7095 /* PodTesterUITests.swift */; };
-		FCEC3B581E0C0CD8007A8CAA /* FirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEC3B571E0C0CD8007A8CAA /* FirstCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +59,6 @@
 		FCCDCC3A1E0B2265005E7095 /* PodTesterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PodTesterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCDCC3E1E0B2265005E7095 /* PodTesterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodTesterUITests.swift; sourceTree = "<group>"; };
 		FCCDCC401E0B2265005E7095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FCEC3B571E0C0CD8007A8CAA /* FirstCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,7 +139,6 @@
 			children = (
 				FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */,
 				FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */,
-				FCEC3B571E0C0CD8007A8CAA /* FirstCell.swift */,
 				FCCDCC221E0B2265005E7095 /* Main.storyboard */,
 				FCCDCC251E0B2265005E7095 /* Assets.xcassets */,
 				FCCDCC271E0B2265005E7095 /* LaunchScreen.storyboard */,
@@ -450,7 +447,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCEC3B581E0C0CD8007A8CAA /* FirstCell.swift in Sources */,
 				FCCDCC1F1E0B2265005E7095 /* AppDelegate.swift in Sources */,
 				FC579C301E0C047900F32F7B /* MainTableViewController.swift in Sources */,
 			);

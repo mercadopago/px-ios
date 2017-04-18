@@ -121,10 +121,8 @@ class MainTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FirstCell", for: indexPath)
+        let cell = UITableViewCell()
         cell.textLabel?.text = dataSource[indexPath.row].name
-        
-        
         return cell
     }
     
@@ -165,134 +163,118 @@ class MainTableViewController: UITableViewController {
     
     /// F3
     func startCheckout(){
-        let checkout = MPFlowBuilder.startCheckoutViewController(prefIdNoExlusions, callback: { (payment: Payment) in
-            // Listo! El pago ya fue procesado por MP.
-            // En el paso siguiente esta el metodo displayPaymentInfo
-            
-        }, callbackCancel: {
-            // Acción a ejecutar en caso de que el usuario
-            // no efectue la compra
-        })
-        
-        self.present(checkout, animated: true,completion: {})
+        let pref = CheckoutPreference(_id: "242624092-e0d12cfe-779b-4b85-b3b5-2243b45334c3")
+        let checkout = MercadoPagoCheckout.init(checkoutPreference: pref, navigationController: self.navigationController!)
+        checkout.start()
     }
-    
-    
     
     /// F2
     func startPaymentVault(){
-        let paymentVault = MPFlowBuilder.startPaymentVaultViewController(amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
-            
-            
-            self.dismiss(animated: true, completion: {})
-            
-            
-        }, callbackCancel: {})
-        
-        self.present(paymentVault, animated: true, completion: {})
+//        let paymentVault = MPFlowBuilder.startPaymentVaultViewController(amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
+//            
+//            
+//            self.dismiss(animated: true, completion: {})
+//            
+//            
+//        }, callbackCancel: {})
+//        
+//        self.present(paymentVault, animated: true, completion: {})
     }
     
     func startCreditCardFlow(){
-        let cardFlow = MPFlowBuilder.startCardFlow(amount: amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
-            
-            
-            self.dismiss(animated: true, completion: {})
-            
-            
-        })
-        
-        self.present(cardFlow, animated: true, completion: {})
-    
+//        let cardFlow = MPFlowBuilder.startCardFlow(amount: amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
+//            
+//            
+//            self.dismiss(animated: true, completion: {})
+//            
+//            
+//        })
+//        
+//        self.present(cardFlow, animated: true, completion: {})
+//    
     }
     
     func startCreditCardForm(){
         
-        let cardForm = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, callback: { (paymentMethod:PaymentMethod, token:Token?, issuer:Issuer?) in
-            
-            
-            self.dismiss(animated: true, completion: {})
-        
-        
-        }, callbackCancel: {
-            
-            self.dismiss(animated: true, completion: {})
-            
-        })
-        
-            self.present(cardForm, animated: true, completion: {})
+//        let cardForm = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, callback: { (paymentMethod:PaymentMethod, token:Token?, issuer:Issuer?) in
+//            
+//            
+//            self.dismiss(animated: true, completion: {})
+//        
+//        
+//        }, callbackCancel: {
+//            
+//            self.dismiss(animated: true, completion: {})
+//            
+//        })
+//        
+//            self.present(cardForm, animated: true, completion: {})
     }
     
     func startPaymentMethod(){
-        let paymentMethod = MPStepBuilder.startPaymentMethodsStep { (paymentMethod:PaymentMethod) in
-            
-            
-            self.dismiss(animated: true, completion: {})
-            
-            
-        }
-        
-        self.present(paymentMethod, animated: true, completion: {})
+//        let paymentMethod = MPStepBuilder.startPaymentMethodsStep { (paymentMethod:PaymentMethod) in
+//            
+//            
+//            self.dismiss(animated: true, completion: {})
+//            
+//            
+//        }
+//        
+//        self.present(paymentMethod, animated: true, completion: {})
     }
     
     func startIssuer(){
-        let issuer = MPStepBuilder.startIssuersStep(paymentMethod) { (issuer:Issuer) in
-            
-            
-            self.dismiss(animated: true, completion: {})
-
-            
-        }
-        
-        self.present(issuer, animated: true, completion: {})
+//        let issuer = MPStepBuilder.startIssuersStep(paymentMethod) { (issuer:Issuer) in
+//            
+//            
+//            self.dismiss(animated: true, completion: {})
+//
+//            
+//        }
+//        
+//        self.present(issuer, animated: true, completion: {})
 
         
     } // crash
 
     func startPayerCost(){
         
-        let payerCost = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: nil, amount: amount, paymentPreference: nil, installment: nil, timer: nil, callback: { (payerCost:PayerCost?) in
-        
-            self.dismiss(animated: true, completion: {})
-            
-        }, callbackCancel: {})
-        
-        self.present(payerCost, animated: true, completion: {})
-        
+//        let payerCost = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: nil, amount: amount, paymentPreference: nil, installment: nil, timer: nil, callback: { (payerCost:PayerCost?) in
+//        
+//            self.dismiss(animated: true, completion: {})
+//            
+//        }, callbackCancel: {})
+//        
+//        self.present(payerCost, animated: true, completion: {})
+//        
 
     }
 
     func startCreatePayment(){
-        
-        MercadoPagoContext.setBaseURL(merchantBaseURL)
-        MercadoPagoContext.setPaymentURI(merchantCreatePaymentUri)
-        
-        let item : Item = Item(_id: itemID, title: itemTitle, quantity: itemQuantity,
-                               unitPrice: itemUnitPrice)
-        
-        
-        //CardIssuer is optional
-        let installments = (self.installmentsSelected == nil) ? 1 : self.installmentsSelected!.installments
-        let cardTokenId = (self.createdToken == nil) ? "" : self.createdToken!._id
-        let merchantPayment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: self.selectedIssuer, tokenId: cardTokenId!, paymentMethod: self.paymentMethod, campaignId: 0)
-        
-        MerchantServer.createPayment(merchantPayment, success: { (payment) in
-            
-            
-        }) { (error) in
-            
-            
-            
-        }
+//
+//        MercadoPagoContext.setBaseURL(merchantBaseURL)
+//        MercadoPagoContext.setPaymentURI(merchantCreatePaymentUri)
+//        
+//        let item : Item = Item(_id: itemID, title: itemTitle, quantity: itemQuantity,
+//                               unitPrice: itemUnitPrice)
+//        
+//        
+//        //CardIssuer is optional
+//        let installments = (self.installmentsSelected == nil) ? 1 : self.installmentsSelected!.installments
+//        let cardTokenId = (self.createdToken == nil) ? "" : self.createdToken!._id
+//        let merchantPayment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: self.selectedIssuer, tokenId: cardTokenId!, paymentMethod: self.paymentMethod, campaignId: 0)
+//        
+//        MerchantServer.createPayment(merchantPayment, success: { (payment) in
+//            
+//            
+//        }) { (error) in
+//            
+//            
+//            
+//        }
         
         
         
         
     }
-    
-    
-    
-    /// F1
-    
-    
-
 }
