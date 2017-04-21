@@ -10,6 +10,12 @@
 		4D1BA2FFECDADE21693F8479 /* Pods_PodTesterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA4C6DA5720ADA0D959E10D /* Pods_PodTesterUITests.framework */; };
 		7977B3C2CC366377F1711AB8 /* Pods_PodTester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F6C388D4809CF09D1B5C5F /* Pods_PodTester.framework */; };
 		96268BFEE693DF0EC8A35C50 /* Pods_PodTesterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D902B45F8C5F45AB09E44105 /* Pods_PodTesterTests.framework */; };
+		FC333DD71EA67982009C746A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC333DD61EA67982009C746A /* SettingsViewController.swift */; };
+		FC333DD81EA67982009C746A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC333DD61EA67982009C746A /* SettingsViewController.swift */; };
+		FC333DDA1EA693A1009C746A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC333DD91EA693A1009C746A /* SettingsViewModel.swift */; };
+		FC333DDB1EA693A1009C746A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC333DD91EA693A1009C746A /* SettingsViewModel.swift */; };
+		FC333DDD1EA6A4A6009C746A /* EnviromentSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC333DDC1EA6A4A6009C746A /* EnviromentSettings.plist */; };
+		FC333DDE1EA6A4A6009C746A /* EnviromentSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC333DDC1EA6A4A6009C746A /* EnviromentSettings.plist */; };
 		FC579C301E0C047900F32F7B /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */; };
 		FCCDCC1F1E0B2265005E7095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */; };
 		FCCDCC241E0B2265005E7095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCCDCC221E0B2265005E7095 /* Main.storyboard */; };
@@ -46,6 +52,9 @@
 		D902B45F8C5F45AB09E44105 /* Pods_PodTesterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PodTesterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEA8E2EECAA9A8B0A1F4CA7 /* Pods-PodTesterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodTesterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodTesterTests/Pods-PodTesterTests.release.xcconfig"; sourceTree = "<group>"; };
 		F6C53D7369B63FDD5568DA23 /* Pods-PodTesterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodTesterUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodTesterUITests/Pods-PodTesterUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FC333DD61EA67982009C746A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		FC333DD91EA693A1009C746A /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		FC333DDC1EA6A4A6009C746A /* EnviromentSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EnviromentSettings.plist; sourceTree = "<group>"; };
 		FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		FCCDCC1B1E0B2265005E7095 /* PodTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +148,9 @@
 			children = (
 				FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */,
 				FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */,
+				FC333DDC1EA6A4A6009C746A /* EnviromentSettings.plist */,
+				FC333DD61EA67982009C746A /* SettingsViewController.swift */,
+				FC333DD91EA693A1009C746A /* SettingsViewModel.swift */,
 				FCCDCC221E0B2265005E7095 /* Main.storyboard */,
 				FCCDCC251E0B2265005E7095 /* Assets.xcassets */,
 				FCCDCC271E0B2265005E7095 /* LaunchScreen.storyboard */,
@@ -284,6 +296,7 @@
 			files = (
 				FCCDCC291E0B2265005E7095 /* LaunchScreen.storyboard in Resources */,
 				FCCDCC261E0B2265005E7095 /* Assets.xcassets in Resources */,
+				FC333DDD1EA6A4A6009C746A /* EnviromentSettings.plist in Resources */,
 				FCCDCC241E0B2265005E7095 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +305,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC333DDE1EA6A4A6009C746A /* EnviromentSettings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +463,8 @@
 			files = (
 				FCCDCC1F1E0B2265005E7095 /* AppDelegate.swift in Sources */,
 				FC579C301E0C047900F32F7B /* MainTableViewController.swift in Sources */,
+				FC333DD71EA67982009C746A /* SettingsViewController.swift in Sources */,
+				FC333DDA1EA693A1009C746A /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +473,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCCDCC341E0B2265005E7095 /* PodTesterTests.swift in Sources */,
+				FC333DD81EA67982009C746A /* SettingsViewController.swift in Sources */,
+				FC333DDB1EA693A1009C746A /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

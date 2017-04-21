@@ -44,6 +44,8 @@ class Option: NSObject{
 
 class MainTableViewController: UITableViewController {
     
+    open var prefID : String = ""
+    
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
     
     let prefIdTicketExcluded = "150216849-551cddcc-e221-4289-bb9c-54bfab992e3d"
@@ -80,12 +82,6 @@ class MainTableViewController: UITableViewController {
    
     var dataSource : [Option]!
     
-
-    
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,36 +92,28 @@ class MainTableViewController: UITableViewController {
         
         if dataSource == nil {
             dataSource = opcionesPpal
-        }
+        }   
         
         
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return dataSource.count
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = dataSource[indexPath.row].name
         return cell
     }
-    
     
     override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         
@@ -155,16 +143,14 @@ class MainTableViewController: UITableViewController {
         }else if dataSource[indexPath.row].action == OptionAction.startCreatePayment{
             startCreatePayment()
         }
-        
     }
-
-    
-    
     
     /// F3
     func startCheckout(){
-        let pref = CheckoutPreference(_id: "242624092-e0d12cfe-779b-4b85-b3b5-2243b45334c3")
+        let pref = CheckoutPreference(_id: self.prefID)
         let checkout = MercadoPagoCheckout.init(checkoutPreference: pref, navigationController: self.navigationController!)
+        let decorationPref : DecorationPreference = DecorationPreference(baseColor: UIColor.fromHex("#80f442"), fontName: "", fontLightName: "")
+        MercadoPagoCheckout.setDecorationPreference(decorationPref)
         checkout.start()
     }
     
@@ -272,9 +258,6 @@ class MainTableViewController: UITableViewController {
 //            
 //            
 //        }
-        
-        
-        
         
     }
 }

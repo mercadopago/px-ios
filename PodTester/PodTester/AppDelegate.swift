@@ -14,13 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let publicKey = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        MercadoPagoContext.setPublicKey(publicKey)
-        MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
         
         return true
     }
