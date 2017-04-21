@@ -5,12 +5,12 @@
   Created by AUGUSTO COLLERONE ALFONSO on 2/15/17.
   Copyright © 2017 MercadoPago. All rights reserved.
 */
-
 "Cargando..." = "Cargando...";
 
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Revisa este dato";
 "invalid_card_length" = "Ingresa los %1$s números de la tarjeta";
+"invalid_card_length_general" = "Ingresa todos los números de la tarjeta";
 "security_code" = "Código de seguridad";
 "cod_seg_desc" = "Últimos %1$s números al dorso de la tarjeta";
 "cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
@@ -127,14 +127,31 @@
 
 
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
 " Sin interés"=" Sin interés";//--
 "¿En cuántas cuotas?" = "¿En cuántas cuotas?";
+"No incluye intereses bancarios" = "No incluye intereses bancarios";
+
+//-- Issuers
 "¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+
+//-- Card Type
 "¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
 "Crédito" = "Crédito";
 "Débito" = "Débito";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "¿Cuál es el tipo de persona?";
+//-----EntityTypes
+"Natural"="Natural";
+"Jurídica"="Jurídica";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "¿Cuál es tu banco?";
+
+
 
 //Instructions
 
@@ -182,6 +199,7 @@
 "¿Cómo quiéres pagar?"="¿Cómo quiéres pagar?";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
+"Con dinero en cuenta" = "Con dinero en cuenta";
 
 // PaymentTypes para RyC
 "ryc_title_default"=" en un ";
@@ -198,6 +216,22 @@
 "ryc_complementary_banamex_atm"="cajero automático de ";
 "ryc_complementary_redlink_atm"="cajero automático de ";
 
+//Discount
+"Código de descuento"="Código de descuento";
+"Canejar"="Canejar";
+"Código inválido"="Código inválido";
+"de descuento"="de descuento";
+"Tengo un descuento"="Tengo un descuento";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor sin descuento disponible";
+"Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
+"Importe fuera del alcance"="Importe fuera del alcance";
+"La campaña expiró"="La campaña expiró";
+
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Recuerda desbloquear tu tarjeta antes de confirmar el pago.";
+"desbloquear tu tarjeta"="desbloquear tu tarjeta";
+"Desbloqueo de Tarjeta"="Desbloqueo de Tarjeta";
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";

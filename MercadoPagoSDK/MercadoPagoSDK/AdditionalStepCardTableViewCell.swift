@@ -14,7 +14,7 @@ class AdditionalStepCardTableViewCell: UITableViewCell {
     var containerView: UIView!
     var cardFront : CardFrontView!
     
-    func loadCellView(view: UIView){
+    func loadCellView(view: UIView?){
         
         self.containerView = UIView()
         
@@ -31,10 +31,13 @@ class AdditionalStepCardTableViewCell: UITableViewCell {
         self.containerView.layer.masksToBounds = true
         self.addSubview(self.containerView)
         
-        view.frame = rect
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        if let view = view {
+            view.frame = rect
+            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            
+            containerView.addSubview(view)
+        }
         
-        containerView.addSubview(view)
         self.cell.backgroundColor = UIColor.primaryColor()
         
         

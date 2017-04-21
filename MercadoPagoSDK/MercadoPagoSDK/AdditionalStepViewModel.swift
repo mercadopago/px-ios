@@ -25,11 +25,12 @@ open class AdditionalStepViewModel : NSObject{
     open var dataSource: [Cellable]
     open var defaultTitleCellHeight: CGFloat = 40
     open var defaultRowCellHeight: CGFloat = 80
-    open var callback: ((_ result: NSObject?) -> Void)?
+    open var callback: ((_ result: NSObject) -> Void)!
+    open var maxFontSize: CGFloat { get { return 24 } }
     open var couponCallback: ((DiscountCoupon) -> Void)? = nil
+
+    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
     
-    
-    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], email: String? = nil){
         self.screenName = screenName
         self.screenTitle = screenTitle
         self.amount = amount
@@ -39,11 +40,20 @@ open class AdditionalStepViewModel : NSObject{
         self.cardSectionView = cardSectionView
         self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
+        self.discount = discount
         self.email = email
     }
     
     func showCardSection() -> Bool{
         return cardSectionVisible
+    }
+    
+    func showPayerCostDescription() -> Bool{
+        return MercadoPagoCheckout.showPayerCostDescription()
+    }
+    
+    func showBankInsterestCell() -> Bool {
+        return MercadoPagoCheckout.showBankInterestWarning()
     }
     
     func showDiscountSection() -> Bool{
@@ -70,7 +80,9 @@ open class AdditionalStepViewModel : NSObject{
         if section == Sections.title.rawValue {
             return 1
         } else if section == Sections.card.rawValue {
-            return showCardSection() ? 1 : 0
+            var rows: Int = showCardSection() ? 1 : 0
+            rows = showBankInsterestCell() ? rows + 1 : rows
+            return rows 
         } else if section == Sections.amountDetail.rawValue {
             return showAmountDetailRow() ? 1 : 0
         } else {
@@ -91,7 +103,14 @@ open class AdditionalStepViewModel : NSObject{
         case Sections.title.rawValue:
             return getTitleCellHeight()
         case Sections.card.rawValue:
-            return getCardSectionCellHeight()
+            if self.showCardSection() {
+                if isCardCellFor(indexPath: indexPath) {
+                    return self.getCardCellHeight()
+                } else if isBankInterestCellFor(indexPath: indexPath) {
+                    return self.getBankInterestWarningCellHeight()
+                }
+            }
+            return 0
         case Sections.amountDetail.rawValue:
             return self.getAmountDetailCellHeight(indexPath: indexPath)
         case Sections.body.rawValue:
@@ -109,13 +128,17 @@ open class AdditionalStepViewModel : NSObject{
         return defaultTitleCellHeight
     }
     
-    func getCardSectionCellHeight() -> CGFloat{
+    func getCardCellHeight() -> CGFloat{
         return UIScreen.main.bounds.width*0.50
+    }
+    
+    func getBankInterestWarningCellHeight() -> CGFloat{
+        return BankInsterestTableViewCell.cellHeight
     }
     
     func getAmountDetailCellHeight(indexPath: IndexPath) -> CGFloat{
         if isDiscountCellFor(indexPath: indexPath) {
-            return 84
+            return DiscountBodyCell.HEIGHT
         } else if isTotalCellFor(indexPath: indexPath) {
             return 42
         }
@@ -135,7 +158,16 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func isCardCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.card.rawValue
+        return indexPath.row == CardSectionCells.card.rawValue && indexPath.section == Sections.card.rawValue
+    }
+    
+    func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    public enum CardSectionCells : Int {
+        case card = 0
+        case bankInterestWarning = 1
     }
     
     public enum Sections : Int {
@@ -153,15 +185,6 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
         super.init(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
-        self.amount = amount
-        self.token = token
-        self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
-        self.dataSource = dataSource
     }
     
 }
@@ -188,6 +211,10 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
     
+    override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue
+    }
+    
 }
 
 class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
@@ -196,17 +223,28 @@ class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
     
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
         super.init(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
-        self.amount = amount
-        self.token = token
-        self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
-        self.dataSource = dataSource
     }
     
+}
+
+class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
+    
+    init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ){
+        super.init(screenName: "FINANCIAL_INSTITUTION", screenTitle: "¿Cuál es tu banco?".localized, cardSectionVisible: false, cardSectionView: nil, totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
+    }
+    
+}
+
+class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
+    
+    override var maxFontSize: CGFloat { get { return 21 } }
+    
+    let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
+    
+    init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ){
+        super.init(screenName: "ENTITY_TYPE", screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView:IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
+    }
+
 }
 
 

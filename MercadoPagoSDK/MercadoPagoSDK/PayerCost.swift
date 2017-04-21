@@ -9,6 +9,8 @@
 import Foundation
 
 open class PayerCost : NSObject, Cellable {
+    
+    public var objectType: ObjectTypes = ObjectTypes.payerCost
     open var installments : Int = 0
     open var installmentRate : Double = 0
     open var labels : [String]!
@@ -17,17 +19,6 @@ open class PayerCost : NSObject, Cellable {
     open var recommendedMessage : String!
     open var installmentAmount : Double = 0
     open var totalAmount : Double = 0
-    
-    
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: PayerCostRowTableViewCell = bundle!.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as! PayerCostRowTableViewCell
-        cell.fillCell(payerCost: self)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
     
     
     public init (installments : Int = 0, installmentRate : Double = 0, labels : [String] = [],

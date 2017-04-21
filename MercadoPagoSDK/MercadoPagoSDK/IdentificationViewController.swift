@@ -352,8 +352,8 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         
         if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary{
             if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
-                let customInitialMask = TextMaskFormater(mask: mask,completeEmptySpaces: true,leftToRight: true)
-                let customMask = TextMaskFormater(mask: mask,completeEmptySpaces: false,leftToRight: true)
+                let customInitialMask = TextMaskFormater(mask: mask,completeEmptySpaces: true,leftToRight: false)
+                let customMask = TextMaskFormater(mask: mask,completeEmptySpaces: true,leftToRight: false, completeEmptySpacesWith: " ")
                 return[customInitialMask,customMask]
             }
         }

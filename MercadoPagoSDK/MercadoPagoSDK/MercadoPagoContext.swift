@@ -110,12 +110,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         case _SPANISH
         case _SPANISH_MEXICO
         case _SPANISH_COLOMBIA
-        /*
         case _SPANISH_URUGUAY
         case _SPANISH_PERU
         case _SPANISH_VENEZUELA
-        case _SPANISH_CHILE
-        */
+//        case _SPANISH_CHILE
         case _PORTUGUESE
         case _ENGLISH
         
@@ -123,14 +121,12 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
             switch self {
             case ._SPANISH : return "es"
             case ._SPANISH_MEXICO : return "es-MX"
-                
             case ._SPANISH_COLOMBIA : return "es-CO"
-                /*
             case ._SPANISH_URUGUAY : return "es-UY"
             case ._SPANISH_PERU : return "es-PE"
             case ._SPANISH_VENEZUELA : return "es-VE"
-            case ._SPANISH_CHILE : return "es-CH"
-                 */
+//            case ._SPANISH_CHILE : return "es-CH"
+                
             case ._PORTUGUESE : return "pt"
             case ._ENGLISH : return "en"
             }

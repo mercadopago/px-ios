@@ -13,7 +13,7 @@ class PayerCostRowTableViewCell: UITableViewCell {
     @IBOutlet weak var interestDescription: UILabel!
     @IBOutlet weak var installmentDescription: UILabel!
     
-    func fillCell(payerCost : PayerCost) {
+    func fillCell(payerCost : PayerCost, showDescription: Bool? = true) {
         let currency = MercadoPagoContext.getCurrency()
         if payerCost.installments == 1 {
             self.interestDescription.clearAttributedText()
@@ -22,9 +22,21 @@ class PayerCostRowTableViewCell: UITableViewCell {
             let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSForegroundColorAttributeName : UIColor.px_grayLight()]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.px_grayLight(), fontSize: 15, baselineOffset:3))
             attributedTotal.append(NSAttributedString(string: ")", attributes: [NSForegroundColorAttributeName : UIColor.px_grayLight()]))
-            interestDescription.attributedText = attributedTotal
+            
+            if showDescription == false {
+                interestDescription.attributedText = NSAttributedString(string : "")
+            }else {
+                interestDescription.attributedText = attributedTotal
+            }
+            
         } else {
-            interestDescription.attributedText = NSAttributedString(string : "Sin interés".localized)
+            
+            if showDescription == false {
+                interestDescription.attributedText = NSAttributedString(string : "")
+            }else {
+                interestDescription.attributedText = NSAttributedString(string : "Sin interés".localized)
+            }
+            
         }
         var installmentNumber = String(format:"%i", payerCost.installments)
         installmentNumber = "\(installmentNumber) x "

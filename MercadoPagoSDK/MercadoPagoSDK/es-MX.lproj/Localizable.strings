@@ -114,14 +114,31 @@
 
 
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
 " Sin interés"=" Sin interés";//--
 "¿En cuántas cuotas?" = "¿En cuántas mensualidades?";
+"No incluye intereses bancarios" = "No incluye intereses bancarios";
+
+//-- Issuers
 "¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+
+//-- Card Type
 "¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
 "Crédito" = "Crédito";
 "Débito" = "Débito";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "¿Cuál es el tipo de persona?";
+//-----EntityTypes
+"Natural"="Natural";
+"Jurídica"="Jurídica";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "¿Cuál es tu banco?";
+
+
 
 //Instructions
 
@@ -197,6 +214,11 @@
 "Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
 "Importe fuera del alcance"="Importe fuera del alcance";
 "La campaña expiró"="La campaña expiró";
+
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Recuerda desbloquear tu tarjeta antes de confirmar el pago.";
+"desbloquear tu tarjeta"="desbloquear tu tarjeta";
+"Desbloqueo de Tarjeta"="Desbloqueo de Tarjeta";
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";

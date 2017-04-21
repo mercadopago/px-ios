@@ -14,13 +14,17 @@ public class PaymentData: NSObject {
     public var issuer : Issuer?
     public var payerCost : PayerCost?
     public var token : Token?
+    public var payer = Payer()
+    public var transactionDetails : TransactionDetails?
     public var discount : DiscountCoupon?
     
-    func clear() {
+    func clearCollectedData() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
+        self.payer.clearCollectedData()
+        self.transactionDetails = nil
         // No borrar el descuento
     }
     
@@ -29,6 +33,14 @@ public class PaymentData: NSObject {
         
         
         if paymentMethod == nil {
+            return false
+        }
+        
+        if paymentMethod.isEntityTypeRequired() && payer.entityType == nil {
+            return false
+        }
+        
+        if !Array.isNullOrEmpty(paymentMethod.financialInstitutions) && transactionDetails?.financialInstitution == nil{
             return false
         }
         
@@ -57,7 +69,8 @@ public class PaymentData: NSObject {
     
     func toJSON() -> [String:Any] {
        var obj:[String:Any] = [
-            "payment_method" : self.paymentMethod.toJSON()
+            "payment_method" : self.paymentMethod.toJSON(),
+            "payer" : payer.toJSON()
        ]
         
         if let payerCost = self.payerCost {
@@ -75,6 +88,7 @@ public class PaymentData: NSObject {
         if let discount = self.discount {
             obj["discount"] = discount.toJSON()
         }
+        
         return obj
     }
 

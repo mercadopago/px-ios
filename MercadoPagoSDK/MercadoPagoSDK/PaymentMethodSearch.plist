@@ -377,6 +377,11 @@
 		<key>image_name</key>
 		<string>mediosDebCabal</string>
 	</dict>
+	<key>pse_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosPSE</string>
+	</dict>
 	<key>mercadopagocard</key>
 	<dict>
 		<key>image_name</key>

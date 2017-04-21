@@ -19,11 +19,12 @@ open class TextMaskFormater: NSObject {
     
     
     
-    public init(mask: String!, completeEmptySpaces : Bool = true, leftToRight : Bool = true) {
+    public init(mask: String!, completeEmptySpaces : Bool = true, leftToRight : Bool = true, completeEmptySpacesWith: Character? = "•") {
         super.init()
         self.mask = mask
         self.completeEmptySpaces = completeEmptySpaces
         self.leftToRight = leftToRight
+        self.emptyMaskElement = completeEmptySpacesWith
     }
     open func textMasked(_ text: String!, remasked: Bool = false) -> String!{
         

@@ -11,12 +11,14 @@ import UIKit
 
 open class PaymentMethod : NSObject , Cellable {
     
+    public var objectType: ObjectTypes = ObjectTypes.paymentMethod
     open var _id : String!
 
     open var name : String!
     open var paymentTypeId : String!
     open var settings : [Setting]!
     open var additionalInfoNeeded : [String]!
+    open var financialInstitutions : [FinancialInstitution]!
     open var accreditationTime : Int? // [ms]
     open var status : String!
     open var secureThumbnail : String!
@@ -35,25 +37,25 @@ open class PaymentMethod : NSObject , Cellable {
         self.paymentTypeId = paymentTypeId
     }
     
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: CardTypeTableViewCell = bundle!.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as! CardTypeTableViewCell
-        cell.setPaymentMethod(paymentMethod: self)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
     open func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }
     
     open func isIdentificationRequired() -> Bool {
-        return isAdditionalInfoNeeded("cardholder_identification_number")
+        if isAdditionalInfoNeeded("cardholder_identification_number") || isAdditionalInfoNeeded("off_identification_number"){
+            return true
+        }
+        return false
     }
     open func isIdentificationTypeRequired() -> Bool {
-        return isAdditionalInfoNeeded("cardholder_identification_type")
+        if isAdditionalInfoNeeded("cardholder_identification_type") || isAdditionalInfoNeeded("off_identification_type") {
+            return true
+        }
+        return false
+    }
+    
+    open func isEntityTypeRequired() -> Bool {
+        return isAdditionalInfoNeeded("entity_type")
     }
     
     open func isCard() -> Bool {
@@ -126,11 +128,17 @@ open class PaymentMethod : NSObject , Cellable {
         }
         obj["additional_info_needed"] = String(additionalInfoJson.characters.dropLast())
       
-        var settingsJson = " "
+        var settingsJson = ""
         for setting in self.settings {
             settingsJson.append(setting.toJSONString() + ",")
         }
         obj["settings"] = String(settingsJson.characters.dropLast())
+        
+        var financialInstitutionsJson = ""
+        for financialInstitution in self.financialInstitutions {
+            financialInstitutionsJson.append(financialInstitution.toJSONString() + ",")
+        }
+        obj["financial_institutions"] = String(financialInstitutionsJson.characters.dropLast())
 
         
         return obj
@@ -193,13 +201,24 @@ open class PaymentMethod : NSObject , Cellable {
                 }
             }
         }
+        paymentMethod.additionalInfoNeeded = additionalInfoNeeded
+
         
         if let accreditationTime = json["accreditation_time"] as? Int {
             paymentMethod.accreditationTime = accreditationTime
         }
         
+        var financialInstitutions : [FinancialInstitution] = [FinancialInstitution]()
+        if let financialInstitutionsArray = json["financial_institutions"] as? NSArray {
+            for i in 0..<financialInstitutionsArray.count {
+                if let financialInstitutionsDic = financialInstitutionsArray[i] as? NSDictionary {
+                    financialInstitutions.append(FinancialInstitution.fromJSON(financialInstitutionsDic))
+                }
+            }
+        }
+        paymentMethod.financialInstitutions = financialInstitutions
         
-        paymentMethod.additionalInfoNeeded = additionalInfoNeeded
+        
         return paymentMethod
     }
     
@@ -397,7 +416,8 @@ public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
     obj1.name == obj2.name &&
     obj1.paymentTypeId == obj2.paymentTypeId &&
     obj1.settings == obj2.settings &&
-    obj1.additionalInfoNeeded == obj2.additionalInfoNeeded
+    obj1.additionalInfoNeeded == obj2.additionalInfoNeeded &&
+    obj1.financialInstitutions == obj2.financialInstitutions
     
     return areEqual
 }

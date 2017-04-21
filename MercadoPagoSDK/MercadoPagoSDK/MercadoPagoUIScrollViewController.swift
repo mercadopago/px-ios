@@ -17,6 +17,7 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     let statusBarHeigth: CGFloat = 20
     var titleCellHeight: CGFloat = 70
     var titleCell: TitleCellScrollable?
+    var maxFontSize: CGFloat { get { return 24 } }
     
     func scrollPositionToShowNavBar () -> CGFloat {
         return titleCellHeight - statusBarHeigth
@@ -28,10 +29,10 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
         if let titleCell = titleCell {
             let fontSize = 18 - (scrollView.contentOffset.y + scrollPositionToShowNavBar())/(CGFloat(64) - scrollPositionToShowNavBar())*4
             
-            if fontSize<24 {
+            if fontSize<maxFontSize {
                 titleCell.updateTitleFontSize(toSize: fontSize)
             } else {
-                titleCell.updateTitleFontSize(toSize: 24)
+                titleCell.updateTitleFontSize(toSize: maxFontSize)
             }
             
         }

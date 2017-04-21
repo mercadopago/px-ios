@@ -13,7 +13,13 @@ class IssuerRowTableViewCell: UITableViewCell {
     @IBOutlet weak var issuerImage: UIImageView!
     
     func fillCell(issuer: Issuer, bundle: Bundle){
-        issuerImage.image = UIImage(named: "issuer_\(issuer._id!)", in: bundle, compatibleWith: nil)
+        if let image = UIImage(named: "issuer_\(issuer._id!)", in: bundle, compatibleWith: nil){
+            issuerImage.image = image
+        }else {
+            issuerImage.image = nil
+            textLabel?.text = issuer.name
+            textLabel?.textAlignment = .center
+        }
     }
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -9,7 +9,7 @@
 import UIKit
 
 
-open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate {
+open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 
     static let kNavBarOffset = CGFloat(-64.0);
     static let kDefaultNavBarOffset = CGFloat(0.0);
@@ -120,7 +120,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.extendedLayoutIncludesOpaqueBars = true
         
         self.navBarTextColor = UIColor.px_blueMercadoPago()
-        
+
         if self.shouldShowNavBar(self.checkoutTable) {
             self.showNavBar()
         }
@@ -179,9 +179,12 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         } else if self.viewModel.isTotalCellFor(indexPath: indexPath){
             return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmount(), addSeparatorLine: false)
         
-        } else if self.viewModel.isConfirmAdditionalInfoFor(indexPath: indexPath){
-        return self.getConfirmAddtionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
-        
+        } else if self.viewModel.isPayerCostAdditionalInfoFor(indexPath: indexPath){
+            return self.getConfirmAddtionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
+
+        } else if self.viewModel.isUnlockCardCellFor(indexPath: indexPath){
+            return self.getUnlockCardCell(indexPath: indexPath)
+            
         } else if self.viewModel.isConfirmButtonCellFor(indexPath: indexPath){
             return self.getConfirmPaymentButtonCell(indexPath: indexPath)
             
@@ -287,6 +290,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
+        
+        let purchaseUnlockCard = UINib(nibName: "UnlockCardTableViewCell", bundle: self.bundle)
+        self.checkoutTable.register(purchaseUnlockCard, forCellReuseIdentifier: "unlockCardTableViewCell")
         
         let confirmAddtionalInfoCFT = UINib(nibName: "ConfirmAdditionalInfoTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(confirmAddtionalInfoCFT, forCellReuseIdentifier: "confirmAddtionalInfoCFT")
@@ -403,6 +409,12 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return exitButtonCell
     }
     
+    private func getUnlockCardCell(indexPath : IndexPath) -> UITableViewCell {
+        let unlockCardCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "unlockCardTableViewCell", for: indexPath) as! UnlockCardTableViewCell
+        unlockCardCell.delegate = self
+        return unlockCardCell
+    }
+    
     private func getTermsAndConditionsCell(indexPath : IndexPath) -> UITableViewCell {
         let tycCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "termsAndConditionsViewCell", for: indexPath) as! TermsAndConditionsViewCell
         tycCell.delegate = self
@@ -417,7 +429,14 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
 	
     internal func openTermsAndConditions(_ title: String, url : URL){
-        let webVC = WebViewController(url: url)
+        let webVC = WebViewController(url: url, screenName: "TERMS_AND_CONDITIONS", navigationBarTitle: "Términos y Condiciones".localized)
+        webVC.title = title
+        self.navigationController!.pushViewController(webVC, animated: true)
+        
+    }
+    
+    internal func openUnlockCard(_ title: String, url : URL){
+        let webVC = WebViewController(url: url, screenName: "UNLOCK_CARD", navigationBarTitle: "Desbloqueo de Tarjeta".localized)
         webVC.title = title
         self.navigationController!.pushViewController(webVC, animated: true)
         
@@ -575,9 +594,12 @@ open class CheckoutViewModel: NSObject {
         } else if self.isTotalCellFor(indexPath: indexPath) {
             return PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT
             
-        } else if self.isConfirmAdditionalInfoFor(indexPath: indexPath) {
+        } else if self.isPayerCostAdditionalInfoFor(indexPath: indexPath) {
             return ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT
-        
+            
+        } else if self.isUnlockCardCellFor(indexPath: indexPath) {
+            return UnlockCardTableViewCell.getCellHeight()
+            
         } else if self.isConfirmButtonCellFor(indexPath: indexPath) {
             return ConfirmPaymentTableViewCell.ROW_HEIGHT
             
@@ -668,6 +690,29 @@ open class CheckoutViewModel: NSObject {
         return self.paymentData.payerCost != nil && self.paymentData.payerCost!.getCFTValue() != nil && self.paymentData.payerCost?.installments != 1
     }
     
+    func getUnlockLink() -> URL? {
+        let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        let site = MercadoPagoContext.getSite()
+        guard let issuerID = self.paymentData.issuer?._id else {
+            return nil
+        }
+        let searchString: String = site + "_" + "\(issuerID)"
+        
+        if let link = dictionary?.value(forKey: searchString) as? String{
+            UnlockCardTableViewCell.unlockCardLink = URL(string:link)
+            return URL(string:link)
+        }
+        return nil
+    }
+    
+    func needUnlockCardCell() -> Bool {
+        if getUnlockLink() != nil {
+            return true
+        }
+        return false
+    }
+    
     func isTitleCellFor(indexPath: IndexPath) -> Bool{
         return indexPath.section == 0
     }
@@ -689,17 +734,30 @@ open class CheckoutViewModel: NSObject {
         var numberOfRows = numberOfSummaryRows()
         numberOfRows += shouldShowTotal() ? 1 : 0
         numberOfRows += shouldShowInstallmentSummary() ? 1 : 0
-        numberOfRows += hasPayerCostAddionalInfo() ? 1 : 0
+        numberOfRows += hasConfirmAdditionalInfo() ? 1 : 0
         return indexPath.section == 1 && indexPath.row == numberOfRows
+    }
+    
+    func hasConfirmAdditionalInfo() -> Bool{
+        if hasPayerCostAddionalInfo() || needUnlockCardCell() {
+            return true
+        }
+        
+        return false
     }
     
     func isItemCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 2
     }
     
-    func isConfirmAdditionalInfoFor(indexPath: IndexPath) -> Bool {
+    func isPayerCostAdditionalInfoFor(indexPath: IndexPath) -> Bool {
         let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
         return hasPayerCostAddionalInfo() && indexPath.section == 1 && indexPath.row == numberOfRows
+    }
+    
+    func isUnlockCardCellFor(indexPath: IndexPath) -> Bool {
+        let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
+        return needUnlockCardCell() && indexPath.section == 1 && indexPath.row == numberOfRows
     }
     
     func isAddtionalCustomCellsFor(indexPath: IndexPath) -> Bool {

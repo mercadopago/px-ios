@@ -14,14 +14,12 @@
 "security_code" = "Código de seguridad";
 "cod_seg_desc" = "Últimos %1$s números al dorso de la tarjeta";
 "cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
-"Selecciona la cantidad de cuotas" = "Selecciona la cantidad de mensualidades";
-"Cuotas" = "Mensualidades";
-"Documento" = "Cédula de ciudadanía";
-"cuotas sin interés" = "mensualidades sin interés";
-"NOT_INSTALLMENTS_FOUND" = "No se encontraron mensualidades disponibles para un monto de $";
+"Selecciona la cantidad de cuotas" = "Selecciona la cantidad de cuotas";
+"Cuotas" = "Cuotas";
+"cuotas sin interés" = "cuotas sin interés";
+"NOT_INSTALLMENTS_FOUND" = "No se encontraron cuotas disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
 "No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
-
 
 "visa"="Visa";
 "master"="Mastercard";
@@ -98,31 +96,13 @@
 "cc_rejected_bad_filled_security_code_subtitle_debit_card"="El código de seguridad no es el correcto.";
 "cc_rejected_bad_filled_date_subtitle_debit_card"="La fecha de vencimiento no es la correcta.";
 
-
-//Discount
-"Código de descuento"="Código de descuento";
-"Canejar"="Canejar";
-"Código inválido"="Código inválido";
-"de descuento"="de descuento";
-"Tengo un descuento"="Tengo un descuento";
-"Total: "="Total: ";
-"Vendedor sin descuento disponible"="Vendedor sin descuento disponible";
-"Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
-"Importe fuera del alcance"="Importe fuera del alcance";
-"La campaña expiró"="La campaña expiró";
-
-
-
-
-
-
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Algo salió mal… " = "Algo salió mal… ";
 
 
 
 
-//—--- Formulario de tarjeta
+//---- Formulario de tarjeta
 "Ver promociones"="Ver promociones";
 "Número de tarjeta"="Número de tarjeta";
 "NOMBRE APELLIDO"="NOMBRE APELLIDO";
@@ -139,29 +119,44 @@
 
 "Nombre y apellido"="Nombre y apellido";
 
-//—--Identification
+//---Identification
 "OK"="OK";
 "DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DEL TITULAR DE LA TARJETA";
 "Número"="Número";
 "Tipo"="Tipo";
 
+//ADDITIONAL STEP
 
-
-//Installment Cell
-
-" Sin interés"=" No incluye intereses bancarios";//–
+//-- Payer Cost
+" Sin interés"=" Sin interés";//--
 "¿En cuántas cuotas?" = "¿En cuántas cuotas?";
+"No incluye intereses bancarios" = "No incluye intereses bancarios";
+
+//-- Issuers
 "¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+
+//-- Card Type
 "¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
 "Crédito" = "Crédito";
 "Débito" = "Débito";
 
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "¿Cuál es el tipo de persona?";
+//-----EntityTypes
+"Natural"="Natural";
+"Jurídica"="Jurídica";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "¿Cuál es tu banco?";
+
+
+
 //Instructions
 
-"Continuar"= "Continuar";//–
+"Continuar"= "Continuar";//--
 
 
-//–
+//--
 "¡Felicitaciones!"="¡Felicitaciones!";
 "Se aprobó tu pago."="Se aprobó tu pago.";
 "Estamos procesando el pago"="Estamos procesando el pago";
@@ -169,7 +164,7 @@
 "Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles."="Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.";
 "En unos minutos te enviaremos por e-mail el resultado."="En unos minutos te enviaremos por e-mail el resultado.";
 "No se pudo realizar el pago."="No se pudo realizar el pago.";
-//–
+//--
 
 
 
@@ -195,13 +190,14 @@
 "Fecha"="Fecha";
 
 // RyC
-"Revisa si está todo bien..." = "Revisa si está todo bien…";
+"Revisa si está todo bien..." = "Revisa si está todo bien...";
 "Total a pagar " = "Total a pagar ";
 "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago";
 
 "¿Cómo quiéres pagar?"="¿Cómo quiéres pagar?";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
+"Con dinero en cuenta" = "Con dinero en cuenta";
 
 // PaymentTypes para RyC
 "ryc_title_default"=" en un ";
@@ -217,6 +213,23 @@
 "ryc_complementary_banamex_bank_transfer"="Home Banking de ";
 "ryc_complementary_banamex_atm"="cajero automático de ";
 "ryc_complementary_redlink_atm"="cajero automático de ";
+
+//Discount
+"Código de descuento"="Código de descuento";
+"Canejar"="Canejar";
+"Código inválido"="Código inválido";
+"de descuento"="de descuento";
+"Tengo un descuento"="Tengo un descuento";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor sin descuento disponible";
+"Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
+"Importe fuera del alcance"="Importe fuera del alcance";
+"La campaña expiró"="La campaña expiró";
+
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Recuerda desbloquear tu tarjeta antes de confirmar el pago.";
+"desbloquear tu tarjeta"="desbloquear tu tarjeta";
+"Desbloqueo de Tarjeta"="Desbloqueo de Tarjeta";
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";

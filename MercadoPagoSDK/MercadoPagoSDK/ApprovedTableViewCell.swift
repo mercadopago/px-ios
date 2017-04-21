@@ -108,7 +108,18 @@ class ApprovedTableViewCell: UITableViewCell {
     
     func fillInterestLabel(payerCost: PayerCost) {
         if !payerCost.hasInstallmentsRate() {
-            installmentRate.text = "Sin interés".localized
+            
+            if MercadoPagoCheckout.showBankInterestWarning() {
+                installmentRate.text = "(" + "No incluye intereses bancarios".localized + ")"
+                installmentRate.font = installmentRate.font.withSize(paymentId.font.pointSize)
+                installmentRate.textColor = UIColor.px_grayDark()
+            } else {
+                if MercadoPagoCheckout.showPayerCostDescription() {
+                    installmentRate.text = "Sin interés".localized
+                } else{
+                    installmentRate.text = ""
+                }
+            }
         }
     }
     

@@ -15,17 +15,36 @@
 "cod_seg_desc" = "Últimos %1$s dígitos do verso do cartão de crédito";
 "cod_seg_desc_amex" = "%1$s dígitos da frente do cartão de crédito";
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
+" Sin interés" = " Sem juros";//--
+"¿En cuántas cuotas?" = "Em quantas parcelas?";
+"No incluye intereses bancarios" = "Não inclui juros bancários";
+
+//-- Issuers
+"¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
+
+//-- Card Type
+"¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "Qual é o tipo de pessoa?";
+//-----EntityTypes
+"Natural"="Física";
+"Jurídica"="Jurídica";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "Qual é o seu banco?";
+
+
+
+//Installment Cell
 "Cuotas" = "Parcelas";
 "cuotas sin interés" = "parcelas sem juros";
 "Selecciona la cantidad de cuotas" = "Escolha o número de parcelas";
 "Selecciona un medio de pago..." = "Escolha o meio de pagamento ...";
-" Sin interés" = " Sem juros";//--
 "Sin interés" = "Sem juros";
-"¿En cuántas cuotas?" = "Em quantas parcelas?";
-"¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
-"¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
 
 
 "Medios de pago" = "Meios de pagamento";
@@ -207,6 +226,10 @@
 "Importe fuera del alcance"="Montante fora do alcance";
 "La campaña expiró"="Campanha expirado";
 
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Lembre-se de desbloquear o seu cartão antes de confirmar o pagamento.";
+"desbloquear tu tarjeta"="desbloquear o seu cartão";
+"Desbloqueo de Tarjeta"="Desbloquear Cartão";
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="Com qual cartão?";

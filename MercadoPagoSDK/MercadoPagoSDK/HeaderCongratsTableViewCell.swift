@@ -100,10 +100,10 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         view.backgroundColor = color
         
         icon.image = MercadoPago.getImage("MPSDK_payment_result_off")
-        let currency = instructionsInfo.amountInfo.currency!
+        let currency = MercadoPagoContext.getCurrency()
         let currencySymbol = currency.getCurrencySymbolOrDefault()
-        let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
-        let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
         
         let arr = String(instructionsInfo.amountInfo.amount).characters.split(separator: ".").map(String.init)
         let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)

@@ -54,8 +54,12 @@ open class MercadoPagoCheckout: NSObject {
             self.collectCard()
         case .IDENTIFICATION :
             self.collectIdentification()
+        case .ENTITY_TYPE :
+            self.collectEntityTypes()
         case .CREDIT_DEBIT:
             self.collectCreditDebit()
+        case .GET_FINANCIAL_INSTITUTIONS:
+            self.collectFinancialInstitutions()
         case .GET_ISSUERS:
             self.collectIssuers()
         case .ISSUERS_SCREEN:
@@ -86,6 +90,7 @@ open class MercadoPagoCheckout: NSObject {
         self.presentLoading()
         MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {(checkoutPreference : CheckoutPreference) -> Void in
             self.viewModel.checkoutPreference = checkoutPreference
+            self.viewModel.paymentData.payer = checkoutPreference.getPayer()
             self.dismissLoading()
             self.executeNextStep()
             
@@ -140,15 +145,13 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectPaymentMethods(){
         // Se limpia paymentData antes de ofrecer selección de medio de pago
+        self.viewModel.paymentData.clearCollectedData()
 
-    
-        self.viewModel.paymentData.clear()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
             self.executeNextStep()
         })
-        
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
       
     }
@@ -193,6 +196,59 @@ open class MercadoPagoCheckout: NSObject {
         self.pushViewController(viewController : crediDebitStep, animated: true)
     }
     
+    func collectFinancialInstitutions(){
+        if let financialInstitutions = self.viewModel.paymentData.paymentMethod.financialInstitutions{
+            self.viewModel.financialInstitutions = financialInstitutions
+            
+            if financialInstitutions.count == 1 {
+                self.viewModel.updateCheckoutModel(financialInstitution: financialInstitutions[0])
+                self.executeNextStep()
+            } else {
+                let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { (financialInstitution) in
+                    self.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution))
+                    self.executeNextStep()
+                })
+                
+                financialInstitutionStep.callbackCancel = {[weak self] in
+                    guard let object = self else {
+                        return
+                    }
+                    object.viewModel.financialInstitutions = nil
+                    object.viewModel.paymentData.transactionDetails?.financialInstitution = nil
+                }
+                
+                self.navigationController.pushViewController(financialInstitutionStep, animated: true)
+            }
+        }
+    }
+    
+    func collectEntityTypes(){
+        let entityTypes = viewModel.getEntityTypes()
+        
+        self.viewModel.entityTypes = entityTypes
+        
+        if entityTypes.count == 1 {
+            self.viewModel.updateCheckoutModel(entityType: entityTypes[0])
+            self.executeNextStep()
+        }
+        
+        let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { (entityType) in
+            self.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType))
+            self.executeNextStep()
+        })
+        
+        entityTypeStep.callbackCancel = {[weak self] in
+            guard let object = self else {
+                return
+            }
+            object.viewModel.entityTypes = nil
+            object.viewModel.paymentData.payer.entityType = nil
+        }
+        
+        self.navigationController.pushViewController(entityTypeStep, animated: true)
+        
+    }
+    
     func collectIssuers(){
         self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
@@ -218,7 +274,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func startIssuersScreen() {
         let issuerStep = AdditionalStepViewController(viewModel: self.viewModel.issuerViewModel(), callback: { (issuer) in
-            self.viewModel.updateCheckoutModel(issuer: issuer as! Issuer?)
+            self.viewModel.updateCheckoutModel(issuer: (issuer as! Issuer))
             self.executeNextStep()
         })
         issuerStep.callbackCancel = {
@@ -308,9 +364,10 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.payerCosts = installments[0].payerCosts
             
             let defaultPayerCost = self.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts)
-            if defaultPayerCost != nil {
-                self.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
+            if let defaultPC = defaultPayerCost {
+                self.viewModel.updateCheckoutModel(payerCost: defaultPC)
             }
+            
             if let updateCallback = updateCallback {
                 updateCallback()
                 self.dismissLoading()
@@ -319,7 +376,6 @@ open class MercadoPagoCheckout: NSObject {
                 self.dismissLoading()
                 self.executeNextStep()
             }
-
             
         }) { (error) -> Void in
             self.dismissLoading()
@@ -332,11 +388,10 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func startPayerCostScreen() {
-        
         let payerCostViewModel = self.viewModel.payerCostViewModel()
         
         let payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { (payerCost) in
-            self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost?)
+            self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost)
             self.executeNextStep()
         })
         payerCostStep.callbackCancel = {
@@ -429,7 +484,7 @@ open class MercadoPagoCheckout: NSObject {
         
         var paymentBody : [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
             paymentBody = mpPayment.toJSON()
         } else {
             paymentBody = self.viewModel.paymentData.toJSON()
@@ -624,6 +679,35 @@ extension MercadoPagoCheckout {
     
     open static func setCallback(callback : @escaping (Void) -> Void) {
         MercadoPagoCheckoutViewModel.callback = callback
+    }
+    
+    open class func showPayerCostDescription() -> Bool{
+        
+        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        let site = MercadoPagoContext.getSite()
+        
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let payerCostDescription = siteDic.value(forKey: "payerCostDescription") as? Bool {
+                return payerCostDescription
+            }
+        }
+        
+        return true
+    }
+    
+    open class func showBankInterestWarning() -> Bool{
+        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        let site = MercadoPagoContext.getSite()
+        
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let bankInsterestCell = siteDic.value(forKey: "bankInsterestCell") as? Bool {
+                return bankInsterestCell
+            }
+        }
+        
+        return false
     }
 
 }
