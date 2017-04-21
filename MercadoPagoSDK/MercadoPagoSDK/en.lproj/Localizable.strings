@@ -212,3 +212,7 @@
 "Se agotó la cantidad de usos"="Ran out of quantity uses of discount";
 "Importe fuera del alcance"="Amount out of reach";
 "La campaña expiró"="/Campaign expired";
+
+
+//Administrador de tarjetas
+"¿Con qué tarjeta?"="Which card?";

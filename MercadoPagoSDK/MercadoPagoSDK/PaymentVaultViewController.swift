@@ -117,6 +117,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
 
        self.collectionSearch.backgroundColor = UIColor.px_white()
+
     }
     
     func updateCoupon(_ notification: Notification) {

@@ -23,6 +23,10 @@ extension UILabel{
         
         return label.frame.height
     }
+    
+    open func clearAttributedText() {
+        self.attributedText = NSAttributedString(string : "")
+    }
 }
 
 extension NSAttributedString {

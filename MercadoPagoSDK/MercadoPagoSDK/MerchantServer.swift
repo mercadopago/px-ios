@@ -35,6 +35,10 @@ open class MerchantServer : NSObject {
                     }
                 }
             }, failure: failure)
+        }else{
+            if failure != nil {
+                failure!(NSError(domain: "mercadopago.sdk.merchantServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+            }
         }
     }
 
