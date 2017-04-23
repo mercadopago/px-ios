@@ -83,7 +83,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.displayStatusBar()
 
-        
+        checkoutTable.setContentOffset(CGPoint(x:0, y: -(statusBarHeigth + navBarHeigth))  , animated: false)
+     
     }
 
     
