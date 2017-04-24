@@ -45,6 +45,7 @@ class Option: NSObject{
 class MainTableViewController: UITableViewController {
     
     open var prefID : String = ""
+    open var color : UIColor!
     
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
     
@@ -149,7 +150,7 @@ class MainTableViewController: UITableViewController {
     func startCheckout(){
         let pref = CheckoutPreference(_id: self.prefID)
         let checkout = MercadoPagoCheckout.init(checkoutPreference: pref, navigationController: self.navigationController!)
-        let decorationPref : DecorationPreference = DecorationPreference(baseColor: UIColor.fromHex("#80f442"), fontName: "", fontLightName: "")
+        let decorationPref : DecorationPreference = DecorationPreference(baseColor: self.color, fontName: "", fontLightName: "")
         MercadoPagoCheckout.setDecorationPreference(decorationPref)
         checkout.start()
     }

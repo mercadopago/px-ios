@@ -23,6 +23,7 @@
 		FCCDCC291E0B2265005E7095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCCDCC271E0B2265005E7095 /* LaunchScreen.storyboard */; };
 		FCCDCC341E0B2265005E7095 /* PodTesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC331E0B2265005E7095 /* PodTesterTests.swift */; };
 		FCCDCC3F1E0B2265005E7095 /* PodTesterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC3E1E0B2265005E7095 /* PodTesterUITests.swift */; };
+		FCF85BA31EAE402E00D45589 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF85BA21EAE402E00D45589 /* Site.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		FCCDCC3A1E0B2265005E7095 /* PodTesterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PodTesterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCDCC3E1E0B2265005E7095 /* PodTesterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodTesterUITests.swift; sourceTree = "<group>"; };
 		FCCDCC401E0B2265005E7095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FCF85BA21EAE402E00D45589 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */,
 				FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */,
 				FC333DDC1EA6A4A6009C746A /* EnviromentSettings.plist */,
+				FCF85BA21EAE402E00D45589 /* Site.swift */,
 				FC333DD61EA67982009C746A /* SettingsViewController.swift */,
 				FC333DD91EA693A1009C746A /* SettingsViewModel.swift */,
 				FCCDCC221E0B2265005E7095 /* Main.storyboard */,
@@ -462,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCCDCC1F1E0B2265005E7095 /* AppDelegate.swift in Sources */,
+				FCF85BA31EAE402E00D45589 /* Site.swift in Sources */,
 				FC579C301E0C047900F32F7B /* MainTableViewController.swift in Sources */,
 				FC333DD71EA67982009C746A /* SettingsViewController.swift in Sources */,
 				FC333DDA1EA693A1009C746A /* SettingsViewModel.swift in Sources */,

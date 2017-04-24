@@ -4,66 +4,100 @@
 <dict>
 	<key>MLA</key>
 	<dict>
+		<key>name</key>
+		<string>Argentina</string>
 		<key>pref_ID</key>
 		<string>243966003-d64b4270-10c8-43b2-9600-3009cdfe4fa9</string>
+		<key>pref_ID_excl_online</key>
+		<string></string>
+		<key>pref_ID_excl_offline</key>
+		<string></string>
+		<key>pref_ID_excl_all</key>
+		<string></string>
 		<key>pk_sandbox</key>
 		<string>TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7</string>
 		<key>pk_produ</key>
 		<string>APP_USR-0d933ff3-b803-4999-a211-8b3c7d5c7c03</string>
+		<key>default_color</key>
+		<string>FF00FF</string>
 	</dict>
 	<key>MLU</key>
 	<dict>
+		<key>name</key>
+		<string>Uruguay</string>
 		<key>pref_ID</key>
 		<string>242696049-e56271fa-7c62-4896-ac4f-47852993c196</string>
 		<key>pk_sandbox</key>
 		<string>TEST-6d6abcc5-27ed-4e68-942f-22539893c073</string>
 		<key>pk_produ</key>
 		<string>APP_USR-cbb6d5cf-a8c4-4354-85ac-476b745e30b6</string>
+		<key>default_color</key>
+		<string>7B68EE</string>
 	</dict>
 	<key>MLB</key>
 	<dict>
+		<key>name</key>
+		<string>Brasil</string>
 		<key>pref_ID</key>
 		<string>245099733-3a38ed92-f013-4bfd-861f-9a467f74204f</string>
 		<key>pk_sandbox</key>
 		<string>TEST-77d0c0c0-0594-4951-ac78-16c03461fcbc</string>
 		<key>pk_produ</key>
 		<string>APP_USR-f3f035a2-d343-4a6f-bd3b-fc3c3cb72416</string>
+		<key>default_color</key>
+		<string>3D4064</string>
 	</dict>
 	<key>MPE</key>
 	<dict>
+		<key>name</key>
+		<string>Perú</string>
 		<key>pref_ID</key>
 		<string>242617753-07562444-aa61-48b2-b33c-85d7dd6b812c</string>
 		<key>pk_sandbox</key>
 		<string>TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c</string>
 		<key>pk_produ</key>
 		<string>APP_USR-0aa4e281-002e-4666-a1cd-95df12595014</string>
+		<key>default_color</key>
+		<string>3D4064</string>
 	</dict>
 	<key>MLV</key>
 	<dict>
+		<key>name</key>
+		<string>Venezuela</string>
 		<key>pref_ID</key>
 		<string>242626852-79b4f503-1cf4-44ec-8f82-b5cd3cca8891</string>
 		<key>pk_sandbox</key>
 		<string>TEST-b3d856f6-375e-4f8c-9573-ad28ab8fac95</string>
 		<key>pk_produ</key>
 		<string>APP_USR-e2c01ce5-b5c7-445d-898c-e954f22ca11a</string>
+		<key>default_color</key>
+		<string>3D4064</string>
 	</dict>
 	<key>MCO</key>
 	<dict>
+		<key>name</key>
+		<string>Colombia</string>
 		<key>pref_ID</key>
 		<string>242624092-e0d12cfe-779b-4b85-b3b5-2243b45334c3</string>
 		<key>pk_sandbox</key>
 		<string>TEST-b17d8f8e-5039-4d58-a99f-7a66872741ca</string>
 		<key>pk_produ</key>
 		<string>APP_USR-169a025c-f8ba-4008-b898-d37568dad17f</string>
+		<key>default_color</key>
+		<string>3D4064</string>
 	</dict>
 	<key>MLC</key>
 	<dict>
+		<key>name</key>
+		<string>Chile</string>
 		<key>pref_ID</key>
 		<string>242625384-79396601-9c02-41fb-a157-0dc8b2256b21</string>
 		<key>pk_sandbox</key>
 		<string>TEST-0baa73db-70a3-4e8a-8f1b-f8f922cf3ae3</string>
 		<key>pk_produ</key>
 		<string>APP_USR-d555ec01-4641-4e12-9b05-dc950aa2d99a</string>
+		<key>default_color</key>
+		<string>3D4064</string>
 	</dict>
 </dict>
 </plist>
