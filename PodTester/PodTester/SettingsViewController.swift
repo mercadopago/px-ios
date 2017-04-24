@@ -42,23 +42,11 @@ open class SettingsViewController: UIViewController, UITableViewDataSource, UITa
     @IBAction func continueAction(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let NewView = storyboard.instantiateViewController(withIdentifier: "MainTableViewController") as! MainTableViewController
-        NewView.prefID = self.viewModel.getPrefID(site: MercadoPagoContext.getSite())
-        NewView.color = self.viewModel.getColor(site: MercadoPagoContext.getSite())
+        self.viewModel.update()
+        NewView.prefID = self.viewModel.selectedSite.getPrefID()
+        NewView.color = self.viewModel.selectedSite.getColor()
         NewView.title = "Options"
         
         self.navigationController?.pushViewController(NewView, animated: true)
     }
-    
-    
-//    func setEnviroment(){
-//        let sites = self.viewModel.getSites()
-//        let site = self.viewModel.getSitefromID(siteID: sites[siteSelector.selectedSegmentIndex].ID)
-//        if enviromentSelector.selectedSegmentIndex == 0 {
-//            MercadoPagoContext.setPublicKey((site?.pk_sandbox)!)
-//            print("Enviroment Changed to Sandbox")
-//        } else {
-//            MercadoPagoContext.setPublicKey((site?.pk_produ)!)
-//            print("Enviroment Changed to Produ")
-//        }
-//    }
 }

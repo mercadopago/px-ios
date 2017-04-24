@@ -15,8 +15,12 @@ open class SettingsViewModel: NSObject {
     open var sites: [Site] = []
     open let enviroments: [String] = [Enviroments.sandbox.rawValue, Enviroments.production.rawValue]
     
+    var selectedSite : Site!
+    var selectedEnviroment : Enviroments!
     var includeOnlinePMS : Bool = true
     var includeOfflinePMS : Bool = true
+    
+    let marginSpace: CGFloat = 10
    
     //Number of Row in the Settings TableView
     open func getNumberOfRowsInSection(section: Int) -> Int{
@@ -37,7 +41,6 @@ open class SettingsViewModel: NSObject {
             return getColorPickerCell()
         default:
             let defaultCell = UITableViewCell()
-            defaultCell.selectionStyle = .none
             return defaultCell
         }
     }
@@ -51,18 +54,23 @@ open class SettingsViewModel: NSObject {
         }
     }
     
+    
+    
+    //--Selector Cell Creator
     func getSelectorCellFor(selector: Selectors) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.frame.size.height = 40
         cell.selectionStyle = .none
         let cellFrame = cell.bounds
         
+        let selectorFrame = CGRect(x: cellFrame.minX + marginSpace/2, y: cellFrame.minY + marginSpace/2, width: cellFrame.width - marginSpace, height: cellFrame.height - marginSpace)
+        
         switch selector {
         case Selectors.site:
             let siteSelector = UISegmentedControl(items: self.getSiteIDs())
             siteSelector.selectedSegmentIndex = 0
             siteSelector.tintColor = UIColor.black
-            siteSelector.frame = CGRect(x: cellFrame.minX + 4, y: cellFrame.minY + 4, width: cellFrame.width - 8, height: cellFrame.height-8)
+            siteSelector.frame = selectorFrame
             setSite(sender: siteSelector)
             siteSelector.addTarget(self, action: #selector(setSite(sender: )), for: .valueChanged)
             cell.addSubview(siteSelector)
@@ -70,7 +78,7 @@ open class SettingsViewModel: NSObject {
             let enviromentSelector = UISegmentedControl(items: self.enviroments)
             enviromentSelector.selectedSegmentIndex = 0
             enviromentSelector.tintColor = UIColor.black
-            enviromentSelector.frame = CGRect(x: cellFrame.minX + 4, y: cellFrame.minY + 4, width: cellFrame.width - 8, height: cellFrame.height-8)
+            enviromentSelector.frame = selectorFrame
             setEnviroment(sender: enviromentSelector)
             enviromentSelector.addTarget(self, action: #selector(setEnviroment(sender: )), for: .valueChanged)
             cell.addSubview(enviromentSelector)
@@ -79,77 +87,113 @@ open class SettingsViewModel: NSObject {
         return cell
 
     }
+    //Selector Cell Creator--
+    
     
     
     //--Site Selector Logic
     func setSite(sender: UISegmentedControl) {
         let siteID = self.sites[sender.selectedSegmentIndex].ID
-        MercadoPagoContext.setSiteID(siteID)
+        self.selectedSite = getSitefromID(siteID: siteID)
     }
     //Site Selector Logic--
+    
+    
     
     //--Enviroment Selector Logic
     func setEnviroment(sender: UISegmentedControl) {
         let title = sender.titleForSegment(at: sender.selectedSegmentIndex)!
-        let siteID = self.sites[sender.selectedSegmentIndex].ID
 
         switch title {
         case Enviroments.production.rawValue:
-            let pk = self.getPublicKey(site: siteID, sandbox: false)
-            MercadoPagoContext.setPublicKey(pk)
+            self.selectedEnviroment = Enviroments.production
         case Enviroments.sandbox.rawValue:
-            let pk = self.getPublicKey(site: siteID, sandbox: true)
-            MercadoPagoContext.setPublicKey(pk)
+            self.selectedEnviroment = Enviroments.sandbox
         default:
-            let pk = self.getPublicKey(site: siteID, sandbox: true)
-            MercadoPagoContext.setPublicKey(pk)
+            self.selectedEnviroment = Enviroments.sandbox
         }
     }
     //Enviroment Selector Logic--
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //--Payment Methods Exclusion Logic
     func getSwitchCellFor(forSwitch: Switches) -> UITableViewCell {
-        
         let cell = UITableViewCell()
         cell.frame.size.height = 40
+        cell.selectionStyle = .none
         let cellFrame = cell.bounds
-        let view = UIView()
-        view.frame = CGRect(x: cellFrame.minX, y: cellFrame.minY, width: cellFrame.width, height: cellFrame.height)
-        let viewFrame = view.bounds
+        
         let cellSwitch = UISwitch()
         cellSwitch.setOn(true, animated: false)
-        cellSwitch.frame = CGRect(x: viewFrame.maxX - cellSwitch.frame.width - 10, y: viewFrame.midY - (cellSwitch.frame.height/2), width: cellSwitch.frame.width, height: cellSwitch.frame.height)
-        view.addSubview(cellSwitch)
+        cellSwitch.frame = CGRect(x: cellFrame.maxX - cellSwitch.frame.width - marginSpace, y: cellFrame.midY - (cellSwitch.frame.height/2), width: cellSwitch.frame.width, height: cellSwitch.frame.height)
+        cell.addSubview(cellSwitch)
         
         cell.textLabel?.textColor = UIColor.black
         cell.textLabel?.text = forSwitch.rawValue
-
-
-        cell.selectionStyle = .none
-        cell.addSubview(view)
+        
+        switch forSwitch {
+        case Switches.OnlinePaymentMethods:
+            cellSwitch.addTarget(self, action: #selector(setOnlinePaymentMethods(sender: )), for: .valueChanged)
+            
+        case Switches.OfflinePaymentMethods:
+            cellSwitch.addTarget(self, action: #selector(setOfflinePaymentMethods(sender: )), for: .valueChanged)
+        }
+        
         return cell
 
     }
+    
+    func setOnlinePaymentMethods(sender: UISwitch) {
+        if sender.isOn {
+            includeOnlinePMS = true
+        } else {
+            if includeOfflinePMS == true {
+                includeOnlinePMS = false
+            } else {
+                includeOnlinePMS = true
+                sender.setOn(true, animated: true)
+            }
+        }
+    }
+    
+    func setOfflinePaymentMethods(sender: UISwitch) {
+        if sender.isOn {
+            includeOfflinePMS = true
+        } else {
+            if includeOnlinePMS == true {
+                includeOfflinePMS = false
+            } else {
+                includeOfflinePMS = true
+                sender.setOn(true, animated: true)
+            }
+        }
+    }
+    //Payment Methods Exclusion Logic--
+    
+    
+    
+    open func update(){
+        
+        MercadoPagoContext.setSiteID(selectedSite.ID)
+        
+        switch self.selectedEnviroment! {
+        case Enviroments.production:
+            MercadoPagoContext.setPublicKey(self.selectedSite.getProduPK())
+            print("PK = \(self.selectedSite.getProduPK())")
+        case Enviroments.sandbox:
+            MercadoPagoContext.setPublicKey(self.selectedSite.getSandboxPK())
+            print("PK = \(self.selectedSite.getSandboxPK())")
+        }
+        
+        selectedSite.pref_ID = getPrefID(site: selectedSite.ID)
+    }
+    
+    
+    
+    
+    
+    
     
 
     
@@ -162,9 +206,9 @@ open class SettingsViewModel: NSObject {
         
         
         let view = UIView()
-        view.frame = CGRect(x: cellFrame.minX + 4, y: cellFrame.minY + 44, width: cellFrame.width - 8, height: cellFrame.height - 48)
+        view.frame = CGRect(x: cellFrame.minX + marginSpace/2, y: cellFrame.minY + marginSpace/2, width: cellFrame.height - marginSpace, height: cellFrame.height - marginSpace)
         
-        view.backgroundColor = self.getColor(site: "MLU")
+        view.backgroundColor = self.selectedSite.getColor()
         
         cell.selectionStyle = .none
         cell.addSubview(view)
@@ -282,31 +326,7 @@ open class SettingsViewModel: NSObject {
         
         return default_MLA_color
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     public enum Cells : Int {
         case siteSelector = 0
         case enviromentSelector = 1
