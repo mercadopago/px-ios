@@ -92,11 +92,11 @@
 		<key>name</key>
 		<string>Colombia</string>
 		<key>pref_ID</key>
-		<string>242624092-e0d12cfe-779b-4b85-b3b5-2243b45334c3</string>
+		<string>242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d</string>
 		<key>pref_ID_excl_online</key>
-		<string></string>
+		<string>242624092-73a1b4b2-08c2-470c-b156-23455215ea6f</string>
 		<key>pref_ID_excl_offline</key>
-		<string></string>
+		<string>242624092-7043ebc3-d6d3-43bd-971f-359dea007fb7</string>
 		<key>pk_sandbox</key>
 		<string>TEST-b17d8f8e-5039-4d58-a99f-7a66872741ca</string>
 		<key>pk_produ</key>
