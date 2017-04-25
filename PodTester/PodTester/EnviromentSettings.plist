@@ -109,11 +109,11 @@
 		<key>name</key>
 		<string>Chile</string>
 		<key>pref_ID</key>
-		<string>242625384-79396601-9c02-41fb-a157-0dc8b2256b21</string>
+		<string>242625384-d7bbdf3b-891a-48f5-bf4d-ca67fbeb05a4</string>
 		<key>pref_ID_excl_online</key>
-		<string></string>
+		<string>242625384-bd05d540-86f4-4d3a-9d88-0aadf195564f</string>
 		<key>pref_ID_excl_offline</key>
-		<string></string>
+		<string>242625384-45710e23-0db2-4890-ada1-abcd687aca5c</string>
 		<key>pk_sandbox</key>
 		<string>TEST-0baa73db-70a3-4e8a-8f1b-f8f922cf3ae3</string>
 		<key>pk_produ</key>
