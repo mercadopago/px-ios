@@ -17,6 +17,7 @@ class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
         // Initialization code
         button.layer.cornerRadius = 3
         self.button.titleLabel?.font = Utils.getFont(size: 16)
+        self.selectionStyle = .none
     }
     
     open func fillCell(paymentResult: PaymentResult){

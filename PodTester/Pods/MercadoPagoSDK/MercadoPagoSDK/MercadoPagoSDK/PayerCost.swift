@@ -110,7 +110,7 @@ open class PayerCost : NSObject, Cellable {
         return nil
     }
     
-    public func getTEAValeu() -> String? {
+    public func getTEAValue() -> String? {
         
         for label in labels {
             let values = label.components(separatedBy: "|")

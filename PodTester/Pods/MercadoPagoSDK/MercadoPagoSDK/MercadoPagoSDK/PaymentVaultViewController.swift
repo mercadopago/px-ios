@@ -121,7 +121,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         
         self.hideNavBar()
         if let button = self.navigationItem.leftBarButtonItem{
-               self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
+               self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         }
      
         self.navigationController!.navigationBar.shadowImage = nil
@@ -140,8 +140,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.backgroundColor?.withAlphaComponent(0)
             temporalView.isUserInteractionEnabled = false
             self.view.addSubview(temporalView)
-            self.loadingInstance = LoadingOverlay.shared.showOverlay(temporalView, backgroundColor: UIColor.primaryColor())
-            self.view.bringSubview(toFront: self.loadingInstance!)
         }
          self.hideLoading()
         
@@ -149,12 +147,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     open override func willMove(toParentViewController parent: UIViewController?) {
         super.willMove(toParentViewController: parent)
-        self.hideLoading()
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.hideLoading()
     }
 
 
@@ -172,7 +168,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
     
     fileprivate func getCustomerCards(){
-       
         if self.viewModel!.shouldGetCustomerCardsInfo() {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.viewModel.customerId = customer._id
@@ -209,16 +204,14 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.loadPaymentMethodSearch()
                 
             }, failure: { (error) -> Void in
-                self.hideLoading()
                 self.requestFailure(error, callback: {
                     self.navigationController!.dismiss(animated: true, completion: {})
                 }, callbackCancel: {
-                    self.invokeCallbackCancel()
+                    self.invokeCallbackCancelShowingNavBar()
                 })
             })
             
         } else {
-            self.hideLoading()
             self.collectionSearch.delegate = self
             self.collectionSearch.dataSource = self
             self.collectionSearch.reloadData()
@@ -353,7 +346,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }else if isCouponSection(section: indexPath.section){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CouponCell",for: indexPath)
             cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount, topMargin: 15)
             discountBody.tag = 1
             cell.contentView.addSubview(discountBody)
             return cell
@@ -453,7 +446,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.hideLoading()
     }
     
  }

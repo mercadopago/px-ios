@@ -9,11 +9,11 @@
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green: ((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue: ((float)(rgbValue & 0xFF)) / 255.0 alpha: 1.0]
 
 #import "MPSDKLoadingView.h"
-#import "MLSpinner.h"
+#import "MLPXSpinner.h"
 
 @interface MPSDKLoadingView ()
 
-@property (nonatomic, strong) MLSpinner *spinner;
+@property (nonatomic, strong) MLPXSpinner *spinner;
 
 @end
 
@@ -58,10 +58,10 @@
 		self.tag = kLoadingViewTag;
 
 
-        MLSpinnerConfig *config = [[MLSpinnerConfig alloc] initWithSize:MLSpinnerSizeBig primaryColor:loadingColor? loadingColor : UIColorFromRGB(0x009EE3) secondaryColor:loadingColor? loadingColor : UIColorFromRGB(0x009EE3)];
+        MLPXSpinnerConfig *config = [[MLPXSpinnerConfig alloc] initWithSize:MLPXSpinnerSizeBig primaryColor:loadingColor? loadingColor : UIColorFromRGB(0x009EE3) secondaryColor:loadingColor? loadingColor : UIColorFromRGB(0x009EE3)];
 
 
-		self.spinner = [[MLSpinner alloc] initWithConfig:config text:text];
+		self.spinner = [[MLPXSpinner alloc] initWithConfig:config text:text];
 
 		[self addSubview:self.spinner];
 		[self.spinner setTranslatesAutoresizingMaskIntoConstraints:NO];

@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,11 +16,11 @@
             <rect key="frame" x="0.0" y="0.0" width="358" height="354"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="358" height="354"/>
+                <rect key="frame" x="0.0" y="0.0" width="358" height="353.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="¿Qué puedo hacer?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBX-U3-5lx">
-                        <rect key="frame" x="83" y="48" width="192" height="108.5"/>
+                        <rect key="frame" x="28" y="48" width="302" height="108.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -37,7 +38,9 @@ O si prefieres, puedes elegir otro medio de pago.</string>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="G6G-nr-CA4" secondAttribute="trailing" constant="20" id="3gU-GE-Gxd"/>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="B9X-gg-6qB"/>
+                    <constraint firstItem="DBX-U3-5lx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="FJJ-EY-gtJ"/>
                     <constraint firstItem="DBX-U3-5lx" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="KbH-eO-SjD"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="DBX-U3-5lx" secondAttribute="trailing" constant="20" id="Pxa-EL-GJq"/>
                     <constraint firstAttribute="bottomMargin" secondItem="G6G-nr-CA4" secondAttribute="bottom" constant="40" id="SyC-ka-X2P"/>
                     <constraint firstItem="DBX-U3-5lx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="40" id="Zui-s3-P0s"/>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="dMs-Rj-y9r"/>

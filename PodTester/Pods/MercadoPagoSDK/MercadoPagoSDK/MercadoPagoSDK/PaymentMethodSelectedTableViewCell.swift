@@ -29,13 +29,11 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     @IBOutlet weak var totalAmountLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func fillCell(_ paymentMethod : PaymentMethod, amount : Double, payerCost : PayerCost? = nil, lastFourDigits : String? = "") {
@@ -49,11 +47,14 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         if let payerCost = payerCost {
             self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments),currency:currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
             let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
-            let attributedAmountFinal = NSMutableAttributedString(string : "(")
-            attributedAmountFinal.append(attributedAmount)
-            attributedAmountFinal.append(NSAttributedString(string : ")"))
-            self.totalAmountLabel.attributedText = attributedAmountFinal
-            self.totalAmountLabel.attributedText = attributedAmountFinal
+            
+            if payerCost.installments > 1 {
+                let attributedAmountFinal = NSMutableAttributedString(string : "(")
+                attributedAmountFinal.append(attributedAmount)
+                attributedAmountFinal.append(NSAttributedString(string : ")"))
+                self.totalAmountLabel.attributedText = attributedAmountFinal
+                self.totalAmountLabel.attributedText = attributedAmountFinal
+            }
         } else {
              self.paymentDescription.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: UIColor.black, fontSize: 24, centsFontSize: 12, baselineOffset: 9)
             self.totalAmountLabel.text = ""
@@ -80,16 +81,13 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
         TEALabel.textColor = UIColor.px_grayDark()
         
-        if let CFTValue = payerCost?.getCFTValue() {
-                CFT.text = "CFT " + CFTValue
-        } else {
+        if needsDisplayAdditionalCost(payerCost: payerCost) {
+            CFT.text = "CFT " + (payerCost?.getCFTValue())!
+            TEALabel.text = "TEA " + (payerCost?.getTEAValue())!
+        }else{
             CFT.text = ""
-            self.changePaymentMethodCFTConstraint.constant = 10
-        }
-        if let TEAValue = payerCost?.getTEAValeu() {
-            TEALabel.text = "TEA " + TEAValue
-        } else {
             TEALabel.text = ""
+            self.changePaymentMethodCFTConstraint.constant = 10
         }
         
         let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
@@ -97,6 +95,30 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
     }
     
+    func needsDisplayAdditionalCost(payerCost : PayerCost? = nil) -> Bool {
+        return needsDisplayCFT(payerCost : payerCost) && needsDisplayTEA(payerCost : payerCost)
+    }
+    func needsDisplayCFT(payerCost : PayerCost? = nil) -> Bool{
+        guard let payerCost = payerCost else {
+            return false
+        }
+        if payerCost.getCFTValue() != nil && payerCost.installments != 1 {
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func needsDisplayTEA(payerCost : PayerCost? = nil) -> Bool{
+        guard let payerCost = payerCost else {
+            return false
+        }
+        if payerCost.getTEAValue() != nil && payerCost.installments != 1 {
+            return true
+        }else{
+            return false
+        }
+    }
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
 		
 		var cellHeight = DEFAULT_ROW_HEIGHT

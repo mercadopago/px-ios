@@ -119,8 +119,12 @@ extension UIColor {
         return MercadoPagoCheckoutViewModel.decorationPreference.getFontColor()
     }
     
-    class public func redCongrats() -> UIColor {
-        return UIColorFromRGB(0xFF5959)
+    class public func px_redCongrats() -> UIColor {
+        return UIColorFromRGB(0xFF6E6E)
+    }
+    
+    class public func px_greenCongrats() -> UIColor {
+        return UIColorFromRGB(0x0DB478)
     }
     
     class public func grayStatusBar() -> UIColor {
@@ -137,7 +141,6 @@ extension UIColor {
     class public func primaryColor() -> UIColor {
         return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
     }
-
    
     class public func mpGreenishTeal() -> UIColor
     {

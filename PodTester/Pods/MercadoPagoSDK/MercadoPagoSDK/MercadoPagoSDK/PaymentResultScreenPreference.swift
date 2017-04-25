@@ -53,6 +53,7 @@ open class PaymentResultScreenPreference: NSObject {
     
     internal static var pendingAdditionalInfoCells = [MPCustomCell]()
     internal static var approvedAdditionalInfoCells = [MPCustomCell]()
+    internal static var approvedSubHeaderCells = [MPCustomCell]()
     
     // Sets de Approved
     
@@ -225,9 +226,14 @@ open class PaymentResultScreenPreference: NSObject {
         PaymentResultScreenPreference.approvedAdditionalInfoCells = customCells
     }
     
+    open static func setCustomApprovedSubHeaderCell(customCells: [MPCustomCell]) {
+        PaymentResultScreenPreference.approvedSubHeaderCells = customCells
+    }
+    
     open static func clear() {
         PaymentResultScreenPreference.approvedAdditionalInfoCells = [MPCustomCell]()
         PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
+        PaymentResultScreenPreference.approvedSubHeaderCells = [MPCustomCell]()
     }
     
     //Approved

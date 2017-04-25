@@ -36,7 +36,7 @@ class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
             } else {
                 CFT.text = ""
             }
-            if let TEAValue = payerCost.getTEAValeu() {
+            if let TEAValue = payerCost.getTEAValue() {
                 TEALabel.text = "TEA " + TEAValue
             } else {
                 TEALabel.text = ""

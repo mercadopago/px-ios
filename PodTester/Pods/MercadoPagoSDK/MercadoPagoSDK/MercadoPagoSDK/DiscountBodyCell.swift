@@ -11,19 +11,23 @@ import UIKit
 class DiscountBodyCell: UIView {
 
     let margin : CGFloat = 5.0
+    var topMargin: CGFloat!
     var coupon: DiscountCoupon?
     var amount: Double!
     
-    init(frame: CGRect, coupon: DiscountCoupon?, amount:Double) {
+    init(frame: CGRect, coupon: DiscountCoupon?, amount:Double, addBorder: Bool = true, topMargin: CGFloat = 20.0) {
         super.init(frame: frame)
         self.coupon = coupon
         self.amount = amount
+        self.topMargin = topMargin
         if (self.coupon == nil){
             loadNoCouponView()
         }else{
             loadCouponView()
         }
-        self.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.px_grayLight(), thickness: 0.5)
+        if addBorder {
+            self.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.px_grayLight(), thickness: 0.5)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,7 +82,7 @@ class DiscountBodyCell: UIView {
         guard let coupon = self.coupon else {
             return
         }
-        let tituloLabel = MPLabel(frame: CGRect(x: margin, y: 20, width: (frame.size.width - 2 * margin), height: 20) )
+        let tituloLabel = MPLabel(frame: CGRect(x: margin, y: topMargin, width: (frame.size.width - 2 * margin), height: 20) )
         tituloLabel.textAlignment = .center;
         let result = NSMutableAttributedString()
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : Utils.getFont(size: 16),NSForegroundColorAttributeName: UIColor.px_grayDark()]
@@ -100,7 +104,11 @@ class DiscountBodyCell: UIView {
         rightArrow.image = MercadoPago.getImage("rightArrow")
         let detailLabel = MPLabel()
         detailLabel.textAlignment = .center
-        detailLabel.text = "Descuento".localized
+        if let concept = coupon.concept {
+           detailLabel.text = concept
+        }else{
+           detailLabel.text = "Descuento".localized
+        }
         detailLabel.textColor = UIColor.mpGreenishTeal()
         detailLabel.font = Utils.getFont(size: 16)
         let discountAmountLabel = MPLabel()
@@ -113,16 +121,16 @@ class DiscountBodyCell: UIView {
         let widthlabelAmount = (discountAmountLabel.attributedText?.widthWithConstrainedHeight(height: 12))! + 8
         let totalViewWidth = widthlabelDiscount! + widthlabelAmount + 10 + 8 + 2 * margin
         var x = (screenWidth - totalViewWidth) / 2
-        let frameLabel = CGRect(x: x , y: (margin * 2 + 40), width: widthlabelDiscount!, height: 18)
+        let frameLabel = CGRect(x: x , y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
         x = x + widthlabelDiscount! + margin
-        let framePic = CGRect(x: x, y: (margin * 2 + 40), width: 10, height: 19)
+        let framePic = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: 10, height: 19)
         picFlag.frame = framePic
         x = x + 10
-        let frameAmountLabel = CGRect(x: x , y: (margin * 2 + 40), width: widthlabelAmount, height: 19)
+        let frameAmountLabel = CGRect(x: x , y: (margin * 2 + topMargin + 20), width: widthlabelAmount, height: 19)
         discountAmountLabel.frame = frameAmountLabel
         x = x + widthlabelAmount + margin
-        let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + 40), width: 8, height: 12)
+        let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
         rightArrow.frame = frameArrow
         self.addSubview(tituloLabel)
         self.addSubview(detailLabel)
@@ -223,7 +231,11 @@ class DiscountToolBar: UIView {
         rightArrow.tintColor = UIColor.white
         let detailLabel = MPLabel()
         detailLabel.textAlignment = .center
-        detailLabel.text = "Descuento".localized
+        if let concept = coupon.concept {
+            detailLabel.text = concept
+        }else{
+            detailLabel.text = "Descuento".localized
+        }
         detailLabel.textColor = UIColor.white
         detailLabel.font = Utils.getFont(size: 16)
         let discountAmountLabel = MPLabel()

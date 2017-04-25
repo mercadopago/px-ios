@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="434" height="304"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_iconoCarrito" translatesAutoresizingMaskIntoConstraints="NO" id="MTY-HS-TBY">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MPSDK_review_iconoCarrito" translatesAutoresizingMaskIntoConstraints="NO" id="MTY-HS-TBY">
                         <rect key="frame" x="193" y="58" width="48" height="48"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="48" id="I2P-1b-qjo"/>
@@ -39,13 +39,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En cuanto pruebas el iPhone 6s, tienes la sensación de no haber usado nunca nada igual lorem ipsum dolor. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DY6-7v-ukj">
-                        <rect key="frame" x="32" y="167" width="370" height="34"/>
+                        <rect key="frame" x="32" y="167" width="370" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKx-8L-Zdg">
-                        <rect key="frame" x="32" y="223" width="370" height="21"/>
+                        <rect key="frame" x="32" y="222.5" width="370" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Cantidad : 1">
                                 <attributes>
@@ -58,7 +58,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gs-mJ-oxp">
-                        <rect key="frame" x="32" y="244" width="370" height="21"/>
+                        <rect key="frame" x="32" y="243.5" width="370" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Precio Unitario : $ 870">
                                 <attributes>
@@ -103,6 +103,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="review_iconoCarrito" width="48" height="48"/>
+        <image name="MPSDK_review_iconoCarrito" width="48" height="48"/>
     </resources>
 </document>

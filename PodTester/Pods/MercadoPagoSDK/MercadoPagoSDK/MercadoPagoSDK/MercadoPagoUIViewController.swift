@@ -140,12 +140,18 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: navController)
     }
     
-    internal func invokeCallbackCancel(){
+    internal func invokeCallbackCancelShowingNavBar(){
         if(self.callbackCancel != nil){
             self.showNavBar()
             self.callbackCancel!()
         }
 
+    }
+    internal func invokeCallbackCancel(){
+        if self.callbackCancel != nil {
+            self.callbackCancel!()
+        }
+        self.navigationController!.popViewController(animated: true)
     }
     
     override open func didReceiveMemoryWarning() {

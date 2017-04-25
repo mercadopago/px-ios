@@ -121,7 +121,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         if(callbackCancel != nil){
             self.navigationItem.leftBarButtonItem?.target = self
-            self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
+            self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         }
         
         textEditMaskFormater.emptyMaskElement = nil

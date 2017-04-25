@@ -21,6 +21,7 @@ class RejectedTableViewCell: UITableViewCell {
         // Initialization code
         self.title.text = "¿Qué puedo hacer?".localized
         self.title.font = Utils.getFont(size: self.title.font.pointSize)
+        self.title.numberOfLines = 0
         self.subtitile.font = Utils.getFont(size: self.subtitile.font.pointSize)
         self.subtitile.text = ""
         self.selectionStyle = .none
@@ -35,6 +36,9 @@ class RejectedTableViewCell: UITableViewCell {
                 self.title.text = title.localized
                 self.subtitile.text = ""
             } else {
+                if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
+                    paymentResult.statusDetail = "cc_rejected_bad_filled_other"
+                }
                 
                 if let paymentTypeId = paymentResult.paymentData?.paymentMethod.paymentTypeId{
                     self.paymentTypeId = paymentTypeId
@@ -48,7 +52,7 @@ class RejectedTableViewCell: UITableViewCell {
                     if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTitleDisable() {
                         self.title.text = ""
                         self .titleSubtitleCoinstraint.constant = 0
-                    } else if String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()) {
+                    } else if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()) {
                         self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()
                     }
                     
@@ -60,7 +64,8 @@ class RejectedTableViewCell: UITableViewCell {
                     }
 
                 } else {
-                    self.subtitile.text = title.localized
+                    let paymentMethodName = paymentResult.paymentData!.paymentMethod.name.localized
+                    self.subtitile.text = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
                 }
             }
         } else if paymentResult.status == "in_process" {

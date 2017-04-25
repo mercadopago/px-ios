@@ -35,9 +35,13 @@ open class MerchantService : MercadoPagoService {
         let headers = NSMutableDictionary()
         headers.setValue(MercadoPagoContext.paymentKey() , forKey: "X-Idempotency-Key")
         
-        self.request(uri: self.URI, params: nil, body: body as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: failure)
+        self.request(uri: self.URI, params: nil, body: body as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: { (error) -> Void in
+            if let failure = failure {
+                failure(NSError(domain: "mercadopago.sdk.MerchantService.createPayment", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a internet e intente nuevamente".localized]))
+            }
+        })
     }
-    
+
     open func createPreference(_ method : String = "POST", body: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
         

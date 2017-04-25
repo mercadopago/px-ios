@@ -1,5 +1,5 @@
 //
-// MLSpinner.h
+// MLPXSpinner.h
 // MLUI
 //
 // Created by Julieta Puente on 18/4/16.
@@ -7,23 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MLSpinnerConfig.h"
+#import "MLPXSpinnerConfig.h"
 
-typedef NS_ENUM (NSInteger, MLSpinnerStyle) {
-	MLSpinnerStyleBlueBig,
-	MLSpinnerStyleWhiteBig,
-	MLSpinnerStyleBlueSmall,
-	MLSpinnerStyleWhiteSmall
+typedef NS_ENUM (NSInteger, MLPXSpinnerStyle) {
+	MLPXSpinnerStyleBlueBig,
+	MLPXSpinnerStyleWhiteBig,
+	MLPXSpinnerStyleBlueSmall,
+	MLPXSpinnerStyleWhiteSmall
 };
 
-@interface MLSpinner : UIView
+@interface MLPXSpinner : UIView
 
 /**
  *  Creates a spinner with the selected style
  *
  *  @param style     spinner style
  */
-- (id)initWithStyle:(MLSpinnerStyle)style __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
+- (id)initWithStyle:(MLPXSpinnerStyle)style __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
 
 /**
  *  Creates a spinner with the selected style and text
@@ -31,7 +31,7 @@ typedef NS_ENUM (NSInteger, MLSpinnerStyle) {
  *  @param style     spinner style
  *  @param text      spinner text
  */
-- (id)initWithStyle:(MLSpinnerStyle)style text:(NSString *)text __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
+- (id)initWithStyle:(MLPXSpinnerStyle)style text:(NSString *)text __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
 
 /**
  *  Creates a spinner with the desire configuration
@@ -39,7 +39,7 @@ typedef NS_ENUM (NSInteger, MLSpinnerStyle) {
  *  @param config    spinner style configuration
  *  @param text      spinner text
  */
-- (id)initWithConfig:(nonnull MLSpinnerConfig *)config text:(NSString *)text;
+- (id)initWithConfig:(nonnull MLPXSpinnerConfig *)config text:(NSString *)text;
 
 /**
  *  Sets spinner text
@@ -53,14 +53,14 @@ typedef NS_ENUM (NSInteger, MLSpinnerStyle) {
  *
  *  @param style     spinner style
  */
-- (void)setStyle:(MLSpinnerStyle)style __attribute__((deprecated("We recommend start using the setUpSpinnerWithConfig: instead.")));
+- (void)setStyle:(MLPXSpinnerStyle)style __attribute__((deprecated("We recommend start using the setUpSpinnerWithConfig: instead.")));
 
 /**
  *  Sets spinner style configuration
  *
  *  @param config     spinner style configuration
  */
-- (void)setUpSpinnerWithConfig:(MLSpinnerConfig *)config;
+- (void)setUpSpinnerWithConfig:(MLPXSpinnerConfig *)config;
 
 
 - (void)showSpinner;

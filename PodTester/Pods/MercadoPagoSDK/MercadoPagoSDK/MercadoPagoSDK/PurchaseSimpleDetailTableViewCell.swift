@@ -10,34 +10,38 @@ import UIKit
 
 class PurchaseSimpleDetailTableViewCell: UITableViewCell {
 
-    static let ROW_HEIGHT = CGFloat(58)
-    static let SEPARATOR_LINE_HEIGHT = PurchaseSimpleDetailTableViewCell.ROW_HEIGHT - 1
+    static let PRODUCT_ROW_HEIGHT = CGFloat(30)
+    static let TOTAL_ROW_HEIGHT = CGFloat(58)
     
     @IBOutlet weak var titleLabel: MPLabel!
     @IBOutlet weak var unitPrice: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        unitPrice.text = ""
+        titleLabel.text = ""
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillCell(_ title : String, amount : Double, currency : Currency, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true, titleColor: UIColor = UIColor.px_grayDark(), amountColor: UIColor = UIColor.px_grayDark()){
+    internal func fillCell(_ title : String, amount : Double, currency : Currency, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true, titleColor: UIColor = UIColor.px_grayDark(), amountColor: UIColor = UIColor.px_grayDark(), amountEnable: Bool = true, height: CGFloat){
         
         fillDescription(title: title, color: titleColor)
         
         self.removeFromSuperview()
         
-        fillAmount(amount: amount, color: amountColor, payerCost: payerCost, currency: currency)
+        if amountEnable {
+            fillAmount(amount: amount, color: amountColor, payerCost: payerCost, currency: currency)
+        }
         
-        addSeperatorLine(addLine: addSeparatorLine)
+        addSeperatorLine(addLine: addSeparatorLine, height: height)
     }
     
     internal func fillCell(summaryRow: SummaryRow, currency : Currency, payerCost : PayerCost? = nil){
         
-        fillCell(summaryRow.customDescription, amount: summaryRow.customAmount, currency: currency, addSeparatorLine: summaryRow.separatorLine, titleColor: summaryRow.colorDescription, amountColor: summaryRow.colorAmount)
+        fillCell(summaryRow.customDescription, amount: summaryRow.customAmount, currency: currency, addSeparatorLine: summaryRow.separatorLine, titleColor: summaryRow.colorDescription, amountColor: summaryRow.colorAmount, amountEnable: summaryRow.isAmountEnable(), height: PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
     }
     
     func fillDescription(title: String, color: UIColor) {
@@ -61,9 +65,9 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
         }
     }
     
-    func addSeperatorLine(addLine: Bool) {
+    func addSeperatorLine(addLine: Bool, height: CGFloat) {
         if addLine {
-            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: PurchaseSimpleDetailTableViewCell.SEPARATOR_LINE_HEIGHT, width: self.frame.width - 42, height: 1)
+            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: height - 1, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }
     }

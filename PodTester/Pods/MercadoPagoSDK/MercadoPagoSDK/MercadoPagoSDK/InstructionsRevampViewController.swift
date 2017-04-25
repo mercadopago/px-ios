@@ -117,7 +117,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
         default:
             if indexPath.row == 0{
                 let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-                confirmEmailCell.fillCell(paymentResult: nil, instruction: instructionsInfo?.instructions[0])
+                confirmEmailCell.fillCell(instruction: instructionsInfo?.instructions[0])
                 confirmEmailCell.selectionStyle = .none
                 ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
                 return confirmEmailCell

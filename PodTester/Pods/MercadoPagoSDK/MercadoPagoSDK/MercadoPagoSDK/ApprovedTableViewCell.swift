@@ -20,6 +20,7 @@ class ApprovedTableViewCell: UITableViewCell {
     @IBOutlet weak var comprobante: UILabel!
     @IBOutlet weak var idInstallmentConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var discountViewHeight: NSLayoutConstraint!
     @IBOutlet weak var discountViewContent: UIView!
     @IBOutlet weak var paymentMethodStatementDescriptionConstraint: NSLayoutConstraint!
     @IBOutlet weak var paymentMethodTotalConstraint: NSLayoutConstraint!
@@ -47,6 +48,9 @@ class ApprovedTableViewCell: UITableViewCell {
                 fillInterestLabel(payerCost: payerCost)
                 fillTotalLabel(payerCost: payerCost, currency: currency)
                 
+            }else  if let discount = paymentResult.paymentData?.discount {
+                fillInstallmentLabel(amount: discount.newAmount(), currency: currency)
+                paymentMethodTotalConstraint.constant = 0
             } else if let amount = checkoutPreference?.getAmount() {
                 fillInstallmentLabel(amount: amount, currency: currency)
                 paymentMethodTotalConstraint.constant = 0
@@ -69,11 +73,11 @@ class ApprovedTableViewCell: UITableViewCell {
         if let discount = paymentResult.paymentData?.discount {
             let screenSize : CGRect = UIScreen.main.bounds
             let screenWidth = screenSize.width
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : 84), coupon:discount, amount:(checkoutPreference?.getAmount())!)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : 84), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false)
             discountViewContent.addSubview(discountBody)
-        } else
-        {
-             discountViewContent.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        
+        } else {
+            discountViewHeight.constant = 0
         }
     }
     
@@ -88,31 +92,28 @@ class ApprovedTableViewCell: UITableViewCell {
     }
     
     func fillInstallmentLabel(amount: Double, payerCost: PayerCost? = nil, currency: Currency) {
-        var installmentNumber = ""
-        
-        if payerCost != nil && payerCost?.installments != 0 {
-            installmentNumber = "\(payerCost!.installments) x "
-        }
-        
-        let total = payerCost != nil ? payerCost!.installmentAmount : amount
-        
-        if amount != 0 {
-            
-            let totalAmount = Utils.getAttributedAmount(total, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
-            let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: [NSFontAttributeName: Utils.getFont(size: 24)])
+
+        if payerCost != nil {
+            let attributedInstallment = Utils.getTransactionInstallmentsDescription(String(describing : payerCost!.installments), currency: currency, installmentAmount: payerCost!.installmentAmount, color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
+            self.installments.attributedText  = attributedInstallment
+        } else if amount != 0 {
+            let totalAmount = Utils.getAttributedAmount(amount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
+            let installmentLabel = NSMutableAttributedString(string: "", attributes: [NSFontAttributeName: Utils.getFont(size: 24)])
             installmentLabel.append(totalAmount)
             self.installments.attributedText =  installmentLabel
+
         }
+        
     }
     
     func fillInterestLabel(payerCost: PayerCost) {
-        if payerCost.installments > 1 && payerCost.installmentRate == 0 {
+        if !payerCost.hasInstallmentsRate() {
             installmentRate.text = "Sin interés".localized
         }
     }
     
     func fillTotalLabel(payerCost: PayerCost, currency: Currency) {
-        if payerCost.totalAmount != 0 && payerCost.installments != 0{
+        if payerCost.totalAmount > 0 && payerCost.hasInstallmentsRate() {
             let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName : UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor.black, fontSize:16, baselineOffset:4))
             attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName : UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
@@ -130,7 +131,7 @@ class ApprovedTableViewCell: UITableViewCell {
         if let token = token {
             self.lastFourDigits.text = "Terminada en ".localized + String(describing: token.lastFourDigits!)
         } else if let paymentMethod = paymentMethod {
-            self.lastFourDigits.text = paymentMethod._id == "account_money" ? "Dinero en cuenta de MercadoPago".localized : ""
+            self.lastFourDigits.text = paymentMethod._id == "account_money" ? "Con dinero en cuenta".localized : ""
         }
     }
     

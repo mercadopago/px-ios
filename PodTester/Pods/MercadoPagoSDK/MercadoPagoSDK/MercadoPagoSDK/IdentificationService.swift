@@ -13,6 +13,10 @@ open class IdentificationService : MercadoPagoService {
         if key != nil {
             params = MercadoPagoContext.keyType() + "=" + key!
         }
-        self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: failure)
+        self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) -> Void in
+            if let failure = failure {
+                failure(NSError(domain: "mercadopago.sdk.IdentificationService.getIdentificationTypes", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a internet e intente nuevamente".localized]))
+            }
+        })
     }
 }

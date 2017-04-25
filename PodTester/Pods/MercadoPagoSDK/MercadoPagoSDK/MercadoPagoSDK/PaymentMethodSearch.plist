@@ -377,5 +377,25 @@
 		<key>image_name</key>
 		<string>mediosDebCabal</string>
 	</dict>
+	<key>mercadopagocard</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosMercadoPagoCard</string>
+	</dict>
+	<key>hipercard</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosHipercard</string>
+	</dict>
+	<key>elo</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosElo</string>
+	</dict>
+	<key>melicard</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoMercadlivre</string>
+	</dict>
 </dict>
 </plist>

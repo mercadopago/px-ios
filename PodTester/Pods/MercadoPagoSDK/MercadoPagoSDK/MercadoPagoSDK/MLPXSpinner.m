@@ -1,23 +1,23 @@
 //
-// MLSpinner.m
+// MLPXSpinner.m
 // MLUI
 //
 // Created by Julieta Puente on 18/4/16.
 // Copyright © 2016 MercadoLibre. All rights reserved.
 //
 
-#import "MLSpinner.h"
+#import "MLPXSpinner.h"
 #import <MercadoPagoSDK/MercadoPagoSDK-Swift.h>
 
 
-@interface MLSpinner ()
+@interface MLPXSpinner ()
 
 @property (nonatomic, strong) CAShapeLayer *circleLayer;
 @property (nonatomic) CGFloat diameter;
 @property (nonatomic) CGFloat lineWidth;
 @property (nonatomic, strong) UIColor *endColor;
 @property (nonatomic, strong) UIColor *startColor;
-@property (nonatomic) MLSpinnerStyle style;
+@property (nonatomic) MLPXSpinnerStyle style;
 @property (nonatomic, copy) NSString *spinnerText;
 @property (nonatomic) BOOL allowsText;
 @property (nonatomic, strong) UIView *view;
@@ -34,29 +34,29 @@
 
 @end
 
-@implementation MLSpinner
+@implementation MLPXSpinner
 
-static const CGFloat kMLSpinnerStrokeAnimationDuration = 0.75;
-static const CGFloat kMLSpinnerColorAnimationDuration = 0.1;
-static const CGFloat kMLSpinnerStrokeStartBegin = 0.5;
-static const CGFloat kMLSpinnerCycleAnimationDuration = kMLSpinnerStrokeAnimationDuration + kMLSpinnerStrokeStartBegin;
-static const CGFloat kMLSpinnerRotationDuration = 2.0;
-static const CGFloat kMLSpinnerLabelVerticalSpacing = 32;
-static const CGFloat kMLSpinnerSmallDiameter = 20;
-static const CGFloat kMLSpinnerBigDiameter = 60;
-static const CGFloat kMLSpinnerSmallLineWidth = 2;
-static const CGFloat kMLSpinnerBigLineWidth = 3;
-static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
+static const CGFloat kMLPXSpinnerStrokeAnimationDuration = 0.75;
+static const CGFloat kMLPXSpinnerColorAnimationDuration = 0.1;
+static const CGFloat kMLPXSpinnerStrokeStartBegin = 0.5;
+static const CGFloat kMLPXSpinnerCycleAnimationDuration = kMLPXSpinnerStrokeAnimationDuration + kMLPXSpinnerStrokeStartBegin;
+static const CGFloat kMLPXSpinnerRotationDuration = 2.0;
+static const CGFloat kMLPXSpinnerLabelVerticalSpacing = 32;
+static const CGFloat kMLPXSpinnerSmallDiameter = 20;
+static const CGFloat kMLPXSpinnerBigDiameter = 60;
+static const CGFloat kMLPXSpinnerSmallLineWidth = 2;
+static const CGFloat kMLPXSpinnerBigLineWidth = 3;
+static const CGFloat kMLPXSpinnerAppearenceAnimationDuration = 0.3;
 
 - (id)init
 {
-	if (self = [self initWithConfig:[self setUpConfigFromStyle:MLSpinnerStyleBlueBig] text:nil]) {
+	if (self = [self initWithConfig:[self setUpConfigFromStyle:MLPXSpinnerStyleBlueBig] text:nil]) {
 		self.translatesAutoresizingMaskIntoConstraints = NO;
 	}
 	return self;
 }
 
-- (id)initWithStyle:(MLSpinnerStyle)style
+- (id)initWithStyle:(MLPXSpinnerStyle)style
 {
 	if (self = [self initWithConfig:[self setUpConfigFromStyle:self.style] text:nil]) {
 		self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -64,7 +64,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 	return self;
 }
 
-- (id)initWithStyle:(MLSpinnerStyle)style text:(NSString *)text
+- (id)initWithStyle:(MLPXSpinnerStyle)style text:(NSString *)text
 {
 	if (self = [self initWithConfig:[self setUpConfigFromStyle:self.style] text:text]) {
 		self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -72,7 +72,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 	return self;
 }
 
-- (id)initWithConfig:(nonnull MLSpinnerConfig *)config text:(NSString *)text
+- (id)initWithConfig:(nonnull MLPXSpinnerConfig *)config text:(NSString *)text
 {
 	if (self = [super init]) {
 		self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -87,7 +87,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 {
 	self = [super initWithCoder:aDecoder];
 	if (self) {
-		self.style = MLSpinnerStyleBlueBig;
+		self.style = MLPXSpinnerStyleBlueBig;
 		[self setUpView];
 	}
 	return self;
@@ -95,7 +95,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 
 - (void)loadView
 {
-	UIView *view = [[MercadoPago getBundle] loadNibNamed:NSStringFromClass([MLSpinner class])
+	UIView *view = [[MercadoPago getBundle] loadNibNamed:NSStringFromClass([MLPXSpinner class])
 		                                         owner:self
 		                                       options:nil].firstObject;
 	self.view = view;
@@ -136,27 +136,27 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 	[self.spinnerView.layer addSublayer:self.circleLayer];
 }
 
-- (MLSpinnerConfig *)setUpConfigFromStyle:(MLSpinnerStyle)style
+- (MLPXSpinnerConfig *)setUpConfigFromStyle:(MLPXSpinnerStyle)style
 {
-	MLSpinnerConfig *config;
+	MLPXSpinnerConfig *config;
 	switch (style) {
-		case MLSpinnerStyleBlueBig: {
-			config = [[MLSpinnerConfig alloc] initWithSize:MLSpinnerSizeBig primaryColor:[UIColor colorWithRed:255.f / 255.f green:219.f / 255.f blue:21.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1]];
+		case MLPXSpinnerStyleBlueBig: {
+			config = [[MLPXSpinnerConfig alloc] initWithSize:MLPXSpinnerSizeBig primaryColor:[UIColor colorWithRed:255.f / 255.f green:219.f / 255.f blue:21.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1]];
 		}
 		break;
 
-		case MLSpinnerStyleWhiteBig: {
-			config = [[MLSpinnerConfig alloc] initWithSize:MLSpinnerSizeBig primaryColor:[UIColor colorWithRed:255.f / 255.f green:255.f / 255.f blue:255.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1]];
+		case MLPXSpinnerStyleWhiteBig: {
+			config = [[MLPXSpinnerConfig alloc] initWithSize:MLPXSpinnerSizeBig primaryColor:[UIColor colorWithRed:255.f / 255.f green:255.f / 255.f blue:255.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1]];
 		}
 		break;
 
-		case MLSpinnerStyleBlueSmall: {
-			config = [[MLSpinnerConfig alloc] initWithSize:MLSpinnerSizeSmall primaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1]];
+		case MLPXSpinnerStyleBlueSmall: {
+			config = [[MLPXSpinnerConfig alloc] initWithSize:MLPXSpinnerSizeSmall primaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:52.f / 255.f green:131.f / 255.f blue:250.f / 255.f alpha:1]];
 		}
 		break;
 
-		case MLSpinnerStyleWhiteSmall: {
-			config = [[MLSpinnerConfig alloc] initWithSize:MLSpinnerSizeSmall primaryColor:[UIColor colorWithRed:255.f / 255.f green:255.f / 255.f blue:255.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:255.f / 255.f green:255.f / 255.f blue:255.f / 255.f alpha:1]];
+		case MLPXSpinnerStyleWhiteSmall: {
+			config = [[MLPXSpinnerConfig alloc] initWithSize:MLPXSpinnerSizeSmall primaryColor:[UIColor colorWithRed:255.f / 255.f green:255.f / 255.f blue:255.f / 255.f alpha:1] secondaryColor:[UIColor colorWithRed:255.f / 255.f green:255.f / 255.f blue:255.f / 255.f alpha:1]];
 		}
 		break;
 
@@ -167,15 +167,15 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 	return config;
 }
 
-- (void)setUpSpinnerWithConfig:(MLSpinnerConfig *)config
+- (void)setUpSpinnerWithConfig:(MLPXSpinnerConfig *)config
 {
 	self.endColor = config.secondaryColor;
 	self.startColor = config.primaryColor;
-	self.allowsText = config.spinnerSize == MLSpinnerSizeBig ? YES : NO;
-	self.diameter = config.spinnerSize == MLSpinnerSizeBig ? kMLSpinnerBigDiameter : kMLSpinnerSmallDiameter;
-	self.spinnerWidthConstraint.constant = config.spinnerSize == MLSpinnerSizeBig ? kMLSpinnerBigDiameter : kMLSpinnerSmallDiameter;
-	self.spinnerHeightConstraint.constant = config.spinnerSize == MLSpinnerSizeBig ? kMLSpinnerBigDiameter : kMLSpinnerSmallDiameter;
-	self.lineWidth = config.spinnerSize == MLSpinnerSizeBig ? kMLSpinnerBigLineWidth : kMLSpinnerSmallLineWidth;
+	self.allowsText = config.spinnerSize == MLPXSpinnerSizeBig ? YES : NO;
+	self.diameter = config.spinnerSize == MLPXSpinnerSizeBig ? kMLPXSpinnerBigDiameter : kMLPXSpinnerSmallDiameter;
+	self.spinnerWidthConstraint.constant = config.spinnerSize == MLPXSpinnerSizeBig ? kMLPXSpinnerBigDiameter : kMLPXSpinnerSmallDiameter;
+	self.spinnerHeightConstraint.constant = config.spinnerSize == MLPXSpinnerSizeBig ? kMLPXSpinnerBigDiameter : kMLPXSpinnerSmallDiameter;
+	self.lineWidth = config.spinnerSize == MLPXSpinnerSizeBig ? kMLPXSpinnerBigLineWidth : kMLPXSpinnerSmallLineWidth;
 
 	if (self.spinnerView) {
 		// If we don't use performSelector, the spinner animation is not visible when the controller is presented
@@ -205,45 +205,45 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 
 	// Stroke animation
 	CABasicAnimation *strokeEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-	strokeEndAnimation.duration = kMLSpinnerStrokeAnimationDuration;
+	strokeEndAnimation.duration = kMLPXSpinnerStrokeAnimationDuration;
 	strokeEndAnimation.beginTime = 0;
 	strokeEndAnimation.fromValue = @0;
 	strokeEndAnimation.toValue = @1;
 
 	CABasicAnimation *strokeStartAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-	strokeStartAnimation.duration = kMLSpinnerStrokeAnimationDuration;
-	strokeStartAnimation.beginTime = kMLSpinnerStrokeStartBegin;
+	strokeStartAnimation.duration = kMLPXSpinnerStrokeAnimationDuration;
+	strokeStartAnimation.beginTime = kMLPXSpinnerStrokeStartBegin;
 	strokeStartAnimation.fromValue = @0;
 	strokeStartAnimation.toValue = @1;
 
 	CAAnimationGroup *strokeAnimationGroup = [CAAnimationGroup animation];
-	strokeAnimationGroup.duration = kMLSpinnerCycleAnimationDuration;
+	strokeAnimationGroup.duration = kMLPXSpinnerCycleAnimationDuration;
 	strokeAnimationGroup.repeatCount = INFINITY;
 	[strokeAnimationGroup setAnimations:[NSArray arrayWithObjects:strokeEndAnimation, strokeStartAnimation, nil]];
 
 	// Color animation
 	CABasicAnimation *colorEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeColor"];
-	colorEndAnimation.duration = kMLSpinnerColorAnimationDuration;
+	colorEndAnimation.duration = kMLPXSpinnerColorAnimationDuration;
 	colorEndAnimation.beginTime = 0;
 	colorEndAnimation.toValue = (id)self.endColor.CGColor;
 	colorEndAnimation.fillMode = kCAFillModeForwards;
 	colorEndAnimation.timeOffset = 0;
 
 	CABasicAnimation *colorStartAnimation = [CABasicAnimation animationWithKeyPath:@"strokeColor"];
-	colorStartAnimation.duration = kMLSpinnerColorAnimationDuration;
-	colorStartAnimation.beginTime = kMLSpinnerCycleAnimationDuration;
+	colorStartAnimation.duration = kMLPXSpinnerColorAnimationDuration;
+	colorStartAnimation.beginTime = kMLPXSpinnerCycleAnimationDuration;
 	colorStartAnimation.toValue = (id)self.startColor.CGColor;
 	colorStartAnimation.fillMode = kCAFillModeForwards;
 	colorStartAnimation.timeOffset = 0;
 
 	CAAnimationGroup *colorAnimationGroup = [CAAnimationGroup animation];
-	colorAnimationGroup.duration = kMLSpinnerCycleAnimationDuration * 2;
+	colorAnimationGroup.duration = kMLPXSpinnerCycleAnimationDuration * 2;
 	colorAnimationGroup.repeatCount = INFINITY;
 	[colorAnimationGroup setAnimations:[NSArray arrayWithObjects:colorEndAnimation, colorStartAnimation, nil]];
 
 	// Rotation animation
 	CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-	rotateAnimation.duration = kMLSpinnerRotationDuration;
+	rotateAnimation.duration = kMLPXSpinnerRotationDuration;
 	rotateAnimation.fromValue = @0;
 	rotateAnimation.toValue = [NSNumber numberWithDouble:2 * M_PI];
 	rotateAnimation.repeatCount = INFINITY;
@@ -273,7 +273,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 		[attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.spinnerText.length)];
 
 		self.label.attributedText = attributedString;
-		self.spinnerLabelVerticalSpacing.constant = kMLSpinnerLabelVerticalSpacing;
+		self.spinnerLabelVerticalSpacing.constant = kMLPXSpinnerLabelVerticalSpacing;
 	} else {
 		self.spinnerLabelVerticalSpacing.constant = 0;
 		self.label.text = @"";
@@ -286,7 +286,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 	[self setUpLabel];
 }
 
-- (void)setStyle:(MLSpinnerStyle)style
+- (void)setStyle:(MLPXSpinnerStyle)style
 {
 	_style = style;
 	[self setUpSpinnerWithConfig:[self setUpConfigFromStyle:style]];
@@ -307,7 +307,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 
 		self.view.alpha = 0;
 		weakSelf.isAnimating = YES;
-		[UIView animateWithDuration:kMLSpinnerAppearenceAnimationDuration animations: ^{
+		[UIView animateWithDuration:kMLPXSpinnerAppearenceAnimationDuration animations: ^{
 		    weakSelf.view.alpha = 1;
 		} completion: ^(BOOL finished) {
 		    weakSelf.isAnimating = NO;
@@ -333,7 +333,7 @@ static const CGFloat kMLSpinnerAppearenceAnimationDuration = 0.3;
 		self.isHidden = YES;
 
 		weakSelf.isAnimating = YES;
-		[UIView animateWithDuration:kMLSpinnerAppearenceAnimationDuration animations: ^{
+		[UIView animateWithDuration:kMLPXSpinnerAppearenceAnimationDuration animations: ^{
 		    weakSelf.view.alpha = 0;
 		} completion: ^(BOOL finished) {
 		    weakSelf.isAnimating = NO;

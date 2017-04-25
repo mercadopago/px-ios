@@ -98,7 +98,10 @@ extension MercadoPagoCheckoutViewModel {
         if self.paymentMethods != nil && self.paymentMethods?.count == 2 {//&&
             //((self.paymentMethods![0].paymentTypeId == PaymentTypeId.CREDIT_CARD && self.paymentMethods![1].paymentTypeId == PaymentTypeId.CREDIT_CARD) ||
             //    (self.paymentMethods![1].paymentTypeId == PaymentTypeId.CREDIT_CARD && self.paymentMethods![0].paymentTypeId == PaymentTypeId.CREDIT_CARD))) {
-            return true
+            
+            self.paymentData.paymentMethod = self.paymentMethods?[0]
+            
+            return false
         }
         return false
     }

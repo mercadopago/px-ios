@@ -3,8 +3,8 @@
 #endif
 
 #import "MercadoPagoSDK.h"
-#import "MLSpinner.h"
-#import "MLSpinnerConfig.h"
+#import "MLPXSpinner.h"
+#import "MLPXSpinnerConfig.h"
 #import "MPSDKLoadingView.h"
 #import "UIView+RotateView.h"
 

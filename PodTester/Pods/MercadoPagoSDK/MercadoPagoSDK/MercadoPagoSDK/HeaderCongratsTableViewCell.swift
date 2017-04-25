@@ -50,8 +50,8 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             }
             let currency = MercadoPagoContext.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
-            let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
-            let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
+            let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+            let decimalSeparator = currency.getDecimalSeparatorOrDefault()
             
             let amountRange = titleWithParams.range(of: "%t")
             
@@ -117,6 +117,9 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             let endingTitle = NSAttributedString(string: (instructionsInfo.instructions[0].title.substring(from: (amountRange?.upperBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
             attributedTitle.append(endingTitle)
             
+            self.title.attributedText = attributedTitle
+        }else {
+            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
             self.title.attributedText = attributedTitle
         }
         

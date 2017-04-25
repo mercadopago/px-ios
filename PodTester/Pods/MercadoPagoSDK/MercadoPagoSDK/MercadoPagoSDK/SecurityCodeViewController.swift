@@ -66,7 +66,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         super.init(coder: aDecoder)
     }
 
-    public init(viewModel : SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: CardInformation, _ securityCode: String) -> Void ) {
+    public init(viewModel : SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: CardInformationForm, _ securityCode: String) -> Void ) {
         super.init(nibName: "SecurityCodeViewController", bundle: MercadoPago.getBundle())
         self.viewModel = viewModel
         self.viewModel.callback = collectSecurityCodeCallback
@@ -192,7 +192,7 @@ open class SecurityCodeViewModel: NSObject {
     var paymentMethod : PaymentMethod!
     var cardInfo : CardInformationForm!
     
-    var callback: ((_ cardInformation: CardInformation, _ securityCode: String) -> Void)?
+    var callback: ((_ cardInformation: CardInformationForm, _ securityCode: String) -> Void)?
     
     public init(paymentMethod : PaymentMethod, cardInfo : CardInformationForm){
         self.paymentMethod = paymentMethod
@@ -211,7 +211,7 @@ open class SecurityCodeViewModel: NSObject {
     }
     
     func executeCallback(secCode : String!) {
-        callback!(cardInfo as! CardInformation, secCode)
+        callback!(cardInfo, secCode)
     }
     
     func getCardHeight() -> CGFloat {

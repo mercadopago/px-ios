@@ -14,6 +14,7 @@ open class SummaryRow: NSObject {
     var colorDescription: UIColor = UIColor.px_grayDark()
     var colorAmount: UIColor = UIColor.px_grayDark()
     var separatorLine: Bool = true
+    var amountEnable = true
     
     public init(customDescription: String, descriptionColor: UIColor? , customAmount: Double, amountColor: UIColor?, separatorLine: Bool = true) {
         self.customDescription = customDescription
@@ -26,5 +27,17 @@ open class SummaryRow: NSObject {
         if let amountColor = amountColor {
             self.colorAmount = amountColor
         }
+    }
+    
+    open func disableAmount() {
+        amountEnable = false
+    }
+    
+    open func enableAmount() {
+        amountEnable = true
+    }
+    
+    open func isAmountEnable() -> Bool {
+        return amountEnable
     }
 }

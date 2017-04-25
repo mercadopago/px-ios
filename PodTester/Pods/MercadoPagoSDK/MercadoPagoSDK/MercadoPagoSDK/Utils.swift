@@ -123,7 +123,10 @@ class Utils {
         
         let stringToWrite = NSMutableAttributedString()
         
-        stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
+        let installmentsValue = Int(installments)
+        if  installmentsValue > 1 {
+            stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
+        }
         
 
         stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault() , color:color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset))

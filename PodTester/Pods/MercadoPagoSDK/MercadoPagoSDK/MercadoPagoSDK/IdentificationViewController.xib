@@ -23,10 +23,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwv-KW-920">
-                    <rect key="frame" x="0.0" y="143" width="320" height="337"/>
+                    <rect key="frame" x="0.0" y="159" width="320" height="321"/>
                     <subviews>
                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h9Z-Aa-2AR">
-                            <rect key="frame" x="0.0" y="121" width="320" height="216"/>
+                            <rect key="frame" x="0.0" y="105" width="320" height="216"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="216" id="T28-ps-8Yw"/>
                             </constraints>
@@ -98,7 +98,7 @@
                             </connections>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rr4-e5-zLS">
-                            <rect key="frame" x="0.0" y="77" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="61" width="320" height="44"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="XgG-he-NIV"/>
@@ -121,7 +121,7 @@
                         <constraint firstItem="Zck-A3-VIw" firstAttribute="width" secondItem="7N3-XK-uvA" secondAttribute="height" multiplier="14:9" id="iP0-5F-tfV"/>
                         <constraint firstItem="h9Z-Aa-2AR" firstAttribute="top" secondItem="rr4-e5-zLS" secondAttribute="bottom" id="l0H-tJ-xK5"/>
                         <constraint firstItem="7N3-XK-uvA" firstAttribute="top" secondItem="jwv-KW-920" secondAttribute="top" constant="10" id="mCB-ij-zaz"/>
-                        <constraint firstAttribute="height" constant="337" id="w87-lb-FjY"/>
+                        <constraint firstAttribute="height" constant="321" id="w87-lb-FjY"/>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">

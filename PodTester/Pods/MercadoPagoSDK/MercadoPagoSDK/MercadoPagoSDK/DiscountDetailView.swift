@@ -45,6 +45,9 @@ class DiscountDetailView: UIView {
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(view)
         self.viewTitle.text = coupon.getDescription()
+        if let concept = coupon.concept {
+            self.discountTitle.text = concept
+        }
         self.productAmount.attributedText = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayDark(), fontSize: fontSize, baselineOffset:baselineOffSet)
         self.discountAmount.attributedText = Utils.getAttributedAmount(Double(coupon.coupon_amount)!, currency: currency, color : UIColor.mpGreenishTeal(), fontSize: fontSize, baselineOffset:baselineOffSet, negativeAmount: true)
         self.totalAmount.attributedText = Utils.getAttributedAmount( amount - Double(coupon.coupon_amount)!, currency: currency, color : UIColor.px_grayDark(), fontSize: fontSize, baselineOffset:baselineOffSet)

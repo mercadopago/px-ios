@@ -13,10 +13,8 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     var paymentResult: PaymentResult!
     var callback: ( _ status : MPStepBuilder.CongratsState) -> Void
     var checkoutPreference: CheckoutPreference?
-    var discount : DiscountCoupon?
     
-    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference,discount : DiscountCoupon? = nil, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
-        self.discount = discount
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
         self.paymentResult = paymentResult
         self.callback = callback
         self.checkoutPreference = checkoutPreference
@@ -46,18 +44,18 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     }
     
     func getColor() -> UIColor{
-		if let color = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.statusBackgroundColor {
-			return color;
-		} else if approved() {
-            return UIColor(red: 59, green: 194, blue: 128)
+        if let color = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.statusBackgroundColor {
+            return color;
+        } else if approved() {
+            return UIColor.px_greenCongrats()
         } else if inProcess() {
             return UIColor(red: 255, green: 161, blue: 90)
         } else if callForAuth() {
             return UIColor(red: 58, green: 184, blue: 239)
         } else if rejected(){
-            return UIColor(red: 255, green: 89, blue: 89)
-		}
-		return UIColor(red: 255, green: 89, blue: 89)
+            return UIColor.px_redCongrats()
+        }
+        return UIColor(red: 255, green: 89, blue: 89)
     }
     
     func callForAuth() ->Bool{
@@ -136,62 +134,69 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     }
     
     func isFooterCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 4
+        return indexPath.section == 5
     }
-
+    
     func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
-		//approved case
-		let precondition = indexPath.section == 1 && approved()
-		//if row at index 0 exists and approved body is not disabled, row 0 should display approved body
-		let case1 = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
+        //approved case
+        let precondition = indexPath.section == 2 && approved()
+        //if row at index 0 exists and approved body is not disabled, row 0 should display approved body
+        let case1 = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
         return precondition && case1
     }
     
     func isEmailCellFor(indexPath: IndexPath) -> Bool {
-		//approved case
-		let precondition = indexPath.section == 1 && approved()
-		//if row at index 0 exists and approved body is disabled, row 0 should display email row
-		let case1 = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
-		//if row at index 1 exists, row 1 should display email row
-		let case2 = indexPath.row == 1;
-		return precondition && (case1 || case2)
+        //approved case
+        let precondition = indexPath.section == 2 && approved()
+        //if row at index 0 exists and approved body is disabled, row 0 should display email row
+        let case1 = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
+        //if row at index 1 exists, row 1 should display email row
+        let case2 = indexPath.row == 1;
+        return precondition && (case1 || case2)
     }
     
     
     func isCallForAuthFor(indexPath: IndexPath) -> Bool {
-		//non approved case
-		let precondition = indexPath.section == 1 && !approved()
-		//if row at index 0 exists and callForAuth is not disabled, row 0 should display callForAuth cell
-		let case1 = callForAuth() && indexPath.row == 0;
-		return precondition && case1
+        //non approved case
+        let precondition = indexPath.section == 2 && !approved()
+        //if row at index 0 exists and callForAuth is not disabled, row 0 should display callForAuth cell
+        let case1 = callForAuth() && indexPath.row == 0;
+        return precondition && case1
     }
-	
+    
     func isSelectOtherPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
-		
-		//non approved case
-		let precondition = indexPath.section == 1 && !approved()
-		//if row at index 0 exists and callForAuth is disabled, row 0 should display select another payment row
-		let case1 = !callForAuth() && indexPath.row == 0;
-		//if row at index 1 exists, row 1 should display select another payment row
-		let case2 = indexPath.row == 1;
-		return precondition && (case1 || case2)
+        
+        //non approved case
+        let precondition = indexPath.section == 2 && !approved()
+        //if row at index 0 exists and callForAuth is disabled, row 0 should display select another payment row
+        let case1 = !callForAuth() && indexPath.row == 0;
+        //if row at index 1 exists, row 1 should display select another payment row
+        let case2 = indexPath.row == 1;
+        return precondition && (case1 || case2)
     }
     
     func isAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 2
-    }
-	
-    func isSecondaryExitButtonCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 3
     }
     
+    func isSecondaryExitButtonCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 4
+    }
+    
+    func isCustomSubHeaderCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1
+    }
+    
     func numberOfRowsInSection(section: Int) -> Int {
-        if section == 1 {
+        if section == 2 {
             return numberOfCellInBody()
-        
+            
         } else if isAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: section)) {
             return numberOfCustomAdditionalCells()
-        
+            
+        } else if isCustomSubHeaderCellFor(indexPath: IndexPath(row: 0, section: section)) {
+            return numberOfCustomSubHeaderCells()
+            
         } else if isSecondaryExitButtonCellFor(indexPath: IndexPath(row: 0, section: section)){
             if approved() && MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil {
                 return 1
@@ -207,15 +212,15 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     
     func numberOfCellInBody() -> Int {
         if approved() {
-			let approvedBodyAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() ? 1 : 0;
-			let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) ? 1 : 0;
-			return approvedBodyAdd + emailCellAdd;
-			
-		} else {
-			let callForAuthAdd = callForAuth() ? 1 : 0;
-			let selectAnotherCellAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
-			return callForAuthAdd + selectAnotherCellAdd;
-		}
+            let approvedBodyAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() ? 1 : 0;
+            let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) ? 1 : 0;
+            return approvedBodyAdd + emailCellAdd;
+            
+        } else {
+            let callForAuthAdd = callForAuth() ? 1 : 0;
+            let selectAnotherCellAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
+            return callForAuthAdd + selectAnotherCellAdd;
+        }
     }
     
     func numberOfCustomAdditionalCells() -> Int {
@@ -223,6 +228,13 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
             return PaymentResultScreenPreference.pendingAdditionalInfoCells.count
         } else if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
             return PaymentResultScreenPreference.approvedAdditionalInfoCells.count
+        }
+        return 0
+    }
+    
+    func numberOfCustomSubHeaderCells() -> Int {
+        if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedSubHeaderCells) && approved() {
+            return PaymentResultScreenPreference.approvedSubHeaderCells.count
         }
         return 0
     }

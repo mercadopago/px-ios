@@ -64,7 +64,12 @@ open class AdditionalStepViewModel : NSObject{
     }
 
     func numberOfCellsInBody() -> Int{
-        return dataSource.count
+        if self.showAmountDetailRow() {
+            return dataSource.count + 1
+        } else {
+            return dataSource.count
+        }
+        
     }
     
     func getCardSectionView() -> Updatable?{

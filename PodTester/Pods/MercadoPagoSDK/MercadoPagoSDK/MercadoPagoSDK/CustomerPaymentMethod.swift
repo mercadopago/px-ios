@@ -20,6 +20,17 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     var paymentMethod : PaymentMethod!
     var card : Card?
     
+    public override init() {
+        super.init()
+    }
+    
+    public init(id: String, paymentMethodId: String, paymentMethodTypeId: String, description: String) {
+        self._id = id
+        self.paymentMethodId = paymentMethodId
+        self.paymentMethodTypeId = paymentMethodTypeId
+        self._description = description
+    }
+    
     open class func fromJSON(_ json : NSDictionary) -> CustomerPaymentMethod {
         let  customerPaymentMethod = CustomerPaymentMethod()
         

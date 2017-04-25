@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="YuT-us-sca">
-                    <rect key="frame" x="0.0" y="0.0" width="202.5" height="182"/>
+                    <rect key="frame" x="0.0" y="0.0" width="203" height="182"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="YuT-us-sca" secondAttribute="height" multiplier="148:133" id="AbB-RE-Buk"/>
                     </constraints>
@@ -29,27 +30,27 @@
                     <rect key="frame" x="16" y="40" width="95" height="102"/>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="bKa-bF-50S" secondAttribute="height" multiplier="69:74" id="9Ql-xD-ehL"/>
+                        <constraint firstAttribute="width" secondItem="bKa-bF-50S" secondAttribute="height" multiplier="60:64" id="9Ql-xD-ehL"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOH-Rs-Q0G">
-                    <rect key="frame" x="116" y="36" width="150" height="111"/>
+                    <rect key="frame" x="116" y="50" width="150" height="82"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xXz-aN-Iw8">
-                            <rect key="frame" x="0.0" y="0.0" width="150" height="28"/>
+                            <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
                             <attributedString key="attributedText">
                                 <fragment content="DOCUMENTO DEL TITULAR DE LA TARJETA">
                                     <attributes>
                                         <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        <font key="NSFont" size="10" name="ArialMT"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="10" maximumLineHeight="20"/>
                                     </attributes>
                                 </fragment>
                             </attributedString>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•• ••• •••" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="XOr-TU-sfk">
-                            <rect key="frame" x="0.0" y="83" width="150" height="28"/>
+                            <rect key="frame" x="0.0" y="62.5" width="150" height="19.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -61,8 +62,8 @@
                         <constraint firstAttribute="trailing" secondItem="XOr-TU-sfk" secondAttribute="trailing" id="7k1-gT-WmK"/>
                         <constraint firstAttribute="trailing" secondItem="xXz-aN-Iw8" secondAttribute="trailing" id="9JJ-pP-kko"/>
                         <constraint firstItem="xXz-aN-Iw8" firstAttribute="top" secondItem="qOH-Rs-Q0G" secondAttribute="top" id="G7T-zr-siE"/>
-                        <constraint firstAttribute="width" secondItem="qOH-Rs-Q0G" secondAttribute="height" multiplier="110:81" id="Ihf-iw-s2K"/>
-                        <constraint firstItem="xXz-aN-Iw8" firstAttribute="height" secondItem="XOr-TU-sfk" secondAttribute="height" id="fzf-aB-vlm"/>
+                        <constraint firstAttribute="width" secondItem="qOH-Rs-Q0G" secondAttribute="height" multiplier="110:60" id="Ihf-iw-s2K"/>
+                        <constraint firstItem="xXz-aN-Iw8" firstAttribute="height" secondItem="XOr-TU-sfk" secondAttribute="height" multiplier="3:2" id="fzf-aB-vlm"/>
                         <constraint firstItem="XOr-TU-sfk" firstAttribute="leading" secondItem="qOH-Rs-Q0G" secondAttribute="leading" id="h61-eZ-t7c"/>
                         <constraint firstAttribute="bottom" secondItem="XOr-TU-sfk" secondAttribute="bottom" id="o0g-vz-cE4"/>
                     </constraints>

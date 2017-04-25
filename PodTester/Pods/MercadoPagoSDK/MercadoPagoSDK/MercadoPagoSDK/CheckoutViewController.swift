@@ -29,7 +29,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     @IBOutlet weak var checkoutTable: UITableView!
     
-    init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void,  callbackCancel : @escaping ((Void) -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
+   public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void,  callbackCancel : @escaping ((Void) -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
         super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
         self.initCommon()
         self.viewModel = viewModel
@@ -353,7 +353,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         let purchaseSimpleDetailTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseSimpleDetailTableViewCell", for: indexPath) as! PurchaseSimpleDetailTableViewCell
-        purchaseSimpleDetailTableViewCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost, addSeparatorLine : addSeparatorLine)
+        purchaseSimpleDetailTableViewCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost, addSeparatorLine : addSeparatorLine, height: PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
         return purchaseSimpleDetailTableViewCell
     }
     
@@ -478,7 +478,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
 }
 
-open class CheckoutViewModel {
+open class CheckoutViewModel: NSObject {
     
     var shippingIncluded = false
     var freeShippingIncluded = false
@@ -494,14 +494,14 @@ open class CheckoutViewModel {
     
     public static var CUSTOMER_ID = ""
     
-    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption, discount: DiscountCoupon? = nil) {
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption, discount: DiscountCoupon? = nil) {
         CheckoutViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
         self.paymentData = paymentData
         self.discount = discount
         self.paymentOptionSelected = paymentOptionSelected
-        
-        self.setSummaryRows()
+        super.init()
+        setSummaryRows()
     }
     
     func setSummaryRows() {
@@ -564,13 +564,13 @@ open class CheckoutViewModel {
             return 60
         
         } else if self.isProductlCellFor(indexPath: indexPath) {
-           return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
+           return PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
         
         } else if self.isInstallmentsCellFor(indexPath: indexPath) {
            return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
             
         } else if self.isTotalCellFor(indexPath: indexPath) {
-            return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
+            return PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT
             
         } else if self.isConfirmAdditionalInfoFor(indexPath: indexPath) {
             return ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT
@@ -659,7 +659,7 @@ open class CheckoutViewModel {
     }
     
     func hasPayerCostAddionalInfo() -> Bool {
-        return self.paymentData.payerCost != nil && self.paymentData.payerCost!.getCFTValue() != nil
+        return self.paymentData.payerCost != nil && self.paymentData.payerCost!.getCFTValue() != nil && self.paymentData.payerCost?.installments != 1
     }
     
     func isTitleCellFor(indexPath: IndexPath) -> Bool{
@@ -709,11 +709,11 @@ open class CheckoutViewModel {
     }
     
     func shouldShowTotal() -> Bool {
-        return shouldShowInstallmentSummary() || numberOfSummaryRows() != 1
+        return shouldShowInstallmentSummary() || numberOfSummaryRows() > 1
     }
     
     func shouldShowInstallmentSummary() -> Bool {
-        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card"
+        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card" && paymentData.payerCost != nil && paymentData.payerCost?.installments != 1
     }
 }
 

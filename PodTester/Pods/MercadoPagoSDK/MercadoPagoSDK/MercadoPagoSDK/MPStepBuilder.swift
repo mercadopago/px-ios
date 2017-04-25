@@ -141,7 +141,7 @@ open class MPStepBuilder : NSObject {
         _ callback : @escaping ((_ identification: Identification?) -> Void)) -> IdentificationViewController {
         
         MercadoPagoContext.initFlavor2()
-        return IdentificationViewController(callback: callback)
+        return IdentificationViewController(callback: callback, errorExitCallback: nil)
     }
     
 //    open class func startIssuersStep(_ paymentMethod: PaymentMethod,
