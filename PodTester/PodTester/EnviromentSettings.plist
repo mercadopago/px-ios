@@ -121,6 +121,23 @@
 		<key>default_color</key>
 		<string>009EE3</string>
 	</dict>
+	<key>MLM</key>
+	<dict>
+		<key>name</key>
+		<string>Mexico</string>
+		<key>pref_ID</key>
+		<string>253812950-f798e5a6-9219-4109-aca3-85fd2bc9d3fa</string>
+		<key>pref_ID_excl_online</key>
+		<string>253812950-612b79f0-f0c1-4da0-a90b-11d9e6ec8782</string>
+		<key>pref_ID_excl_offline</key>
+		<string>253812950-c5d78d75-af39-4421-908e-11fd6cf9702e</string>
+		<key>pk_sandbox</key>
+		<string>TEST-0f375857-0881-447c-9b2b-23e97b93f947</string>
+		<key>pk_produ</key>
+		<string>APP_USR-409345eb-2e44-4cab-8d35-d2d0789d0a89</string>
+		<key>default_color</key>
+		<string>009EE3</string>
+	</dict>
 	<key>default</key>
 	<dict>
 		<key>name</key>
