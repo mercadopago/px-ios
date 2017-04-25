@@ -82,11 +82,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.registerAllCells()
         
         self.displayStatusBar()
-
-        
     }
 
-    
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -132,10 +129,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         super.didReceiveMemoryWarning()
     }
     
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.viewModel.checkoutTableHeaderHeight(section)
-    }
-    
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.viewModel.heightForRow(indexPath)
     }
@@ -145,24 +138,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
 
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return 1
-            case 1:
-                // numberOfRowsInMainSection() + confirmPaymentButton
-                return self.viewModel.numberOfRowsInMainSection() + 1
-            case 2:
-                return viewModel.hasCustomItemCells() ? viewModel.numberOfCustomItemCells() : self.viewModel.preference!.items.count
-            case 3:
-                return 1
-            case 4:
-                return self.viewModel.numberOfCustomAdditionalCells()
-            case 5:
-                // No mostrar TyC en caso de que se tenga AT
-                return (String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())) ? 3 : 2
-            default:
-                return 0
-        }
+        return self.viewModel.numberOfRowsInSection(section: section)
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -199,28 +175,18 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             
         } else if viewModel.isAddtionalCustomCellsFor(indexPath: indexPath) {
             return self.getCustomAdditionalCell(indexPath: indexPath)
-            
-        } else if viewModel.isFotterCellFor(indexPath: indexPath) {
-            switch indexPath.row {
-            case 0 :
-                if String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {
-                    return self.getTermsAndConditionsCell(indexPath: indexPath)
-                }
-                return self.getConfirmPaymentButtonCell(indexPath: indexPath)
-            case 1 :
-                if String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {
-                    return self.getConfirmPaymentButtonCell(indexPath: indexPath)
-                }
-                return self.getCancelPaymentButtonCell(indexPath: indexPath)
-            default :
-                return self.getCancelPaymentButtonCell(indexPath: indexPath)
-            }
+        
+        } else if viewModel.isTermsAndConditionsViewCellFor(indexPath: indexPath) {
+            return self.getTermsAndConditionsCell(indexPath: indexPath)
+
+        } else if viewModel.isSecondaryConfirmButton(indexPath: indexPath) {
+            return self.getConfirmPaymentButtonCell(indexPath: indexPath)
+        
+        } else if viewModel.isExitButtonTableViewCellFor(indexPath: indexPath) {
+            return self.getCancelPaymentButtonCell(indexPath: indexPath)
         }
+
         return UITableViewCell()
-    }
-    
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      
     }
     
     @objc fileprivate func confirmPayment(){
@@ -228,9 +194,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.hideNavBar()
         self.hideBackButton()
         self.hideTimer()
-        
         self.showLoading()
-
         self.callbackConfirm(self.viewModel.paymentData)
     }
  
@@ -457,10 +421,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.didScrollInTable(scrollView)
     }
     
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-    
     public func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void)) {
         rowCallback(self.viewModel.paymentData)
     }
@@ -486,298 +446,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
         self.statusBarView = UIView(frame: CGRect(x: 0, y: -20, width: self.view.frame.width, height: 20))
         self.statusBarView!.backgroundColor = UIColor.grayStatusBar()
-    
-        
         self.statusBarView!.tag = 1
-        
         self.navigationController!.navigationBar.barStyle = .blackTranslucent
         self.navigationController!.navigationBar.addSubview(self.statusBarView!)
-    }
-    
-    
-}
-
-open class CheckoutViewModel: NSObject {
-    
-    var shippingIncluded = false
-    var freeShippingIncluded = false
-    var discountIncluded = false
-    
-    var preference : CheckoutPreference?
-    var paymentData : PaymentData!
-    var paymentOptionSelected : PaymentMethodOption
-    
-    var discount : DiscountCoupon?
-    
-    var reviewScreenPreference: ReviewScreenPreference!
-    var summaryRows: [SummaryRow]!
-    
-    public static var CUSTOMER_ID = ""
-    
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
-        CheckoutViewModel.CUSTOMER_ID = ""
-        self.preference = checkoutPreference
-        self.paymentData = paymentData
-        self.discount = discount
-        self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenPreference = reviewScreenPreference
-        self.summaryRows = reviewScreenPreference.getSummaryRows()
-        super.init()
-        setSummaryRows()
-    }
-    
-    func setSummaryRows() {
-        
-        let productsSummary = SummaryRow(customDescription: reviewScreenPreference.getProductsTitle(), descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: shouldShowTotal())
-        
-        summaryRows.insert(productsSummary, at: 0)
-        
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.paymentData.discount {
-            let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount:-Double(discount.coupon_amount)!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
-            summaryRows.insert(discountSummary, at: 1)
-        }
-    }
-    
-    func isPaymentMethodSelectedCard() -> Bool {
-        return self.paymentData.paymentMethod != nil && self.paymentData.paymentMethod!.isCard()
-    }
-    
-    func numberOfSections() -> Int {
-        return self.preference != nil ? 6 : 0
-    }
-    
-    func isPaymentMethodSelected() -> Bool {
-        return paymentData.paymentMethod != nil
-    }
-    
-    func checkoutTableHeaderHeight(_ section : Int) -> CGFloat {
-        return 0
-    }
-    
-    func numberOfRowsInMainSection() -> Int {
-        // Productos
-        var numberOfRows = 0
-        
-        if self.isPaymentMethodSelectedCard() {
-            numberOfRows = numberOfRows +  1
-        }
-        
-        if self.discountIncluded {
-            numberOfRows = numberOfRows + 1
-        }
-        
-        if self.shippingIncluded {
-            numberOfRows = numberOfRows + 1
-        }
-        
-        if hasPayerCostAddionalInfo() {
-            numberOfRows += 1
-        }
-        // Productos + customSummaryRows
-        numberOfRows += summaryRows.count
-        
-        // Total
-        numberOfRows = numberOfRows + 1
-        return numberOfRows
-        
-    }
-    func heightForRow(_ indexPath: IndexPath) -> CGFloat {
-        if isTitleCellFor(indexPath: indexPath) {
-            return 60
-        
-        } else if self.isProductlCellFor(indexPath: indexPath) {
-           return PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
-        
-        } else if self.isInstallmentsCellFor(indexPath: indexPath) {
-           return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
-            
-        } else if self.isTotalCellFor(indexPath: indexPath) {
-            return PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT
-            
-        } else if self.isPayerCostAdditionalInfoFor(indexPath: indexPath) {
-            return ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT
-            
-        } else if self.isUnlockCardCellFor(indexPath: indexPath) {
-            return UnlockCardTableViewCell.getCellHeight()
-            
-        } else if self.isConfirmButtonCellFor(indexPath: indexPath) {
-            return ConfirmPaymentTableViewCell.ROW_HEIGHT
-            
-        } else if self.isItemCellFor(indexPath: indexPath) {
-            return hasCustomItemCells() ? reviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
-            
-        } else if self.isPaymentMethodCellFor(indexPath: indexPath) {
-            if isPaymentMethodSelectedCard() {
-                return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost, reviewScreenPreference: reviewScreenPreference)
-            }
-            return OfflinePaymentMethodCell.ROW_HEIGHT
-        
-        } else if self.isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return reviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
-            
-        } else if isTermsAndConditionsViewCellFor(indexPath: indexPath) {
-            return TermsAndConditionsViewCell.getCellHeight()
-        
-        } else if isConfirmPaymentTableViewCellFor(indexPath: indexPath) {
-            return ConfirmPaymentTableViewCell.ROW_HEIGHT
-        
-        } else if isExitButtonTableViewCellFor(indexPath: indexPath) {
-            return ExitButtonTableViewCell.ROW_HEIGHT
-        }
-
-        return 0
-    }
-        
-    func isTermsAndConditionsViewCellFor(indexPath: IndexPath) -> Bool{
-        if !isFotterCellFor(indexPath: indexPath) {
-            return false
-        }
-        return ( indexPath.row == 0 && String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) )
-    }
-    func isConfirmPaymentTableViewCellFor(indexPath: IndexPath) -> Bool{
-        if !isFotterCellFor(indexPath: indexPath) {
-            return false
-        }
-        return ( indexPath.row == 1 && String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) ) || ( indexPath.row == 0 && !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) )
-    }
-    func isExitButtonTableViewCellFor(indexPath: IndexPath) -> Bool{
-        if !isFotterCellFor(indexPath: indexPath) {
-            return false
-        }
-        return ( indexPath.row == 2 && String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) ) || ( indexPath.row == 1 && !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) )
-    }
-    func isPreferenceLoaded() -> Bool {
-        return self.preference != nil
-    }
-    
-    func shouldDisplayNoRate() -> Bool {
-        return self.paymentData.payerCost != nil && !self.paymentData.payerCost!.hasInstallmentsRate() && self.paymentData.payerCost!.installments != 1
-    }
-    
-    func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(reviewScreenPreference.additionalInfoCells) {
-            return reviewScreenPreference.additionalInfoCells.count
-        }
-        return 0
-    }
-    
-    func numberOfCustomItemCells() -> Int {
-        if hasCustomItemCells() {
-            return reviewScreenPreference.customItemCells.count
-        }
-        return 0
-    }
-    
-    func hasCustomItemCells() -> Bool {
-        return !Array.isNullOrEmpty(reviewScreenPreference.customItemCells)
-    }
-    
-    func numberOfSummaryRows() -> Int{
-        return summaryRows.count
-    }
-    
-    func getTotalAmount() -> Double {
-        if let payerCost = paymentData.payerCost {
-            return payerCost.totalAmount
-        }
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
-            return discount.newAmount()
-        }
-        return self.preference!.getAmount()
-    }
-    
-    func hasPayerCostAddionalInfo() -> Bool {
-        return self.paymentData.payerCost != nil && self.paymentData.payerCost!.getCFTValue() != nil && self.paymentData.payerCost?.installments != 1
-    }
-    
-    func getUnlockLink() -> URL? {
-        let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
-        guard let issuerID = self.paymentData.issuer?._id else {
-            return nil
-        }
-        let searchString: String = site + "_" + "\(issuerID)"
-        
-        if let link = dictionary?.value(forKey: searchString) as? String{
-            UnlockCardTableViewCell.unlockCardLink = URL(string:link)
-            return URL(string:link)
-        }
-        return nil
-    }
-    
-    func needUnlockCardCell() -> Bool {
-        if getUnlockLink() != nil {
-            return true
-        }
-        return false
-    }
-    
-    func isTitleCellFor(indexPath: IndexPath) -> Bool{
-        return indexPath.section == 0
-    }
-    
-    func isProductlCellFor(indexPath: IndexPath) -> Bool{
-        return indexPath.section == 1 && indexPath.row < numberOfSummaryRows()
-    }
-    
-    func isInstallmentsCellFor(indexPath: IndexPath) -> Bool{
-        return shouldShowInstallmentSummary() && indexPath.section == 1 && indexPath.row == numberOfSummaryRows()
-           
-    }
-    func isTotalCellFor(indexPath: IndexPath) -> Bool {
-        let numberOfRows = numberOfSummaryRows() + (shouldShowInstallmentSummary() ? 1 : 0)
-        return shouldShowTotal() && indexPath.section == 1 && indexPath.row == numberOfRows
-    }
-    
-    func isConfirmButtonCellFor(indexPath: IndexPath) -> Bool {
-        var numberOfRows = numberOfSummaryRows()
-        numberOfRows += shouldShowTotal() ? 1 : 0
-        numberOfRows += shouldShowInstallmentSummary() ? 1 : 0
-        numberOfRows += hasConfirmAdditionalInfo() ? 1 : 0
-        return indexPath.section == 1 && indexPath.row == numberOfRows
-    }
-    
-    func hasConfirmAdditionalInfo() -> Bool{
-        if hasPayerCostAddionalInfo() || needUnlockCardCell() {
-            return true
-        }
-        
-        return false
-    }
-    
-    func isItemCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 2
-    }
-    
-    func isPayerCostAdditionalInfoFor(indexPath: IndexPath) -> Bool {
-        let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
-        return hasPayerCostAddionalInfo() && indexPath.section == 1 && indexPath.row == numberOfRows
-    }
-    
-    func isUnlockCardCellFor(indexPath: IndexPath) -> Bool {
-        let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
-        return needUnlockCardCell() && indexPath.section == 1 && indexPath.row == numberOfRows
-    }
-    
-    func isAddtionalCustomCellsFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 4
-    }
-    
-    func isFotterCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 5
-    }
-    
-    func isPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 3
-    }
-    
-    func shouldShowTotal() -> Bool {
-        return shouldShowInstallmentSummary() || numberOfSummaryRows() > 1
-    }
-    
-    func shouldShowInstallmentSummary() -> Bool {
-        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card" && paymentData.payerCost != nil && paymentData.payerCost?.installments != 1
     }
 }
 

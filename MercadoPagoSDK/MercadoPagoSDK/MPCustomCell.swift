@@ -21,8 +21,10 @@ open class MPCustomCell: NSObject {
     }
  
     public func getHeight() -> CGFloat {
-        let contentProvider = self.getTableViewCell() as! MPCellContentProvider
-        return contentProvider.getHeight()
+        if let contentProvider = self.getTableViewCell() as? MPCellContentProvider {
+            return contentProvider.getHeight()
+        }
+        return 0
     }
 
     public func setDelegate(delegate : MPCustomRowDelegate) {
