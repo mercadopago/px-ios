@@ -58,11 +58,11 @@
 		<key>name</key>
 		<string>Perú</string>
 		<key>pref_ID</key>
-		<string>242617753-07562444-aa61-48b2-b33c-85d7dd6b812c</string>
+		<string>242617753-4a855b05-1ede-4445-ac4f-77d065699015</string>
 		<key>pref_ID_excl_online</key>
-		<string></string>
+		<string>242617753-e6f25e5a-9ec6-4485-adf2-0b7d18f35f44</string>
 		<key>pref_ID_excl_offline</key>
-		<string></string>
+		<string>242617753-4fda54a1-5228-404e-8515-3c1ac321541b</string>
 		<key>pk_sandbox</key>
 		<string>TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c</string>
 		<key>pk_produ</key>
