@@ -23,6 +23,7 @@ open class SettingsViewModel: NSObject {
     
     let marginSpace: CGFloat = 10
    
+    let Mainframe = UIScreen.main.bounds
 
     
     //--TableView Build Logic
@@ -59,6 +60,7 @@ open class SettingsViewModel: NSObject {
     func getSelectorCellFor(selector: Selectors) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.frame.size.height = 40
+        cell.frame.size.width = Mainframe.width
         cell.selectionStyle = .none
         let cellFrame = cell.bounds
         
@@ -121,6 +123,7 @@ open class SettingsViewModel: NSObject {
     func getSwitchCellFor(forSwitch: Switches) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.frame.size.height = 40
+        cell.frame.size.width = Mainframe.width
         cell.selectionStyle = .none
         let cellFrame = cell.bounds
         
@@ -181,6 +184,7 @@ open class SettingsViewModel: NSObject {
         
         let cell = UITableViewCell()
         cell.frame.size.height = 40
+        cell.frame.size.width = Mainframe.width
         cell.selectionStyle = .none
         cell.textLabel?.textColor = UIColor.black
         cell.textLabel?.text = "Custom Color"
@@ -192,7 +196,8 @@ open class SettingsViewModel: NSObject {
         cellTextfield.layer.borderWidth = 1
         cellTextfield.layer.cornerRadius = 5
         cellTextfield.placeholder = "#FFFFFF"
-        cellTextfield.addTarget(self, action: #selector(setSelectedColor(sender: )), for: UIControlEvents.editingDidEndOnExit)
+        cellTextfield.autocapitalizationType = .allCharacters
+        cellTextfield.addTarget(self, action: #selector(setSelectedColor(sender: )), for: UIControlEvents.allEditingEvents)
         cell.addSubview(cellTextfield)
         
         return cell
@@ -200,11 +205,7 @@ open class SettingsViewModel: NSObject {
     
     
     func setSelectedColor(sender: UITextField) {
-        if (sender.text?.contains("#"))!{
-            selectedColor = UIColor.fromHex(sender.text!)
-        } else {
-            selectedColor = selectedSite.getColor()
-        }
+        selectedColor = UIColor.fromHex(sender.text!)
     }
     //Color Picker Logic--
     
