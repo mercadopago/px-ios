@@ -41,11 +41,11 @@
 		<key>name</key>
 		<string>Brasil</string>
 		<key>pref_ID</key>
-		<string>245099733-3a38ed92-f013-4bfd-861f-9a467f74204f</string>
+		<string>245099733-1772f1c8-4ae9-4064-81ff-3d9a7a1e0a88</string>
 		<key>pref_ID_excl_online</key>
-		<string></string>
+		<string>245099733-8f2f9e2b-e303-4898-8bb1-41d6c3ca4969</string>
 		<key>pref_ID_excl_offline</key>
-		<string></string>
+		<string>245099733-b6508c44-808d-4d83-b812-6760c885e28b</string>
 		<key>pk_sandbox</key>
 		<string>TEST-77d0c0c0-0594-4951-ac78-16c03461fcbc</string>
 		<key>pk_produ</key>
