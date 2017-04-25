@@ -259,19 +259,24 @@ open class SettingsViewModel: NSObject {
     private func getEnviromentSettings(site: String) -> NSDictionary{
         let path = Bundle.main.path(forResource: "EnviromentSettings", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
-        let siteDictionary = dictionary?.value(forKey: site)
         
-        return siteDictionary as! NSDictionary
+        if let siteDictionary = dictionary?.value(forKey: site) {
+            return siteDictionary as! NSDictionary
+        } else {
+            return dictionary?.value(forKey: "default") as! NSDictionary
+        }
+        
+        
     }
     
     func prefIdFinder(site: String, forValue: String) -> String {
-        let dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnviromentSettings(site: site)
         
         if let prefID = dictionary.value(forKey: forValue) {
             return prefID as! String
         } else {
-            let dictionary = getEnviromentSettings(site: "default")
-            return dictionary.value(forKey: "pref_ID") as! String
+            dictionary = getEnviromentSettings(site: "default")
+            return dictionary.value(forKey: forValue) as! String
         }
     }
     
@@ -286,43 +291,47 @@ open class SettingsViewModel: NSObject {
     }
     
     open func getPublicKey(site: String) -> String{
-        let default_MLA_PK = ""
-        let dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnviromentSettings(site: site)
         
         switch self.selectedEnviroment {
         case Enviroments.production:
             if let Pk = dictionary.value(forKey: "pk_produ") {
                 return Pk as! String
+            } else {
+                dictionary = getEnviromentSettings(site: "default")
+                return dictionary.value(forKey: "pk_produ") as! String
             }
+            
         case Enviroments.sandbox:
             if let Pk = dictionary.value(forKey: "pk_sandbox") {
                 return Pk as! String
+            } else {
+                dictionary = getEnviromentSettings(site: "default")
+                return dictionary.value(forKey: "pk_sandbox") as! String
             }
         }
-        
-        return default_MLA_PK
     }
     
     open func getName(site: String) -> String {
-        let default_MLA_name = "Argentina"
-        let dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnviromentSettings(site: site)
         
         if let name = dictionary.value(forKey: "name") {
             return name as! String
+        } else {
+            dictionary = getEnviromentSettings(site: "default")
+            return dictionary.value(forKey: "name") as! String
         }
-        
-        return default_MLA_name
     }
     
     open func getColor(site: String) -> UIColor {
-        let default_MLA_color = UIColor.fromHex("3D4064")
-        let dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnviromentSettings(site: site)
         
         if let color = dictionary.value(forKey: "default_color") {
             return UIColor.fromHex(color as! String)
+        } else {
+            dictionary = getEnviromentSettings(site: "default")
+            return UIColor.fromHex(dictionary.value(forKey: "default_color") as! String)
         }
-        
-        return default_MLA_color
     }
 
     public enum Cells : Int {
