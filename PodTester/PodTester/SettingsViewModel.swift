@@ -17,12 +17,15 @@ open class SettingsViewModel: NSObject {
     
     var selectedSite : Site!
     var selectedEnviroment : Enviroments = Enviroments.sandbox
+    var selectedColor : UIColor!
     var includeOnlinePMS : Bool = true
     var includeOfflinePMS : Bool = true
     
     let marginSpace: CGFloat = 10
    
-    //Number of Row in the Settings TableView
+
+    
+    //--TableView Build Logic
     open func getNumberOfRowsInSection(section: Int) -> Int{
         return 5
     }
@@ -46,13 +49,9 @@ open class SettingsViewModel: NSObject {
     }
     
     open func getHeightFor(indexPath: IndexPath) -> CGFloat{
-        switch indexPath.row {
-        case Cells.colorPicker.rawValue:
-            return 80
-        default:
-            return 40
-        }
+        return 40
     }
+    //TableView Build Logic--
     
     
     
@@ -95,6 +94,7 @@ open class SettingsViewModel: NSObject {
     func setSite(sender: UISegmentedControl) {
         let siteID = self.sites[sender.selectedSegmentIndex].ID
         self.selectedSite = getSitefromID(siteID: siteID)
+        self.selectedColor = selectedSite.getColor()
     }
     //Site Selector Logic--
     
@@ -131,6 +131,9 @@ open class SettingsViewModel: NSObject {
         
         cell.textLabel?.textColor = UIColor.black
         cell.textLabel?.text = forSwitch.rawValue
+        
+        setOnlinePaymentMethods(sender: cellSwitch)
+        setOfflinePaymentMethods(sender: cellSwitch)
         
         switch forSwitch {
         case Switches.OnlinePaymentMethods:
@@ -173,72 +176,73 @@ open class SettingsViewModel: NSObject {
     
     
     
-    open func update(){
-        MercadoPagoContext.setSiteID(selectedSite.ID)
-        selectedSite.pk = getPublicKey(site: selectedSite.ID)
-        MercadoPagoContext.setPublicKey(selectedSite.pk)
-        
-        selectedSite.pref_ID = getPrefID(site: selectedSite.ID)
-    }
-    
-    
-    
-    
-    
-    
-    
-
-    
+    //--Color Picker Logic
     func getColorPickerCell() -> UITableViewCell {
-        let cell = UITableViewCell()
         
-        cell.frame.size.height = 80
+        let cell = UITableViewCell()
+        cell.frame.size.height = 40
+        cell.selectionStyle = .none
+        cell.textLabel?.textColor = UIColor.black
+        cell.textLabel?.text = "Custom Color"
         
         let cellFrame = cell.bounds
         
+        let cellTextfield = UITextField()
+        cellTextfield.frame = CGRect(x: cellFrame.midX + marginSpace/2, y: cellFrame.minY + marginSpace/2, width: cellFrame.width/2 - marginSpace, height: cellFrame.height - marginSpace)
+        cellTextfield.layer.borderWidth = 1
+        cellTextfield.layer.cornerRadius = 5
+        cellTextfield.placeholder = "E.X: #FFFFFF"
+        cellTextfield.addTarget(self, action: #selector(setSelectedColor(sender: )), for: UIControlEvents.editingDidEndOnExit)
+        cell.addSubview(cellTextfield)
         
-        let view = UIView()
-        view.frame = CGRect(x: cellFrame.minX + marginSpace/2, y: cellFrame.minY + marginSpace/2, width: cellFrame.height - marginSpace, height: cellFrame.height - marginSpace)
-        
-        view.backgroundColor = self.selectedSite.getColor()
-        
-        cell.selectionStyle = .none
-        cell.addSubview(view)
         return cell
     }
     
     
-    //Get Site From Site ID. E.G: "MLA"
-    open func getSitefromID(siteID: String) -> Site? {
-        let sites = getSites()
-        for site in sites {
-            if site.ID == siteID {
-                return site
-            }
+    func setSelectedColor(sender: UITextField) {
+        if (sender.text?.contains("#"))!{
+            selectedColor = UIColor.fromHex(sender.text!)
+        } else {
+            selectedColor = selectedSite.getColor()
         }
-        
-        return nil
+    }
+    //Color Picker Logic--
+    
+
+    //Updates build settings bearing in mind the customization factors
+    open func update(){
+        MercadoPagoContext.setSiteID(selectedSite.ID)
+        selectedSite.pk = getPublicKey(site: selectedSite.ID)
+        MercadoPagoContext.setPublicKey(selectedSite.pk)
+        selectedSite.pref_ID = getPrefID(site: selectedSite.ID)
+    }
+    
+    //Return NSDictionary from requested Plist
+    func getDictionaryFrom(plist: String) -> NSDictionary? {
+        let path = Bundle.main.path(forResource: "EnviromentSettings", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        return dictionary!
     }
     
     //Load Sites from plist to local variable
     open func loadSites() {
-        let path = Bundle.main.path(forResource: "EnviromentSettings", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
+        let dictionary = getDictionaryFrom(plist: "EnviromentSettings")
         let keys = dictionary?.allKeys
         
         for siteID in keys! {
-            
-            let name = getName(site: siteID as! String)
-            let prefId = getPrefID(site: siteID as! String)
-            let pk = getPublicKey(site: siteID as! String)
-            let color = getColor(site: siteID as! String)
-            
-            let site = Site(ID: siteID as! String, name: name, prefID: prefId, publicKey: pk, defaultColor: color)
-            self.sites.append(site)
+            if siteID as! String != "default" {
+                let name = getName(site: siteID as! String)
+                let prefId = getPrefID(site: siteID as! String)
+                let pk = getPublicKey(site: siteID as! String)
+                let color = getColor(site: siteID as! String)
+                
+                let site = Site(ID: siteID as! String, name: name, prefID: prefId, publicKey: pk, defaultColor: color)
+                self.sites.append(site)
+            }
         }
     }
     
-    
+    //Returns Array of available Sites
     open func getSites() -> [Site] {
         if sites.isEmpty {
             loadSites()
@@ -246,6 +250,7 @@ open class SettingsViewModel: NSObject {
         return sites
     }
     
+    //Returns Array of available Sites IDs
     open func getSiteIDs() -> [String] {
         let sites = getSites()
         var sitesIDs : [String] = []
@@ -255,10 +260,21 @@ open class SettingsViewModel: NSObject {
         }
         return sitesIDs
     }
+    
+    //Get Site From Site ID. E.G: "MLA"
+    open func getSitefromID(siteID: String) -> Site? {
+        let sites = getSites()
+        for site in sites {
+            if site.ID == siteID {
+                return site
+            }
+        }
+        return nil
+    }
 
+    //Returns Enviroment Settings for the requested Site
     private func getEnviromentSettings(site: String) -> NSDictionary{
-        let path = Bundle.main.path(forResource: "EnviromentSettings", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
+        let dictionary = getDictionaryFrom(plist: "EnviromentSettings")
         
         if let siteDictionary = dictionary?.value(forKey: site) {
             return siteDictionary as! NSDictionary
@@ -269,6 +285,7 @@ open class SettingsViewModel: NSObject {
         
     }
     
+    //Returns Requested PrefID
     func prefIdFinder(site: String, forValue: String) -> String {
         var dictionary = getEnviromentSettings(site: site)
         
@@ -280,6 +297,7 @@ open class SettingsViewModel: NSObject {
         }
     }
     
+    //Returns a PrefID bearing in mind the customization factors
     open func getPrefID(site: String) -> String{
         if includeOnlinePMS && includeOfflinePMS {
             return prefIdFinder(site: site, forValue: "pref_ID")
@@ -290,6 +308,7 @@ open class SettingsViewModel: NSObject {
         }
     }
     
+    //Returns a Public Key bearing in mind the customization factors
     open func getPublicKey(site: String) -> String{
         var dictionary = getEnviromentSettings(site: site)
         
@@ -312,6 +331,7 @@ open class SettingsViewModel: NSObject {
         }
     }
     
+    //Returns Name for the requested SiteID
     open func getName(site: String) -> String {
         var dictionary = getEnviromentSettings(site: site)
         
@@ -323,6 +343,7 @@ open class SettingsViewModel: NSObject {
         }
     }
     
+    //Returns Color for the requested SiteID
     open func getColor(site: String) -> UIColor {
         var dictionary = getEnviromentSettings(site: site)
         

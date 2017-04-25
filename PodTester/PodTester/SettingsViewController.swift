@@ -44,7 +44,7 @@ open class SettingsViewController: UIViewController, UITableViewDataSource, UITa
         let NewView = storyboard.instantiateViewController(withIdentifier: "MainTableViewController") as! MainTableViewController
         self.viewModel.update()
         NewView.prefID = self.viewModel.selectedSite.getPrefID()
-        NewView.color = self.viewModel.selectedSite.getColor()
+        NewView.color = self.viewModel.selectedColor
         NewView.title = "Options"
         
         self.navigationController?.pushViewController(NewView, animated: true)
