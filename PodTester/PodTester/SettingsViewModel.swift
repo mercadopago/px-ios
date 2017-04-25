@@ -16,7 +16,7 @@ open class SettingsViewModel: NSObject {
     open let enviroments: [String] = [Enviroments.sandbox.rawValue, Enviroments.production.rawValue]
     
     var selectedSite : Site!
-    var selectedEnviroment : Enviroments!
+    var selectedEnviroment : Enviroments = Enviroments.sandbox
     var includeOnlinePMS : Bool = true
     var includeOfflinePMS : Bool = true
     
@@ -174,17 +174,9 @@ open class SettingsViewModel: NSObject {
     
     
     open func update(){
-        
         MercadoPagoContext.setSiteID(selectedSite.ID)
-        
-        switch self.selectedEnviroment! {
-        case Enviroments.production:
-            MercadoPagoContext.setPublicKey(self.selectedSite.getProduPK())
-            print("PK = \(self.selectedSite.getProduPK())")
-        case Enviroments.sandbox:
-            MercadoPagoContext.setPublicKey(self.selectedSite.getSandboxPK())
-            print("PK = \(self.selectedSite.getSandboxPK())")
-        }
+        selectedSite.pk = getPublicKey(site: selectedSite.ID)
+        MercadoPagoContext.setPublicKey(selectedSite.pk)
         
         selectedSite.pref_ID = getPrefID(site: selectedSite.ID)
     }
@@ -238,11 +230,10 @@ open class SettingsViewModel: NSObject {
             
             let name = getName(site: siteID as! String)
             let prefId = getPrefID(site: siteID as! String)
-            let pkSandbox = getPublicKey(site: siteID as! String, sandbox: true)
-            let pkProdu = getPublicKey(site: siteID as! String, sandbox: false)
+            let pk = getPublicKey(site: siteID as! String)
             let color = getColor(site: siteID as! String)
             
-            let site = Site(ID: siteID as! String, name: name, prefID: prefId, pk_sandbox: pkSandbox, pk_produ: pkProdu, defaultColor: color)
+            let site = Site(ID: siteID as! String, name: name, prefID: prefId, publicKey: pk, defaultColor: color)
             self.sites.append(site)
         }
     }
@@ -294,12 +285,19 @@ open class SettingsViewModel: NSObject {
         }
     }
     
-    open func getPublicKey(site: String, sandbox: Bool) -> String{
+    open func getPublicKey(site: String) -> String{
         let default_MLA_PK = ""
         let dictionary = getEnviromentSettings(site: site)
         
-        if let PK = sandbox ? dictionary.value(forKey: "pk_sandbox") : dictionary.value(forKey: "pk_produ") {
-            return PK as! String
+        switch self.selectedEnviroment {
+        case Enviroments.production:
+            if let Pk = dictionary.value(forKey: "pk_produ") {
+                return Pk as! String
+            }
+        case Enviroments.sandbox:
+            if let Pk = dictionary.value(forKey: "pk_sandbox") {
+                return Pk as! String
+            }
         }
         
         return default_MLA_PK
