@@ -191,7 +191,7 @@ open class SettingsViewModel: NSObject {
         cellTextfield.frame = CGRect(x: cellFrame.midX + marginSpace/2, y: cellFrame.minY + marginSpace/2, width: cellFrame.width/2 - marginSpace, height: cellFrame.height - marginSpace)
         cellTextfield.layer.borderWidth = 1
         cellTextfield.layer.cornerRadius = 5
-        cellTextfield.placeholder = "E.X: #FFFFFF"
+        cellTextfield.placeholder = "#FFFFFF"
         cellTextfield.addTarget(self, action: #selector(setSelectedColor(sender: )), for: UIControlEvents.editingDidEndOnExit)
         cell.addSubview(cellTextfield)
         

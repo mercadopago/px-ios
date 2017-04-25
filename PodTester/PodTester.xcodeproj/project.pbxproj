@@ -150,10 +150,10 @@
 			children = (
 				FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */,
 				FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */,
-				FC333DDC1EA6A4A6009C746A /* EnviromentSettings.plist */,
-				FCF85BA21EAE402E00D45589 /* Site.swift */,
 				FC333DD61EA67982009C746A /* SettingsViewController.swift */,
 				FC333DD91EA693A1009C746A /* SettingsViewModel.swift */,
+				FCF85BA21EAE402E00D45589 /* Site.swift */,
+				FC333DDC1EA6A4A6009C746A /* EnviromentSettings.plist */,
 				FCCDCC221E0B2265005E7095 /* Main.storyboard */,
 				FCCDCC251E0B2265005E7095 /* Assets.xcassets */,
 				FCCDCC271E0B2265005E7095 /* LaunchScreen.storyboard */,
