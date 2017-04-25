@@ -13,10 +13,10 @@ import MercadoPagoSDK
 open class SettingsViewModel: NSObject {
     
     open var sites: [Site] = []
-    open let enviroments: [String] = [Enviroments.sandbox.rawValue, Enviroments.production.rawValue]
+    open let environments: [String] = [Environments.sandbox.rawValue, Environments.production.rawValue]
     
     var selectedSite : Site!
-    var selectedEnviroment : Enviroments = Enviroments.sandbox
+    var selectedEnvironment : Environments = Environments.sandbox
     var selectedColor : UIColor!
     var includeOnlinePMS : Bool = true
     var includeOfflinePMS : Bool = true
@@ -35,8 +35,8 @@ open class SettingsViewModel: NSObject {
         switch indexPath.row {
         case Cells.siteSelector.rawValue:
             return getSelectorCellFor(selector: Selectors.site)
-        case Cells.enviromentSelector.rawValue:
-            return getSelectorCellFor(selector: Selectors.enviroment)
+        case Cells.environmentSelector.rawValue:
+            return getSelectorCellFor(selector: Selectors.environment)
         case Cells.onlinePMs.rawValue:
             return getSwitchCellFor(forSwitch: Switches.OnlinePaymentMethods)
         case Cells.offlinePMS.rawValue:
@@ -75,14 +75,14 @@ open class SettingsViewModel: NSObject {
             setSite(sender: siteSelector)
             siteSelector.addTarget(self, action: #selector(setSite(sender: )), for: .valueChanged)
             cell.addSubview(siteSelector)
-        case Selectors.enviroment:
-            let enviromentSelector = UISegmentedControl(items: self.enviroments)
-            enviromentSelector.selectedSegmentIndex = 0
-            enviromentSelector.tintColor = UIColor.black
-            enviromentSelector.frame = selectorFrame
-            setEnviroment(sender: enviromentSelector)
-            enviromentSelector.addTarget(self, action: #selector(setEnviroment(sender: )), for: .valueChanged)
-            cell.addSubview(enviromentSelector)
+        case Selectors.environment:
+            let environmentSelector = UISegmentedControl(items: self.environments)
+            environmentSelector.selectedSegmentIndex = 0
+            environmentSelector.tintColor = UIColor.black
+            environmentSelector.frame = selectorFrame
+            setEnvironment(sender: environmentSelector)
+            environmentSelector.addTarget(self, action: #selector(setEnvironment(sender: )), for: .valueChanged)
+            cell.addSubview(environmentSelector)
         }
         
         return cell
@@ -102,20 +102,20 @@ open class SettingsViewModel: NSObject {
     
     
     
-    //--Enviroment Selector Logic
-    func setEnviroment(sender: UISegmentedControl) {
+    //--Environment Selector Logic
+    func setEnvironment(sender: UISegmentedControl) {
         let title = sender.titleForSegment(at: sender.selectedSegmentIndex)!
 
         switch title {
-        case Enviroments.production.rawValue:
-            self.selectedEnviroment = Enviroments.production
-        case Enviroments.sandbox.rawValue:
-            self.selectedEnviroment = Enviroments.sandbox
+        case Environments.production.rawValue:
+            self.selectedEnvironment = Environments.production
+        case Environments.sandbox.rawValue:
+            self.selectedEnvironment = Environments.sandbox
         default:
-            self.selectedEnviroment = Enviroments.sandbox
+            self.selectedEnvironment = Environments.sandbox
         }
     }
-    //Enviroment Selector Logic--
+    //Environment Selector Logic--
     
     
     
@@ -220,14 +220,14 @@ open class SettingsViewModel: NSObject {
     
     //Return NSDictionary from requested Plist
     func getDictionaryFrom(plist: String) -> NSDictionary? {
-        let path = Bundle.main.path(forResource: "EnviromentSettings", ofType: "plist")
+        let path = Bundle.main.path(forResource: "EnvironmentSettings", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         return dictionary!
     }
     
     //Load Sites from plist to local variable
     open func loadSites() {
-        let dictionary = getDictionaryFrom(plist: "EnviromentSettings")
+        let dictionary = getDictionaryFrom(plist: "EnvironmentSettings")
         let keys = dictionary?.allKeys
         
         for siteID in keys! {
@@ -273,9 +273,9 @@ open class SettingsViewModel: NSObject {
         return nil
     }
 
-    //Returns Enviroment Settings for the requested Site
-    private func getEnviromentSettings(site: String) -> NSDictionary{
-        let dictionary = getDictionaryFrom(plist: "EnviromentSettings")
+    //Returns Environment Settings for the requested Site
+    private func getEnvironmentSettings(site: String) -> NSDictionary{
+        let dictionary = getDictionaryFrom(plist: "EnvironmentSettings")
         
         if let siteDictionary = dictionary?.value(forKey: site) {
             return siteDictionary as! NSDictionary
@@ -288,12 +288,12 @@ open class SettingsViewModel: NSObject {
     
     //Returns Requested PrefID
     func prefIdFinder(site: String, forValue: String) -> String {
-        var dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnvironmentSettings(site: site)
         
         if let prefID = dictionary.value(forKey: forValue) {
             return prefID as! String
         } else {
-            dictionary = getEnviromentSettings(site: "default")
+            dictionary = getEnvironmentSettings(site: "default")
             return dictionary.value(forKey: forValue) as! String
         }
     }
@@ -311,22 +311,22 @@ open class SettingsViewModel: NSObject {
     
     //Returns a Public Key bearing in mind the customization factors
     open func getPublicKey(site: String) -> String{
-        var dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnvironmentSettings(site: site)
         
-        switch self.selectedEnviroment {
-        case Enviroments.production:
+        switch self.selectedEnvironment {
+        case Environments.production:
             if let Pk = dictionary.value(forKey: "pk_produ") {
                 return Pk as! String
             } else {
-                dictionary = getEnviromentSettings(site: "default")
+                dictionary = getEnvironmentSettings(site: "default")
                 return dictionary.value(forKey: "pk_produ") as! String
             }
             
-        case Enviroments.sandbox:
+        case Environments.sandbox:
             if let Pk = dictionary.value(forKey: "pk_sandbox") {
                 return Pk as! String
             } else {
-                dictionary = getEnviromentSettings(site: "default")
+                dictionary = getEnvironmentSettings(site: "default")
                 return dictionary.value(forKey: "pk_sandbox") as! String
             }
         }
@@ -334,44 +334,44 @@ open class SettingsViewModel: NSObject {
     
     //Returns Name for the requested SiteID
     open func getName(site: String) -> String {
-        var dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnvironmentSettings(site: site)
         
         if let name = dictionary.value(forKey: "name") {
             return name as! String
         } else {
-            dictionary = getEnviromentSettings(site: "default")
+            dictionary = getEnvironmentSettings(site: "default")
             return dictionary.value(forKey: "name") as! String
         }
     }
     
     //Returns Color for the requested SiteID
     open func getColor(site: String) -> UIColor {
-        var dictionary = getEnviromentSettings(site: site)
+        var dictionary = getEnvironmentSettings(site: site)
         
         if let color = dictionary.value(forKey: "default_color") {
             return UIColor.fromHex(color as! String)
         } else {
-            dictionary = getEnviromentSettings(site: "default")
+            dictionary = getEnvironmentSettings(site: "default")
             return UIColor.fromHex(dictionary.value(forKey: "default_color") as! String)
         }
     }
 
     public enum Cells : Int {
         case siteSelector = 0
-        case enviromentSelector = 1
+        case environmentSelector = 1
         case onlinePMs = 2
         case offlinePMS = 3
         case colorPicker = 4
     }
     
-    public enum Enviroments : String {
+    public enum Environments : String {
         case sandbox = "Sandbox"
         case production = "Production"
     }
     
     public enum Selectors : String {
         case site = "site"
-        case enviroment = "enviroment"
+        case environment = "environment"
     }
     
     public enum Switches : String {
