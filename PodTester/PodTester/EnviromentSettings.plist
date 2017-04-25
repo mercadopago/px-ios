@@ -24,11 +24,11 @@
 		<key>name</key>
 		<string>Uruguay</string>
 		<key>pref_ID</key>
-		<string>242696049-e56271fa-7c62-4896-ac4f-47852993c196</string>
+		<string>242696049-dd98b839-4de1-4be9-ac17-bf8878b86407</string>
 		<key>pref_ID_excl_online</key>
-		<string></string>
+		<string>242696049-532573d8-0405-46c2-b49b-c72aded629b9</string>
 		<key>pref_ID_excl_offline</key>
-		<string></string>
+		<string>242696049-e249dd15-f90e-4744-aa70-14295cda6737</string>
 		<key>pk_sandbox</key>
 		<string>TEST-6d6abcc5-27ed-4e68-942f-22539893c073</string>
 		<key>pk_produ</key>
