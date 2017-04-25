@@ -257,7 +257,6 @@
 				TargetAttributes = {
 					FCCDCC1A1E0B2265005E7095 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = ULW3UE3Q6Z;
 						ProvisioningStyle = Automatic;
 					};
 					FCCDCC2E1E0B2265005E7095 = {
@@ -624,7 +623,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ULW3UE3Q6Z;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PodTester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ML.PodTester;
@@ -639,7 +638,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ULW3UE3Q6Z;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PodTester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ML.PodTester;
