@@ -2658,7 +2658,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_HEADERS_RUN_UNIFDEF = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ULW3UE3Q6Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2685,7 +2684,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_HEADERS_RUN_UNIFDEF = NO;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ULW3UE3Q6Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
