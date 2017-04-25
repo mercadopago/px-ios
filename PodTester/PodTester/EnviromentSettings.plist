@@ -17,7 +17,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-0d933ff3-b803-4999-a211-8b3c7d5c7c03</string>
 		<key>default_color</key>
-		<string>FF00FF</string>
+		<string>009EE3</string>
 	</dict>
 	<key>MLU</key>
 	<dict>
@@ -34,7 +34,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-cbb6d5cf-a8c4-4354-85ac-476b745e30b6</string>
 		<key>default_color</key>
-		<string>7B68EE</string>
+		<string>009EE3</string>
 	</dict>
 	<key>MLB</key>
 	<dict>
@@ -51,7 +51,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-f3f035a2-d343-4a6f-bd3b-fc3c3cb72416</string>
 		<key>default_color</key>
-		<string>3D4064</string>
+		<string>009EE3</string>
 	</dict>
 	<key>MPE</key>
 	<dict>
@@ -68,7 +68,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-0aa4e281-002e-4666-a1cd-95df12595014</string>
 		<key>default_color</key>
-		<string>3D4064</string>
+		<string>009EE3</string>
 	</dict>
 	<key>MLV</key>
 	<dict>
@@ -85,7 +85,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-e2c01ce5-b5c7-445d-898c-e954f22ca11a</string>
 		<key>default_color</key>
-		<string>3D4064</string>
+		<string>009EE3</string>
 	</dict>
 	<key>MCO</key>
 	<dict>
@@ -102,7 +102,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-169a025c-f8ba-4008-b898-d37568dad17f</string>
 		<key>default_color</key>
-		<string>3D4064</string>
+		<string>009EE3</string>
 	</dict>
 	<key>MLC</key>
 	<dict>
@@ -119,7 +119,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-d555ec01-4641-4e12-9b05-dc950aa2d99a</string>
 		<key>default_color</key>
-		<string>3D4064</string>
+		<string>009EE3</string>
 	</dict>
 	<key>default</key>
 	<dict>
@@ -136,7 +136,7 @@
 		<key>pk_produ</key>
 		<string>APP_USR-0d933ff3-b803-4999-a211-8b3c7d5c7c03</string>
 		<key>default_color</key>
-		<string>FF00FF</string>
+		<string>009EE3</string>
 	</dict>
 </dict>
 </plist>
