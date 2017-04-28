@@ -104,7 +104,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         pp.maxAcceptedInstallments = 3
 
         let pv = MPFlowBuilder.startPaymentVaultViewController(5, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
-            print(paymentMethod._id)
+            print(issuer?._id)
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -209,6 +209,8 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
                                unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
 
+        print("empezo creacion de pago")
+        
         //CardIssuer is optional
         let installments = (self.installmentsSelected == nil) ? 1 : self.installmentsSelected!.installments
         let cardTokenId = (self.createdToken == nil) ? "" : self.createdToken!._id
@@ -217,7 +219,12 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
 
         MerchantServer.createPayment(merchantPayment, success: { (payment) in
             
+            print("pago creado")
+            
             }) { (error) in
+                
+            print("pago error")
+
             
         }*/
         
