@@ -87,7 +87,15 @@ class OfflinePaymentMethodCell: UITableViewCell {
             if complementaryTitle.existsLocalized() {
                 attributedTitle.append(NSAttributedString(string : complementaryTitle.localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
             }
-            attributedTitle.append(NSAttributedString(string : paymentMethodOption.getDescription(), attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
+            var paymentMethodName = "ryc_payment_method_" + paymentMethodOption.getId()
+            
+            if paymentMethodName.existsLocalized() {
+                paymentMethodName = paymentMethodName.localized
+            } else {
+                paymentMethodName = paymentMethodOption.getDescription()
+            }
+            
+            attributedTitle.append(NSAttributedString(string : paymentMethodName, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
             
             self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodOption.getComment(), attributes: [NSFontAttributeName: Utils.getFont(size: 12)])
         }

@@ -216,6 +216,9 @@
 "ryc_complementary_banamex_atm"="cajero automático de ";
 "ryc_complementary_redlink_atm"="cajero automático de ";
 
+"ryc_payment_method_redlink_atm" = "Red Link";
+"ryc_payment_method_redlink_bank_transfer" = "Red Link";
+
 //Discount
 "Código de descuento"="Código de descuento";
 "Canejar"="Canejar";
@@ -232,6 +235,7 @@
 "Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Recuerda desbloquear tu tarjeta antes de confirmar el pago.";
 "desbloquear tu tarjeta"="desbloquear tu tarjeta";
 "Desbloqueo de Tarjeta"="Desbloqueo de Tarjeta";
+
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";

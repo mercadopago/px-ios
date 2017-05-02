@@ -1,0 +1,26 @@
+PODS:
+  - MercadoPagoSDK (3.0.0-DEVELOP):
+    - MercadoPagoSDK/Localization (= 3.0.0-DEVELOP)
+  - MercadoPagoSDK/Localization (3.0.0-DEVELOP):
+    - MercadoPagoSDK/Localization/es (= 3.0.0-DEVELOP)
+    - MercadoPagoSDK/Localization/es-CO (= 3.0.0-DEVELOP)
+    - MercadoPagoSDK/Localization/es-MX (= 3.0.0-DEVELOP)
+    - MercadoPagoSDK/Localization/pt (= 3.0.0-DEVELOP)
+  - MercadoPagoSDK/Localization/es (3.0.0-DEVELOP)
+  - MercadoPagoSDK/Localization/es-CO (3.0.0-DEVELOP)
+  - MercadoPagoSDK/Localization/es-MX (3.0.0-DEVELOP)
+  - MercadoPagoSDK/Localization/pt (3.0.0-DEVELOP)
+
+DEPENDENCIES:
+  - MercadoPagoSDK (from `../`)
+
+EXTERNAL SOURCES:
+  MercadoPagoSDK:
+    :path: ../
+
+SPEC CHECKSUMS:
+  MercadoPagoSDK: cc27d0dde146e2642e7dc3e7d62e4d68d1b84544
+
+PODFILE CHECKSUM: 0992ca2f8d7c2acabf817b7477463fa790adf87b
+
+COCOAPODS: 1.1.1

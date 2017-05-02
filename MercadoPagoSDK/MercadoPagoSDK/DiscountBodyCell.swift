@@ -14,14 +14,16 @@ class DiscountBodyCell: UIView {
     var topMargin: CGFloat!
     var coupon: DiscountCoupon?
     var amount: Double!
+    var hideArrow: Bool = false
     
     static let HEIGHT : CGFloat = 86.0
     
-    init(frame: CGRect, coupon: DiscountCoupon?, amount:Double, addBorder: Bool = true, topMargin: CGFloat = 20.0) {
+    init(frame: CGRect, coupon: DiscountCoupon?, amount:Double, addBorder: Bool = true, topMargin: CGFloat = 20.0, hideArrow: Bool = false) {
         super.init(frame: frame)
         self.coupon = coupon
         self.amount = amount
         self.topMargin = topMargin
+        self.hideArrow = hideArrow
         if (self.coupon == nil){
             loadNoCouponView()
         }else{
@@ -52,7 +54,9 @@ class DiscountBodyCell: UIView {
         couponFlag.image = couponFlag.image?.withRenderingMode(.alwaysTemplate)
         couponFlag.tintColor = UIColor.primaryColor()
         let rightArrow = UIImageView()
-        rightArrow.image = MercadoPago.getImage("rightArrow")
+        if !self.hideArrow {
+            rightArrow.image = MercadoPago.getImage("rightArrow")
+        }
         rightArrow.image = rightArrow.image?.withRenderingMode(.alwaysTemplate)
         rightArrow.tintColor = UIColor.primaryColor()
         let detailLabel = MPLabel()
@@ -103,7 +107,11 @@ class DiscountBodyCell: UIView {
         picFlag.image = picFlag.image?.withRenderingMode(.alwaysTemplate)
         picFlag.tintColor = UIColor.mpGreenishTeal()
         let rightArrow = UIImageView()
-        rightArrow.image = MercadoPago.getImage("rightArrow")
+        
+        if !self.hideArrow {
+            rightArrow.image = MercadoPago.getImage("rightArrow")
+        }
+        
         let detailLabel = MPLabel()
         detailLabel.textAlignment = .center
         if let concept = coupon.concept {

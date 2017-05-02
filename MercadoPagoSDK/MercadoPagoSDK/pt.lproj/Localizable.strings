@@ -213,6 +213,9 @@
 "ryc_complementary_banamex_atm"="caixa eletrônico de ";
 "ryc_complementary_redlink_atm"="caixa eletrônico de ";
 
+"ryc_payment_method_redlink_atm" = "Red Link";
+"ryc_payment_method_redlink_bank_transfer" = "Red Link";
+
 
 //Discount
 "Código de descuento"="Código de desconto";

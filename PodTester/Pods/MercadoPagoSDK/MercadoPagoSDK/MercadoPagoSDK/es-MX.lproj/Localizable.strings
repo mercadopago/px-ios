@@ -1,0 +1,200 @@
+/*
+ Localizable.strings
+ MercadoPagoSDK
+ 
+ Created by Matias Gualino on 26/4/15.
+ Copyright (c) 2015 MercadoPago. All rights reserved.
+ */
+
+
+"invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
+"invalid_field" = "Revisa este dato";
+"invalid_card_length" = "Ingresa los %1$s números de la tarjeta";
+"invalid_card_length_general" = "Ingresa todos los números de la tarjeta";
+"security_code" = "Código de seguridad";
+"cod_seg_desc" = "Últimos %1$s números al dorso de la tarjeta";
+"cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
+"NOT_INSTALLMENTS_FOUND" = "No se encontraron mensualidades disponibles para un monto de $";
+"PAYMENT_ERROR" = "No se pudo realizar el pago.";
+"No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
+
+"visa"="Visa";
+"master"="Mastercard";
+"amex"="Amex";
+
+//INSTRUCCIONES
+
+
+//CONGRATS
+
+"Cancelar pago y seguir comprando" = "Cancelar pago y seguir comprando";
+
+// -- CallForAuth
+
+"Debes autorizar ante %p el pago de %t a MercadoPago" = "Debes autorizar ante %p el pago de %t a MercadoPago";
+"Ya hable con %0 y me autorizó" = "Ya hable con %0 y me autorizó";
+
+// -- Approved
+"¡Listo, se acreditó tu pago!" = "¡Listo, se acreditó tu pago!";
+"También enviamos el código a tu email" = "También enviamos el código a tu email";
+"Te enviaremos este comprobante a %0" = "Te enviaremos este comprobante a %0";
+"Dinero en cuenta de MercadoPago" = "Dinero en cuenta de MercadoPago";
+"Terminada en " = "Terminada en ";
+"En tu estado de cuenta verás el cargo como %0" = "En tu estado de cuenta verás el cargo como %0";
+"Comprobante" = "Comprobante";
+
+// -- Pending
+"Estamos procesando el pago" = "Estamos procesando el pago";
+"En menos de 1 hora te enviaremos por e-mail el resultado." = "En menos de 1 hora te enviaremos por e-mail el resultado.";
+"En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información." = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.";
+
+// -- Rejected
+"¿Que puedo hacer?" = "¿Que puedo hacer?";
+"rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
+"cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
+"cc_rejected_other_reason_title"="%0 no procesó el pago";
+"cc_rejected_max_attempts_title"= "Llegaste al límite de intentos permitidos";
+"cc_rejected_duplicated_payment_title"="%0 no procesó el pago";
+"cc_rejected_card_disabled_title"="Llama a %0 para que active tu tarjeta";
+"cc_rejected_bad_filled_other_title"="Algún dato de tu %0 es incorrecto";
+"cc_rejected_bad_filled_card_number_title"="Algún dato de tu %0 es incorrecto";
+"cc_rejected_bad_filled_security_code_title"="Algún dato de tu %0 es incorrecto";
+"cc_rejected_bad_filled_date_title"="Algún dato de tu %0 es incorrecto";
+"cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
+
+
+"rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. \n\nO si prefieres, puedes elegir otro medio de pago.";
+"cc_rejected_insufficient_amount_subtitle_credit_card" = "¡No te desanimes! Puedes elegir otro medio de pago.";
+"cc_rejected_other_reason_subtitle_credit_card"="Usa otra tarjeta u otro medio de pago.";
+"cc_rejected_max_attempts_subtitle_credit_card"= "Elige otra tarjeta u otro medio de pago.";
+"cc_rejected_duplicated_payment_subtitle_credit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
+"cc_rejected_card_disabled_subtitle_credit_card"="El teléfono está al dorso de tu tarjeta.";
+
+
+
+"rejected_high_risk_subtitle_debit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";
+"cc_rejected_insufficient_amount_subtitle_debit_card" = "¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. O si prefieres, puedes elegir otro medio de pago.";
+"cc_rejected_other_reason_subtitle_debit_card"="Usa otra tarjeta u otro medio de pago.";
+"cc_rejected_max_attempts_subtitle_debit_card"= "Elige otra tarjeta u otro medio de pago.";
+"cc_rejected_duplicated_payment_subtitle_debit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
+"cc_rejected_card_disabled_subtitle_debit_card"="El teléfono está al dorso de tu tarjeta.";
+"cc_rejected_bad_filled_other_subtitle_debit_card"="Algún dato de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_card_number_subtitle_debit_card"="El número de tu %0 es incorrecto.";
+"cc_rejected_bad_filled_security_code_subtitle_debit_card"="El código de seguridad no es el correcto.";
+"cc_rejected_bad_filled_date_subtitle_debit_card"="La fecha de vencimiento no es la correcta.";
+
+"Ingresalo nuevamente" = "Ingresalo nuevamente";
+"Algo salió mal… " = "Algo salió mal… ";
+
+
+
+
+//---- Formulario de tarjeta
+"Ver promociones"="Ver promociones";
+"Número de tarjeta"="Número de tarjeta";
+"NOMBRE APELLIDO"="NOMBRE APELLIDO";
+"MM/AA"="MM/AA";
+"Fecha de expiración"="Fecha de expiración";
+"Código de seguridad"="Código de seguridad";
+"Continuar"="Continuar";
+"Anterior"="Anterior";
+"Ingresa el número de la tarjeta de crédito"="Ingresa el número de la tarjeta de crédito";
+"Revisa este dato"="Revisa este dato";
+"Ingresa el nombre y apellido impreso en la tarjeta"="Ingresa el nombre y apellido impreso en la tarjeta";
+"Ingresa los %1$s números del código de seguridad"="Ingresa los %1$s números del código de seguridad";
+"Método de pago no soportado"="Método de pago no soportado";
+
+"Nombre y apellido"="Nombre y apellido";
+
+//---Identification
+"OK"="OK";
+"DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DEL TITULAR DE LA TARJETA";
+"Número"="Número";
+"Tipo"="Tipo";
+
+
+
+//Installment Cell
+
+" Sin interés"=" Sin interés";//--
+"¿En cuántas cuotas?" = "¿En cuántas mensualidades?";
+"¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+"¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
+"Crédito" = "Crédito";
+"Débito" = "Débito";
+
+//Instructions
+
+"Seguir comprando"= "Seguir comprando";//--
+
+
+//--
+"¡Felicitaciones!"="¡Felicitaciones!";
+"Se aprobó tu pago."="Se aprobó tu pago.";
+"Estamos procesando el pago"="Estamos procesando el pago";
+"¡Ups! Ocurrió un problema"="¡Ups! Ocurrió un problema";
+"Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles."="Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.";
+"En unos minutos te enviaremos por e-mail el resultado."="En unos minutos te enviaremos por e-mail el resultado.";
+"No se pudo realizar el pago."="No se pudo realizar el pago.";
+//--
+
+
+
+//CONGRATS
+
+"Comprobante"="Comprobante";
+
+"terminada en "="terminada en ";
+"Sin interés"="Sin interés";
+"Uy, no pudimos procesar el pago"="Uy, no pudimos procesar el pago";
+"Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
+"El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
+"Debes autorizar el pago ante tu tarjeta"="Debes autorizar el pago ante tu tarjeta";
+"Debes autorizar ante %1$s el pago de " = "Debes autorizar ante %1$s el pago de ";
+" a MercadoPago" = " a MercadoPago";
+"Ya hablé con %1$s y me autorizó" = "Ya hablé con %1$s y me autorizó";
+
+"En menos de 1 hora te enviaremos por e-mail el resultado."="En menos de 1 hora te enviaremos por e-mail el resultado.";
+"En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.";
+"Total"="Total";
+"Medio de pago"="Medio de pago";
+"Operación"="Operación";
+"Fecha"="Fecha";
+
+
+"Revisa si está todo bien..." = "Revisa si está todo bien...";
+"Total a pagar " = "Total a pagar ";
+"Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago";
+
+"¿Cómo quiéres pagar?"="¿Cómo quiéres pagar?";
+"Cancelar Pago"="Cancelar Pago";
+"Términos y Condiciones"="Términos y Condiciones";
+"Con dinero en cuenta" = "Con dinero en cuenta";
+
+// PaymentTypes para RyC
+"ryc_title_default"=" en un ";
+"ryc_title_cargavirtual"=" en ";
+"ryc_title_redlink_bank_transfer"=" en tu ";
+"ryc_title_bancomer_bank_transfer"=" en tu ";
+"ryc_title_serfin_bank_transfer"=" en tu ";
+"ryc_title_banamex_bank_transfer"=" en tu ";
+
+"ryc_complementary_bancomer_bank_transfer"="Home Banking de ";
+"ryc_complementary_serfin_bank_transfer"="Home Banking de ";
+"ryc_complementary_redlink_bank_transfer"="Home Banking de ";
+"ryc_complementary_banamex_bank_transfer"="Home Banking de ";
+"ryc_complementary_banamex_atm"="cajero automático de ";
+"ryc_complementary_redlink_atm"="cajero automático de ";
+
+//Discount
+"Código de descuento"="Código de descuento";
+"Canejar"="Canejar";
+"Código inválido"="Código inválido";
+"de descuento"="de descuento";
+"Tengo un descuento"="Tengo un descuento";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor sin descuento disponible";
+"Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
+"Importe fuera del alcance"="Importe fuera del alcance";
+"La campaña expiró"="La campaña expiró";
+

@@ -73,7 +73,7 @@ class ApprovedTableViewCell: UITableViewCell {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentResult.paymentData?.discount {
             let screenSize : CGRect = UIScreen.main.bounds
             let screenWidth = screenSize.width
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : DiscountBodyCell.HEIGHT), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : DiscountBodyCell.HEIGHT), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false, hideArrow: true)
             discountViewContent.addSubview(discountBody)
         
         } else {
