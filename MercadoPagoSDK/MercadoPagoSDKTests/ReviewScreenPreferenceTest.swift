@@ -21,7 +21,7 @@ class ReviewScreenPreferenceTest: BaseTest {
     func createCheckout() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
     }
 
     func testSetTitle() {

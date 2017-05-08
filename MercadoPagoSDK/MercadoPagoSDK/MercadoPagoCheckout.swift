@@ -10,7 +10,7 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
-    static var currentCheckout : MercadoPagoCheckout?
+    static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
@@ -21,7 +21,7 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
-    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
+    public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
@@ -30,6 +30,13 @@ open class MercadoPagoCheckout: NSObject {
             let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self)
             }
             viewControllerBase = newNavigationStack.last
+        }
+
+        MercadoPagoContext.setPublicKey(publicKey)
+        if let at = accessToken {
+            MercadoPagoContext.setPayerAccessToken(at)
+        } else {
+            MercadoPagoContext.setPayerAccessToken("")
         }
     }
 

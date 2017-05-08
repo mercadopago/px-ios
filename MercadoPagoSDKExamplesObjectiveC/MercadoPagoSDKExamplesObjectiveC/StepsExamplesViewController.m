@@ -99,7 +99,7 @@ CheckoutPreference *pref;
     pd.issuer._id = [NSNumber numberWithInt:200];
     
     
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:pd discount:nil navigationController:self.navigationController paymentResult:nil] start];
+    [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:pd discount:nil navigationController:self.navigationController paymentResult:nil] start];
 
     
 }
@@ -114,7 +114,7 @@ CheckoutPreference *pref;
     
     [MainExamplesViewController setPaymentDataCallback];
     
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:nil discount:nil navigationController:self.navigationController paymentResult:nil] start];
+    [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:nil discount:nil navigationController:self.navigationController paymentResult:nil] start];
 
 }
 
@@ -141,7 +141,7 @@ CheckoutPreference *pref;
     pd.issuer = nil;//[[Issuer alloc] init];
      PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"approved" paymentData:pd payerEmail:nil id:nil statementDescription:nil];
     
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:pd discount:nil navigationController:self.navigationController paymentResult:paymentResult] start];
+    [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:pd discount:nil navigationController:self.navigationController paymentResult:paymentResult] start];
 
 }
 

@@ -353,7 +353,7 @@ extension UINavigationController {
     }
 
  //   override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        
+
  //       return self.viewControllers.last!.supportedInterfaceOrientations
   //  }
 

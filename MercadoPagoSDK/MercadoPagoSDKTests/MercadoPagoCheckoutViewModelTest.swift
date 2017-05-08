@@ -27,10 +27,9 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withCheckoutPreference_accountMoney() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
         MercadoPagoCheckoutViewModel.flowPreference.showDiscount = true
 
@@ -85,10 +84,9 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withCheckoutPreference_masterCreditCard() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
         MercadoPagoCheckoutViewModel.flowPreference.showDiscount = true
 
@@ -196,7 +194,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withCheckoutPreference_accountMoney_noRyC() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         // Deshabilitar ryc
@@ -215,7 +212,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         }
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
@@ -256,14 +253,13 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withPaymentDataComplete() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let accountMoneyPaymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId : "account_money")
         let paymentDataAccountMoney = MockBuilder.buildPaymentData(paymentMethod: accountMoneyPaymentMethod)
 
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, paymentData : paymentDataAccountMoney, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData : paymentDataAccountMoney, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Search Preference
@@ -307,7 +303,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withPaymentResult() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
 
         // Init checkout
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
@@ -316,7 +311,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         let paymentResult = PaymentResult(status: "status", statusDetail: "statusDetail", paymentData: paymentDataVisa, payerEmail: "payerEmail", id: "id", statementDescription: "description")
 
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController(), paymentResult : paymentResult)
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController(), paymentResult : paymentResult)
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Search preference
@@ -341,11 +336,10 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withCustomerCard() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
 
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Search preference
@@ -429,7 +423,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withCheckoutPreference_accountMoney_noDiscount() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         // Deshabilitar descuentos
@@ -438,7 +431,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         MercadoPagoCheckout.setFlowPreference(fp)
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Search Preference
@@ -488,7 +481,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testNextStep_withCheckoutPreference_accountMoney_withDiscount() {
 
         // Set access_token
-        MercadoPagoContext.setPayerAccessToken("access_token")
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         // Deshabilitar descuentos
@@ -507,7 +499,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         discount.concept = "Descuento de patito"
         discount.amount = 300
 
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, discount: discount, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: checkoutPreference, discount: discount, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Search Preference
@@ -560,7 +552,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testHasError() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         XCTAssertFalse(mpCheckout.viewModel.hasError())
 
@@ -575,7 +567,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testCardFormManager() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         let cardFormManager = mpCheckout.viewModel.cardFormManager()
         XCTAssertTrue(cardFormManager.isKind(of: CardViewModelManager.self))
@@ -584,7 +576,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testPaymentVaultViewModel() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
@@ -598,7 +590,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testDebitCreditViewModel() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 

@@ -32,7 +32,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testInit_withCheckoutPreference() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
         XCTAssertNotNil(self.mpCheckout!.viewModel)
         XCTAssertNotNil(self.mpCheckout!.viewModel.checkoutPreference)
         XCTAssertFalse(self.mpCheckout!.viewModel.paymentData.isComplete())
@@ -49,7 +49,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         paymentData.token = MockBuilder.buildToken()
         let navControllerInstance = UINavigationController()
 
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance)
 
         XCTAssertNotNil(self.mpCheckout!.viewModel)
         XCTAssertNotNil(self.mpCheckout!.viewModel.checkoutPreference)
@@ -69,7 +69,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         let paymentResult = MockBuilder.buildPaymentResult(paymentMethodId: "visa")
 
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance, paymentResult : paymentResult)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance, paymentResult : paymentResult)
 
         XCTAssertNotNil(self.mpCheckout!.viewModel)
         XCTAssertNotNil(self.mpCheckout!.viewModel.checkoutPreference)
@@ -85,7 +85,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testCollectCheckoutPreference() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckoutMock(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout!.collectCheckoutPreference()
 
@@ -97,7 +97,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testCollectPaymentMethodSearch() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckoutMock(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         XCTAssertNil(self.mpCheckout?.viewModel.rootPaymentMethodOptions)
         XCTAssertNil(self.mpCheckout?.viewModel.search)
@@ -118,7 +118,7 @@ class MercadoPagoCheckoutTest: BaseTest {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: self.mpCheckout!)
 
@@ -141,7 +141,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         fp.disableDiscount()
         MercadoPagoCheckout.setFlowPreference(fp)
 
-        self.mpCheckout = MercadoPagoCheckoutMock(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout!.validatePreference()
         XCTAssertEqual(navControllerInstance.viewControllers.count, 0)
@@ -149,7 +149,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         // Evitar ir a buscar preferencia. Preferencia inválida debería mostrar error
         checkoutPreference.items = nil
         checkoutPreference._id = nil
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
         self.mpCheckout!.validatePreference()
 //        XCTAssertNotNil(MercadoPagoCheckoutViewModel.error)
 //        XCTAssertNotNil(MercadoPagoCheckoutViewModel.error!.messageDetail)//,errorMessageExpected)
@@ -160,7 +160,7 @@ class MercadoPagoCheckoutTest: BaseTest {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout?.collectCard()
 
@@ -176,7 +176,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testCollectIdentification() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout?.collectIdentification()
 
@@ -192,7 +192,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testCollectCreditDebit() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout?.collectCreditDebit()
 
@@ -208,7 +208,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testStartIssuersScreen() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout?.collectCreditDebit()
 
@@ -224,7 +224,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testStartPayerCostScreen() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout?.collectCreditDebit()
 
@@ -240,7 +240,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testCollectPaymentData() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: self.mpCheckout!)
         MPCheckoutTestAction.selectAccountMoney(mpCheckout: self.mpCheckout!)
@@ -256,7 +256,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testDisplayPaymentResult_onlinePayment() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("visa")
@@ -273,7 +273,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testDisplayPaymentResult_offlinePayment() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         let paymentMethod = MockBuilder.buildPaymentMethod("rapipago", paymentTypeId : "ticket")
         self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("rapipago")

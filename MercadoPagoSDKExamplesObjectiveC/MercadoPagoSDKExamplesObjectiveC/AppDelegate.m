@@ -21,9 +21,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    [MercadoPagoContext setPublicKey:@"APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"];
+//    [MercadoPagoContext setPublicKey:@"APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"];
     
-    [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
+//    [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
 //    [MercadoPagoContext setPayerAccessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
 //    [MercadoPagoContext setMerchantAccessToken: MERCHANT_ACCESS_TOKEN];
