@@ -25,8 +25,8 @@ class BinTest: BaseTest {
         let binJSON = bin.toJSON()
 
         XCTAssertEqual("pattern", binJSON["pattern"] as! String)
-        XCTAssertEqual("exclusion_pattern", binJSON["exclusionPattern"] as! String)
-        XCTAssertEqual("installments_pattern", binJSON["installmentsPattern"] as! String)
+        XCTAssertEqual("exclusion_pattern", binJSON["exclusion_pattern"] as! String)
+        XCTAssertEqual("installments_pattern", binJSON["installments_pattern"] as! String)
     }
 
 }

@@ -84,18 +84,18 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
         let securityCode : Any = self.securityCode == nil ? JSONHandler.null : self.securityCode
 
         let obj: [String:Any] = [
-            "cardHolder": cardHolder,
+            "card_holder": cardHolder,
             "customer_id": customer_id,
-            "dateCreated": dateCreated,
-            "dateLastUpdated": dateLastUpdated,
-            "expirationMonth": self.expirationMonth,
-            "expirationYear": self.expirationYear,
-            "firstSixDigits": firstSixDigits,
-            "idCard": self.idCard,
-            "lastFourDigits": lastFourDigits,
-            "paymentMethod": paymentMethod,
+            "date_created": dateCreated,
+            "date_last_updated": dateLastUpdated,
+            "expiration_month": self.expirationMonth,
+            "expiration_year": self.expirationYear,
+            "first_six_digits": firstSixDigits,
+            "id_card": self.idCard,
+            "last_four_digits": lastFourDigits,
+            "payment_method": paymentMethod,
             "issuer": issuer,
-            "securityCode": securityCode
+            "security_code": securityCode
         ]
         return obj
     }

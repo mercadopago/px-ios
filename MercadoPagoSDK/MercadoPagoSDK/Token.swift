@@ -103,19 +103,19 @@ open class Token: NSObject, CardInformationForm {
 
         let obj: [String:Any] = [
             "id": _id,
-            "cardId": cardId,
-            "luhnValidation": luhn,
+            "card_id": cardId,
+            "luhn_validation": luhn,
             "status": self.status,
-            "usedDate": self.usedDate,
-            "cardNumberLength": self.cardNumberLength,
-            "creationDate": Utils.getStringFromDate(self.creationDate),
-            "lastFourDigits": lastFour,
-            "firstSixDigit": firstSix,
-            "securityCodeLength": self.securityCodeLength,
-            "expirationMonth": self.expirationMonth,
-            "expirationYear": self.expirationYear,
-            "lastModifiedDate": Utils.getStringFromDate(self.lastModifiedDate),
-            "dueDate": Utils.getStringFromDate(self.dueDate)
+            "used_date": self.usedDate,
+            "card_number_length": self.cardNumberLength,
+            "creation_date": Utils.getStringFromDate(self.creationDate),
+            "last_four_digits": lastFour,
+            "first_six_digits": firstSix,
+            "security_code_length": self.securityCodeLength,
+            "expiration_month": self.expirationMonth,
+            "expiration_year": self.expirationYear,
+            "last_modified_date": Utils.getStringFromDate(self.lastModifiedDate),
+            "due_date": Utils.getStringFromDate(self.dueDate)
         ]
 
         return obj

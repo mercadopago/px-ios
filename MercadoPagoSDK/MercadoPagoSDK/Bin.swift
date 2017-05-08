@@ -38,8 +38,8 @@ open class BinMask: NSObject {
 
         let obj: [String:Any] = [
             "pattern": pattern,
-            "installmentsPattern": installmentsPattern,
-            "exclusionPattern": exclusionPattern
+            "installments_pattern": installmentsPattern,
+            "exclusion_pattern": exclusionPattern
             ]
         return obj
     }
