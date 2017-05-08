@@ -10,6 +10,7 @@ Fix #{issueNumber}
 - [ ] Se incluyen cambios de UX ? se verificó que se vean bien tanto en iPhone SE y S6 : NA
 - [ ] No se agregan logs / prints innecesarios
 - [ ] No se agregan comentarios basura
+- [ ] Correr Swiftlint
 
 ### Testeo
 - [ ] Testeado en BETA con emulador
