@@ -20,7 +20,6 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var selectOtherPaymentMethodButton: MPButton!
     
-    @IBOutlet weak var TEALabel: UILabel!
     @IBOutlet weak var CFT: UILabel!
     @IBOutlet weak var noRateLabel: MPLabel!
     
@@ -67,17 +66,11 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
         
         CFT.textColor = UIColor.px_grayDark()
-        TEALabel.textColor = UIColor.px_grayDark()
         
         if let CFTValue = payerCost?.getCFTValue() {
                 CFT.text = "CFT " + CFTValue
         } else {
             CFT.text = ""
-        }
-        if let TEAValue = payerCost?.getTEAValeu() {
-            TEALabel.text = "TEA " + TEAValue
-        } else {
-            TEALabel.text = ""
         }
         
     }
@@ -85,8 +78,8 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
         var height = DEFAULT_ROW_HEIGHT
         
-        if let dic = payerCost?.getCFTValue() {
-            height += 65
+        if (payerCost?.getCFTValue()) != nil {
+            height += 55
         }
         
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {

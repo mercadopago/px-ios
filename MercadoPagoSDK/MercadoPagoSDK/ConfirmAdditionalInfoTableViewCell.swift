@@ -9,8 +9,7 @@
 import UIKit
 
 class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
-    static let ROW_HEIGHT = CGFloat(45)
-    @IBOutlet weak var TEALabel: UILabel!
+    static let ROW_HEIGHT = CGFloat(35)
     @IBOutlet weak var CFT: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,17 +27,11 @@ class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
             //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
             
             CFT.textColor = UIColor.px_grayDark()
-            TEALabel.textColor = UIColor.px_grayDark()
             
             if let CFTValue = payerCost.getCFTValue() {
                 CFT.text = "CFT " + CFTValue
             } else {
                 CFT.text = ""
-            }
-            if let TEAValue = payerCost.getTEAValeu() {
-                TEALabel.text = "TEA " + TEAValue
-            } else {
-                TEALabel.text = ""
             }
         }
     }
