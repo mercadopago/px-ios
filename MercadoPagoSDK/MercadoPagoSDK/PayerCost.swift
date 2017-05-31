@@ -55,6 +55,13 @@ open class PayerCost : NSObject {
         if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]) {
             payerCost.recommendedMessage = recommendedMessage
         }
+        if let labelsArray = json["labels"] as? NSArray {
+            for i in 0..<labelsArray.count {
+                if let label = labelsArray[i] as? String {
+                    payerCost.labels.append(label)
+                }
+            }
+        }
         return payerCost
     }
     
@@ -77,6 +84,31 @@ open class PayerCost : NSObject {
 
     public func hasInstallmentsRate() -> Bool {
         return (self.installmentRate > 0 && self.installments > 1)
+    }
+    
+    public func getCFTValue() -> String? {
+        for label in labels {
+            let values = label.components(separatedBy: "|")
+            for value in values {
+                if let range = value.range(of: "CFT_"){
+                    return value.substring(from: range.upperBound)
+                }
+            }
+        }
+        return nil
+    }
+    
+    public func getTEAValeu() -> String? {
+        
+        for label in labels {
+            let values = label.components(separatedBy: "|")
+            for value in values {
+                if let range = value.range(of: "TEA_"){
+                    return value.substring(from: range.upperBound)
+                }
+            }
+        }
+        return nil
     }
 }
 

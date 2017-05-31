@@ -80,6 +80,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         
         self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodMethodSearchItem.comment!, attributes: [NSFontAttributeName: Utils.getFont(size: 12)])
         
+        self.changePaymentButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
         self.changePaymentButton.titleLabel?.font = Utils.getFont(size: 18)
         self.changePaymentButton.setTitle("Cambiar pago".localized, for: .normal)
     }

@@ -126,8 +126,8 @@ open class MPStepBuilder : NSObject {
     
     
     
-    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ) -> SecrurityCodeViewController {
-        let secVC = SecrurityCodeViewController(paymentMethod: paymentMethod, cardInfo: cardInfo, callback: callback)
+    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ) -> SecurityCodeViewController {
+        let secVC = SecurityCodeViewController(paymentMethod: paymentMethod, cardInfo: cardInfo, callback: callback)
         return secVC
     }
     

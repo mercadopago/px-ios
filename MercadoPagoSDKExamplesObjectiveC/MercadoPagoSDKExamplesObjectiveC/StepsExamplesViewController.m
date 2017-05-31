@@ -67,7 +67,7 @@ int installmentsSelected = 1;
     //WALLET CONFIGS
     [MercadoPagoContext setLanguageWithLanguage:Languages_SPANISH];
     
-    [MercadoPagoContext setPublicKey:@"APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d"];
+    //[MercadoPagoContext setPublicKey:@"APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d"];
     [MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
     [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
     PaymentVaultViewController.maxCustomerPaymentMethods = 100;
@@ -147,7 +147,7 @@ int installmentsSelected = 1;
 
 - (void)createPayment {
     
-    [MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
+    //[MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
     [MercadoPagoContext setBaseURL:MERCHANT_MOCK_BASE_URL];
     [MercadoPagoContext setPaymentURI:MERCHANT_MOCK_CREATE_PAYMENT_URI];
     

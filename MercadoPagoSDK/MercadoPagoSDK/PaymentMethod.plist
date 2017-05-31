@@ -22,7 +22,7 @@
 		<key>first_color</key>
 		<string>405B72</string>
 		<key>image_name</key>
-		<string>icoTc_master</string>
+		<string>icoTc_debmaster</string>
 		<key>font_color</key>
 		<string>FFFFFF</string>
 		<key>editing_font_color</key>
@@ -56,7 +56,7 @@
 		<key>first_color</key>
 		<string>001D77</string>
 		<key>image_name</key>
-		<string>icoTc_visa</string>
+		<string>icoTc_debvisa</string>
 		<key>label_mask</key>
 		<string>XXXX XXXX XXXX XXXX</string>
 		<key>editText_mask</key>
@@ -357,6 +357,51 @@
 		<string>FFFFFF</string>
 		<key>editing_font_color</key>
 		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
+	<key>maestro_19</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_maestro</string>
+		<key>first_color</key>
+		<string>405B72</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXXXXXXX XXXXXXXXXX</string>
+		<key>editText_mask</key>
+		<string>XXXXXXXXX XXXXXXXXXX</string>
+	</dict>
+	<key>maestro_18</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_maestro</string>
+		<key>first_color</key>
+		<string>405B72</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXXXXXXXX XXXXX XXX</string>
+		<key>editText_mask</key>
+		<string>XXXXXXXXXX XXXXX XXX</string>
+	</dict>
+	<key>debcabal</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_debcabal</string>
+		<key>first_color</key>
+		<string>D4B44B</string>
+		<key>font_color</key>
+		<string>333333</string>
+		<key>editing_font_color</key>
+		<string>333333</string>
 		<key>label_mask</key>
 		<string>XXXX XXXX XXXX XXXX</string>
 		<key>editText_mask</key>

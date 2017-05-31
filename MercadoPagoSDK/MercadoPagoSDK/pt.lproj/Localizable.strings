@@ -10,6 +10,7 @@
 "invalid_cvv_length" = "Digite os %1$s números do código de segurança";
 "invalid_field" = "Verifique este dado";
 "invalid_card_length" = "Digite os %1$s números do cartão de crédito";
+"invalid_card_length_general" = "Entre todos os números de cartão";
 "security_code" = "Código de segurança";
 "cod_seg_desc" = "Últimos %1$s dígitos do verso do cartão de crédito";
 "cod_seg_desc_amex" = "%1$s dígitos da frente do cartão de crédito";
@@ -168,3 +169,19 @@
 
 "Términos y Condiciones"="Termos e Condições";
 "Verifique su conexión a internet e intente nuevamente"="Sem conexão";
+
+"Pagáras " = "Você pagará ";
+
+"ryc_title_default"=" no ";
+"ryc_title_cargavirtual"=" no ";
+"ryc_title_redlink_bank_transfer"=" com ";
+"ryc_title_bancomer_bank_transfer"=" com ";
+"ryc_title_serfin_bank_transfer"=" com ";
+"ryc_title_banamex_bank_transfer"=" com ";
+
+"ryc_complementary_bancomer_bank_transfer"="Internet Banking de ";
+"ryc_complementary_serfin_bank_transfer"="Internet Banking de ";
+"ryc_complementary_redlink_bank_transfer"="Internet Banking de ";
+"ryc_complementary_banamex_bank_transfer"="Internet Banking de ";
+"ryc_complementary_banamex_atm"="caixa eletrônico de ";
+"ryc_complementary_redlink_atm"="caixa eletrônico de ";

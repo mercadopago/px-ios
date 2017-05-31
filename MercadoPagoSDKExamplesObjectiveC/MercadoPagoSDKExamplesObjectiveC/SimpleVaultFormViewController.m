@@ -71,7 +71,7 @@ UILabel *identificationType;
     }
     
     if (!errorOcurred) {
-        [MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
+        //[MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
         [MercadoPagoContext setBaseURL:MERCHANT_MOCK_BASE_URL];
         [MercadoPagoContext setPaymentURI:MERCHANT_MOCK_CREATE_PAYMENT_URI];
         NSInteger installments = (selectedPayerCost == nil) ? 1 : selectedPayerCost.installments;

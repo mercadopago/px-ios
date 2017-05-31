@@ -71,7 +71,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.showLoading()
         self.navigationItem.rightBarButtonItem = nil
         self.navBarBackgroundColor = UIColor.px_white()
-        self.navBarTextColor = !self.viewModel.isPreferenceLoaded() ? UIColor.primaryColor() : UIColor.px_blueMercadoPago()
+        self.navBarTextColor = UIColor.primaryColor()
         
         
     }
@@ -147,30 +147,28 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if self.viewModel.isTitleCellFor(indexPath: indexPath){
             return getMainTitleCell(indexPath : indexPath)
-        } else if indexPath.section == 1 {
-            switch indexPath.row {
-            case 0:
-                return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel.preference!.getAmount())
-            case 1:
-                var title = "Total".localized
-                var addSeparatorLine = false
-                if self.viewModel.payerCost != nil {
-                    title = "Pagas".localized
-                    addSeparatorLine = true
-                }
-                return self.getPurchaseDetailCell(indexPath: indexPath, title : title, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.payerCost, addSeparatorLine: addSeparatorLine)
-            case 2:
-                if self.viewModel.isPaymentMethodSelectedCard() {
-                    return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.payerCost!.totalAmount, addSeparatorLine: false)
-                }
-                return self.getConfirmPaymentButtonCell(indexPath: indexPath)
-            default:
-                return self.getConfirmPaymentButtonCell(indexPath: indexPath)
-            }
-        } else if indexPath.section == 2 {
-                return self.getPurchaseItemDetailCell(indexPath: indexPath)
+            
+        } else if self.viewModel.isProductlCellFor(indexPath: indexPath){
+            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel.preference!.getAmount())
+        
+        } else if self.viewModel.isInstallmentsCellFor(indexPath: indexPath) {
+            let title = "Pagas".localized
+            let addSeparatorLine = true
+            return self.getPurchaseDetailCell(indexPath: indexPath, title : title, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.payerCost, addSeparatorLine: addSeparatorLine)
+        
+        } else if self.viewModel.isTotalCellFor(indexPath: indexPath){
+            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmmount(), addSeparatorLine: false)
+        } else if self.viewModel.isConfirmAdditionalInfoFor(indexPath: indexPath){
+            return self.getConfirmAddtionalInfo(indexPath: indexPath, payerCost: self.viewModel.payerCost)
+        
+        } else if self.viewModel.isConfirmButtonCellFor(indexPath: indexPath){
+            return self.getConfirmPaymentButtonCell(indexPath: indexPath)
+        
+        } else if self.viewModel.isItemCellFor(indexPath: indexPath){
+            return self.getPurchaseItemDetailCell(indexPath: indexPath)
+        
         } else if indexPath.section == 3 {
             switch indexPath.row {
             case 0:
@@ -423,6 +421,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
         
+        let confirmAddtionalInfoCFT = UINib(nibName: "ConfirmAdditionalInfoTableViewCell", bundle: self.bundle)
+        self.checkoutTable.register(confirmAddtionalInfoCFT, forCellReuseIdentifier: "confirmAddtionalInfoCFT")
+        
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .none
@@ -431,7 +432,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
         let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
         payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra".localized)
-        payerCostTitleTableViewCell.title.textColor = UIColor.px_blueMercadoPago()
+        payerCostTitleTableViewCell.title.textColor = UIColor.primaryColor()
         payerCostTitleTableViewCell.cell.backgroundColor = UIColor.px_white()
         titleCell = payerCostTitleTableViewCell
         return payerCostTitleTableViewCell
@@ -455,6 +456,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return purchaseSimpleDetailTableViewCell
     }
     
+    private func getConfirmAddtionalInfo( indexPath: IndexPath, payerCost: PayerCost?) -> UITableViewCell{
+        let confirmAdditionalInfoCFT = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAddtionalInfoCFT", for: indexPath) as! ConfirmAdditionalInfoTableViewCell
+        confirmAdditionalInfoCFT.fillCell(payerCost: payerCost)
+        return confirmAdditionalInfoCFT
+    }
     
     private func getConfirmPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell{
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
@@ -593,6 +599,9 @@ open class CheckoutViewModel {
         if self.shippingIncluded {
             numberOfRows = numberOfRows + 1
         }
+        if hasPayerCostAddionalInfo() {
+            numberOfRows += 1
+        }
         
         // Total
         numberOfRows = numberOfRows + 1
@@ -601,7 +610,7 @@ open class CheckoutViewModel {
     }
     
     func heightForRow(_ indexPath : IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        if isTitleCellFor(indexPath: indexPath) {
             return 60
         } else if indexPath.section == 1 {
             switch indexPath.row {
@@ -615,6 +624,8 @@ open class CheckoutViewModel {
                 return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
             case 2:
                 return (self.isPaymentMethodSelectedCard()) ? PurchaseSimpleDetailTableViewCell.ROW_HEIGHT : ConfirmPaymentTableViewCell.ROW_HEIGHT
+            case 3:
+                return hasPayerCostAddionalInfo() ? ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT : ConfirmPaymentTableViewCell.ROW_HEIGHT
             default:
                 return ConfirmPaymentTableViewCell.ROW_HEIGHT
             }
@@ -641,5 +652,66 @@ open class CheckoutViewModel {
     
     func shouldDisplayNoRate() -> Bool {
         return self.payerCost != nil && !self.payerCost!.hasInstallmentsRate() && self.payerCost!.installments != 1
+    }
+    func getTotalAmmount() -> Double {
+        if let payerCost = payerCost {
+            return payerCost.totalAmount
+        }
+        return self.preference!.getAmount()
+    }
+    
+    func hasPayerCostAddionalInfo() -> Bool {
+        if payerCost?.getCFTValue() != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func isTitleCellFor(indexPath: IndexPath) -> Bool{
+        return indexPath.section == 0
+    }
+    
+    func isProductlCellFor(indexPath: IndexPath) -> Bool{
+        return indexPath.section == 1 && indexPath.row == 0
+    }
+    
+    func isInstallmentsCellFor(indexPath: IndexPath) -> Bool{
+        if indexPath.section == 1 && indexPath.row == 1 {
+            return isPaymentMethodSelectedCard()
+        } else {
+            return false
+        }
+    }
+    func isTotalCellFor(indexPath: IndexPath) -> Bool {
+        if isPaymentMethodSelectedCard() {
+            return indexPath.section == 1 && indexPath.row == 2
+        } else {
+            return indexPath.section == 1 && indexPath.row == 1
+        }
+    }
+    
+    func isConfirmButtonCellFor(indexPath: IndexPath) -> Bool {
+        var row = 2
+        if isPaymentMethodSelectedCard() {
+            row += 1
+            if hasPayerCostAddionalInfo(){
+                row += 1
+            }
+            return indexPath.section == 1 && indexPath.row == row
+        } else {
+            return indexPath.section == 1 && indexPath.row == row
+        }
+    }
+    
+    func isItemCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 2
+    }
+    
+    func isConfirmAdditionalInfoFor(indexPath: IndexPath) -> Bool {
+        if hasPayerCostAddionalInfo() {
+            return indexPath.section == 1 && indexPath.row == 3
+        }
+        return false
     }
 }

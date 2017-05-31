@@ -39,20 +39,20 @@ class PayerCostCardTableViewCell: UITableViewCell {
         
         if let paymentMethod = paymentMethod{
             
-            self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
-            self.cardView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
             self.cardFront?.cardLogo.alpha = 1
-            let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
             if let token = token{
           //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
-                let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
+                self.cardFront?.cardLogo.image =  paymentMethod.getImage(bin: token.getCardBin())
+                self.cardView.backgroundColor = paymentMethod.getColor(bin: token.getCardBin())
+                let fontColor = paymentMethod.getFontColor(bin: token.getCardBin())
+                let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: token.getCardBin()), completeEmptySpaces: true, leftToRight: false)
                 cardFront?.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
+                cardFront?.cardNumber.textColor =  fontColor
             }
             
             cardFront?.cardName.text = ""
             cardFront?.cardExpirationDate.text = ""
             cardFront?.cardNumber.alpha = 0.8
-            cardFront?.cardNumber.textColor =  fontColor
         }
     }
     func fadeCard(){

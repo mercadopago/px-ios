@@ -17,12 +17,14 @@ class ConfirmEmailTableViewCell: UITableViewCell {
     }
     func fillCell(payment: Payment, instruction: Instruction?) -> Void {
         label.font = Utils.getFont(size: label.font.pointSize)
-        if let instruction = instruction?.secondaryInfo?[0] {
-            label.text = instruction
-        } else if payment.status == "approved"{
-            label.text = ("Te enviaremos este comprobante a %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(payment.payer.email!)")
-        } else {
-            label.text = "También enviamos el código a tu email".localized
+        if !Array.isNullOrEmpty(instruction?.secondaryInfo) {
+            if let instruction = instruction?.secondaryInfo?[0] {
+                label.text = instruction
+            } else if payment.status == "approved"{
+                label.text = ("Te enviaremos este comprobante a %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(payment.payer.email!)")
+            } else {
+                label.text = "También enviamos el código a tu email".localized
+            }
         }
     }
 }

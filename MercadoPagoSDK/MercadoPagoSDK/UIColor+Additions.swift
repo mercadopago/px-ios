@@ -131,6 +131,10 @@ extension UIColor {
         return MercadoPagoContext.getComplementaryColor()
     }
     
+    class public func cardDefaultColor() -> UIColor {
+        return UIColor(netHex: 0xEEEEEE)
+    }
+    
    
     
     func lighter() -> UIColor {

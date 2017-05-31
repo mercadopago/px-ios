@@ -16,6 +16,7 @@ class ConfirmPaymentTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.confirmPaymentButton.backgroundColor = UIColor.primaryColor()
         self.confirmPaymentButton.layer.cornerRadius = 4
         self.confirmPaymentButton.titleLabel?.font = Utils.getFont(size: 16)
         self.confirmPaymentButton.setTitle("Confirmar".localized,for: .normal)

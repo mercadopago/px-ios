@@ -112,8 +112,11 @@ open class MockBuilder: NSObject {
     }
     
     
-    class func buildPaymentMethod(_ id : String, name : String? = "", paymentTypeId : String? = "credit_card") -> PaymentMethod {
-        let paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
+    class func buildPaymentMethod(_ id : String, name : String? = "", paymentTypeId : String? = "credit_card", multipleSettings : Bool? = false) -> PaymentMethod {
+        var paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
+        if multipleSettings == true{
+            paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethodMultipleSettings")!)
+        }
         paymentMethod._id = id
         paymentMethod.name = name
         paymentMethod.paymentTypeId = paymentTypeId

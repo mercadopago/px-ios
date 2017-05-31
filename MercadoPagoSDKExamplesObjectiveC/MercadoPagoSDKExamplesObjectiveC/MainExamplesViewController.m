@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
+    //[MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
 }
 
 - (void)didReceiveMemoryWarning {

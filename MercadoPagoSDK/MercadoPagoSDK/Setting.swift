@@ -17,18 +17,19 @@ open class Setting : NSObject {
         super.init()
     }
     
-    open class func getSettingByBin(_ settings: [Setting]!, bin: String!) -> Setting? {
-        var selectedSetting : Setting? = nil
+    open class func getSettingByBin(_ settings: [Setting]!, bin: String!) -> [Setting]? {
+        var selectedSetting = [Setting] ()
         if settings != nil && settings.count > 0 {
             for setting in settings {
                 
                 if "" != bin && Regex(setting.binMask!.pattern! + ".*").test(bin) &&
                     (String.isNullOrEmpty(setting.binMask!.exclusionPattern) || !Regex(setting.binMask!.exclusionPattern! + ".*").test(bin!)) {
-                    selectedSetting = setting
+                    selectedSetting.append(setting)
                 }
             }
+
         }
-        return selectedSetting
+        return selectedSetting.isEmpty ? nil : selectedSetting
     }
     
     open class func fromJSON(_ json : NSDictionary) -> Setting {

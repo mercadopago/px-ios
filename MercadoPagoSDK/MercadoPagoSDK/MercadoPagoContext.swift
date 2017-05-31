@@ -46,6 +46,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var decorationPreference = DecorationPreference()
 
+    var enableBinaryMode = false
+    
     var language: String = NSLocale.preferredLanguages[0]
     
     open class var PUBLIC_KEY : String {
@@ -58,6 +60,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
 
     open class func isAuthenticatedUser() -> Bool{
         return !sharedInstance.payer_access_token.isEmpty
+    }
+    
+    open class func isBinaryModeEnabled() -> Bool{
+        return sharedInstance.enableBinaryMode
     }
 
     public func flavor() -> Flavor!{
@@ -73,7 +79,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     open func sdkVersion() -> String!{
-        return "2.2.9"
+        return "2.2.11"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
@@ -312,6 +318,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
     }
     
+    open class func setEnableBinaryMode(flag : Bool) {
+        sharedInstance.enableBinaryMode = flag
+    }
+    
     open class func setAccountMoneyAvailable(accountMoneyAvailable : Bool) {
         sharedInstance.account_money_available = accountMoneyAvailable
     }
@@ -375,7 +385,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
     
 
-    
+
     
     
     open class func isCustomerInfoAvailable() -> Bool {

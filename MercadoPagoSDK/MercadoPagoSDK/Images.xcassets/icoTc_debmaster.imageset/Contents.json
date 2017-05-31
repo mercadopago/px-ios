@@ -5,17 +5,17 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "logoMastercard.png",
+      "filename" : "logoMastercardDebito.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "logoMastercard@2x.png",
+      "filename" : "logoMastercardDebito@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "logoMastercard@3x.png",
+      "filename" : "logoMastercardDebito@3x.png",
       "scale" : "3x"
     }
   ],

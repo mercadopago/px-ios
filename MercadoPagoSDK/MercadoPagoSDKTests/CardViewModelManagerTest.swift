@@ -64,25 +64,55 @@ class CardViewModelManagerTest: BaseTest {
     func testGetLabelTextColorDefaultColor() {
         self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
         
-        let color = self.cardFormManager!.getLabelTextColor()
+        let color = self.cardFormManager!.getLabelTextColor(cardNumber: nil)
         XCTAssertEqual(color, MPLabel.defaultColorText)
     }
     
-    func testGetLabelTextColorPaymentMethodColor() {
+    func testGetPMLabelColors() {
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let cardNumber = "4242424242424242"
         self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [paymentMethod], paymentSettings: nil)
         
-        let color = self.cardFormManager!.getLabelTextColor()
-        XCTAssertEqual(MercadoPago.getFontColorFor(paymentMethod), color)
+        let fontColor = self.cardFormManager!.getLabelTextColor(cardNumber: cardNumber)
+        XCTAssertEqual(fontColor, paymentMethod.getFontColor(bin: "424242"))
+        
+        let editingFontColor = self.cardFormManager!.getEditingLabelColor(cardNumber: cardNumber)
+        XCTAssertEqual(editingFontColor, paymentMethod.getEditingFontColor(bin: "424242"))
     }
     
-    func testGetLabelTextColorCustomerCard() {
-        let customerCard = MockBuilder.buildCard(paymentMethodId: "master")
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard : customerCard, paymentSettings: nil)
+    func testGetPMLabelColorsForMultipleSettings() {
+        let paymentMethod = MockBuilder.buildPaymentMethod("maestro", name : "Maestro", paymentTypeId : "debit_card", multipleSettings: true)
+        let firstSettingCardNumber = "501041456060594693"
+        let secondSettingCardNumber = "5010811232093852985"
+        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [paymentMethod], paymentSettings: nil)
         
-        let expectedPaymentMethod = MockBuilder.buildPaymentMethod("master")
-        XCTAssertEqual(MercadoPago.getFontColorFor(expectedPaymentMethod), self.cardFormManager!.getLabelTextColor())
+        let firstBin = firstSettingCardNumber.substring(to: (firstSettingCardNumber.characters.index(firstSettingCardNumber.startIndex, offsetBy: 6)))
+        let secondBin = secondSettingCardNumber.substring(to: (secondSettingCardNumber.characters.index(firstSettingCardNumber.startIndex, offsetBy: 6)))
+        
+        //First Setting Colors
+        let firtsFontColor = self.cardFormManager!.getLabelTextColor(cardNumber: firstSettingCardNumber)
+        XCTAssertEqual(firtsFontColor, paymentMethod.getFontColor(bin: firstBin))
+        
+        let firstEditingFontColor = self.cardFormManager!.getEditingLabelColor(cardNumber: firstSettingCardNumber)
+        XCTAssertEqual(firstEditingFontColor, paymentMethod.getEditingFontColor(bin: firstBin))
+
+        //Second Setting Colors
+        let secondFontColor = self.cardFormManager!.getLabelTextColor(cardNumber: secondSettingCardNumber)
+        XCTAssertEqual(secondFontColor, paymentMethod.getFontColor(bin: secondBin))
+        
+        let secondEditingFontColor = self.cardFormManager!.getEditingLabelColor(cardNumber: secondSettingCardNumber)
+        XCTAssertEqual(secondEditingFontColor, paymentMethod.getEditingFontColor(bin: secondBin))
     }
+
+    
+    
+//    func testGetLabelTextColorCustomerCard() {
+//        let customerCard = MockBuilder.buildCard(paymentMethodId: "master")
+//        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard : customerCard, paymentSettings: nil)
+//        
+//        let expectedPaymentMethod = MockBuilder.buildPaymentMethod("master")
+//        XCTAssertEqual(MercadoPago.getFontColorFor(expectedPaymentMethod), self.cardFormManager!.getLabelTextColor())
+//    }
    
     /*
      *

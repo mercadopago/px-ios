@@ -36,7 +36,10 @@ class CardViewModelManager: NSObject {
     var cvvEmpty: Bool = true
     var cardholderNameEmpty: Bool = true
     
+    let animationDuration: Double = 0.6
+    
     var promos : [Promo]?
+    
     
     init(amount : Double, paymentMethods : [PaymentMethod]?, paymentMethod : [PaymentMethod]? = nil, customerCard : CardInformation? = nil, token : Token? = nil, paymentSettings : PaymentPreference?){
         self.amount = amount
@@ -68,12 +71,26 @@ class CardViewModelManager: NSObject {
         return lenght
     }
  
-    func getLabelTextColor() -> UIColor {
-        return (self.guessedPMS == nil) ? MPLabel.defaultColorText : MercadoPago.getFontColorFor(self.getGuessedPM()!)!
+    func getLabelTextColor(cardNumber: String?) -> UIColor {
+        if let cardNumber = cardNumber{
+            if let bin = getBIN(cardNumber){
+                if let guessedPM = self.getGuessedPM(){
+                    return (guessedPM.getFontColor(bin: bin))
+                }
+            }
+        }
+        return MPLabel.defaultColorText
     }
 
-    func getEditingLabelColor() -> UIColor {
-        return (self.guessedPMS == nil) ? MPLabel.highlightedColorText : MercadoPago.getEditingFontColorFor(getGuessedPM()!)!
+    func getEditingLabelColor(cardNumber: String?) -> UIColor {
+        if let cardNumber = cardNumber{
+            if let bin = getBIN(cardNumber){
+                if let guessedPM = self.getGuessedPM(){
+                    return (guessedPM.getEditingFontColor(bin: bin))
+                }
+            }
+        }
+        return MPLabel.highlightedColorText
     }
     
     func getExpirationMonthFromLabel(_ expirationDateLabel : MPLabel)->Int {

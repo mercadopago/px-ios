@@ -525,6 +525,61 @@
     &quot;max_allowed_amount&quot;: 250000,
     &quot;accreditation_time&quot;: 2880
   }</string>
+	<key>PaymentMethodMultipleSettings</key>
+	<string>{
+    &quot;id&quot;: &quot;maestro&quot;,
+    &quot;name&quot;: &quot;Maestro&quot;,
+    &quot;payment_type_id&quot;: &quot;debit_card&quot;,
+    &quot;status&quot;: &quot;active&quot;,
+    &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/maestro.gif&quot;,
+    &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/maestro.gif&quot;,
+    &quot;deferred_capture&quot;: &quot;unsupported&quot;,
+    &quot;settings&quot;: [
+      {
+        &quot;bin&quot;: {
+          &quot;pattern&quot;: &quot;^(501020|501021|501023|501062|501038|501057|588729|501041|501056|501075)&quot;,
+          &quot;exclusion_pattern&quot;: null,
+          &quot;installments_pattern&quot;: &quot;^(501020|501021|501023|501062|501038|501057|588729|501041|501056|501075)&quot;
+        },
+        &quot;card_number&quot;: {
+          &quot;length&quot;: 18,
+          &quot;validation&quot;: &quot;standard&quot;
+        },
+        &quot;security_code&quot;: {
+          &quot;mode&quot;: &quot;mandatory&quot;,
+          &quot;length&quot;: 3,
+          &quot;card_location&quot;: &quot;back&quot;
+        }
+      },
+      {
+        &quot;bin&quot;: {
+          &quot;pattern&quot;: &quot;^(501080|501081)&quot;,
+          &quot;exclusion_pattern&quot;: null,
+          &quot;installments_pattern&quot;: &quot;^(501080|501081)&quot;
+        },
+        &quot;card_number&quot;: {
+          &quot;length&quot;: 19,
+          &quot;validation&quot;: &quot;standard&quot;
+        },
+        &quot;security_code&quot;: {
+          &quot;mode&quot;: &quot;mandatory&quot;,
+          &quot;length&quot;: 3,
+          &quot;card_location&quot;: &quot;back&quot;
+        }
+      }
+    ],
+    &quot;additional_info_needed&quot;: [
+      &quot;cardholder_identification_number&quot;,
+      &quot;cardholder_identification_type&quot;,
+      &quot;cardholder_name&quot;,
+      &quot;issuer_id&quot;
+    ],
+    &quot;min_allowed_amount&quot;: 0,
+    &quot;max_allowed_amount&quot;: 250000,
+    &quot;accreditation_time&quot;: 1440,
+    &quot;financial_institutions&quot;: [
+    ]
+  }</string>
 	<key>PaymentMethodSearch</key>
 	<string>{
    &quot;groups&quot;:[

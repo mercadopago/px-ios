@@ -104,13 +104,13 @@ open class PayerCostViewController: MercadoPagoUIViewController {
         
         if(self.paymentMethod != nil){
             
-            self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)
-            self.cardView.backgroundColor = MercadoPago.getColorFor(self.paymentMethod!)
+            self.cardFront?.cardLogo.image =  (paymentMethod?.getImage(bin: nil))
+            self.cardView.backgroundColor =  (paymentMethod?.getColor(bin: nil))
             self.cardFront?.cardLogo.alpha = 1
-            self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
+            self.fontColor = (paymentMethod?.getFontColor(bin: nil))!
             cardFront?.cardName.text = " "
             cardFront?.cardExpirationDate.text = " "
-            let labelMask = (paymentMethod?.getLabelMask() != nil) ? paymentMethod?.getLabelMask() : "XXXX XXXX XXXX XXXX"
+            let labelMask = (paymentMethod?.getLabelMask(bin: nil) != nil) ? paymentMethod?.getLabelMask(bin: nil) : "XXXX XXXX XXXX XXXX"
             let textMaskFormaterAux = TextMaskFormater(mask: labelMask, leftToRight:false)
             cardFront?.cardNumber.text =  textMaskFormaterAux.textMasked((self.token!.lastFourDigits as String))
 
