@@ -15,7 +15,7 @@ coverage:
                                #   option: "auto" (must increase from parent commit or pull request base)
                                #   option: "X%" a static target percentage to hit
         branches:              # -> see "branch patterns" below
-        threshold: 0.25%        # allowed to drop X% and still result in a "success" commit status
+        threshold: 0.24%        # allowed to drop X% and still result in a "success" commit status
         if_no_uploads: error   # will post commit status of "error" if no coverage reports we uploaded
                                # options: success, error, failure
         if_not_found: success  # if parent is not found report status as success, error, or failure
