@@ -11,8 +11,7 @@ import UIKit
 open class MercadoPagoCheckout: NSObject {
 
     open var callbackCancel: ((Void) -> Void)?
-    
-    
+
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
@@ -23,7 +22,6 @@ open class MercadoPagoCheckout: NSObject {
 
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
-
 
     public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
@@ -582,6 +580,7 @@ open class MercadoPagoCheckout: NSObject {
         let currentViewController = self.navigationController.viewControllers
         if let checkoutVC = currentViewController.last as? ReviewScreenViewController {
             checkoutVC.showNavBar()
+            checkoutVC.viewModel.reviewScreenPreference = viewModel.reviewScreenPreference
             checkoutVC.checkoutTable.reloadData()
         }
     }
