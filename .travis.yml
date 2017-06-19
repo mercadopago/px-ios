@@ -25,7 +25,7 @@ branches:
 # - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+# - gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c
 - cd ../scripts
 - "./run_tests_on_devices.sh"
 
