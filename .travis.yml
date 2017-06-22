@@ -7,8 +7,6 @@ xcode_scheme: MercadoPagoSDK
 xcode_sdk: iphonesimulator
 before_script:
   - cd MercadoPagoSDK
-  - xcrun simctl list
-  - brew update
 
 branches:
   only: 
@@ -21,7 +19,6 @@ install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c
 - cd ../scripts
 - "./run_tests_on_devices.sh"
 
