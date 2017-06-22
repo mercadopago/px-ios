@@ -52,7 +52,7 @@ open class CardsAdminViewModel: NSObject {
         if numberOfCells == 0 {
             return 0
         }
-
+        
         let section: Int
         let row = indexPath.row
         if row % 2 == 1 {

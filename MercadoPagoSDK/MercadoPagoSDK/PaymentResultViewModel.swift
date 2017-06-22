@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
+class PaymentResultViewModel: NSObject {
 
     var paymentResult: PaymentResult!
     var callback: ( _ status: PaymentResult.CongratsState) -> Void
@@ -25,6 +25,8 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
         self.paymentResultScreenPreference = paymentResultScreenPreference
     }
 
+    
+    /* TODO CLEAN
     // MPPaymentTrackInformer Implementation
 
     open func getMethodId() -> String! {
@@ -50,7 +52,7 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
     open func getIssuerId() -> String! {
         return String(describing: paymentResult.paymentData?.issuer?._id)
     }
-
+*/
     open func getContentCell() -> PaymentResultContentView {
         if contentCell == nil {
             contentCell = PaymentResultContentView(paymentResult: self.paymentResult, paymentResultScreenPreference: self.paymentResultScreenPreference)
@@ -104,7 +106,6 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
 
     func setCallbackWithTracker() -> (_ paymentResult: PaymentResult, _ status: PaymentResult.CongratsState) -> Void {
         let callbackWithTracker : (_ paymentResutl: PaymentResult, _ status: PaymentResult.CongratsState) -> Void = {(paymentResult, status) in
-            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getLayoutName(), action: self.getPaymentAction(), result: nil)
             self.callback(status)
         }
         return callbackWithTracker

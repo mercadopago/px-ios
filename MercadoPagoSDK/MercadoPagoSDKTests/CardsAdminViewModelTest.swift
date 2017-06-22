@@ -35,7 +35,7 @@ class CardsAdminViewModelTest: BaseTest {
         XCTAssertEqual(cardAdminViewModelWithExtraOption.numberOfOptions(), 4, "La cantidad de items a mostrar no se calcula correctametne. (Cantidad de tarjeas y una opcion extra)")
     }
 
-    func testHeights() {
+    func testHeights() { // Solo funciona con el emulador en iPhone SE
         let json: NSDictionary = MockManager.getMockFor("Card")!
         let cardFromJSON = Card.fromJSON(json)
         let dummyCards = [cardFromJSON]

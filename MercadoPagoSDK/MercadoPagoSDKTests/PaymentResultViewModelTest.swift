@@ -25,14 +25,6 @@ class PaymentResultViewModelTest: BaseTest {
         self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (_) in})
     }
 
-    func testPaymentTrackingInfo() {
-        XCTAssertEqual(self.instance.getMethodId(), self.paymentResult.paymentData?.paymentMethod._id)
-        XCTAssertEqual(self.instance.getStatus(), self.paymentResult.status)
-        XCTAssertEqual(self.instance.getStatusDetail(), self.paymentResult.statusDetail)
-        XCTAssertEqual(self.instance.getTypeId(), self.paymentResult.paymentData?.paymentMethod.paymentTypeId)
-        XCTAssertEqual(self.instance.getInstallments(), String(describing: paymentResult.paymentData?.payerCost?.installments))
-        XCTAssertEqual(self.instance.getIssuerId(), String(describing: paymentResult.paymentData?.issuer?._id))
-    }
 
     func testColor() {
         paymentResult.status = "lala"
