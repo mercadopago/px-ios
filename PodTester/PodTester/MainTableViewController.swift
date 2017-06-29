@@ -48,6 +48,7 @@ class MainTableViewController: UITableViewController {
     open var accessToken: String!
     open var prefID: String!
     open var customCheckoutPref: CheckoutPreference!
+    open var showMaxCards: Int!
     open var color: UIColor!
     open var configJSON: String!
 
@@ -193,6 +194,11 @@ class MainTableViewController: UITableViewController {
         }
 
         let flowPref: FlowPreference = FlowPreference()
+        
+        if let maxShowCards = self.showMaxCards {
+            flowPref.setMaxSavedCardsToShow(fromInt: maxShowCards)
+        }
+        
         showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
         MercadoPagoCheckout.setFlowPreference(flowPref)
 
@@ -216,7 +222,7 @@ class MainTableViewController: UITableViewController {
                 self.navigationController?.popToRootViewController(animated: false)
             })
         }
-
+        
         checkout.setCallbackCancel {
             print("Se cerro al flujo")
             self.navigationController?.popToRootViewController(animated: true)
@@ -228,11 +234,23 @@ class MainTableViewController: UITableViewController {
 
     /// Wallet Checkout
     func startWalletCheckout() {
-        loadCheckout(showRyC: false, setPaymentDataCallback: true)
+        if !String.isNullOrEmpty(self.configJSON) {
+            
+            tryConvertStringtoDictionary(String: self.configJSON)
+            loadCheckout(showRyC: false, setPaymentDataCallback: true)
+        } else {
+            loadCheckout(showRyC: false, setPaymentDataCallback: true)
+        }
     }
 
     func startWalletReviewAndConfirm() {
-        loadCheckout(paymentData: self.paymentData, setPaymentDataConfirmCallback: true)
+        if !String.isNullOrEmpty(self.configJSON) {
+            
+            tryConvertStringtoDictionary(String: self.configJSON)
+            loadCheckout(paymentData: self.paymentData, setPaymentDataConfirmCallback: true)
+        } else {
+            loadCheckout(paymentData: self.paymentData, setPaymentDataConfirmCallback: true)
+        }
     }
 
     func startWalletCongrats() {
@@ -249,13 +267,8 @@ class MainTableViewController: UITableViewController {
     /// F3
     func startCheckout() {
         if !String.isNullOrEmpty(self.configJSON) {
-
-            do {
-                let JSON = try convertStringToDictionary(self.configJSON)
-                useJSONConfig(json: JSON!)
-            } catch {
-                print("Error")
-            }
+            
+            tryConvertStringtoDictionary(String: self.configJSON)
             loadCheckout()
         } else {
             loadCheckout()
@@ -270,25 +283,37 @@ class MainTableViewController: UITableViewController {
     func useJSONConfig(json: [String:AnyObject]) {
 
         let startFor: String = json["start_for"] != nil ?  json["start_for"] as! String : ""
-        let prefID: String = json["pref_id"] != nil ?  json["pref_id"] as! String : ""
-        let PK: String = json["public_key"] != nil ?  json["public_key"] as! String : ""
-        let site: String = json["site_id"] != nil ?  json["site_id"] as! String : ""
-        let payerEmail: String = json["payer_email"] != nil ?  json["payer_email"] as! String : ""
-        let items: [NSDictionary] = json["items"] != nil ?  json["items"] as! [NSDictionary] : []
+        let prefID : String = json["pref_id"] != nil ?  json["pref_id"] as! String : ""
+        let PK : String = json["public_key"] != nil ?  json["public_key"] as! String : ""
+        let site : String = json["site_id"] != nil ?  json["site_id"] as! String : ""
+        let payerEmail : String = json["payer_email"] != nil ?  json["payer_email"] as! String : ""
+        let items : [NSDictionary] = json["items"] != nil ?  json["items"] as! [NSDictionary] : []
+        let maxCards = json["show_max_saved_cards"] != nil ? json["show_max_saved_cards"] as? Int : nil
 
         switch startFor {
         case startForOptions.payment.rawValue:
             self.publicKey = PK
             self.prefID = prefID
+            self.showMaxCards = maxCards
         case startForOptions.paymentData.rawValue:
             self.publicKey = PK
             MercadoPagoContext.setSiteID(site)
             let pref = createCheckoutPreference(payerEmail: payerEmail, site: site, itemsDictArray: items)
             self.customCheckoutPref = pref
+            self.showMaxCards = maxCards
         default: break
         }
     }
-
+    
+    func tryConvertStringtoDictionary(String: String) {
+        do {
+            let JSON = try convertStringToDictionary(String)
+            useJSONConfig(json: JSON!)
+        } catch {
+            print("Error")
+        }
+    }
+    
     func createCheckoutPreference(payerEmail: String, site: String, itemsDictArray: [NSDictionary]) -> CheckoutPreference {
         let payer = Payer(email: payerEmail)
         var items: [Item] = []

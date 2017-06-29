@@ -29,6 +29,7 @@
 		0F5EBE673EDA6E186F2BEC2388DE9179 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC08BC3DD0BD4715566A6AAEAD36A41 /* CardInfo.swift */; };
 		1033E5FD2F59BA5E78D3A92D437B110B /* RevampImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A7C98B46BC34208D832099766CF1F58 /* RevampImages.xcassets */; };
 		106F71B32629509F5EC5D5167521D6D5 /* Refund.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD52EAD938F1762D3D9BEB4CEACD9AC /* Refund.swift */; };
+		1085C2CF3FD7CF35F091B09306479CBF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		1293DD652F1388D8367A2D283AE9AC5B /* Installment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25018732B64E7A7AF778932EC495C4EE /* Installment.swift */; };
 		13CD96B6EADAD14E98BDFF55F6FFFA31 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47093FE55650A2A1347EA4604ACAD0 /* Utils.swift */; };
 		14AF50C6717E68308E4B496199E81E34 /* ConfirmInstallmentsTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = FA0A4E73ED5B41629F3A5061EA0FC312 /* ConfirmInstallmentsTableViewCell.xib */; };
@@ -36,7 +37,6 @@
 		156A9EFB50023B38E735EAE25A555F19 /* CardNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEB8644C464ADF8AD1A66AE8225047B /* CardNumber.swift */; };
 		15C212434A6987F0E053880595DCFBBA /* ErrorViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = D7B9D01CA2D52BA6FEA90B4DD3375BDC /* ErrorViewController.xib */; };
 		161130A1B7B7DB8AA62DA0C0398979A7 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26179D185D85C3C2A6ED9CC16373A64 /* Updatable.swift */; };
-		1647724B0BCD723F14BF96D996E537E1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		178C60E7C57016A89C33DA360141F1C5 /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 935E674CF8385FD3498B25F0926460CB /* UIView+RotateView.m */; };
 		197456067A2F765878E79058E0732BE8 /* MercadoPagoCheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275E15ACA8FE9E520FC696DD5822D565 /* MercadoPagoCheckoutViewModel.swift */; };
 		19B35DAA98C82A8C0FF074729DF6084E /* InstructionsSubtitleTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = CF4E110C503303B67E2E452B3D02729C /* InstructionsSubtitleTableViewCell.xib */; };
@@ -110,6 +110,7 @@
 		55B55AB0CFD9F36D6C6E30CDC78A5C06 /* MercadoPagoSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A4EEA3F30DAAC14882BC826D446D9ED5 /* MercadoPagoSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5717973F23437C8D75A5D30A5A56CEE5 /* Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D48CAB4865016C5DD4A2BB27C543488 /* Phone.swift */; };
 		599D282D77E2998A4DFCE5289CB78F04 /* IssuerRowTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 30F6A070C3EAB78FF31D3518D9420552 /* IssuerRowTableViewCell.xib */; };
+		5B1B3BB315DBFD9311094327286C8C2C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		5B5ABEF822B6D530FF86F41A52B241E3 /* PaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7567F53A77FA04447F658E8830A072 /* PaymentService.swift */; };
 		601A73D45F94DE524A10C2B3F6FACAF9 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21534D7A6F472E78DF2BE5B1FF7BB60 /* Address.swift */; };
 		6125173CECBADA206E15E08374F4BB41 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 324CAC66E73B41F0593534DD5EDC8272 /* Images.xcassets */; };
@@ -128,6 +129,7 @@
 		70071845F8463379A875B9E29E2980D1 /* TextMaskFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7042E2FA853B80E7395590A16DDB8C83 /* TextMaskFormater.swift */; };
 		70187CF12697DE05CEE3A64DDB27DBB1 /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF2F512D742FE19030A6FA116EC4485 /* EntityType.swift */; };
 		70E6C85C55928B1CBE8F1E0AAF45CCB2 /* GatewayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF046440324FDDA5347A6C6E2131214 /* GatewayService.swift */; };
+		718E1718EA05232685B2CB95A5F12B92 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		71C7888C2B8830653EE1FBB768BDED74 /* AdditionalStepViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = EE6D2125F27187E1BB333D769BFE06AC /* AdditionalStepViewController.xib */; };
 		7266FDC57B1506F1E8DF8CAF545E516A /* es-CO.lproj in Resources */ = {isa = PBXBuildFile; fileRef = EF90BC9755654EA2EAA8E33F54A9C8AD /* es-CO.lproj */; };
 		72F2F509343BD78C7BC643D74C09861F /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051045305726A75A0A00E81B41FE8C6E /* PaymentResultViewController.swift */; };
@@ -188,10 +190,10 @@
 		9FC3FCA596B012494990A022C41E3535 /* UnlockCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0EBFDD065838876D064857BD4A5C3CE /* UnlockCardTableViewCell.swift */; };
 		9FCEB54E2AECAB949872880A64BCE76F /* ConfirmAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8493CD643AFB48BA2FD0F43A9FCEE0D /* ConfirmAdditionalInfoTableViewCell.swift */; };
 		A09058DA757F36622AA95F7C5BEC0C1D /* OfflinePaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1EB7FC51BD81BA08AD56B540B212E3 /* OfflinePaymentMethodCell.swift */; };
-		A3F717A965A43238C4C0EC2ED03EB9F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		A4B6B633F250EA0586F6FACA691AD470 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777E033B7DB9C03DC65C12DE62006B9 /* InstructionsViewController.swift */; };
 		A51768261132406910D78A2A64087081 /* ConfirmEmailTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 65D26A4177A4C7D59F6188FFDAC4FB19 /* ConfirmEmailTableViewCell.xib */; };
 		A57106C08E906E48AADC389FBDB3EB8A /* MLPXSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = F6C3FFD426D6D44F337BC4457949C61A /* MLPXSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A5E807AB9EB779D89C031D4F2DF37730 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		A609936DE4EEC8FE6A983D151A752503 /* ApprovedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A086D6FEECB729B2243C5C5E19D8C /* ApprovedTableViewCell.swift */; };
 		A888B300CCAEB229E0F1713B309B8307 /* PayerCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D36BA757E292D1B5435175538B10BA /* PayerCost.swift */; };
 		A966B8BAE14994719AF80CD6A56ADC3F /* FooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB78B891E77D514B511DE7D5940697C /* FooterTableViewCell.swift */; };
@@ -208,7 +210,6 @@
 		B5C2B8B1E79D0070C539F377B1765E4F /* Pods-PodTesterUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6ACB625CD0D416C82B596B917E09A0 /* Pods-PodTesterUITests-dummy.m */; };
 		B68DC3364C3CDDE066C03A91AE2B14A8 /* PaymentResultScreenPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FCBF96BC6E72BF93F4746BDC52BC7 /* PaymentResultScreenPreference.swift */; };
 		B907E1C70274E8AB348C60A6B2A9BC6C /* MPXLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500A57BEB8EA7D1BE945264FF2E605B /* MPXLoadingViewController.swift */; };
-		B941FBB1075259DFFC6F38A9F2092463 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		B969C6DEC1782D4E73F1B4D91E80061E /* MercadoPagoCheckoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1269D3F4C523922A94D7E2B0651270CB /* MercadoPagoCheckoutExtension.swift */; };
 		B9C5B0D2E7ED2C80A4DB41593509B2EF /* CardViewModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23EA8ED2945C865F523EECD75FD8268 /* CardViewModelManager.swift */; };
 		BAC8FD4EE9414E520FC2D3B9D58AC150 /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ACE164854127AA0C58CBAE08868B67B2 /* pt.lproj */; };
@@ -257,7 +258,6 @@
 		E53F83F09526BDA241354655AF096151 /* SummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B24AD8A3828F3E885D0938AEB1A744 /* SummaryRow.swift */; };
 		E6A307A96DB13F0186659D4EC88B0391 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826EC7D07F3212F4155C6A16EBDCA54 /* ServicePreference.swift */; };
 		F0AF4CF87AF87521C363DE03E1FE9714 /* AdditionalStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93097C94512922792CCCCAA5B155D2D7 /* AdditionalStepViewModel.swift */; };
-		F0DDB69B116529090649E470DA992917 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		F12427FC28B2D15CE6023CA205BB164B /* PaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B853A12B9615C46E66286D483DD0A2 /* PaymentResultViewModel.swift */; };
 		F160D9D6CF869CB86896951A3C134CF8 /* CardFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD9723C0C4DD1CCC55148C5907B82D /* CardFormViewController.swift */; };
 		F16171FAA997803746A161CFC033B126 /* CardFrontView.xib in Sources */ = {isa = PBXBuildFile; fileRef = 36D827FB1A3A4BF16D0E40B0A00C6A23 /* CardFrontView.xib */; };
@@ -404,7 +404,6 @@
 		6559740792656E4B5E2521B170FA7770 /* MercadoPagoUIViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MercadoPagoUIViewController.swift; sourceTree = "<group>"; };
 		65878ADC76C48334CAAEC2FEF5016171 /* ExitButtonTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = ExitButtonTableViewCell.xib; sourceTree = "<group>"; };
 		65D26A4177A4C7D59F6188FFDAC4FB19 /* ConfirmEmailTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = ConfirmEmailTableViewCell.xib; sourceTree = "<group>"; };
-		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		66081C73C92C7E426F693BDDF4AA9240 /* MPSDKError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPSDKError.swift; sourceTree = "<group>"; };
 		66110D056314E3C598AAA909DB52DE12 /* Pods-PodTesterTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PodTesterTests-resources.sh"; sourceTree = "<group>"; };
 		6844428FBB636C69FA4FC94C42B3B7FC /* AdditionalStepViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewController.swift; sourceTree = "<group>"; };
@@ -531,6 +530,7 @@
 		CB13F85880CF7777720D3DD523E76E4C /* Order.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		CB387937D1FF8FDAB9593363079F1E00 /* PurchaseSimpleDetailTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseSimpleDetailTableViewCell.swift; sourceTree = "<group>"; };
 		CB472007525A5542EF9A2D0D00D31325 /* PromoViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = PromoViewController.xib; sourceTree = "<group>"; };
+		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		CC5D6F321DB1B5CF8C5477CAC6A0870C /* PurchaseDetailTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = PurchaseDetailTableViewCell.xib; sourceTree = "<group>"; };
 		CF0C5DE9C41F7F895C680B93A90B4206 /* PaymentVaultViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentVaultViewController.swift; sourceTree = "<group>"; };
 		CF4E110C503303B67E2E452B3D02729C /* InstructionsSubtitleTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = InstructionsSubtitleTableViewCell.xib; sourceTree = "<group>"; };
@@ -593,7 +593,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1647724B0BCD723F14BF96D996E537E1 /* Foundation.framework in Frameworks */,
+				1085C2CF3FD7CF35F091B09306479CBF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,7 +601,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3F717A965A43238C4C0EC2ED03EB9F6 /* Foundation.framework in Frameworks */,
+				718E1718EA05232685B2CB95A5F12B92 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,7 +609,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0DDB69B116529090649E470DA992917 /* Foundation.framework in Frameworks */,
+				5B1B3BB315DBFD9311094327286C8C2C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +617,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B941FBB1075259DFFC6F38A9F2092463 /* Foundation.framework in Frameworks */,
+				A5E807AB9EB779D89C031D4F2DF37730 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -829,6 +829,14 @@
 			);
 			name = "Pods-PodTesterUITests";
 			path = "Target Support Files/Pods-PodTesterUITests";
+			sourceTree = "<group>";
+		};
+		7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -1198,7 +1206,7 @@
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
+				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1226,14 +1234,6 @@
 			);
 			name = MercadoPagoSDK;
 			path = MercadoPagoSDK;
-			sourceTree = "<group>";
-		};
-		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 		D4D15723B5974D21532205800528C205 /* MercadoPagoSDK */ = {
@@ -1465,7 +1465,7 @@
 		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
@@ -1794,49 +1794,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		086FECD69A5F46CC1B8C87606AA14199 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D405AB01A9235D3E08093F8C6253C45 /* Pods-PodTester.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-PodTester/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-PodTester/Pods-PodTester.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_PodTester;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		1B2CB2D6B62440477B019990E0F279D8 /* Release */ = {
+		1269360350B275B3AE81DEB29559D433 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5079AA142DA21360D151D6529310E221 /* Pods-PodTesterUITests.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -1868,45 +1829,80 @@
 			};
 			name = Release;
 		};
-		492B8CC19F29E6F5C3185AADC425B5D4 /* Release */ = {
+		224CA83B92810B3524159CF54FA6ADAC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17A6F20BF08B07FA181C5840399DFECC /* MercadoPagoSDK.xcconfig */;
+			baseConfigurationReference = B56A53EEA6373A42737AFACEDBAB7568 /* Pods-PodTesterUITests.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MercadoPagoSDK/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-PodTesterUITests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = MercadoPagoSDK;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PodTesterUITests/Pods-PodTesterUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PodTesterUITests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
-		538C82A736754AB646360EA2804A9D40 /* Release */ = {
+		920CEF7425363E26310B5E24655C68CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E9448642E7DC6588957BA18654635D65 /* Pods-PodTesterTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PodTesterTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PodTesterTests/Pods-PodTesterTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PodTesterTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		992154F12AD7FB79A495D03A9988CA50 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 78A088CEC929C23BD47303CEB7843250 /* Pods-PodTesterTests.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -1938,11 +1934,78 @@
 			};
 			name = Release;
 		};
-		64AA52FB84BBC2216B9F78155AE6AE38 /* Debug */ = {
+		A97036296FE6E81B83C031DCC16B6E0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D405AB01A9235D3E08093F8C6253C45 /* Pods-PodTester.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PodTester/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PodTester/Pods-PodTester.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PodTester;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BFE953AA984A30611AA64C0C00C71A0D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 17A6F20BF08B07FA181C5840399DFECC /* MercadoPagoSDK.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MercadoPagoSDK/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = MercadoPagoSDK;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C12FCD835FD835D8F5ADBAEA29D9E101 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A43DE0C28615070B785C9088A3859098 /* Pods-PodTester.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -1968,56 +2031,18 @@
 				PRODUCT_NAME = Pods_PodTester;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		8221E2493E4076FA421C2CD3E493575F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17A6F20BF08B07FA181C5840399DFECC /* MercadoPagoSDK.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MercadoPagoSDK/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = MercadoPagoSDK;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		C9AB81BFD05E6D67605417F865AD0797 /* Debug */ = {
+		CACE7C8415F53E79F07C6BBE57F0F61D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2025,13 +2050,10 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
@@ -2060,84 +2082,43 @@
 			};
 			name = Debug;
 		};
-		E0F62BC4CB1A412FC5DC159B98C54A8D /* Debug */ = {
+		E973013C6B6D604EEB790D841672956C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E9448642E7DC6588957BA18654635D65 /* Pods-PodTesterTests.debug.xcconfig */;
+			baseConfigurationReference = 17A6F20BF08B07FA181C5840399DFECC /* MercadoPagoSDK.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-PodTesterTests/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MercadoPagoSDK/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-PodTesterTests/Pods-PodTesterTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_PodTesterTests;
+				MODULEMAP_FILE = "Target Support Files/MercadoPagoSDK/MercadoPagoSDK.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = MercadoPagoSDK;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		E8D82CFCFBD6175562BD329B16A46B26 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B56A53EEA6373A42737AFACEDBAB7568 /* Pods-PodTesterUITests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-PodTesterUITests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-PodTesterUITests/Pods-PodTesterUITests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_PodTesterUITests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		EDC2AA7A769C7EC8985877948E1A0E59 /* Release */ = {
+		ED4FC68AB2A4E06C718CFF338F6F156B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2145,13 +2126,10 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
@@ -2182,8 +2160,8 @@
 		03A555DC32A410AEAD3F6957C96AA427 /* Build configuration list for PBXNativeTarget "MercadoPagoSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8221E2493E4076FA421C2CD3E493575F /* Debug */,
-				492B8CC19F29E6F5C3185AADC425B5D4 /* Release */,
+				BFE953AA984A30611AA64C0C00C71A0D /* Debug */,
+				E973013C6B6D604EEB790D841672956C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2191,8 +2169,8 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C9AB81BFD05E6D67605417F865AD0797 /* Debug */,
-				EDC2AA7A769C7EC8985877948E1A0E59 /* Release */,
+				CACE7C8415F53E79F07C6BBE57F0F61D /* Debug */,
+				ED4FC68AB2A4E06C718CFF338F6F156B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2200,8 +2178,8 @@
 		47200C4B185583EBACE1A923EFB3E4FC /* Build configuration list for PBXNativeTarget "Pods-PodTester" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				64AA52FB84BBC2216B9F78155AE6AE38 /* Debug */,
-				086FECD69A5F46CC1B8C87606AA14199 /* Release */,
+				C12FCD835FD835D8F5ADBAEA29D9E101 /* Debug */,
+				A97036296FE6E81B83C031DCC16B6E0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2209,8 +2187,8 @@
 		AD18363C170C958E22205E2D3EE71BF2 /* Build configuration list for PBXNativeTarget "Pods-PodTesterUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E8D82CFCFBD6175562BD329B16A46B26 /* Debug */,
-				1B2CB2D6B62440477B019990E0F279D8 /* Release */,
+				224CA83B92810B3524159CF54FA6ADAC /* Debug */,
+				1269360350B275B3AE81DEB29559D433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2218,8 +2196,8 @@
 		BA0AD9760E720D736ADD3394C89B7A93 /* Build configuration list for PBXNativeTarget "Pods-PodTesterTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E0F62BC4CB1A412FC5DC159B98C54A8D /* Debug */,
-				538C82A736754AB646360EA2804A9D40 /* Release */,
+				920CEF7425363E26310B5E24655C68CE /* Debug */,
+				992154F12AD7FB79A495D03A9988CA50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

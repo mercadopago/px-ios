@@ -87,10 +87,10 @@ open class Customer: NSObject {
             "address": address
         ]
 
-        var cardsJson: [[String:Any]] = [[:]]
+        var cardsJson: [[String:Any]] = []
         if !Array.isNullOrEmpty(cards) {
-            for (index, card) in cards!.enumerated() {
-                cardsJson[index] = card.toJSON()
+            for card in cards! {
+                cardsJson.append(card.toJSON())
             }
             obj["cards"] = cardsJson
 
