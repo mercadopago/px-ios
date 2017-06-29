@@ -79,6 +79,8 @@ open class MercadoPagoCheckout: NSObject {
             self.collectPayerCosts()
         case .PAYER_COST_SCREEN:
             self.startPayerCostScreen()
+        case .PAYER_COST_CONFIRM_SCREEN:
+            self.startPayerCostConfirmScreen()
         case .REVIEW_AND_CONFIRM :
             self.collectPaymentData()
         case .SECURITY_CODE_ONLY :
@@ -505,6 +507,24 @@ open class MercadoPagoCheckout: NSObject {
         self.pushViewController(viewController : payerCostStep, animated: true)
     }
 
+    func startPayerCostConfirmScreen() {
+        let confirmInstallmentsViewModel = self.viewModel.confirmInstallmentsViewModel()
+
+        let installmentsConfirmStep = ConfirmInstallmentStepViewController(viewModel: confirmInstallmentsViewModel, callback: { [weak self] (payerCost) in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.viewModel.alreadyConfirmInstallments = true
+            strongSelf.executeNextStep()
+        })
+
+        installmentsConfirmStep.callbackCancel = {
+            self.viewModel.alreadyConfirmInstallments = false
+        }
+
+        self.pushViewController(viewController : installmentsConfirmStep, animated: true)
+    }
+
     func collectPaymentData() {
         let checkoutVC = ReviewScreenViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: { [weak self] (paymentData : PaymentData) -> Void in
             guard let strongSelf = self else {
@@ -688,7 +708,7 @@ open class MercadoPagoCheckout: NSObject {
 
         removeRootLoading()
 
-        if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
+        if self.viewModel.paymentData.isComplete() && !self.viewModel.isReviewScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
             return
 

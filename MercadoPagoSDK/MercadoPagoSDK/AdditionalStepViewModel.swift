@@ -216,6 +216,24 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
 
 }
 
+class ConfirmInstallmentsAdditionalStepViewModel: AdditionalStepViewModel {
+
+    let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
+
+    init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: Cellable, discount: DiscountCoupon? = nil, email: String? = nil) {
+        super.init(screenName: "CONFIRM_INSTALLMENTS", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: [dataSource], discount: discount, email: email)
+
+        self.defaultRowCellHeight = 260
+    }
+    override func showDiscountSection() -> Bool {
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
+    }
+
+    override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue && showBankInsterestCell()
+    }
+}
+
 class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
@@ -243,5 +261,4 @@ class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ) {
         super.init(screenName: "ENTITY_TYPE", screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView:IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
     }
-
 }

@@ -211,3 +211,31 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
 
 }
+
+class ConfirmInstallmentStepViewController: AdditionalStepViewController {
+
+    override func loadCells() {
+        let confirmIntallmentsNib = UINib(nibName: "ConfirmInstallmentsTableViewCell", bundle: self.bundle)
+        self.tableView.register(confirmIntallmentsNib, forCellReuseIdentifier: "ConfirmInstallmentsTableViewCell")
+        super.loadCells()
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if viewModel.isBodyCellFor(indexPath: indexPath) {
+            let payerCost = self.viewModel.dataSource[0]
+            let cell: ConfirmInstallmentsTableViewCell = bundle!.loadNibNamed("ConfirmInstallmentsTableViewCell", owner: nil, options: nil)?[0] as! ConfirmInstallmentsTableViewCell
+            cell.fillCell(payerCost: payerCost as! PayerCost, buttonCallback: self.viewModel.callback)
+            cell.selectionStyle = .none
+            return cell
+        }
+        return super.tableView(tableView, cellForRowAt: indexPath)
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if viewModel.isBodyCellFor(indexPath: indexPath) {
+            let callbackData: NSObject = self.viewModel.dataSource[0] as! NSObject
+            self.viewModel.callback!(callbackData)
+        }
+    }
+
+}

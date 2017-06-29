@@ -22,6 +22,7 @@ open class FlowPreference: NSObject {
     var showDiscount = true
     var showAllSavedCards = false
     var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
+    var showInstallmentsReviewScreen = true
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -53,6 +54,10 @@ open class FlowPreference: NSObject {
 
     public func disableBankDeals() {
         CardFormViewController.showBankDeals = false
+    }
+
+    public func disableInstallmentsReviewScreen() {
+        showInstallmentsReviewScreen = false
     }
 
     /*public func setCongratsDisplayTime(){
@@ -89,6 +94,10 @@ open class FlowPreference: NSObject {
 
     public func enableBankDeals() {
         CardFormViewController.showBankDeals = true
+    }
+
+    public func enableInstallmentsReviewScreen() {
+        showInstallmentsReviewScreen = true
     }
 
     public func setMaxSavedCardsToShow(fromInt: Int) {
@@ -138,6 +147,10 @@ open class FlowPreference: NSObject {
 
     public func isShowAllSavedCardsEnabled() -> Bool {
         return showAllSavedCards
+    }
+
+    public func isInstallmentsReviewScreenEnable() -> Bool {
+        return showInstallmentsReviewScreen
     }
 
     public func getMaxSavedCardsToShow() -> Int {

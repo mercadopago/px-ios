@@ -27,6 +27,7 @@ public enum CheckoutStep: String {
     case GET_FINANCIAL_INSTITUTIONS
     case GET_PAYER_COSTS
     case PAYER_COST_SCREEN
+    case PAYER_COST_CONFIRM_SCREEN
     case REVIEW_AND_CONFIRM
     case POST_PAYMENT
     case CONGRATS
@@ -89,6 +90,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var checkoutComplete = false
     internal var initWithPaymentData = false
     var directDiscountSearched = false
+    var alreadyConfirmInstallments = false
 
     static internal func clearEnviroment() {
         MercadoPagoCheckoutViewModel.servicePreference = ServicePreference()
@@ -194,6 +196,20 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
 
         return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email)
+    }
+
+    public func confirmInstallmentsViewModel() -> AdditionalStepViewModel {
+        var paymentMethod: PaymentMethod = PaymentMethod()
+        if let pm = self.paymentData.paymentMethod {
+            paymentMethod = pm
+        }
+        var cardInformation: CardInformationForm? = self.cardToken
+        if cardInformation == nil {
+            if let token = paymentOptionSelected as? CardInformationForm {
+                cardInformation = token
+            }
+        }
+        return ConfirmInstallmentsAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethod: paymentMethod, dataSource: self.paymentData.payerCost!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email)
     }
 
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
@@ -348,6 +364,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needPayerCostSelectionScreen() {
             return .PAYER_COST_SCREEN
+        }
+
+        if needPayerCostConfirmScreen() {
+            return .PAYER_COST_CONFIRM_SCREEN
         }
 
         if needSecurityCode() {
@@ -619,7 +639,8 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func prepareForNewSelection() {
-           self.setIsCheckoutComplete(isCheckoutComplete: false)
+        self.setIsCheckoutComplete(isCheckoutComplete: false)
+        self.alreadyConfirmInstallments = false
         self.cleanPaymentResult()
         self.resetInformation()
         self.resetGroupSelection()

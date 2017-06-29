@@ -10,19 +10,23 @@ import UIKit
 
 class ConfirmInstallmentsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var TEALabel: UILabel!
     @IBOutlet weak var CFT: UILabel!
-    @IBOutlet weak var Confirm: UIButton!
+    @IBOutlet weak var confirm: UIButton!
     @IBOutlet weak var interest: UILabel!
     @IBOutlet weak var installments: UILabel!
     @IBOutlet weak var total: UILabel!
+
+    var buttonCallback: ((NSObject) -> Void)?
+    var payerCost: PayerCost?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    func fillCell(payerCost: PayerCost) {
+    func fillCell(payerCost: PayerCost, buttonCallback: @escaping ((NSObject) -> Void)) {
         let currency = MercadoPagoContext.getCurrency()
+        self.buttonCallback = buttonCallback
+        self.payerCost = payerCost
 
         let attributedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
         let attributedAmountFinal = NSMutableAttributedString(string : "(")
@@ -40,30 +44,18 @@ class ConfirmInstallmentsTableViewCell: UITableViewCell {
 
         CFT.font = Utils.getLightFont(size: CFT.font.pointSize)
         CFT.textColor = UIColor.px_grayDark()
-        TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
-        TEALabel.textColor = UIColor.px_grayDark()
 
-        if let CFTValue = payerCost.getCFTValue() {
-            CFT.text = "CFT " + CFTValue
-        } else {
-            CFT.text = ""
-        }
-        if let TEAValue = payerCost.getTEAValue() {
-            TEALabel.text = "TEA " + TEAValue
-        } else {
-            TEALabel.text = ""
-        }
+        CFT.text = !String.isNullOrEmpty(payerCost.getCFTValue()) ? "CFT " + payerCost.getCFTValue()! : ""
 
-        self.Confirm.backgroundColor = UIColor.primaryColor()
-        self.Confirm.layer.cornerRadius = 4
-        self.Confirm.titleLabel?.font = Utils.getFont(size: 16)
-        self.Confirm.setTitle("Continuar".localized, for: .normal)
+        self.confirm.backgroundColor = UIColor.primaryColor()
+        self.confirm.layer.cornerRadius = 4
+        self.confirm.titleLabel?.font = Utils.getFont(size: 16)
+        self.confirm.setTitle("Continuar".localized, for: .normal)
+        self.confirm.addTarget(self, action: #selector(confirmCallback), for: .touchUpInside)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func confirmCallback() {
+        self.buttonCallback?(payerCost!)
     }
 
 }
