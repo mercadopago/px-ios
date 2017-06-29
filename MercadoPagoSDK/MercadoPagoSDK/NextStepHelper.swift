@@ -161,6 +161,24 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
+    func needPayerCostConfirmScreen() -> Bool {
+        if isReviewScreenEnable() || !MercadoPagoCheckoutViewModel.flowPreference.isInstallmentsReviewScreenEnable() {
+            return false
+        }
+
+        guard let pm = self.paymentData.paymentMethod else {
+            return false
+        }
+        guard let payerCost = self.paymentData.payerCost else {
+            return false
+        }
+
+        if pm.isCreditCard() && payerCost.hasCFTValue() && !alreadyConfirmInstallments {
+            return true
+        }
+        return false
+    }
+
     func needSecurityCode() -> Bool {
         guard let pmSelected = self.paymentOptionSelected else {
             return false
@@ -191,7 +209,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         if paymentData.isComplete() {
-            return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+            return isReviewScreenEnable()
         }
 
         return false
@@ -233,5 +251,9 @@ extension MercadoPagoCheckoutViewModel {
 
     func needValidatePreference() -> Bool {
         return !self.needLoadPreference && !self.preferenceValidated
+    }
+
+    func isReviewScreenEnable() -> Bool {
+        return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
     }
 }

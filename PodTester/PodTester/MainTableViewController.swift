@@ -219,6 +219,7 @@ class MainTableViewController: UITableViewController {
 
         checkout.setCallbackCancel {
             print("Se cerro al flujo")
+            self.navigationController?.popToRootViewController(animated: true)
         }
 
         MercadoPagoContext.setLanguage(language: ._SPANISH_MEXICO)

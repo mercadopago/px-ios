@@ -87,6 +87,10 @@ open class PayerCost: NSObject, Cellable {
         return (self.installmentRate > 0 && self.installments > 1)
     }
 
+    public func hasCFTValue() -> Bool {
+        return getCFTValue() != nil
+    }
+
     public func getCFTValue() -> String? {
         for label in labels {
             let values = label.components(separatedBy: "|")

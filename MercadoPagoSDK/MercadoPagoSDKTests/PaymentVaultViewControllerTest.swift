@@ -712,7 +712,6 @@ class PaymentVaultViewModelTest: BaseTest {
     }
 
     func testSetDefaultSavedCardsWithoutFlowPreference() {
-
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
@@ -794,7 +793,6 @@ class PaymentVaultViewModelTest: BaseTest {
     }
 
     func testGetCustomerPaymentMethodsToDisplayCount() {
-
 
         //No customerCards loaded
         var customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
@@ -1215,6 +1213,7 @@ class PaymentVaultViewModelTest: BaseTest {
     override func tearDown() {
         // Restore default value
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
+        super.tearDown()
     }
 
 }
