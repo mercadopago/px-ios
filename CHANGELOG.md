@@ -2,10 +2,47 @@
 
 ## [Unreleased](https://github.com/mercadopago/px-ios/tree/HEAD)
 
-[Full Changelog](https://github.com/mercadopago/px-ios/compare/3.0.0-BETA-38...HEAD)
+[Full Changelog](https://github.com/mercadopago/px-ios/compare/3.1.1...HEAD)
 
 **Closed issues:**
 
+- Salimos de flujo al volver para atrás de revisa y confirma [\#1056](https://github.com/mercadopago/px-ios/issues/1056)
+- Crash al cancelar el pago en revisa y confirma [\#1055](https://github.com/mercadopago/px-ios/issues/1055)
+- Unificar los callbacks cancel [\#1054](https://github.com/mercadopago/px-ios/issues/1054)
+- Testear extensiones [\#565](https://github.com/mercadopago/px-ios/issues/565)
+- Agregar carpetas reales al proyecto [\#539](https://github.com/mercadopago/px-ios/issues/539)
+- Bajar cantidad de Warnings [\#538](https://github.com/mercadopago/px-ios/issues/538)
+- Formateo de Código en Proyecto [\#463](https://github.com/mercadopago/px-ios/issues/463)
+- NavBar en Token recuperable después de C4A se ve incorrecto [\#458](https://github.com/mercadopago/px-ios/issues/458)
+- Análisis de Bugsnag y herramientas de trackeo de Bugs [\#428](https://github.com/mercadopago/px-ios/issues/428)
+- Tests Funcionales de UI [\#426](https://github.com/mercadopago/px-ios/issues/426)
+- Fallo al mostrar videos instructivos en Documentación [\#405](https://github.com/mercadopago/px-ios/issues/405)
+- Retries automaticos? [\#380](https://github.com/mercadopago/px-ios/issues/380)
+- No es visible en objective c el Listener de tracker [\#342](https://github.com/mercadopago/px-ios/issues/342)
+- Probar CC en BETA [\#258](https://github.com/mercadopago/px-ios/issues/258)
+
+## [3.1.1](https://github.com/mercadopago/px-ios/tree/3.1.1) (2017-06-27)
+[Full Changelog](https://github.com/mercadopago/px-ios/compare/3.1.0...3.1.1)
+
+**Closed issues:**
+
+- Limpiamos el mail del payer al cambiar medio de pago [\#1050](https://github.com/mercadopago/px-ios/issues/1050)
+- Prepaid card no funciona correctamente [\#1047](https://github.com/mercadopago/px-ios/issues/1047)
+- Priorizar el server del merchant para customer cards antes de las cards de grupos [\#1045](https://github.com/mercadopago/px-ios/issues/1045)
+
+**Merged pull requests:**
+
+- Update Version [\#1058](https://github.com/mercadopago/px-ios/pull/1058) ([demtej](https://github.com/demtej))
+- Fixes bug callback cancel [\#1057](https://github.com/mercadopago/px-ios/pull/1057) ([edentorres](https://github.com/edentorres))
+- Fix clean paymentData in ReviewScreen [\#1051](https://github.com/mercadopago/px-ios/pull/1051) ([edentorres](https://github.com/edentorres))
+
+## [3.1.0](https://github.com/mercadopago/px-ios/tree/3.1.0) (2017-06-23)
+[Full Changelog](https://github.com/mercadopago/px-ios/compare/3.0.0-BETA-38...3.1.0)
+
+**Closed issues:**
+
+- Mejorar de tiempo de builldeo en travis [\#1041](https://github.com/mercadopago/px-ios/issues/1041)
+- Los test no corren en Xcode 8.2 y Xcode 8.1 [\#1032](https://github.com/mercadopago/px-ios/issues/1032)
 - Organizar y borrar imagenes [\#1030](https://github.com/mercadopago/px-ios/issues/1030)
 - Desaparece el navbar cuando se inicia el CHO [\#1026](https://github.com/mercadopago/px-ios/issues/1026)
 - Testear el toJSON ida y vuelta de Customer y Cards [\#1022](https://github.com/mercadopago/px-ios/issues/1022)
@@ -14,6 +51,9 @@
 - Añadir test de CardManager [\#1009](https://github.com/mercadopago/px-ios/issues/1009)
 - Modificar CardAdminViewController [\#1008](https://github.com/mercadopago/px-ios/issues/1008)
 - Cambiar wording en revisa y confirma en portugues [\#993](https://github.com/mercadopago/px-ios/issues/993)
+- Alinear los callbacks con Android [\#981](https://github.com/mercadopago/px-ios/issues/981)
+- Deprecar MerchantServer y implementar CustomService [\#980](https://github.com/mercadopago/px-ios/issues/980)
+- Implementar el deshabilitado de las pantallas de resultado [\#979](https://github.com/mercadopago/px-ios/issues/979)
 - Añadir showBankDeals al flowPreference [\#978](https://github.com/mercadopago/px-ios/issues/978)
 - No existen los textos "Si" - "No" dentro de los Localizables [\#974](https://github.com/mercadopago/px-ios/issues/974)
 - No anda la deserialización de JSONS Customer [\#970](https://github.com/mercadopago/px-ios/issues/970)
@@ -31,12 +71,20 @@
 
 **Merged pull requests:**
 
+- Fixea el back de Revisa y confirma [\#1049](https://github.com/mercadopago/px-ios/pull/1049) ([demtej](https://github.com/demtej))
+- Prepaid Bug [\#1048](https://github.com/mercadopago/px-ios/pull/1048) ([demtej](https://github.com/demtej))
+- Prioritize customer cards server before groups [\#1046](https://github.com/mercadopago/px-ios/pull/1046) ([edentorres](https://github.com/edentorres))
+- Release/v3 [\#1043](https://github.com/mercadopago/px-ios/pull/1043) ([edentorres](https://github.com/edentorres))
+- JSON Init Pod Tester [\#1042](https://github.com/mercadopago/px-ios/pull/1042) ([augustocollerone](https://github.com/augustocollerone))
+- Mejorar tiempos de buildeo en travis [\#1040](https://github.com/mercadopago/px-ios/pull/1040) ([edentorres](https://github.com/edentorres))
 - Change pod iOS version to 8.0 [\#1038](https://github.com/mercadopago/px-ios/pull/1038) ([edentorres](https://github.com/edentorres))
 - Show navigation bar when exiting payment result [\#1037](https://github.com/mercadopago/px-ios/pull/1037) ([edentorres](https://github.com/edentorres))
 - Align payment callback [\#1036](https://github.com/mercadopago/px-ios/pull/1036) ([edentorres](https://github.com/edentorres))
 - Add support to disable payment result in FlowPreference [\#1035](https://github.com/mercadopago/px-ios/pull/1035) ([edentorres](https://github.com/edentorres))
+- Fix Test for XCode 8.2 & 8.1 [\#1033](https://github.com/mercadopago/px-ios/pull/1033) ([demtej](https://github.com/demtej))
 - Fixes para Taxi-ba [\#1031](https://github.com/mercadopago/px-ios/pull/1031) ([edentorres](https://github.com/edentorres))
 - Disable new swiftlint rules [\#1024](https://github.com/mercadopago/px-ios/pull/1024) ([edentorres](https://github.com/edentorres))
+- Custom Server [\#1019](https://github.com/mercadopago/px-ios/pull/1019) ([augustocollerone](https://github.com/augustocollerone))
 
 ## [3.0.0-BETA-38](https://github.com/mercadopago/px-ios/tree/3.0.0-BETA-38) (2017-06-16)
 [Full Changelog](https://github.com/mercadopago/px-ios/compare/3.0.0-BETA-37...3.0.0-BETA-38)
