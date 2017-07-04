@@ -49,52 +49,52 @@ extension UIColor {
     }
 
     class public func greenOkColor() -> UIColor {
-    return UIColorFromRGB(0x6FBB2A)
+        return UIColorFromRGB(0x6FBB2A)
     }
 
     class public func redFailureColor() -> UIColor {
-    return UIColorFromRGB(0xB94A48)
+        return UIColorFromRGB(0xB94A48)
     }
 
     class public func px_errorValidationTextColor() -> UIColor {
-    return UIColorFromRGB(0xB34C42)
+        return UIColorFromRGB(0xB34C42)
     }
 
     class public func yellowFailureColor() -> UIColor {
-    return UIColorFromRGB(0xF5CC00)
+        return UIColorFromRGB(0xF5CC00)
     }
 
     class public func px_blueMercadoPago() -> UIColor {
-    return UIColorFromRGB(0x009EE3)
+        return UIColorFromRGB(0x009EE3)
     }
     class public func lightBlue() -> UIColor {
         return UIColorFromRGB(0x3F9FDA)
     }
     class public func px_grayBaseText() -> UIColor {
-    return UIColorFromRGB(0x333333)
+        return UIColorFromRGB(0x333333)
     }
 
     class public func px_grayDark() -> UIColor {
-    return UIColorFromRGB(0x666666)
+        return UIColorFromRGB(0x666666)
     }
 
     class public func px_grayLight() -> UIColor {
-    return UIColorFromRGB(0x999999)
+        return UIColorFromRGB(0x999999)
     }
 
     class public func px_grayLines() -> UIColor {
-    return UIColorFromRGB(0xCCCCCC)
+        return UIColorFromRGB(0xCCCCCC)
     }
 
     class public func grayTableSeparator() -> UIColor {
-    return UIColorFromRGB(0xEFEFF4)
+        return UIColorFromRGB(0xEFEFF4)
     }
     class public func px_backgroundColor() -> UIColor {
-    return UIColorFromRGB(0xEBEBF0)
+        return UIColorFromRGB(0xEBEBF0)
     }
 
     class public func px_white() -> UIColor {
-    return UIColorFromRGB(0xFFFFFF)
+        return UIColorFromRGB(0xFFFFFF)
     }
 
     class public func installments() -> UIColor {
@@ -140,13 +140,13 @@ extension UIColor {
     }
 
     func lighter() -> UIColor {
-            return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
+        return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
     }
 
     func adjust(_ red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
-            var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-            self.getRed(&r, green: &g, blue: &b, alpha: &a)
-            return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
     }
 
 }

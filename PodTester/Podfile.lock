@@ -1,34 +1,34 @@
 PODS:
-  - MercadoPagoSDK (3.0.0-DEVELOP):
-    - MercadoPagoSDK/Localization (= 3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization (3.0.0-DEVELOP):
-    - MercadoPagoSDK/Localization/en (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es-CO (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es-MX (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es-PE (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es-UY (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es-VE (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/pt (= 3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/en (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es-CO (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es-MX (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es-PE (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es-UY (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es-VE (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/pt (3.0.0-DEVELOP)
+  - MercadoPagoSDK (3.1.1):
+    - MercadoPagoSDK/Localization (= 3.1.1)
+  - MercadoPagoSDK/Localization (3.1.1):
+    - MercadoPagoSDK/Localization/en (= 3.1.1)
+    - MercadoPagoSDK/Localization/es (= 3.1.1)
+    - MercadoPagoSDK/Localization/es-CO (= 3.1.1)
+    - MercadoPagoSDK/Localization/es-MX (= 3.1.1)
+    - MercadoPagoSDK/Localization/es-PE (= 3.1.1)
+    - MercadoPagoSDK/Localization/es-UY (= 3.1.1)
+    - MercadoPagoSDK/Localization/es-VE (= 3.1.1)
+    - MercadoPagoSDK/Localization/pt (= 3.1.1)
+  - MercadoPagoSDK/Localization/en (3.1.1)
+  - MercadoPagoSDK/Localization/es (3.1.1)
+  - MercadoPagoSDK/Localization/es-CO (3.1.1)
+  - MercadoPagoSDK/Localization/es-MX (3.1.1)
+  - MercadoPagoSDK/Localization/es-PE (3.1.1)
+  - MercadoPagoSDK/Localization/es-UY (3.1.1)
+  - MercadoPagoSDK/Localization/es-VE (3.1.1)
+  - MercadoPagoSDK/Localization/pt (3.1.1)
 
 DEPENDENCIES:
   - MercadoPagoSDK (from `../`)
 
 EXTERNAL SOURCES:
   MercadoPagoSDK:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  MercadoPagoSDK: 57a2cae8c6c379cc9817779017aa665709358a9b
+  MercadoPagoSDK: 640f135ea1ca923493b46ce804f718ec48032044
 
-PODFILE CHECKSUM: 0992ca2f8d7c2acabf817b7477463fa790adf87b
+PODFILE CHECKSUM: '0992ca2f8d7c2acabf817b7477463fa790adf87b'
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

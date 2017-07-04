@@ -14,14 +14,27 @@ class AdditionalStepCellFactory: NSObject {
     open class func buildCell(object: Cellable, width: Double, height: Double) -> UITableViewCell {
 
         if object.objectType == ObjectTypes.payerCost {
-            let bundle = MercadoPago.getBundle()
-            let cell: PayerCostRowTableViewCell = bundle!.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as! PayerCostRowTableViewCell
-            let showDescription = MercadoPagoCheckout.showPayerCostDescription()
-            cell.fillCell(payerCost: object as! PayerCost, showDescription: showDescription)
-            cell.addSeparatorLineToBottom(width: width, height: height)
-            cell.selectionStyle = .none
 
-            return cell
+            let payerCost = object as! PayerCost
+                            let bundle = MercadoPago.getBundle()
+
+            if  AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: payerCost) {
+                let cell: PayerCostCFTTableViewCell = bundle!.loadNibNamed("PayerCostCFTTableViewCell", owner: nil, options: nil)?[0] as! PayerCostCFTTableViewCell
+                cell.fillCell(payerCost: payerCost)
+                cell.addSeparatorLineToBottom(width: width, height: height)
+                cell.selectionStyle = .none
+
+                return cell
+
+            } else {
+                let cell: PayerCostRowTableViewCell = bundle!.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as! PayerCostRowTableViewCell
+                let showDescription = MercadoPagoCheckout.showPayerCostDescription()
+                cell.fillCell(payerCost: payerCost, showDescription: showDescription)
+                cell.addSeparatorLineToBottom(width: width, height: height)
+                cell.selectionStyle = .none
+
+                return cell
+            }
         }
 
         if object.objectType == ObjectTypes.issuer {
@@ -67,6 +80,10 @@ class AdditionalStepCellFactory: NSObject {
         let defaultCell = UITableViewCell()
 
         return defaultCell
+    }
+
+    open class func needsCFTPayerCostCell(payerCost: PayerCost) -> Bool {
+        return payerCost.hasCFTValue() && MercadoPagoCheckoutViewModel.flowPreference.isInstallmentsReviewScreenEnable() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
     }
 
 }

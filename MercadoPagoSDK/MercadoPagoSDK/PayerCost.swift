@@ -21,7 +21,7 @@ open class PayerCost: NSObject, Cellable {
     open var totalAmount: Double = 0
 
     public init (installments: Int = 0, installmentRate: Double = 0, labels: [String] = [],
-        minAllowedAmount: Double = 0, maxAllowedAmount: Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
+                 minAllowedAmount: Double = 0, maxAllowedAmount: Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
 
         self.installments = installments
         self.installmentRate = installmentRate
@@ -79,12 +79,16 @@ open class PayerCost: NSObject, Cellable {
             "recommended_message": self.recommendedMessage,
             "installment_amount": self.installmentAmount,
             "total_amount": self.totalAmount
-            ]
+        ]
         return obj
     }
 
     public func hasInstallmentsRate() -> Bool {
         return (self.installmentRate > 0 && self.installments > 1)
+    }
+
+    public func hasCFTValue() -> Bool {
+        return !String.isNullOrEmpty(getCFTValue())
     }
 
     public func getCFTValue() -> String? {
@@ -116,14 +120,14 @@ open class PayerCost: NSObject, Cellable {
 public func ==(obj1: PayerCost, obj2: PayerCost) -> Bool {
 
     let areEqual =
-    obj1.installments == obj2.installments &&
-        obj1.installmentRate == obj2.installmentRate &&
-        obj1.labels == obj2.labels &&
-        obj1.minAllowedAmount == obj2.minAllowedAmount &&
-        obj1.maxAllowedAmount == obj2.maxAllowedAmount &&
-        obj1.recommendedMessage == obj2.recommendedMessage &&
-        obj1.installmentAmount == obj2.installmentAmount &&
-        obj1.totalAmount == obj2.totalAmount
+        obj1.installments == obj2.installments &&
+            obj1.installmentRate == obj2.installmentRate &&
+            obj1.labels == obj2.labels &&
+            obj1.minAllowedAmount == obj2.minAllowedAmount &&
+            obj1.maxAllowedAmount == obj2.maxAllowedAmount &&
+            obj1.recommendedMessage == obj2.recommendedMessage &&
+            obj1.installmentAmount == obj2.installmentAmount &&
+            obj1.totalAmount == obj2.totalAmount
 
     return areEqual
 }

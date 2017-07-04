@@ -132,4 +132,16 @@ class FlowPreferenceTest: BaseTest {
         XCTAssertTrue(flowPreference.isShowAllSavedCardsEnabled())
     }
 
+    func testDisableInstallmentsReviewScreen() {
+        flowPreference.disableInstallmentsReviewScreen()
+        XCTAssertFalse(flowPreference.isInstallmentsReviewScreenEnable())
+    }
+
+    func testEnableInstallmentsReviewScreen() {
+        XCTAssert(flowPreference.isInstallmentsReviewScreenEnable())
+        flowPreference.disableInstallmentsReviewScreen()
+        flowPreference.enableInstallmentsReviewScreen()
+        XCTAssert(flowPreference.isInstallmentsReviewScreenEnable())
+    }
+
 }

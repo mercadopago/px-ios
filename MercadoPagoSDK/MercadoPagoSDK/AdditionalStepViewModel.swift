@@ -119,7 +119,7 @@ open class AdditionalStepViewModel: NSObject {
             return self.getAmountDetailCellHeight(indexPath: indexPath)
 
         } else if isBodyCellFor(indexPath: indexPath) {
-            return defaultRowCellHeight
+            return self.getDefaultRowCellHeight()
         }
          return 0
     }
@@ -134,6 +134,10 @@ open class AdditionalStepViewModel: NSObject {
 
     func getCardCellHeight() -> CGFloat {
         return UIScreen.main.bounds.width*0.50
+    }
+
+    func getDefaultRowCellHeight() -> CGFloat {
+        return defaultRowCellHeight
     }
 
     func getBankInterestWarningCellHeight() -> CGFloat {
@@ -203,9 +207,16 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
 
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil) {
         super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, discount: discount, email: email)
-
-        self.defaultRowCellHeight = 60
     }
+
+    override func getDefaultRowCellHeight() -> CGFloat {
+        if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PayerCost) {
+            return 86
+        } else {
+            return 60
+        }
+    }
+
     override func showDiscountSection() -> Bool {
         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
