@@ -683,4 +683,8 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
     }
 
+    func cleanToken() {
+        self.paymentData.token = nil
+    }
+
 }
