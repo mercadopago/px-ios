@@ -300,6 +300,7 @@
 		4BAE1D541DCBE9340000ED5C /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */; };
 		4BAE1D551DCBE9340000ED5C /* PaymentResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D511DCBE9340000ED5C /* PaymentResultViewController.xib */; };
 		4BB721B61ECB18810013FE32 /* MockedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15E7D6E71C87164E00101872 /* MockedData.plist */; };
+		4BBF5B7D1F100CE500C0708F /* TrackingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF5B7C1F100CE500C0708F /* TrackingUtil.swift */; };
 		4BCDAC3B1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */; };
 		4BDE2D451E37B4AC00C1D614 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
 		4BE51C201E2CFEC6004E5F7D /* DecorationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE51C1F1E2CFEC6004E5F7D /* DecorationPreference.swift */; };
@@ -761,6 +762,7 @@
 		4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmEmailTableViewCell.xib; sourceTree = "<group>"; };
 		4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewController.swift; sourceTree = "<group>"; };
 		4BAE1D511DCBE9340000ED5C /* PaymentResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentResultViewController.xib; sourceTree = "<group>"; };
+		4BBF5B7C1F100CE500C0708F /* TrackingUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingUtil.swift; sourceTree = "<group>"; };
 		4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewScreenPreferenceTest.swift; sourceTree = "<group>"; };
 		4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicePreference.swift; sourceTree = "<group>"; };
 		4BE51C1F1E2CFEC6004E5F7D /* DecorationPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecorationPreference.swift; sourceTree = "<group>"; };
@@ -1080,6 +1082,7 @@
 				0F9883AD1AD2ACF400F750F0 /* Additions */,
 				0F9883AC1AD2ABBC00F750F0 /* Frameworks */,
 				23ECADC41EF1C7CC003E4539 /* ApiUtil.swift */,
+				4BBF5B7C1F100CE500C0708F /* TrackingUtil.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -2113,6 +2116,7 @@
 				15F7F8BF1F0D34140093E2F9 /* TrackingStrategy.swift in Sources */,
 				4BEF80F61E53308C00797CD1 /* PaymentResult.swift in Sources */,
 				15C422C11EE072650039B80F /* MPXTracker.swift in Sources */,
+				4BBF5B7D1F100CE500C0708F /* TrackingUtil.swift in Sources */,
 				76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				157704B51DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */,
 				7669999B1E675193005FB30F /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
