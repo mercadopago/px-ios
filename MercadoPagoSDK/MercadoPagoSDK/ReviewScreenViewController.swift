@@ -21,6 +21,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     var callbackExit: ((Void) -> Void)!
     var viewModel: CheckoutViewModel!
     override open var screenName: String { get { return "REVIEW_AND_CONFIRM" } }
+    override open var screenId: String { get { return "/checkout_off/review" } }
     fileprivate var reviewAndConfirmContent = Set<String>()
     private var statusBarView: UIView?
 
@@ -42,6 +43,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         MercadoPagoContext.clearPaymentKey()
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
+    }
+    override func trackInfo() {
+        var additionalInfo = ["has_shipping": "false", "payment_type": self.viewModel.paymentData.paymentMethod.paymentTypeId, "payment_method": self.viewModel.paymentData.paymentMethod._id]
+        if let issuer = self.viewModel.paymentData.issuer {
+            additionalInfo["issuer"] = issuer._id
+        }
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, additionalInfo:additionalInfo)
     }
 
     override func loadMPStyles() {

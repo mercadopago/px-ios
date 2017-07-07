@@ -10,7 +10,7 @@ import Foundation
 
 protocol TrackingStrategy {
     func trackScreen(screenTrack: ScreenTrackInfo)
-    func trackLastCheckoutScreen(screenTrack: ScreenTrackInfo)
+    func trackLastScreen(screenTrack: ScreenTrackInfo)
 }
 
 class PersistAndTrack: TrackingStrategy {
@@ -20,7 +20,7 @@ class PersistAndTrack: TrackingStrategy {
     init(attemptSendEachTrack: Bool = true) {
         self.attemptSendForEachTrack = attemptSendEachTrack
     }
-    func trackLastCheckoutScreen(screenTrack: ScreenTrackInfo) {
+    func trackLastScreen(screenTrack: ScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
         attemptSendTrackInfo()
     }

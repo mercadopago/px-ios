@@ -14,9 +14,14 @@ class MPXTracker {
 
     var trackingStrategy: TrackingStrategy = PersistAndTrack()
 
-    static func trackScreen(screenId: String, screenName: String) {
-        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId)
+    static func trackScreen(screenId: String, screenName: String, additionalInfo: [String:Any] = [:]) {
+        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, additionalInfo:additionalInfo)
         sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
+    }
+
+    static func trackLastScreen(screenId: String, screenName: String, additionalInfo: [String:Any] = [:]) {
+        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, additionalInfo:additionalInfo)
+        sharedInstance.trackingStrategy.trackLastScreen(screenTrack: screenTrack)
     }
 
     static func generateJSONDefault() -> [String:Any] {
@@ -30,9 +35,9 @@ class MPXTracker {
             ]
         return obj
     }
-    static func generateJSONScreen(screenId: String, screenName: String) -> [String:Any] {
+    static func generateJSONScreen(screenId: String, screenName: String, additionalInfo: [String:Any]) -> [String:Any] {
         var obj = generateJSONDefault()
-        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName)
+        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName, additionalInfo:additionalInfo)
         obj["events"] = [screenJSON]
         return obj
     }
@@ -59,7 +64,7 @@ class MPXTracker {
         ]
         return obj
     }
-    static func screenJSON(screenId: String, screenName: String) -> [String:Any] {
+    static func screenJSON(screenId: String, screenName: String, additionalInfo: [String:Any]) -> [String:Any] {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
@@ -68,7 +73,8 @@ class MPXTracker {
             "timestamp": timestamp,
             "type": "screenview",
             "screen_id": screenId,
-            "screen_name": screenName
+            "screen_name": screenName,
+            "additional_info": additionalInfo
         ]
         return obj
     }

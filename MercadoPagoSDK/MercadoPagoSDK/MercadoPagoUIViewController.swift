@@ -19,18 +19,21 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var hideNavBarCallback: (() -> Void)?
 
     let NO_NAME_SCREEN = "NO NAME"
+    let NO_SCREEN_ID = "/"
 
     open var screenName: String { get { return NO_NAME_SCREEN } }
+    open var screenId: String { get { return NO_SCREEN_ID } }
 
     var loadingInstance: UIView?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
 
-        if screenName != NO_NAME_SCREEN {
-            MPXTracker.trackScreen(screenId: screenName, screenName: screenName)
-        }
         self.loadMPStyles()
+    }
+
+    func trackInfo() {
+         MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
     }
 
     var lastDefaultFontLabel: String?
@@ -41,6 +44,11 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     override open func viewDidAppear(_ animated: Bool) {
 
         super.viewDidAppear(animated)
+
+        if screenName != NO_NAME_SCREEN && screenId != NO_SCREEN_ID {
+            trackInfo()
+        }
+
         if CountdownTimer.getInstance().hasTimer() {
             self.timer = CountdownTimer.getInstance()
             self.timer!.delegate = self
