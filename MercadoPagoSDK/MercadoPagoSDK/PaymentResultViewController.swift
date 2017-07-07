@@ -14,9 +14,8 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     var bundle = MercadoPago.getBundle()
     var viewModel: PaymentResultViewModel!
 
-    override open var screenName: String { get {
-        return "RESULT"
-    } }
+    override open var screenName: String { get { return "RESULT" } }
+    override open var screenId: String { get { return "/checkout_off/congrats" } }
 
      override open func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +37,25 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         tableView.addSubview(view)
     }
 
+    override func trackInfo() {
+        
+        var additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_IS_EXPRESS : TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS:self.viewModel.paymentResult.status,
+                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS_DETAIL:self.viewModel.paymentResult.statusDetail,
+                              TrackingUtil.ADDITIONAL_PAYMENT_ID:  self.viewModel.paymentResult._id]
+        if let pm = self.viewModel.paymentResult.paymentData?.paymentMethod{
+            additionalInfo[TrackingUtil.ADDITIONAL_PAYMENT_ID] = pm._id
+        }
+        if let issuer = self.viewModel.paymentResult.paymentData?.issuer {
+            additionalInfo["issuer"] = issuer._id
+        }
+        var finalId = screenId + "/" + self.viewModel.paymentResult.status
+        var name = screenName
+        if self.viewModel.isCallForAuth() {
+            name = "CALL_FOR_AUTHORIZE"
+        }
+        MPXTracker.trackLastScreen(screenId: screenId, screenName: name, additionalInfo:additionalInfo)
+    }
     func registerCells() {
 
         let headerNib = UINib(nibName: "HeaderCongratsTableViewCell", bundle: self.bundle)

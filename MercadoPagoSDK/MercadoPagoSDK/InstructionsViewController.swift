@@ -51,8 +51,17 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     }
     
     override  func trackInfo() {
-        var additionalInfo = []
-        MPXTracker.trackLastScreen(screenId: screenId, screenName: screenName)
+        var additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_IS_EXPRESS : TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS:self.paymentResult.status,
+                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS_DETAIL:self.paymentResult.statusDetail,
+                              TrackingUtil.ADDITIONAL_PAYMENT_ID:  self.paymentResult._id]
+        if let pm = self.paymentResult.paymentData?.paymentMethod{
+            additionalInfo[TrackingUtil.ADDITIONAL_PAYMENT_ID] = pm._id
+        }
+        if let issuer = self.paymentResult.paymentData?.issuer {
+            additionalInfo["issuer"] = issuer._id
+        }
+        MPXTracker.trackLastScreen(screenId: screenId, screenName: screenName, additionalInfo: additionalInfo)
     }
     
     open override func viewWillAppear(_ animated: Bool) {

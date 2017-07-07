@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class TackingUtil: NSObject {
+open class TrackingUtil: NSObject {
 
     //Screen IDs
     open static let SCREEN_ID_CHECKOUT = "/checkout_off/init"
