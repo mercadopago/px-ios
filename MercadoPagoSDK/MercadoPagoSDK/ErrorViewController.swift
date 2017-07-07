@@ -19,12 +19,14 @@ open class ErrorViewController: MercadoPagoUIViewController {
     @IBOutlet weak var exitButton: MPButton!
 
     @IBOutlet weak var retryButton: MPButton!
+
     var error: MPSDKError!
     var callback: (() -> Void)?
 
-    override open var screenName: String { get { return "ERROR" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_ERROR } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_ERROR } }
 
-   open static var defaultErrorCancel: (() -> Void)?
+    open static var defaultErrorCancel: (() -> Void)?
 
     open var exitErrorCallback: (() -> Void)!
 
@@ -46,13 +48,17 @@ open class ErrorViewController: MercadoPagoUIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override open func trackInfo() {
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, additionalInfo: [TrackingUtil.ADDITIONAL_MERCADO_PAGO_ERROR: error.toJSONString()])
+    }
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
 
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
 
-        self.errorSubtitle.attributedText = NSAttributedString(string :error.messageDetail, attributes: normalAttributes)
+        self.errorSubtitle.attributedText = NSAttributedString(string :error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
 
         if self.error.retry! {

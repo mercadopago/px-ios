@@ -301,6 +301,7 @@
 		4BAE1D551DCBE9340000ED5C /* PaymentResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D511DCBE9340000ED5C /* PaymentResultViewController.xib */; };
 		4BB721B61ECB18810013FE32 /* MockedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15E7D6E71C87164E00101872 /* MockedData.plist */; };
 		4BBF5B7D1F100CE500C0708F /* TrackingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF5B7C1F100CE500C0708F /* TrackingUtil.swift */; };
+		4BBF5B7F1F101CBA00C0708F /* TrackingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF5B7C1F100CE500C0708F /* TrackingUtil.swift */; };
 		4BCDAC3B1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */; };
 		4BDE2D451E37B4AC00C1D614 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
 		4BE51C201E2CFEC6004E5F7D /* DecorationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE51C1F1E2CFEC6004E5F7D /* DecorationPreference.swift */; };
@@ -2529,6 +2530,7 @@
 				0FC4FC341B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.swift in Sources */,
 				15F7F8C31F0D63AD0093E2F9 /* TrackingServices.swift in Sources */,
 				15521E391E60A0B000148979 /* AppDecorationKeeper.swift in Sources */,
+				4BBF5B7F1F101CBA00C0708F /* TrackingUtil.swift in Sources */,
 				0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				76CA7C721E01EA8C009080B3 /* UIView+RotateView.m in Sources */,
 				767D8DD41E55FA420004FCA9 /* MPXLoadingViewController.swift in Sources */,

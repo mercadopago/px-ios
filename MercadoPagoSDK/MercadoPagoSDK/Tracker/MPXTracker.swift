@@ -16,6 +16,7 @@ class MPXTracker {
 
     static func trackScreen(screenId: String, screenName: String, additionalInfo: [String:Any] = [:]) {
         let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, additionalInfo:additionalInfo)
+        print("Screen Name: \(screenName): Json: " + screenTrack.toJSONString())
         sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
     }
 
