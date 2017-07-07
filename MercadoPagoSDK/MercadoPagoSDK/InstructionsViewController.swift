@@ -18,6 +18,10 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     var instructionsInfo: InstructionsInfo?
     var paymentResultScreenPreference: PaymentResultScreenPreference!
 
+    override open var screenName: String { get { return "INSTRUCTIONS" } }
+    override open var screenId: String { get { return "/checkout_off/congrats/instructions" } }
+    
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,6 +49,12 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         let footerNib = UINib(nibName: "FooterTableViewCell", bundle: self.bundle)
         self.tableView.register(footerNib, forCellReuseIdentifier: "footerNib")
     }
+    
+    override  func trackInfo() {
+        var additionalInfo = []
+        MPXTracker.trackLastScreen(screenId: screenId, screenName: screenName)
+    }
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
@@ -53,6 +63,8 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         }
 
     }
+    
+    
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if instructionsInfo == nil {
