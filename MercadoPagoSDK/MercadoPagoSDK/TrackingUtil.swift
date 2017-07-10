@@ -14,6 +14,7 @@ open class TrackingUtil: NSObject {
     open static let SCREEN_ID_CHECKOUT = "/checkout_off/init"
     open static let SCREEN_ID_PAYMENT_VAULT = "/checkout_off/payment_option"
     open static let SCREEN_ID_REVIEW_AND_CONFIRM = "/checkout_off/review"
+    open static let SCREEN_ID_PAYMENT_RESULT = "/checkout_off/congrats"
     open static let SCREEN_ID_PAYMENT_RESULT_APPROVED = "/checkout_off/congrats/approved"
     open static let SCREEN_ID_PAYMENT_RESULT_PENDING = "/checkout_off/congrats/pending"
     open static let SCREEN_ID_PAYMENT_RESULT_REJECTED = "/checkout_off/congrats/rejected"
@@ -24,12 +25,10 @@ open class TrackingUtil: NSObject {
     open static let SCREEN_ID_PAYMENT_TYPES = "/checkout_off/card/payment_types"
 
     //Screen Names
-    open static let SCREEN_NAME_CHECKOUT = "Init checkout"
+    open static let SCREEN_NAME_CHECKOUT = "INIT_CHECKOUT"
     open static let SCREEN_NAME_PAYMENT_VAULT = "PAYMENT_METHOD_SEARCH"
     open static let SCREEN_NAME_REVIEW_AND_CONFIRM = "REVIEW_AND_CONFIRM"
-    open static let SCREEN_NAME_PAYMENT_RESULT_APPROVED = "RESULT"
-    open static let SCREEN_NAME_PAYMENT_RESULT_PENDING = "RESULT"
-    open static let SCREEN_NAME_PAYMENT_RESULT_REJECTED = "RESULT"
+    open static let SCREEN_NAME_PAYMENT_RESULT = "RESULT"
     open static let SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH = "CALL_FOR_AUTHORIZE"
     open static let SCREEN_NAME_PAYMENT_RESULT_INSTRUCTIONS = "INSTRUCTIONS"
     open static let SCREEN_NAME_BANK_DEALS = "BANK_DEALS"
@@ -41,7 +40,7 @@ open class TrackingUtil: NSObject {
     open static let SCREEN_NAME_CARD_FORM_IDENTIFICATION_NUMBER = "IDENTIFICATION_NUMBER"
     open static let SCREEN_NAME_CARD_FORM_ISSUERS = "CARD_ISSUERS"
     open static let SCREEN_NAME_CARD_FORM_INSTALLMENTS = "CARD_INSTALLMENTS"
-    open static let SCREEN_NAME_ERROR = "Error View"
+    open static let SCREEN_NAME_ERROR = "ERROR_VIEW"
     open static let SCREEN_NAME_PAYMENT_TYPES = "CARD_PAYMENT_TYPES"
     open static let SCREEN_NAME_SECURITY_CODE = "SECURITY_CODE_CARD"
 
@@ -69,5 +68,7 @@ open class TrackingUtil: NSObject {
     //Default values
     open static let HAS_SHIPPING_DEFAULT_VALUE = "false"
     open static let IS_EXPRESS_DEFAULT_VALUE = "false"
+    open static let NO_NAME_SCREEN = "NO NAME"
+    open static let NO_SCREEN_ID = "/"
 
 }

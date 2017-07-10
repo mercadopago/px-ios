@@ -377,7 +377,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
 
         if search?.getPaymentOptionsCount() == 0 {
-            self.errorInputs(error: MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
+            self.errorInputs(error: MPSDKError(message: "Ha ocurrido un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
 
             })
         }

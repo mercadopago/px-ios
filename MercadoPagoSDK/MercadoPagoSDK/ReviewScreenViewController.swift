@@ -20,8 +20,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     var callbackConfirm: ((PaymentData) -> Void)!
     var callbackExit: ((Void) -> Void)!
     var viewModel: CheckoutViewModel!
-    override open var screenName: String { get { return "REVIEW_AND_CONFIRM" } }
-    override open var screenId: String { get { return "/checkout_off/review" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     fileprivate var reviewAndConfirmContent = Set<String>()
     private var statusBarView: UIView?
 
@@ -45,9 +45,10 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.accessToken = MercadoPagoContext.merchantAccessToken()
     }
     override func trackInfo() {
-        var additionalInfo = ["has_shipping": "false", "payment_type": self.viewModel.paymentData.paymentMethod.paymentTypeId, "payment_method": self.viewModel.paymentData.paymentMethod._id]
+        var additionalInfo = [TrackingUtil.ADDITIONAL_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.ADDITIONAL_PAYMENT_TYPE_ID: self.viewModel.paymentData.paymentMethod.paymentTypeId, TrackingUtil.ADDITIONAL_PAYMENT_METHOD_ID: self.viewModel.paymentData.paymentMethod._id]
+
         if let issuer = self.viewModel.paymentData.issuer {
-            additionalInfo["issuer"] = issuer._id
+            additionalInfo[TrackingUtil.ADDITIONAL_ISSUER_ID] = issuer._id
         }
         MPXTracker.trackScreen(screenId: screenId, screenName: screenName, additionalInfo:additionalInfo)
     }
@@ -207,7 +208,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         MPServicesBuilder.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
                 if let error = preference.validate() {
                     // Invalid preference - cannot continue
-                    let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: error.localized, retry: false)
+                    let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
                     self.displayFailure(mpError)
                 } else {
                     self.viewModel.preference = preference
