@@ -7,15 +7,15 @@
 		<key>name</key>
 		<string>Argentina</string>
 		<key>pref_ID</key>
-		<string>243966003-8427190c-c392-4d37-a8f0-7a2d3752e22b</string>
+		<string>243966003-ead93403-6b57-4976-899c-39374943cb81</string>
 		<key>pref_ID_excl_online</key>
-		<string>243966003-fcc66aea-1f57-4623-b082-0098c4109f9e</string>
+		<string>243966003-119c2f60-fdb1-4c9d-b44b-d864614c33e6</string>
 		<key>pref_ID_excl_offline</key>
-		<string>243966003-89815ce6-9f09-4c9e-a266-fb299e4f7abf</string>
+		<string>243966003-604f025d-52ef-4fd2-ba23-5af49235b517</string>
 		<key>pk_sandbox</key>
-		<string>TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7</string>
+		<string>TEST-0b74577e-863f-4a0e-9932-b87761cda03e</string>
 		<key>pk_produ</key>
-		<string>APP_USR-0d933ff3-b803-4999-a211-8b3c7d5c7c03</string>
+		<string>APP_USR-6e5263dd-6d3a-4d7d-bd91-7baf04e31ea8</string>
 		<key>default_color</key>
 		<string>009EE3</string>
 	</dict>
