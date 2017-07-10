@@ -17,12 +17,12 @@ class PersistAndTrack: TrackingStrategy {
 
     var attemptSendForEachTrack = false
 
-    init(attemptSendEachTrack: Bool = true) {
+    init(attemptSendEachTrack: Bool = false) {
         self.attemptSendForEachTrack = attemptSendEachTrack
     }
     func trackLastScreen(screenTrack: ScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
-        attemptSendTrackInfo()
+        attemptSendTrackInfo(force:true)
     }
     func trackScreen(screenTrack: ScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
@@ -49,7 +49,7 @@ class PersistAndTrack: TrackingStrategy {
                 return
             }
             send(trackList: batch)
-            attemptSendTrackInfo()
+            attemptSendTrackInfo(force: force)
         }else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
                 self.attemptSendTrackInfo(force: force)

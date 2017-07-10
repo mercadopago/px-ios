@@ -605,9 +605,9 @@ open class MercadoPagoCheckout: NSObject {
             }
 
             strongSelf.viewModel.updateCheckoutModel(payment: payment)
-            strongSelf.dismissLoading()
-            strongSelf.executeNextStep()
 
+            strongSelf.executeNextStep()
+            strongSelf.dismissLoading()
             }, failure: {[weak self] (error: NSError) -> Void in
                 guard let strongSelf = self else {
                     return
