@@ -55,8 +55,7 @@ open class CardViewModelManager: NSObject {
     func cardType() -> String? {
         return self.paymentSettings?.defaultPaymentTypeId
     }
-    
-    
+
     func cvvLenght() -> Int {
         var lenght: Int
 

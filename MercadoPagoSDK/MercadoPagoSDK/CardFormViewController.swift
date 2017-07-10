@@ -54,30 +54,29 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     override open var screenName: String { get { return "CARD_FORM" } }
     override open var screenId: String { get { return "/checkout_off/card" } }
-    
-    
+
     public init(cardFormManager: CardViewModelManager, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
        super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.cardFormManager = cardFormManager
         self.callback = callback
     }
-    
+
     override func trackInfo() {
         var finalId = screenId
         if let cardType = self.cardFormManager.cardType() {
             finalId = finalId + "/" + cardType
         }
-        MPXTracker.trackScreen(screenId: finalId , screenName: screenName)
+        MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
         self.trackStatus()
     }
-    
-    func trackStatus(){
+
+    func trackStatus() {
         var finalId = screenId
-        
+
         if let cardType = self.cardFormManager.cardType() {
             finalId = finalId + "/" + cardType
         }
-        
+
         if editingLabel == cardNumberLabel {
             MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_NUMBER, screenName: screenName)
         } else if editingLabel == nameLabel {
@@ -87,10 +86,10 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         } else if editingLabel == cvvLabel {
             MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_SECURITY_CODE, screenName: screenName)
         } else if editingLabel == nil {
-            MPXTracker.trackScreen(screenId: finalId , screenName: screenName)
+            MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
         }
     }
- 
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -379,7 +378,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.becomeFirstResponder()
         textBox.text = textEditMaskFormater.textMasked(cardNumberLabel!.text?.trimSpaces())
         textBox.placeholder = "Número de tarjeta".localized
-        self.trackInfo()
+        self.trackStatus()
     }
     fileprivate func prepareNameLabelForEdit() {
         editingLabel = nameLabel
@@ -388,7 +387,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.becomeFirstResponder()
         textBox.text = cardFormManager.cardholderNameEmpty ?  "" : nameLabel!.text!.replacingOccurrences(of: " ", with: "")
         textBox.placeholder = "Nombre y apellido".localized
-        self.trackInfo()
+        self.trackStatus()
 
     }
     fileprivate func prepareExpirationLabelForEdit() {
@@ -398,7 +397,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.becomeFirstResponder()
         textBox.text = expirationLabelEmpty ?  "" : expirationDateLabel!.text
         textBox.placeholder = "Fecha de expiración".localized
-        self.trackInfo()
+        self.trackStatus()
     }
     fileprivate func prepareCVVLabelForEdit() {
 
@@ -423,7 +422,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.becomeFirstResponder()
         textBox.text = self.cardFormManager.cvvEmpty  ?  "" : cvvLabel!.text!.replacingOccurrences(of: " ", with: "")
         textBox.placeholder = "Código de seguridad".localized
-        self.trackInfo()
+        self.trackStatus()
     }
 
     /* Metodos para validar si un texto ingresado es valido, dependiendo del tipo

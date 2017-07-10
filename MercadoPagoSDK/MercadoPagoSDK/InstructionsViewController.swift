@@ -20,8 +20,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
 
     override open var screenName: String { get { return "INSTRUCTIONS" } }
     override open var screenId: String { get { return "/checkout_off/congrats/instructions" } }
-    
-    
+
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,13 +48,13 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         let footerNib = UINib(nibName: "FooterTableViewCell", bundle: self.bundle)
         self.tableView.register(footerNib, forCellReuseIdentifier: "footerNib")
     }
-    
+
     override  func trackInfo() {
-        var additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_IS_EXPRESS : TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
-                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS:self.paymentResult.status,
-                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS_DETAIL:self.paymentResult.statusDetail,
-                              TrackingUtil.ADDITIONAL_PAYMENT_ID:  self.paymentResult._id]
-        if let pm = self.paymentResult.paymentData?.paymentMethod{
+        var additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS: self.paymentResult.status,
+                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS_DETAIL: self.paymentResult.statusDetail,
+                              TrackingUtil.ADDITIONAL_PAYMENT_ID: self.paymentResult._id]
+        if let pm = self.paymentResult.paymentData?.paymentMethod {
             additionalInfo[TrackingUtil.ADDITIONAL_PAYMENT_ID] = pm._id
         }
         if let issuer = self.paymentResult.paymentData?.issuer {
@@ -63,7 +62,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         }
         MPXTracker.trackLastScreen(screenId: screenId, screenName: screenName, additionalInfo: additionalInfo)
     }
-    
+
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
@@ -72,8 +71,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         }
 
     }
-    
-    
+
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if instructionsInfo == nil {
