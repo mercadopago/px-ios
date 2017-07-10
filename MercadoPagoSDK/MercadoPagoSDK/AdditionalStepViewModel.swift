@@ -13,8 +13,10 @@ open class AdditionalStepViewModel: NSObject {
 
     var bundle: Bundle? = MercadoPago.getBundle()
     open var discount: DiscountCoupon?
-    public var screenName: String
     public var screenTitle: String
+    open var screenId: String { get { return TrackingUtil.NO_SCREEN_ID } }
+    open var screenName: String { get { return TrackingUtil.NO_NAME_SCREEN } }
+
     open var amount: Double
     open var email: String?
     open var token: CardInformationForm?
@@ -30,9 +32,7 @@ open class AdditionalStepViewModel: NSObject {
     open var maxFontSize: CGFloat { get { return 24 } }
     open var couponCallback: ((DiscountCoupon) -> Void)?
 
-    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, showBankInsterestWarning: Bool = false, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil) {
-
-        self.screenName = screenName
+    init(screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, showBankInsterestWarning: Bool = false, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil) {
         self.screenTitle = screenTitle
         self.amount = amount
         self.token = token
@@ -72,6 +72,10 @@ open class AdditionalStepViewModel: NSObject {
 
     func getScreenName() -> String {
         return screenName
+    }
+
+    func getScreenId() -> String {
+        return screenId
     }
 
     func getTitle() -> String {
@@ -133,7 +137,7 @@ open class AdditionalStepViewModel: NSObject {
     }
 
     func getCardCellHeight() -> CGFloat {
-        return UIScreen.main.bounds.width*0.50
+        return UIScreen.main.bounds.width * 0.50
     }
 
     func getDefaultRowCellHeight() -> CGFloat {
@@ -196,8 +200,11 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ) {
-        super.init(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
+        super.init(screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
     }
+
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM_ISSUERS } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + paymentMethods[0].paymentTypeId + TrackingUtil.CARD_ISSUER} }
 
 }
 
@@ -206,8 +213,11 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil) {
-        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, discount: discount, email: email)
+        super.init(screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, discount: discount, email: email)
     }
+
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + paymentMethods[0].paymentTypeId + TrackingUtil.CARD_INSTALLMENTS } }
 
     override func getDefaultRowCellHeight() -> CGFloat {
         if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PayerCost) {
@@ -231,16 +241,20 @@ class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
-    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ) {
-        super.init(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
-    }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_TYPES } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_TYPES } }
 
+    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ) {
+        super.init(screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
+    }
 }
 
 class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
 
+    override open var screenName: String { get { return "FINANCIAL_INSTITUTION" } }
+
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ) {
-        super.init(screenName: "FINANCIAL_INSTITUTION", screenTitle: "¿Cuál es tu banco?".localized, cardSectionVisible: false, cardSectionView: nil, totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
+        super.init(screenTitle: "¿Cuál es tu banco?".localized, cardSectionVisible: false, cardSectionView: nil, totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
     }
 
 }
@@ -251,8 +265,10 @@ class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
+    override open var screenName: String { get { return "ENTITY_TYPE" } }
+
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ) {
-        super.init(screenName: "ENTITY_TYPE", screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView:IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
+        super.init(screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView:IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
     }
 
 }

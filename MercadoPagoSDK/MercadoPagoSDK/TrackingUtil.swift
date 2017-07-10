@@ -24,7 +24,7 @@ open class TrackingUtil: NSObject {
     open static let SCREEN_ID_PAYMENT_TYPES = "/checkout_off/card/payment_types"
 
     //Screen Names
-    open static let SCREEN_NAME_CHECKOUT = "Init checkout"
+    open static let SCREEN_NAME_CHECKOUT = "INIT_CHECKOUT"
     open static let SCREEN_NAME_PAYMENT_VAULT = "PAYMENT_METHOD_SEARCH"
     open static let SCREEN_NAME_REVIEW_AND_CONFIRM = "REVIEW_AND_CONFIRM"
     open static let SCREEN_NAME_PAYMENT_RESULT_APPROVED = "RESULT"
@@ -41,7 +41,7 @@ open class TrackingUtil: NSObject {
     open static let SCREEN_NAME_CARD_FORM_IDENTIFICATION_NUMBER = "IDENTIFICATION_NUMBER"
     open static let SCREEN_NAME_CARD_FORM_ISSUERS = "CARD_ISSUERS"
     open static let SCREEN_NAME_CARD_FORM_INSTALLMENTS = "CARD_INSTALLMENTS"
-    open static let SCREEN_NAME_ERROR = "Error View"
+    open static let SCREEN_NAME_ERROR = "ERROR_VIEW"
     open static let SCREEN_NAME_PAYMENT_TYPES = "CARD_PAYMENT_TYPES"
     open static let SCREEN_NAME_SECURITY_CODE = "SECURITY_CODE_CARD"
 
@@ -69,5 +69,7 @@ open class TrackingUtil: NSObject {
     //Default values
     open static let HAS_SHIPPING_DEFAULT_VALUE = "false"
     open static let IS_EXPRESS_DEFAULT_VALUE = "false"
+    open static let NO_NAME_SCREEN = "NO NAME"
+    open static let NO_SCREEN_ID = "/"
 
 }
