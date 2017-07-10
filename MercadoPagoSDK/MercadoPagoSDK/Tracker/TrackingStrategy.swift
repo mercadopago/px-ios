@@ -31,16 +31,19 @@ class PersistAndTrack: TrackingStrategy {
         }
     }
 
-    func canSendTrack() -> Bool {
+    func canSendTrack(force: Bool = false) -> Bool {
         let status = Reach().connectionStatus()
         if status.description == "Offline" {
             return false
+        }
+        if force {
+            return true
         }
         return status.description == "Online (WiFi)" || UIApplication.shared.applicationState == UIApplicationState.background
     }
 
     func attemptSendTrackInfo(force: Bool = false) {
-        if canSendTrack() {
+        if canSendTrack(force:force) {
             let array = TrackStorageManager.getBatchScreenTracks(force: force)
             guard let batch = array else {
                 return
