@@ -40,7 +40,7 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + "credit_card" + TrackingUtil.CARD_INSTALLMENTS)
+        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS)
     }
 
     func testNumberOfSections() {
@@ -225,7 +225,7 @@ class IssuerAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + "credit_card" + TrackingUtil.CARD_ISSUER)
+        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER)
     }
 
     func testNumberOfSections() {

@@ -193,6 +193,10 @@ open class AdditionalStepViewModel: NSObject {
         case body = 3
     }
 
+    func track() {
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
+    }
+
 }
 
 class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
@@ -204,7 +208,12 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM_ISSUERS } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + paymentMethods[0].paymentTypeId + TrackingUtil.CARD_ISSUER} }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER} }
+
+    override func track() {
+        let additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_METHOD_ID: paymentMethods[0]._id, TrackingUtil.ADDITIONAL_PAYMENT_TYPE_ID: paymentMethods[0].paymentTypeId]
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, additionalInfo: additionalInfo)
+    }
 
 }
 
@@ -217,7 +226,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + paymentMethods[0].paymentTypeId + TrackingUtil.CARD_INSTALLMENTS } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS } }
 
     override func getDefaultRowCellHeight() -> CGFloat {
         if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PayerCost) {
@@ -233,6 +242,11 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
 
     override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue && showBankInsterestCell()
+    }
+
+    override func track() {
+        let additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_METHOD_ID: paymentMethods[0]._id]
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, additionalInfo: additionalInfo)
     }
 
 }
