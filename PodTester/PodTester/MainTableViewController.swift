@@ -51,6 +51,7 @@ class MainTableViewController: UITableViewController {
     open var showMaxCards: Int!
     open var color: UIColor!
     open var configJSON: String!
+    open var flowPreference = FlowPreference()
 
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
 
@@ -193,14 +194,19 @@ class MainTableViewController: UITableViewController {
             MercadoPagoCheckout.setDecorationPreference(decorationPref)
         }
 
-        let flowPref: FlowPreference = FlowPreference()
+        if String.isNullOrEmpty(self.configJSON) {
 
-        if let maxShowCards = self.showMaxCards {
-            flowPref.setMaxSavedCardsToShow(fromInt: maxShowCards)
+            let flowPref: FlowPreference = FlowPreference()
+
+            if let maxShowCards = self.showMaxCards {
+                flowPref.setMaxSavedCardsToShow(fromInt: maxShowCards)
+            }
+
+            showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
+            MercadoPagoCheckout.setFlowPreference(flowPref)
+        } else {
+            MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
-
-        showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
-        MercadoPagoCheckout.setFlowPreference(flowPref)
 
         if setPaymentDataCallback {
             MercadoPagoCheckout.setPaymentDataCallback { (PaymentData) in
@@ -228,7 +234,6 @@ class MainTableViewController: UITableViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
 
-        MercadoPagoContext.setLanguage(language: ._SPANISH_MEXICO)
         checkout.start()
     }
 
@@ -258,7 +263,7 @@ class MainTableViewController: UITableViewController {
         self.payment.status = "rejected"
         self.payment.statusDetail = "cc_rejected_call_for_authorize"
         self.payment.payer = Payer(_id: "1", email: "asd@asd.com", type: nil, identification: nil, entityType: nil)
-      //  self.payment.payer.email = "as@asd.com"
+        //  self.payment.payer.email = "as@asd.com"
         self.payment.statementDescriptor = "description"
         let PR = PaymentResult(payment: self.payment, paymentData: self.paymentData)
         loadCheckout( paymentData: self.paymentData, paymentResult: PR)
@@ -289,6 +294,9 @@ class MainTableViewController: UITableViewController {
         let payerEmail: String = json["payer_email"] != nil ?  json["payer_email"] as! String : ""
         let items: [NSDictionary] = json["items"] != nil ?  json["items"] as! [NSDictionary] : []
         let maxCards = json["show_max_saved_cards"] != nil ? json["show_max_saved_cards"] as? Int : nil
+        let flowPreference = json["flow_preference"] != nil ? FlowPreference.fromJSON(json["flow_preference"] as! NSDictionary) : FlowPreference()
+
+        self.flowPreference = flowPreference
 
         switch startFor {
         case startForOptions.payment.rawValue:
@@ -324,7 +332,7 @@ class MainTableViewController: UITableViewController {
         }
 
         return CheckoutPreference(items: items, payer: payer)
-        }
+    }
 
     func convertStringToDictionary(_ text: String) throws -> [String:AnyObject]? {
         if let data = text.data(using: String.Encoding.utf8) {
@@ -336,107 +344,107 @@ class MainTableViewController: UITableViewController {
 
     /// F2
     func startPaymentVault() {
-//        let paymentVault = MPFlowBuilder.startPaymentVaultViewController(amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
-//            
-//            
-//            self.dismiss(animated: true, completion: {})
-//            
-//            
-//        }, callbackCancel: {})
-//        
-//        self.present(paymentVault, animated: true, completion: {})
+        //        let paymentVault = MPFlowBuilder.startPaymentVaultViewController(amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
+        //
+        //
+        //            self.dismiss(animated: true, completion: {})
+        //
+        //
+        //        }, callbackCancel: {})
+        //
+        //        self.present(paymentVault, animated: true, completion: {})
     }
 
     func startCreditCardFlow() {
-//        let cardFlow = MPFlowBuilder.startCardFlow(amount: amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
-//            
-//            
-//            self.dismiss(animated: true, completion: {})
-//            
-//            
-//        })
-//        
-//        self.present(cardFlow, animated: true, completion: {})
-//    
+        //        let cardFlow = MPFlowBuilder.startCardFlow(amount: amount, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) in
+        //
+        //
+        //            self.dismiss(animated: true, completion: {})
+        //
+        //
+        //        })
+        //
+        //        self.present(cardFlow, animated: true, completion: {})
+        //
     }
 
     func startCreditCardForm() {
 
-//        let cardForm = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, callback: { (paymentMethod:PaymentMethod, token:Token?, issuer:Issuer?) in
-//            
-//            
-//            self.dismiss(animated: true, completion: {})
-//        
-//        
-//        }, callbackCancel: {
-//            
-//            self.dismiss(animated: true, completion: {})
-//            
-//        })
-//        
-//            self.present(cardForm, animated: true, completion: {})
+        //        let cardForm = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, callback: { (paymentMethod:PaymentMethod, token:Token?, issuer:Issuer?) in
+        //
+        //
+        //            self.dismiss(animated: true, completion: {})
+        //
+        //
+        //        }, callbackCancel: {
+        //
+        //            self.dismiss(animated: true, completion: {})
+        //
+        //        })
+        //
+        //            self.present(cardForm, animated: true, completion: {})
     }
 
     func startPaymentMethod() {
-//        let paymentMethod = MPStepBuilder.startPaymentMethodsStep { (paymentMethod:PaymentMethod) in
-//            
-//            
-//            self.dismiss(animated: true, completion: {})
-//            
-//            
-//        }
-//        
-//        self.present(paymentMethod, animated: true, completion: {})
+        //        let paymentMethod = MPStepBuilder.startPaymentMethodsStep { (paymentMethod:PaymentMethod) in
+        //
+        //
+        //            self.dismiss(animated: true, completion: {})
+        //
+        //
+        //        }
+        //
+        //        self.present(paymentMethod, animated: true, completion: {})
     }
 
     func startIssuer() {
-//        let issuer = MPStepBuilder.startIssuersStep(paymentMethod) { (issuer:Issuer) in
-//            
-//            
-//            self.dismiss(animated: true, completion: {})
-//
-//            
-//        }
-//        
-//        self.present(issuer, animated: true, completion: {})
+        //        let issuer = MPStepBuilder.startIssuersStep(paymentMethod) { (issuer:Issuer) in
+        //
+        //
+        //            self.dismiss(animated: true, completion: {})
+        //
+        //
+        //        }
+        //
+        //        self.present(issuer, animated: true, completion: {})
 
     } // crash
 
     func startPayerCost() {
 
-//        let payerCost = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: nil, amount: amount, paymentPreference: nil, installment: nil, timer: nil, callback: { (payerCost:PayerCost?) in
-//        
-//            self.dismiss(animated: true, completion: {})
-//            
-//        }, callbackCancel: {})
-//        
-//        self.present(payerCost, animated: true, completion: {})
-//        
+        //        let payerCost = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: nil, amount: amount, paymentPreference: nil, installment: nil, timer: nil, callback: { (payerCost:PayerCost?) in
+        //
+        //            self.dismiss(animated: true, completion: {})
+        //
+        //        }, callbackCancel: {})
+        //
+        //        self.present(payerCost, animated: true, completion: {})
+        //
 
     }
 
     func startCreatePayment() {
-//
-//        MercadoPagoContext.setBaseURL(merchantBaseURL)
-//        MercadoPagoContext.setPaymentURI(merchantCreatePaymentUri)
-//        
-//        let item : Item = Item(_id: itemID, title: itemTitle, quantity: itemQuantity,
-//                               unitPrice: itemUnitPrice)
-//        
-//        
-//        //CardIssuer is optional
-//        let installments = (self.installmentsSelected == nil) ? 1 : self.installmentsSelected!.installments
-//        let cardTokenId = (self.createdToken == nil) ? "" : self.createdToken!._id
-//        let merchantPayment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: self.selectedIssuer, tokenId: cardTokenId!, paymentMethod: self.paymentMethod, campaignId: 0)
-//        
-//        MerchantServer.createPayment(merchantPayment, success: { (payment) in
-//            
-//            
-//        }) { (error) in
-//            
-//            
-//            
-//        }
+        //
+        //        MercadoPagoContext.setBaseURL(merchantBaseURL)
+        //        MercadoPagoContext.setPaymentURI(merchantCreatePaymentUri)
+        //
+        //        let item : Item = Item(_id: itemID, title: itemTitle, quantity: itemQuantity,
+        //                               unitPrice: itemUnitPrice)
+        //
+        //
+        //        //CardIssuer is optional
+        //        let installments = (self.installmentsSelected == nil) ? 1 : self.installmentsSelected!.installments
+        //        let cardTokenId = (self.createdToken == nil) ? "" : self.createdToken!._id
+        //        let merchantPayment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: self.selectedIssuer, tokenId: cardTokenId!, paymentMethod: self.paymentMethod, campaignId: 0)
+        //        
+        //        MerchantServer.createPayment(merchantPayment, success: { (payment) in
+        //            
+        //            
+        //        }) { (error) in
+        //            
+        //            
+        //            
+        //        }
 
     }
 }

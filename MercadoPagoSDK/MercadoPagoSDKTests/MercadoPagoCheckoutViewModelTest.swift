@@ -140,7 +140,15 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let identificationMock = MockBuilder.buildIdentification()
         mpCheckout.viewModel.updateCheckoutModel(identification: identificationMock)
 
-        // 8 . Get Issuers
+        // 8. Crear token
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.CREATE_CARD_TOKEN, step)
+
+        // Simular token completo
+        let mockToken = MockBuilder.buildToken()
+        mpCheckout.viewModel.updateCheckoutModel(token: mockToken)
+
+        // 9 . Get Issuers
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.GET_ISSUERS, step)
 
@@ -149,25 +157,17 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         mpCheckout.viewModel.issuers = [onlyIssuerAvailable]
         mpCheckout.viewModel.updateCheckoutModel(issuer: onlyIssuerAvailable)
 
-        // 9. Un solo banco disponible => Payer Costs
+        // 10. Un solo banco disponible => Payer Costs
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
 
-        // 10. Pantalla cuotas
+        // 11. Pantalla cuotas
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.PAYER_COST_SCREEN, step)
 
         //Simular cuotas seleccionadas 
         mpCheckout.viewModel.paymentData.payerCost = MockBuilder.buildPayerCost()
-
-        // 11. Crear token
-        step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.CREATE_CARD_TOKEN, step)
-
-        // Simular token completo
-        let mockToken = MockBuilder.buildToken()
-        mpCheckout.viewModel.updateCheckoutModel(token: mockToken)
 
         // 12. RyC
         step = mpCheckout.viewModel.nextStep()
