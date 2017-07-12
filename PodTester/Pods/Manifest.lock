@@ -1,34 +1,30 @@
 PODS:
-  - MercadoPagoSDK (3.1.1):
-    - MercadoPagoSDK/Localization (= 3.1.1)
-  - MercadoPagoSDK/Localization (3.1.1):
-    - MercadoPagoSDK/Localization/en (= 3.1.1)
-    - MercadoPagoSDK/Localization/es (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-CO (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-MX (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-PE (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-UY (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-VE (= 3.1.1)
-    - MercadoPagoSDK/Localization/pt (= 3.1.1)
-  - MercadoPagoSDK/Localization/en (3.1.1)
-  - MercadoPagoSDK/Localization/es (3.1.1)
-  - MercadoPagoSDK/Localization/es-CO (3.1.1)
-  - MercadoPagoSDK/Localization/es-MX (3.1.1)
-  - MercadoPagoSDK/Localization/es-PE (3.1.1)
-  - MercadoPagoSDK/Localization/es-UY (3.1.1)
-  - MercadoPagoSDK/Localization/es-VE (3.1.1)
-  - MercadoPagoSDK/Localization/pt (3.1.1)
+  - MercadoPagoSDK (3.2.0):
+    - MercadoPagoSDK/Localization (= 3.2.0)
+  - MercadoPagoSDK/Localization (3.2.0):
+    - MercadoPagoSDK/Localization/en (= 3.2.0)
+    - MercadoPagoSDK/Localization/es (= 3.2.0)
+    - MercadoPagoSDK/Localization/es-CO (= 3.2.0)
+    - MercadoPagoSDK/Localization/es-MX (= 3.2.0)
+    - MercadoPagoSDK/Localization/es-PE (= 3.2.0)
+    - MercadoPagoSDK/Localization/es-UY (= 3.2.0)
+    - MercadoPagoSDK/Localization/es-VE (= 3.2.0)
+    - MercadoPagoSDK/Localization/pt (= 3.2.0)
+  - MercadoPagoSDK/Localization/en (3.2.0)
+  - MercadoPagoSDK/Localization/es (3.2.0)
+  - MercadoPagoSDK/Localization/es-CO (3.2.0)
+  - MercadoPagoSDK/Localization/es-MX (3.2.0)
+  - MercadoPagoSDK/Localization/es-PE (3.2.0)
+  - MercadoPagoSDK/Localization/es-UY (3.2.0)
+  - MercadoPagoSDK/Localization/es-VE (3.2.0)
+  - MercadoPagoSDK/Localization/pt (3.2.0)
 
 DEPENDENCIES:
-  - MercadoPagoSDK (from `../`)
-
-EXTERNAL SOURCES:
-  MercadoPagoSDK:
-    :path: ../
+  - MercadoPagoSDK (= 3.2.0)
 
 SPEC CHECKSUMS:
-  MercadoPagoSDK: 8f42190daf79ad57a7d85a7d5c57a113692e20fd
+  MercadoPagoSDK: 1b7e17eca98adffd38fca4bcbe0ffc0506214bcf
 
-PODFILE CHECKSUM: 0992ca2f8d7c2acabf817b7477463fa790adf87b
+PODFILE CHECKSUM: 4d5e643af15176dd00670de62a7307f40e06222b
 
 COCOAPODS: 1.1.1

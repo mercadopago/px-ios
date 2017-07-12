@@ -81,12 +81,6 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="TEA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7P-hF-Nl6" userLabel="TEA">
-                        <rect key="frame" x="227" y="232" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="9"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQZ-9M-k8U">
                         <rect key="frame" x="227" y="278" width="42" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -94,9 +88,9 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CFT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9H-cX-bxB">
-                        <rect key="frame" x="232" y="261" width="32" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="27"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CFT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9H-cX-bxB">
+                        <rect key="frame" x="226" y="251" width="44" height="29"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="24"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -108,18 +102,14 @@
                     <constraint firstItem="Yqy-D5-bms" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="6tl-h1-Iib"/>
                     <constraint firstItem="e6B-2G-k5B" firstAttribute="top" secondItem="7IM-bU-WwN" secondAttribute="bottom" constant="20" id="7dY-qP-4SB"/>
                     <constraint firstItem="aDj-L7-Gmd" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="8U7-Ta-jXR"/>
-                    <constraint firstItem="Z7P-hF-Nl6" firstAttribute="top" secondItem="aDj-L7-Gmd" secondAttribute="bottom" constant="20" id="8pd-DV-6Py"/>
                     <constraint firstItem="Tw3-3X-flB" firstAttribute="top" secondItem="Zf5-PV-8ZU" secondAttribute="bottom" constant="3" id="Bdz-a2-4ed"/>
                     <constraint firstItem="Tw3-3X-flB" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="EUo-02-mVy"/>
-                    <constraint firstItem="B9H-cX-bxB" firstAttribute="top" secondItem="Z7P-hF-Nl6" secondAttribute="bottom" id="Fdf-Xi-5iv"/>
-                    <constraint firstItem="B9H-cX-bxB" firstAttribute="top" secondItem="Z7P-hF-Nl6" secondAttribute="bottom" id="Ilu-pk-0zO"/>
                     <constraint firstItem="e6B-2G-k5B" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="25" id="Ite-rd-d5O"/>
-                    <constraint firstItem="Z7P-hF-Nl6" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="IvO-1D-Lqc"/>
+                    <constraint firstItem="B9H-cX-bxB" firstAttribute="top" secondItem="aDj-L7-Gmd" secondAttribute="bottom" constant="20" id="TFA-6o-ovz"/>
                     <constraint firstAttribute="trailingMargin" secondItem="e6B-2G-k5B" secondAttribute="trailing" constant="25" id="YnC-19-XIk"/>
                     <constraint firstItem="B9H-cX-bxB" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="cdQ-be-wBj"/>
                     <constraint firstItem="7IM-bU-WwN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="50" id="dtD-fe-40W"/>
                     <constraint firstItem="7IM-bU-WwN" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hfj-ol-X0h"/>
-                    <constraint firstItem="Z7P-hF-Nl6" firstAttribute="top" secondItem="aDj-L7-Gmd" secondAttribute="bottom" constant="20" id="pJn-VV-OLi"/>
                     <constraint firstItem="Zf5-PV-8ZU" firstAttribute="top" secondItem="e6B-2G-k5B" secondAttribute="bottom" id="vKP-Kc-9Xb"/>
                     <constraint firstItem="aDj-L7-Gmd" firstAttribute="top" secondItem="Tw3-3X-flB" secondAttribute="bottom" constant="10" id="w4O-50-WVm" userLabel="Payment Method Description.top = Total Amount Label.bottom + 10"/>
                 </constraints>
@@ -129,7 +119,6 @@
             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="CFT" destination="B9H-cX-bxB" id="Voe-vt-JFl"/>
-                <outlet property="TEALabel" destination="Z7P-hF-Nl6" id="SDx-8C-ojU"/>
                 <outlet property="changePaymentMethodCFTConstraint" destination="1MJ-vX-PPV" id="pLw-5y-5dw"/>
                 <outlet property="noRateLabel" destination="Zf5-PV-8ZU" id="KuN-lT-dB9"/>
                 <outlet property="paymentDescription" destination="e6B-2G-k5B" id="D8F-XV-nTU"/>

@@ -31,7 +31,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
-
+    
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
 
     override open var screenName: String { get { return "IDENTIFICATION_NUMBER" } }
@@ -86,7 +86,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        if (string.characters.count < 1) {
+        if string.characters.count < 1 {
             return true
         }
         guard let identificationType = identificationType else {
@@ -148,6 +148,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         numberDocLabel = identificationCard?.numberDocLabel
 
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
+        self.tipoDeDocumentoLabel.font = Utils.getIdentificationFont(size: 10)
         self.numberTextField.placeholder = "Número".localized
         self.textField.placeholder = "Tipo".localized
         self.view.backgroundColor = UIColor.primaryColor()
@@ -163,7 +164,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     func getCardWidth() -> CGFloat {
         let widthTotal = UIScreen.main.bounds.size.width * 0.70
         if widthTotal < 512 {
-            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.height - 394)) {
+            if (0.63 * widthTotal) < (UIScreen.main.bounds.size.height - 394) {
                 return widthTotal
             } else {
                 return (UIScreen.main.bounds.size.height - 394) / 0.63
@@ -191,7 +192,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
    open
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if(self.identificationTypes == nil) {
+        if self.identificationTypes == nil {
             return 0
         }
 
@@ -257,7 +258,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
         let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  defaultEditTextMask.textUnmasked(numberTextField.text))
 
-        if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil) {
+        if (cardToken.validateIdentificationNumber(self.identificationType)) == nil {
             self.numberTextField.resignFirstResponder()
             self.callback!(idnt)
         } else {
@@ -266,9 +267,15 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     }
 
-     var errorLabel: MPLabel?
+    var errorLabel: MPLabel?
+
     func showErrorMessage(_ errorMessage: String) {
-        errorLabel = MPLabel(frame: toolbar!.frame)
+        
+        guard let toolbar = toolbar else {
+            return
+        }
+        
+        errorLabel = MPLabel(frame: toolbar.frame)
         self.errorLabel!.backgroundColor = UIColor.mpLightGray()
         self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
         self.errorLabel!.text = errorMessage
@@ -328,8 +335,8 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
         if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
             if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
-                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: true, leftToRight: true)
-                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: true)
+                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: true, leftToRight: false)
+                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: true, leftToRight: false, completeEmptySpacesWith: " ")
                 return[customInitialMask, customMask]
             }
         }

@@ -11,13 +11,17 @@ import UIKit
 class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 
     var url: URL?
-    override internal var screenName: String { get { return "TERMS_AND_CONDITIONS" } }
+    var name: String?
+    var navBarTitle: String!
     @IBOutlet weak var webView: UIWebView!
-    init( url: URL) {
+    init( url: URL, screenName: String, navigationBarTitle: String) {
         super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
         self.url = url
+        self.name = screenName
+        self.navBarTitle = navigationBarTitle
 
     }
+    override internal var screenName: String { get { return name! } }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -36,7 +40,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     }
 
     override func getNavigationBarTitle() -> String {
-        return "Términos y Condiciones".localized
+        return navBarTitle
     }
 
     override func didReceiveMemoryWarning() {

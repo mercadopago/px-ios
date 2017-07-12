@@ -18,8 +18,8 @@ open class ReviewScreenPreference: NSObject {
 
     private var summaryRows = [SummaryRow]()
 
-    internal static var additionalInfoCells = [MPCustomCell]()
-    internal static var customItemCells = [MPCustomCell]()
+    var additionalInfoCells = [MPCustomCell]()
+    var customItemCells = [MPCustomCell]()
 
     open func setTitle(title: String) {
         self.title = title
@@ -73,17 +73,12 @@ open class ReviewScreenPreference: NSObject {
         return summaryRows
     }
 
-    open static func setCustomItemCell(customCell: [MPCustomCell]) {
-        ReviewScreenPreference.customItemCells = customCell
+    open func setCustomItemCell(customCell: [MPCustomCell]) {
+        self.customItemCells = customCell
     }
 
-    open static func setAddionalInfoCells(customCells: [MPCustomCell]) {
-        ReviewScreenPreference.additionalInfoCells = customCells
-    }
-
-    open static func clear() {
-        ReviewScreenPreference.customItemCells = [MPCustomCell]()
-        ReviewScreenPreference.additionalInfoCells = [MPCustomCell]()
+    open func setAddionalInfoCells(customCells: [MPCustomCell]) {
+        self.additionalInfoCells = customCells
     }
 
 }

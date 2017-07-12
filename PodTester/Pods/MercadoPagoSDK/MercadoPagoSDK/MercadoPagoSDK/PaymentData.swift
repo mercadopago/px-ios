@@ -14,13 +14,17 @@ public class PaymentData: NSObject {
     public var issuer: Issuer?
     public var payerCost: PayerCost?
     public var token: Token?
+    public var payer = Payer()
+    public var transactionDetails: TransactionDetails?
     public var discount: DiscountCoupon?
 
-    func clear() {
+    func clearCollectedData() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
+        self.payer.clearCollectedData()
+        self.transactionDetails = nil
         // No borrar el descuento
     }
 
@@ -30,13 +34,21 @@ public class PaymentData: NSObject {
             return false
         }
 
+        if paymentMethod.isEntityTypeRequired() && payer.entityType == nil {
+            return false
+        }
+
+        if !Array.isNullOrEmpty(paymentMethod.financialInstitutions) && transactionDetails?.financialInstitution == nil {
+            return false
+        }
+
         if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod() {
             return true
         }
 
         if paymentMethod!.isCard() && (token == nil || payerCost == nil) {
 
-            if paymentMethod.paymentTypeId == "debit_card" && token != nil {
+            if (paymentMethod.paymentTypeId == PaymentTypeId.DEBIT_CARD.rawValue || paymentMethod.paymentTypeId == PaymentTypeId.PREPAID_CARD.rawValue ) && token != nil {
                 return true
             }
             return false
@@ -55,12 +67,26 @@ public class PaymentData: NSObject {
 
     func toJSON() -> [String:Any] {
        var obj: [String:Any] = [
-            "payment_method_id": String(describing: self.paymentMethod._id)
+            "payment_method": self.paymentMethod.toJSON(),
+            "payer": payer.toJSON()
        ]
 
-        obj["installments"] = (self.payerCost != nil ) ? self.payerCost!.installments : ""
-        obj["card_token_id"] = (self.token != nil ) ? self.token!._id : ""
-        obj["issuer_id"] = (self.issuer != nil ) ? self.issuer!._id : ""
+        if let payerCost = self.payerCost {
+            obj["payer_cost"] = payerCost.toJSON()
+        }
+
+        if let token = self.token {
+            obj["card_token"] = token.toJSON()
+        }
+
+        if let issuer = self.issuer {
+            obj["issuer"] = issuer.toJSON()
+        }
+
+        if let discount = self.discount {
+            obj["discount"] = discount.toJSON()
+        }
+
         return obj
     }
 

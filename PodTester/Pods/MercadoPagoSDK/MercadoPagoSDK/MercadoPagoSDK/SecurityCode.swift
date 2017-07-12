@@ -39,7 +39,7 @@ open class SecurityCode: NSObject {
         let obj: [String:Any] = [
             "length": self.length,
             "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,
-            "mode": self.mode
+            "mode": self.mode == nil ? "" : self.mode!
         ]
 
         return obj

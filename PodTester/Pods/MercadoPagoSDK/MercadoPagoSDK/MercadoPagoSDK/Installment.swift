@@ -96,7 +96,7 @@ open class Installment: NSObject {
     open func containsInstallment(_ installment: Int) -> PayerCost? {
 
         for pc in payerCosts! {
-            if (pc.installments == installment) {
+            if pc.installments == installment {
                 return pc
             }
         }

@@ -32,6 +32,24 @@ open class Address: Equatable {
         }
         return address
     }
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+        let streetName: Any = self.streetName == nil ? JSONHandler.null : self.streetName!
+        let streetNumber: Any = self.streetNumber == nil ? JSONHandler.null : self.streetNumber!
+        let zipCode: Any = self.zipCode == nil ? JSONHandler.null : self.zipCode!
+
+        let obj: [String:Any] = [
+            "street_name": streetName,
+            "street_number": streetNumber,
+            "zip_code": zipCode
+        ]
+
+        return obj
+    }
 }
 
 public func ==(obj1: Address, obj2: Address) -> Bool {

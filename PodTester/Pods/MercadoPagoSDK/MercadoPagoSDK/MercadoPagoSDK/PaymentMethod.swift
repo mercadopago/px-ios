@@ -11,12 +11,14 @@ import UIKit
 
 open class PaymentMethod: NSObject, Cellable {
 
+    public var objectType: ObjectTypes = ObjectTypes.paymentMethod
     open var _id: String!
 
     open var name: String!
     open var paymentTypeId: String!
     open var settings: [Setting]!
     open var additionalInfoNeeded: [String]!
+    open var financialInstitutions: [FinancialInstitution]!
     open var accreditationTime: Int? // [ms]
     open var status: String!
     open var secureThumbnail: String!
@@ -35,25 +37,25 @@ open class PaymentMethod: NSObject, Cellable {
         self.paymentTypeId = paymentTypeId
     }
 
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: CardTypeTableViewCell = bundle!.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as! CardTypeTableViewCell
-        cell.setPaymentMethod(paymentMethod: self)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-
-        return cell
-    }
-
     open func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }
 
     open func isIdentificationRequired() -> Bool {
-        return isAdditionalInfoNeeded("cardholder_identification_number")
+        if isAdditionalInfoNeeded("cardholder_identification_number") || isAdditionalInfoNeeded("identification_number") || isEntityTypeRequired() {
+            return true
+        }
+        return false
     }
     open func isIdentificationTypeRequired() -> Bool {
-        return isAdditionalInfoNeeded("cardholder_identification_type")
+        if isAdditionalInfoNeeded("cardholder_identification_type") || isAdditionalInfoNeeded("identification_type") || isEntityTypeRequired() {
+            return true
+        }
+        return false
+    }
+
+    open func isEntityTypeRequired() -> Bool {
+        return isAdditionalInfoNeeded("entity_type")
     }
 
     open func isCard() -> Bool {
@@ -74,9 +76,9 @@ open class PaymentMethod: NSObject, Cellable {
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
         let settings: [Setting]? = Setting.getSettingByBin(self.settings, bin: bin)
         if let settings = settings {
-                if settings[0].securityCode.length != 0 {
-                    return true
-                }
+            if settings[0].securityCode.length != 0 {
+                return true
+            }
         }
         return false
     }
@@ -120,17 +122,33 @@ open class PaymentMethod: NSObject, Cellable {
             "accreditation_time": accreditationTime
         ]
 
-       var additionalInfoJson = ""
+        var additionalInfoJson = ""
         for info in self.additionalInfoNeeded {
             additionalInfoJson.append(info + ",")
         }
         obj["additional_info_needed"] = String(additionalInfoJson.characters.dropLast())
 
-        var settingsJson = " "
-        for setting in self.settings {
-            settingsJson.append(setting.toJSONString() + ",")
+        if Array.isNullOrEmpty(settings) {
+            obj["settings"] = JSONHandler.null
+
+        } else {
+            var settingsJson: [[String:Any]] = [[:]]
+            for (index, setting) in self.settings.enumerated() {
+                settingsJson[index] = setting.toJSON()
+            }
+            obj["settings"] = settingsJson
         }
-        obj["settings"] = String(settingsJson.characters.dropLast())
+
+        if Array.isNullOrEmpty(financialInstitutions) {
+            obj["financial_institutions"] = JSONHandler.null
+
+        } else {
+            var financialInstitutionsJson: [[String:Any]] = [[:]]
+                for (index, financialInstitution) in self.financialInstitutions.enumerated() {
+                    financialInstitutionsJson[index] = financialInstitution.toJSON()
+                }
+                obj["financial_institutions"] = financialInstitutionsJson
+        }
 
         return obj
 
@@ -141,9 +159,9 @@ open class PaymentMethod: NSObject, Cellable {
         paymentMethod._id = json["id"] as? String
         paymentMethod.name = json["name"] as? String
 
-		if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
-			paymentMethod.paymentTypeId = json["payment_type_id"] as! String
-		}
+        if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
+            paymentMethod.paymentTypeId = json["payment_type_id"] as! String
+        }
 
         if json["status"] != nil && !(json["status"]! is NSNull) {
             paymentMethod.status = json["status"] as! String
@@ -181,7 +199,7 @@ open class PaymentMethod: NSObject, Cellable {
                 }
             }
         }
-        paymentMethod.settings = settings
+        paymentMethod.settings = settings.isEmpty ? nil : settings
 
         var additionalInfoNeeded: [String] = [String]()
         if let additionalInfoNeededArray = json["additional_info_needed"] as? NSArray {
@@ -191,12 +209,24 @@ open class PaymentMethod: NSObject, Cellable {
                 }
             }
         }
+        paymentMethod.additionalInfoNeeded = additionalInfoNeeded
 
         if let accreditationTime = json["accreditation_time"] as? Int {
             paymentMethod.accreditationTime = accreditationTime
         }
 
-        paymentMethod.additionalInfoNeeded = additionalInfoNeeded
+        var financialInstitutions: [FinancialInstitution] = [FinancialInstitution]()
+
+        if let financialInstitutionsArray = json["financial_institutions"] as? NSArray {
+            for i in 0..<financialInstitutionsArray.count {
+                if let financialInstitutionsDic = financialInstitutionsArray[i] as? NSDictionary {
+                    financialInstitutions.append(FinancialInstitution.fromJSON(financialInstitutionsDic))
+                }
+            }
+        }
+
+        paymentMethod.financialInstitutions = financialInstitutions.isEmpty ? nil : financialInstitutions
+
         return paymentMethod
     }
 
@@ -226,11 +256,11 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open func secCodeMandatory() -> Bool {
-        if (self.settings.count == 0) {
+        if self.settings.count == 0 {
             return false // Si no tiene settings el codigo no es mandatorio
         }
         let filterList = self.settings.filter({ return $0.securityCode.mode == self.settings[0].securityCode.mode })
-        if (filterList.count == self.settings.count) {
+        if filterList.count == self.settings.count {
             return self.settings[0].securityCode.mode == "mandatory"
         } else {
             return true // si para alguna de sus settings es mandatorio entonces el codigo es mandatorio
@@ -238,22 +268,22 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open func secCodeLenght() -> Int {
-        if (self.settings != nil && self.settings.count == 0 || self.settings == nil) {
+        if self.settings != nil && self.settings.count == 0 || self.settings == nil {
             return 3 //Si no tiene settings la longitud es cero
         }
         let filterList = self.settings.filter({ return $0.securityCode.length == self.settings[0].securityCode.length })
-        if (filterList.count == self.settings.count) {
+        if filterList.count == self.settings.count {
             return self.settings[0].securityCode.length
         } else {
             return 0 //si la longitud de sus codigos, en sus settings no es siempre la misma entonces responde 0
         }
     }
     open func cardNumberLenght() -> Int {
-        if (self.settings.count == 0) {
+        if self.settings.count == 0 {
             return 0 //Si no tiene settings la longitud es cero
         }
         let filterList = self.settings.filter({ return $0.cardNumber.length == self.settings[0].cardNumber.length })
-        if (filterList.count == self.settings.count) {
+        if filterList.count == self.settings.count {
             return self.settings[0].cardNumber.length
         } else {
             return 0 //si la longitud de sus numberos, en sus settings no es siempre la misma entonces responde 0
@@ -261,11 +291,11 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open func secCodeInBack() -> Bool {
-        if (self.settings == nil || self.settings.count == 0) {
+        if self.settings == nil || self.settings.count == 0 {
             return true //si no tiene settings, por defecto el codigo de seguridad ira atras
         }
         let filterList = self.settings.filter({ return $0.securityCode.cardLocation == self.settings[0].securityCode.cardLocation })
-        if (filterList.count == self.settings.count) {
+        if filterList.count == self.settings.count {
             return self.settings[0].securityCode.cardLocation == "back"
         } else {
             return true //si sus settings no coinciden el codigo ira atras por default
@@ -285,33 +315,32 @@ open class PaymentMethod: NSObject, Cellable {
 
     open func conformsPaymentPreferences(_ paymentPreference: PaymentPreference?) -> Bool {
 
-        if(paymentPreference == nil) {
+        if paymentPreference == nil {
             return true
         }
-
-        if (paymentPreference!.defaultPaymentMethodId != nil) {
-            if (self._id != paymentPreference!.defaultPaymentMethodId) {
+        if paymentPreference!.defaultPaymentMethodId != nil {
+            if self._id != paymentPreference!.defaultPaymentMethodId {
                 return false
             }
         }
-        if((paymentPreference?.excludedPaymentTypeIds) != nil) {
+        if (paymentPreference?.excludedPaymentTypeIds) != nil {
             for (_, value) in (paymentPreference?.excludedPaymentTypeIds!.enumerated())! {
-                if (value == self.paymentTypeId) {
+                if value == self.paymentTypeId {
                     return false
                 }
             }
         }
 
-        if((paymentPreference?.excludedPaymentMethodIds) != nil) {
+        if (paymentPreference?.excludedPaymentMethodIds) != nil {
             for (_, value) in (paymentPreference?.excludedPaymentMethodIds!.enumerated())! {
-                if (value == self._id) {
+                if value == self._id {
                     return false
                 }
             }
         }
 
-        if(paymentPreference!.defaultPaymentTypeId != nil) {
-            if (paymentPreference!.defaultPaymentTypeId != self.paymentTypeId) {
+        if paymentPreference!.defaultPaymentTypeId != nil {
+            if paymentPreference!.defaultPaymentTypeId != self.paymentTypeId {
                 return false
             }
         }
@@ -320,12 +349,12 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     // IMAGE
-    open func getImage(bin: String?) -> UIImage? {
+    open func getImage() -> UIImage? {
         return MercadoPago.getImageFor(self)
     }
 
     // COLORS
-        // First Color
+    // First Color
     open func getColor(bin: String?) -> UIColor {
         var settings: [Setting]? = nil
 
@@ -335,7 +364,7 @@ open class PaymentMethod: NSObject, Cellable {
 
         return MercadoPago.getColorFor(self, settings: settings)
     }
-        // Font Color
+    // Font Color
     open func getFontColor(bin: String?) -> UIColor {
         var settings: [Setting]? = nil
 
@@ -345,7 +374,7 @@ open class PaymentMethod: NSObject, Cellable {
 
         return MercadoPago.getFontColorFor(self, settings: settings)
     }
-        // Edit Font Color
+    // Edit Font Color
     open func getEditingFontColor(bin: String?) -> UIColor {
         var settings: [Setting]? = nil
 
@@ -357,7 +386,7 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     // MASKS
-        // Label Mask
+    // Label Mask
     open func getLabelMask(bin: String?) -> String {
         var settings: [Setting]? = nil
 
@@ -366,7 +395,7 @@ open class PaymentMethod: NSObject, Cellable {
         }
         return MercadoPago.getLabelMaskFor(self, settings: settings)
     }
-        // Edit Text Mask
+    // Edit Text Mask
     open func getEditTextMask(bin: String?) -> String {
         var settings: [Setting]? = nil
 
@@ -381,11 +410,12 @@ open class PaymentMethod: NSObject, Cellable {
 public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
 
     let areEqual =
-    obj1._id == obj2._id &&
-    obj1.name == obj2.name &&
-    obj1.paymentTypeId == obj2.paymentTypeId &&
-    obj1.settings == obj2.settings &&
-    obj1.additionalInfoNeeded == obj2.additionalInfoNeeded
+        obj1._id == obj2._id &&
+            obj1.name == obj2.name &&
+            obj1.paymentTypeId == obj2.paymentTypeId &&
+            obj1.settings == obj2.settings &&
+            obj1.additionalInfoNeeded == obj2.additionalInfoNeeded &&
+            obj1.financialInstitutions == obj2.financialInstitutions
 
     return areEqual
 }

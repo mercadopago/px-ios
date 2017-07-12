@@ -54,21 +54,21 @@ open class PaymentPreference: NSObject {
     }
 
     open func autoSelectPayerCost(_ payerCostList: [PayerCost]) -> PayerCost? {
-        if (payerCostList.count == 0) {
+        if payerCostList.count == 0 {
             return nil
         }
-        if (payerCostList.count == 1) {
+        if payerCostList.count == 1 {
             return payerCostList.first
         }
 
             for payercost in payerCostList {
-                if (payercost.installments == defaultInstallments) {
+                if payercost.installments == defaultInstallments {
                     return payercost
                 }
             }
 
-        if ((payerCostList.first?.installments <= maxAcceptedInstallments)
-            && (payerCostList[1].installments > maxAcceptedInstallments)) {
+        if (payerCostList.first?.installments <= maxAcceptedInstallments)
+            && (payerCostList[1].installments > maxAcceptedInstallments) {
                 return payerCostList.first
         } else {
             return nil
@@ -77,10 +77,10 @@ open class PaymentPreference: NSObject {
     }
 
     open func validate() -> Bool {
-        if (maxAcceptedInstallments <= 0) {
+        if maxAcceptedInstallments <= 0 {
             return false
         }
-        if (PaymentType.allPaymentIDs.count <= excludedPaymentTypeIds?.count) {
+        if PaymentType.allPaymentIDs.count <= excludedPaymentTypeIds?.count {
             return false
         }
 
@@ -124,27 +124,27 @@ open class PaymentPreference: NSObject {
 
     open func addSettings(_ defaultPaymentTypeId: String? = nil, excludedPaymentMethodsIds: Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment: Int? = nil, defaultInstallments: Int? = nil) -> PaymentPreference {
 
-        if(excludedPaymentMethodsIds != nil) {
+        if excludedPaymentMethodsIds != nil {
            self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
         }
 
-        if(excludedPaymentTypesIds != nil) {
+        if excludedPaymentTypesIds != nil {
             self.excludedPaymentTypeIds = excludedPaymentTypesIds
         }
 
-        if(defaultPaymentMethodId != nil) {
+        if defaultPaymentMethodId != nil {
              self.defaultPaymentMethodId = defaultPaymentMethodId
         }
 
-        if(maxAcceptedInstallment != nil) {
+        if maxAcceptedInstallment != nil {
             self.maxAcceptedInstallments = maxAcceptedInstallment!
         }
 
-        if(defaultInstallments != nil) {
+        if defaultInstallments != nil {
             self.defaultInstallments = defaultInstallments!
         }
 
-        if(defaultPaymentTypeId != nil) {
+        if defaultPaymentTypeId != nil {
             self.defaultPaymentTypeId = defaultPaymentTypeId
         }
 
@@ -201,7 +201,7 @@ open class PaymentPreference: NSObject {
 
             "default_installments": default_installments,
             "default_payment_method_id": default_payment_method_id,
-            "installments": installments
+            "installments": installments,
         ]
 
         var excludedPaymentMethodIdsJson = [NSDictionary]()
