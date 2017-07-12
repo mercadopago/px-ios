@@ -18,14 +18,18 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     var hideNavBarCallback: (() -> Void)?
 
-    open var screenName: String { get { return MPTracker.kGenericScreenName } }
+    let NO_NAME_SCREEN = "NO NAME"
+
+    open var screenName: String { get { return NO_NAME_SCREEN } }
 
     var loadingInstance: UIView?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
 
-        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
+        if screenName != NO_NAME_SCREEN {
+            MPXTracker.trackScreen(screenId: screenName, screenName: screenName)
+        }
         self.loadMPStyles()
     }
 

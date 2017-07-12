@@ -45,9 +45,11 @@ open class MercadoPagoCheckout: NSObject {
     public func start() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
+
     }
 
     func executeNextStep() {
+
         switch self.viewModel.nextStep() {
         case .SEARCH_PREFERENCE :
             self.collectCheckoutPreference()
@@ -372,12 +374,20 @@ open class MercadoPagoCheckout: NSObject {
                 guard let strongSelf = self else {
                     return
                 }
+                let error = MPSDKError.convertFrom(error)
 
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
-                    self?.createNewCardToken()
-                })
-                strongSelf.dismissLoading()
-                strongSelf.executeNextStep()
+                if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
+                    if let identificationViewController = strongSelf.navigationController.viewControllers.last as? IdentificationViewController {
+                        identificationViewController.showErrorMessage("Revisa este dato".localized)
+                    }
+                    strongSelf.dismissLoading()
+                } else {
+                    strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] (_) in
+                        self?.createNewCardToken()
+                    })
+                    strongSelf.dismissLoading()
+                    strongSelf.executeNextStep()
+                }
         })
     }
 
@@ -765,6 +775,7 @@ open class MercadoPagoCheckout: NSObject {
         viewController.hidesBottomBarWhenPushed = true
         let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         if mercadoPagoViewControllers.count == 0 {
+            self.navigationController.navigationBar.isHidden = false
             viewController.callbackCancel = { self.cancel() }
         }
         self.navigationController.pushViewController(viewController, animated: animated)

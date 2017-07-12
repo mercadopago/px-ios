@@ -60,6 +60,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let holder = self.cardToken?.cardholder else {
             return false
         }
+        
         if let identification = holder.identification {
             if String.isNullOrEmpty(identification.number) && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod() {
                 return true
@@ -165,7 +166,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pmSelected = self.paymentOptionSelected else {
             return false
         }
-        if pmSelected.isCustomerPaymentMethod() && self.paymentData.token == nil && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if pmSelected.isCustomerPaymentMethod() && self.paymentData.token == nil && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue && (self.paymentData.payerCost != nil || !self.paymentData.paymentMethod.isCreditCard()) {
             return true
         }
         return false
@@ -176,7 +177,9 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        return self.paymentData.token == nil && pm.isCard()
+        //Note: this is being used only for new cards, saved cards tokenization is
+        //made in MercadoPagoCheckout#collectSecurityCode().
+        return self.paymentData.token == nil && pm.isCard() && self.cardToken != nil
     }
 
     func needReviewAndConfirm() -> Bool {

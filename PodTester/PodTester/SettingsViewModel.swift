@@ -121,11 +121,11 @@ open class SettingsViewModel: NSObject {
         }
     }
     //Environment Selector Logic--
-    
+
     //--Api Version Selector Logic
     func setApiVersion(sender: UISegmentedControl) {
         let title = sender.titleForSegment(at: sender.selectedSegmentIndex)!
-        
+
         switch title {
         case ApiEnvironment.Beta.rawValue:
             self.selectedApiEnvironment = ApiEnvironment.Beta
@@ -227,7 +227,7 @@ open class SettingsViewModel: NSObject {
         }
     }
     //Color Picker Logic--
-    
+
     //--Json Input Logic
     func getJsonInputCell() -> UITableViewCell {
         let cell = UITableViewCell()
@@ -236,9 +236,9 @@ open class SettingsViewModel: NSObject {
         cell.selectionStyle = .none
         cell.textLabel?.textColor = UIColor.black
         cell.textLabel?.text = "Config. JSON"
-        
+
         let cellFrame = cell.bounds
-        
+
         let cellTextfield = UITextField()
         cellTextfield.frame = CGRect(x: cellFrame.midX + marginSpace/2, y: cellFrame.minY + marginSpace/2, width: cellFrame.width/2 - marginSpace, height: cellFrame.height - marginSpace)
         cellTextfield.layer.borderWidth = 1
@@ -247,10 +247,10 @@ open class SettingsViewModel: NSObject {
         cellTextfield.autocapitalizationType = .allCharacters
         cellTextfield.addTarget(self, action: #selector(setConfigurationJSON(sender: )), for: UIControlEvents.allEditingEvents)
         cell.addSubview(cellTextfield)
-        
+
         return cell
     }
-    
+
     func setConfigurationJSON(sender: UITextField) {
         if let text = sender.text, text.isNotEmpty {
             configurationJSON = sender.text
@@ -259,19 +259,19 @@ open class SettingsViewModel: NSObject {
         }
     }
     //Json Input Logic--
-    
+
     //Updates build settings bearing in mind the customization factors
     open func update() {
         MercadoPagoContext.setSiteID(selectedSite.ID)
         selectedSite.pk = getPublicKey(site: selectedSite.ID)
         selectedSite.pref_ID = getPrefID(site: selectedSite.ID)
-        
+
 //        if selectedApiEnvironment == ApiEnvironment.Beta {
 //            ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_TEST_ENV
 //        } else {
 //            ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_PROD_ENV
 //        }
-        
+
     }
 
     //Return NSDictionary from requested Plist
@@ -425,7 +425,7 @@ open class SettingsViewModel: NSObject {
         case sandbox = "Sandbox"
         case production = "Production"
     }
-    
+
     public enum ApiEnvironment: String {
         case Beta = "Beta"
         case V1 = "V1"

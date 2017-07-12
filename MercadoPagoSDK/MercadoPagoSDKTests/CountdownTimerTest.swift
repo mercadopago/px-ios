@@ -9,8 +9,8 @@
 import UIKit
 import XCTest
 
-class CountdownTimerTest: BaseTest, TimerDelegate {
-
+class CountdownTimerTest: BaseTest /*, TimerDelegate*/ {
+/*
      override func setUp() {
         super.setUp()
         CountdownTimer.getInstance().delegate = nil
@@ -91,4 +91,5 @@ class CountdownTimerTest: BaseTest, TimerDelegate {
     func updateTimer() {
 
     }
+ */
 }

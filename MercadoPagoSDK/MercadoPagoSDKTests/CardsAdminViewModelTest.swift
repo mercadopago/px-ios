@@ -57,7 +57,6 @@ class CardsAdminViewModelTest: BaseTest {
         cardAdminViewModel.setScreenTitle(title: "title")
         XCTAssertEqual(cardAdminViewModel.titleScreen, "title")
     }
-
     func testGetTitle() {
         XCTAssertEqual(cardAdminViewModel.getScreenTitle(), "¿Con qué tarjeta?".localized)
         cardAdminViewModel.titleScreen = "title"

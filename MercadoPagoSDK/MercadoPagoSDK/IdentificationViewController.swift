@@ -31,7 +31,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
-
+    
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
 
     override open var screenName: String { get { return "IDENTIFICATION_NUMBER" } }
@@ -267,9 +267,15 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     }
 
-     var errorLabel: MPLabel?
+    var errorLabel: MPLabel?
+
     func showErrorMessage(_ errorMessage: String) {
-        errorLabel = MPLabel(frame: toolbar!.frame)
+        
+        guard let toolbar = toolbar else {
+            return
+        }
+        
+        errorLabel = MPLabel(frame: toolbar.frame)
         self.errorLabel!.backgroundColor = UIColor.mpLightGray()
         self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
         self.errorLabel!.text = errorMessage
