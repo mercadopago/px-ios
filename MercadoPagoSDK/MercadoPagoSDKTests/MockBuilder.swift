@@ -390,5 +390,30 @@ open class MockBuilder: NSObject {
 
         return customer
     }
+    
+    class func buildApiException(code: String) -> ApiException? {
+        
+        if code == ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue {
+            return buildInvalidIdNumberApiException()
+        }
+    
+        return nil
+    }
+    
+    class func buildInvalidIdNumberApiException() -> ApiException {
+        let apiException = ApiException()
+        apiException.message = "Invalid cardholder.identification.number: 312322222 in site_id: MLV"
+        apiException.error = "bad_request"
+        apiException.status = 400
+        
+        var cause = [Cause]()
+        let invalidIdCause = Cause()
+        invalidIdCause._description = "Invalid parameter 'cardholder.identification.number'"
+        invalidIdCause.code = "324"
+        
+        cause.append(invalidIdCause)
+        apiException.cause = cause
+        return apiException
+    }
 
 }

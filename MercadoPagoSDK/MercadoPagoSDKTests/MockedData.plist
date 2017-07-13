@@ -2,6 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ApiException</key>
+	<string>{
+    &quot;message&quot;: &quot;Invalid cardholder.identification.number: 312322222 in site_id: MLV&quot;,
+    &quot;cause&quot;: [
+        {
+            &quot;description&quot;: &quot;Invalid parameter &apos;cardholder.identification.number&apos;&quot;,
+            &quot;code&quot;: &quot;324&quot;
+        }
+    ],
+    &quot;error&quot;: &quot;bad_request&quot;,
+    &quot;status&quot;: 400
+}</string>
+	<key>Cause</key>
+	<string>{
+            &quot;description&quot;: &quot;Invalid parameter &apos;cardholder.identification.number&apos;&quot;,
+            &quot;code&quot;: &quot;324&quot;
+}</string>
 	<key>groups</key>
 	<string>{
   &quot;groups&quot;: [

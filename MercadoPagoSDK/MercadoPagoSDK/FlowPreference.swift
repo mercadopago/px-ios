@@ -157,4 +157,20 @@ open class FlowPreference: NSObject {
         return maxSavedCardsToShow
     }
 
+    open class func fromJSON(_ json: NSDictionary) -> FlowPreference {
+        let flowPreference = FlowPreference()
+        flowPreference.showReviewAndConfirmScreen = json["review_and_confirm_screen_enabled"] as? Bool ?? true
+        flowPreference.showPaymentResultScreen = json["payment_result_screen_enabled"] as? Bool ?? true
+        flowPreference.showPaymentApprovedScreen = json["payment_approved_screen_enabled"] as? Bool ?? true
+        flowPreference.showPaymentRejectedScreen = json["payment_rejected_screen_enabled"] as? Bool ?? true
+        flowPreference.showPaymentPendingScreen = json["payment_pending_screen_enabled"] as? Bool ?? true
+        flowPreference.showPaymentSearchScreen = json["payment_search_screen_enabled"] as? Bool ?? true
+        flowPreference.showDiscount = json["discount_enabled"] as? Bool ?? true
+        flowPreference.showAllSavedCards = json["show_all_saved_cards_enabled"] as? Bool ?? false
+        flowPreference.showInstallmentsReviewScreen = json["installments_review_screen_enabled"] as? Bool ?? true
+        flowPreference.maxSavedCardsToShow = json["max_saved_cards_to_show"] as? Int ?? FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
+
+        return flowPreference
+    }
+
 }

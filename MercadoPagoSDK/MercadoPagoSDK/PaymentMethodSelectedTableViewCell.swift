@@ -83,27 +83,26 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             self.paymentDescription.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: UIColor.black, fontSize: 24, centsFontSize: 12, baselineOffset: 9)
             self.totalAmountLabel.text = ""
         }
-
-        if paymentData.payerCost != nil && !paymentData.payerCost!.hasInstallmentsRate() && paymentData.payerCost?.installments != 1 {
-
-            if MercadoPagoCheckout.showPayerCostDescription() {
-
-                if MercadoPagoCheckout.showBankInterestWarning() {
-                    self.noRateLabel.attributedText = NSAttributedString(string : "(" + "No incluye intereses bancarios".localized + ")")
-                    self.noRateLabel.textColor = UIColor.px_grayDark()
-                } else {
-                    self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
-                }
-            } else {
-
-                if MercadoPagoCheckout.showBankInterestWarning() {
-                    self.noRateLabel.attributedText = NSAttributedString(string : "(" + "No incluye intereses bancarios".localized + ")")
-                    self.noRateLabel.textColor = UIColor.px_grayDark()
-                } else {
-                    self.noRateLabel.attributedText = NSAttributedString(string : "")
-                }
-            }
+        
+        self.noRateLabel.attributedText = NSAttributedString(string : "")
+        
+        if showBankInterestWarning(paymentData: paymentData) {
+            self.noRateLabel.attributedText = NSAttributedString(string : "No incluye intereses bancarios".localized)
+            self.noRateLabel.textColor = self.totalAmountLabel.textColor
+            self.noRateLabel.font = Utils.getFont(size: self.totalAmountLabel.font.pointSize)
         }
+        
+        if showPayerCostDescription(paymentData: paymentData) {
+            self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
+        }
+    }
+    
+    func showBankInterestWarning(paymentData: PaymentData) -> Bool {
+        return paymentData.payerCost != nil && MercadoPagoCheckout.showBankInterestWarning()
+    }
+    
+    func showPayerCostDescription(paymentData: PaymentData) -> Bool {
+        return paymentData.payerCost != nil && !paymentData.payerCost!.hasInstallmentsRate() && paymentData.payerCost?.installments != 1 && !showBankInterestWarning(paymentData: paymentData)
     }
 
     func fillChangePaymentMethodButton(reviewScreenPreference: ReviewScreenPreference) {

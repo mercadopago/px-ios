@@ -14,4 +14,7 @@ open class ApiUtil {
         case BAD_REQUEST = 400
         case NOT_FOUND = 404
     }
+    enum ErrorCauseCodes: String {
+        case INVALID_IDENTIFICATION_NUMBER = "324"
+    }
 }

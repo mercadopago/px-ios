@@ -81,6 +81,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     open var financialInstitutions: [FinancialInstitution]?
 
     static var error: MPSDKError?
+
     internal var errorCallback: (() -> Void)?
 
     internal var needLoadPreference: Bool = false
@@ -324,8 +325,17 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needCompleteCard() {
             return .CARD_FORM
         }
+
         if needGetIdentification() {
             return .IDENTIFICATION
+        }
+
+        if needSecurityCode() {
+            return .SECURITY_CODE_ONLY
+        }
+
+        if needCreateToken() {
+            return .CREATE_CARD_TOKEN
         }
 
         if needGetEntityTypes() {
@@ -354,14 +364,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needPayerCostSelectionScreen() {
             return .PAYER_COST_SCREEN
-        }
-
-        if needSecurityCode() {
-            return .SECURITY_CODE_ONLY
-        }
-
-        if needCreateToken() {
-            return .CREATE_CARD_TOKEN
         }
 
         return .FINISH
@@ -537,6 +539,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     func getExcludedPaymentTypesIds() -> Set<String>? {
+        if self.checkoutPreference.siteId == "MLC" || self.checkoutPreference.siteId == "MCO" || self.checkoutPreference.siteId == "MLV" {
+            self.checkoutPreference.addExcludedPaymentType("atm")
+            self.checkoutPreference.addExcludedPaymentType("bank_transfer")
+            self.checkoutPreference.addExcludedPaymentType("ticket")
+        }
         return self.checkoutPreference.getExcludedPaymentTypesIds()
     }
 
@@ -600,7 +607,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 extension MercadoPagoCheckoutViewModel {
     func resetGroupSelection() {
         self.paymentOptionSelected = nil
-        self.paymentMethodOptions = self.rootPaymentMethodOptions
+        guard let search = self.search else {
+            return
+        }
+        self.updateCheckoutModel(paymentMethodSearch: search)
     }
 
     func resetInformation() {

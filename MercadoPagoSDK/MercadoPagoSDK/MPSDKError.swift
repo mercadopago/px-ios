@@ -12,6 +12,8 @@ open class MPSDKError: NSObject {
 
     open var message: String = ""
     open var errorDetail: String = ""
+    open var messageDetail: String = ""
+    open var apiException: ApiException?
     open var retry: Bool?
 
     public override init() {
@@ -33,7 +35,8 @@ open class MPSDKError: NSObject {
             let errorMessage = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
             mpError.message = errorMessage.localized
             let messageDetail = currentError.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? ""
-            mpError.errorDetail = messageDetail.localized
+            mpError.messageDetail = messageDetail.localized
+            mpError.apiException = ApiException.fromJSON(currentError.userInfo as NSDictionary)
         }
         mpError.retry = (currentError.code == MercadoPago.ERROR_API_CODE || currentError.code == NSURLErrorCannotDecodeContentData || currentError.code == NSURLErrorNotConnectedToInternet || currentError.code == NSURLErrorTimedOut)
         return mpError
