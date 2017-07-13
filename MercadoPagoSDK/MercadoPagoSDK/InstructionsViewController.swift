@@ -50,17 +50,17 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     }
 
     override  func trackInfo() {
-        var additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
-                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS: self.paymentResult.status,
-                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS_DETAIL: self.paymentResult.statusDetail,
-                              TrackingUtil.ADDITIONAL_PAYMENT_ID: self.paymentResult._id]
+        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                              TrackingUtil.METADATA_PAYMENT_STATUS: self.paymentResult.status,
+                              TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.paymentResult.statusDetail,
+                              TrackingUtil.METADATA_PAYMENT_ID: self.paymentResult._id]
         if let pm = self.paymentResult.paymentData?.paymentMethod {
-            additionalInfo[TrackingUtil.ADDITIONAL_PAYMENT_ID] = pm._id
+            metadata[TrackingUtil.METADATA_PAYMENT_ID] = pm._id
         }
         if let issuer = self.paymentResult.paymentData?.issuer {
-            additionalInfo["issuer"] = issuer._id
+            metadata["issuer"] = issuer._id
         }
-        MPXTracker.trackLastScreen(screenId: screenId, screenName: screenName, additionalInfo: additionalInfo)
+        MPXTracker.trackLastScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -160,7 +160,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
                 self.tableView.reloadData()
                 self.hideLoading()
             }, failure: { (error) -> Void in
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue, callback: {
                     self.getInstructions()
                 }, callbackCancel: {
                     self.dismiss(animated: true, completion: {})

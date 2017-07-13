@@ -39,15 +39,15 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
 
     override func trackInfo() {
 
-        var additionalInfo = [TrackingUtil.ADDITIONAL_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
-                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS: self.viewModel.paymentResult.status,
-                              TrackingUtil.ADDITIONAL_PAYMENT_STATUS_DETAIL: self.viewModel.paymentResult.statusDetail,
-                              TrackingUtil.ADDITIONAL_PAYMENT_ID: self.viewModel.paymentResult._id]
+        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                              TrackingUtil.METADATA_PAYMENT_STATUS: self.viewModel.paymentResult.status,
+                              TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.paymentResult.statusDetail,
+                              TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.paymentResult._id]
         if let pm = self.viewModel.paymentResult.paymentData?.paymentMethod {
-            additionalInfo[TrackingUtil.ADDITIONAL_PAYMENT_ID] = pm._id
+            metadata[TrackingUtil.METADATA_PAYMENT_ID] = pm._id
         }
         if let issuer = self.viewModel.paymentResult.paymentData?.issuer {
-            additionalInfo[TrackingUtil.ADDITIONAL_ISSUER_ID] = issuer._id
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
         }
         let finalId = screenId + "/" + self.viewModel.paymentResult.status
 
@@ -55,7 +55,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         if self.viewModel.isCallForAuth() {
             name = "CALL_FOR_AUTHORIZE"
         }
-        MPXTracker.trackLastScreen(screenId: finalId, screenName: name, additionalInfo:additionalInfo)
+        MPXTracker.trackLastScreen(screenId: finalId, screenName: name, metadata: metadata)
     }
     func registerCells() {
 

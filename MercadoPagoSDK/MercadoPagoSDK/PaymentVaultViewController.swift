@@ -221,7 +221,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.loadPaymentMethodSearch()
 
             }, failure: { (error) -> Void in
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue, callback: {
                     self.navigationController!.dismiss(animated: true, completion: {})
                 }, callbackCancel: {
                     self.invokeCallbackCancelShowingNavBar()

@@ -316,7 +316,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
             self.numberTextField.text = ""
 
             }, failure : { (error) -> Void in
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue, callback: {
                     self.dismiss(animated: true, completion: {})
                     self.getIdentificationTypes()
                     }, callbackCancel: {

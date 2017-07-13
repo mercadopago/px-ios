@@ -271,8 +271,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         return false
     }
 
-    internal func requestFailure(_ error: NSError, callback: (() -> Void)? = nil, callbackCancel: (() -> Void)? = nil) {
-        let errorVC = ErrorViewController(error: MPSDKError.convertFrom(error), callback: callback, callbackCancel: callbackCancel)
+    internal func requestFailure(_ error: NSError, requestOrigin: String, callback: (() -> Void)? = nil, callbackCancel: (() -> Void)? = nil) {
+        let errorVC = ErrorViewController(error: MPSDKError.convertFrom(error, requestOrigin: requestOrigin), callback: callback, callbackCancel: callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.present(errorVC, animated: true, completion: {})
         } else {

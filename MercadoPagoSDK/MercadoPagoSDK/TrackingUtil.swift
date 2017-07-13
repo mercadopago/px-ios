@@ -63,7 +63,6 @@ open class TrackingUtil: NSObject {
     open static let METADATA_PAYMENT_ID = "payment_id"
     open static let METADATA_PAYMENT_STATUS_DETAIL = "payment_status_detail"
     open static let METADATA_PAYMENT_IS_EXPRESS = "is_express"
-    open static let METADATA_ERROR = "mercado_pago_error"
     open static let METADATA_ERROR_STATUS = "error_status"
     open static let METADATA_ERROR_CODE = "error_code"
     open static let METADATA_ERROR_REQUEST = "error_request_origin"
