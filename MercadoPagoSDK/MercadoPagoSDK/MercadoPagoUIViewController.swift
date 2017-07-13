@@ -25,7 +25,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-
         self.loadMPStyles()
     }
 

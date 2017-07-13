@@ -10,7 +10,7 @@ import UIKit
 
 class TrackStorageManager: NSObject {
 
-    static let SCREEN_TRACK_INFO_ARRAY_KEY = "screen-tracks-info"
+    static let SCREEN_TRACK_INFO_ARRAY_KEY = "screens-tracks-info"
     static let MAX_TRACKS_PER_REQUEST = 10
     static let MIN_TRACKS_PER_REQUEST = 10
     static var MAX_DAYS_IN_STORAGE: Double = 7
@@ -78,6 +78,9 @@ class TrackStorageManager: NSObject {
             screenTrackJSONArray.append(trackScreen.toJSONString())
         }
         UserDefaults.standard.setValue(screenTrackJSONArray, forKey: SCREEN_TRACK_INFO_ARRAY_KEY)
+        if newArray.count == 0 {
+            return nil
+        }
         return Array(newArray)
     }
 

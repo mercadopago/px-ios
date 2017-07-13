@@ -11,10 +11,15 @@ import UIKit
 class MPXTracker {
 
     static let sharedInstance = MPXTracker()
+    private static let kTrackingSettings = "tracking_settings"
+    private static let kTrackingEnabled = "tracking_enabled"
 
-    var trackingStrategy: TrackingStrategy = PersistAndTrack()
+    var trackingStrategy: TrackingStrategy = RealTimeStrategy()
 
     static func trackScreen(screenId: String, screenName: String, additionalInfo: [String:Any] = [:]) {
+        if !isEnabled() {
+            return
+        }
         let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, additionalInfo:additionalInfo)
         print("Screen Name: \(screenName): Json: " + screenTrack.toJSONString())
         sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
@@ -78,5 +83,16 @@ class MPXTracker {
             "additional_info": additionalInfo
         ]
         return obj
+    }
+
+    static func isEnabled() -> Bool {
+        guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+            return false
+        }
+        guard let trackingEnabled = trackiSettings[MPXTracker.kTrackingEnabled] as? Bool else {
+            return false
+        }
+        return trackingEnabled
+
     }
 }

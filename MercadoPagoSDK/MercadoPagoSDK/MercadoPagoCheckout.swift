@@ -48,9 +48,15 @@ open class MercadoPagoCheckout: NSObject {
 
     }
 
+    func initialize() {
+        MPXTracker.trackScreen(screenId: "/checkout_off/init", screenName: "Init checkout")
+        executeNextStep()
+    }
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {
+        case .START :
+            self.initialize()
         case .SEARCH_PREFERENCE :
             self.collectCheckoutPreference()
         case .VALIDATE_PREFERENCE :
@@ -775,7 +781,6 @@ open class MercadoPagoCheckout: NSObject {
         viewController.hidesBottomBarWhenPushed = true
         let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         if mercadoPagoViewControllers.count == 0 {
-            MPXTracker.trackScreen(screenId: "/checkout_off/init", screenName: "Init checkout")
             self.navigationController.navigationBar.isHidden = false
             viewController.callbackCancel = { self.cancel() }
         }

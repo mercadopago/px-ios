@@ -9,6 +9,7 @@
 import UIKit
 
 public enum CheckoutStep: String {
+    case START
     case SEARCH_PREFERENCE
     case SEARCH_DIRECT_DISCOUNT
     case VALIDATE_PREFERENCE
@@ -36,6 +37,7 @@ public enum CheckoutStep: String {
 
 open class MercadoPagoCheckoutViewModel: NSObject {
 
+    var startedCheckout = false
     internal static var servicePreference = ServicePreference()
     internal static var decorationPreference = DecorationPreference()
     internal static var flowPreference = FlowPreference()
@@ -107,6 +109,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData {
             if pm.isComplete() {
+                self.startedCheckout = true
                 self.paymentData = pm
                 self.directDiscountSearched = true
                 if paymentResult == nil {
@@ -279,6 +282,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     public func nextStep() -> CheckoutStep {
 
+        if !startedCheckout {
+            startedCheckout = true
+            return .START
+        }
         if needLoadPreference {
             needLoadPreference = false
             return .SEARCH_PREFERENCE

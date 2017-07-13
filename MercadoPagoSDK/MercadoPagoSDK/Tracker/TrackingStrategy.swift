@@ -13,7 +13,30 @@ protocol TrackingStrategy {
     func trackLastScreen(screenTrack: ScreenTrackInfo)
 }
 
-class PersistAndTrack: TrackingStrategy {
+class RealTimeStrategy: TrackingStrategy { // V1
+    func trackScreen(screenTrack: ScreenTrackInfo) {
+
+    }
+    func trackLastScreen(screenTrack: ScreenTrackInfo) {
+
+    }
+    private func send(trackList: Array<ScreenTrackInfo>) {
+        var jsonBody = MPXTracker.generateJSONDefault()
+        var arrayEvents = Array<[String:Any]>()
+        for elementToTrack in trackList {
+            arrayEvents.append(elementToTrack.toJSON())
+        }
+        jsonBody["events"] = arrayEvents
+        let body = JSONHandler.jsonCoding(jsonBody)
+        TrackingServices.request(url: "https://api.mercadopago.com/beta/checkout/tracking/events", params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
+            print("TRACKED!")
+        }) { (error) -> Void in
+            TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
+        }
+    }
+}
+
+class PersistAndTrack: TrackingStrategy { // V2
 
     var attemptSendForEachTrack = false
 
