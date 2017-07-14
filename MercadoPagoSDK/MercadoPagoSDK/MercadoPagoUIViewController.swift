@@ -107,7 +107,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: 18)
             titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: fontChosed]
-
             if titleDict.count > 0 {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
             }
@@ -118,7 +117,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.view.backgroundColor = UIColor.primaryColor()
-
             //Create navigation buttons
             displayBackButton()
         }
