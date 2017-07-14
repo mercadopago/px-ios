@@ -67,11 +67,17 @@ class ScreenTrackInfo {
     var screenId: String
     var timestamp: String
     var type: String
-    var additionalInfo: [String:Any]
-    init(screenName: String, screenId: String, additionalInfo: [String:Any]) {
+    var metadata: [String:Any]
+    init(screenName: String, screenId: String, metadata: [String:Any]) {
         self.screenName = screenName
         self.screenId = screenId
-        self.additionalInfo = additionalInfo
+        self.metadata = metadata
+        for key in metadata.keys {
+            if metadata[key] == nil {
+                self.metadata.removeValue(forKey: key)
+            }
+        }
+
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
@@ -80,12 +86,12 @@ class ScreenTrackInfo {
         self.type = "screenview"
     }
     func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+        var obj: [String:Any] = [
             "timestamp": self.timestamp.replacingOccurrences(of: " ", with: "T"),
             "type": self.type,
             "screen_id": self.screenId,
             "screen_name": self.screenName,
-            "additional_info": self.additionalInfo
+            "metadata": self.metadata
         ]
         return obj
     }
@@ -95,7 +101,7 @@ class ScreenTrackInfo {
         self.timestamp = json["timestamp"] as! String
         self.timestamp = self.timestamp .replacingOccurrences(of: "T", with: " ")
         self.type = json["type"] as! String
-        self.additionalInfo = json["additional_info"] as! [String:Any]
+        self.metadata = json["metadata"] as! [String:Any]
     }
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())

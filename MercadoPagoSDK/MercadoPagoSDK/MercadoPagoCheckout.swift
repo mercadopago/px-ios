@@ -122,7 +122,7 @@ open class MercadoPagoCheckout: NSObject {
                 }
 
                 strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) -> Void in
+                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
                     self?.collectCheckoutPreference()
                 })
                 strongSelf.executeNextStep()
@@ -178,7 +178,7 @@ open class MercadoPagoCheckout: NSObject {
                 }
 
                 strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) -> Void in
+                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] (_) -> Void in
 
                     self?.collectPaymentMethodSearch()
                 })
@@ -323,7 +323,7 @@ open class MercadoPagoCheckout: NSObject {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_ISSUERS.rawValue), errorCallback: { [weak self] (_) in
                 self?.collectIssuers()
             })
             strongSelf.executeNextStep()
@@ -380,7 +380,7 @@ open class MercadoPagoCheckout: NSObject {
                 guard let strongSelf = self else {
                     return
                 }
-                let error = MPSDKError.convertFrom(error)
+                let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
 
                 if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
                     if let identificationViewController = strongSelf.navigationController.viewControllers.last as? IdentificationViewController {
@@ -421,7 +421,7 @@ open class MercadoPagoCheckout: NSObject {
                 }
 
                 strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
+                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
                     self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
                 })
                 strongSelf.executeNextStep()
@@ -445,7 +445,7 @@ open class MercadoPagoCheckout: NSObject {
                 }
 
                 strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
+                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
                     self?.cloneCardToken(token: token, securityCode: securityCode)
                 })
                 strongSelf.executeNextStep()
@@ -483,7 +483,7 @@ open class MercadoPagoCheckout: NSObject {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] (_) in
                 self?.collectPayerCosts()
             })
             strongSelf.executeNextStep()
@@ -628,7 +628,7 @@ open class MercadoPagoCheckout: NSObject {
                 }
 
                 strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
+                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue), errorCallback: { [weak self] (_) in
                     self?.createPayment()
                 })
                 strongSelf.executeNextStep()

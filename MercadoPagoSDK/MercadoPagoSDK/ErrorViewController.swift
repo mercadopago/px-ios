@@ -49,7 +49,20 @@ open class ErrorViewController: MercadoPagoUIViewController {
     }
 
     override open func trackInfo() {
-        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, additionalInfo: [TrackingUtil.ADDITIONAL_MERCADO_PAGO_ERROR: error.toJSONString()])
+        var metadata: [String: String] = [:]
+
+        if !String.isNullOrEmpty(String(describing: error.apiException?.status)) {
+            metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing: error.apiException?.status)
+        }
+
+        if !String.isNullOrEmpty(error.apiException?.cause?[0].code) {
+            metadata[TrackingUtil.METADATA_ERROR_CODE] = error.apiException?.cause?[0].code
+        }
+
+        if !String.isNullOrEmpty(error.requestOrigin) {
+            metadata[TrackingUtil.METADATA_ERROR_REQUEST] = error.requestOrigin
+        }
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
 
     override open func viewDidLoad() {

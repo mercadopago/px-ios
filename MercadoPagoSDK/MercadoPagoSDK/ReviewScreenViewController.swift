@@ -45,12 +45,12 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.accessToken = MercadoPagoContext.merchantAccessToken()
     }
     override func trackInfo() {
-        var additionalInfo = [TrackingUtil.ADDITIONAL_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.ADDITIONAL_PAYMENT_TYPE_ID: self.viewModel.paymentData.paymentMethod.paymentTypeId, TrackingUtil.ADDITIONAL_PAYMENT_METHOD_ID: self.viewModel.paymentData.paymentMethod._id]
+        var metadata = [TrackingUtil.METADATA_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.viewModel.paymentData.paymentMethod.paymentTypeId, TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.viewModel.paymentData.paymentMethod._id]
 
         if let issuer = self.viewModel.paymentData.issuer {
-            additionalInfo[TrackingUtil.ADDITIONAL_ISSUER_ID] = issuer._id
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
         }
-        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, additionalInfo:additionalInfo)
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
 
     override func loadMPStyles() {
@@ -217,7 +217,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
                 }
             }, failure: { (error) in
                 // Error in service - retry
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue, callback: {
                     self.loadPreference()
                     }, callbackCancel: {
                     self.navigationController!.dismiss(animated: true, completion: {})

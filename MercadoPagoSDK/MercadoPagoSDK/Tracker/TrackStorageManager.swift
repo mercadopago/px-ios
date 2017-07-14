@@ -10,11 +10,9 @@ import UIKit
 
 class TrackStorageManager: NSObject {
 
-    static let SCREEN_TRACK_INFO_ARRAY_KEY = "screens-tracks-info"
-    static let MAX_TRACKS_PER_REQUEST = 10
-    static let MIN_TRACKS_PER_REQUEST = 10
-    static var MAX_DAYS_IN_STORAGE: Double = 7
-
+    static var MAX_TRACKS_PER_REQUEST = SETTING_MAX_TRACKS_PER_REQUEST
+    static var MIN_TRACKS_PER_REQUEST = SETTING_MIN_TRACKS_PER_REQUEST
+    static var MAX_DAYS_IN_STORAGE: Double = SETTING_MAX_DAYS_IN_STORAGE
     //Guardo el ScreenTrackInfo serializado en el array del userDefaults, si el mismo no esta creado lo crea
     static func persist(screenTrackInfo: ScreenTrackInfo) {
         persist(screenTrackInfoArray: [screenTrackInfo])
@@ -84,4 +82,44 @@ class TrackStorageManager: NSObject {
         return Array(newArray)
     }
 
+}
+
+extension TrackStorageManager {
+    private static let kMaxTracksPerRequest = "max_tracks_per_request"
+    private static let kMinTracksPerRequest = "min_tracks_per_request"
+    private static let kMaxDaysInStorage = "max_days_in_storage"
+    static let SCREEN_TRACK_INFO_ARRAY_KEY = "screens-tracks-info"
+    static var SETTING_MAX_TRACKS_PER_REQUEST: Int {
+        get {
+            guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+                return 0
+            }
+            guard let trackingEnabled = trackiSettings[TrackStorageManager.kMaxTracksPerRequest] as? Int else {
+                return 0
+            }
+            return trackingEnabled
+        }
+    }
+    static var SETTING_MIN_TRACKS_PER_REQUEST: Int {
+        get {
+            guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+                return 0
+            }
+            guard let trackingEnabled = trackiSettings[TrackStorageManager.kMinTracksPerRequest] as? Int else {
+                return 0
+            }
+            return trackingEnabled
+        }
+    }
+    static var SETTING_MAX_DAYS_IN_STORAGE: Double {
+        get {
+            guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+                return 0
+            }
+            guard let trackingEnabled = trackiSettings[TrackStorageManager.kMaxDaysInStorage] as? Double else {
+                return 0
+            }
+            return trackingEnabled
+        }
+}
 }

@@ -55,15 +55,17 @@ open class TrackingUtil: NSObject {
     open static let CARD_SECURITY_CODE_VIEW = "/security_code"
 
     //Additional Info Keys
-    open static let ADDITIONAL_PAYMENT_METHOD_ID = "payment_method"
-    open static let ADDITIONAL_PAYMENT_TYPE_ID = "payment_type"
-    open static let ADDITIONAL_ISSUER_ID = "issuer"
-    open static let ADDITIONAL_SHIPPING_INFO = "has_shipping"
-    open static let ADDITIONAL_PAYMENT_STATUS = "payment_status"
-    open static let ADDITIONAL_PAYMENT_ID = "payment_id"
-    open static let ADDITIONAL_PAYMENT_STATUS_DETAIL = "payment_status_detail"
-    open static let ADDITIONAL_PAYMENT_IS_EXPRESS = "is_express"
-    open static let ADDITIONAL_MERCADO_PAGO_ERROR = "mercado_pago_error"
+    open static let METADATA_PAYMENT_METHOD_ID = "payment_method"
+    open static let METADATA_PAYMENT_TYPE_ID = "payment_type"
+    open static let METADATA_ISSUER_ID = "issuer"
+    open static let METADATA_SHIPPING_INFO = "has_shipping"
+    open static let METADATA_PAYMENT_STATUS = "payment_status"
+    open static let METADATA_PAYMENT_ID = "payment_id"
+    open static let METADATA_PAYMENT_STATUS_DETAIL = "payment_status_detail"
+    open static let METADATA_PAYMENT_IS_EXPRESS = "is_express"
+    open static let METADATA_ERROR_STATUS = "error_status"
+    open static let METADATA_ERROR_CODE = "error_code"
+    open static let METADATA_ERROR_REQUEST = "error_request_origin"
 
     //Default values
     open static let HAS_SHIPPING_DEFAULT_VALUE = "false"

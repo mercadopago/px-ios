@@ -11,22 +11,23 @@ import UIKit
 class MPXTracker {
 
     static let sharedInstance = MPXTracker()
-    private static let kTrackingSettings = "tracking_settings"
+    static let TRACKING_URL = "https://api.mercadopago.com/beta/checkout/tracking/events"
+    static let kTrackingSettings = "tracking_settings"
     private static let kTrackingEnabled = "tracking_enabled"
 
     var trackingStrategy: TrackingStrategy = RealTimeStrategy()
 
-    static func trackScreen(screenId: String, screenName: String, additionalInfo: [String:Any] = [:]) {
+    static func trackScreen(screenId: String, screenName: String, metadata: [String:Any] = [:]) {
         if !isEnabled() {
             return
         }
-        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, additionalInfo:additionalInfo)
-        print("Screen Name: \(screenName): Json: " + screenTrack.toJSONString())
+
+        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata:metadata)
         sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
     }
 
-    static func trackLastScreen(screenId: String, screenName: String, additionalInfo: [String:Any] = [:]) {
-        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, additionalInfo:additionalInfo)
+    static func trackLastScreen(screenId: String, screenName: String, metadata: [String : String?] = [:]) {
+        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata:metadata)
         sharedInstance.trackingStrategy.trackLastScreen(screenTrack: screenTrack)
     }
 
@@ -41,9 +42,9 @@ class MPXTracker {
             ]
         return obj
     }
-    static func generateJSONScreen(screenId: String, screenName: String, additionalInfo: [String:Any]) -> [String:Any] {
+    static func generateJSONScreen(screenId: String, screenName: String, metadata: [String:Any]) -> [String:Any] {
         var obj = generateJSONDefault()
-        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName, additionalInfo:additionalInfo)
+        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName, metadata:metadata)
         obj["events"] = [screenJSON]
         return obj
     }
@@ -70,7 +71,7 @@ class MPXTracker {
         ]
         return obj
     }
-    static func screenJSON(screenId: String, screenName: String, additionalInfo: [String:Any]) -> [String:Any] {
+    static func screenJSON(screenId: String, screenName: String, metadata: [String:Any]) -> [String:Any] {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
@@ -80,7 +81,7 @@ class MPXTracker {
             "type": "screenview",
             "screen_id": screenId,
             "screen_name": screenName,
-            "additional_info": additionalInfo
+            "metadata": metadata
         ]
         return obj
     }
