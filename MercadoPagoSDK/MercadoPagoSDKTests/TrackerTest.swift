@@ -38,7 +38,7 @@ class TrackerTest: XCTestCase {
         XCTAssertEqual(event["value"] as! String, eventTester["value"] as! String)
     }
     func testScreenJSON() {
-        let jsonScreen = DummyContext.generateJSONScreen(screenId: DummyContext.testScreenId, screenName: DummyContext.testScreenName, additionalInfo: [:])
+        let jsonScreen = DummyContext.generateJSONScreen(screenId: DummyContext.testScreenId, screenName: DummyContext.testScreenName, metadata: [:])
         let testScreenJSON = screenJSONToTest()
         let event = (jsonScreen["events"] as! [[String:Any]])[0]
         let eventTester = (testScreenJSON["events"] as! [[String:Any]])[0]
