@@ -287,6 +287,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SERVICE_GET_DIRECT_DISCOUNT
+
         }
 
         if shouldExitCheckout() {
