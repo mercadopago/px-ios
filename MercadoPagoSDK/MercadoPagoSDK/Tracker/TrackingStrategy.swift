@@ -25,6 +25,7 @@ class RealTimeStrategy: TrackingStrategy { // V1
         var arrayEvents = Array<[String:Any]>()
         for elementToTrack in trackList {
             arrayEvents.append(elementToTrack.toJSON())
+            print("Pantalla = \(elementToTrack.screenName)")
         }
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)

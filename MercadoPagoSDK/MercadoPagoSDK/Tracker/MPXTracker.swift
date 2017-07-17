@@ -27,6 +27,9 @@ class MPXTracker {
     }
 
     static func trackLastScreen(screenId: String, screenName: String, metadata: [String : String?] = [:]) {
+        if !isEnabled() {
+            return
+        }
         let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata:metadata)
         sharedInstance.trackingStrategy.trackLastScreen(screenTrack: screenTrack)
     }
