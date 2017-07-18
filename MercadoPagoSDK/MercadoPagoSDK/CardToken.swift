@@ -306,7 +306,7 @@ open class CardToken: NSObject, CardInformationForm {
         return bin
     }
 
-    open func toJSONString() -> String {
+    open func toJSON() -> [String:Any] {
 
         let card_number : Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
         let cardholder : Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
@@ -320,7 +320,11 @@ open class CardToken: NSObject, CardInformationForm {
             "expiration_year": self.expirationYear,
             "device": device
         ]
-        return JSONHandler.jsonCoding(obj)
+        return obj
+    }
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(toJSON())
     }
 
     open func getNumberFormated() -> NSString {

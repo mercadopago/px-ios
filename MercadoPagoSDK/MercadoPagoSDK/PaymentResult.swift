@@ -42,4 +42,24 @@ open class PaymentResult: NSObject {
         self._id = id
         self.statementDescription = statementDescription
     }
+
+    func isCallForAuth() -> Bool {
+        return self.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH
+    }
+
+    func isApproved() -> Bool {
+        return self.status == PaymentStatus.APPROVED
+    }
+
+    func isPending() -> Bool {
+        return self.status == PaymentStatus.IN_PROCESS
+    }
+
+    func isRejected() -> Bool {
+        return self.status == PaymentStatus.REJECTED
+    }
+
+    func isInvalidESC() -> Bool {
+        return self.statusDetail == RejectedStatusDetail.INVALID_ESC
+    }
 }

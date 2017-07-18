@@ -15,32 +15,25 @@ open class MPServicesBuilder: NSObject {
     open class func createNewCardToken(_ cardToken: CardToken, baseURL: String = ServicePreference.MP_API_BASE_URL,
                                        success:@escaping (_ token: Token) -> Void,
                                        failure: ((_ error: NSError) -> Void)?) {
-
         cardToken.device = Device()
-        let service = GatewayService(baseURL: baseURL)
-        service.getToken(key: MercadoPagoContext.keyValue(), cardToken: cardToken, success: {(jsonResult: AnyObject?) -> Void in
-            var token : Token
-            if let tokenDic = jsonResult as? NSDictionary {
-                if tokenDic["error"] == nil {
-                    token = Token.fromJSON(tokenDic)
-                    MPXTracker.trackToken(token: token._id)
-                    success(token)
-                } else {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
-                    }
-                }
-            }
-        }, failure: failure)
+        self.createToken(baseURL: baseURL, cardTokenJSON: cardToken.toJSONString(), success: success, failure: failure)
     }
 
-    open class func createToken(_ savedCardToken: SavedCardToken,
+    open class func createSavedCardToken(_ savedCardToken: SavedCardToken,
                                 baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
                                 failure: ((_ error: NSError) -> Void)?) {
+        self.createToken(baseURL: baseURL, cardTokenJSON: savedCardToken.toJSONString(), success: success, failure: failure)
+    }
 
-        savedCardToken.device = Device()
+    open class func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken,
+                                baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
+                                failure: ((_ error: NSError) -> Void)?) {
+        self.createToken(baseURL: baseURL, cardTokenJSON: savedESCCardToken.toJSONString(), success: success, failure: failure)
+    }
+
+    open class func createToken(baseURL: String, cardTokenJSON: String, success: @escaping (_ token: Token) -> Void, failure: ((_ error: NSError) -> Void)?) {
         let service: GatewayService = GatewayService(baseURL: baseURL)
-        service.getToken(key: MercadoPagoContext.keyValue(), savedCardToken: savedCardToken, success: {(jsonResult: AnyObject?) -> Void in
+        service.getToken(key: MercadoPagoContext.keyValue(), cardTokenJSON: cardTokenJSON, success: {(jsonResult: AnyObject?) -> Void in
             var token : Token
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
@@ -54,7 +47,6 @@ open class MPServicesBuilder: NSObject {
                 }
             }
         }, failure: failure)
-
     }
 
     open class func cloneToken(_ token: Token,

@@ -19,7 +19,7 @@ class CustomServerTest: BaseTest {
         let paymentBodyDict: NSMutableDictionary = NSMutableDictionary()
         paymentBodyDict.setValue(payerDict, forKey: "payer")
         CustomServer.createPayment(url: "http://api.mercadopago.com", uri: "/v1/checkout/payments?public_key=PK-PROCESSING-TEST&payment_method_id=visa", paymentData: paymentBodyDict, query: nil, success: { (payment: Payment) -> Void in
-            XCTAssertEqual(payment.status, PaymentStatus.IN_PROCESS.rawValue)
+            XCTAssertEqual(payment.status, PaymentStatus.IN_PROCESS)
         }, failure: { (_: NSError) -> Void in
             XCTFail()
         })

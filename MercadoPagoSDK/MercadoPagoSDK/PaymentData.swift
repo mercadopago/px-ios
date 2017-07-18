@@ -57,8 +57,24 @@ public class PaymentData: NSObject {
         return true
     }
 
+    func hasToken() -> Bool {
+        return token != nil
+    }
+
+    func hasIssuer() -> Bool {
+        return issuer != nil
+    }
+
+    func hasPayerCost() -> Bool {
+        return payerCost != nil
+    }
+
+    func hasPaymentMethod() -> Bool {
+        return paymentMethod != nil
+    }
+
     func hasCustomerPaymentOption() -> Bool {
-        return self.paymentMethod != nil && (self.paymentMethod.isAccountMoney() || (self.token != nil && !String.isNullOrEmpty(self.token!.cardId)))
+        return hasPaymentMethod() && (self.paymentMethod.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
     }
 
     func toJSONString() -> String {

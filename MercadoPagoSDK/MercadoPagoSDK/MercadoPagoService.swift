@@ -23,7 +23,7 @@ open class MercadoPagoService: NSObject {
     }
 
     public func request(uri: String, params: String?, body: AnyObject?, method: String, headers: NSDictionary? = nil, cache: Bool = true, success: @escaping (_ jsonResult: AnyObject?) -> Void,
-        failure: ((_ error: NSError) -> Void)?) {
+                        failure: ((_ error: NSError) -> Void)?) {
 
         var url = baseURL + uri
         if params != nil {
@@ -31,14 +31,18 @@ open class MercadoPagoService: NSObject {
         }
 
         let finalURL: NSURL = NSURL(string: url)!
-            let request: NSMutableURLRequest
-            if cache {
-              request  = NSMutableURLRequest(url: finalURL as URL,
-                    cachePolicy: .returnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
-            } else {
-               request = NSMutableURLRequest(url: finalURL as URL,
-                    cachePolicy: .useProtocolCachePolicy, timeoutInterval: MP_DEFAULT_TIME_OUT)
-            }
+        let request: NSMutableURLRequest
+        if cache {
+            request  = NSMutableURLRequest(url: finalURL as URL,
+                                           cachePolicy: .returnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
+        } else {
+            request = NSMutableURLRequest(url: finalURL as URL,
+                                          cachePolicy: .useProtocolCachePolicy, timeoutInterval: MP_DEFAULT_TIME_OUT)
+        }
+
+        #if DEBUG
+            print("\n--REQUEST_URL: \(finalURL)")
+        #endif
 
         request.url = finalURL as URL
         request.httpMethod = method
@@ -50,32 +54,36 @@ open class MercadoPagoService: NSObject {
         }
 
         if body != nil {
+            #if DEBUG
+                print("--REQUEST_BODY: \(body as! NSString)")
+            #endif
             request.httpBody = (body as! NSString).data(using: String.Encoding.utf8.rawValue)
         }
 
-		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
-		NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
-				UIApplication.shared.isNetworkActivityIndicatorVisible = false
-				if error == nil {
-					do {
+        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            if error == nil {
+                do {
+                    #if DEBUG
+                        print("--REQUEST_RESPONSE: \(String(data: data!, encoding: String.Encoding.utf8) as! NSString)\n")
+                    #endif
+                    let responseJson = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
+                    success(responseJson as AnyObject?)
+                } catch {
 
-                        let responseJson = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
-						success(responseJson as AnyObject?)
-					} catch {
-
-						let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-						failure!(e)
-					}
-                } else {
-
-                    let response = String(describing: error)
-
-                    if failure != nil {
-                        failure!(error! as NSError)
-                    }
+                    let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                    failure!(e)
                 }
+            } else {
+
+                let response = String(describing: error)
+
+                if failure != nil {
+                    failure!(error! as NSError)
+                }
+            }
         }
     }
-
-    }
+}

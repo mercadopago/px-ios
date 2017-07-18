@@ -19,11 +19,18 @@ open class SavedCardToken: CardToken {
         self.securityCode = securityCode
     }
 
+    internal init(cardId: String) {
+        self.cardId = cardId
+        super.init()
+        self.device = Device()
+    }
+
     public init(card: CardInformation, securityCode: String?, securityCodeRequired: Bool) {
         self.cardId = card.getCardId()
         super.init()
         self.securityCode = securityCode
         self.securityCodeRequired = securityCodeRequired
+        self.device = Device()
     }
 
     open override func validate() -> Bool {
@@ -43,12 +50,16 @@ open class SavedCardToken: CardToken {
         return true
     }
 
-    open override func toJSONString() -> String {
+    open override func toJSON() -> [String:Any] {
         let obj: [String:Any] = [
             "card_id": String.isNullOrEmpty(self.cardId) ? JSONHandler.null : self.cardId,
-            "security_code": String.isNullOrEmpty(self.securityCode!) ? JSONHandler.null : self.securityCode!,
-            "device": self.device == nil ? JSONHandler.null : self.device!.toJSON()
+            "security_code": String.isNullOrEmpty(self.securityCode!) ? "" : self.securityCode!,
+            "device": self.device == nil ? JSONHandler.null : self.device!.toJSON(),
         ]
-        return JSONHandler.jsonCoding(obj)
+        return obj
+    }
+
+    open override func toJSONString() -> String {
+        return JSONHandler.jsonCoding(toJSON())
     }
 }

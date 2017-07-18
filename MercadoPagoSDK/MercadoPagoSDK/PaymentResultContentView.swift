@@ -125,11 +125,11 @@ class PaymentResultContentViewModel: NSObject {
     }
 
     func isPaymentRejected() -> Bool {
-        return paymentResult.status == PaymentStatus.REJECTED.rawValue
+        return paymentResult.status == PaymentStatus.REJECTED
     }
 
     func isPaymentPending() -> Bool {
-        return  paymentResult.status == PaymentStatus.IN_PROCESS.rawValue
+        return  paymentResult.status == PaymentStatus.IN_PROCESS
     }
 
     func hasSubtitle() -> Bool {
@@ -151,7 +151,7 @@ class PaymentResultContentViewModel: NSObject {
     }
 
     func getRejectedTitle() -> String {
-        if paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH.rawValue {
+        if paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
             return (paymentResult.statusDetail + "_title").localized
         } else if paymentResult.statusDetail != "" {
             return defaultTitle
@@ -194,10 +194,10 @@ class PaymentResultContentViewModel: NSObject {
     }
 
     func getPendingSubtitle() -> String {
-        if paymentResult.statusDetail == PendingStatusDetail.CONTINGENCY.rawValue {
+        if paymentResult.statusDetail == PendingStatusDetail.CONTINGENCY {
             return "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
 
-        } else if paymentResult.statusDetail == PendingStatusDetail.REVIEW_MANUAL.rawValue {
+        } else if paymentResult.statusDetail == PendingStatusDetail.REVIEW_MANUAL {
             return "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
 
         } else if !String.isNullOrEmpty(paymentResultScreenPreference.getPendingContentText()) {

@@ -57,10 +57,10 @@ class ApprovedPaymentResultViewModelTest: BaseTest {
     }
 
     func testStatus() {
-        XCTAssertTrue(self.instance.isApproved())
-        XCTAssertFalse(self.instance.isPending())
-        XCTAssertFalse(self.instance.isRejected())
-        XCTAssertFalse(self.instance.isCallForAuth())
+        XCTAssertTrue(self.instance.paymentResult.isApproved())
+        XCTAssertFalse(self.instance.paymentResult.isPending())
+        XCTAssertFalse(self.instance.paymentResult.isRejected())
+        XCTAssertFalse(self.instance.paymentResult.isCallForAuth())
     }
 
     func testGetColor() {
@@ -354,10 +354,10 @@ class PendingPaymentResultViewModelTest: BaseTest {
     }
 
     func testStatus() {
-        XCTAssertFalse(self.instance.isApproved())
-        XCTAssertTrue(self.instance.isPending())
-        XCTAssertFalse(self.instance.isRejected())
-        XCTAssertFalse(self.instance.isCallForAuth())
+        XCTAssertFalse(self.instance.paymentResult.isApproved())
+        XCTAssertTrue(self.instance.paymentResult.isPending())
+        XCTAssertFalse(self.instance.paymentResult.isRejected())
+        XCTAssertFalse(self.instance.paymentResult.isCallForAuth())
     }
 
     func testGetColor() {
@@ -583,10 +583,10 @@ class CallForAuthPaymentResultViewModelTest: BaseTest {
     }
 
     func testStatus() {
-        XCTAssertFalse(self.instance.isApproved())
-        XCTAssertFalse(self.instance.isPending())
-        XCTAssertTrue(self.instance.isCallForAuth())
-        XCTAssertTrue(self.instance.isRejected())
+        XCTAssertFalse(self.instance.paymentResult.isApproved())
+        XCTAssertFalse(self.instance.paymentResult.isPending())
+        XCTAssertTrue(self.instance.paymentResult.isCallForAuth())
+        XCTAssertTrue(self.instance.paymentResult.isRejected())
     }
 
     func testGetColor() {
@@ -774,10 +774,10 @@ class RejectedPaymentResultViewModelTest: BaseTest {
     }
 
     func testStatus() {
-        XCTAssertFalse(self.instance.isApproved())
-        XCTAssertFalse(self.instance.isPending())
-        XCTAssertFalse(self.instance.isCallForAuth())
-        XCTAssertTrue(self.instance.isRejected())
+        XCTAssertFalse(self.instance.paymentResult.isApproved())
+        XCTAssertFalse(self.instance.paymentResult.isPending())
+        XCTAssertFalse(self.instance.paymentResult.isCallForAuth())
+        XCTAssertTrue(self.instance.paymentResult.isRejected())
     }
 
     func testGetColor() {
@@ -950,10 +950,10 @@ class RecoveryPaymentResultViewModelTest: BaseTest {
     }
 
     func testStatus() {
-        XCTAssertFalse(self.instance.isApproved())
-        XCTAssertFalse(self.instance.isPending())
-        XCTAssertFalse(self.instance.isCallForAuth())
-        XCTAssertTrue(self.instance.isRejected())
+        XCTAssertFalse(self.instance.paymentResult.isApproved())
+        XCTAssertFalse(self.instance.paymentResult.isPending())
+        XCTAssertFalse(self.instance.paymentResult.isCallForAuth())
+        XCTAssertTrue(self.instance.paymentResult.isRejected())
     }
 
     func testGetColor() {

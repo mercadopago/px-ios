@@ -10,16 +10,8 @@ import Foundation
 
 open class GatewayService: MercadoPagoService {
 
-    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", key: String, savedCardToken: SavedCardToken, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
-        self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: savedCardToken.toJSONString() as AnyObject?, method: method, success: success, failure: { (error) -> Void in
-            if let failure = failure {
-                failure(NSError(domain: "mercadopago.sdk.GatewayService.getToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
-            }
-        })
-    }
-
-    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", key: String, cardToken: CardToken, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
-        self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: cardToken.toJSONString() as AnyObject?, method: method, success: success, failure: { (error) -> Void in
+    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", key: String, cardTokenJSON: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+        self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: cardTokenJSON as AnyObject?, method: method, success: success, failure: { (error) -> Void in
             if let failure = failure {
                 failure(NSError(domain: "mercadopago.sdk.GatewayService.getToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
             }

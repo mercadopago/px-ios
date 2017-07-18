@@ -24,13 +24,14 @@ open class Token: NSObject, CardInformationForm {
 	open var expirationYear: Int = 0
 	open var lastModifiedDate: Date!
 	open var dueDate: Date!
+    open var esc: String?
 
     open var cardHolder: Cardholder?
 
 	public init (_id: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!,
         usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!,
 		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!,
-        dueDate: Date?, cardHolder: Cardholder?) {
+		dueDate: Date?, cardHolder: Cardholder?, esc: String? = nil) {
 			self._id = _id
 			self.publicKey = publicKey
 			self.cardId = cardId
@@ -47,7 +48,18 @@ open class Token: NSObject, CardInformationForm {
 			self.lastModifiedDate = lastModifiedDate
 			self.dueDate = dueDate
             self.cardHolder = cardHolder
+            self.esc = esc
 	}
+
+    public convenience init (_id: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!,
+                 usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!,
+                 securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!,
+                 dueDate: Date?, cardHolder: Cardholder?) {
+        self.init(_id: _id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status,
+              usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits : lastFourDigits, firstSixDigit : firstSixDigit,
+              securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate,
+              dueDate: dueDate, cardHolder: cardHolder, esc: nil)
+    }
 
     open func getBin() -> String? {
         var bin: String? = nil
@@ -75,6 +87,8 @@ open class Token: NSObject, CardInformationForm {
         let expMonth = JSONHandler.attemptParseToInt(literalJson["expiration_month"], defaultReturn: 0)
 		let expYear = JSONHandler.attemptParseToInt(literalJson["expiration_year"], defaultReturn: 0)
 
+        let esc = JSONHandler.attemptParseToString(literalJson["esc"])
+
         var cardHolder: Cardholder? = nil
         if let dic = json["cardholder"] as? NSDictionary {
             cardHolder = Cardholder.fromJSON(dic)
@@ -87,7 +101,7 @@ open class Token: NSObject, CardInformationForm {
 		return Token(_id: _id!, publicKey: key, cardId: cardId, luhnValidation: luhn, status: status,
 			usedDate: usedDate, cardNumberLength: cardNumberLength!, creationDate: creationDate, lastFourDigits : lastFourDigits, firstSixDigit : firstSixDigits,
 			securityCodeLength: securityCodeLength!, expirationMonth: expMonth!, expirationYear: expYear!, lastModifiedDate: lastModifiedDate,
-            dueDate: dueDate, cardHolder: cardHolder)
+			dueDate: dueDate, cardHolder: cardHolder, esc: esc)
 	}
 
     open func toJSONString() -> String {
@@ -101,6 +115,7 @@ open class Token: NSObject, CardInformationForm {
         let lastFour : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
         let firstSix : Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
         let cardHolderToJsonString: Any = self.cardHolder?.toJSON() ?? JSONHandler.null
+        let esc: Any = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc
 
         let obj: [String:Any] = [
             "id": _id,
@@ -117,7 +132,8 @@ open class Token: NSObject, CardInformationForm {
             "expiration_year": self.expirationYear,
             "last_modified_date": Utils.getStringFromDate(self.lastModifiedDate),
             "due_date": Utils.getStringFromDate(self.dueDate),
-            "cardholder": cardHolderToJsonString
+            "cardholder": cardHolderToJsonString,
+            "esc": esc
         ]
 
         return obj
@@ -158,6 +174,14 @@ open class Token: NSObject, CardInformationForm {
 
     public func canBeClone() -> Bool {
         return true
+    }
+
+    public func hasESC() -> Bool {
+        return !String.isNullOrEmpty(esc)
+    }
+
+    public func hasCardId() -> Bool {
+        return !String.isNullOrEmpty(cardId)
     }
 }
 

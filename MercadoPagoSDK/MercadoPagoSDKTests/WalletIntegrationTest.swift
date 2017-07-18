@@ -38,17 +38,17 @@ class WalletIntegrationTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: preference, navigationController: UINavigationController())
 
         var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
+        XCTAssertEqual(step, CheckoutStep.SERVICE_GET_PREFERENCE)
 
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.VALIDATE_PREFERENCE)
+        XCTAssertEqual(step, CheckoutStep.ACTION_VALIDATE_PREFERENCE)
 
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.SEARCH_PAYMENT_METHODS)
+        XCTAssertEqual(step, CheckoutStep.SERVICE_GET_PAYMENT_METHODS)
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.PAYMENT_METHOD_SELECTION)
+        XCTAssertEqual(step, CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION)
 
         MPCheckoutTestAction.selectAccountMoney(mpCheckout: mpCheckout)
 
@@ -61,7 +61,7 @@ class WalletIntegrationTest: BaseTest {
         }
 
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.FINISH)
+        XCTAssertEqual(step, CheckoutStep.ACTION_FINISH)
 
         // Ejecutar finish => paymentDataCallback
         mpCheckout.executeNextStep()
@@ -75,18 +75,18 @@ class WalletIntegrationTest: BaseTest {
         // Se vuelve a llamar a Checkout para que muestre RyC
         let mpCheckoutWithRyC = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: preference, paymentData : localPaymentData!, navigationController: UINavigationController())
         step = mpCheckoutWithRyC.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
+        XCTAssertEqual(step, CheckoutStep.SERVICE_GET_PREFERENCE)
 
         step = mpCheckoutWithRyC.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.VALIDATE_PREFERENCE)
+        XCTAssertEqual(step, CheckoutStep.ACTION_VALIDATE_PREFERENCE)
 
         step = mpCheckoutWithRyC.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.SEARCH_PAYMENT_METHODS)
+        XCTAssertEqual(step, CheckoutStep.SERVICE_GET_PAYMENT_METHODS)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckoutWithRyC)
 
         step = mpCheckoutWithRyC.viewModel.nextStep()
-        XCTAssertEqual(step, CheckoutStep.REVIEW_AND_CONFIRM)
+        XCTAssertEqual(step, CheckoutStep.SCREEN_REVIEW_AND_CONFIRM)
         // Se realiza pago, se llama a confirmPaymentCallback
         // Se llama a congrats con paymentResult
     }

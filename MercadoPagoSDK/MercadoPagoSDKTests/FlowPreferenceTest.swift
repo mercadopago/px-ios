@@ -12,6 +12,17 @@ class FlowPreferenceTest: BaseTest {
 
     let flowPreference = FlowPreference()
 
+    func testDefaultState(){
+        XCTAssertFalse(flowPreference.isESCEnable())
+        XCTAssert(flowPreference.isReviewAndConfirmScreenEnable())
+        XCTAssert(flowPreference.isPaymentResultScreenEnable())
+        XCTAssert(flowPreference.isPaymentApprovedScreenEnable())
+        XCTAssert(flowPreference.isPaymentRejectedScreenEnable())
+        XCTAssert(flowPreference.isPaymentPendingScreenEnable())
+        XCTAssert(flowPreference.isPaymentSearchScreenEnable())
+        XCTAssert(CardFormViewController.showBankDeals)
+    }
+
     func testDisableReviewAndConfirmScreen() {
         flowPreference.disableReviewAndConfirmScreen()
         XCTAssertFalse(flowPreference.isReviewAndConfirmScreenEnable())
@@ -39,6 +50,13 @@ class FlowPreferenceTest: BaseTest {
     func testDisableBankDeals() {
         flowPreference.disableBankDeals()
         XCTAssertFalse(CardFormViewController.showBankDeals)
+    }
+
+    func testDisableESC() {
+        XCTAssertFalse(flowPreference.isESCEnable())
+        flowPreference.saveESC = true
+        flowPreference.disableESC()
+        XCTAssertFalse(flowPreference.saveESC)
     }
 
     func testEnablePaymentPendingScreen() {
@@ -90,6 +108,12 @@ class FlowPreferenceTest: BaseTest {
     func testEnableBankDeals() {
         flowPreference.enableBankDeals()
         XCTAssert(CardFormViewController.showBankDeals)
+    }
+
+    func testEnableESC() {
+        flowPreference.disablePaymentApprovedScreen()
+        flowPreference.enableESC()
+        XCTAssert(flowPreference.saveESC)
     }
 
     func testDefaultMaxSavedCards() {

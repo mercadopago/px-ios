@@ -109,7 +109,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
             return getCallForAuthCell()
 
         } else if viewModel.isContentCellFor(indexPath: indexPath) {
-            if viewModel.isCallForAuth() {
+            if viewModel.paymentResult.isCallForAuth() {
                 return getContentCell(drawLine: true)
             }
             return getContentCell(drawLine: false)
@@ -144,7 +144,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         footerNib.setCallbackStatus(callback: self.viewModel.callback, status: PaymentResult.CongratsState.ok)
         footerNib.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
 		let isSecondaryButtonDisplayed = viewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil
-        if self.viewModel.isApproved() && !isSecondaryButtonDisplayed {
+        if self.viewModel.paymentResult.isApproved() && !isSecondaryButtonDisplayed {
             ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
         }
         return footerNib
