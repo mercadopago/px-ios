@@ -13,7 +13,7 @@ open class MercadoPagoCheckout: NSObject {
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
-    var viewControllerBase: UIViewController?
+    open var viewControllerBase: UIViewController?
     var countLoadings: Int = 0
 
     private var currentLoadingView: UIViewController?

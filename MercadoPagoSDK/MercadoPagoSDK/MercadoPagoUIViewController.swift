@@ -28,7 +28,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         super.viewDidLoad()
 
         if screenName != NO_NAME_SCREEN {
-           // MPXTracker.trackScreen(screenId: screenName, screenName: screenName)
+            MPXTracker.trackScreen(screenId: screenName, screenName: screenName)
         }
         self.loadMPStyles()
     }
