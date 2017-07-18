@@ -14,7 +14,7 @@ public protocol MPTrackListener {
     func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String:String]?)
 }
 
-class MPXTracker {
+public class MPXTracker {
 
     static let sharedInstance = MPXTracker()
     var trackListener: MPTrackListener?
