@@ -11,7 +11,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecurityCodeViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
                 <outlet property="cardCvvThumbnail" destination="UPL-NB-jmA" id="xHs-Im-60h"/>
-                <outlet property="errorLabel" destination="h3x-Y7-b4M" id="ucc-T7-Pcr"/>
                 <outlet property="panelView" destination="yob-kR-dQh" id="kZV-OM-lKE"/>
                 <outlet property="securityCodeTextField" destination="CLV-K5-LXP" id="s6C-CM-zBJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -25,16 +24,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yob-kR-dQh">
                     <rect key="frame" x="0.0" y="328" width="375" height="159"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CardCVVThumbnailBack" translatesAutoresizingMaskIntoConstraints="NO" id="UPL-NB-jmA">
-                            <rect key="frame" x="283" y="25" width="60" height="38"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="60" id="JEN-Iw-Zbt"/>
-                                <constraint firstAttribute="height" constant="38" id="cLl-Ec-3ML"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CardCVVThumbnailBack" translatesAutoresizingMaskIntoConstraints="NO" id="UPL-NB-jmA">
                             <rect key="frame" x="283" y="25" width="60" height="38"/>
                             <constraints>
@@ -70,13 +59,10 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="UPL-NB-jmA" firstAttribute="leading" secondItem="CLV-K5-LXP" secondAttribute="trailing" constant="13" id="0rf-VX-QdX"/>
-                        <constraint firstItem="h3x-Y7-b4M" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="30" id="CiF-1w-qqh"/>
-                        <constraint firstAttribute="bottom" secondItem="h3x-Y7-b4M" secondAttribute="bottom" constant="66" id="FAa-Ci-O0b"/>
                         <constraint firstItem="UPL-NB-jmA" firstAttribute="bottom" secondItem="CLV-K5-LXP" secondAttribute="bottom" id="IYl-l1-vBC"/>
-                        <constraint firstItem="h3x-Y7-b4M" firstAttribute="top" secondItem="CLV-K5-LXP" secondAttribute="bottom" constant="9" id="Ird-of-R5E"/>
+                        <constraint firstAttribute="bottom" secondItem="CLV-K5-LXP" secondAttribute="bottom" constant="96" id="McQ-Zb-NZq"/>
                         <constraint firstAttribute="trailing" secondItem="UPL-NB-jmA" secondAttribute="trailing" constant="32" id="UDK-7o-6ik"/>
                         <constraint firstItem="CLV-K5-LXP" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="30" id="Ycr-IF-Fkd"/>
-                        <constraint firstAttribute="trailing" secondItem="h3x-Y7-b4M" secondAttribute="trailing" constant="30" id="ZwJ-mU-O7j"/>
                         <constraint firstAttribute="height" constant="159" id="lSK-DC-awx"/>
                     </constraints>
                 </view>
