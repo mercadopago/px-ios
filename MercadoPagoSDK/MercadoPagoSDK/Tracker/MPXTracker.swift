@@ -8,15 +8,27 @@
 
 import UIKit
 
-class MPXTracker {
+@objc
+public protocol MPTrackListener {
+    func trackScreen(screenName: String)
+    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String:String]?)
+}
+
+public class MPXTracker: NSObject {
 
     static let sharedInstance = MPXTracker()
+    var trackListener: MPTrackListener?
 
     var trackingStrategy: TrackingStrategy = PersistAndTrack()
 
     static func trackScreen(screenId: String, screenName: String) {
-        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId)
-        sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
+        if let trackListener = sharedInstance.trackListener {
+            trackListener.trackScreen(screenName: screenName)
+        }
+        return
+        // dissable tracking
+       // let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId)
+       // sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
     }
 
     static func generateJSONDefault() -> [String:Any] {
@@ -71,5 +83,12 @@ class MPXTracker {
             "screen_name": screenName
         ]
         return obj
+    }
+
+    open class func setTrack(listener: MPTrackListener) {
+        MPXTracker.sharedInstance.trackListener = listener
+    }
+    open static func getTrackListener() -> MPTrackListener? {
+        return sharedInstance.trackListener
     }
 }

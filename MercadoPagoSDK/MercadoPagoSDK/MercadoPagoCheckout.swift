@@ -788,4 +788,10 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.viewControllers = currentViewControllers
     }
 
+    public func popToWhenFinish(viewController: UIViewController) {
+        if self.navigationController.viewControllers.contains(viewController) {
+            self.viewControllerBase = viewController
+        }
+    }
+
 }
