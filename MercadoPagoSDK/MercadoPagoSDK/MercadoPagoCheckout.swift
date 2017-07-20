@@ -13,7 +13,7 @@ open class MercadoPagoCheckout: NSObject {
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
-    open var viewControllerBase: UIViewController?
+    var viewControllerBase: UIViewController?
     var countLoadings: Int = 0
 
     private var currentLoadingView: UIViewController?
@@ -786,6 +786,12 @@ open class MercadoPagoCheckout: NSObject {
             return vc != self.rootViewController
         }
         self.navigationController.viewControllers = currentViewControllers
+    }
+
+    public func popToWhenFinish(viewController: UIViewController) {
+        if self.navigationController.viewControllers.contains(viewController) {
+            self.viewControllerBase = viewController
+        }
     }
 
 }
