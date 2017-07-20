@@ -7,6 +7,6 @@
 	<key>prod_mp_api_environment</key>
 	<true/>
 	<key>sdk_version</key>
-	<string>3.2.1</string>
+	<string>3.2.2</string>
 </dict>
 </plist>
