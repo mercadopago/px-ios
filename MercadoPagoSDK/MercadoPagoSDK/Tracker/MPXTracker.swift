@@ -8,21 +8,32 @@
 
 import UIKit
 
-class MPXTracker {
+@objc
+public protocol MPTrackListener {
+    func trackScreen(screenName: String)
+    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String:String]?)
+}
+
+public class MPXTracker: NSObject {
 
     static let sharedInstance = MPXTracker()
+
     static let TRACKING_URL = "https://api.mercadopago.com/beta/checkout/tracking/events"
     static let kTrackingSettings = "tracking_settings"
     private static let kTrackingEnabled = "tracking_enabled"
 
+    var trackListener: MPTrackListener?
+
     var trackingStrategy: TrackingStrategy = RealTimeStrategy()
 
-    static func trackScreen(screenId: String, screenName: String, metadata: [String:Any] = [:]) {
+    static func trackScreen(screenId: String, screenName: String, metadata: [String : String?] = [:]) {
+        if let trackListener = sharedInstance.trackListener {
+            trackListener.trackScreen(screenName: screenName)
+        }
         if !isEnabled() {
             return
         }
-
-        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata:metadata)
+        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata: metadata)
         sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
     }
 
@@ -97,6 +108,12 @@ class MPXTracker {
             return false
         }
         return trackingEnabled
+    }
 
+    open class func setTrack(listener: MPTrackListener) {
+        MPXTracker.sharedInstance.trackListener = listener
+    }
+    open static func getTrackListener() -> MPTrackListener? {
+        return sharedInstance.trackListener
     }
 }

@@ -33,6 +33,7 @@ class RealTimeStrategy: TrackingStrategy { // V1
             print("tracked")
         }) { (error) -> Void in
             //    self.send(trackList: trackList)
+            print(error)
         }
     }
 }

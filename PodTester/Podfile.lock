@@ -1,23 +1,23 @@
 PODS:
-  - MercadoPagoSDK (3.2.1):
-    - MercadoPagoSDK/Localization (= 3.2.1)
-  - MercadoPagoSDK/Localization (3.2.1):
-    - MercadoPagoSDK/Localization/en (= 3.2.1)
-    - MercadoPagoSDK/Localization/es (= 3.2.1)
-    - MercadoPagoSDK/Localization/es-CO (= 3.2.1)
-    - MercadoPagoSDK/Localization/es-MX (= 3.2.1)
-    - MercadoPagoSDK/Localization/es-PE (= 3.2.1)
-    - MercadoPagoSDK/Localization/es-UY (= 3.2.1)
-    - MercadoPagoSDK/Localization/es-VE (= 3.2.1)
-    - MercadoPagoSDK/Localization/pt (= 3.2.1)
-  - MercadoPagoSDK/Localization/en (3.2.1)
-  - MercadoPagoSDK/Localization/es (3.2.1)
-  - MercadoPagoSDK/Localization/es-CO (3.2.1)
-  - MercadoPagoSDK/Localization/es-MX (3.2.1)
-  - MercadoPagoSDK/Localization/es-PE (3.2.1)
-  - MercadoPagoSDK/Localization/es-UY (3.2.1)
-  - MercadoPagoSDK/Localization/es-VE (3.2.1)
-  - MercadoPagoSDK/Localization/pt (3.2.1)
+  - MercadoPagoSDK (3.2.2):
+    - MercadoPagoSDK/Localization (= 3.2.2)
+  - MercadoPagoSDK/Localization (3.2.2):
+    - MercadoPagoSDK/Localization/en (= 3.2.2)
+    - MercadoPagoSDK/Localization/es (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-CO (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-MX (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-PE (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-UY (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-VE (= 3.2.2)
+    - MercadoPagoSDK/Localization/pt (= 3.2.2)
+  - MercadoPagoSDK/Localization/en (3.2.2)
+  - MercadoPagoSDK/Localization/es (3.2.2)
+  - MercadoPagoSDK/Localization/es-CO (3.2.2)
+  - MercadoPagoSDK/Localization/es-MX (3.2.2)
+  - MercadoPagoSDK/Localization/es-PE (3.2.2)
+  - MercadoPagoSDK/Localization/es-UY (3.2.2)
+  - MercadoPagoSDK/Localization/es-VE (3.2.2)
+  - MercadoPagoSDK/Localization/pt (3.2.2)
 
 DEPENDENCIES:
   - MercadoPagoSDK (from `../`)
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MercadoPagoSDK: 987185e082efddcf624c36a703c0aa0d5c2c5c57
+  MercadoPagoSDK: 616739944b177b1691962b511ec1995a7a9069ea
 
 PODFILE CHECKSUM: 7652d70c091fe815ac1f0c32abd1230fe0dccf1a
 

@@ -12,4 +12,6 @@ public protocol Updatable {
 
     func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod)
 
+    func setCornerRadius(radius: CGFloat)
+
 }

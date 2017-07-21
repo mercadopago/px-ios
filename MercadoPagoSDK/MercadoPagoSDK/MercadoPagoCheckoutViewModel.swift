@@ -286,6 +286,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             startedCheckout = true
             return .START
         }
+        if hasError() {
+            return .ERROR
+        }
         if needLoadPreference {
             needLoadPreference = false
             return .SEARCH_PREFERENCE
@@ -293,10 +296,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SEARCH_DIRECT_DISCOUNT
-        }
-
-        if hasError() {
-            return .ERROR
         }
 
         if shouldExitCheckout() {

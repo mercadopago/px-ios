@@ -1,6 +1,6 @@
 {
   "name": "MercadoPagoSDK",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "summary": "MercadoPagoSDK",
   "homepage": "https://www.mercadopago.com",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/mercadopago/px-ios.git",
-    "tag": "3.2.1"
+    "tag": "3.2.2"
   },
   "platforms": {
     "ios": "8.0"

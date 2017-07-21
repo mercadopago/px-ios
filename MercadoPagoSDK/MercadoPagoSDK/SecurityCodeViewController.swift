@@ -12,15 +12,15 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
-    @IBOutlet weak var errorLabel: UILabel!
+    var errorLabel: MPLabel?
 
     @IBOutlet weak var panelView: UIView!
     var viewModel: SecurityCodeViewModel!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var cardCvvThumbnail: UIImageView!
     var textMaskFormater: TextMaskFormater!
     var cardFront: CardFrontView!
-    var cardBack: CardBackView!
     var ccvLabelEmpty: Bool = true
+    var toolbar: UIToolbar?
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_SECURITY_CODE } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
@@ -29,20 +29,12 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         super.viewDidLoad()
          self.hideNavBar()
         loadMPStyles()
-        self.button.setTitle("Continuar".localized, for: .normal)
-        self.errorLabel.alpha = 0
         self.securityCodeTextField.placeholder = "security_code".localized
-        self.errorLabel.text = "Revisa este dato".localized
+        setupInputAccessoryView()
         self.view.backgroundColor = UIColor.primaryColor()
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
-        self.cardBack = CardBackView.init(frame: viewModel.getCardBounds())
-        if viewModel.showFrontCard() {
-            self.view.addSubview(cardFront)
-            self.securityCodeLabel = cardFront.cardCVV
-        } else {
-             self.view.addSubview(cardBack)
-            self.securityCodeLabel = cardBack.cardCVV
-        }
+        self.view.addSubview(cardFront)
+        self.securityCodeLabel = cardFront.cardCVV
         self.view.bringSubview(toFront: panelView)
         self.updateCardSkin(cardInformation: viewModel.cardInfo, paymentMethod: viewModel.paymentMethod)
 
@@ -75,68 +67,73 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         securityCodeTextField.becomeFirstResponder()
-        self.button.titleLabel?.font = Utils.getFont(size: 16)
-
     }
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.showNavBar()
     }
 
-    override func loadMPStyles() {
+    func setupInputAccessoryView() {
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+        let toolbar = UIToolbar(frame: frame)
 
-        if self.navigationController != nil {
-            self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-            self.navigationController?.navigationBar.tintColor = UIColor(red: 255, green: 255, blue: 255)
-            self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
-            self.navigationController?.navigationBar.removeBottomLine()
-            self.navigationController?.navigationBar.isTranslucent = false
+        toolbar.barStyle = UIBarStyle.default
+        toolbar.backgroundColor = UIColor.mpLightGray()
+        toolbar.alpha = 1
+        toolbar.isUserInteractionEnabled = true
 
-            self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") //saca linea molesta
-            displayBackButton()
-        }
+        let buttonNext = UIBarButtonItem(title: "Siguiente".localized, style: .done, target: self, action: #selector(self.continueAction))
+        let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(self.backAction))
+
+        let font = Utils.getFont(size: 14)
+        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+
+        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+
+        self.toolbar = toolbar
+        self.securityCodeTextField.delegate = self
+        self.securityCodeTextField.inputAccessoryView = toolbar
     }
 
-    @IBAction func cloneToken(_ sender: AnyObject) {
+    func continueAction() {
         securityCodeTextField.resignFirstResponder()
         guard securityCodeTextField.text?.characters.count == viewModel.secCodeLenght() else {
-            showErrorMessage()
+            let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
+            showErrorMessage(errorMessage)
             return
         }
         self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
     }
 
-    func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod?) {
-        if viewModel.showFrontCard() {
-            if let paymentMethod = paymentMethod {
-                self.cardFront.cardLogo.alpha = 1
-                if let token = cardInformation {
-                    self.cardFront.cardLogo.image =  paymentMethod.getImage()
-                    self.cardFront.backgroundColor = paymentMethod.getColor(bin: cardInformation?.getCardBin())
-                    self.textMaskFormater = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: cardInformation?.getCardBin()), completeEmptySpaces: true, leftToRight: false)
-                    let fontColor = paymentMethod.getFontColor(bin: cardInformation?.getCardBin())
-                    cardFront.cardNumber.textColor =  fontColor
-                    cardFront.cardNumber.text =  self.textMaskFormater.textMasked(token.getCardLastForDigits())
-                }
-                cardFront.cardName.text = ""
-                cardFront.cardExpirationDate.text = ""
-                cardFront.cardNumber.alpha = 0.8
-                cardFront.cardCVV.alpha = 0.8
-                cardFront.layer.cornerRadius = 11
-            }
-
-        } else {
-            if let paymentMethod = paymentMethod {
-                self.cardBack.backgroundColor = paymentMethod.getColor(bin: cardInformation?.getCardBin())
-                let fontColor = paymentMethod.getFontColor(bin: cardInformation?.getCardBin())
-                cardBack.cardCVV.alpha = 0.8
-                cardBack.cardCVV.textColor =  fontColor
-                cardBack.layer.cornerRadius = 11
-            }
-
-        }
-
+    func backAction() {
+        self.executeBack()
     }
+
+    func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod) {
+        self.updateCardThumbnail(paymentMethodColor: paymentMethod.getColor(bin: cardInformation?.getCardBin()))
+        self.cardFront.updateCard(token: cardInformation, paymentMethod: paymentMethod)
+        cardFront.cardCVV.alpha = 0.8
+        cardFront.setCornerRadius(radius: 11)
+    }
+
+    func updateCardThumbnail(paymentMethodColor: UIColor) {
+        self.cardCvvThumbnail.backgroundColor = paymentMethodColor
+        self.cardCvvThumbnail.layer.cornerRadius = 3
+        if self.viewModel.secCodeInBack() {
+            self.securityCodeLabel.isHidden = true
+            self.cardCvvThumbnail.image = MercadoPago.getImage("CardCVVThumbnailBack")
+        } else {
+            self.securityCodeLabel.isHidden = false
+            self.cardCvvThumbnail.image = MercadoPago.getImage("CardCVVThumbnailFront")
+        }
+    }
+
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         if ((textField.text?.characters.count)! + string.characters.count) > viewModel.secCodeLenght() {
@@ -149,16 +146,33 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         hideErrorMessage()
         securityCodeLabel.text = textField.text
         self.ccvLabelEmpty = (textField.text != nil && textField.text!.characters.count == 0)
-        securityCodeLabel.textColor  = UIColor.black
+        securityCodeLabel.textColor = self.viewModel.getPaymentMethodFontColor()
         completeCvvLabel()
 
     }
 
-    open func showErrorMessage() {
-        self.errorLabel.alpha = 1
+    open func showErrorMessage(_ errorMessage: String) {
+        errorLabel = MPLabel(frame: toolbar!.frame)
+        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
+        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        self.errorLabel!.textAlignment = .center
+        self.errorLabel!.text = errorMessage
+        self.errorLabel!.font = self.errorLabel!.font.withSize(12)
+        securityCodeTextField.borderInactiveColor = UIColor.red
+        securityCodeTextField.borderActiveColor = UIColor.red
+        securityCodeTextField.inputAccessoryView = errorLabel
+        securityCodeTextField.setNeedsDisplay()
+        securityCodeTextField.resignFirstResponder()
+        securityCodeTextField.becomeFirstResponder()
+
     }
     open func hideErrorMessage() {
-        self.errorLabel.alpha = 0
+        self.securityCodeTextField.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
+        self.securityCodeTextField.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.securityCodeTextField.inputAccessoryView = self.toolbar
+        self.securityCodeTextField.setNeedsDisplay()
+        self.securityCodeTextField.resignFirstResponder()
+        self.securityCodeTextField.becomeFirstResponder()
     }
 
     func completeCvvLabel() {
@@ -169,7 +183,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         while addCvvDot() != false {
 
         }
-        securityCodeLabel.textColor = UIColor.black
+        securityCodeLabel.textColor = self.viewModel.getPaymentMethodFontColor()
     }
 
     func addCvvDot() -> Bool {
@@ -182,55 +196,5 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
         label?.text?.append("•")
         return true
-
     }
-}
-
-open class SecurityCodeViewModel: NSObject {
-    var paymentMethod: PaymentMethod!
-    var cardInfo: CardInformationForm!
-
-    var callback: ((_ cardInformation: CardInformationForm, _ securityCode: String) -> Void)?
-
-    public init(paymentMethod: PaymentMethod, cardInfo: CardInformationForm) {
-        self.paymentMethod = paymentMethod
-        self.cardInfo = cardInfo
-    }
-
-    public func showFrontCard() -> Bool {
-        return !paymentMethod.secCodeInBack()
-    }
-
-    func secCodeInBack() -> Bool {
-        return paymentMethod.secCodeInBack()
-    }
-    func secCodeLenght() -> Int {
-        return paymentMethod.secCodeLenght()
-    }
-
-    func executeCallback(secCode: String!) {
-        callback!(cardInfo, secCode)
-    }
-
-    func getCardHeight() -> CGFloat {
-        return getCardWidth() / 12 * 7
-    }
-
-    func getCardWidth() -> CGFloat {
-
-        return (UIScreen.main.bounds.width - 100)
-    }
-    func getCardX() -> CGFloat {
-        return ((UIScreen.main.bounds.width - getCardWidth())/2)
-    }
-
-    func getCardY() -> CGFloat {
-        let y = (UIScreen.main.bounds.height - getCardHeight() - 375) / 2
-        return y>10 ? y : 10
-    }
-
-    func getCardBounds() -> CGRect {
-        return CGRect(x: getCardX(), y: getCardY(), width: getCardWidth(), height: getCardHeight())
-    }
-
 }

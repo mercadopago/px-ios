@@ -99,6 +99,7 @@
 "Código de seguridad"="Código de segurança";
 "Continuar"="Continuar";
 "Anterior"="Anterior";
+"Siguiente"="Seguinte";
 "Ingresa el número de la tarjeta de crédito"="Digite todos os números do cartão";
 "Revisa este dato"="Revise este dado";
 "Ingresa el nombre y apellido impreso en la tarjeta"="Digite o nome e sobrenome impresso no cartão";
@@ -179,7 +180,7 @@
 "Precio Unitario : " = "Preço unitário: ";
 "Pagas" = "Você paga";
 "Cambiar medio de pago" = "Alterar meio de pagamento";
-
+"Productos" = "Produtos";
 "Medio de pago" = "Meio de pagamento";
 "Operación" = "Operação";
 "Fecha" = "Data";
