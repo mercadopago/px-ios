@@ -53,7 +53,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
 
         var name = screenName
         if self.viewModel.isCallForAuth() {
-            name = "CALL_FOR_AUTHORIZE"
+            name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
         }
         MPXTracker.trackLastScreen(screenId: finalId, screenName: name, metadata: metadata)
     }

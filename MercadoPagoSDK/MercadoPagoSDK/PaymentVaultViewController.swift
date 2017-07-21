@@ -31,8 +31,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    override open var screenName: String { get { return "PAYMENT_METHOD_SEARCH" } }
-    override open var screenId: String { get { return "/checkout_off/payment_option" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_VAULT} }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_VAULT} }
 
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
 

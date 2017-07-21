@@ -18,8 +18,8 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     var instructionsInfo: InstructionsInfo?
     var paymentResultScreenPreference: PaymentResultScreenPreference!
 
-    override open var screenName: String { get { return "INSTRUCTIONS" } }
-    override open var screenId: String { get { return "/checkout_off/congrats/instructions" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_INSTRUCTIONS} }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT_INSTRUCTIONS } }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
