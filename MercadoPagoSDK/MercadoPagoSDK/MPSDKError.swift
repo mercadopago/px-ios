@@ -12,7 +12,6 @@ open class MPSDKError: NSObject {
 
     open var message: String = ""
     open var errorDetail: String = ""
-    open var messageDetail: String = ""
     open var apiException: ApiException?
     open var requestOrigin: String = ""
     open var retry: Bool?
@@ -35,8 +34,6 @@ open class MPSDKError: NSObject {
         if currentError.userInfo.count > 0 {
             let errorMessage = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
             mpError.message = errorMessage.localized
-            let messageDetail = currentError.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? ""
-            mpError.messageDetail = messageDetail.localized
             mpError.apiException = ApiException.fromJSON(currentError.userInfo as NSDictionary)
             mpError.requestOrigin = requestOrigin
         }
