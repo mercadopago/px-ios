@@ -20,7 +20,7 @@ open class TrackingUtil: NSObject {
     open static let SCREEN_ID_PAYMENT_RESULT_REJECTED = "/checkout_off/congrats/rejected"
     open static let SCREEN_ID_PAYMENT_RESULT_INSTRUCTIONS = "/checkout_off/congrats/instructions"
     open static let SCREEN_ID_BANK_DEALS = "/checkout_off/bank_deals"
-    open static let SCREEN_ID_CARD_FORM = "/checkout_off/card/"
+    open static let SCREEN_ID_CARD_FORM = "/checkout_off/card"
     open static let SCREEN_ID_ERROR = "/checkout_off/failure"
     open static let SCREEN_ID_PAYMENT_TYPES = "/checkout_off/card/payment_types"
 
