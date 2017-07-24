@@ -49,7 +49,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func initialize() {
-        MPXTracker.trackScreen(screenId: "/checkout_off/init", screenName: "Init checkout")
+        MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
     }
     func executeNextStep() {
