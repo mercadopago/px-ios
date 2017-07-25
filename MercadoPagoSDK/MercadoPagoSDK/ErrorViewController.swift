@@ -51,8 +51,8 @@ open class ErrorViewController: MercadoPagoUIViewController {
     override open func trackInfo() {
         var metadata: [String: String] = [:]
 
-        if !String.isNullOrEmpty(String(describing: error.apiException?.status)) {
-            metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing: error.apiException?.status)
+        if let statusError = error.apiException?.status {
+            metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing:statusError)
         }
         if (error.apiException?.cause?.count)! > 0 && !String.isNullOrEmpty(error.apiException?.cause?[0].code) {
             metadata[TrackingUtil.METADATA_ERROR_CODE] = error.apiException?.cause?[0].code

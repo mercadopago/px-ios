@@ -23,7 +23,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var toolbar: UIToolbar?
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_SECURITY_CODE } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
 
     override open func viewDidLoad() {
         super.viewDidLoad()

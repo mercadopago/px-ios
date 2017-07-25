@@ -10,75 +10,92 @@ import Foundation
 
 protocol TrackingStrategy {
     func trackScreen(screenTrack: ScreenTrackInfo)
-    func trackLastScreen(screenTrack: ScreenTrackInfo)
 }
 
 class RealTimeStrategy: TrackingStrategy { // V1
     func trackScreen(screenTrack: ScreenTrackInfo) {
      self.send(trackList: [screenTrack])
     }
-    func trackLastScreen(screenTrack: ScreenTrackInfo) {
-        self.trackScreen(screenTrack: screenTrack)
+    private func send(trackList: Array<ScreenTrackInfo>) {
+        var jsonBody = MPXTracker.generateJSONDefault()
+        var arrayEvents = Array<[String:Any]>()
+        for elementToTrack in trackList {
+            arrayEvents.append(elementToTrack.toJSON())
+        }
+        jsonBody["events"] = arrayEvents
+        let body = JSONHandler.jsonCoding(jsonBody)
+        TrackingServices.request(url: MPXTracker.TRACKING_URL, params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
+           // print("tracked")
+        }) { (error) -> Void in
+            //print(error)
+        }
+    }
+}
+
+class BatchStrategy: TrackingStrategy { // V2
+
+    func trackScreen(screenTrack: ScreenTrackInfo) {
+        TrackStorageManager.persist(screenTrackInfo: screenTrack)
+        attemptSendTrackInfo()
+    }
+
+    func canSendTrack() -> Bool {
+        let status = Reach().connectionStatus()
+        if status.description == "Offline" {
+            return false
+        }
+        return status.description == "Online (WiFi)" || UIApplication.shared.applicationState == UIApplicationState.background
+    }
+
+    func attemptSendTrackInfo() {
+        if canSendTrack() {
+            let array = TrackStorageManager.getBatchScreenTracks(force: false)
+            guard let batch = array else {
+                return
+            }
+            send(trackList: batch)
+        }
     }
     private func send(trackList: Array<ScreenTrackInfo>) {
         var jsonBody = MPXTracker.generateJSONDefault()
         var arrayEvents = Array<[String:Any]>()
         for elementToTrack in trackList {
             arrayEvents.append(elementToTrack.toJSON())
-            print("Pantalla = \(elementToTrack.screenName)")
         }
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)
         TrackingServices.request(url: MPXTracker.TRACKING_URL, params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
-            print("tracked")
+            print("TRACKED!")
         }) { (error) -> Void in
-            //    self.send(trackList: trackList)
-            print(error)
+            TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
         }
     }
+
 }
 
-class PersistAndTrack: TrackingStrategy { // V2
+class ForceTrackStrategy: TrackingStrategy { // V2
 
-    var attemptSendForEachTrack = false
-
-    init(attemptSendEachTrack: Bool = false) {
-        self.attemptSendForEachTrack = attemptSendEachTrack
-    }
-    func trackLastScreen(screenTrack: ScreenTrackInfo) {
+    func trackScreen(screenTrack: ScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
         attemptSendTrackInfo(force:true)
     }
-    func trackScreen(screenTrack: ScreenTrackInfo) {
-        TrackStorageManager.persist(screenTrackInfo: screenTrack)
-        if attemptSendForEachTrack {
-            attemptSendTrackInfo()
-        }
-    }
 
-    func canSendTrack(force: Bool = false) -> Bool {
+    func canSendTrack() -> Bool {
         let status = Reach().connectionStatus()
         if status.description == "Offline" {
             return false
         }
-        if force {
-            return true
-        }
-        return status.description == "Online (WiFi)" || UIApplication.shared.applicationState == UIApplicationState.background
+        return true
     }
 
     func attemptSendTrackInfo(force: Bool = false) {
-        if canSendTrack(force:force) {
-            let array = TrackStorageManager.getBatchScreenTracks(force: force)
+        if canSendTrack() {
+            let array = TrackStorageManager.getBatchScreenTracks(force: true)
             guard let batch = array else {
                 return
             }
             send(trackList: batch)
             attemptSendTrackInfo(force: force)
-        }else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
-                self.attemptSendTrackInfo(force: force)
-            })
         }
     }
     private func send(trackList: Array<ScreenTrackInfo>) {

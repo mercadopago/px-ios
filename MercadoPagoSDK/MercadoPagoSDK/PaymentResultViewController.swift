@@ -44,7 +44,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
                               TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.paymentResult.statusDetail,
                               TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.paymentResult._id]
         if let pm = self.viewModel.paymentResult.paymentData?.paymentMethod {
-            metadata[TrackingUtil.METADATA_PAYMENT_ID] = pm._id
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
         }
         if let issuer = self.viewModel.paymentResult.paymentData?.issuer {
             metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
@@ -55,7 +55,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         if self.viewModel.isCallForAuth() {
             name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
         }
-        MPXTracker.trackLastScreen(screenId: finalId, screenName: name, metadata: metadata)
+        MPXTracker.trackScreen(screenId: finalId, screenName: name, metadata: metadata)
     }
     func registerCells() {
 

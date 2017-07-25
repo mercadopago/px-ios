@@ -55,12 +55,12 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
                               TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.paymentResult.statusDetail,
                               TrackingUtil.METADATA_PAYMENT_ID: self.paymentResult._id]
         if let pm = self.paymentResult.paymentData?.paymentMethod {
-            metadata[TrackingUtil.METADATA_PAYMENT_ID] = pm._id
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
         }
         if let issuer = self.paymentResult.paymentData?.issuer {
             metadata["issuer"] = issuer._id
         }
-        MPXTracker.trackLastScreen(screenId: screenId, screenName: screenName, metadata: metadata)
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
 
     open override func viewWillAppear(_ animated: Bool) {

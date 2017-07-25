@@ -37,14 +37,6 @@ public class MPXTracker: NSObject {
         sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
     }
 
-    static func trackLastScreen(screenId: String, screenName: String, metadata: [String : String?] = [:]) {
-        if !isEnabled() {
-            return
-        }
-        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata:metadata)
-        sharedInstance.trackingStrategy.trackLastScreen(screenTrack: screenTrack)
-    }
-
     static func generateJSONDefault() -> [String:Any] {
         let clientId = UIDevice.current.identifierForVendor!.uuidString
         let deviceJSON = MPTDevice().toJSON()
