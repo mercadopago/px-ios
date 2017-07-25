@@ -23,6 +23,9 @@
 "visa"="Visa";
 "master"="Mastercard";
 "amex"="Amex";
+"Salir" = "Leave";
+"Reintentar" = "Retry";
+"Hubo un error" = "There was an error";
 
 //CONGRATS
 
