@@ -104,6 +104,9 @@
 "Ingresa el nombre y apellido impreso en la tarjeta"="Digite o nome e sobrenome impresso no cartão";
 "Ingresa los %1$s números del código de seguridad"="Digite os %1$s números do código de segurança";
 "Método de pago no soportado"="Você não pode pagar com este método de pagamento";
+"Salir" = "Sair";
+"Reintentar" = "Tentar novamente";
+"Hubo un error" = "Ocorreu um erro";
 
 "Nombre y apellido"="Nome e sobrenome";
 

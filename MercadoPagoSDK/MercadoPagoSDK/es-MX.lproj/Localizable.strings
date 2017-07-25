@@ -21,6 +21,9 @@
 "visa"="Visa";
 "master"="Mastercard";
 "amex"="Amex";
+"Salir" = "Salir";
+"Reintentar" = "Reintentar";
+"Hubo un error" = "Hubo un error";
 
 //INSTRUCCIONES
 
