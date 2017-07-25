@@ -38,7 +38,7 @@ open class SecurityCode: NSObject {
     open func toJSON() -> [String:Any] {
         let obj: [String:Any] = [
             "length": self.length,
-            "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,
+            "card_location": self.cardLocation == nil ? "" : self.cardLocation!,
             "mode": self.mode == nil ? "" : self.mode!
         ]
 
