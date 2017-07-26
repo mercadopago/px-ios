@@ -6,8 +6,8 @@ target 'PodTester' do
   use_frameworks!
 
   # Pods for PodTester
-  pod 'MercadoPagoSDK', :path => '../'
-
+   pod 'MercadoPagoSDK', :path => '../'
+  #pod 'MercadoPagoSDK', '3.2.0'
 
   target 'PodTesterTests' do
     inherit! :search_paths

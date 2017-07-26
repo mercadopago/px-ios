@@ -56,24 +56,4 @@ open class CurrenciesUtil {
         return (currencyId != nil && currencyId?.characters.count > 0) ? self.currenciesList[currencyId!] : nil
     }
 
-    open class func formatNumber(_ amount: Double, currencyId: String) -> String? {
-
-        // Get currency configuration
-        let currency: Currency? = currenciesList[currencyId]
-
-        if currency != nil {
-
-            // Set formatters
-            let formatter: NumberFormatter = NumberFormatter()
-            formatter.decimalSeparator = String(currency!.decimalSeparator)
-            formatter.groupingSeparator = String(currency!.thousandsSeparator)
-            formatter.numberStyle = .none
-            formatter.maximumFractionDigits = currency!.decimalPlaces
-            // return formatted string
-            let number = amount as NSNumber
-            return currency!.symbol + " " + formatter.string(from: number)!
-        } else {
-            return nil
-        }
-    }
 }

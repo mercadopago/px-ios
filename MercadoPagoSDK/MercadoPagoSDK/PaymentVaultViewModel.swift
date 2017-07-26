@@ -9,6 +9,8 @@
 import Foundation
 class PaymentVaultViewModel: NSObject {
 
+    var groupName: String?
+
     var amount: Double
     var paymentPreference: PaymentPreference?
     var email: String
@@ -31,9 +33,10 @@ class PaymentVaultViewModel: NSObject {
 
     internal var isRoot = true
 
-    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel: (() -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
+    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], groupName: String? = nil, customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel: (() -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
         self.amount = amount
         self.email = email
+        self.groupName = groupName
         self.discount = discount
         self.paymentPreference = paymentPrefence
         self.paymentMethodOptions = paymentMethodOptions

@@ -25,6 +25,7 @@ open class PaymentResultScreenPreference: NSObject {
     var pendingIconBundle = MercadoPago.getBundle()!
     var hidePendingSecondaryButton = false
     var hidePendingContentText = false
+    var hidePendingContentTitle = false
     var pendingSecondaryExitButtonText = "Pagar con otro medio".localized
     var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
@@ -43,17 +44,17 @@ open class PaymentResultScreenPreference: NSObject {
 
     var exitButtonTitle = "Continuar".localized
 
-	  var statusBackgroundColor: UIColor?
+    var statusBackgroundColor: UIColor?
 
-	  var hideApprovedPaymentBodyCell = false
+    var hideApprovedPaymentBodyCell = false
     var hideContentCell = false
     var hideAmount = false
     var hidePaymentId = false
     var hidePaymentMethod = false
 
-    internal static var pendingAdditionalInfoCells = [MPCustomCell]()
-    internal static var approvedAdditionalInfoCells = [MPCustomCell]()
-    internal static var approvedSubHeaderCells = [MPCustomCell]()
+    var pendingAdditionalInfoCells = [MPCustomCell]()
+    var approvedAdditionalInfoCells = [MPCustomCell]()
+    var approvedSubHeaderCells = [MPCustomCell]()
 
     // Sets de Approved
 
@@ -104,6 +105,10 @@ open class PaymentResultScreenPreference: NSObject {
 
     open func disablePendingContentText() {
         self.hidePendingContentText = true
+    }
+
+    open func disablePendingContentTitle() {
+        self.hidePendingContentTitle = true
     }
 
     open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String) {
@@ -211,28 +216,26 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePendingContentText = false
     }
 
+    open func enablePaymentContentTitle() {
+        self.hidePendingContentTitle = false
+    }
+
     open func enableApprovedPaymentMethodInfo() {
         self.hidePaymentMethod = false
     }
 
     //Custom Rows
 
-    open static func setCustomPendingCells(customCells: [MPCustomCell]) {
-        PaymentResultScreenPreference.pendingAdditionalInfoCells = customCells
+    open func setCustomPendingCells(customCells: [MPCustomCell]) {
+        self.pendingAdditionalInfoCells = customCells
     }
 
-    open static func setCustomsApprovedCell(customCells: [MPCustomCell]) {
-        PaymentResultScreenPreference.approvedAdditionalInfoCells = customCells
+    open func setCustomsApprovedCell(customCells: [MPCustomCell]) {
+        self.approvedAdditionalInfoCells = customCells
     }
 
-    open static func setCustomApprovedSubHeaderCell(customCells: [MPCustomCell]) {
-        PaymentResultScreenPreference.approvedSubHeaderCells = customCells
-    }
-
-    open static func clear() {
-        PaymentResultScreenPreference.approvedAdditionalInfoCells = [MPCustomCell]()
-        PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
-        PaymentResultScreenPreference.approvedSubHeaderCells = [MPCustomCell]()
+    open func setCustomApprovedSubHeaderCell(customCells: [MPCustomCell]) {
+        self.approvedSubHeaderCells = customCells
     }
 
     //Approved
@@ -292,6 +295,10 @@ open class PaymentResultScreenPreference: NSObject {
 
     open func isPendingContentTextDisable() -> Bool {
         return hidePendingContentText
+    }
+
+    open func isPendingContentTitleDisable() -> Bool {
+        return hidePendingContentTitle
     }
 
     // Rejected

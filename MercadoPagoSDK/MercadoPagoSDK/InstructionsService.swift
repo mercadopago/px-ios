@@ -42,8 +42,7 @@ open class InstructionsService: MercadoPagoService {
         }
         params = params + "&api_version=" + ServicePreference.API_VERSION
 
-        let headers = NSMutableDictionary()
-        headers.setValue(MercadoPagoContext.getLanguage(), forKey: "Accept-Language")
+        let headers = [MercadoPagoContext.getLanguage(): "Accept-Language"]
 
         self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (jsonResult) -> Void in
 

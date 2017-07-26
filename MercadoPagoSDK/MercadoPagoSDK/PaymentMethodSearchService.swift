@@ -68,29 +68,28 @@ open class PaymentMethodSearchService: MercadoPagoService {
 
         params = params + "&api_version=" + ServicePreference.API_VERSION
 
-        var groupsPayerBody: AnyObject? = nil
+        var groupsPayerBody: String = ""
         if !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {
             let groupsPayerBodyJson: [String:Any] = [
                 "payer": GroupsPayer().toJSON()
             ]
-            groupsPayerBody = JSONHandler.jsonCoding(groupsPayerBodyJson) as AnyObject?
+            groupsPayerBody = JSONHandler.jsonCoding(groupsPayerBodyJson)
         }
 
-        let headers = NSMutableDictionary()
-        headers.setValue(MercadoPagoContext.getLanguage(), forKey: "Accept-Language")
+        let headers = [MercadoPagoContext.getLanguage(): "Accept-Language"]
 
         self.request(uri: ServicePreference.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (jsonResult) -> Void in
 
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
-                    failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago".localized]))
+                    failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago".localized]))
                 } else {
 
                     if paymentSearchDic.allKeys.count > 0 {
                         let paymentSearch = PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
                             success(paymentSearch)
                     } else {
-                        failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago".localized]))
+                        failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago".localized]))
                     }
                 }
             }

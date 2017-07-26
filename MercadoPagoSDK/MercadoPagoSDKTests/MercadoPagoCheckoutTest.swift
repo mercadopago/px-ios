@@ -351,23 +351,23 @@ class MercadoPagoCheckoutTest: BaseTest {
         self.mpCheckout?.setBinaryMode(false)
         XCTAssertEqual(false, self.mpCheckout?.viewModel.binaryMode)
     }
-    
+
     func testWhenCreateNewCardTokenFailsWithInvalidIdNumberThenDoNotExecuteNextStep() {
         let navControllerInstance = UINavigationController()
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let dummyExecutionCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA_INVALID_ID_TEST", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
-        
+
         self.mpCheckout = dummyExecutionCheckout
-        
+
         mpCheckout?.viewModel.updateCheckoutModel(paymentMethods: [MockBuilder.buildPaymentMethod("visa")], cardToken: MockBuilder.buildCardToken())
-        
+
         mpCheckout?.createNewCardToken()
         XCTAssertFalse(dummyExecutionCheckout.executedNextStep)
     }
 }
 
 open class MercadoPagoCheckoutMock: MercadoPagoCheckout {
-    var executedNextStep : Bool = false
+    var executedNextStep: Bool = false
     override func executeNextStep() {
         executedNextStep = true
     }

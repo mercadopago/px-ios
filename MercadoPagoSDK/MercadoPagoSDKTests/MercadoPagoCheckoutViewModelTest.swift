@@ -34,8 +34,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
         MercadoPagoCheckoutViewModel.flowPreference.showDiscount = true
 
-        // 1. Search Preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -96,8 +100,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
         MercadoPagoCheckoutViewModel.flowPreference.showDiscount = true
 
-        // 1. Search Preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -222,8 +230,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search Preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -268,7 +280,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData : paymentDataAccountMoney, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search Preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
@@ -320,8 +332,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData: paymentDataVisa, paymentResult : paymentResult, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
@@ -348,8 +364,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -440,8 +460,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search Preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
         // 2. Validate preference
@@ -508,8 +532,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: checkoutPreference, discount: discount, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search Preference
+        // 0. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PREFERENCE, step)
 
         // 2. Validate preference

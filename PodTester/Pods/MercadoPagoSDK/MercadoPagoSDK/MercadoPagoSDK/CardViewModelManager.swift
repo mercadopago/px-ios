@@ -38,7 +38,7 @@ open class CardViewModelManager: NSObject {
 
     var promos: [Promo]?
 
-    init(amount: Double, paymentMethods: [PaymentMethod]?, paymentMethod: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
+    public init(amount: Double, paymentMethods: [PaymentMethod]?, paymentMethod: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.guessedPMS = paymentMethod
@@ -58,7 +58,7 @@ open class CardViewModelManager: NSObject {
         if self.customerCard != nil {
             lenght = (self.customerCard?.getCardSecurityCode().length)!
         } else {
-            if ((getGuessedPM()?.settings == nil)||(getGuessedPM()?.settings.count == 0)) {
+            if (getGuessedPM()?.settings == nil)||(getGuessedPM()?.settings.count == 0) {
                 lenght = 3 // Default
             } else {
                 lenght = (getGuessedPM()?.settings[0].securityCode.length)!
@@ -98,14 +98,14 @@ open class CardViewModelManager: NSObject {
     }
 
     func getBIN(_ cardNumber: String) -> String? {
-        if (token != nil) {
+        if token != nil {
             return token?.firstSixDigit
         }
 
         var trimmedNumber = cardNumber.replacingOccurrences(of: " ", with: "")
         trimmedNumber = trimmedNumber.replacingOccurrences(of: String(textMaskFormater.emptyMaskElement), with: "")
 
-        if (trimmedNumber.characters.count < 6) {
+        if trimmedNumber.characters.count < 6 {
             return nil
         } else {
             let bin = trimmedNumber.substring(to: (trimmedNumber.characters.index(trimmedNumber.startIndex, offsetBy: 6)))
@@ -114,7 +114,7 @@ open class CardViewModelManager: NSObject {
     }
 
     func isValidInputCVV(_ text: String) -> Bool {
-        if( text.characters.count > self.cvvLenght() ) {
+        if text.characters.count > self.cvvLenght() {
             return false
         }
         let num = Int(text)
@@ -123,14 +123,14 @@ open class CardViewModelManager: NSObject {
 
     func validateCardNumber(_ cardNumberLabel: UILabel, expirationDateLabel: MPLabel, cvvLabel: UILabel, cardholderNameLabel: MPLabel) -> Bool {
 
-        if(self.guessedPMS == nil) {
+        if self.guessedPMS == nil {
             return false
         }
 
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
 
         let errorMethod = self.cardToken!.validateCardNumber(getGuessedPM()!)
-        if((errorMethod) != nil) {
+        if (errorMethod) != nil {
             return false
         }
         return true
@@ -140,7 +140,7 @@ open class CardViewModelManager: NSObject {
 
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
 
-        if ( self.cardToken!.validateCardholderName() != nil ) {
+        if self.cardToken!.validateCardholderName() != nil {
             return false
         }
         return true
@@ -154,7 +154,7 @@ open class CardViewModelManager: NSObject {
             return false
         }
         let errorMethod = self.cardToken!.validateSecurityCode()
-        if((errorMethod) != nil) {
+        if (errorMethod) != nil {
             return false
         }
         return true
@@ -164,7 +164,7 @@ open class CardViewModelManager: NSObject {
 
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         let errorMethod = self.cardToken!.validateExpiryDate()
-        if((errorMethod) != nil) {
+        if (errorMethod) != nil {
             return false
         }
         return true
@@ -172,10 +172,10 @@ open class CardViewModelManager: NSObject {
 
     /*TODO : deberia validarse esto acá???*/
     func isAmexCard(_ cardNumber: String) -> Bool {
-        if(self.getBIN(cardNumber) == nil) {
+        if self.getBIN(cardNumber) == nil {
             return false
         }
-        if(self.guessedPMS != nil) {
+        if self.guessedPMS != nil {
             return self.getGuessedPM()!.isAmex()
         } else {
             return false
@@ -187,10 +187,10 @@ open class CardViewModelManager: NSObject {
             return self.guessedPMS
 
         }
-        if(self.paymentMethods == nil) {
+        if self.paymentMethods == nil {
             return nil
         }
-        if(getBIN(cardNumber) == nil) {
+        if getBIN(cardNumber) == nil {
             return nil
         }
 
@@ -198,8 +198,8 @@ open class CardViewModelManager: NSObject {
 
         for (_, value) in self.paymentMethods!.enumerated() {
 
-            if (value.conformsPaymentPreferences(self.paymentSettings)) {
-                if (value.conformsToBIN(getBIN(cardNumber)!)) {
+            if value.conformsPaymentPreferences(self.paymentSettings) {
+                if value.conformsToBIN(getBIN(cardNumber)!) {
                     paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
                 }
             }

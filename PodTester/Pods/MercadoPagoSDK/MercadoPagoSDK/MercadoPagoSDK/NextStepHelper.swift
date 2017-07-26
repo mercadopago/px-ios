@@ -51,9 +51,16 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod, let option = self.paymentOptionSelected else {
             return false
         }
+
+        if !self.paymentData.paymentMethod.isOnlinePaymentMethod() && (self.paymentData.paymentMethod.isIdentificationRequired() || self.paymentData.paymentMethod.isIdentificationTypeRequired()) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
+
+            return true
+        }
+
         guard let holder = self.cardToken?.cardholder else {
             return false
         }
+
         if let identification = holder.identification {
             if String.isNullOrEmpty(identification.number) && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod() {
                 return true
@@ -62,6 +69,35 @@ extension MercadoPagoCheckoutViewModel {
         return false
 
     }
+
+    func needGetEntityTypes() -> Bool {
+        guard let _ = self.paymentOptionSelected else {
+            return false
+        }
+        guard let pm = self.paymentData.paymentMethod else {
+            return false
+        }
+        if paymentData.payer.entityType == nil && pm.isEntityTypeRequired() {
+            return true
+        }
+        return false
+    }
+
+    func needGetFinancialInstitutions() -> Bool {
+        guard let _ = self.paymentOptionSelected else {
+            return false
+        }
+        guard let pm = self.paymentData.paymentMethod else {
+            return false
+        }
+
+        if paymentData.transactionDetails?.financialInstitution == nil && !Array.isNullOrEmpty(pm.financialInstitutions) {
+           return true
+        }
+
+        return false
+    }
+
     func needGetIssuers() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
             return false
@@ -110,7 +146,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        if pm.isCreditCard() && self.paymentData.payerCost == nil && installment == nil {
+        if pm.isCreditCard() && self.paymentData.payerCost == nil && payerCosts == nil {
             return true
         }
         return false
@@ -120,7 +156,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        if pm.isCreditCard() && self.paymentData.payerCost == nil && installment != nil {
+        if pm.isCreditCard() && self.paymentData.payerCost == nil && payerCosts != nil {
             return true
         }
         return false
@@ -130,7 +166,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pmSelected = self.paymentOptionSelected else {
             return false
         }
-        if pmSelected.isCustomerPaymentMethod() && self.paymentData.token == nil && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if pmSelected.isCustomerPaymentMethod() && self.paymentData.token == nil && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue && (self.paymentData.payerCost != nil || !self.paymentData.paymentMethod.isCreditCard()) {
             return true
         }
         return false
@@ -141,19 +177,47 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        return self.paymentData.token == nil && pm.isCard()
+        //Note: this is being used only for new cards, saved cards tokenization is
+        //made in MercadoPagoCheckout#collectSecurityCode().
+        return self.paymentData.token == nil && pm.isCard() && self.cardToken != nil
+    }
+
+    func needReviewAndConfirm() -> Bool {
+
+        guard let _ = self.paymentOptionSelected else {
+            return false
+        }
+
+        if self.initWithPaymentData && paymentData.isComplete() {
+            initWithPaymentData = false
+            return true
+        }
+
+        if paymentData.isComplete() {
+            return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+        }
+
+        return false
     }
 
     func shouldShowCongrats() -> Bool {
-        return self.payment != nil || self.paymentResult != nil
+        if self.payment != nil || self.paymentResult != nil {
+            self.setIsCheckoutComplete(isCheckoutComplete: true)
+            return true
+        }
+        return false
     }
 
     func shouldExitCheckout() -> Bool {
         return self.isCheckoutComplete()
     }
 
+    func needToSearchDirectDiscount() -> Bool {
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete()
+    }
+
     func setPaymentOptionSelected() {
-        if self.paymentData.hasCustomerPaymentOption() {
+        if self.paymentData.hasCustomerPaymentOption() && self.customPaymentOptions != nil {
             // Account_money o customer cards
             let customOption = Utils.findCardInformationIn(customOptions: self.customPaymentOptions!, paymentData: self.paymentData)
             self.paymentOptionSelected = customOption as? PaymentMethodOption
@@ -168,5 +232,9 @@ extension MercadoPagoCheckoutViewModel {
                 self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
             }
         }
+    }
+
+    func needValidatePreference() -> Bool {
+        return !self.needLoadPreference && !self.preferenceValidated
     }
 }

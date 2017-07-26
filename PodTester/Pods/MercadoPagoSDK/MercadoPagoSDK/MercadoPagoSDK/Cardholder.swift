@@ -10,7 +10,7 @@ import Foundation
 
 open class Cardholder: NSObject {
     open var name: String?
-    open var identification: Identification?
+    open var identification: Identification!
 
     open class func fromJSON(_ json: NSDictionary) -> Cardholder {
         let cardholder: Cardholder = Cardholder()
@@ -19,7 +19,9 @@ open class Cardholder: NSObject {
             cardholder.name = name
         }
 
-        cardholder.identification = Identification.fromJSON(json["identification"]! as! NSDictionary)
+        let identificationDic: NSDictionary = JSONHandler.getValue(of: NSDictionary.self, key: "identification", from: json)
+        cardholder.identification = Identification.fromJSON(identificationDic)
+
         return cardholder
     }
 

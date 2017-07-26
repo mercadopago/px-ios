@@ -79,14 +79,16 @@ open class PaymentMethodSearch: Equatable {
 
     func getPaymentOptionsCount() -> Int {
         let customOptionsCount = (self.customerPaymentMethods != nil) ? self.customerPaymentMethods!.count : 0
-        return customOptionsCount + self.groups.count
+        let groupsOptionsCount = (self.groups != nil) ? self.groups!.count : 0
+        return customOptionsCount + groupsOptionsCount
     }
 
 }
 
 public func ==(obj1: PaymentMethodSearch, obj2: PaymentMethodSearch) -> Bool {
     let areEqual =
-    obj1.groups == obj2.groups &&
+        ((obj1.groups == nil && obj2.groups == nil) ||
+    obj1.groups == obj2.groups) &&
     obj1.paymentMethods == obj2.paymentMethods
     return areEqual
 }

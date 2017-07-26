@@ -18,6 +18,9 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     var instructionsInfo: InstructionsInfo?
     var paymentResultScreenPreference: PaymentResultScreenPreference!
 
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_INSTRUCTIONS} }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT_INSTRUCTIONS } }
+
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,6 +48,21 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         let footerNib = UINib(nibName: "FooterTableViewCell", bundle: self.bundle)
         self.tableView.register(footerNib, forCellReuseIdentifier: "footerNib")
     }
+
+    override  func trackInfo() {
+        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                              TrackingUtil.METADATA_PAYMENT_STATUS: self.paymentResult.status,
+                              TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.paymentResult.statusDetail,
+                              TrackingUtil.METADATA_PAYMENT_ID: self.paymentResult._id]
+        if let pm = self.paymentResult.paymentData?.paymentMethod {
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
+        }
+        if let issuer = self.paymentResult.paymentData?.issuer {
+            metadata["issuer"] = issuer._id
+        }
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
+    }
+
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
@@ -53,6 +71,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         }
 
     }
+
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if instructionsInfo == nil {
@@ -141,7 +160,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
                 self.tableView.reloadData()
                 self.hideLoading()
             }, failure: { (error) -> Void in
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue, callback: {
                     self.getInstructions()
                 }, callbackCancel: {
                     self.dismiss(animated: true, completion: {})

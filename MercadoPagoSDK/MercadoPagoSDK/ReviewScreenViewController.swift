@@ -20,7 +20,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     var callbackConfirm: ((PaymentData) -> Void)!
     var callbackExit: ((Void) -> Void)!
     var viewModel: CheckoutViewModel!
-    override open var screenName: String { get { return "REVIEW_AND_CONFIRM" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     fileprivate var reviewAndConfirmContent = Set<String>()
     private var statusBarView: UIView?
 
@@ -42,6 +43,14 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         MercadoPagoContext.clearPaymentKey()
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
+    }
+    override func trackInfo() {
+        var metadata = [TrackingUtil.METADATA_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.viewModel.paymentData.paymentMethod.paymentTypeId, TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.viewModel.paymentData.paymentMethod._id]
+
+        if let issuer = self.viewModel.paymentData.issuer {
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
+        }
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
 
     override func loadMPStyles() {
@@ -199,7 +208,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         MPServicesBuilder.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
                 if let error = preference.validate() {
                     // Invalid preference - cannot continue
-                    let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: error.localized, retry: false)
+                    let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
                     self.displayFailure(mpError)
                 } else {
                     self.viewModel.preference = preference
@@ -208,7 +217,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
                 }
             }, failure: { (error) in
                 // Error in service - retry
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue, callback: {
                     self.loadPreference()
                     }, callbackCancel: {
                     self.navigationController!.dismiss(animated: true, completion: {})

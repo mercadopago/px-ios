@@ -48,6 +48,9 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())
     }
+    func fillCell(optionText: String) {
+        self.fillCell(image: nil, title:optionText, subtitle: nil)
+    }
 
     static func totalHeight(drawablePaymentOption: PaymentOptionDrawable) -> CGFloat {
         return PaymentSearchCollectionViewCell.totalHeight(title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())

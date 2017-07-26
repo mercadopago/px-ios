@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardFormViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
                 <outlet property="cardBackground" destination="HQg-yC-PDa" id="0O0-1b-hau"/>
+                <outlet property="keyboardHeightConstraint" destination="NiL-XW-k8t" id="KUW-hy-RbI"/>
                 <outlet property="textBox" destination="cn0-aq-63o" id="zao-Py-yva"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -23,6 +24,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Olw-Lu-Sob">
                     <rect key="frame" x="0.0" y="330" width="320" height="216"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="216" id="NiL-XW-k8t"/>
+                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFe-jt-dCn">
                     <rect key="frame" x="0.0" y="227" width="320" height="60"/>
@@ -100,13 +104,13 @@
                 <constraint firstAttribute="bottom" secondItem="Olw-Lu-Sob" secondAttribute="bottom" id="0iJ-Cj-WeG"/>
                 <constraint firstAttribute="trailing" secondItem="ASx-GA-eOR" secondAttribute="trailing" id="2CN-iN-DjR"/>
                 <constraint firstItem="HQg-yC-PDa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4J2-ua-9z6"/>
-                <constraint firstAttribute="bottom" secondItem="ASx-GA-eOR" secondAttribute="bottom" constant="216" id="BKi-7C-qji"/>
                 <constraint firstItem="Olw-Lu-Sob" firstAttribute="top" secondItem="ASx-GA-eOR" secondAttribute="bottom" id="GXL-e4-4jJ"/>
                 <constraint firstItem="UFe-jt-dCn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Kps-70-0cP"/>
                 <constraint firstItem="ASx-GA-eOR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LRK-ro-loV"/>
                 <constraint firstItem="Olw-Lu-Sob" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="PII-wH-txj"/>
                 <constraint firstItem="ASx-GA-eOR" firstAttribute="top" secondItem="UFe-jt-dCn" secondAttribute="bottom" constant="-1" id="ab4-Ci-iLk"/>
                 <constraint firstAttribute="trailing" secondItem="Olw-Lu-Sob" secondAttribute="trailing" id="bEG-Lc-JB2"/>
+                <constraint firstItem="Olw-Lu-Sob" firstAttribute="top" secondItem="ASx-GA-eOR" secondAttribute="bottom" id="ia7-oU-3z8"/>
                 <constraint firstAttribute="trailing" secondItem="HQg-yC-PDa" secondAttribute="trailing" id="kOB-62-EI1"/>
                 <constraint firstItem="HQg-yC-PDa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oLi-pd-ETQ"/>
                 <constraint firstAttribute="trailing" secondItem="UFe-jt-dCn" secondAttribute="trailing" id="y0q-es-6YA"/>

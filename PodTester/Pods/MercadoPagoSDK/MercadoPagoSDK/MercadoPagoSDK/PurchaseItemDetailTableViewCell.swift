@@ -19,6 +19,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var itemUnitPrice: MPLabel!
 
+    @IBOutlet weak var titleDescriptionConstraint: NSLayoutConstraint!
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -44,11 +45,14 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         self.itemTitle.text = item.title
         self.itemTitle.font = Utils.getFont(size: itemTitle.font.pointSize)
         self.itemDescription.font =  Utils.getFont(size: itemDescription.font.pointSize)
+
         if item._description != nil && item._description!.characters.count > 0 {
             self.itemDescription.text = item._description!
         } else {
             self.itemDescription.text = ""
+            self.titleDescriptionConstraint.constant = 0
         }
+
         self.itemQuantity.text = "Cantidad : ".localized + String(item.quantity)
         self.itemQuantity.font = Utils.getFont(size: itemQuantity.font.pointSize)
         let unitPrice = Utils.getAttributedAmount(item.unitPrice, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.px_grayDark(), fontSize : 18, baselineOffset: 5)
@@ -58,12 +62,9 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
     }
 
     static func getCellHeight(item: Item) -> CGFloat {
-
-        let description = item.description
-        if String.isNullOrEmpty(description) {
-            return CGFloat(270)
+        if String.isNullOrEmpty(item._description) {
+            return CGFloat(280)
         }
-
         return CGFloat(300)
 
     }

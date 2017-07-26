@@ -9,6 +9,7 @@
 import UIKit
 
 public enum CheckoutStep: String {
+    case START
     case SEARCH_PREFERENCE
     case SEARCH_DIRECT_DISCOUNT
     case VALIDATE_PREFERENCE
@@ -36,6 +37,7 @@ public enum CheckoutStep: String {
 
 open class MercadoPagoCheckoutViewModel: NSObject {
 
+    var startedCheckout = false
     internal static var servicePreference = ServicePreference()
     internal static var decorationPreference = DecorationPreference()
     internal static var flowPreference = FlowPreference()
@@ -107,6 +109,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData {
             if pm.isComplete() {
+                self.startedCheckout = true
                 self.paymentData = pm
                 self.directDiscountSearched = true
                 if paymentResult == nil {
@@ -146,7 +149,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, couponCallback: {[weak self] (discount) in
+        var groupName: String?
+        if let optionSelected = paymentOptionSelected {
+            groupName = optionSelected.getId()
+        }
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, groupName: groupName, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, couponCallback: {[weak self] (discount) in
             guard let object = self else {
                 return
             }
@@ -274,10 +281,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     }
     public func nextStep() -> CheckoutStep {
+
+        if !startedCheckout {
+            startedCheckout = true
+            return .START
+        }
         if hasError() {
             return .ERROR
         }
-        
         if needLoadPreference {
             needLoadPreference = false
             return .SEARCH_PREFERENCE
@@ -376,7 +387,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
 
         if search?.getPaymentOptionsCount() == 0 {
-            self.errorInputs(error: MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
+            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
 
             })
         }

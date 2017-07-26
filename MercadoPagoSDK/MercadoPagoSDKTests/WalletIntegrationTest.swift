@@ -38,6 +38,9 @@ class WalletIntegrationTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: preference, navigationController: UINavigationController())
 
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.START)
+
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
 
         step = mpCheckout.viewModel.nextStep()

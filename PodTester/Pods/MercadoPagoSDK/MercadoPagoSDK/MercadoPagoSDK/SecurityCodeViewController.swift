@@ -35,7 +35,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         self.view.backgroundColor = UIColor.primaryColor()
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
         self.cardBack = CardBackView.init(frame: viewModel.getCardBounds())
-        if (viewModel.showFrontCard()) {
+        if viewModel.showFrontCard() {
             self.view.addSubview(cardFront)
             self.securityCodeLabel = cardFront.cardCVV
         } else {
@@ -110,7 +110,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
             if let paymentMethod = paymentMethod {
                 self.cardFront.cardLogo.alpha = 1
                 if let token = cardInformation {
-                    self.cardFront.cardLogo.image =  paymentMethod.getImage(bin: cardInformation?.getCardBin())
+                    self.cardFront.cardLogo.image =  paymentMethod.getImage()
                     self.cardFront.backgroundColor = paymentMethod.getColor(bin: cardInformation?.getCardBin())
                     self.textMaskFormater = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: cardInformation?.getCardBin()), completeEmptySpaces: true, leftToRight: false)
                     let fontColor = paymentMethod.getFontColor(bin: cardInformation?.getCardBin())
@@ -138,7 +138,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     }
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        if (((textField.text?.characters.count)! + string.characters.count) > viewModel.secCodeLenght()) {
+        if ((textField.text?.characters.count)! + string.characters.count) > viewModel.secCodeLenght() {
             return false
         }
         return true
@@ -161,11 +161,11 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     func completeCvvLabel() {
-        if (self.ccvLabelEmpty) {
+        if self.ccvLabelEmpty {
             securityCodeLabel!.text = ""
         }
 
-        while (addCvvDot() != false) {
+        while addCvvDot() != false {
 
         }
         securityCodeLabel.textColor = UIColor.black
