@@ -15,13 +15,13 @@ open class PreferenceService: MercadoPagoService {
         self.request(uri: ServicePreference.MP_PREFERENCE_URI + preferenceId, params: params, body: nil, method: "GET", success: { (jsonResult) in
             if let preferenceDic = jsonResult as? NSDictionary {
                 if preferenceDic["error"] != nil {
-                    failure(NSError(domain: "mercadopago.sdk.PreferenceService.getPreference", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia".localized]))
+                    failure(NSError(domain: "mercadopago.sdk.PreferenceService.getPreference", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia".localized]))
                 } else {
                     if preferenceDic.allKeys.count > 0 {
                         let checkoutPreference = CheckoutPreference.fromJSON(preferenceDic)
                         success(checkoutPreference)
                     } else {
-                        failure(NSError(domain: "mercadopago.sdk.PreferenceService.getPreference", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia".localized]))
+                        failure(NSError(domain: "mercadopago.sdk.PreferenceService.getPreference", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia".localized]))
                     }
                 }
             }
