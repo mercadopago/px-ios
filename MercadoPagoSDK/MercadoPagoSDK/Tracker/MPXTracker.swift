@@ -33,8 +33,24 @@ public class MPXTracker: NSObject {
         if !isEnabled() {
             return
         }
+        setTrackingStrategy(screenID: screenId)
         let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata: metadata)
         sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
+    }
+    
+    static func setTrackingStrategy(screenID: String) {
+        let forcedScreens: [String] = [TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_APPROVED,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_PENDING,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_REJECTED,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_INSTRUCTIONS,
+                                       TrackingUtil.SCREEN_ID_ERROR]
+        if forcedScreens.contains(screenID) {
+            sharedInstance.trackingStrategy = ForceTrackStrategy()
+        } else {
+            sharedInstance.trackingStrategy = BatchStrategy()
+        }
     }
 
     static func generateJSONDefault() -> [String:Any] {
