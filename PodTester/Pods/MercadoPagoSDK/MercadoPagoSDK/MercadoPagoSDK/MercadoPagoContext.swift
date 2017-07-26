@@ -9,19 +9,15 @@
 import Foundation
 import UIKit
 
-open class MercadoPagoContext: NSObject, MPTrackerDelegate {
+open class MercadoPagoContext: NSObject {
 
     static let sharedInstance = MercadoPagoContext()
-
-    var trackListener: MPTrackListener?
 
     var public_key: String = ""
 
     var payer_access_token: String = ""
 
     var merchant_access_token: String = ""
-
-    var initialFlavor: Flavor?
 
     var payment_key: String = ""
 
@@ -37,6 +33,8 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
 
     var language: String = NSLocale.preferredLanguages[0]
 
+    static let kSdkVersion = "sdk_version"
+
     open class var PUBLIC_KEY: String {
         return "public_key"
     }
@@ -48,21 +46,19 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
     open class func isAuthenticatedUser() -> Bool {
         return !sharedInstance.payer_access_token.isEmpty
     }
-
-    public func flavor() -> Flavor! {
-        if (initialFlavor == nil) {
-        return Flavor.Flavor_3
-    } else {
-                return initialFlavor
-        }
-
-    }
+    static var mpxPublicKey: String {return sharedInstance.publicKey()}
+    static var mpxCheckoutVersion: String {return sharedInstance.sdkVersion()}
+    static var mpxPlatform: String {return sharedInstance.framework()}
+    static var mpxSiteId: String {return sharedInstance.siteId()}
+    static var platformType: String {return "Native"}
 
     open func framework() -> String! {
         return  "iOS"
     }
+
     open func sdkVersion() -> String! {
-        return "3.0.0-BETA-20"
+        let sdkVersion: String = Utils.getSetting(identifier: MercadoPagoContext.kSdkVersion)
+        return sdkVersion
     }
 
     static let siteIdsSettings: [String : NSDictionary] = [
@@ -83,7 +79,7 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
         "MCO": ["language": "es-CO", "currency": "COP", "termsconditions": "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
         //Venezuela
         "MLV": ["language": "es", "currency": "VEF", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
-]
+    ]
 
     public enum Site: String {
         case MLA = "MLA"
@@ -94,38 +90,6 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
         case MPE = "MPE"
         case MLC = "MLC"
         case MCO = "MCO"
-    }
-
-    @objc public enum Languages: Int {
-        case _SPANISH
-        case _SPANISH_MEXICO
-        case _SPANISH_COLOMBIA
-        /*
-        case _SPANISH_URUGUAY
-        case _SPANISH_PERU
-        case _SPANISH_VENEZUELA
-        case _SPANISH_CHILE
-        */
-        case _PORTUGUESE
-        case _ENGLISH
-
-        func langPrefix() -> String {
-            switch self {
-            case ._SPANISH : return "es"
-            case ._SPANISH_MEXICO : return "es-MX"
-
-            case ._SPANISH_COLOMBIA : return "es-CO"
-                /*
-            case ._SPANISH_URUGUAY : return "es-UY"
-            case ._SPANISH_PERU : return "es-PE"
-            case ._SPANISH_VENEZUELA : return "es-VE"
-            case ._SPANISH_CHILE : return "es-CH"
-                 */
-            case ._PORTUGUESE : return "pt"
-            case ._ENGLISH : return "en"
-            }
-        }
-
     }
 
     open func siteId() -> String! {
@@ -157,14 +121,6 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
         if site != nil {
             MercadoPagoContext.setSite(site!)
         }
-    }
-
-    open class func setTrack(listener: MPTrackListener) {
-        MercadoPagoContext.sharedInstance.trackListener = listener
-    }
-
-    open static func getTrackListener() -> MPTrackListener? {
-        return sharedInstance.trackListener
     }
     open static func setLanguage(language: Languages) {
         sharedInstance.language = language.langPrefix()
@@ -207,38 +163,17 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
     open class func setPayerAccessToken(_ payerAccessToken: String) {
 
         sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
-      _ = CardFrontView()
-      _ = CardBackView()
+        _ = CardFrontView()
+        _ = CardBackView()
 
     }
 
     open class func setPublicKey(_ public_key: String) {
 
-       sharedInstance.public_key = public_key.trimSpaces()
-       _ = CardFrontView()
-       _ = CardBackView()
+        sharedInstance.public_key = public_key.trimSpaces()
+        _ = CardFrontView()
+        _ = CardBackView()
 
-    }
-
-    public class func initFlavor1() {
-        if (MercadoPagoContext.sharedInstance.initialFlavor != nil) {
-            return
-        }
-        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_1
-    }
-
-    public class func initFlavor2() {
-        if (MercadoPagoContext.sharedInstance.initialFlavor != nil) {
-            return
-        }
-        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_2
-    }
-
-    public class func initFlavor3() {
-        if (MercadoPagoContext.sharedInstance.initialFlavor != nil) {
-            return
-        }
-        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
 
     open class func setAccountMoneyAvailable(accountMoneyAvailable: Bool) {
@@ -251,6 +186,9 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
 
     open class func merchantAccessToken() -> String {
         return sharedInstance.merchant_access_token
+    }
+    open class func setMerchantAccessToken(merchantAT: String) {
+        sharedInstance.merchant_access_token = merchantAT
     }
 
     open class func publicKey() -> String {
@@ -281,7 +219,7 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
     }
 
     open class func keyType() -> String {
-        if(MercadoPagoContext.isAuthenticatedUser()) {
+        if MercadoPagoContext.isAuthenticatedUser() {
             return MercadoPagoContext.PRIVATE_KEY
         } else {
             return MercadoPagoContext.PUBLIC_KEY
@@ -289,10 +227,38 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
     }
 
     open class func keyValue() -> String {
-        if(MercadoPagoContext.isAuthenticatedUser()) {
+        if MercadoPagoContext.isAuthenticatedUser() {
             return MercadoPagoContext.payerAccessToken()
         } else {
             return MercadoPagoContext.publicKey()
+        }
+    }
+
+}
+
+@objc public enum Languages: Int {
+    case _SPANISH
+    case _SPANISH_MEXICO
+    case _SPANISH_COLOMBIA
+    case _SPANISH_URUGUAY
+    case _SPANISH_PERU
+    case _SPANISH_VENEZUELA
+    //        case _SPANISH_CHILE
+    case _PORTUGUESE
+    case _ENGLISH
+
+    func langPrefix() -> String {
+        switch self {
+        case ._SPANISH : return "es"
+        case ._SPANISH_MEXICO : return "es-MX"
+        case ._SPANISH_COLOMBIA : return "es-CO"
+        case ._SPANISH_URUGUAY : return "es-UY"
+        case ._SPANISH_PERU : return "es-PE"
+        case ._SPANISH_VENEZUELA : return "es-VE"
+            //            case ._SPANISH_CHILE : return "es-CH"
+
+        case ._PORTUGUESE : return "pt"
+        case ._ENGLISH : return "en"
         }
     }
 

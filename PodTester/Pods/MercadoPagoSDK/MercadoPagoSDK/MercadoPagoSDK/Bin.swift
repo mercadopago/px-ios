@@ -38,8 +38,8 @@ open class BinMask: NSObject {
 
         let obj: [String:Any] = [
             "pattern": pattern,
-            "installmentsPattern": installmentsPattern,
-            "exclusionPattern": exclusionPattern
+            "installments_pattern": installmentsPattern,
+            "exclusion_pattern": exclusionPattern
             ]
         return obj
     }
@@ -51,7 +51,7 @@ open class BinMask: NSObject {
 
 public func ==(obj1: BinMask, obj2: BinMask) -> Bool {
     var areEqual: Bool
-    if ((obj1.exclusionPattern == nil) || (obj2.exclusionPattern == nil)) {
+    if (obj1.exclusionPattern == nil) || (obj2.exclusionPattern == nil) {
         areEqual  =
             obj1.installmentsPattern == obj2.installmentsPattern &&
             obj1.pattern == obj2.pattern

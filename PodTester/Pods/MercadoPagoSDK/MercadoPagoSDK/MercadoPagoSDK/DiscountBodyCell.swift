@@ -14,13 +14,17 @@ class DiscountBodyCell: UIView {
     var topMargin: CGFloat!
     var coupon: DiscountCoupon?
     var amount: Double!
+    var hideArrow: Bool = false
 
-    init(frame: CGRect, coupon: DiscountCoupon?, amount: Double, addBorder: Bool = true, topMargin: CGFloat = 20.0) {
+    static let HEIGHT: CGFloat = 86.0
+
+    init(frame: CGRect, coupon: DiscountCoupon?, amount: Double, addBorder: Bool = true, topMargin: CGFloat = 20.0, hideArrow: Bool = false) {
         super.init(frame: frame)
         self.coupon = coupon
         self.amount = amount
         self.topMargin = topMargin
-        if (self.coupon == nil) {
+        self.hideArrow = hideArrow
+        if self.coupon == nil {
             loadNoCouponView()
         } else {
             loadCouponView()
@@ -50,7 +54,9 @@ class DiscountBodyCell: UIView {
         couponFlag.image = couponFlag.image?.withRenderingMode(.alwaysTemplate)
         couponFlag.tintColor = UIColor.primaryColor()
         let rightArrow = UIImageView()
-        rightArrow.image = MercadoPago.getImage("rightArrow")
+        if !self.hideArrow {
+            rightArrow.image = MercadoPago.getImage("rightArrow")
+        }
         rightArrow.image = rightArrow.image?.withRenderingMode(.alwaysTemplate)
         rightArrow.tintColor = UIColor.primaryColor()
         let detailLabel = MPLabel()
@@ -100,7 +106,11 @@ class DiscountBodyCell: UIView {
         picFlag.image = picFlag.image?.withRenderingMode(.alwaysTemplate)
         picFlag.tintColor = UIColor.mpGreenishTeal()
         let rightArrow = UIImageView()
-        rightArrow.image = MercadoPago.getImage("rightArrow")
+
+        if !self.hideArrow {
+            rightArrow.image = MercadoPago.getImage("rightArrow")
+        }
+
         let detailLabel = MPLabel()
         detailLabel.textAlignment = .center
         if let concept = coupon.concept {
@@ -116,8 +126,9 @@ class DiscountBodyCell: UIView {
         discountAmountLabel.backgroundColor = UIColor.mpGreenishTeal()
         discountAmountLabel.textColor = UIColor.white
         discountAmountLabel.font = Utils.getFont(size: 12)
+
         let widthlabelDiscount = detailLabel.attributedText?.widthWithConstrainedHeight(height: 18)
-        let widthlabelAmount = (discountAmountLabel.attributedText?.widthWithConstrainedHeight(height: 12))! + 8
+        let widthlabelAmount = (discountAmountLabel.attributedText?.widthWithConstrainedHeight(height: 12))! + 10
         let totalViewWidth = widthlabelDiscount! + widthlabelAmount + 10 + 8 + 2 * margin
         var x = (screenWidth - totalViewWidth) / 2
         let frameLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
@@ -131,6 +142,18 @@ class DiscountBodyCell: UIView {
         x = x + widthlabelAmount + margin
         let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
         rightArrow.frame = frameArrow
+
+        let path = UIBezierPath(roundedRect:discountAmountLabel.bounds,
+                                byRoundingCorners:[.topRight, .bottomRight],
+                                cornerRadii: CGSize(width: 2, height:  2))
+
+        let maskLayer = CAShapeLayer()
+
+        maskLayer.path = path.cgPath
+        ///   viewToRound.layer.mask = maskLayer
+
+        discountAmountLabel.layer.mask = maskLayer
+
         self.addSubview(tituloLabel)
         self.addSubview(detailLabel)
         self.addSubview(picFlag)
@@ -175,7 +198,7 @@ class DiscountToolBar: UIView {
 
         self.margin = (frame.size.height - 18 ) / 2
         self.backgroundColor = UIColor.mpGreenishTeal()
-        if (self.coupon == nil) {
+        if self.coupon == nil {
             loadNoCouponView()
         } else {
             loadCouponView()
@@ -264,6 +287,69 @@ class DiscountToolBar: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension UIView {
+
+    /**
+     Rounds the given set of corners to the specified radius
+     
+     - parameter corners: Corners to round
+     - parameter radius:  Radius to round to
+     */
+    func round(corners: UIRectCorner, radius: CGFloat) {
+        _round(corners: corners, radius: radius)
+    }
+
+    /**
+     Rounds the given set of corners to the specified radius with a border
+     
+     - parameter corners:     Corners to round
+     - parameter radius:      Radius to round to
+     - parameter borderColor: The border color
+     - parameter borderWidth: The border width
+     */
+    func round(corners: UIRectCorner, radius: CGFloat, borderColor: UIColor, borderWidth: CGFloat) {
+        let mask = _round(corners: corners, radius: radius)
+        addBorder(mask: mask, borderColor: borderColor, borderWidth: borderWidth)
+    }
+
+    /**
+     Fully rounds an autolayout view (e.g. one with no known frame) with the given diameter and border
+     
+     - parameter diameter:    The view's diameter
+     - parameter borderColor: The border color
+     - parameter borderWidth: The border width
+     */
+    func fullyRound(diameter: CGFloat, borderColor: UIColor, borderWidth: CGFloat) {
+        layer.masksToBounds = true
+        layer.cornerRadius = diameter / 2
+        layer.borderWidth = borderWidth
+        layer.borderColor = borderColor.cgColor
+    }
+
+}
+
+private extension UIView {
+
+    @discardableResult func _round(corners: UIRectCorner, radius: CGFloat) -> CAShapeLayer {
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+        return mask
+    }
+
+    func addBorder(mask: CAShapeLayer, borderColor: UIColor, borderWidth: CGFloat) {
+        let borderLayer = CAShapeLayer()
+        borderLayer.path = mask.path
+        borderLayer.fillColor = UIColor.clear.cgColor
+        borderLayer.strokeColor = borderColor.cgColor
+        borderLayer.lineWidth = borderWidth
+        borderLayer.frame = bounds
+        layer.addSublayer(borderLayer)
     }
 
 }

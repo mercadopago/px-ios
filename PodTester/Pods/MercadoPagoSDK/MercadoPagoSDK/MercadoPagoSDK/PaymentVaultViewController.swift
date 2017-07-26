@@ -31,8 +31,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    static public var maxCustomerPaymentMethods = 3
-
     override open var screenName: String { get { return "PAYMENT_METHOD_SEARCH" } }
 
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
@@ -79,7 +77,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.showLoading()
+        //self.showLoading()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateCoupon(_:)), name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil)
+
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10
         upperFrame.size.width = UIScreen.main.bounds.width
@@ -108,6 +109,14 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
 
        self.collectionSearch.backgroundColor = UIColor.px_white()
+
+    }
+
+    func updateCoupon(_ notification: Notification) {
+        if let discount = notification.userInfo?["coupon"] as? DiscountCoupon {
+            self.viewModel.discount = discount
+            self.collectionSearch.reloadData()
+        }
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -160,15 +169,19 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate func getCustomerCards() {
         if self.viewModel!.shouldGetCustomerCardsInfo() {
-            MerchantServer.getCustomer({ (customer: Customer) -> Void in
-                self.viewModel.customerId = customer._id
-                self.viewModel.customerPaymentOptions = customer.cards
-                self.loadPaymentMethodSearch()
 
-            }, failure: { (_: NSError?) -> Void in
-                // It a Grupos igual
-                self.loadPaymentMethodSearch()
-            })
+            if let customerURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
+                CustomServer.getCustomer(url: customerURL, uri: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI(), additionalInfo: MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, {[weak self] (customer: Customer) -> Void in
+                    self?.viewModel.customerId = customer._id
+                    self?.viewModel.customerPaymentOptions = customer.cards
+                    self?.loadPaymentMethodSearch()
+
+                }, failure: { (_: NSError?) -> Void in
+                    // Ir a Grupos igual
+                    self.loadPaymentMethodSearch()
+                })
+            }
+
         } else {
             self.loadPaymentMethodSearch()
         }
@@ -207,7 +220,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.collectionSearch.reloadData()
             self.loadingGroups = false
 
-            if (self.viewModel.getDisplayedPaymentMethodsCount() == 1) {
+            if self.viewModel.getDisplayedPaymentMethodsCount() == 1 {
                 let paymentOptionDefault = self.viewModel.getPaymentMethodOption(row: 0) as! PaymentMethodOption
                 self.callback(paymentOptionDefault)
             }
@@ -253,7 +266,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.loadingGroups {
             return 0
         }
-        return viewModel.discount == nil ? 2 : 3
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() ? 3 : 2
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -262,48 +275,47 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             collectionView.deselectItem(at: indexPath, animated: true)
             collectionView.allowsSelection = false
             self.callback!(paymentSearchItemSelected)
-        } else if isCouponSection(section: indexPath.section) {
 
+        } else if isCouponSection(section: indexPath.section) {
             if let coupon = self.viewModel.discount {
-               let step = MPStepBuilder.startDetailDiscountDetailStep(coupon: coupon)
-               self.present(step, animated: false, completion: {})
+                let step = CouponDetailViewController(coupon: coupon)
+                self.present(step, animated: false, completion: {})
+            } else {
+                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email, callback: { (coupon) in
+                    self.viewModel.discount = coupon
+                    self.collectionSearch.reloadData()
+                    if let updateMercadoPagoCheckout = self.viewModel.couponCallback {
+                        updateMercadoPagoCheckout(coupon)
+                    }
+                })
+                self.present(step, animated: false, completion: {})
             }
         }
     }
 
     func isHeaderSection(section: Int) -> Bool {
-        if (section == 0 ) {
-            return true
-        } else {
-            return false
-        }
+        return section == 0
     }
     func isCouponSection(section: Int) -> Bool {
-        guard let _ = viewModel.discount else {
-            return false
-        }
-        return section == 1
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && section == 1
     }
 
     func isGroupSection(section: Int) -> Bool {
-        var sectionGroup = 1
-        if viewModel.discount != nil {
-            sectionGroup = 2
-        }
+        let sectionGroup = MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() ? 2 :1
+
         return sectionGroup == section
     }
 
     public func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
 
-            if (loadingGroups) {
+            if loadingGroups {
                 return 0
             }
-
-            if (isHeaderSection(section: section)) {
+            if isHeaderSection(section: section) {
                 return 1
             }
-            if (isCouponSection(section: section)) {
+            if isCouponSection(section: section) {
                 return 1
             }
 
@@ -330,7 +342,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         } else if isCouponSection(section: indexPath.section) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CouponCell", for: indexPath)
             cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount, topMargin: 15)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : DiscountBodyCell.HEIGHT), coupon: self.viewModel.discount, amount:self.viewModel.amount, topMargin: 15)
             discountBody.tag = 1
             cell.contentView.addSubview(discountBody)
             return cell
@@ -359,7 +371,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             return CGSize(width : view.frame.width, height : titleCellHeight)
         }
         if isCouponSection(section: indexPath.section) {
-            return CGSize(width : view.frame.width, height : 84)
+            return CGSize(width : view.frame.width, height : DiscountBodyCell.HEIGHT + 20) // Add 20 px to separate sections
         }
 
         let widthPerItem = availableWidth / itemsPerRow
@@ -431,93 +443,3 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
  }
-
-class PaymentVaultViewModel: NSObject {
-
-    var amount: Double
-    var paymentPreference: PaymentPreference?
-
-    var paymentMethodOptions: [PaymentMethodOption]
-    var customerPaymentOptions: [CardInformation]?
-    var paymentMethods: [PaymentMethod]!
-    var defaultPaymentOption: PaymentMethodSearchItem?
-   // var cards : [Card]?
-
-    var discount: DiscountCoupon?
-
-    weak var controller: PaymentVaultViewController?
-
-    var customerId: String?
-
-    var callback : ((_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
-    var callbackCancel: (() -> Void)?
-
-    internal var isRoot = true
-
-    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, callbackCancel: (() -> Void)? = nil) {
-        self.amount = amount
-        self.discount = discount
-        self.paymentPreference = paymentPrefence
-        self.paymentMethodOptions = paymentMethodOptions
-        self.customerPaymentOptions = customerPaymentOptions
-        self.isRoot = isRoot
-    }
-
-    func shouldGetCustomerCardsInfo() -> Bool {
-        return MercadoPagoCheckoutViewModel.servicePreference.isCustomerInfoAvailable() && self.isRoot && (self.customerPaymentOptions == nil || self.customerPaymentOptions?.count == 0)
-
-    }
-
-    func getCustomerPaymentMethodsToDisplayCount() -> Int {
-        if (self.customerPaymentOptions != nil && self.customerPaymentOptions?.count > 0 && self.isRoot) {
-            return (self.customerPaymentOptions!.count <= PaymentVaultViewController.maxCustomerPaymentMethods ? self.customerPaymentOptions!.count : PaymentVaultViewController.maxCustomerPaymentMethods)
-        }
-        return 0
-
-    }
-
-    func getPaymentMethodOption(row: Int) -> PaymentOptionDrawable {
-        if (self.getCustomerPaymentMethodsToDisplayCount() > row) {
-            return self.customerPaymentOptions![row]
-        }
-        let indexInPaymentMethods = Array.isNullOrEmpty(self.customerPaymentOptions) ? row : (row - self.getCustomerPaymentMethodsToDisplayCount())
-        return self.paymentMethodOptions[indexInPaymentMethods] as! PaymentOptionDrawable
-    }
-
-    func getDisplayedPaymentMethodsCount() -> Int {
-        let currentPaymentMethodSearchCount = self.paymentMethodOptions.count
-        return self.getCustomerPaymentMethodsToDisplayCount() + currentPaymentMethodSearchCount
-    }
-
-//    func getCustomerCardRowHeight() -> CGFloat {
-//        return self.getCustomerPaymentMethodsToDisplayCount() > 0 ? CustomerPaymentMethodCell.ROW_HEIGHT : 0
-//    }
-
-    func getExcludedPaymentTypeIds() -> Set<String>? {
-        return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentTypeIds : nil
-    }
-
-    func getExcludedPaymentMethodIds() -> Set<String>? {
-        return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentMethodIds : nil
-    }
-
-    func getPaymentPreferenceDefaultPaymentMethodId() -> String? {
-        return (self.paymentPreference != nil) ? self.paymentPreference!.defaultPaymentMethodId : nil
-    }
-
-    func isCustomerPaymentMethodOptionSelected(_ row: Int) -> Bool {
-        if (Array.isNullOrEmpty(self.customerPaymentOptions)) {
-            return false
-        }
-        return (row < self.getCustomerPaymentMethodsToDisplayCount())
-    }
-
-    func hasOnlyGroupsPaymentMethodAvailable() -> Bool {
-        return (self.paymentMethodOptions.count == 1 && Array.isNullOrEmpty(self.customerPaymentOptions))
-    }
-
-    func hasOnlyCustomerPaymentMethodAvailable() -> Bool {
-        return Array.isNullOrEmpty(self.paymentMethodOptions) && !Array.isNullOrEmpty(self.customerPaymentOptions) && self.customerPaymentOptions?.count == 1
-    }
-
-}

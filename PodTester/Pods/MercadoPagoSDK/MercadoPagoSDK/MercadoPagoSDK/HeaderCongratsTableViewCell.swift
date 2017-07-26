@@ -28,19 +28,19 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         subtitle.text = ""
     }
 
-    func fillCell(paymentResult: PaymentResult, paymentMethod: PaymentMethod?, color: UIColor) {
+    func fillCell(paymentResult: PaymentResult, paymentMethod: PaymentMethod?, color: UIColor, paymentResultScreenPreference: PaymentResultScreenPreference) {
 
         view.backgroundColor = color
 
 		if paymentResult.status == "approved" {
-			icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderApprovedIcon()
-            title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedTitle()
-            subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedSubtitle()
+			icon.image = paymentResultScreenPreference.getHeaderApprovedIcon()
+            title.text = paymentResultScreenPreference.getApprovedTitle()
+            subtitle.text = paymentResultScreenPreference.getApprovedSubtitle()
 
         } else if paymentResult.status == "in_process" {
-            icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderPendingIcon()
-            title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingTitle()
-            subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSubtitle()
+            icon.image = paymentResultScreenPreference.getHeaderPendingIcon()
+            title.text = paymentResultScreenPreference.getPendingTitle()
+            subtitle.text = paymentResultScreenPreference.getPendingSubtitle()
 
         } else if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
             icon.image = MercadoPago.getImage("MPSDK_payment_result_c4a")
@@ -65,12 +65,12 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             }
 
         } else {
-            icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderRejectedIcon()
+            icon.image = paymentResultScreenPreference.getHeaderRejectedIcon()
             var title = (paymentResult.statusDetail + "_title")
             if !title.existsLocalized() {
-                if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedTitle()) {
-                    self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedTitle()
-                    subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedSubtitle()
+                if !String.isNullOrEmpty(paymentResultScreenPreference.getRejectedTitle()) {
+                    self.title.text = paymentResultScreenPreference.getRejectedTitle()
+                    subtitle.text = paymentResultScreenPreference.getRejectedSubtitle()
                 } else {
                     self.title.text = "Uy, no pudimos procesar el pago".localized
                 }
@@ -91,7 +91,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
                 self.addSubview(timerLabel!)
             }
 
-            messageError.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedIconSubtext()
+            messageError.text = paymentResultScreenPreference.getRejectedIconSubtext()
         }
     }
 
@@ -100,10 +100,10 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         view.backgroundColor = color
 
         icon.image = MercadoPago.getImage("MPSDK_payment_result_off")
-        let currency = instructionsInfo.amountInfo.currency!
+        let currency = MercadoPagoContext.getCurrency()
         let currencySymbol = currency.getCurrencySymbolOrDefault()
-        let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
-        let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
 
         let arr = String(instructionsInfo.amountInfo.amount).characters.split(separator: ".").map(String.init)
         let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)

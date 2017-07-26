@@ -10,7 +10,7 @@ import XCTest
 /*
 
 class TrackStorageTest: BaseTest {
-
+/*
     override func setUp() {
         super.setUp()
         UserDefaults.standard.setValue([String](), forKey: TrackStorageManager.SCREEN_TRACK_INFO_ARRAY_KEY)
@@ -42,6 +42,7 @@ class TrackStorageTest: BaseTest {
         XCTAssert(array?.count == 0)
     }
 
+    
     func testClean() {
         var i = 0
         let N = TrackStorageManager.MIN_TRACKS_PER_REQUEST
@@ -57,6 +58,6 @@ class TrackStorageTest: BaseTest {
         batchArray = TrackStorageManager.getBatchScreenTracks()
         XCTAssert(batchArray == nil)
     }
-
+*/
 }
 */

@@ -18,19 +18,18 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     var hideNavBarCallback: (() -> Void)?
 
-    let NO_NAME_SCREEN = "NO NAME"
-
-    open var screenName: String { get { return NO_NAME_SCREEN } }
+    open var screenName: String { get { return TrackingUtil.NO_NAME_SCREEN } }
+    open var screenId: String { get { return TrackingUtil.NO_SCREEN_ID } }
 
     var loadingInstance: UIView?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-
-        if screenName != NO_NAME_SCREEN {
-            MPXTracker.trackScreen(screenId: screenName, screenName: screenName)
-        }
         self.loadMPStyles()
+    }
+
+    func trackInfo() {
+         MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
     }
 
     var lastDefaultFontLabel: String?
@@ -41,6 +40,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     override open func viewDidAppear(_ animated: Bool) {
 
         super.viewDidAppear(animated)
+        if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID {
+            trackInfo()
+        }
+
         if CountdownTimer.getInstance().hasTimer() {
             self.timer = CountdownTimer.getInstance()
             self.timer!.delegate = self
@@ -101,7 +104,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: 18)
             titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: fontChosed]
-            
+
             if titleDict.count > 0 {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
             }
@@ -112,7 +115,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.view.backgroundColor = UIColor.primaryColor()
-            
+
             //Create navigation buttons
             displayBackButton()
         }
@@ -260,8 +263,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         return false
     }
 
-    internal func requestFailure(_ error: NSError, callback: (() -> Void)? = nil, callbackCancel: (() -> Void)? = nil) {
-        let errorVC = ErrorViewController(error: MPSDKError.convertFrom(error), callback: callback, callbackCancel: callbackCancel)
+    internal func requestFailure(_ error: NSError, requestOrigin: String, callback: (() -> Void)? = nil, callbackCancel: (() -> Void)? = nil) {
+        let errorVC = ErrorViewController(error: MPSDKError.convertFrom(error, requestOrigin: requestOrigin), callback: callback, callbackCancel: callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.present(errorVC, animated: true, completion: {})
         } else {

@@ -21,7 +21,7 @@ open class MercadoPagoService: NSObject {
         super.init()
     }
 
-    public func request(uri: String, params: String?, body: AnyObject?, method: String, headers: NSDictionary? = nil, cache: Bool? = true, success: (_ jsonResult: AnyObject?) -> Void,
+    public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool? = true, success: (_ jsonResult: AnyObject?) -> Void,
         failure: ((_ error: NSError) -> Void)?) {
 
         /*

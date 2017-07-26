@@ -29,7 +29,7 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class OfflinePaymentMethodCell: UITableViewCell {
 
-    static let ROW_HEIGHT = CGFloat(80)
+    static let ROW_HEIGHT = CGFloat(313)
 
     @IBOutlet weak var iconCash: UIImageView!
     @IBOutlet weak var paymentMethodDescription: MPLabel!
@@ -49,9 +49,6 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
         self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
 
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: nil) - 1, width: UIScreen.main.bounds.width, height: 1)
-        self.addSubview(separatorLine)
-
         self.iconCash.image = MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")
     }
 
@@ -59,7 +56,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    internal func fillCell(_ paymentMethodOption: PaymentMethodOption, amount: Double, paymentMethod: PaymentMethod, currency: Currency) {
+    internal func fillCell(_ paymentMethodOption: PaymentMethodOption, amount: Double, paymentMethod: PaymentMethod, currency: Currency, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
 
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.black)
         var attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()])
@@ -73,7 +70,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         } else {
             var currentTitle = ""
             let titleI18N = "ryc_title_" + paymentMethodOption.getId()
-            if (titleI18N.existsLocalized()) {
+            if titleI18N.existsLocalized() {
                 currentTitle = titleI18N.localized
             } else {
                 currentTitle = "ryc_title_default".localized
@@ -85,22 +82,51 @@ class OfflinePaymentMethodCell: UITableViewCell {
             if complementaryTitle.existsLocalized() {
                 attributedTitle.append(NSAttributedString(string : complementaryTitle.localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
             }
-            attributedTitle.append(NSAttributedString(string : paymentMethodOption.getDescription(), attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
+            var paymentMethodName = "ryc_payment_method_" + paymentMethodOption.getId()
+
+            if paymentMethodName.existsLocalized() {
+                paymentMethodName = paymentMethodName.localized
+            } else {
+                paymentMethodName = paymentMethodOption.getDescription()
+            }
+
+            attributedTitle.append(NSAttributedString(string : paymentMethodName, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
 
             self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodOption.getComment(), attributes: [NSFontAttributeName: Utils.getFont(size: 12)])
         }
 
         self.paymentMethodDescription.attributedText = attributedTitle
 
-		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+		if reviewScreenPreference.isChangeMethodOptionEnabled() {
    			self.changePaymentButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
 			self.changePaymentButton.titleLabel?.font = Utils.getFont(size: 18)
 			self.changePaymentButton.setTitle("Cambiar medio de pago".localized, for: .normal)
 		} else {
 			self.changePaymentButton.isHidden = true
 		}
+
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: paymentMethodOption, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
+
         self.setNeedsUpdateConstraints()
         self.setNeedsLayout()
+    }
+
+    public static func getCellHeight(paymentMethodOption: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) -> CGFloat {
+
+        var cellHeight = OfflinePaymentMethodCell.ROW_HEIGHT
+        var buttonHeight: CGFloat = 48
+
+        if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+            cellHeight = 290
+            buttonHeight = 80
+        }
+
+        if !reviewScreenPreference.isChangeMethodOptionEnabled() {
+            cellHeight -= buttonHeight
+        }
+
+        return cellHeight
     }
 
   }

@@ -38,7 +38,7 @@ class TrackerTest: XCTestCase {
         XCTAssertEqual(event["value"] as! String, eventTester["value"] as! String)
     }
     func testScreenJSON() {
-        let jsonScreen = DummyContext.generateJSONScreen(screenId: DummyContext.testScreenId, screenName: DummyContext.testScreenName)
+        let jsonScreen = DummyContext.generateJSONScreen(screenId: DummyContext.testScreenId, screenName: DummyContext.testScreenName, metadata: [:])
         let testScreenJSON = screenJSONToTest()
         let event = (jsonScreen["events"] as! [[String:Any]])[0]
         let eventTester = (testScreenJSON["events"] as! [[String:Any]])[0]
@@ -46,6 +46,7 @@ class TrackerTest: XCTestCase {
         XCTAssertEqual(event["type"] as! String, eventTester["type"] as! String)
         XCTAssertEqual(event["screen_id"] as! String, eventTester["screen_id"] as! String)
         XCTAssertEqual(event["screen_name"] as! String, eventTester["screen_name"] as! String)
+     //   XCTAssertTrue(event["additional_info"] as! [String:Any] == eventTester["additional_info"] as! [String:Any])
 
     }
     func screenJSONToTest() -> [String:Any] {
@@ -65,7 +66,7 @@ class TrackerTest: XCTestCase {
         let obj: [String:Any] = [
             "public_key": MercadoPagoContext.sharedInstance.publicKey(),
             "checkout_version": MercadoPagoContext.sharedInstance.sdkVersion(),
-            "platform": "Native"
+            "platform": "native/ios"
         ]
         return obj
     }
@@ -85,7 +86,8 @@ class TrackerTest: XCTestCase {
         let obj: [String:Any] = [
             "type": "screenview",
             "screen_id": DummyContext.testScreenId,
-            "screen_name": DummyContext.testScreenName
+            "screen_name": DummyContext.testScreenName,
+            "additional_info": [:]
         ]
         return obj
     }

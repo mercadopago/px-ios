@@ -19,13 +19,18 @@ open class ServicePreference: NSObject {
     var paymentURL: String = MP_API_BASE_URL
     var paymentURI: String = MP_PAYMENTS_URI + "?api_version=" + API_VERSION
     var paymentAdditionalInfo: NSDictionary?
+    var discountURL: String = MP_API_BASE_URL
+    var discountURI: String = MP_DISCOUNT_URI
+    var discountAdditionalInfo: NSDictionary?
 
     static let MP_ALPHA_ENV = "/gamma"
-    static var MP_TEST_ENV = "/beta"
-    static let MP_PROD_ENV = "/v1"
-    static let API_VERSION = "1.3.X"
+    open static var MP_TEST_ENV = "/beta"
+    open static let MP_PROD_ENV = "/v1"
+    open static var MP_SELECTED_ENV = MP_PROD_ENV
 
-    static let MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+    static var API_VERSION = "1.3.X"
+
+    static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
 
     static let MP_OP_ENVIROMENT = "/v1"
 
@@ -46,11 +51,20 @@ open class ServicePreference: NSObject {
     static let MP_SEARCH_PAYMENTS_URI = MP_ENVIROMENT + "/payment_methods/search/options"
     static let MP_INSTRUCTIONS_URI = MP_ENVIROMENT + "/payments/${payment_id}/results"
     static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
+    static let MP_DISCOUNT_URI =  "/discount_campaigns/"
+
+    private static let kIsProdApiEnvironemnt = "prod_mp_api_environment"
 
     private var useDefaultPaymentSettings = true
+    private var defaultDiscountSettings = true
 
     var baseURL: String = MP_API_BASE_URL
     var gatewayURL: String?
+
+    public override init() {
+        super.init()
+        ServicePreference.setupMPEnvironment()
+    }
 
     public func setGetCustomer(baseURL: String, URI: String, additionalInfo: [String:String] = [:]) {
         customerURL = baseURL
@@ -63,6 +77,13 @@ open class ServicePreference: NSObject {
         paymentURI = URI
         paymentAdditionalInfo = additionalInfo
         self.useDefaultPaymentSettings = false
+    }
+
+    public func setDiscount(baseURL: String = MP_API_BASE_URL, URI: String = MP_DISCOUNT_URI, additionalInfo: [String:String] = [:]) {
+        discountURL = baseURL
+        discountURI = URI
+        discountAdditionalInfo = additionalInfo as NSDictionary?
+        defaultDiscountSettings = false
     }
 
     public func setCreateCheckoutPreference(baseURL: String, URI: String, additionalInfo: NSDictionary = [:]) {
@@ -103,6 +124,10 @@ open class ServicePreference: NSObject {
         return useDefaultPaymentSettings
     }
 
+    public func isUsingDefaultDiscountSettings() -> Bool {
+        return defaultDiscountSettings
+    }
+
     public func getCustomerAddionalInfo() -> String {
         if !NSDictionary.isNullOrEmpty(customerAdditionalInfo) {
             return customerAdditionalInfo!.parseToQuery()
@@ -121,9 +146,27 @@ open class ServicePreference: NSObject {
         return paymentURI
     }
 
-    public func getPaymentAddionalInfo() -> String {
+    public func getDiscountURL() -> String {
+        if discountURL == ServicePreference.MP_API_BASE_URL && baseURL != ServicePreference.MP_API_BASE_URL {
+            return baseURL
+        }
+        return discountURL
+    }
+
+    public func getDiscountURI() -> String {
+        return discountURI
+    }
+
+    public func getPaymentAddionalInfo() -> NSDictionary? {
         if !NSDictionary.isNullOrEmpty(paymentAdditionalInfo) {
-            return paymentAdditionalInfo!.toJsonString()
+            return paymentAdditionalInfo!
+        }
+        return nil
+    }
+
+    public func getDiscountAddionalInfo() -> String {
+        if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
+            return discountAdditionalInfo!.parseToQuery()
         }
         return ""
     }
@@ -156,7 +199,21 @@ open class ServicePreference: NSObject {
     }
 
     public func isCustomerInfoAvailable() -> Bool {
-        return !String.isNullOrEmpty(self.customerURL) && !String.isNullOrEmpty(self.customerURI) && customerAdditionalInfo != nil
+        return !String.isNullOrEmpty(self.customerURL) && !String.isNullOrEmpty(self.customerURI)
+    }
+
+    static public func setupMPEnvironment() {
+        // En caso de correr los tests se toma environment como prod por default
+        if Utils.isTesting() {
+            ServicePreference.MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+        } else {
+            let isProdEnvironment: Bool = Utils.getSetting(identifier: ServicePreference.kIsProdApiEnvironemnt)
+            if isProdEnvironment {
+                ServicePreference.MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+            } else {
+                ServicePreference.MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
+            }
+        }
     }
 
 }

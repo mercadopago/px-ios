@@ -1,23 +1,23 @@
 PODS:
-  - MercadoPagoSDK (3.1.1):
-    - MercadoPagoSDK/Localization (= 3.1.1)
-  - MercadoPagoSDK/Localization (3.1.1):
-    - MercadoPagoSDK/Localization/en (= 3.1.1)
-    - MercadoPagoSDK/Localization/es (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-CO (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-MX (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-PE (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-UY (= 3.1.1)
-    - MercadoPagoSDK/Localization/es-VE (= 3.1.1)
-    - MercadoPagoSDK/Localization/pt (= 3.1.1)
-  - MercadoPagoSDK/Localization/en (3.1.1)
-  - MercadoPagoSDK/Localization/es (3.1.1)
-  - MercadoPagoSDK/Localization/es-CO (3.1.1)
-  - MercadoPagoSDK/Localization/es-MX (3.1.1)
-  - MercadoPagoSDK/Localization/es-PE (3.1.1)
-  - MercadoPagoSDK/Localization/es-UY (3.1.1)
-  - MercadoPagoSDK/Localization/es-VE (3.1.1)
-  - MercadoPagoSDK/Localization/pt (3.1.1)
+  - MercadoPagoSDK (3.2.2):
+    - MercadoPagoSDK/Localization (= 3.2.2)
+  - MercadoPagoSDK/Localization (3.2.2):
+    - MercadoPagoSDK/Localization/en (= 3.2.2)
+    - MercadoPagoSDK/Localization/es (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-CO (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-MX (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-PE (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-UY (= 3.2.2)
+    - MercadoPagoSDK/Localization/es-VE (= 3.2.2)
+    - MercadoPagoSDK/Localization/pt (= 3.2.2)
+  - MercadoPagoSDK/Localization/en (3.2.2)
+  - MercadoPagoSDK/Localization/es (3.2.2)
+  - MercadoPagoSDK/Localization/es-CO (3.2.2)
+  - MercadoPagoSDK/Localization/es-MX (3.2.2)
+  - MercadoPagoSDK/Localization/es-PE (3.2.2)
+  - MercadoPagoSDK/Localization/es-UY (3.2.2)
+  - MercadoPagoSDK/Localization/es-VE (3.2.2)
+  - MercadoPagoSDK/Localization/pt (3.2.2)
 
 DEPENDENCIES:
   - MercadoPagoSDK (from `../`)
@@ -27,8 +27,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MercadoPagoSDK: 8f42190daf79ad57a7d85a7d5c57a113692e20fd
+  MercadoPagoSDK: 616739944b177b1691962b511ec1995a7a9069ea
 
-PODFILE CHECKSUM: 0992ca2f8d7c2acabf817b7477463fa790adf87b
+PODFILE CHECKSUM: 7652d70c091fe815ac1f0c32abd1230fe0dccf1a
 
 COCOAPODS: 1.1.1

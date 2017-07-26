@@ -17,18 +17,40 @@ public protocol MPTrackListener {
 public class MPXTracker: NSObject {
 
     static let sharedInstance = MPXTracker()
+
+    static let TRACKING_URL = "https://api.mercadopago.com/beta/checkout/tracking/events"
+    static let kTrackingSettings = "tracking_settings"
+    private static let kTrackingEnabled = "tracking_enabled"
+
     var trackListener: MPTrackListener?
 
-    var trackingStrategy: TrackingStrategy = PersistAndTrack()
+    var trackingStrategy: TrackingStrategy = RealTimeStrategy()
 
-    static func trackScreen(screenId: String, screenName: String) {
+    static func trackScreen(screenId: String, screenName: String, metadata: [String : String?] = [:]) {
         if let trackListener = sharedInstance.trackListener {
             trackListener.trackScreen(screenName: screenName)
         }
-        return
-        // dissable tracking
-       // let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId)
-       // sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
+        if !isEnabled() {
+            return
+        }
+        setTrackingStrategy(screenID: screenId)
+        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId, metadata: metadata)
+        sharedInstance.trackingStrategy.trackScreen(screenTrack: screenTrack)
+    }
+    
+    static func setTrackingStrategy(screenID: String) {
+        let forcedScreens: [String] = [TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_APPROVED,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_PENDING,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_REJECTED,
+                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT_INSTRUCTIONS,
+                                       TrackingUtil.SCREEN_ID_ERROR]
+        if forcedScreens.contains(screenID) {
+            sharedInstance.trackingStrategy = ForceTrackStrategy()
+        } else {
+            sharedInstance.trackingStrategy = BatchStrategy()
+        }
     }
 
     static func generateJSONDefault() -> [String:Any] {
@@ -42,9 +64,9 @@ public class MPXTracker: NSObject {
             ]
         return obj
     }
-    static func generateJSONScreen(screenId: String, screenName: String) -> [String:Any] {
+    static func generateJSONScreen(screenId: String, screenName: String, metadata: [String:Any]) -> [String:Any] {
         var obj = generateJSONDefault()
-        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName)
+        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName, metadata:metadata)
         obj["events"] = [screenJSON]
         return obj
     }
@@ -71,7 +93,7 @@ public class MPXTracker: NSObject {
         ]
         return obj
     }
-    static func screenJSON(screenId: String, screenName: String) -> [String:Any] {
+    static func screenJSON(screenId: String, screenName: String, metadata: [String:Any]) -> [String:Any] {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
@@ -80,9 +102,20 @@ public class MPXTracker: NSObject {
             "timestamp": timestamp,
             "type": "screenview",
             "screen_id": screenId,
-            "screen_name": screenName
+            "screen_name": screenName,
+            "metadata": metadata
         ]
         return obj
+    }
+
+    static func isEnabled() -> Bool {
+        guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+            return false
+        }
+        guard let trackingEnabled = trackiSettings[MPXTracker.kTrackingEnabled] as? Bool else {
+            return false
+        }
+        return trackingEnabled
     }
 
     open class func setTrack(listener: MPTrackListener) {

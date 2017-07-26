@@ -9,23 +9,15 @@
 import Foundation
 
 open class Issuer: NSObject, Cellable {
-    open var _id: NSNumber?
+
+    public var objectType: ObjectTypes = ObjectTypes.issuer
+    open var _id: String?
     open var name: String?
-
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: IssuerRowTableViewCell = bundle!.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as! IssuerRowTableViewCell
-        cell.fillCell(issuer: self, bundle: bundle!)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-
-        return cell
-    }
 
     open class func fromJSON(_ json: NSDictionary) -> Issuer {
         let issuer: Issuer = Issuer()
 
-        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue {
+        if let _id = JSONHandler.attemptParseToString(json["id"]) {
             issuer._id = _id
         }
         if let name = JSONHandler.attemptParseToString(json["name"]) {
@@ -44,7 +36,7 @@ open class Issuer: NSObject, Cellable {
         let name : Any = self.name == nil ? JSONHandler.null : self.name!
         let obj: [String:Any] = [
             "id": id,
-            "name": name
+            "name": name,
             ]
         return obj
     }

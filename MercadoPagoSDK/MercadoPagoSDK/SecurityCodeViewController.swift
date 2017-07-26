@@ -14,7 +14,6 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     var errorLabel: MPLabel?
 
-
     @IBOutlet weak var panelView: UIView!
     var viewModel: SecurityCodeViewModel!
     @IBOutlet weak var cardCvvThumbnail: UIImageView!
@@ -23,7 +22,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var ccvLabelEmpty: Bool = true
     var toolbar: UIToolbar?
 
-    override open var screenName: String { get { return "SECURITY_CODE" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_SECURITY_CODE } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -72,36 +72,36 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         super.viewDidDisappear(animated)
         self.showNavBar()
     }
-    
+
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
         let toolbar = UIToolbar(frame: frame)
-        
+
         toolbar.barStyle = UIBarStyle.default
         toolbar.backgroundColor = UIColor.mpLightGray()
         toolbar.alpha = 1
         toolbar.isUserInteractionEnabled = true
-        
+
         let buttonNext = UIBarButtonItem(title: "Siguiente".localized, style: .done, target: self, action: #selector(self.continueAction))
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(self.backAction))
-        
+
         let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        
+
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        
+
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
+
         toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
-        
+
         self.toolbar = toolbar
         self.securityCodeTextField.delegate = self
         self.securityCodeTextField.inputAccessoryView = toolbar
     }
-    
-    func continueAction(){
+
+    func continueAction() {
         securityCodeTextField.resignFirstResponder()
         guard securityCodeTextField.text?.characters.count == viewModel.secCodeLenght() else {
             let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
@@ -110,8 +110,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         }
         self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
     }
-    
-    func backAction(){
+
+    func backAction() {
         self.executeBack()
     }
 
@@ -121,7 +121,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         cardFront.cardCVV.alpha = 0.8
         cardFront.setCornerRadius(radius: 11)
     }
-    
+
     func updateCardThumbnail(paymentMethodColor: UIColor) {
         self.cardCvvThumbnail.backgroundColor = paymentMethodColor
         self.cardCvvThumbnail.layer.cornerRadius = 3
@@ -133,7 +133,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
             self.cardCvvThumbnail.image = MercadoPago.getImage("CardCVVThumbnailFront")
         }
     }
-    
+
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         if ((textField.text?.characters.count)! + string.characters.count) > viewModel.secCodeLenght() {

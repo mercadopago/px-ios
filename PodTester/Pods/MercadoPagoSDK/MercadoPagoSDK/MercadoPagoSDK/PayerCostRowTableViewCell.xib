@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="329" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZC-qa-k5B">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZC-qa-k5B">
                         <rect key="frame" x="234" y="21" width="71" height="18"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <attributedString key="attributedText">
@@ -31,8 +31,8 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMq-pe-Zxb">
-                        <rect key="frame" x="25" y="18" width="78" height="24"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMq-pe-Zxb">
+                        <rect key="frame" x="25" y="18" width="198" height="24"/>
                         <attributedString key="attributedText">
                             <fragment content="1 x $109">
                                 <attributes>
@@ -46,6 +46,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="mZC-qa-k5B" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wMq-pe-Zxb" secondAttribute="trailing" constant="10" id="H1T-pF-o6D"/>
                     <constraint firstItem="mZC-qa-k5B" firstAttribute="centerY" secondItem="rMs-ZX-Lzr" secondAttribute="centerY" id="Ojq-2c-kNu"/>
                     <constraint firstItem="wMq-pe-Zxb" firstAttribute="leading" secondItem="rMs-ZX-Lzr" secondAttribute="leadingMargin" constant="17" id="Vva-ge-gvS"/>
                     <constraint firstAttribute="trailingMargin" secondItem="mZC-qa-k5B" secondAttribute="trailing" constant="16" id="WFe-81-3de"/>

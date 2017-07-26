@@ -10,18 +10,18 @@ import Foundation
 
 open class SavedCardToken: CardToken {
 
-    open var cardId: String?
+    open var cardId: String
     open var securityCodeRequired: Bool = true
 
     public init(cardId: String, securityCode: String) {
-        super.init()
         self.cardId = cardId
+        super.init()
         self.securityCode = securityCode
     }
 
     public init(card: CardInformation, securityCode: String?, securityCodeRequired: Bool) {
-        super.init()
         self.cardId = card.getCardId()
+        super.init()
         self.securityCode = securityCode
         self.securityCodeRequired = securityCodeRequired
     }
@@ -31,7 +31,7 @@ open class SavedCardToken: CardToken {
     }
 
     open func validateCardId() -> Bool {
-        return !String.isNullOrEmpty(cardId) && String.isDigitsOnly(cardId!)
+        return !String.isNullOrEmpty(cardId) && String.isDigitsOnly(cardId)
     }
 
     open func validateSecurityCodeNumbers() -> Bool {
@@ -45,9 +45,9 @@ open class SavedCardToken: CardToken {
 
     open override func toJSONString() -> String {
         let obj: [String:Any] = [
-            "card_id": String.isNullOrEmpty(self.cardId!) ? JSONHandler.null : self.cardId!,
+            "card_id": String.isNullOrEmpty(self.cardId) ? JSONHandler.null : self.cardId,
             "security_code": String.isNullOrEmpty(self.securityCode!) ? JSONHandler.null : self.securityCode!,
-            "device": self.device == nil ? JSONHandler.null : self.device!.toJSONString()
+            "device": self.device == nil ? JSONHandler.null : self.device!.toJSON()
         ]
         return JSONHandler.jsonCoding(obj)
     }

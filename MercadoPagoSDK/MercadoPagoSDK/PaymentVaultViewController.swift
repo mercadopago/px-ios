@@ -31,7 +31,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    override open var screenName: String { get { return "PAYMENT_METHOD_SEARCH" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_VAULT} }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_VAULT} }
 
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
 
@@ -39,6 +40,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     var merchantAccessToken: String!
     var publicKey: String!
     var currency: Currency!
+
+    var groupName: String?
 
     var defaultInstallments: Int?
     var installments: Int?
@@ -61,7 +64,18 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
         self.viewModel = viewModel
+        if let groupName = self.viewModel.groupName {
+            self.groupName = groupName
+        }
         self.callback = callback
+    }
+
+    override func trackInfo() {
+        var finalId = screenId
+        if let groupName = groupName {
+            finalId = screenId + "/" + groupName
+        }
+        MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
     }
 
     fileprivate func initCommon() {
@@ -207,7 +221,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.loadPaymentMethodSearch()
 
             }, failure: { (error) -> Void in
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue, callback: {
                     self.navigationController!.dismiss(animated: true, completion: {})
                 }, callbackCancel: {
                     self.invokeCallbackCancelShowingNavBar()

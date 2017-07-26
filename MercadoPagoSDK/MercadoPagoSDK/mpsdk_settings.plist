@@ -8,5 +8,18 @@
 	<true/>
 	<key>sdk_version</key>
 	<string>3.2.2</string>
+	<key>tracking_settings</key>
+	<dict>
+		<key>tracking_enabled</key>
+		<true/>
+		<key>persist_tracks</key>
+		<false/>
+		<key>max_tracks_per_request</key>
+		<integer>10</integer>
+		<key>min_tracks_per_request</key>
+		<integer>10</integer>
+		<key>max_days_in_storage</key>
+		<integer>45</integer>
+	</dict>
 </dict>
 </plist>
