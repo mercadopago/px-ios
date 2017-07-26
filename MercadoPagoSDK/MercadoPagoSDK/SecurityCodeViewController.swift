@@ -13,7 +13,6 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     var errorLabel: MPLabel?
-
     @IBOutlet weak var panelView: UIView!
     var viewModel: SecurityCodeViewModel!
     @IBOutlet weak var cardCvvThumbnail: UIImageView!
