@@ -22,15 +22,14 @@ open class MercadoPagoService: NSObject {
         super.init()
     }
 
-    public func request(uri: String, params: String?, body: AnyObject?, method: String, headers: NSDictionary? = nil, cache: Bool = true, success: @escaping (_ jsonResult: AnyObject?) -> Void,
+    public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ jsonResult: AnyObject?) -> Void,
         failure: ((_ error: NSError) -> Void)?) {
-
         var url = baseURL + uri
-        if params != nil {
-            url += "?" + params!
+        var requesturl = url
+        if !String.isNullOrEmpty(params) {
+            requesturl += "?" + params!
         }
-
-        let finalURL: NSURL = NSURL(string: url)!
+        let finalURL: NSURL = NSURL(string: requesturl)!
             let request: NSMutableURLRequest
             if cache {
               request  = NSMutableURLRequest(url: finalURL as URL,
@@ -45,12 +44,11 @@ open class MercadoPagoService: NSObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if headers !=  nil && headers!.count > 0 {
             for header in headers! {
-                request.setValue(header.value as? String, forHTTPHeaderField: header.key as! String)
+                request.setValue(header.value, forHTTPHeaderField: header.key)
             }
         }
-
-        if body != nil {
-            request.httpBody = (body as! NSString).data(using: String.Encoding.utf8.rawValue)
+        if let body = body {
+            request.httpBody = body.data(using: String.Encoding.utf8)
         }
 
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -59,21 +57,15 @@ open class MercadoPagoService: NSObject {
 				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 				if error == nil {
 					do {
-
                         let responseJson = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
 						success(responseJson as AnyObject?)
 					} catch {
 
 						let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-						failure!(e)
+						failure?(e)
 					}
                 } else {
-
-                    let response = String(describing: error)
-
-                    if failure != nil {
-                        failure!(error! as NSError)
-                    }
+                    failure?(error! as NSError)
                 }
         }
     }

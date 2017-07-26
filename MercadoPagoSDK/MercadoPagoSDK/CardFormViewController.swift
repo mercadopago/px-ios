@@ -52,8 +52,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     var cardFormManager: CardViewModelManager!
 
-    override open var screenName: String { get { return "CARD_FORM" } }
-    override open var screenId: String { get { return "/checkout_off/card" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM} }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM } }
 
     public init(cardFormManager: CardViewModelManager, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
        super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
@@ -77,13 +77,13 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             finalId = finalId + "/" + cardType
         }
 
-        if editingLabel == cardNumberLabel {
+        if editingLabel === cardNumberLabel {
             MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_NUMBER, screenName: screenName)
-        } else if editingLabel == nameLabel {
+        } else if editingLabel === nameLabel {
             MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_HOLDER_NAME, screenName: screenName)
-        } else if editingLabel == expirationDateLabel {
+        } else if editingLabel === expirationDateLabel {
             MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_EXPIRATION_DATE, screenName: screenName)
-        } else if editingLabel == cvvLabel {
+        } else if editingLabel === cvvLabel {
             MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_SECURITY_CODE, screenName: screenName)
         } else if editingLabel == nil {
             MPXTracker.trackScreen(screenId: finalId, screenName: screenName)

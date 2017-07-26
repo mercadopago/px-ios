@@ -157,8 +157,8 @@
 		157704B81DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */; };
 		157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
 		157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA64691C90C3E3004F9A7C /* TermsAndConditionsViewCell.swift */; };
-		15840B8C1F06BF9D00701885 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15840B8B1F06BF9D00701885 /* Reach.swift */; };
-		15840B8D1F06BF9D00701885 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15840B8B1F06BF9D00701885 /* Reach.swift */; };
+		15840B8C1F06BF9D00701885 /* MPXReach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15840B8B1F06BF9D00701885 /* MPXReach.swift */; };
+		15840B8D1F06BF9D00701885 /* MPXReach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15840B8B1F06BF9D00701885 /* MPXReach.swift */; };
 		15840B8F1F06E64B00701885 /* TrackStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152B48E81F02D57B00600D21 /* TrackStorageManager.swift */; };
 		15840B911F06E7B700701885 /* TrackStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15840B901F06E7B700701885 /* TrackStorageTest.swift */; };
 		158F17701D34141B00E7EBDA /* MercadoPagoContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B8C1C1D19752A00A86097 /* MercadoPagoContext.swift */; };
@@ -679,7 +679,7 @@
 		157420F51DF881770041171E /* UIView+RotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RotateView.m"; sourceTree = "<group>"; };
 		157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewController.swift; sourceTree = "<group>"; };
 		157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecurityCodeViewController.xib; sourceTree = "<group>"; };
-		15840B8B1F06BF9D00701885 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
+		15840B8B1F06BF9D00701885 /* MPXReach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPXReach.swift; sourceTree = "<group>"; };
 		15840B901F06E7B700701885 /* TrackStorageTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackStorageTest.swift; sourceTree = "<group>"; };
 		15904D4D1E09748C00B3B9FD /* MLPXSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPXSpinner.h; sourceTree = "<group>"; };
 		15904D4E1E09748C00B3B9FD /* MLPXSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPXSpinner.m; sourceTree = "<group>"; };
@@ -1345,7 +1345,7 @@
 		15C422BF1EE072330039B80F /* New Tracker */ = {
 			isa = PBXGroup;
 			children = (
-				15840B8B1F06BF9D00701885 /* Reach.swift */,
+				15840B8B1F06BF9D00701885 /* MPXReach.swift */,
 				15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */,
 				15C422C01EE072650039B80F /* MPXTracker.swift */,
 				15C422C31EE072D10039B80F /* MPTFingerPrint.swift */,
@@ -2242,7 +2242,7 @@
 				76151B871C73C025007DF0E3 /* InstructionsService.swift in Sources */,
 				76FD24811C5BFEA1008C5DC0 /* CardFrontView.swift in Sources */,
 				76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,
-				15840B8C1F06BF9D00701885 /* Reach.swift in Sources */,
+				15840B8C1F06BF9D00701885 /* MPXReach.swift in Sources */,
 				76128AC11DD10BA600D3B3CD /* MercadoPagoUIScrollViewController.swift in Sources */,
 				1553AF331E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
 				7619E9451DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */,
@@ -2542,7 +2542,7 @@
 				15B8B1C81E71DED10065DF50 /* DiscountService.swift in Sources */,
 				0F9883B61AD2AD0C00F750F0 /* Regex.swift in Sources */,
 				76EC47CA1C85E3C80086FA53 /* CardholderTest.swift in Sources */,
-				15840B8D1F06BF9D00701885 /* Reach.swift in Sources */,
+				15840B8D1F06BF9D00701885 /* MPXReach.swift in Sources */,
 				4BCDAC3B1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift in Sources */,
 				C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */,
 				76B085311CE51C5800C157BF /* PaymentMethodSelectedTableViewCell.swift in Sources */,

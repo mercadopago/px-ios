@@ -25,9 +25,7 @@ class RealTimeStrategy: TrackingStrategy { // V1
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)
         TrackingServices.request(url: MPXTracker.TRACKING_URL, params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
-           // print("tracked")
         }) { (error) -> Void in
-            //print(error)
         }
     }
 }
@@ -40,7 +38,7 @@ class BatchStrategy: TrackingStrategy { // V2
     }
 
     func canSendTrack() -> Bool {
-        let status = Reach().connectionStatus()
+        let status = MPXReach().connectionStatus()
         if status.description == "Offline" {
             return false
         }
@@ -65,7 +63,6 @@ class BatchStrategy: TrackingStrategy { // V2
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)
         TrackingServices.request(url: MPXTracker.TRACKING_URL, params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
-            print("TRACKED!")
         }) { (error) -> Void in
             TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
         }
@@ -81,7 +78,7 @@ class ForceTrackStrategy: TrackingStrategy { // V2
     }
 
     func canSendTrack() -> Bool {
-        let status = Reach().connectionStatus()
+        let status = MPXReach().connectionStatus()
         if status.description == "Offline" {
             return false
         }
@@ -98,16 +95,15 @@ class ForceTrackStrategy: TrackingStrategy { // V2
             attemptSendTrackInfo(force: force)
         }
     }
-    private func send(trackList: Array<ScreenTrackInfo>) {
+    private func send(trackList: [ScreenTrackInfo]) {
         var jsonBody = MPXTracker.generateJSONDefault()
-        var arrayEvents = Array<[String:Any]>()
+        var arrayEvents = [[String: Any]]()
         for elementToTrack in trackList {
             arrayEvents.append(elementToTrack.toJSON())
         }
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)
         TrackingServices.request(url: MPXTracker.TRACKING_URL, params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
-            print("TRACKED!")
         }) { (error) -> Void in
             TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
         }

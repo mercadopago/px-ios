@@ -13,6 +13,7 @@ open class ApiUtil {
         case PROCESSING = 499
         case BAD_REQUEST = 400
         case NOT_FOUND = 404
+        case OK = 200
     }
     enum ErrorCauseCodes: String {
         case INVALID_IDENTIFICATION_NUMBER = "324"

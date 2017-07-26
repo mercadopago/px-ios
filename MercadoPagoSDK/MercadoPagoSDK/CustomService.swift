@@ -42,10 +42,9 @@ open class CustomService: MercadoPagoService {
 
     open func createPayment(_ method: String = "POST", body: String, success: @escaping (_ jsonResult: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        let headers = NSMutableDictionary()
-        headers.setValue(MercadoPagoContext.paymentKey(), forKey: "X-Idempotency-Key")
+        let headers = [MercadoPagoContext.paymentKey(): "X-Idempotency-Key"]
 
-        self.request(uri: self.URI, params: nil, body: body as AnyObject?, method: method, headers : headers, cache: false, success: { (jsonResult: AnyObject?) -> Void in
+        self.request(uri: self.URI, params: nil, body: body, method: method, headers : headers, cache: false, success: { (jsonResult: AnyObject?) -> Void in
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if paymentDic["status"] as? Int == ApiUtil.StatusCodes.PROCESSING.rawValue {
@@ -74,7 +73,7 @@ open class CustomService: MercadoPagoService {
 
     open func createPreference(_ method: String = "POST", body: String, success: @escaping (_ jsonResult: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        self.request(uri: self.URI, params: nil, body: body as AnyObject?, method: method, cache: false, success: {
+        self.request(uri: self.URI, params: nil, body: body, method: method, cache: false, success: {
             (jsonResult) in
 
             if let preferenceDic = jsonResult as? NSDictionary {
