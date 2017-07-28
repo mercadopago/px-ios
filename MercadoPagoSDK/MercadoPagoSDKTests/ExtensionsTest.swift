@@ -47,7 +47,7 @@ class ExtensionsTest: BaseTest {
         dict = ["2": "B", "1": "A", "3": "C"]
         XCTAssertEqual(dict.parseToQuery(), "2=B&1=A&3=C")
         dict = ["2 sarasa": "B", "1": "A", "3": "C"]
-        XCTAssertEqual(dict.parseToQuery(), "1=A&2%20sarasa=B&3=C")
+        XCTAssertEqual(dict.parseToQuery(), "2%20sarasa=B&1=A&3=C")
         dict = [:]
         XCTAssertEqual(dict.parseToQuery(), "")
     }

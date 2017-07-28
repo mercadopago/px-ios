@@ -22,8 +22,6 @@ public class MPXTracker: NSObject {
     static let TRACKING_URL = "https://api.mercadopago.com/beta/checkout/tracking/events"
     static let kTrackingSettings = "tracking_settings"
     private static let kTrackingEnabled = "tracking_enabled"
-
-    var trackListener: MPTrackListener?
     var trackingStrategy: TrackingStrategy = RealTimeStrategy()
 
     static func trackScreen(screenId: String, screenName: String, metadata: [String : String?] = [:]) {
@@ -117,7 +115,6 @@ public class MPXTracker: NSObject {
         }
         return trackingEnabled
     }
-
 
     open class func setTrack(listener: MPTrackListener) {
         MPXTracker.sharedInstance.trackListener = listener
