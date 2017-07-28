@@ -362,6 +362,21 @@
 		<key>editText_mask</key>
 		<string>XXXX XXXX XXXX XXXX</string>
 	</dict>
+	<key>maestro</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_maestro</string>
+		<key>first_color</key>
+		<string>405B72</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXXXXXXX XXXXXXXXXX</string>
+		<key>editText_mask</key>
+		<string>XXXXXXXXX XXXXXXXXXX</string>
+	</dict>
 	<key>maestro_19</key>
 	<dict>
 		<key>image_name</key>
