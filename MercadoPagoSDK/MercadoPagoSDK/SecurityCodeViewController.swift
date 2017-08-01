@@ -108,6 +108,10 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         }
         self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
     }
+    
+    func backAction(){
+        self.executeBack()
+    }
 
     func backAction() {
         self.executeBack()
