@@ -8,11 +8,15 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MercadoPagoSDK:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   MercadoPagoSDK: 26e5daf4472d0fc237c38efbf357966c7b8780d4
 
+<<<<<<< HEAD
 PODFILE CHECKSUM: a29eddb84ab9f342bc3f5cef0bbdeb19a47239af
+=======
+PODFILE CHECKSUM: 3111e8f37f7eb3c11fc43c91401593d2750a9c2b
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

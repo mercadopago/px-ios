@@ -9,7 +9,10 @@
 import UIKit
 
 public enum CheckoutStep: String {
+<<<<<<< HEAD
     case START
+=======
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
     case ACTION_FINISH
     case ACTION_VALIDATE_PREFERENCE
     case SERVICE_GET_PREFERENCE
@@ -36,7 +39,10 @@ public enum CheckoutStep: String {
 
 open class MercadoPagoCheckoutViewModel: NSObject {
 
+<<<<<<< HEAD
     var startedCheckout = false
+=======
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
     static var servicePreference = ServicePreference()
     static var decorationPreference = DecorationPreference()
     static var flowPreference = FlowPreference()
@@ -273,6 +279,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     public func nextStep() -> CheckoutStep {
 
+<<<<<<< HEAD
         if !startedCheckout {
             startedCheckout = true
             return .START
@@ -280,6 +287,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if hasError() {
             return .SCREEN_ERROR
         }
+=======
+        if hasError() {
+            return .SCREEN_ERROR
+        }
+
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
         if needLoadPreference {
             needLoadPreference = false
             return .SERVICE_GET_PREFERENCE
@@ -287,7 +300,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SERVICE_GET_DIRECT_DISCOUNT
+<<<<<<< HEAD
 
+=======
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
         }
 
         if shouldExitCheckout() {
@@ -682,4 +698,8 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
 }

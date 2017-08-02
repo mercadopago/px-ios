@@ -18,7 +18,8 @@ DerivedData
 *.xcuserstate
 .DS_Store
 MercadoPagoSDK/MercadoPagoSDK.framework
-PodTester/Pods/MercadoPagoSDK/*
+PodTester/Pods/*
+
 
 # CocoaPods
 #

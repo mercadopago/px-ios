@@ -38,6 +38,7 @@ class WalletIntegrationTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: preference, navigationController: UINavigationController())
 
         var step = mpCheckout.viewModel.nextStep()
+<<<<<<< HEAD
         XCTAssertEqual(step, CheckoutStep.START)
 
         step = mpCheckout.viewModel.nextStep()
@@ -47,6 +48,14 @@ class WalletIntegrationTest: BaseTest {
         XCTAssertEqual(step, CheckoutStep.ACTION_VALIDATE_PREFERENCE)
 
         step = mpCheckout.viewModel.nextStep()
+=======
+        XCTAssertEqual(step, CheckoutStep.SERVICE_GET_PREFERENCE)
+
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.ACTION_VALIDATE_PREFERENCE)
+
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
         XCTAssertEqual(step, CheckoutStep.SERVICE_GET_PAYMENT_METHODS)
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 

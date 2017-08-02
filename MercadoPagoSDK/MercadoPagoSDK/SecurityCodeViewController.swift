@@ -13,6 +13,10 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     var errorLabel: MPLabel?
+<<<<<<< HEAD
+=======
+
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
     @IBOutlet weak var panelView: UIView!
     var viewModel: SecurityCodeViewModel!
     @IBOutlet weak var cardCvvThumbnail: UIImageView!
@@ -71,27 +75,31 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         super.viewDidDisappear(animated)
         self.showNavBar()
     }
-    
+
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
         let toolbar = UIToolbar(frame: frame)
+<<<<<<< HEAD
+=======
+
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
         toolbar.barStyle = UIBarStyle.default
         toolbar.backgroundColor = UIColor.mpLightGray()
         toolbar.alpha = 1
         toolbar.isUserInteractionEnabled = true
-        
+
         let buttonNext = UIBarButtonItem(title: "Siguiente".localized, style: .done, target: self, action: #selector(self.continueAction))
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(self.backAction))
-        
+
         let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        
+
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        
+
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
+
         toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
 
         self.toolbar = toolbar
@@ -108,8 +116,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         }
         self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
     }
-    
-    func backAction(){
+
+    func backAction() {
         self.executeBack()
     }
 

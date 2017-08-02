@@ -25,19 +25,19 @@ open class SecurityCodeViewModel: NSObject {
     func secCodeLenght() -> Int {
         return paymentMethod.secCodeLenght()
     }
-    
+
     func executeCallback(secCode: String!) {
         callback!(cardInfo, secCode)
     }
-    
+
     func getPaymentMethodColor() -> UIColor {
         return self.paymentMethod.getColor(bin: self.cardInfo.getCardBin())
     }
-    
+
     func getPaymentMethodFontColor() -> UIColor {
         return self.paymentMethod.getFontColor(bin: self.cardInfo.getCardBin())
     }
-    
+
     func getCardHeight() -> CGFloat {
         return getCardWidth() / 12 * 7
     }

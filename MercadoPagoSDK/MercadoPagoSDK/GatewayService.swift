@@ -11,7 +11,11 @@ import Foundation
 open class GatewayService: MercadoPagoService {
 
     open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", key: String, cardTokenJSON: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+<<<<<<< HEAD
         self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: cardTokenJSON, method: method, success: success, failure: { (error) -> Void in
+=======
+        self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: cardTokenJSON as AnyObject?, method: method, success: success, failure: { (error) -> Void in
+>>>>>>> Integrate MLESCManager library in SDK (#1104)
             if let failure = failure {
                 failure(NSError(domain: "mercadopago.sdk.GatewayService.getToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
             }

@@ -184,6 +184,7 @@ class MainTableViewController: UITableViewController {
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
+
         let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
 
         if let color = self.color {
@@ -203,8 +204,10 @@ class MainTableViewController: UITableViewController {
             }
 
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
+            flowPref.enableESC()
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
+
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
 
@@ -216,8 +219,7 @@ class MainTableViewController: UITableViewController {
         }
 
         if setPaymentDataConfirmCallback {
-            MercadoPagoCheckout.setPaymentDataConfirmCallback { (PaymentData) in
-                self.paymentData = PaymentData
+            MercadoPagoCheckout.setPaymentDataConfirmCallback { (_) in
                 self.buttonViewControllerCreator(title: "Ir a Congrats", walletStep: walletSteps.congrats)
             }
         }
@@ -309,6 +311,7 @@ class MainTableViewController: UITableViewController {
             let pref = createCheckoutPreference(payerEmail: payerEmail, site: site, itemsDictArray: items)
             self.customCheckoutPref = pref
             self.showMaxCards = maxCards
+            flowPreference.disableReviewAndConfirmScreen()
         default: break
         }
     }
