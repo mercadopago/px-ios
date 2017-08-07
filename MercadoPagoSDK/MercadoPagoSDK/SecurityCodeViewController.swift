@@ -14,9 +14,12 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     var errorLabel: MPLabel?
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
     @IBOutlet weak var panelView: UIView!
     var viewModel: SecurityCodeViewModel!
     @IBOutlet weak var cardCvvThumbnail: UIImageView!

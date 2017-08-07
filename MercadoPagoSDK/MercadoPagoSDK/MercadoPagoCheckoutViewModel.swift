@@ -10,9 +10,13 @@ import UIKit
 
 public enum CheckoutStep: String {
 <<<<<<< HEAD
+<<<<<<< HEAD
     case START
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+    case START
+>>>>>>> Tracking (#1113)
     case ACTION_FINISH
     case ACTION_VALIDATE_PREFERENCE
     case SERVICE_GET_PREFERENCE
@@ -40,9 +44,13 @@ public enum CheckoutStep: String {
 open class MercadoPagoCheckoutViewModel: NSObject {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     var startedCheckout = false
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+    var startedCheckout = false
+>>>>>>> Tracking (#1113)
     static var servicePreference = ServicePreference()
     static var decorationPreference = DecorationPreference()
     static var flowPreference = FlowPreference()
@@ -280,10 +288,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func nextStep() -> CheckoutStep {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
         if !startedCheckout {
             startedCheckout = true
             return .START
         }
+<<<<<<< HEAD
         if hasError() {
             return .SCREEN_ERROR
         }
@@ -293,6 +305,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
 
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        if hasError() {
+            return .SCREEN_ERROR
+        }
+>>>>>>> Tracking (#1113)
         if needLoadPreference {
             needLoadPreference = false
             return .SERVICE_GET_PREFERENCE
@@ -396,6 +413,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if search?.getPaymentOptionsCount() == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
+<<<<<<< HEAD
+=======
+
+>>>>>>> Tracking (#1113)
             })
         }
 

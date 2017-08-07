@@ -29,6 +29,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
@@ -39,6 +40,14 @@ class ESCFlowsTests: BaseTest {
         // 1. Search preference
         var step = mpCheckout.viewModel.nextStep()
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        // 1. Start
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -122,6 +131,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
@@ -132,6 +142,14 @@ class ESCFlowsTests: BaseTest {
         // 1. Search preference
         var step = mpCheckout.viewModel.nextStep()
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        // 1. Start
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -215,6 +233,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
@@ -225,6 +244,14 @@ class ESCFlowsTests: BaseTest {
         // 1. Search preference
         var step = mpCheckout.viewModel.nextStep()
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        // 1. Start
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -315,6 +342,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
@@ -325,6 +353,14 @@ class ESCFlowsTests: BaseTest {
         // 1. Search preference
         var step = mpCheckout.viewModel.nextStep()
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        // 1. Start
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -434,6 +470,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
@@ -444,6 +481,14 @@ class ESCFlowsTests: BaseTest {
         // 1. Search preference
         var step = mpCheckout.viewModel.nextStep()
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        // 1. Start
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -550,6 +595,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertNotNil(mpCheckout.viewModel)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
@@ -560,6 +606,14 @@ class ESCFlowsTests: BaseTest {
         // 1. Search preference
         var step = mpCheckout.viewModel.nextStep()
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        // 1. Start
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount

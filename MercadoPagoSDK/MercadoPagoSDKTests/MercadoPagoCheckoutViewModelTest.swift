@@ -37,13 +37,19 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
+<<<<<<< HEAD
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -108,12 +114,18 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
+<<<<<<< HEAD
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -243,12 +255,18 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
+<<<<<<< HEAD
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -350,13 +368,19 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
+<<<<<<< HEAD
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
@@ -386,14 +410,20 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
 
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
+<<<<<<< HEAD
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -489,12 +519,18 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
+<<<<<<< HEAD
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         // 2. Validate preference
@@ -566,13 +602,19 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
+<<<<<<< HEAD
 =======
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         // 2. Validate preference

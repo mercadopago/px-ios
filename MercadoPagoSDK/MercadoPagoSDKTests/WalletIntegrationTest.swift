@@ -39,6 +39,7 @@ class WalletIntegrationTest: BaseTest {
 
         var step = mpCheckout.viewModel.nextStep()
 <<<<<<< HEAD
+<<<<<<< HEAD
         XCTAssertEqual(step, CheckoutStep.START)
 
         step = mpCheckout.viewModel.nextStep()
@@ -49,6 +50,11 @@ class WalletIntegrationTest: BaseTest {
 
         step = mpCheckout.viewModel.nextStep()
 =======
+=======
+        XCTAssertEqual(step, CheckoutStep.START)
+
+        step = mpCheckout.viewModel.nextStep()
+>>>>>>> Tracking (#1113)
         XCTAssertEqual(step, CheckoutStep.SERVICE_GET_PREFERENCE)
 
         step = mpCheckout.viewModel.nextStep()

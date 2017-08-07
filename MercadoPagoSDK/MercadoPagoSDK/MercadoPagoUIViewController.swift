@@ -25,15 +25,17 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-
-        if screenName != NO_NAME_SCREEN {
+        if screenName != TrackingUtil.NO_NAME_SCREEN {
             MPXTracker.trackScreen(screenId: screenName, screenName: screenName)
         }
         self.loadMPStyles()
     }
 
+<<<<<<< HEAD
     var tracked : Bool = false;
     
+=======
+>>>>>>> Tracking (#1113)
     func trackInfo() {
          MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
     }
@@ -46,8 +48,12 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     override open func viewDidAppear(_ animated: Bool) {
 
         super.viewDidAppear(animated)
+<<<<<<< HEAD
         if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
             tracked = true
+=======
+        if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID {
+>>>>>>> Tracking (#1113)
             trackInfo()
         }
 

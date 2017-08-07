@@ -1,0 +1,243 @@
+/*
+ Localizable.strings
+ MercadoPagoSDK
+ 
+ Created by Matias Gualino on 26/4/15.
+ Copyright (c) 2015 MercadoPago. All rights reserved.
+ */
+
+"Si" = "Yes";
+"No" = "No";
+
+"Cargando..." = "Loading...";
+"invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
+"invalid_field" = "Check this information";
+"invalid_card_length" = "Enter the %1$s card numbers";
+"invalid_card_length_general" = "Enter all card numbers";
+"security_code" = "Security Code";
+"cod_seg_desc" = "Last %1$s digits code on the back of the card";
+"cod_seg_desc_amex" = "%1$s digits code on the front of the card";
+"NOT_INSTALLMENTS_FOUND" = "No interest were found available for an amount of $";
+"PAYMENT_ERROR" = "Payment failed.";
+"No se ha podido obtener los métodos de pago con esta preferencia" = "Payment methods could not be obtained with this preference";
+"visa"="Visa";
+"master"="Mastercard";
+"amex"="Amex";
+
+//CONGRATS
+
+"Cancelar pago" = "Cancel payment";
+"¿Qué puedo hacer?" = "What can I do?";
+
+// -- CallForAuth
+
+"Debes autorizar ante %p el pago de %t a MercadoPago" = "You must authorize with %p the payment of %t to Mercado Pago";
+"Ya hable con %0 y me autorizó" = "Already talked with %0 and I am authorized";
+"El teléfono está al dorso de tu tarjeta." = "The phone number is on the back of your card.";
+"Pagar con otro medio" = "Choose another payment method";
+
+// -- Approved
+"¡Listo, se acreditó tu pago!" = "Done, your payment was accredited!";
+"También enviamos el código a tu email" = "También enviamos el código a tu email";
+"Te enviaremos este comprobante a %0" = "We will send you the data to %0";
+"Dinero en cuenta de MercadoPago" = "Account Money of MercadoPago";
+"Terminada en " = "Ending in ";
+"En tu estado de cuenta verás el cargo como %0" = "On your statement you will see the charge as %0";
+"Comprobante" = "Ticket";
+
+// -- Pending
+"Estamos procesando el pago" = "We are processing the payment";
+"En menos de 1 hora te enviaremos por e-mail el resultado."="In less than an hour we will send you the result by e-mail.";
+"En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="In a few hours we will tell you by e-mail if it is accredited or if we need more information.";
+
+// -- Rejected
+"¿Qué puedo hacer?" = "What can I do?";
+"rejected_high_risk_title"="For security reasons, we had to reject your payment";
+"cc_rejected_insufficient_amount_title" = "Yours %0 has insufficient funds";
+"cc_rejected_other_reason_title"="%0 did not process the payment";
+"cc_rejected_max_attempts_title"= "You reached the limit of attempts allowed";
+"cc_rejected_duplicated_payment_title"="%0 did not process the payment";
+"cc_rejected_card_disabled_title"="Calls to %1$s for activate your card";
+"cc_rejected_bad_filled_other_title"="Some data of your %1$s is incorect";
+"cc_rejected_bad_filled_card_number_title"="Algún dato de tu %0 es incorrecto";
+"cc_rejected_bad_filled_security_code_title"="Algún dato de tu %0 es incorrecto";
+"cc_rejected_bad_filled_date_title"="The expiration date is not correct.";
+"cc_rejected_call_for_authorize_title" = "Could not authorize it?";
+"Ingresalo nuevamente" = "Ingresalo nuevamente";
+"Algo salió mal… " = "Something went wrong…";
+
+
+"rejected_high_risk_subtitle_credit_card"="If you want to pay with the money from your account, contact Mercado Pago customer service.\n\n Or if you prefer, you can choose other payment method.";
+"cc_rejected_insufficient_amount_subtitle_credit_card" = "Don't worry! You can choose another payment method.";
+"cc_rejected_other_reason_subtitle_credit_card"="Use another card or another payment method";
+"cc_rejected_max_attempts_subtitle_credit_card"= "Choose another card or another payment method";
+"cc_rejected_duplicated_payment_subtitle_credit_card"="If you need to repay, use another card or other payment method.";
+"cc_rejected_card_disabled_subtitle_credit_card"="The phone number is on the back of your card.";
+"cc_rejected_call_for_authorize_subtitle_credit_card" = "";
+
+
+
+"rejected_high_risk_subtitle_debit_card"=">If you want to pay with the money from your account, contact Mercado Pago customer service. \n\n Or if you prefer, you can choose other payment method.";
+"cc_rejected_insufficient_amount_subtitle_debit_card" = "Don't worry! Recharge at any bank or from your electronic banking and try again. Or if you prefer, you can choose another payment method.";
+"cc_rejected_other_reason_subtitle_debit_card"="Use another card or another payment method";
+"cc_rejected_max_attempts_subtitle_debit_card"= "Choose another card or another payment method.";
+"cc_rejected_duplicated_payment_subtitle_debit_card"="If you need to repay, use another card or other payment method.";
+"cc_rejected_card_disabled_subtitle_debit_card"="The phone number is on the back of your card.";
+"cc_rejected_bad_filled_card_number_subtitle_debit_card"="The number of your %0 is incorrect.";
+"cc_rejected_bad_filled_security_code_subtitle_debit_card"="The security code is not correct";
+"cc_rejected_bad_filled_date_subtitle_debit_card"="The expiration date is not correct.";
+"cc_rejected_call_for_authorize_subtitle_debit_card" = "";
+
+"Ingresalo nuevamente" = "Enter again";
+
+
+//---- Formulario de tarjeta
+"Ver promociones"="Show Promotions";
+"Número de tarjeta"="Card number";
+"NOMBRE APELLIDO"="NAME SURNAME";
+"MM/AA"="MM/AA";
+"Fecha de expiración"="Expiration date";
+"Código de seguridad"="Security code";
+"Continuar"="Continue";
+"Anterior"="Previous";
+"Ingresa el número de la tarjeta de crédito"="Enter all the numbers of the card";
+"Revisa este dato"="Check this information";
+"Ingresa el nombre y apellido impreso en la tarjeta"="Enter the name and last name printed on the card";
+"Ingresa los %1$s números del código de seguridad"="Enter the %1$s security code numbers";
+"Método de pago no soportado"="Payment Method no supported";
+
+"Nombre y apellido"="Name and surname";
+
+//---Identification
+"OK"="OK";
+"DOCUMENTO DEL TITULAR DE LA TARJETA"="CARD HOLDER DOCUMENT";
+"Número"="Number";
+"Tipo"="Type";
+
+//ADDITIONAL STEP
+
+//-- Payer Cost
+" Sin interés"=" Interest free";//--
+"¿En cuántas cuotas?" = "How many installments?";
+"No incluye intereses bancarios" = "Doesn't include bank interest";
+
+//-- Issuers
+"¿Quién emitió tu tarjeta?" = "Which is your bank?";
+
+//-- Card Type
+"¿Qué tipo de tarjeta es?" = "Which type of card is it?";
+"Crédito" = "Credit";
+"Débito" = "Debit";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "Which is your entity\'s type?";
+//-----EntityTypes
+"Natural"="Individual";
+"Jurídica"="Association";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "Which is your bank?";
+
+
+
+//Instructions
+
+"Continuar"= "Continue";//--
+
+//--
+"¡Felicitaciones!"="¡Congratulations!";
+"Se aprobó tu pago."="Se aprobó tu pago.";
+"Estamos procesando el pago"="We are processing the payment";
+"¡Ups! Ocurrió un problema"="¡Ups! Ocurrió un problema";
+"Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles."="Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.";
+"En unos minutos te enviaremos por e-mail el resultado."="En unos minutos te enviaremos por e-mail el resultado.";
+"No se pudo realizar el pago."="No se pudo realizar el pago.";
+//--
+
+
+
+//CONGRATS
+
+"terminada en "="ending in ";
+"terminada en "="ending in ";
+"Terminada en " = "Ending in ";
+" terminada en " = " ending in ";
+"Sin interés"="Interest free";
+"Uy, no pudimos procesar el pago"="Oops, we could not process your payment";
+"Algún dato de tu %1$s es incorrecto."="Some data of your %1$s is incorect.";
+"El teléfono está al dorso de tu tarjeta"="The phone number is on the back of your card";
+"Debes autorizar el pago ante tu tarjeta"="You must authorize the payment with your card";
+"Debes autorizar ante %1$s el pago de " = "You must authorize with %1$s the payment of";
+" a MercadoPago" = " to MercadoPago";
+"Ya hablé con %1$s y me autorizó" = "Already talked with %0 and I am authorized";
+"En tu estado de cuenta verás el cargo como %0" = "In your account yo will see the charge as %0";
+
+
+"Total"="Total";
+"Medio de pago"="Payment method";
+"Operación"="Operación";
+"Fecha"="Date";
+
+// RyC
+"Revisa si está todo bien..." = "Verify that everything is fine…";
+"Total a pagar " = "Total to pay ";
+"Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="By paying, I claim to be an adult and that I accept the Terms and Conditions";
+
+"¿Cómo quiéres pagar?"="How do you want to pay?";
+"Términos y Condiciones"="Terms and Conditions";
+"Confirma tu compra" = "Confirm your purchase";
+"Total" = "Total";
+"Cantidad : " = "Quantity: ";
+"Precio Unitario : " = "Unit price: ";
+"Pagas" = "You will pay";
+"Cambiar pago" = "Change payment";
+"Productos" = "Products";
+"Confirmar" = "Confirm";
+
+"Medio de pago" = "Payment Method";
+"Operación" = "Operation";
+"Fecha" = "Date";
+"Cancelar Pago"="Cancel Payment";
+"Pagáras " = "You will pay ";
+"Con dinero en cuenta" = "With account money";
+
+
+
+// PaymentTypes para RyC
+"ryc_title_default"=" in a ";
+"ryc_title_cargavirtual"=" in ";
+"ryc_title_redlink_bank_transfer"=" in your ";
+"ryc_title_bancomer_bank_transfer"=" in your ";
+"ryc_title_serfin_bank_transfer"=" in your ";
+"ryc_title_banamex_bank_transfer"=" in your ";
+
+"ryc_complementary_bancomer_bank_transfer"="Home Banking of ";
+"ryc_complementary_serfin_bank_transfer"="Home Banking of ";
+"ryc_complementary_redlink_bank_transfer"="Home Banking of ";
+"ryc_complementary_banamex_bank_transfer"="Home Banking of ";
+"ryc_complementary_banamex_atm"="ATM of ";
+"ryc_complementary_redlink_atm"="ATM of ";
+
+"ryc_payment_method_redlink_atm" = "Red Link";
+"ryc_payment_method_redlink_bank_transfer" = "Red Link";
+
+
+//Discount
+"Código de descuento"="Discount code";
+"Canejar"="Exchange";
+"Código inválido"="Invalid code";
+"de descuento"="of discount";
+"Tengo un descuento"="I have a discount";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Merchant without discount available";
+"Se agotó la cantidad de usos"="Ran out of quantity uses of discount";
+"Importe fuera del alcance"="Amount out of reach";
+"La campaña expiró"="/Campaign expired";
+
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Remember to unlock your card before you confirm the payment";
+"desbloquear tu tarjeta"="unlock your card";
+"Desbloqueo de Tarjeta"="Card Unlocking";
+
+//Administrador de tarjetas
+"¿Con qué tarjeta?"="Which card?";

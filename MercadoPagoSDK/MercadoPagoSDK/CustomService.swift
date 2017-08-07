@@ -43,10 +43,15 @@ open class CustomService: MercadoPagoService {
     open func createPayment(_ method: String = "POST", body: String, success: @escaping (_ jsonResult: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let headers = [MercadoPagoContext.paymentKey(): "X-Idempotency-Key"]
+<<<<<<< HEAD
         
         let params = "processing_mode=" + MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString()
         
         self.request(uri: self.URI, params: params, body: body, method: method, headers : headers, cache: false, success: { (jsonResult: AnyObject?) -> Void in
+=======
+
+        self.request(uri: self.URI, params: nil, body: body, method: method, headers : headers, cache: false, success: { (jsonResult: AnyObject?) -> Void in
+>>>>>>> Tracking (#1113)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if paymentDic["status"] as? Int == ApiUtil.StatusCodes.PROCESSING.rawValue {

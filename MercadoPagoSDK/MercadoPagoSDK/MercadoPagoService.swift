@@ -23,6 +23,7 @@ open class MercadoPagoService: NSObject {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ jsonResult: AnyObject?) -> Void,
                         failure: ((_ error: NSError) -> Void)?) {
 =======
@@ -30,6 +31,10 @@ open class MercadoPagoService: NSObject {
                         failure: ((_ error: NSError) -> Void)?) {
 
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+    public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ jsonResult: AnyObject?) -> Void,
+                        failure: ((_ error: NSError) -> Void)?) {
+>>>>>>> Tracking (#1113)
         var url = baseURL + uri
         var requesturl = url
         if !String.isNullOrEmpty(params) {
@@ -37,10 +42,14 @@ open class MercadoPagoService: NSObject {
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         let finalURL: NSURL = NSURL(string: requesturl)!
 =======
         let finalURL: NSURL = NSURL(string: url)!
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        let finalURL: NSURL = NSURL(string: requesturl)!
+>>>>>>> Tracking (#1113)
         let request: NSMutableURLRequest
         if cache {
             request  = NSMutableURLRequest(url: finalURL as URL,
@@ -63,6 +72,7 @@ open class MercadoPagoService: NSObject {
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         if let body = body {
             #if DEBUG
                 print("--REQUEST_BODY: \(body as! NSString)")
@@ -76,6 +86,13 @@ open class MercadoPagoService: NSObject {
             #endif
             request.httpBody = (body as! NSString).data(using: String.Encoding.utf8.rawValue)
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+        if let body = body {
+            #if DEBUG
+                print("--REQUEST_BODY: \(body as! NSString)")
+            #endif
+            request.httpBody = body.data(using: String.Encoding.utf8)
+>>>>>>> Tracking (#1113)
         }
 
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -93,6 +110,7 @@ open class MercadoPagoService: NSObject {
 
                     let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     failure?(e)
                 }
             } else {
@@ -108,6 +126,12 @@ open class MercadoPagoService: NSObject {
                     failure!(error! as NSError)
                 }
 >>>>>>> Integrate MLESCManager library in SDK (#1104)
+=======
+                    failure?(e)
+                }
+            } else {
+                failure?(error! as NSError)
+>>>>>>> Tracking (#1113)
             }
         }
     }
