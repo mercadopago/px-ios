@@ -80,7 +80,7 @@ class ScreenTrackInfo {
 
         let date = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
         let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
         self.timestamp = timestamp
         self.type = "screenview"

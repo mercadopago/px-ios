@@ -172,5 +172,4 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     public func canBeClone() -> Bool {
         return false
     }
-
 }

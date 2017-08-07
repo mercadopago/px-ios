@@ -47,7 +47,7 @@ class PaymentResultContentViewModelTest: BaseTest {
         // Titulo
         // Subtitulo
         self.instance.paymentResult.status = "rejected"
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
 
         titleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.titleFontSize), text: self.instance.getTitle())
@@ -56,7 +56,7 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // StatusDetail: bad_filled
         // Titulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER
         XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
 
         titleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.titleFontSize), text: self.instance.getTitle())
@@ -64,7 +64,7 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // StatusDetail: call_for_auth
         // Titulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER
         XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
 
         // StatusDetail: ""
@@ -96,7 +96,7 @@ class PaymentResultContentViewModelTest: BaseTest {
         // StatusDetail: other_reason con paymentPreference
         // Titulo
         // Subtitlo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         self.instance.paymentResultScreenPreference.hideRejectedContentTitle = true
         self.instance.paymentResultScreenPreference.hideRejectedContentText = true
         XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
@@ -108,7 +108,7 @@ class PaymentResultContentViewModelTest: BaseTest {
         // Con statusDetail = "CONTINGENCY"
         // Titulo
         // Subtitilo
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
 
         titleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.titleFontSize), text: self.instance.getTitle())
@@ -118,7 +118,7 @@ class PaymentResultContentViewModelTest: BaseTest {
         // Con statusDetail = "REVIEW_MANUAL"
         // Titulo
         // Subtitilo
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL
         XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
 
         // StatusDetail: ""
@@ -153,7 +153,7 @@ class PaymentResultContentViewModelTest: BaseTest {
         // Con statusDetail = "CONTINGENCY" con paymentPreference
         // Titulo
         // Subtitilo
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         self.instance.paymentResultScreenPreference.hidePendingContentTitle = true
         self.instance.paymentResultScreenPreference.hidePendingContentText = true
         XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
@@ -169,13 +169,13 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "other_reason"
         // ¿Que puede hacer?
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), self.instance.defaultTitle)
 
         // Con statusDetail = "cc_rejected_call_for_authorize"
         // ¿No pudiste autorizarlo?
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.CALL_FOR_AUTH.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.CALL_FOR_AUTH
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), (paymentResult.statusDetail + "_title").localized)
 
@@ -195,14 +195,14 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "other_reason" y con PaymentResultScreenPreference
         // ¿Que puede hacer?
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         self.instance.paymentResultScreenPreference.rejectedContentTitle = "Sarasa"
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), self.instance.defaultTitle)
 
         // Con statusDetail = "other_reason" y titulo deshabilitado
         // ¿Que puede hacer?
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         self.instance.paymentResultScreenPreference.hideRejectedContentTitle = true
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), self.instance.defaultTitle)
@@ -222,49 +222,49 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "other_reason"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
 
         // Con statusDetail = "high_risk"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.HIGH_RISK.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.HIGH_RISK
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
 
         // Con statusDetail = "max_attemps"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.MAX_ATTEMPTS.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.MAX_ATTEMPTS
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
 
         // Con statusDetail = "CARD_DISABLE"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.CARD_DISABLE.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.CARD_DISABLE
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
 
         // Con statusDetail = "BAD_FILLED_OTHER"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER
         XCTAssertFalse(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), "")
 
         // Con statusDetail = "DUPLICATED_PAYMENT"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.DUPLICATED_PAYMENT.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.DUPLICATED_PAYMENT
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
 
         // Con statusDetail = "INSUFFICIENT_AMOUNT"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.INSUFFICIENT_AMOUNT
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
 
         // Con statusDetail = "cc_rejected_call_for_authorize"
         // No hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.CALL_FOR_AUTH.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.CALL_FOR_AUTH
         XCTAssertFalse(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), "")
 
@@ -285,14 +285,14 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "other_reason" y con PaymentResultScreenPreference
         // Se deberia mostrar nuestro subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         self.instance.paymentResultScreenPreference.rejectedContentTitle = "Sarasa"
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
 
         // Con statusDetail = "other_reason" y subtitulo deshabilitado
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         self.instance.paymentResultScreenPreference.hideRejectedContentText = true
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), (self.instance.paymentResult.statusDetail + "_subtitle_" + "credit_card").localized)
@@ -313,13 +313,13 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "CONTINGENCY"
         // ¿Que puede hacer?
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), self.instance.defaultTitle)
 
         // Con statusDetail = "REVIEW_MANUAL"
         // ¿Que puede hacer?
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), self.instance.defaultTitle)
 
@@ -340,14 +340,14 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "CONTINGENCY" y con PaymentResultScreenPreference
         // ¿Que puede hacer?
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         self.instance.paymentResultScreenPreference.pendingContentTitle = "Sarasa"
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), self.instance.defaultTitle)
 
         // Con statusDetail = "other_reason" y titulo deshabilitado
         // ¿Que puede hacer?
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         self.instance.paymentResultScreenPreference.hidePendingContentTitle = true
         XCTAssertTrue(self.instance.hasTitle())
         XCTAssertEqual(self.instance.getTitle(), self.instance.defaultTitle)
@@ -367,13 +367,13 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "CONTINGENCY"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), "En menos de 1 hora te enviaremos por e-mail el resultado.".localized)
 
         // Con statusDetail = "REVIEW_MANUAL"
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized)
 
@@ -394,14 +394,14 @@ class PaymentResultContentViewModelTest: BaseTest {
 
         // Con statusDetail = "other_reason" y con PaymentResultScreenPreference
         // Se deberia mostrar nuestro subtitulo
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         self.instance.paymentResultScreenPreference.pendingContentText = "Sarasa"
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), "En menos de 1 hora te enviaremos por e-mail el resultado.".localized)
 
         // Con statusDetail = "other_reason" y subtitulo deshabilitado
         // Hay subtitulo
-        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         self.instance.paymentResultScreenPreference.hidePendingContentText = true
         XCTAssertTrue(self.instance.hasSubtitle())
         XCTAssertEqual(self.instance.getSubtitle(), "En menos de 1 hora te enviaremos por e-mail el resultado.".localized)

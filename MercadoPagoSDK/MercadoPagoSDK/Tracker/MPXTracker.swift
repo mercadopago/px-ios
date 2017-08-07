@@ -37,8 +37,7 @@ public class MPXTracker: NSObject {
     }
 
     static func setTrackingStrategy(screenID: String) {
-        let forcedScreens: [String] = [TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM,
-                                       TrackingUtil.SCREEN_ID_PAYMENT_RESULT,
+        let forcedScreens: [String] = [TrackingUtil.SCREEN_ID_PAYMENT_RESULT,
                                        TrackingUtil.SCREEN_ID_PAYMENT_RESULT_APPROVED,
                                        TrackingUtil.SCREEN_ID_PAYMENT_RESULT_PENDING,
                                        TrackingUtil.SCREEN_ID_PAYMENT_RESULT_REJECTED,

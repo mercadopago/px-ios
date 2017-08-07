@@ -244,8 +244,11 @@ open class MockBuilder: NSObject {
         return PaymentType(paymentTypeId: creditCardPaymentTypeId)
     }
 
-    class func buildToken() -> Token {
+    class func buildToken(withESC: Bool = false) -> Token {
         let token = Token(_id: "tokenId", publicKey: MLA_PK, cardId: "cardId", luhnValidation: "luhn", status: "status", usedDate: "11", cardNumberLength: 16, creationDate: Date(), lastFourDigits: "1234", firstSixDigit: "123456", securityCodeLength: 3, expirationMonth: 11, expirationYear: 22, lastModifiedDate: Date(), dueDate: Date(), cardHolder: MockBuilder.buildCardholder())
+        if withESC {
+            token.esc = "esc"
+        }
         return token
     }
 
@@ -316,6 +319,13 @@ open class MockBuilder: NSObject {
         return customOption
     }
 
+    class func buildCustomerPaymentMethodWithESC(paymentMethodId: String) -> CardInformation {
+        let customOption = CustomerPaymentMethod()
+        customOption._id = "esc"
+        customOption.paymentMethodId = paymentMethodId
+        return customOption
+    }
+
     class func buildPaymentData(paymentMethod: PaymentMethod) -> PaymentData {
         let paymentData = PaymentData()
         paymentData.paymentMethod = paymentMethod
@@ -328,19 +338,19 @@ open class MockBuilder: NSObject {
         return paymentData
     }
 
-    class func buildPaymentData(paymentMethodId: String = "visa", installments: Int = 0, installmentRate: Double = 0) -> PaymentData {
+    class func buildPaymentData(paymentMethodId: String = "visa", installments: Int = 0, installmentRate: Double = 0, withESC: Bool = false) -> PaymentData {
         let paymentData = PaymentData()
         paymentData.paymentMethod = MockBuilder.buildPaymentMethod(paymentMethodId)
         paymentData.issuer = MockBuilder.buildIssuer()
         paymentData.payerCost = MockBuilder.buildPayerCost(installments: installments, installmentRate: installmentRate)
-        paymentData.token = MockBuilder.buildToken()
+        paymentData.token = MockBuilder.buildToken(withESC: withESC)
         return paymentData
     }
 
     class func buildPayment(_ paymentMethodId: String) -> Payment {
         let payment = Payment()
         payment.paymentMethodId = paymentMethodId
-        payment.status = "status"
+        payment.status = "approved"
         payment.statusDetail = "status_detail"
         let payer = MockBuilder.buildPayer("payerid")
         payment.payer = payer
@@ -368,6 +378,10 @@ open class MockBuilder: NSObject {
         discount.amount_off = "20"
         discount.amount = 5
         return discount
+    }
+
+    class func buildPaymentResult(withESC: Bool = false) -> PaymentResult {
+        return PaymentResult(payment: MockBuilder.buildPayment("visa"), paymentData: MockBuilder.buildPaymentData(withESC: withESC))
     }
 
     class func buildAddress() -> Address {
@@ -414,6 +428,12 @@ open class MockBuilder: NSObject {
         cause.append(invalidIdCause)
         apiException.cause = cause
         return apiException
+    }
+
+    class func buildFlowPreferenceWithoutESC() -> FlowPreference {
+        let flowPreference = FlowPreference()
+        flowPreference.disableESC()
+        return flowPreference
     }
 
 }

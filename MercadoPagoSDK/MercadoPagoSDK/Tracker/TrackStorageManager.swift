@@ -10,15 +10,16 @@ import UIKit
 
 class TrackStorageManager: NSObject {
 
-    static var MAX_TRACKS_PER_REQUEST = SETTING_MAX_TRACKS_PER_REQUEST
-    static var MIN_TRACKS_PER_REQUEST = SETTING_MIN_TRACKS_PER_REQUEST
-    static var MAX_DAYS_IN_STORAGE: Double = SETTING_MAX_DAYS_IN_STORAGE
+    static var MAX_BATCH_SIZE = SETTING_MAX_BATCH_SIZE
+    static var MAX_AGEING: Double  = SETTING_MAX_AGEING
+    static var MAX_LIFETIME: Double = SETTING_MAX_LIFETIME
     //Guardo el ScreenTrackInfo serializado en el array del userDefaults, si el mismo no esta creado lo crea
     static func persist(screenTrackInfo: ScreenTrackInfo) {
         persist(screenTrackInfoArray: [screenTrackInfo])
     }
     //Guardo todos los elementos del array screenTrackInfoArray serializado en el array del userDefaults, si el mismo no esta creado lo crea
     static func persist(screenTrackInfoArray: [ScreenTrackInfo]) {
+
         var newArray = [String]()
         if let array = UserDefaults.standard.array(forKey: SCREEN_TRACK_INFO_ARRAY_KEY) as? [String] {
             newArray.append(contentsOf: array)
@@ -39,11 +40,14 @@ class TrackStorageManager: NSObject {
             screenTrackArray.append(ScreenTrackInfo(from: JSONHandler.convertToDictionary(text: trackScreenJSON)!))
         }
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let interval = -MAX_DAYS_IN_STORAGE * 24 * 60 * 60
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
+        let interval = -MAX_LIFETIME * 24 * 60 * 60
         let limitDayToKeep = Date().addingTimeInterval(TimeInterval(interval))
         let lastScreens = screenTrackArray.filter {
             let date = formatter.date(from:$0.timestamp)
+            if date == nil {
+                return false
+            }
             return date! > limitDayToKeep
         }
         var screenTrackJSONArray = [String]()
@@ -61,16 +65,24 @@ class TrackStorageManager: NSObject {
         guard let arrayScreen = array as? [String] else {
             return nil
         }
-        if arrayScreen.count < MIN_TRACKS_PER_REQUEST && !force {
-            return nil
-        }
+
         var screenTrackArray = [ScreenTrackInfo]()
         for trackScreenJSON in arrayScreen {
             screenTrackArray.append(ScreenTrackInfo(from: JSONHandler.convertToDictionary(text: trackScreenJSON)!))
         }
         var lastScreens = screenTrackArray.sorted { $0.timestamp < $1.timestamp}
-        let newArray = lastScreens.suffix(MAX_TRACKS_PER_REQUEST)
-        lastScreens.safeRemoveLast(MAX_TRACKS_PER_REQUEST)
+        let lastScreenTrack = lastScreens.first
+
+        guard let lastTrack = lastScreenTrack else {
+            return nil
+        }
+        // Validar que el track mas viejo
+        if !force && !forceCauseAgeing(lastTrack: lastTrack) {
+            return nil
+        }
+
+        let newArray = lastScreens.suffix(MAX_BATCH_SIZE)
+        lastScreens.safeRemoveLast(MAX_BATCH_SIZE)
         var screenTrackJSONArray = [String]()
         for trackScreen in lastScreens {
             screenTrackJSONArray.append(trackScreen.toJSONString())
@@ -82,44 +94,52 @@ class TrackStorageManager: NSObject {
         return Array(newArray)
     }
 
+    static func forceCauseAgeing(lastTrack: ScreenTrackInfo) -> Bool {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
+        let interval = -TrackStorageManager.MAX_AGEING
+        let limitDayToAgeing = Date().addingTimeInterval(TimeInterval(interval))
+        let date = formatter.date(from:lastTrack.timestamp)
+        return date! < limitDayToAgeing
+    }
 }
 
 extension TrackStorageManager {
-    private static let kMaxTracksPerRequest = "max_tracks_per_request"
-    private static let kMinTracksPerRequest = "min_tracks_per_request"
-    private static let kMaxDaysInStorage = "max_days_in_storage"
+    private static let kMaxBatchSize = "max_batch_size"
+    private static let kMaxAgeing = "max_ageing"
+    private static let kMaxLifetime = "max_lifetime"
     static let SCREEN_TRACK_INFO_ARRAY_KEY = "screens-tracks-info"
-    static var SETTING_MAX_TRACKS_PER_REQUEST: Int {
+    static var SETTING_MAX_BATCH_SIZE: Int {
         get {
             guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
                 return 0
             }
-            guard let trackingEnabled = trackiSettings[TrackStorageManager.kMaxTracksPerRequest] as? Int else {
+            guard let trackingEnabled = trackiSettings[TrackStorageManager.kMaxBatchSize] as? Int else {
                 return 0
             }
             return trackingEnabled
         }
     }
-    static var SETTING_MIN_TRACKS_PER_REQUEST: Int {
+    static var SETTING_MAX_AGEING: Double {
         get {
             guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
                 return 0
             }
-            guard let trackingEnabled = trackiSettings[TrackStorageManager.kMinTracksPerRequest] as? Int else {
+            guard let maxAgening = trackiSettings[TrackStorageManager.kMaxAgeing] as? Double else {
                 return 0
             }
-            return trackingEnabled
+            return maxAgening
         }
     }
-    static var SETTING_MAX_DAYS_IN_STORAGE: Double {
+    static var SETTING_MAX_LIFETIME: Double {
         get {
             guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
                 return 0
             }
-            guard let trackingEnabled = trackiSettings[TrackStorageManager.kMaxDaysInStorage] as? Double else {
+            guard let maxLifetime = trackiSettings[TrackStorageManager.kMaxLifetime] as? Double else {
                 return 0
             }
-            return trackingEnabled
+            return maxLifetime
         }
 }
 }

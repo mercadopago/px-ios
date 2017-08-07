@@ -115,7 +115,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout!.collectCheckoutPreference()
+        self.mpCheckout!.getCheckoutPreference()
 
         // Se obtiene id de MockedResponse
         XCTAssertEqual("150216849-e131b785-10d3-48c0-a58b-2910935512e0", self.mpCheckout!.viewModel.checkoutPreference._id)
@@ -132,7 +132,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         XCTAssertNil(self.mpCheckout?.viewModel.availablePaymentMethods)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentMethodOptions)
 
-        self.mpCheckout!.collectPaymentMethodSearch()
+        self.mpCheckout!.getPaymentMethodSearch()
 
         XCTAssertNotNil(self.mpCheckout?.viewModel.rootPaymentMethodOptions)
         XCTAssertNotNil(self.mpCheckout?.viewModel.search)
@@ -150,7 +150,7 @@ class MercadoPagoCheckoutTest: BaseTest {
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: self.mpCheckout!)
 
-        self.mpCheckout?.collectPaymentMethods()
+        self.mpCheckout?.showPaymentMethodsScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
@@ -190,7 +190,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout?.collectCard()
+        self.mpCheckout?.showCardForm()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
@@ -206,7 +206,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout?.collectIdentification()
+        self.mpCheckout?.showIdentificationScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
@@ -222,7 +222,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout?.collectCreditDebit()
+        self.mpCheckout?.showCreditDebitScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
@@ -238,7 +238,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout?.collectCreditDebit()
+        self.mpCheckout?.showCreditDebitScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
@@ -254,7 +254,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout?.collectCreditDebit()
+        self.mpCheckout?.showCreditDebitScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
@@ -273,7 +273,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: self.mpCheckout!)
         MPCheckoutTestAction.selectAccountMoney(mpCheckout: self.mpCheckout!)
 
-        self.mpCheckout?.collectPaymentData()
+        self.mpCheckout?.showReviewAndConfirmScreen()
 
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertEqual(self.mpCheckout?.navigationController.viewControllers.count, 1)
@@ -290,7 +290,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("visa")
         self.mpCheckout!.viewModel.paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
 
-        self.mpCheckout!.displayPaymentResult()
+        self.mpCheckout!.showPaymentResultScreen()
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentResult)
         XCTAssertEqual(self.mpCheckout?.navigationController.viewControllers.count, 1)
         let lastVC = self.mpCheckout!.navigationController.viewControllers[0]
@@ -307,7 +307,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("rapipago")
         self.mpCheckout!.viewModel.paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
 
-        self.mpCheckout!.displayPaymentResult()
+        self.mpCheckout!.showPaymentResultScreen()
 
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentResult)
         XCTAssertEqual(self.mpCheckout?.navigationController.viewControllers.count, 1)

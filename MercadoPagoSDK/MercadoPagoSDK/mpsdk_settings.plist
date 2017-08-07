@@ -13,13 +13,13 @@
 		<key>tracking_enabled</key>
 		<true/>
 		<key>persist_tracks</key>
-		<false/>
-		<key>max_tracks_per_request</key>
+		<true/>
+		<key>max_batch_size</key>
 		<integer>10</integer>
-		<key>min_tracks_per_request</key>
-		<integer>10</integer>
-		<key>max_days_in_storage</key>
+		<key>max_lifetime</key>
 		<integer>45</integer>
+		<key>max_ageing</key>
+		<integer>10</integer>
 	</dict>
 </dict>
 </plist>

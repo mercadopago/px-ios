@@ -23,6 +23,7 @@ open class FlowPreference: NSObject {
     var showAllSavedCards = false
     var showInstallmentsReviewScreen = true
     var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
+    var saveESC = false
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -64,6 +65,10 @@ open class FlowPreference: NSObject {
     
      }*/
 
+    public func disableESC() {
+        saveESC = false
+    }
+
     public func enableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = true
     }
@@ -98,6 +103,10 @@ open class FlowPreference: NSObject {
 
     public func enableInstallmentsReviewScreen() {
         showInstallmentsReviewScreen = true
+    }
+
+    public func enableESC() {
+        saveESC = true
     }
 
     public func setMaxSavedCardsToShow(fromInt: Int) {
@@ -155,6 +164,10 @@ open class FlowPreference: NSObject {
 
     public func getMaxSavedCardsToShow() -> Int {
         return maxSavedCardsToShow
+    }
+
+    public func isESCEnable() -> Bool {
+        return saveESC
     }
 
     open class func fromJSON(_ json: NSDictionary) -> FlowPreference {

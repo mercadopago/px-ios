@@ -25,33 +25,6 @@ class PaymentResultViewModel: NSObject {
         self.paymentResultScreenPreference = paymentResultScreenPreference
     }
 
-    /* TODO CLEAN
-    // MPPaymentTrackInformer Implementation
-
-    open func getMethodId() -> String! {
-        return paymentResult.paymentData?.paymentMethod._id ?? ""
-    }
-
-    open func getStatus() -> String! {
-        return paymentResult.status
-    }
-
-    open func getStatusDetail() -> String! {
-        return paymentResult.statusDetail
-    }
-
-    open func getTypeId() -> String! {
-        return paymentResult.paymentData?.paymentMethod.paymentTypeId ?? ""
-    }
-
-    open func getInstallments() -> String! {
-        return String(describing: paymentResult.paymentData?.payerCost?.installments)
-    }
-
-    open func getIssuerId() -> String! {
-        return String(describing: paymentResult.paymentData?.issuer?._id)
-    }
-*/
     open func getContentCell() -> PaymentResultContentView {
         if contentCell == nil {
             contentCell = PaymentResultContentView(paymentResult: self.paymentResult, paymentResultScreenPreference: self.paymentResultScreenPreference)
@@ -62,37 +35,21 @@ class PaymentResultViewModel: NSObject {
     func getColor() -> UIColor {
         if let color = paymentResultScreenPreference.statusBackgroundColor {
             return color
-        } else if isApproved() {
+        } else if paymentResult.isApproved() {
             return UIColor.px_greenCongrats()
-        } else if isPending() {
+        } else if paymentResult.isPending() {
             return UIColor(red: 255, green: 161, blue: 90)
-        } else if isCallForAuth() {
+        } else if paymentResult.isCallForAuth() {
             return UIColor(red: 58, green: 184, blue: 239)
-        } else if isRejected() {
+        } else if paymentResult.isRejected() {
             return UIColor.px_redCongrats()
         }
         return UIColor(red: 255, green: 89, blue: 89)
     }
 
-    func isCallForAuth() -> Bool {
-        return self.paymentResult.statusDetail == "cc_rejected_call_for_authorize"
-    }
-
-    func isApproved() -> Bool {
-        return self.paymentResult.status == PaymentStatus.APPROVED.rawValue
-    }
-
-    func isPending() -> Bool {
-        return self.paymentResult.status == PaymentStatus.IN_PROCESS.rawValue
-    }
-
-    func isRejected() -> Bool {
-        return self.paymentResult.status == PaymentStatus.REJECTED.rawValue
-    }
-
     internal func getLayoutName() -> String! {
 
-        if paymentResult.status == PaymentStatus.REJECTED.rawValue {
+        if paymentResult.status == PaymentStatus.REJECTED {
             if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
                 return "authorize" //C4A
             } else if paymentResult.statusDetail.contains("cc_rejected_bad_filled") {
@@ -113,9 +70,9 @@ class PaymentResultViewModel: NSObject {
     func getPaymentAction() -> PaymentActions.RawValue {
         if self.paymentResult.statusDetail.contains("cc_rejected_bad_filled") {
             return PaymentActions.RECOVER_PAYMENT.rawValue
-        } else if isCallForAuth() {
+        } else if paymentResult.isCallForAuth() {
             return PaymentActions.RECOVER_TOKEN.rawValue
-        } else if isRejected() {
+        } else if paymentResult.isRejected() {
             return PaymentActions.SELECTED_OTHER_PM.rawValue
         } else {
             return PaymentActions.RECOVER_PAYMENT.rawValue
@@ -136,7 +93,7 @@ class PaymentResultViewModel: NSObject {
 
     func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
         //approved case
-        let precondition = indexPath.section == Sections.body.rawValue && isApproved()
+        let precondition = indexPath.section == Sections.body.rawValue && paymentResult.isApproved()
         //if row at index 0 exists and approved body is not disabled, row 0 should display approved body
         let case1 = !paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0
         return precondition && case1
@@ -144,7 +101,7 @@ class PaymentResultViewModel: NSObject {
 
     func isEmailCellFor(indexPath: IndexPath) -> Bool {
         //approved case
-        let precondition = indexPath.section == Sections.body.rawValue && isApproved() && !String.isNullOrEmpty(paymentResult.payerEmail)
+        let precondition = indexPath.section == Sections.body.rawValue && paymentResult.isApproved() && !String.isNullOrEmpty(paymentResult.payerEmail)
         //if row at index 0 exists and approved body is disabled, row 0 should display email row
         let case1 = paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0
         //if row at index 1 exists, row 1 should display email row
@@ -154,27 +111,27 @@ class PaymentResultViewModel: NSObject {
 
     func isCallForAuthFor(indexPath: IndexPath) -> Bool {
         //non approved case
-        let precondition = indexPath.section == Sections.body.rawValue && !isApproved()
+        let precondition = indexPath.section == Sections.body.rawValue && !paymentResult.isApproved()
         //if row at index 0 exists and callForAuth is not disabled, row 0 should display callForAuth cell
-        let case1 = isCallForAuth() && indexPath.row == 0
+        let case1 = paymentResult.isCallForAuth() && indexPath.row == 0
         return precondition && case1
     }
 
     func isContentCellFor(indexPath: IndexPath) -> Bool {
         //non approved case
-        let precondition = indexPath.section == Sections.body.rawValue && !isApproved()
+        let precondition = indexPath.section == Sections.body.rawValue && !paymentResult.isApproved()
         //if row at index 0 exists and callForAuth is disabled, row 0 should display select another payment row
-        let case1 = !isCallForAuth() && indexPath.row == 0
+        let case1 = !paymentResult.isCallForAuth() && indexPath.row == 0
         //if row at index 1 exists, row 1 should display select another payment row
         let case2 = indexPath.row == 1
         return precondition && (case1 || case2) && !self.paymentResultScreenPreference.isContentCellDisable()
     }
 
     func isApprovedAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.additionaCells.rawValue && isApproved() && numberOfCustomAdditionalCells() > indexPath.row
+        return indexPath.section == Sections.additionaCells.rawValue && paymentResult.isApproved() && numberOfCustomAdditionalCells() > indexPath.row
     }
     func isPendingAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.additionaCells.rawValue && isPending() && numberOfCustomAdditionalCells() > indexPath.row
+        return indexPath.section == Sections.additionaCells.rawValue && paymentResult.isPending() && numberOfCustomAdditionalCells() > indexPath.row
     }
 
     func isSecondaryExitButtonCellFor(indexPath: IndexPath) -> Bool {
@@ -182,7 +139,7 @@ class PaymentResultViewModel: NSObject {
     }
 
     func isApprovedCustomSubHeaderCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.subHedader.rawValue && isApproved() && numberOfCustomSubHeaderCells() > indexPath.row
+        return indexPath.section == Sections.subHedader.rawValue && paymentResult.isApproved() && numberOfCustomSubHeaderCells() > indexPath.row
     }
 
     func numberOfRowsInSection(section: Int) -> Int {
@@ -205,39 +162,39 @@ class PaymentResultViewModel: NSObject {
     }
 
     func shouldShowSecondaryExitButton() -> Bool {
-        if isApproved() && paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil {
+        if paymentResult.isApproved() && paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil {
             return true
-        } else if isPending() && !paymentResultScreenPreference.isPendingSecondaryExitButtonDisable() {
+        } else if paymentResult.isPending() && !paymentResultScreenPreference.isPendingSecondaryExitButtonDisable() {
             return true
-        } else if isRejected() && !paymentResultScreenPreference.isRejectedSecondaryExitButtonDisable() {
+        } else if paymentResult.isRejected() && !paymentResultScreenPreference.isRejectedSecondaryExitButtonDisable() {
             return true
         }
         return false
     }
 
     func numberOfCellInBody() -> Int {
-        if isApproved() {
+        if paymentResult.isApproved() {
             let approvedBodyAdd = !paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() ? 1 : 0
             let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) ? 1 : 0
             return approvedBodyAdd + emailCellAdd
 
         }
-        let callForAuthAdd = isCallForAuth() ? 1 : 0
+        let callForAuthAdd = paymentResult.isCallForAuth() ? 1 : 0
         let selectAnotherCellAdd = !paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
         return callForAuthAdd + selectAnotherCellAdd
     }
 
     func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(paymentResultScreenPreference.pendingAdditionalInfoCells) && isPending() {
+        if !Array.isNullOrEmpty(paymentResultScreenPreference.pendingAdditionalInfoCells) && paymentResult.isPending() {
             return paymentResultScreenPreference.pendingAdditionalInfoCells.count
-        } else if !Array.isNullOrEmpty(paymentResultScreenPreference.approvedAdditionalInfoCells) && isApproved() {
+        } else if !Array.isNullOrEmpty(paymentResultScreenPreference.approvedAdditionalInfoCells) && paymentResult.isApproved() {
             return paymentResultScreenPreference.approvedAdditionalInfoCells.count
         }
         return 0
     }
 
     func numberOfCustomSubHeaderCells() -> Int {
-        if !Array.isNullOrEmpty(paymentResultScreenPreference.approvedSubHeaderCells) && isApproved() {
+        if !Array.isNullOrEmpty(paymentResultScreenPreference.approvedSubHeaderCells) && paymentResult.isApproved() {
             return paymentResultScreenPreference.approvedSubHeaderCells.count
         }
         return 0
@@ -272,29 +229,30 @@ class PaymentResultViewModel: NSObject {
     }
 }
 
-enum PaymentStatus: String {
-    case APPROVED = "approved"
-    case REJECTED = "rejected"
-    case RECOVERY = "recovery"
-    case IN_PROCESS = "in_process"
+struct PaymentStatus {
+    static let APPROVED = "approved"
+    static let REJECTED = "rejected"
+    static let RECOVERY = "recovery"
+    static let IN_PROCESS = "in_process"
 }
 
-enum RejectedStatusDetail: String {
-    case HIGH_RISK = "rejected_high_risk"
-    case OTHER_REASON = "cc_rejected_other_reason"
-    case MAX_ATTEMPTS = "cc_rejected_max_attempts"
-    case CARD_DISABLE = "cc_rejected_card_disabled"
-    case BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
-    case BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
-    case BAD_FILLED_SECURITY_CODE = "cc_rejected_bad_filled_security_code"
-    case BAD_FILLED_DATE = "cc_rejected_bad_filled_date"
-    case CALL_FOR_AUTH = "cc_rejected_call_for_authorize"
-    case DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
-    case INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
+struct RejectedStatusDetail {
+    static let HIGH_RISK = "rejected_high_risk"
+    static let OTHER_REASON = "cc_rejected_other_reason"
+    static let MAX_ATTEMPTS = "cc_rejected_max_attempts"
+    static let CARD_DISABLE = "cc_rejected_card_disabled"
+    static let BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
+    static let BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
+    static let BAD_FILLED_SECURITY_CODE = "cc_rejected_bad_filled_security_code"
+    static let BAD_FILLED_DATE = "cc_rejected_bad_filled_date"
+    static let CALL_FOR_AUTH = "cc_rejected_call_for_authorize"
+    static let DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
+    static let INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
+    static let INVALID_ESC = "invalid_esc"
 }
 
-enum PendingStatusDetail: String {
-    case CONTINGENCY = "pending_contingency"
-    case REVIEW_MANUAL = "pending_review_manual"
+struct PendingStatusDetail {
+    static let CONTINGENCY = "pending_contingency"
+    static let REVIEW_MANUAL = "pending_review_manual"
 
 }

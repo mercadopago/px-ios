@@ -52,15 +52,10 @@ class CheckoutViewModelTest: BaseTest {
         XCTAssertTrue(self.instance!.isTermsAndConditionsViewCellFor(indexPath: IndexPath(row: 0, section: 5)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 5)), TermsAndConditionsViewCell.getCellHeight())
 
-        XCTAssertTrue(self.instance!.isSecondaryConfirmButton(indexPath: IndexPath(row: 1, section: 5)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 5)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
-
         XCTAssertTrue(self.instance!.isExitButtonTableViewCellFor(indexPath: IndexPath(row: 2, section: 5)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 2, section: 5)), ExitButtonTableViewCell.ROW_HEIGHT)
 
         MercadoPagoContext.setPayerAccessToken("sarasa")
-        XCTAssertTrue(self.instance!.isSecondaryConfirmButton(indexPath: IndexPath(row: 0, section: 5)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 5)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isExitButtonTableViewCellFor(indexPath: IndexPath(row: 1, section: 5)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 5)), ExitButtonTableViewCell.ROW_HEIGHT)
@@ -132,7 +127,7 @@ class CheckoutViewModelTest: BaseTest {
         self.instance!.paymentData.paymentMethod = paymentMethodOff
 
         let result = self.instance!.numberOfRowsInMainSection()
-        XCTAssertEqual(2, result)
+        XCTAssertEqual(1, result)
     }
 
     func testIsPreferenceLoaded() {
@@ -195,12 +190,11 @@ class CheckoutViewModelTest: BaseTest {
         /// SUMARY:
         ///
         /// Productos --- $30
-        /// Confirmar
 
         self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "account_money", paymentMethodName: "account_money", paymentMethodTypeId: "account_money")
 
         // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 2)
+        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1)
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -208,9 +202,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isConfirmButtonCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         // Extra checks
         XCTAssertFalse(self.instance!.shouldShowInstallmentSummary())
@@ -226,12 +217,11 @@ class CheckoutViewModelTest: BaseTest {
         /// Productos --- $30
         /// Descuento --- -$10
         /// Total --- $20
-        /// Confirmar
 
         self.instanceWithCoupon!.paymentData.paymentMethod = PaymentMethod(_id: "account_money", name : "account_money", paymentTypeId : "account_money")
 
         // Number of Rows
-        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 4)
+        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 3)
 
         // Cells
         XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -242,9 +232,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instanceWithCoupon!.isTotalCellFor(indexPath: IndexPath(row: 2, section: 1)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isConfirmButtonCellFor(indexPath: IndexPath(row: 3, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 3, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instanceWithCoupon!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
@@ -264,12 +251,11 @@ class CheckoutViewModelTest: BaseTest {
         /// Comision --- -$10
         /// Descuento --- -$10
         /// Total --- $20
-        /// Confirmar
 
         self.instanceWithCustomSummaryRow!.paymentData.paymentMethod = PaymentMethod(_id: "account_money", name : "account_money", paymentTypeId : "account_money")
 
         // Number of Rows
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.numberOfRowsInMainSection(), 5)
+        XCTAssertEqual(self.instanceWithCustomSummaryRow!.numberOfRowsInMainSection(), 4)
 
         // Cells
         XCTAssertTrue(self.instanceWithCustomSummaryRow!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -283,9 +269,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instanceWithCustomSummaryRow!.isTotalCellFor(indexPath: IndexPath(row: 3, section: 1)))
         XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 3, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCustomSummaryRow!.isConfirmButtonCellFor(indexPath: IndexPath(row: 4, section: 1)))
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 4, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instanceWithCustomSummaryRow!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
@@ -302,19 +285,15 @@ class CheckoutViewModelTest: BaseTest {
         /// SUMARY:
         ///
         /// Productos --- $30
-        /// Confirmar
 
         self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "oxxo", paymentMethodName: "Oxxo", paymentMethodTypeId: "ticket")
 
         // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 2)
+        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1)
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isConfirmButtonCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
@@ -331,13 +310,12 @@ class CheckoutViewModelTest: BaseTest {
         /// SUMARY:
         ///
         /// Productos --- $30
-        /// Confirmar
 
         self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
         self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost()
 
         // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 2)
+        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1)
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -345,9 +323,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
-
-        XCTAssertTrue(self.instance!.isConfirmButtonCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         // Extra checks
         XCTAssertFalse(self.instance!.shouldShowInstallmentSummary())
@@ -362,13 +337,12 @@ class CheckoutViewModelTest: BaseTest {
         /// Productos --- $30
         /// Pagas --- 3X$10
         /// Total --- 30
-        /// Confirmar
 
         self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
         self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost(installments: 3)
 
         // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 4)
+        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 3)
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -379,9 +353,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 2, section: 1)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isConfirmButtonCellFor(indexPath: IndexPath(row: 3, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 3, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
@@ -396,19 +367,15 @@ class CheckoutViewModelTest: BaseTest {
         /// SUMARY:
         ///
         /// Productos --- $30
-        /// Confirmar
 
         self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "debit_card")
 
         // Number of Cells
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 2) // Productos + Confirm Button
+        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1) // Productos
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isConfirmButtonCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
@@ -427,14 +394,13 @@ class CheckoutViewModelTest: BaseTest {
         /// Descuento --- -$0
         /// Pagas --- 3X$10
         /// Total --- 30
-        /// Confirmar
 
         MercadoPagoCheckoutViewModel.flowPreference.enableDiscount()
         instanceWithCoupon!.summaryRows = []
         instanceWithCoupon!.setSummaryRows()
 
         // Number of cells
-        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 5)
+        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 4)
 
         // Cells
         XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -448,9 +414,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instanceWithCoupon!.isTotalCellFor(indexPath: IndexPath(row: 3, section: 1)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 3, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isConfirmButtonCellFor(indexPath: IndexPath(row: 4, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 4, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instanceWithCoupon!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instanceWithCoupon!.paymentData.payerCost, reviewScreenPreference: self.instanceWithCoupon!.reviewScreenPreference))
@@ -470,7 +433,6 @@ class CheckoutViewModelTest: BaseTest {
         /// Pagas --- 3X$10
         /// Total --- 30
         /// CFT Y TEA
-        /// Confirmar
 
         MercadoPagoCheckoutViewModel.flowPreference.enableDiscount()
         instanceWithCoupon!.summaryRows = []
@@ -479,7 +441,7 @@ class CheckoutViewModelTest: BaseTest {
         self.instanceWithCoupon!.paymentData.payerCost = MockBuilder.buildPayerCost(installments: 3, hasCFT: true)
 
         // Number of cells
-        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 6)
+        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 5)
 
         // Cells
         XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -496,9 +458,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instanceWithCoupon!.isPayerCostAdditionalInfoFor(indexPath: IndexPath(row: 4, section: 1)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 4, section: 1)), ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isConfirmButtonCellFor(indexPath: IndexPath(row: 5, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 5, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instanceWithCoupon!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instanceWithCoupon!.paymentData.payerCost, reviewScreenPreference: self.instanceWithCoupon!.reviewScreenPreference))
@@ -520,13 +479,12 @@ class CheckoutViewModelTest: BaseTest {
         /// Pagas --- 3X$10
         /// Total --- 30
         /// CFT Y TEA
-        /// Confirmar
 
         self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
         self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost(installments: 3, hasCFT: true)
 
         // Number of cells
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 5)
+        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 4)
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
@@ -540,9 +498,6 @@ class CheckoutViewModelTest: BaseTest {
 
         XCTAssertTrue(self.instance!.isPayerCostAdditionalInfoFor(indexPath: IndexPath(row: 3, section: 1)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 3, section: 1)), ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isConfirmButtonCellFor(indexPath: IndexPath(row: 4, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 4, section: 1)), ConfirmPaymentTableViewCell.ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
