@@ -13,11 +13,10 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     @IBOutlet weak var tableView: UITableView!
 
     var bundle: Bundle? = MercadoPago.getBundle()
-    let viewModel: AdditionalStepViewModel!
+    open let viewModel: AdditionalStepViewModel!
+    override var maxFontSize: CGFloat { get { return self.viewModel.maxFontSize } }
 
-    override open var screenName: String { get {
-        return viewModel.getScreenName()
-        } }
+    override open var screenName: String { get { return viewModel.getScreenName()} }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -42,17 +41,13 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
         let totalRowNib = UINib(nibName: "TotalPayerCostRowTableViewCell", bundle: self.bundle)
         self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
+        let bankInsterestNib = UINib(nibName: "BankInsterestTableViewCell", bundle: self.bundle)
+        self.tableView.register(bankInsterestNib, forCellReuseIdentifier: "bankInsterestNib")
     }
 
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.hideNavBar()
-
     }
 
     override open func viewDidAppear(_ animated: Bool) {
@@ -79,55 +74,28 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         fatalError("init(coder:) has not been implemented")
     }
 
-    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject?) -> Void)) {
+    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void)) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
         super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        switch indexPath.section {
-        case 0:
-            return self.viewModel.getTitleCellHeight()
-        case 1:
-            return self.viewModel.getCardSectionCellHeight()
-        case 2:
-            return self.viewModel.getBodyCellHeight(row: indexPath.row)
-
-        default:
-            return 60
-        }
-
+        return self.viewModel.heightForRowAt(indexPath: indexPath)
     }
 
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return self.viewModel.numberOfSections()
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if viewModel.showCardSection() == false {
-            if section == 0 {
-                return 1
-            } else if section == 1 {
-                return 0
-            } else {
-                return self.viewModel.numberOfCellsInBody()
-            }
-        } else {
-            if (section == 0 || section == 1) {
-                return 1
-            } else {
-                return self.viewModel.numberOfCellsInBody()
-            }
-        }
-
+        return  self.viewModel.numberOfRowsInSection(section: section)
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellWidth = self.tableView.bounds.width
 
-        if (indexPath.section == 0) {
+        if viewModel.isTitleCellFor(indexPath: indexPath) {
 
             let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! AdditionalStepTitleTableViewCell
             titleCell.selectionStyle = .none
@@ -137,79 +105,84 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
             return titleCell
 
-        } else if (indexPath.section == 1) {
+        } else if viewModel.isCardCellFor(indexPath: indexPath) {
+
+            let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
+            cardSectionCell.selectionStyle = .none
+            cardSectionCell.backgroundColor = UIColor.primaryColor()
+
             if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
-
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                cardSectionCell.loadCellView(view: cellView as! UIView)
-                cardSectionCell.selectionStyle = .none
+                cardSectionCell.loadCellView(view: cellView as? UIView)
                 cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], view: cellView)
-                cardSectionCell.backgroundColor = UIColor.primaryColor()
-
-                return cardSectionCell
-
-            } else {
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                cardSectionCell.backgroundColor = UIColor.primaryColor()
-                return cardSectionCell
             }
 
-        } else {
+            return cardSectionCell
 
-            if self.viewModel.showAmountDetailRow() {
-                if indexPath.row == 0 {
+        } else if viewModel.isBankInterestCellFor(indexPath: indexPath) {
+            let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
+                bankInsterestCell.backgroundColor = UIColor.primaryColor()
+            return bankInsterestCell
 
-                    if self.viewModel.showDiscountSection() {
-                        let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
-                        cell.contentView.viewWithTag(1)?.removeFromSuperview()
-                        let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
-                        discountBody.tag = 1
-                        cell.contentView.addSubview(discountBody)
-                        cell.selectionStyle = .none
-                        return cell
-                    } else {
-                        let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
-                        let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
-                        totalCell.fillCell(total: self.viewModel.amount)
-                        totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: Double(cellHeight))
-                        totalCell.selectionStyle = .none
-                        return totalCell as UITableViewCell
-                    }
-                } else {
-                    let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
-                    let cell = self.viewModel.dataSource[indexPath.row-1].getCell(width: Double(cellWidth), height: Double(cellHeight))
-                    return cell
-                }
-            } else {
-                let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
-                let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth), height: Double(cellHeight))
-                return cell
-            }
+        } else if viewModel.isDiscountCellFor(indexPath: indexPath) {
+            let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
+            cell.contentView.viewWithTag(1)?.removeFromSuperview()
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : DiscountBodyCell.HEIGHT), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+            discountBody.tag = 1
+            cell.contentView.addSubview(discountBody)
+            cell.selectionStyle = .none
+            return cell
+
+        } else if viewModel.isTotalCellFor(indexPath: indexPath) {
+            let cellHeight = Double(viewModel.getAmountDetailCellHeight(indexPath: indexPath))
+            let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
+            totalCell.fillCell(total: self.viewModel.amount)
+            totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: cellHeight)
+            totalCell.selectionStyle = .none
+            return totalCell as UITableViewCell
+
+        } else if viewModel.isBodyCellFor(indexPath: indexPath) {
+            let object = self.viewModel.dataSource[indexPath.row]
+            let cell = AdditionalStepCellFactory.buildCell(object: object, width: Double(cellWidth), height: Double(viewModel.getDefaultRowCellHeight()))
+            return cell
         }
+        return UITableViewCell()
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        if (indexPath.section == 2) {
-            if self.viewModel.showTotalRow() {
-                if indexPath.row != 0 {
-                    let callbackData: NSObject = self.viewModel.dataSource[indexPath.row - 1] as! NSObject
-                    self.viewModel.callback!(callbackData)
-                } else {
-                    if self.viewModel.showDiscountSection() {
+        if viewModel.isBodyCellFor(indexPath: indexPath) {
+            let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
+            self.viewModel.callback!(callbackData)
 
-                        if let coupon = self.viewModel.discount {
-                            let step = MPStepBuilder.startDetailDiscountDetailStep(coupon: coupon)
-                            self.present(step, animated: false, completion: {})
-                        }
-                    }
-
+        }
+        if self.viewModel.isDiscountCellFor(indexPath: indexPath) {
+            if let coupon = self.viewModel.discount {
+                let step = CouponDetailViewController(coupon: coupon)
+                DispatchQueue.main.async {
+                    self.present(step, animated: false, completion: {})
                 }
             } else {
-                let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
-                self.viewModel.callback!(callbackData)
+                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, callback: { (coupon) in
+                    let couponDataDict: [String: DiscountCoupon] = ["coupon": coupon]
+
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil, userInfo: couponDataDict)
+
+                    if let updateMercadoPagoCheckout = self.viewModel.couponCallback {
+                        updateMercadoPagoCheckout(coupon)
+                    }
+                })
+                DispatchQueue.main.async {
+                    self.present(step, animated: false, completion: {})
+                }
             }
+
         }
+
+    }
+
+    public func updateDataSource(dataSource: [Cellable]) {
+        self.viewModel.dataSource = dataSource
+        self.tableView.reloadData()
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -222,7 +195,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                         if 44/tableView.contentOffset.y < 0.265 && !scrollingDown {
                             card.fadeCard()
                         } else {
-                            card.containerView.alpha = 44/tableView.contentOffset.y
+                            if let container = card.containerView {
+                                container.alpha = 44/tableView.contentOffset.y
+                            }
                         }
                     }
                 }

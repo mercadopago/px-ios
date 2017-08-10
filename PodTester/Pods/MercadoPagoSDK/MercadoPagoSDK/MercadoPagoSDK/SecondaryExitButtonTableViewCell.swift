@@ -11,6 +11,7 @@ import UIKit
 class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
 
     @IBOutlet weak var button: UIButton!
+    var paymentResultScreenPreference: PaymentResultScreenPreference?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,40 +21,42 @@ class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
         self.selectionStyle = .none
     }
 
-    open func fillCell(paymentResult: PaymentResult) {
+    open func fillCell(paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) {
+        self.paymentResultScreenPreference = paymentResultScreenPreference
+
         if paymentResult.statusDetail.contains("cc_rejected_bad_filled") {
-            status = MPStepBuilder.CongratsState.cancel_RECOVER
+            status = PaymentResult.CongratsState.cancel_RECOVER
             self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
         }
         if paymentResult.status == "approved"{
-            self.button.setTitle(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedSecondaryButtonText(), for: .normal)
+            self.button.setTitle(paymentResultScreenPreference.getApprovedSecondaryButtonText(), for: .normal)
             self.button.addTarget(self, action: #selector(approvedCallback), for: .touchUpInside)
         } else if paymentResult.status == "rejected" {
-            self.button.setTitle(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedSecondaryButtonText(), for: .normal)
+            self.button.setTitle(paymentResultScreenPreference.getRejectedSecondaryButtonText(), for: .normal)
                 self.button.addTarget(self, action: #selector(rejectedCallback), for: .touchUpInside)
         } else {
-            self.button.setTitle(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSecondaryButtonText(), for: .normal)
+            self.button.setTitle(paymentResultScreenPreference.getPendingSecondaryButtonText(), for: .normal)
                 self.button.addTarget(self, action: #selector(pendingCallback), for: .touchUpInside)
         }
 
     }
 
     func rejectedCallback() {
-        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedSecondaryButtonCallback() {
+        if let paymentResult = paymentResult, let customCallback = paymentResultScreenPreference?.getRejectedSecondaryButtonCallback() {
             customCallback(paymentResult)
         } else {
             invokeCallback()
         }
     }
     func pendingCallback() {
-        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSecondaryButtonCallback() {
+        if let paymentResult = paymentResult, let customCallback = paymentResultScreenPreference?.getPendingSecondaryButtonCallback() {
             customCallback(paymentResult)
         } else {
             invokeCallback()
         }
     }
     func approvedCallback() {
-        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedSecondaryButtonCallback() {
+        if let paymentResult = paymentResult, let customCallback = paymentResultScreenPreference?.getApprovedSecondaryButtonCallback() {
             customCallback(paymentResult)
         } else {
             invokeCallback()

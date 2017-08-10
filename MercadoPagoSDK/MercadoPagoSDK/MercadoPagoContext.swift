@@ -50,7 +50,7 @@ open class MercadoPagoContext: NSObject {
     static var mpxCheckoutVersion: String {return sharedInstance.sdkVersion()}
     static var mpxPlatform: String {return sharedInstance.framework()}
     static var mpxSiteId: String {return sharedInstance.siteId()}
-    static var platformType: String {return "Native"}
+    static var platformType: String {return "native/ios"}
 
     open func framework() -> String! {
         return  "iOS"

@@ -69,6 +69,7 @@
 "cc_rejected_max_attempts_subtitle_credit_card"= "Elige otra tarjeta u otro medio de pago.";
 "cc_rejected_duplicated_payment_subtitle_credit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
 "cc_rejected_card_disabled_subtitle_credit_card"="El teléfono está al dorso de tu tarjeta.";
+"cc_rejected_call_for_authorize_subtitle_credit_card" = "";
 
 
 
@@ -78,10 +79,10 @@
 "cc_rejected_max_attempts_subtitle_debit_card"= "Elige otra tarjeta u otro medio de pago.";
 "cc_rejected_duplicated_payment_subtitle_debit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
 "cc_rejected_card_disabled_subtitle_debit_card"="El teléfono está al dorso de tu tarjeta.";
-"cc_rejected_bad_filled_other_subtitle_debit_card"="Algún dato de tu %0 es incorrecto.";
 "cc_rejected_bad_filled_card_number_subtitle_debit_card"="El número de tu %0 es incorrecto.";
 "cc_rejected_bad_filled_security_code_subtitle_debit_card"="El código de seguridad no es el correcto.";
 "cc_rejected_bad_filled_date_subtitle_debit_card"="La fecha de vencimiento no es la correcta.";
+"cc_rejected_call_for_authorize_subtitle_debit_card" = "";
 
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Algo salió mal… " = "Algo salió mal… ";
@@ -114,14 +115,31 @@
 
 
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
 " Sin interés"=" Sin interés";//--
 "¿En cuántas cuotas?" = "¿En cuántas mensualidades?";
+"No incluye intereses bancarios" = "No incluye intereses bancarios";
+
+//-- Issuers
 "¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+
+//-- Card Type
 "¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
 "Crédito" = "Crédito";
 "Débito" = "Débito";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "¿Cuál es el tipo de persona?";
+//-----EntityTypes
+"Natural"="Natural";
+"Jurídica"="Jurídica";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "¿Cuál es tu banco?";
+
+
 
 //Instructions
 
@@ -186,6 +204,9 @@
 "ryc_complementary_banamex_atm"="cajero automático de ";
 "ryc_complementary_redlink_atm"="cajero automático de ";
 
+"ryc_payment_method_redlink_atm" = "Red Link";
+"ryc_payment_method_redlink_bank_transfer" = "Red Link";
+
 //Discount
 "Código de descuento"="Código de descuento";
 "Canejar"="Canejar";
@@ -198,3 +219,10 @@
 "Importe fuera del alcance"="Importe fuera del alcance";
 "La campaña expiró"="La campaña expiró";
 
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Recuerda desbloquear tu tarjeta antes de confirmar el pago.";
+"desbloquear tu tarjeta"="desbloquear tu tarjeta";
+"Desbloqueo de Tarjeta"="Desbloqueo de Tarjeta";
+
+//Administrador de tarjetas
+"¿Con qué tarjeta?"="¿Con qué tarjeta?";

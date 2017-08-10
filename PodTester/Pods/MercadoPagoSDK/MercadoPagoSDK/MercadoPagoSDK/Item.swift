@@ -19,20 +19,18 @@ open class Item: NSObject {
     open var _id: String!
     open var quantity: Int!
     open var unitPrice: Double!
-    open var title: String!
+    open var title: String?
     open var _description: String?
     open var currencyId: String!
-    open var categoryId: String!
-    open var pictureUrl: String!
+    open var categoryId: String?
+    open var pictureUrl: String?
 
     open func validate() -> String? {
-
-        if title.isEmpty {
-            return "El título del item esta vacio".localized
-        }
-
         if currencyId.isEmpty {
             return "La currency del item esta vacia".localized
+        }
+        if quantity <= 0 {
+            return "La cantidad de items no es valida".localized
         }
 
         return nil
@@ -62,18 +60,18 @@ open class Item: NSObject {
             "unit_price": self.unitPrice,
             "title": title,
             "description": self._description,
-            "currencyId": currencyId,
-            "categoryId": categoryId,
-            "pictureUrl": pictureUrl
+            "currency_id": currencyId,
+            "category_id": categoryId,
+            "picture_url": pictureUrl,
         ]
         return JSONHandler.jsonCoding(obj)
     }
 
     open class func fromJSON(_ json: NSDictionary) -> Item {
         let item = Item()
-        if let _id = JSONHandler.attemptParseToString(json["json"]) {
-            item._id = _id
-        }
+
+        item._id = JSONHandler.getValue(of: String.self, key: "id", from: json)
+
         if let quantity = JSONHandler.attemptParseToInt(json["quantity"]) {
             item.quantity = quantity
         }
@@ -86,9 +84,9 @@ open class Item: NSObject {
         if let description = JSONHandler.attemptParseToString(json["description"]) {
             item._description = description
         }
-        if let currencyId = JSONHandler.attemptParseToString(json["currency_id"]) {
-            item.currencyId = currencyId
-        }
+
+        item.currencyId = JSONHandler.getValue(of: String.self, key: "currency_id", from: json)
+
         if let categoryId = JSONHandler.attemptParseToString(json["category_id"]) {
             item.categoryId = categoryId
         }

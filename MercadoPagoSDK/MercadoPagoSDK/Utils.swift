@@ -242,13 +242,15 @@ class Utils {
         return nil
     }
 
-    static internal func findCardInformationIn(customOptions: [CardInformation], paymentData: PaymentData) -> CardInformation? {
+    static internal func findCardInformationIn(customOptions: [CardInformation], paymentData: PaymentData, savedESCCardToken: SavedESCCardToken? = nil) -> CardInformation? {
         let customOptionsFound = customOptions.filter { (cardInformation: CardInformation) -> Bool in
             if paymentData.paymentMethod.isAccountMoney() {
                 return  cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
             } else {
                 if paymentData.token != nil {
                     return paymentData.token!.cardId == cardInformation.getCardId()
+                } else if savedESCCardToken != nil {
+                    return savedESCCardToken!.cardId == cardInformation.getCardId()
                 }
             }
             return false

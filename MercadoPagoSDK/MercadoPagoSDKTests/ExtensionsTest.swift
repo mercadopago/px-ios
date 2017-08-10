@@ -44,10 +44,12 @@ class ExtensionsTest: BaseTest {
     func testParseToQuery() {
         var dict = NSDictionary(dictionary: ["hola": "hola"])
         XCTAssertEqual(dict.parseToQuery(), "hola=hola")
-        dict = ["2": "B", "1": "A", "3": "C"]
-        XCTAssertEqual(dict.parseToQuery(), "2=B&1=A&3=C")
-        dict = ["2 sarasa": "B", "1": "A", "3": "C"]
-        XCTAssertEqual(dict.parseToQuery(), "1=A&2%20sarasa=B&3=C")
+        dict = ["2": "B", "1": "A"]
+        let query = dict.parseToQuery()
+        XCTAssert(query == "2=B&1=A" || query == "1=A&2=B")
+
+        dict = ["2 sarasa": "B"]
+        XCTAssertEqual(dict.parseToQuery(), "2%20sarasa=B")
         dict = [:]
         XCTAssertEqual(dict.parseToQuery(), "")
     }

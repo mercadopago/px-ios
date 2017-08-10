@@ -32,23 +32,23 @@ class ApprovedTableViewCell: UITableViewCell {
         setFonts()
     }
 
-    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?) {
+    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?, paymentResultScreenPreference: PaymentResultScreenPreference) {
 
         let currency = MercadoPagoContext.getCurrency()
 
-        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentIdDisable() {
+        if !paymentResultScreenPreference.isPaymentIdDisable() {
             fillID(id: paymentResult._id)
         } else {
             idInstallmentConstraint.constant = 0
         }
 
-        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isAmountDisable() {
+        if !paymentResultScreenPreference.isAmountDisable() {
             if let payerCost = paymentResult.paymentData?.payerCost {
                 fillInstallmentLabel(amount: payerCost.totalAmount, payerCost: payerCost, currency: currency)
                 fillInterestLabel(payerCost: payerCost)
                 fillTotalLabel(payerCost: payerCost, currency: currency)
 
-            } else  if let discount = paymentResult.paymentData?.discount {
+            } else  if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentResult.paymentData?.discount {
                 fillInstallmentLabel(amount: discount.newAmount(), currency: currency)
                 paymentMethodTotalConstraint.constant = 0
             } else if let amount = checkoutPreference?.getAmount() {
@@ -59,7 +59,7 @@ class ApprovedTableViewCell: UITableViewCell {
             paymentMethodTotalConstraint.constant = 0
         }
 
-        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentMethodDisable() {
+        if !paymentResultScreenPreference.isPaymentMethodDisable() {
 
             fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.paymentMethod)
 
@@ -70,10 +70,10 @@ class ApprovedTableViewCell: UITableViewCell {
 
         fillStatementDescriptionLabel(description: paymentResult.statementDescription)
 
-        if let discount = paymentResult.paymentData?.discount {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentResult.paymentData?.discount {
             let screenSize: CGRect = UIScreen.main.bounds
             let screenWidth = screenSize.width
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : 84), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : DiscountBodyCell.HEIGHT), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false, hideArrow: true)
             discountViewContent.addSubview(discountBody)
 
         } else {
@@ -108,7 +108,18 @@ class ApprovedTableViewCell: UITableViewCell {
 
     func fillInterestLabel(payerCost: PayerCost) {
         if !payerCost.hasInstallmentsRate() {
-            installmentRate.text = "Sin interés".localized
+
+            if MercadoPagoCheckout.showBankInterestWarning() {
+                installmentRate.text = "No incluye intereses bancarios".localized
+                installmentRate.font = installmentRate.font.withSize(paymentId.font.pointSize)
+                installmentRate.textColor = total.textColor
+            } else {
+                if MercadoPagoCheckout.showPayerCostDescription() {
+                    installmentRate.text = "Sin interés".localized
+                } else {
+                    installmentRate.text = ""
+                }
+            }
         }
     }
 

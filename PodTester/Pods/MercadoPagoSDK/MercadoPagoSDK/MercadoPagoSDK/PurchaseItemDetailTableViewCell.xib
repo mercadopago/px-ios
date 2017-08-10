@@ -45,7 +45,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKx-8L-Zdg">
-                        <rect key="frame" x="32" y="222.5" width="370" height="21"/>
+                        <rect key="frame" x="32" y="220.5" width="370" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Cantidad : 1">
                                 <attributes>
@@ -58,7 +58,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gs-mJ-oxp">
-                        <rect key="frame" x="32" y="243.5" width="370" height="21"/>
+                        <rect key="frame" x="32" y="241.5" width="370" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Precio Unitario : $ 870">
                                 <attributes>
@@ -76,7 +76,7 @@
                     <constraint firstItem="MTY-HS-TBY" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="1aO-nE-CtF"/>
                     <constraint firstItem="DY6-7v-ukj" firstAttribute="top" secondItem="6hX-Cr-Nbu" secondAttribute="bottom" constant="20" id="2RS-58-VDt"/>
                     <constraint firstAttribute="trailingMargin" secondItem="6hX-Cr-Nbu" secondAttribute="trailing" constant="25" id="7Wv-4J-Yxt"/>
-                    <constraint firstItem="qKx-8L-Zdg" firstAttribute="top" secondItem="DY6-7v-ukj" secondAttribute="bottom" constant="22" id="Htj-e4-bjN"/>
+                    <constraint firstItem="qKx-8L-Zdg" firstAttribute="top" secondItem="DY6-7v-ukj" secondAttribute="bottom" constant="20" id="Htj-e4-bjN"/>
                     <constraint firstAttribute="trailingMargin" secondItem="qKx-8L-Zdg" secondAttribute="trailing" constant="24" id="Iv0-T9-0IY"/>
                     <constraint firstItem="7Gs-mJ-oxp" firstAttribute="top" secondItem="qKx-8L-Zdg" secondAttribute="bottom" id="JwN-Sf-aKT"/>
                     <constraint firstItem="7Gs-mJ-oxp" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="KCT-9f-VKV"/>
@@ -98,6 +98,7 @@
                 <outlet property="itemQuantity" destination="qKx-8L-Zdg" id="4WE-rE-tl5"/>
                 <outlet property="itemTitle" destination="6hX-Cr-Nbu" id="l9c-Ly-4P6"/>
                 <outlet property="itemUnitPrice" destination="7Gs-mJ-oxp" id="a3I-mc-nP2"/>
+                <outlet property="titleDescriptionConstraint" destination="2RS-58-VDt" id="Atb-Zx-Jkm"/>
             </connections>
             <point key="canvasLocation" x="91" y="184.5"/>
         </tableViewCell>

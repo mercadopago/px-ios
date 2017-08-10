@@ -30,7 +30,7 @@
                     <rect key="frame" x="16" y="40" width="95" height="102"/>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="bKa-bF-50S" secondAttribute="height" multiplier="60:64" id="9Ql-xD-ehL"/>
+                        <constraint firstAttribute="width" secondItem="bKa-bF-50S" secondAttribute="height" multiplier="61:65" id="9Ql-xD-ehL"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOH-Rs-Q0G">

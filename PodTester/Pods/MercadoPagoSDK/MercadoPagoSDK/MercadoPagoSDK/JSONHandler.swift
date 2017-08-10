@@ -10,32 +10,6 @@ import UIKit
 
 class JSONHandler: NSObject {
 
-    /*
-    class func jsonCoding(jsonDictionary: [String:Any]) -> Any {
-        var result : Any = ""
-        do{
-            let jsonData = try JSONSerialization.data(withJSONObject: jsonArray, options: .prettyPrinted)
-            let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-            result = decoded
-        }catch{
-            print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
-        }
-        return result
-
-    }
-    
-    class func parseToJSON(data:Data) -> Any{
-        var result : Any = []
-        do{
-            result = try JSONSerialization.jsonObject(with: data, options: [])
-        }catch{
-            print("ERROR PARSIBNG JSON, ERROR = \(error)")
-        }
-        return result
-    }
-    */
-
-    //For compiling porpouse
     class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
         var result: String = ""
         do {
@@ -46,15 +20,23 @@ class JSONHandler: NSObject {
                 }
             }
             let jsonData = try JSONSerialization.data(withJSONObject: dict)
-          //  let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-            result = NSString(data: jsonData,
-                                       encoding: String.Encoding.ascii.rawValue)  as! String
-          //  result = (decoded as AnyObject).description
+            result = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue)  as! String
         } catch {
             print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
         }
         return result
 
+    }
+
+    class func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
     }
 
     class func parseToJSON(_ data: Data) -> Any {
@@ -72,7 +54,7 @@ class JSONHandler: NSObject {
         guard let _ = anyobject, let string = (anyobject! as AnyObject).description else {
             return defaultReturn
         }
-        if ( string != "<null>" ) {
+        if  string != "<null>" {
             return string
         } else {
             return defaultReturn
@@ -102,6 +84,14 @@ class JSONHandler: NSObject {
             return defaultReturn
         }
         return Int(string) ?? defaultReturn
+    }
+
+    class func getValue<T>(of type: T.Type, key: String, from json: NSDictionary) -> T {
+        guard let value = json[key] as? T else {
+            let errorPlace: String = "Error in class: \(#file) , function:  \(#function), line: \(#line)"
+            fatalError("Could not get value for key: \(key). " + errorPlace )
+        }
+        return value
     }
 
     internal class var null: NSNull { return NSNull() }

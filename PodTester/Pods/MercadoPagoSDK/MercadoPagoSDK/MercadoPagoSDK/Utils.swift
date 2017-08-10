@@ -30,6 +30,8 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class Utils {
 
+    private static let kSdkSettingsFile = "mpsdk_settings"
+
     class func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
         let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         NSLayoutConstraint.activate(widthConstraints)
@@ -52,14 +54,14 @@ class Utils {
         return dateFormatter.date(from: dateArr[0])
     }
 
-    class func getStringFromDate(_ date: Date!) -> String! {
+    class func getStringFromDate(_ date: Date?) -> Any! {
 
         if date == nil {
-            return nil
+            return JSONHandler.null
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: date)
+        return dateFormatter.string(from: date!)
     }
 
     class func getAttributedAmount(_ formattedString: String, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
@@ -92,7 +94,7 @@ class Utils {
         let smallAttributes: [String:AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName: baselineOffset as AnyObject]
 
         var symbols: String!
-        if (negativeAmount) {
+        if negativeAmount {
             symbols = "-" + currencySymbol
         } else {
             symbols = currencySymbol
@@ -134,7 +136,19 @@ class Utils {
     }
 
     class func getLightFont(size: CGFloat) -> UIFont {
-        return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+        if #available(iOS 8.2, *) {
+            return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+        } else {
+            return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+        }
+    }
+
+    class func getIdentificationFont(size: CGFloat) -> UIFont {
+        if #available(iOS 8.2, *) {
+            return UIFont(name: "KohinoorBangla-Regular", size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+        } else {
+            return UIFont(name: "KohinoorBangla-Regular", size: size) ?? UIFont.systemFont(ofSize: size)
+        }
     }
 
     class func append(firstJSON: String, secondJSON: String) -> String {
@@ -233,7 +247,7 @@ class Utils {
             if paymentData.paymentMethod.isAccountMoney() {
                 return  cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
             } else {
-                if (paymentData.token != nil) {
+                if paymentData.token != nil {
                     return paymentData.token!.cardId == cardInformation.getCardId()
                 }
             }
@@ -302,7 +316,7 @@ class Utils {
         var paymentTypeSelected = ""
 
         let paymentMethod = paymentMethods.filter({ (paymentMethod: PaymentMethod) -> Bool in
-            if (paymentMethodId.startsWith(paymentMethod._id)) {
+            if paymentMethodId.startsWith(paymentMethod._id) {
                 let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod._id)
                 // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
@@ -327,7 +341,7 @@ class Utils {
     internal static func getExpirationYearFromLabelText(_ mmyy: String) -> Int {
         let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
         let validInt = Int(stringMMYY)
-        if(validInt == nil || stringMMYY.characters.count < 4) {
+        if validInt == nil || stringMMYY.characters.count < 4 {
             return 0
         }
         let floatMMYY = Float( validInt! / 100 )
@@ -340,15 +354,26 @@ class Utils {
     internal static func getExpirationMonthFromLabelText(_ mmyy: String) -> Int {
         let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
         let validInt = Int(stringMMYY)
-        if(validInt == nil) {
+        if validInt == nil {
             return 0
         }
         let floatMMYY = Float( validInt! / 100 )
         let mm: Int = Int(floor(floatMMYY))
-        if (mm >= 1 && mm <= 12) {
+        if mm >= 1 && mm <= 12 {
             return mm
         }
         return 0
+    }
+
+    internal static func getSetting<T>(identifier: String) -> T {
+        let path = MercadoPago.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        return dictPM![identifier] as! T
+    }
+
+    static func isTesting() -> Bool {
+        let environment = ProcessInfo.processInfo.environment
+        return environment["testing"] != nil
     }
 
 }

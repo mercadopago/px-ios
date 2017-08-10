@@ -10,6 +10,10 @@ import UIKit
 
 open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 
+    var floatingConfirmButtonView: UIView!
+    var fixedButton: UIButton?
+    var floatingButton: UIButton?
+
     static let kNavBarOffset = CGFloat(-64.0)
     static let kDefaultNavBarOffset = CGFloat(0.0)
     var preferenceId: String!
@@ -20,7 +24,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     var callbackConfirm: ((PaymentData) -> Void)!
     var callbackExit: ((Void) -> Void)!
     var viewModel: CheckoutViewModel!
-    override open var screenName: String { get { return "REVIEW_AND_CONFIRM" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     fileprivate var reviewAndConfirmContent = Set<String>()
     private var statusBarView: UIView?
 
@@ -42,6 +47,14 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         MercadoPagoContext.clearPaymentKey()
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
+    }
+    override func trackInfo() {
+        var metadata = [TrackingUtil.METADATA_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.viewModel.paymentData.paymentMethod.paymentTypeId, TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.viewModel.paymentData.paymentMethod._id]
+
+        if let issuer = self.viewModel.paymentData.issuer {
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
+        }
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
 
     override func loadMPStyles() {
@@ -80,6 +93,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
         self.registerAllCells()
 
+        self.displayFloatingConfirmButton()
         self.displayStatusBar()
     }
 
@@ -153,13 +167,10 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmount(), addSeparatorLine: false)
 
         } else if self.viewModel.isPayerCostAdditionalInfoFor(indexPath: indexPath) {
-            return self.getConfirmAddtionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
+            return self.getConfirmAdditionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
 
         } else if self.viewModel.isUnlockCardCellFor(indexPath: indexPath) {
             return self.getUnlockCardCell(indexPath: indexPath)
-
-        } else if self.viewModel.isConfirmButtonCellFor(indexPath: indexPath) {
-            return self.getConfirmPaymentButtonCell(indexPath: indexPath)
 
         } else if self.viewModel.isItemCellFor(indexPath: indexPath) {
             return viewModel.hasCustomItemCells() ? self.getCustomItemCell(indexPath: indexPath) : self.getPurchaseItemDetailCell(indexPath: indexPath)
@@ -176,8 +187,10 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         } else if viewModel.isTermsAndConditionsViewCellFor(indexPath: indexPath) {
             return self.getTermsAndConditionsCell(indexPath: indexPath)
 
-        } else if viewModel.isSecondaryConfirmButton(indexPath: indexPath) {
-            return self.getConfirmPaymentButtonCell(indexPath: indexPath)
+        } else if viewModel.isConfirmButtonCellFor(indexPath: indexPath) {
+            let cell = self.getConfirmPaymentButtonCell(indexPath: indexPath) as! ConfirmPaymentTableViewCell
+            self.fixedButton = cell.confirmPaymentButton
+            return cell
 
         } else if viewModel.isExitButtonTableViewCellFor(indexPath: indexPath) {
             return self.getCancelPaymentButtonCell(indexPath: indexPath)
@@ -199,7 +212,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         MPServicesBuilder.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
                 if let error = preference.validate() {
                     // Invalid preference - cannot continue
-                    let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: error.localized, retry: false)
+                    let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
                     self.displayFailure(mpError)
                 } else {
                     self.viewModel.preference = preference
@@ -208,7 +221,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
                 }
             }, failure: { (error) in
                 // Error in service - retry
-                self.requestFailure(error, callback: {
+                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue, callback: {
                     self.loadPreference()
                     }, callbackCancel: {
                     self.navigationController!.dismiss(animated: true, completion: {})
@@ -255,8 +268,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         let purchaseUnlockCard = UINib(nibName: "UnlockCardTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseUnlockCard, forCellReuseIdentifier: "unlockCardTableViewCell")
 
-        let confirmAddtionalInfoCFT = UINib(nibName: "ConfirmAdditionalInfoTableViewCell", bundle: self.bundle)
-        self.checkoutTable.register(confirmAddtionalInfoCFT, forCellReuseIdentifier: "confirmAddtionalInfoCFT")
+        let confirmAdditionalInfoCFT = UINib(nibName: "ConfirmAdditionalInfoTableViewCell", bundle: self.bundle)
+        self.checkoutTable.register(confirmAdditionalInfoCFT, forCellReuseIdentifier: "confirmAdditionalInfoCFT")
 
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -323,8 +336,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         return purchaseSimpleDetailTableViewCell
     }
 
-    private func getConfirmAddtionalInfo( indexPath: IndexPath, payerCost: PayerCost?) -> UITableViewCell {
-        let confirmAdditionalInfoCFT = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAddtionalInfoCFT", for: indexPath) as! ConfirmAdditionalInfoTableViewCell
+    private func getConfirmAdditionalInfo( indexPath: IndexPath, payerCost: PayerCost?) -> UITableViewCell {
+        let confirmAdditionalInfoCFT = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalInfoCFT", for: indexPath) as! ConfirmAdditionalInfoTableViewCell
         confirmAdditionalInfoCFT.fillCell(payerCost: payerCost)
         return confirmAdditionalInfoCFT
     }
@@ -332,7 +345,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     private func getConfirmPaymentButtonCell(indexPath: IndexPath) -> UITableViewCell {
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
         confirmPaymentTableViewCell.confirmPaymentButton.addTarget(self, action: #selector(confirmPayment), for: .touchUpInside)
-		let confirmPaymentTitle = (indexPath.section == 1) ? viewModel.reviewScreenPreference.getConfirmButtonText() : "Confirmar".localized
+        let confirmPaymentTitle = viewModel.reviewScreenPreference.getConfirmButtonText()
         confirmPaymentTableViewCell.confirmPaymentButton.setTitle(confirmPaymentTitle, for: .normal)
         return confirmPaymentTableViewCell
     }
@@ -412,7 +425,54 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         return ""
     }
 
+    open func isConfirmButtonVisible() -> Bool {
+        guard let floatingButton = self.floatingButton, let fixedButton = self.fixedButton else {
+            return false
+        }
+        let floatingButtonCoordinates = floatingButton.convert(CGPoint.zero, from: self.view.window)
+        let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
+        return fixedButtonCoordinates.y > floatingButtonCoordinates.y
+    }
+
+    open func getFloatingButtonView() -> UIView {
+        let frame = self.viewModel.getFloatingConfirmButtonViewFrame()
+        let view = UIView(frame: frame)
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowRadius = 4
+        view.layer.shadowOpacity = 0.25
+        view.layer.masksToBounds = false
+        view.clipsToBounds = false
+        return view
+    }
+
+    open func getFloatingButtonCell() -> UITableViewCell {
+        let indexPath = IndexPath(row: 0, section: 1)
+        let frame = self.viewModel.getFloatingConfirmButtonCellFrame()
+        let cell = self.getConfirmPaymentButtonCell(indexPath: indexPath) as! ConfirmPaymentTableViewCell
+        cell.frame = frame
+        self.floatingButton = cell.confirmPaymentButton
+        return cell
+    }
+
+    open func displayFloatingConfirmButton() {
+        self.floatingConfirmButtonView = self.getFloatingButtonView()
+        let cell = self.getFloatingButtonCell()
+        self.floatingConfirmButtonView.addSubview(cell)
+        self.view.addSubview(floatingConfirmButtonView)
+        self.view.bringSubview(toFront: floatingConfirmButtonView)
+    }
+
+    public func checkFloatingButtonVisibility() {
+        if isConfirmButtonVisible() {
+            self.floatingConfirmButtonView.isHidden = true
+        } else {
+            self.floatingConfirmButtonView.isHidden = false
+        }
+    }
+
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.checkFloatingButtonVisibility()
         self.didScrollInTable(scrollView)
     }
 

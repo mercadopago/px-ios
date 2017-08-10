@@ -200,7 +200,7 @@ open class Payment: NSObject {
     }
 
     open func isRejected() -> Bool {
-        return self.status == PaymentStatus.REJECTED.rawValue
+        return self.status == PaymentStatus.REJECTED
     }
 }
 

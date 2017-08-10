@@ -19,12 +19,14 @@ open class ErrorViewController: MercadoPagoUIViewController {
     @IBOutlet weak var exitButton: MPButton!
 
     @IBOutlet weak var retryButton: MPButton!
+
     var error: MPSDKError!
     var callback: (() -> Void)?
 
-    override open var screenName: String { get { return "ERROR" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_ERROR } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_ERROR } }
 
-   open static var defaultErrorCancel: (() -> Void)?
+    open static var defaultErrorCancel: (() -> Void)?
 
     open var exitErrorCallback: (() -> Void)!
 
@@ -46,13 +48,29 @@ open class ErrorViewController: MercadoPagoUIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override open func trackInfo() {
+        var metadata: [String: String] = [:]
+
+        if let statusError = error.apiException?.status {
+            metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing:statusError)
+        }
+        if (error.apiException?.cause?.count)! > 0 && !String.isNullOrEmpty(error.apiException?.cause?[0].code) {
+            metadata[TrackingUtil.METADATA_ERROR_CODE] = error.apiException?.cause?[0].code
+        }
+
+        if !String.isNullOrEmpty(error.requestOrigin) {
+            metadata[TrackingUtil.METADATA_ERROR_REQUEST] = error.requestOrigin
+        }
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
+    }
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
 
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
 
-        self.errorSubtitle.attributedText = NSAttributedString(string :error.messageDetail, attributes: normalAttributes)
+        self.errorSubtitle.attributedText = NSAttributedString(string :error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
         self.exitButton.setTitle("Salir".localized, for: .normal)
         self.retryButton.setTitle("Reintentar".localized, for: .normal)

@@ -293,11 +293,15 @@
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
 
-    SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:YES];
+    SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:NO];
 
     [summaryRow disableAmount];
+    
+    SummaryRow *summaryRow2 = [[SummaryRow alloc] initWithCustomDescription:@"Incluye interes" descriptionColor: UIColor.grayColor customAmount:0 amountColor:UIColor.redColor separatorLine:YES];
+    
+    [summaryRow2 disableAmount];
 
-    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
+    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow,summaryRow2, nil]];
 
     [reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
 

@@ -32,7 +32,7 @@ open class MercadoPagoService: NSObject {
 
         let finalURL: NSURL = NSURL(string: url)!
             let request: NSMutableURLRequest
-            if(cache) {
+            if cache {
               request  = NSMutableURLRequest(url: finalURL as URL,
                     cachePolicy: .returnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
             } else {

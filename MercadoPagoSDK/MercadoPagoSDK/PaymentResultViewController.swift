@@ -14,9 +14,8 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     var bundle = MercadoPago.getBundle()
     var viewModel: PaymentResultViewModel!
 
-    override open var screenName: String { get {
-        return "RESULT"
-    } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT } }
 
      override open func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +37,26 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         tableView.addSubview(view)
     }
 
+    override func trackInfo() {
+
+        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                              TrackingUtil.METADATA_PAYMENT_STATUS: self.viewModel.paymentResult.status,
+                              TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.paymentResult.statusDetail,
+                              TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.paymentResult._id]
+        if let pm = self.viewModel.paymentResult.paymentData?.paymentMethod {
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
+        }
+        if let issuer = self.viewModel.paymentResult.paymentData?.issuer {
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
+        }
+        let finalId = screenId + "/" + self.viewModel.paymentResult.status
+
+        var name = screenName
+        if self.viewModel.paymentResult.isCallForAuth() {
+            name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
+        }
+        MPXTracker.trackScreen(screenId: finalId, screenName: name, metadata: metadata)
+    }
     func registerCells() {
 
         let headerNib = UINib(nibName: "HeaderCongratsTableViewCell", bundle: self.bundle)
@@ -109,7 +128,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
             return getCallForAuthCell()
 
         } else if viewModel.isContentCellFor(indexPath: indexPath) {
-            if viewModel.isCallForAuth() {
+            if viewModel.paymentResult.isCallForAuth() {
                 return getContentCell(drawLine: true)
             }
             return getContentCell(drawLine: false)
@@ -144,7 +163,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         footerNib.setCallbackStatus(callback: self.viewModel.callback, status: PaymentResult.CongratsState.ok)
         footerNib.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
 		let isSecondaryButtonDisplayed = viewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil
-        if self.viewModel.isApproved() && !isSecondaryButtonDisplayed {
+        if self.viewModel.paymentResult.isApproved() && !isSecondaryButtonDisplayed {
             ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
         }
         return footerNib

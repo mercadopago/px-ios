@@ -45,8 +45,11 @@ open class CountdownTimer: NSObject {
 
         //print("timer retain count \(CFGetRetainCount(self))")
 
+        guard let timer = self.timer else {
+            return
+        }
         guard let delegate = self.delegate  else {
-            self.timer!.invalidate()
+            timer.invalidate()
             return
         }
         secondsLeft -= 1
