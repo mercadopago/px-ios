@@ -25,17 +25,11 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        if screenName != TrackingUtil.NO_NAME_SCREEN {
-            MPXTracker.trackScreen(screenId: screenName, screenName: screenName)
-        }
         self.loadMPStyles()
     }
 
-<<<<<<< HEAD
     var tracked : Bool = false;
-    
-=======
->>>>>>> Tracking (#1113)
+
     func trackInfo() {
          MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
     }
@@ -48,12 +42,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     override open func viewDidAppear(_ animated: Bool) {
 
         super.viewDidAppear(animated)
-<<<<<<< HEAD
+
         if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
             tracked = true
-=======
-        if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID {
->>>>>>> Tracking (#1113)
             trackInfo()
         }
 
@@ -117,10 +108,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: 18)
             titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: fontChosed]
-<<<<<<< HEAD
-=======
-
->>>>>>> Integrate MLESCManager library in SDK (#1104)
             if titleDict.count > 0 {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
             }
@@ -131,10 +118,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.view.backgroundColor = UIColor.primaryColor()
-<<<<<<< HEAD
-=======
-
->>>>>>> Integrate MLESCManager library in SDK (#1104)
             //Create navigation buttons
             displayBackButton()
         }

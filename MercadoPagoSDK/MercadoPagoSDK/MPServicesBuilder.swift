@@ -33,7 +33,7 @@ open class MPServicesBuilder: NSObject {
 
     open class func createToken(baseURL: String, cardTokenJSON: String, success: @escaping (_ token: Token) -> Void, failure: ((_ error: NSError) -> Void)?) {
         let service: GatewayService = GatewayService(baseURL: baseURL)
-        service.getToken(key: MercadoPagoContext.keyValue(), cardTokenJSON: cardTokenJSON, success: {(jsonResult: AnyObject?) -> Void in
+        service.getToken(cardTokenJSON: cardTokenJSON, success: {(jsonResult: AnyObject?) -> Void in
             var token : Token
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {

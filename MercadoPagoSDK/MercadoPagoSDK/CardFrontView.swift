@@ -54,11 +54,6 @@ import UIKit
         self.backgroundView.layer.cornerRadius = radius
     }
 
-    public func setCornerRadius(radius: CGFloat) {
-        self.layer.cornerRadius = radius
-        self.backgroundView.layer.cornerRadius = radius
-    }
-
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CardFrontView", bundle: bundle)

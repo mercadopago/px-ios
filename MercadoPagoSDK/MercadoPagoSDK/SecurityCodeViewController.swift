@@ -13,13 +13,6 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     var errorLabel: MPLabel?
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
     @IBOutlet weak var panelView: UIView!
     var viewModel: SecurityCodeViewModel!
     @IBOutlet weak var cardCvvThumbnail: UIImageView!
@@ -82,10 +75,6 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
         let toolbar = UIToolbar(frame: frame)
-<<<<<<< HEAD
-=======
-
->>>>>>> Integrate MLESCManager library in SDK (#1104)
         toolbar.barStyle = UIBarStyle.default
         toolbar.backgroundColor = UIColor.mpLightGray()
         toolbar.alpha = 1

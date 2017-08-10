@@ -2587,18 +2587,8 @@
 				15B8B1C81E71DED10065DF50 /* DiscountService.swift in Sources */,
 				0F9883B61AD2AD0C00F750F0 /* Regex.swift in Sources */,
 				76EC47CA1C85E3C80086FA53 /* CardholderTest.swift in Sources */,
-<<<<<<< HEAD
-<<<<<<< HEAD
 				15840B8D1F06BF9D00701885 /* MPXReach.swift in Sources */,
 				4B0BAC421F1E81BF0097103E /* MercadoPagoCheckoutServices.swift in Sources */,
-=======
-				4B0BAC421F1E81BF0097103E /* MercadoPagoCheckoutServices.swift in Sources */,
-				15840B8D1F06BF9D00701885 /* Reach.swift in Sources */,
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-				15840B8D1F06BF9D00701885 /* MPXReach.swift in Sources */,
-				4B0BAC421F1E81BF0097103E /* MercadoPagoCheckoutServices.swift in Sources */,
->>>>>>> Tracking (#1113)
 				4BCDAC3B1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift in Sources */,
 				C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */,
 				76B085311CE51C5800C157BF /* PaymentMethodSelectedTableViewCell.swift in Sources */,

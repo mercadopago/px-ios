@@ -19,11 +19,7 @@ public class MPXTracker: NSObject {
     static let sharedInstance = MPXTracker()
     var trackListener: MPTrackListener?
 
-<<<<<<< HEAD
     static let TRACKING_URL = ServicePreference.MP_API_BASE_URL_PROD + ServicePreference.MP_TRACKING_EVENTS_URI
-=======
-    static let TRACKING_URL = "https://api.mercadopago.com/beta/checkout/tracking/events"
->>>>>>> Tracking (#1113)
     static let kTrackingSettings = "tracking_settings"
     private static let kTrackingEnabled = "tracking_enabled"
     var trackingStrategy: TrackingStrategy = RealTimeStrategy()
@@ -109,16 +105,6 @@ public class MPXTracker: NSObject {
         return obj
     }
     
-    static func isEnabled() -> Bool {
-        guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
-            return false
-        }
-        guard let trackingEnabled = trackiSettings[MPXTracker.kTrackingEnabled] as? Bool else {
-            return false
-        }
-        return trackingEnabled
-    }
-
     static func isEnabled() -> Bool {
         guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
             return false

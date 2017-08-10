@@ -28,26 +28,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search preference
         step = mpCheckout.viewModel.nextStep()
-=======
-        // 1. Search preference
-        var step = mpCheckout.viewModel.nextStep()
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-        // 1. Start
-        var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.START, step)
-
-        // 1. Search preference
-        step = mpCheckout.viewModel.nextStep()
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -130,26 +116,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search preference
         step = mpCheckout.viewModel.nextStep()
-=======
-        // 1. Search preference
-        var step = mpCheckout.viewModel.nextStep()
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-        // 1. Start
-        var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.START, step)
-
-        // 1. Search preference
-        step = mpCheckout.viewModel.nextStep()
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -232,26 +204,12 @@ class ESCFlowsTests: BaseTest {
     func testEntireFlowWithCustomerCardWithESErrorInTokenCreation() {
         XCTAssertNotNil(mpCheckout.viewModel)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search preference
         step = mpCheckout.viewModel.nextStep()
-=======
-        // 1. Search preference
-        var step = mpCheckout.viewModel.nextStep()
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-        // 1. Start
-        var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.START, step)
-
-        // 1. Search preference
-        step = mpCheckout.viewModel.nextStep()
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -341,26 +299,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search preference
         step = mpCheckout.viewModel.nextStep()
-=======
-        // 1. Search preference
-        var step = mpCheckout.viewModel.nextStep()
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-        // 1. Start
-        var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.START, step)
-
-        // 1. Search preference
-        step = mpCheckout.viewModel.nextStep()
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -469,26 +413,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search preference
         step = mpCheckout.viewModel.nextStep()
-=======
-        // 1. Search preference
-        var step = mpCheckout.viewModel.nextStep()
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-        // 1. Start
-        var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.START, step)
-
-        // 1. Search preference
-        step = mpCheckout.viewModel.nextStep()
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -594,26 +524,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search preference
         step = mpCheckout.viewModel.nextStep()
-=======
-        // 1. Search preference
-        var step = mpCheckout.viewModel.nextStep()
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-        // 1. Start
-        var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.START, step)
-
-        // 1. Search preference
-        step = mpCheckout.viewModel.nextStep()
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -682,22 +598,22 @@ class ESCFlowsTests: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_RESULT, step)
         XCTAssertFalse(mpCheckout.viewModel.saveOrDeleteESC())
-
+        
         // 10. Finish
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_FINISH, step)
-
+        
         // Ejecutar finish
         mpCheckout.executeNextStep()
     }
-
+    
 }
 open class MercadoPagoESCImplementationTest: NSObject, MercadoPagoESC {
-
+    
     public func hasESCEnable() -> Bool {
         return MercadoPagoCheckoutViewModel.flowPreference.isESCEnable()
     }
-
+    
     public func getESC(cardId: String) -> String? {
         if hasESCEnable() {
             if cardId == "esc" {
@@ -706,19 +622,19 @@ open class MercadoPagoESCImplementationTest: NSObject, MercadoPagoESC {
         }
         return nil
     }
-
+    
     public func saveESC(cardId: String, esc: String) -> Bool {
         if hasESCEnable() {
             return true
         }
         return false
     }
-
+    
     public func deleteESC(cardId: String) {
-
+        
     }
-
+    
     public func deleteAllESC() {
-
+        
     }
 }

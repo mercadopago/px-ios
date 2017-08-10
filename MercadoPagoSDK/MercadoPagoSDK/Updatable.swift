@@ -14,6 +14,4 @@ public protocol Updatable {
 
     func setCornerRadius(radius: CGFloat)
 
-    func setCornerRadius(radius: CGFloat)
-
 }

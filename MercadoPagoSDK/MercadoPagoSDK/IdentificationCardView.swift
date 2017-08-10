@@ -33,10 +33,6 @@ var view: UIView!
         self.layer.cornerRadius = radius
     }
 
-    public func setCornerRadius(radius: CGFloat) {
-        self.layer.cornerRadius = radius
-    }
-
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "IdentificationCardView", bundle: bundle)

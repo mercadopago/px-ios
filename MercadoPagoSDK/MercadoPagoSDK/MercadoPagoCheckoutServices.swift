@@ -29,15 +29,7 @@ extension MercadoPagoCheckout {
                 }
 
                 strongSelf.dismissLoading()
-<<<<<<< HEAD
-<<<<<<< HEAD
                 strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) -> Void in
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
->>>>>>> Tracking (#1113)
                     self?.getCheckoutPreference()
                 })
                 strongSelf.executeNextStep()
@@ -71,13 +63,13 @@ extension MercadoPagoCheckout {
         MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
                                                baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
 
-            guard let strongSelf = self else {
-                return
-            }
+                                                guard let strongSelf = self else {
+                                                    return
+                                                }
 
-            strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-            strongSelf.dismissLoading()
-            strongSelf.executeNextStep()
+                                                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
+                                                strongSelf.dismissLoading()
+                                                strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) -> Void in
                 guard let strongSelf = self else {
@@ -85,15 +77,7 @@ extension MercadoPagoCheckout {
                 }
 
                 strongSelf.dismissLoading()
-<<<<<<< HEAD
-<<<<<<< HEAD
                 strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] (_) -> Void in
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) -> Void in
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] (_) -> Void in
->>>>>>> Tracking (#1113)
 
                     self?.getPaymentMethodSearch()
                 })
@@ -123,15 +107,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-<<<<<<< HEAD
-<<<<<<< HEAD
             strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_ISSUERS.rawValue), errorCallback: { [weak self] (_) in
-=======
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_ISSUERS.rawValue), errorCallback: { [weak self] (_) in
->>>>>>> Tracking (#1113)
                 self?.getIssuers()
             })
             strongSelf.executeNextStep()
@@ -182,15 +158,7 @@ extension MercadoPagoCheckout {
                 guard let strongSelf = self else {
                     return
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
                 let error = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-=======
-                let error = MPSDKError.convertFrom(error)
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-                let error = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
->>>>>>> Tracking (#1113)
 
                 if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
                     if let identificationViewController = strongSelf.navigationController.viewControllers.last as? IdentificationViewController {
@@ -231,15 +199,7 @@ extension MercadoPagoCheckout {
                 }
 
                 strongSelf.dismissLoading()
-<<<<<<< HEAD
-<<<<<<< HEAD
                 strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
->>>>>>> Tracking (#1113)
                     self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
                 })
                 strongSelf.executeNextStep()
@@ -265,15 +225,7 @@ extension MercadoPagoCheckout {
                 guard let strongSelf = self else {
                     return
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
                 let mpError = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-=======
-                let mpError = MPSDKError.convertFrom(error)
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-                let mpError = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
->>>>>>> Tracking (#1113)
 
                 if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) ||  apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
 
@@ -307,15 +259,7 @@ extension MercadoPagoCheckout {
                 }
 
                 strongSelf.dismissLoading()
-<<<<<<< HEAD
-<<<<<<< HEAD
                 strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
->>>>>>> Tracking (#1113)
                     self?.cloneCardToken(token: token, securityCode: securityCode)
                 })
                 strongSelf.executeNextStep()
@@ -353,15 +297,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-<<<<<<< HEAD
-<<<<<<< HEAD
             strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] (_) in
-=======
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { [weak self] (_) in
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] (_) in
->>>>>>> Tracking (#1113)
                 self?.getPayerCosts()
             })
             strongSelf.executeNextStep()
@@ -389,32 +325,25 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(payment: payment)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-
+            
             }, failure: {[weak self] (error: NSError) -> Void in
                 guard let strongSelf = self else {
                     return
                 }
-
+                
                 strongSelf.dismissLoading()
-<<<<<<< HEAD
-<<<<<<< HEAD
                 let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
-=======
-                let mpError = MPSDKError.convertFrom(error)
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-                let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
->>>>>>> Tracking (#1113)
-
+                
                 if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
                     strongSelf.viewModel.prepareForInvalidPaymentWithESC()
                 } else {
                     strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
                         self?.createPayment()
                     })
-
+                    
                 }
                 strongSelf.executeNextStep()
         })
     }
 }
+

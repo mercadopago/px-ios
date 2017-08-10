@@ -12,15 +12,7 @@ class FlowPreferenceTest: BaseTest {
 
     let flowPreference = FlowPreference()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     func testDefaultState() {
-=======
-    func testDefaultState(){
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-    func testDefaultState() {
->>>>>>> Tracking (#1113)
         XCTAssertFalse(flowPreference.isESCEnable())
         XCTAssert(flowPreference.isReviewAndConfirmScreenEnable())
         XCTAssert(flowPreference.isPaymentResultScreenEnable())

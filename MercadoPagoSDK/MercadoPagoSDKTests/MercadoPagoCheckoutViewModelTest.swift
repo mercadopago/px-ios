@@ -36,20 +36,11 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
-<<<<<<< HEAD
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -113,19 +104,10 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -194,7 +176,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_PAYER_COST, step)
 
-        //Simular cuotas seleccionadas 
+        //Simular cuotas seleccionadas
         mpCheckout.viewModel.paymentData.payerCost = MockBuilder.buildPayerCost()
 
         // 12. RyC
@@ -254,19 +236,10 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -367,20 +340,11 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
-<<<<<<< HEAD
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
@@ -409,21 +373,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Tracking (#1113)
 
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
-<<<<<<< HEAD
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -518,19 +473,10 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         // 2. Validate preference
@@ -601,20 +547,11 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.START, step)
 
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
 
-<<<<<<< HEAD
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         // 2. Validate preference
@@ -763,9 +700,9 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         XCTAssertNotNil(mpCheckoutViewModel.search)
         XCTAssertEqual(mpCheckoutViewModel.search, paymentMethodSearchMock)
-     //   XCTAssertEqual(mpCheckoutViewModel.rootPaymentMethodOptions, mpCheckoutViewModel.paymentMethodOptions)
+        //   XCTAssertEqual(mpCheckoutViewModel.rootPaymentMethodOptions, mpCheckoutViewModel.paymentMethodOptions)
         XCTAssertEqual(mpCheckoutViewModel.availablePaymentMethods!, paymentMethodSearchMock.paymentMethods)
-     //   XCTAssertEqual(mpCheckoutViewModel.customPaymentOptions, paymentMethodSearchMock.customerPaymentMethods)
+        //   XCTAssertEqual(mpCheckoutViewModel.customPaymentOptions, paymentMethodSearchMock.customerPaymentMethods)
 
     }
 
@@ -833,7 +770,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         //   XCTAssertEqual(mpCheckoutViewModel.rootPaymentMethodOptions, mpCheckoutViewModel.paymentMethodOptions)
         XCTAssertEqual(mpCheckoutViewModel.availablePaymentMethods!, paymentMethodSearchMock.paymentMethods)
 
-         XCTAssertEqual(mpCheckoutViewModel.paymentOptionSelected!.getId(), accountMoneyOption.getCardId())
+        XCTAssertEqual(mpCheckoutViewModel.paymentOptionSelected!.getId(), accountMoneyOption.getCardId())
 
     }
 
@@ -875,7 +812,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         mpCheckoutViewModel.handleCustomerPaymentMethod()
 
-                XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod._id, "visa")
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod._id, "visa")
     }
 
     func testResetGroupSelection() {
@@ -954,39 +891,39 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let paymentResult = MockBuilder.buildPaymentResult("status", paymentMethodId: "paymentMethodId")
         let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : paymentResult, discount : nil)
-
+        
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-
+        
         flowPreference.disablePaymentResultScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-
+        
         flowPreference.enablePaymentResultScreen()
         flowPreference.disablePaymentApprovedScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-
+        
         mpCheckoutViewModel.paymentResult!.status = "approved"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-
+        
         flowPreference.enablePaymentResultScreen()
         flowPreference.enablePaymentApprovedScreen()
         flowPreference.disablePaymentPendingScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-
+        
         mpCheckoutViewModel.paymentResult!.status = "in_process"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-
+        
         flowPreference.enablePaymentResultScreen()
         flowPreference.enablePaymentApprovedScreen()
         flowPreference.enablePaymentPendingScreen()
         flowPreference.disablePaymentRejectedScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-
+        
         mpCheckoutViewModel.paymentResult!.status = "rejected"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
     }
-
+    
 }

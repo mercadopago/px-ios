@@ -58,16 +58,8 @@ open class MercadoPagoCheckout: NSObject {
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {
-<<<<<<< HEAD
-<<<<<<< HEAD
         case .START :
             self.initialize()
-=======
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
-        case .START :
-            self.initialize()
->>>>>>> Tracking (#1113)
         case .SERVICE_GET_PREFERENCE:
             self.getCheckoutPreference()
         case .ACTION_VALIDATE_PREFERENCE:
@@ -111,13 +103,6 @@ open class MercadoPagoCheckout: NSObject {
         case .SCREEN_ERROR:
             self.showErrorScreen()
         default: break
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> Integrate MLESCManager library in SDK (#1104)
-=======
->>>>>>> Tracking (#1113)
         }
     }
 
