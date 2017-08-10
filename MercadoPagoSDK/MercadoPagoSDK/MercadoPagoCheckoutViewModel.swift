@@ -655,6 +655,7 @@ extension MercadoPagoCheckoutViewModel {
         self.cleanPaymentResult()
         self.resetInformation()
         self.resetGroupSelection()
+        self.rootVC = true
     }
 
     func cleanToken() {
