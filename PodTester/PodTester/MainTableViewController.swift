@@ -132,20 +132,6 @@ class MainTableViewController: UITableViewController {
             startCheckout()
         } else if dataSource[indexPath.row].action == OptionAction.startWalletCheckout {
             startWalletCheckout()
-        } else if dataSource[indexPath.row].action == OptionAction.startPaymentVault {
-            startPaymentVault()
-        } else if dataSource[indexPath.row].action == OptionAction.startCreditCardFlow {
-            startCreditCardFlow()
-        } else if dataSource[indexPath.row].action == OptionAction.startCreditCardForm {
-            startCreditCardForm()
-        } else if dataSource[indexPath.row].action == OptionAction.startPaymentMethod {
-            startPaymentMethod()
-        } else if dataSource[indexPath.row].action == OptionAction.startIssuer {
-            startIssuer()
-        } else if dataSource[indexPath.row].action == OptionAction.startPayerCost {
-            startPayerCost()
-        } else if dataSource[indexPath.row].action == OptionAction.startCreatePayment {
-            startCreatePayment()
         }
     }
 
