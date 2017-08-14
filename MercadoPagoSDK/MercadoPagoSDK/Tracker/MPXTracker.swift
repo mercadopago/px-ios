@@ -19,7 +19,7 @@ public class MPXTracker: NSObject {
     static let sharedInstance = MPXTracker()
     var trackListener: MPTrackListener?
 
-    static let TRACKING_URL = "https://api.mercadopago.com/beta/checkout/tracking/events"
+    static let TRACKING_URL = ServicePreference.MP_API_BASE_URL_PROD + ServicePreference.MP_TRACKING_EVENTS_URI
     static let kTrackingSettings = "tracking_settings"
     private static let kTrackingEnabled = "tracking_enabled"
     var trackingStrategy: TrackingStrategy = RealTimeStrategy()
