@@ -17,6 +17,7 @@
 		FC333DDD1EA6A4A6009C746A /* EnvironmentSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC333DDC1EA6A4A6009C746A /* EnvironmentSettings.plist */; };
 		FC333DDE1EA6A4A6009C746A /* EnvironmentSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC333DDC1EA6A4A6009C746A /* EnvironmentSettings.plist */; };
 		FC579C301E0C047900F32F7B /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */; };
+		FC5DEA351F4217880094C06E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC5DEA341F4217880094C06E /* GoogleService-Info.plist */; };
 		FCCDCC1F1E0B2265005E7095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */; };
 		FCCDCC241E0B2265005E7095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCCDCC221E0B2265005E7095 /* Main.storyboard */; };
 		FCCDCC261E0B2265005E7095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCCDCC251E0B2265005E7095 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 		FC333DD91EA693A1009C746A /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		FC333DDC1EA6A4A6009C746A /* EnvironmentSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EnvironmentSettings.plist; sourceTree = "<group>"; };
 		FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
+		FC5DEA341F4217880094C06E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FCCDCC1B1E0B2265005E7095 /* PodTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCCDCC231E0B2265005E7095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 		FCCDCC1D1E0B2265005E7095 /* PodTester */ = {
 			isa = PBXGroup;
 			children = (
+				FC5DEA341F4217880094C06E /* GoogleService-Info.plist */,
 				FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */,
 				FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */,
 				FC333DD61EA67982009C746A /* SettingsViewController.swift */,
@@ -300,6 +303,7 @@
 				FCCDCC291E0B2265005E7095 /* LaunchScreen.storyboard in Resources */,
 				FCCDCC261E0B2265005E7095 /* Assets.xcassets in Resources */,
 				FC333DDD1EA6A4A6009C746A /* EnvironmentSettings.plist in Resources */,
+				FC5DEA351F4217880094C06E /* GoogleService-Info.plist in Resources */,
 				FCCDCC241E0B2265005E7095 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
