@@ -217,19 +217,19 @@ open class ServicePreference: NSObject {
             }
         }
     }
-    
+
     public func getProcessingModeString() -> String {
         return self.processingMode.rawValue
     }
-    
+
     public func setAggregatorAsProcessingMode() {
         self.processingMode = ProcessingMode.aggregator
     }
-    
+
     public func setGatewayAsProcessingMode() {
         self.processingMode = ProcessingMode.gateway
     }
-    
+
     //Turn on when hybrid is available
     /*
     public func setHybridAsProcessingMode() {
