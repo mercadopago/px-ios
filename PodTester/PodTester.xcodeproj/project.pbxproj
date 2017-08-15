@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4BDB3C191F421E9D00D5AC41 /* CheckoutConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB3C181F421E9D00D5AC41 /* CheckoutConfig.swift */; };
 		4D1BA2FFECDADE21693F8479 /* Pods_PodTesterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA4C6DA5720ADA0D959E10D /* Pods_PodTesterUITests.framework */; };
 		7977B3C2CC366377F1711AB8 /* Pods_PodTester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F6C388D4809CF09D1B5C5F /* Pods_PodTester.framework */; };
 		96268BFEE693DF0EC8A35C50 /* Pods_PodTesterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D902B45F8C5F45AB09E44105 /* Pods_PodTesterTests.framework */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4BDB3C181F421E9D00D5AC41 /* CheckoutConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutConfig.swift; sourceTree = "<group>"; };
 		788E4776CD9FAE0AEE06C75D /* Pods-PodTester.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodTester.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PodTester/Pods-PodTester.debug.xcconfig"; sourceTree = "<group>"; };
 		92F6C388D4809CF09D1B5C5F /* Pods_PodTester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PodTester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9754B13CFE395067E14B75EA /* Pods-PodTester.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodTester.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodTester/Pods-PodTester.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +104,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4BDB3C171F421E8D00D5AC41 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4BDB3C181F421E9D00D5AC41 /* CheckoutConfig.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		6755D3BF18B7247BC009309C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				FC5DEA341F4217880094C06E /* GoogleService-Info.plist */,
+				4BDB3C171F421E8D00D5AC41 /* Model */,
 				FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */,
 				FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */,
 				FC333DD61EA67982009C746A /* SettingsViewController.swift */,
@@ -471,6 +482,7 @@
 				FCCDCC1F1E0B2265005E7095 /* AppDelegate.swift in Sources */,
 				FCF85BA31EAE402E00D45589 /* Site.swift in Sources */,
 				FC579C301E0C047900F32F7B /* MainTableViewController.swift in Sources */,
+				4BDB3C191F421E9D00D5AC41 /* CheckoutConfig.swift in Sources */,
 				FC333DD71EA67982009C746A /* SettingsViewController.swift in Sources */,
 				FC333DDA1EA693A1009C746A /* SettingsViewModel.swift in Sources */,
 			);

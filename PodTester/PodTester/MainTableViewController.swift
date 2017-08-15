@@ -184,13 +184,10 @@ class MainTableViewController: UITableViewController {
 
             let flowPref: FlowPreference = FlowPreference()
 
-            if let maxShowCards = self.showMaxCards {
-                flowPref.setMaxSavedCardsToShow(fromInt: maxShowCards)
-            }
-
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
+            showRyC ? flowPreference.enableReviewAndConfirmScreen() : flowPreference.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
 
@@ -273,28 +270,20 @@ class MainTableViewController: UITableViewController {
 
     func useJSONConfig(json: [String:AnyObject]) {
 
-        let startFor: String = json["start_for"] != nil ?  json["start_for"] as! String : ""
-        let prefID: String = json["pref_id"] != nil ?  json["pref_id"] as! String : ""
-        let PK: String = json["public_key"] != nil ?  json["public_key"] as! String : ""
-        let site: String = json["site_id"] != nil ?  json["site_id"] as! String : ""
-        let payerEmail: String = json["payer_email"] != nil ?  json["payer_email"] as! String : ""
-        let items: [NSDictionary] = json["items"] != nil ?  json["items"] as! [NSDictionary] : []
-        let maxCards = json["show_max_saved_cards"] != nil ? json["show_max_saved_cards"] as? Int : nil
-        let flowPreference = json["flow_preference"] != nil ? FlowPreference.fromJSON(json["flow_preference"] as! NSDictionary) : FlowPreference()
+        let checkoutConfig = CheckoutConfig.fromJson(json as NSDictionary)
 
-        self.flowPreference = flowPreference
+        self.publicKey = checkoutConfig.publicKey
+        self.accessToken = checkoutConfig.accessToken
+        self.flowPreference = checkoutConfig.flowPreference
+        self.customCheckoutPref = checkoutConfig.checkoutPreference
 
-        switch startFor {
+        switch checkoutConfig.startFor {
         case startForOptions.payment.rawValue:
-            self.publicKey = PK
-            self.prefID = prefID
-            self.showMaxCards = maxCards
+            // Flujo normal
+            break
         case startForOptions.paymentData.rawValue:
-            self.publicKey = PK
-            MercadoPagoContext.setSiteID(site)
-            let pref = createCheckoutPreference(payerEmail: payerEmail, site: site, itemsDictArray: items)
-            self.customCheckoutPref = pref
-            self.showMaxCards = maxCards
+            // Prender Caso Wallet
+            break
         default: break
         }
     }
