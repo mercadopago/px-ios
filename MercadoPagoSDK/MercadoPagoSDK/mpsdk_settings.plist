@@ -7,7 +7,7 @@
 	<key>prod_mp_api_environment</key>
 	<true/>
 	<key>sdk_version</key>
-	<string>3.2.2</string>
+	<string>3.3.0</string>
 	<key>tracking_settings</key>
 	<dict>
 		<key>tracking_enabled</key>
