@@ -198,7 +198,7 @@ class CheckoutViewModelTest: BaseTest {
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
+        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
@@ -293,7 +293,7 @@ class CheckoutViewModelTest: BaseTest {
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
+        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
@@ -319,7 +319,7 @@ class CheckoutViewModelTest: BaseTest {
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
+        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
@@ -375,7 +375,7 @@ class CheckoutViewModelTest: BaseTest {
 
         // Cells
         XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
+        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
 
         XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))

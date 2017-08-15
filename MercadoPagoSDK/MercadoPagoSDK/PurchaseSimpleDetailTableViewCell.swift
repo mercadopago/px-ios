@@ -11,6 +11,7 @@ import UIKit
 class PurchaseSimpleDetailTableViewCell: UITableViewCell {
 
     static let PRODUCT_ROW_HEIGHT = CGFloat(30)
+    static let PRODUCT_ONLY_ROW_HEIGHT = CGFloat(70)
     static let TOTAL_ROW_HEIGHT = CGFloat(58)
 
     @IBOutlet weak var titleLabel: MPLabel!
