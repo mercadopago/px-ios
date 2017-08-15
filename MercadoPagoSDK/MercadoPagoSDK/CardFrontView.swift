@@ -48,11 +48,6 @@ import UIKit
         backgroundView.backgroundColor = paymentMethod.getColor(bin: token?.getCardBin())
 
     }
-    
-    public func setCornerRadius(radius: CGFloat) {
-        self.layer.cornerRadius = radius
-        self.backgroundView.layer.cornerRadius = radius
-    }
 
     public func setCornerRadius(radius: CGFloat) {
         self.layer.cornerRadius = radius

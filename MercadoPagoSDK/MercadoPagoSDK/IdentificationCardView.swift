@@ -28,10 +28,6 @@ var view: UIView!
     public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
 
     }
-    
-    public func setCornerRadius(radius: CGFloat) {
-        self.layer.cornerRadius = radius
-    }
 
     public func setCornerRadius(radius: CGFloat) {
         self.layer.cornerRadius = radius
