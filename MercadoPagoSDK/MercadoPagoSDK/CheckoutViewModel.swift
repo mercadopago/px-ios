@@ -105,7 +105,7 @@ open class CheckoutViewModel: NSObject {
             return 60
 
         } else if self.isProductlCellFor(indexPath: indexPath) {
-            return PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
+            return numberOfRowsInMainSection() == 1 ? PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT : PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
 
         } else if self.isInstallmentsCellFor(indexPath: indexPath) {
             return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
