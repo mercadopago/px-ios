@@ -75,4 +75,25 @@ class ServicePreferenceTest: BaseTest {
 
         XCTAssertTrue(servicePreference.isCheckoutPreferenceSet())
     }
+    
+    public func testSetAggregatorAsProcessingModeAndEnableBankDeals() {
+        let servicePreference = ServicePreference()
+        servicePreference.setAggregatorAsProcessingMode()
+        XCTAssertEqual(servicePreference.getProcessingModeString(), ProcessingMode.aggregator.rawValue)
+        XCTAssertTrue(servicePreference.shouldShowBankDeals())
+    }
+    
+    public func testSetGatewayAsProcessingModeAndDisableBankDeals() {
+        let servicePreference = ServicePreference()
+        servicePreference.setGatewayAsProcessingMode()
+        XCTAssertEqual(servicePreference.getProcessingModeString(), ProcessingMode.gateway.rawValue)
+        XCTAssertFalse(servicePreference.shouldShowBankDeals())
+    }
+    
+    public func testSetHybridAsProcessingModeAndDisableBankDeals() {
+        let servicePreference = ServicePreference()
+        servicePreference.setHybridAsProcessingMode()
+        XCTAssertEqual(servicePreference.getProcessingModeString(), ProcessingMode.hybrid.rawValue)
+        XCTAssertFalse(servicePreference.shouldShowBankDeals())
+    }
 }

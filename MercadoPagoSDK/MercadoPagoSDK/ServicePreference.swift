@@ -233,6 +233,10 @@ open class ServicePreference: NSObject {
     public func setHybridAsProcessingMode() {
         self.processingMode = ProcessingMode.hybrid
     }
+    
+    internal func shouldShowBankDeals() -> Bool {
+        return self.processingMode == ProcessingMode.aggregator
+    }
  
 }
 

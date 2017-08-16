@@ -248,6 +248,6 @@ open class CardViewModelManager: NSObject {
     }
 
     func showBankDeals() -> Bool {
-        return !Array.isNullOrEmpty(self.promos) && CardFormViewController.showBankDeals
+        return !Array.isNullOrEmpty(self.promos) && CardFormViewController.showBankDeals && MercadoPagoCheckoutViewModel.servicePreference.shouldShowBankDeals()
     }
 }
