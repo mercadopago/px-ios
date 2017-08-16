@@ -229,17 +229,15 @@ open class ServicePreference: NSObject {
     public func setGatewayAsProcessingMode() {
         self.processingMode = ProcessingMode.gateway
     }
-
-    //Turn on when hybrid is available
-    /*
+    
     public func setHybridAsProcessingMode() {
-        self.processingMode = ProcessingModes.hybrid
+        self.processingMode = ProcessingMode.hybrid
     }
-    */
+ 
 }
 
 public enum ProcessingMode: String {
     case gateway = "gateway"
     case aggregator = "aggregator"
-    case hybrid = "hybrid"
+    case hybrid = "gateway,aggregator"
 }
