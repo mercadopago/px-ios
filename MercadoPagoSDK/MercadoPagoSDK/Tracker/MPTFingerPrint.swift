@@ -81,13 +81,25 @@ class ScreenTrackInfo {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        var timestamp = formatter.string(from: date)
+        timestamp = timestamp.replacingOccurrences(of: " AM", with: "X1")
+        timestamp = timestamp.replacingOccurrences(of: " PM", with: "X2")
+        timestamp = timestamp.replacingOccurrences(of: " ", with: "T")
+        timestamp = timestamp.replacingOccurrences(of: "X1", with: " AM")
+        timestamp = timestamp.replacingOccurrences(of: "X2", with: " PM")
+        //let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
         self.timestamp = timestamp
         self.type = "screenview"
     }
     func toJSON() -> [String:Any] {
+        var timestamp = self.timestamp
+        timestamp = timestamp.replacingOccurrences(of: " AM", with: "X1")
+        timestamp = timestamp.replacingOccurrences(of: " PM", with: "X2")
+        timestamp = timestamp.replacingOccurrences(of: " ", with: "T")
+        timestamp = timestamp.replacingOccurrences(of: "X1", with: " AM")
+        timestamp = timestamp.replacingOccurrences(of: "X2", with: " PM")
         var obj: [String:Any] = [
-            "timestamp": self.timestamp.replacingOccurrences(of: " ", with: "T"),
+            "timestamp": timestamp,
             "type": self.type,
             "screen_id": self.screenId,
             "screen_name": self.screenName,
