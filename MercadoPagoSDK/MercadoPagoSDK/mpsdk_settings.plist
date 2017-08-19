@@ -11,7 +11,7 @@
 	<key>tracking_settings</key>
 	<dict>
 		<key>tracking_enabled</key>
-		<false/>
+		<true/>
 		<key>persist_tracks</key>
 		<true/>
 		<key>max_batch_size</key>
