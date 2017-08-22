@@ -33,6 +33,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
 
         var frame = self.tableView.bounds
         frame.origin.y = -frame.size.height
+        frame.size.width = UIScreen.main.bounds.width
         let view = UIView(frame: frame)
         view.backgroundColor = self.color
         tableView.addSubview(view)
