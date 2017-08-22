@@ -42,7 +42,7 @@ open class InstructionsService: MercadoPagoService {
         }
         params = params + "&api_version=" + ServicePreference.API_VERSION
 
-        let headers = [MercadoPagoContext.getLanguage(): "Accept-Language"]
+        let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]
 
         self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (jsonResult) -> Void in
 
