@@ -216,25 +216,37 @@ open class ServicePreference: NSObject {
             }
         }
     }
-    
+
     public func getProcessingModeString() -> String {
         return self.processingMode.rawValue
     }
-    
+
     public func setAggregatorAsProcessingMode() {
         self.processingMode = ProcessingMode.aggregator
     }
-    
+
     public func setGatewayAsProcessingMode() {
         self.processingMode = ProcessingMode.gateway
     }
-    
-    //Turn on when hybrid is available
-    /*
-    public func setHybridAsProcessingMode() {
-        self.processingMode = ProcessingModes.hybrid
+
+    open class func fromJSON(_ json: NSDictionary) -> ServicePreference {
+        let servicePreference = ServicePreference()
+        servicePreference.customerURL = json["get_customer_url"] as? String
+        servicePreference.customerURI = json["get_customer_uri"] as? String ?? ""
+        servicePreference.customerAdditionalInfo = json["get_customer_additional_info"] as? NSDictionary
+        servicePreference.checkoutPreferenceURL = json["create_checkout_preference_url"] as? String
+        servicePreference.checkoutPreferenceURI = json["create_checkout_preference_uri"] as? String ?? ""
+        servicePreference.customerAdditionalInfo = json["create_checkout_preference_additional_info"] as? NSDictionary
+        servicePreference.paymentURL = json["create_payment_url"] as? String ?? MP_API_BASE_URL
+        servicePreference.paymentURI = json["create_payment_uri"] as? String ?? MP_PAYMENTS_URI + "?api_version=" + API_VERSION
+        servicePreference.paymentAdditionalInfo = json["create_payment_additional_info"] as? NSDictionary
+        servicePreference.discountURL = json["get_merchant_discount_url"] as? String ?? MP_API_BASE_URL
+        servicePreference.discountURI = json["get_merchant_discount_uri"] as? String ?? MP_DISCOUNT_URI
+        servicePreference.discountAdditionalInfo = json["get_discount_additional_info"] as? NSDictionary
+        servicePreference.processingMode = json["processing_mode"] as? ProcessingMode ?? ProcessingMode.aggregator
+
+        return servicePreference
     }
-    */
 }
 
 public enum ProcessingMode: String {

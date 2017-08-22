@@ -52,6 +52,8 @@ class MainTableViewController: UITableViewController {
     open var color: UIColor!
     open var configJSON: String!
     open var flowPreference = FlowPreference()
+    open var decorationPreference = DecorationPreference()
+    open var servicePreference = ServicePreference()
 
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
 
@@ -246,7 +248,6 @@ class MainTableViewController: UITableViewController {
         self.payment.status = "rejected"
         self.payment.statusDetail = "cc_rejected_call_for_authorize"
         self.payment.payer = Payer(_id: "1", email: "asd@asd.com", type: nil, identification: nil, entityType: nil)
-        //  self.payment.payer.email = "as@asd.com"
         self.payment.statementDescriptor = "description"
         let PR = PaymentResult(payment: self.payment, paymentData: self.paymentData)
         loadCheckout( paymentData: self.paymentData, paymentResult: PR)
@@ -276,6 +277,8 @@ class MainTableViewController: UITableViewController {
         self.accessToken = checkoutConfig.accessToken
         self.flowPreference = checkoutConfig.flowPreference
         self.customCheckoutPref = checkoutConfig.checkoutPreference
+        self.decorationPreference = checkoutConfig.decorationPreference
+        self.servicePreference = checkoutConfig.servicePreference
 
         switch checkoutConfig.startFor {
         case startForOptions.payment.rawValue:

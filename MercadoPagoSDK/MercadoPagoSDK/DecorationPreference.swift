@@ -9,10 +9,14 @@
 import Foundation
 
 open class DecorationPreference: NSObject {
+
+    static var DEFAULT_FONT_REGULAR_NAME = ".SFUIDisplay-Regular"
+    static var DEFAULT_FONT_LIGHT_NAME = ".SFUIDisplay-Light"
+
     var baseColor: UIColor
     var textColor: UIColor = UIColor.white
-    var fontName: String = ".SFUIDisplay-Regular"
-    var fontLightName: String = ".SFUIDisplay-Light"
+    var fontName: String = DecorationPreference.DEFAULT_FONT_REGULAR_NAME
+    var fontLightName: String = DecorationPreference.DEFAULT_FONT_LIGHT_NAME
 
     public init(baseColor: UIColor = UIColor.px_blueMercadoPago()) {
         self.baseColor = baseColor
@@ -47,11 +51,11 @@ open class DecorationPreference: NSObject {
     }
 
     public func setMercadoPagoFont() {
-        fontName = ".SFUIDisplay-Regular"
+        fontName = DecorationPreference.DEFAULT_FONT_REGULAR_NAME
     }
 
     public func setMercadoPagoLightFont() {
-        fontLightName = ".SFUIDisplay-Light"
+        fontLightName = DecorationPreference.DEFAULT_FONT_LIGHT_NAME
     }
 
     public func getBaseColor() -> UIColor {
@@ -68,5 +72,29 @@ open class DecorationPreference: NSObject {
 
     public func getFontName() -> String {
         return fontName
+    }
+
+    open class func fromJSON(_ json: NSDictionary) -> DecorationPreference {
+        let decorationPreference = DecorationPreference()
+
+        if let baseColor = json["base_color"] as? String {
+            decorationPreference.baseColor = UIColor.fromHex(baseColor)
+        } else {
+            decorationPreference.setMercadoPagoBaseColor()
+        }
+
+        if let darkFontEnable = json["dark_font_enable"] as? Bool {
+            if darkFontEnable {
+                decorationPreference.enableDarkFont()
+            }
+            else {
+                decorationPreference.enableLightFont()
+            }
+
+        } else {
+            decorationPreference.enableLightFont()
+        }
+
+        return decorationPreference
     }
 }
