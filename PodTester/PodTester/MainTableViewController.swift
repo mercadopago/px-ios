@@ -331,7 +331,9 @@ class MainTableViewController: UITableViewController {
             items.append(item)
         }
 
-        return CheckoutPreference(items: items, payer: payer)
+        let checkoutPreference = CheckoutPreference(items: items, payer: payer)
+        checkoutPreference.siteId = site
+        return checkoutPreference
     }
 
     func convertStringToDictionary(_ text: String) throws -> [String:AnyObject]? {
