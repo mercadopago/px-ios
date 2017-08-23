@@ -121,6 +121,11 @@
 "Ingresa el nombre y apellido impreso en la tarjeta"="Ingresa el nombre y apellido impreso en la tarjeta";
 "Ingresa los %1$s números del código de seguridad"="Ingresa los %1$s números del código de seguridad";
 "Método de pago no soportado"="Método de pago no soportado";
+"Solo puedes pagar con "="Solo puedes pagar con ";
+"No puedes pagar con esta tarjeta"="No puedes pagar con esta tarjeta";
+"MAS INFO"="MÁS INFO";
+"Ingresar tarjeta"="Ingresar tarjeta";
+"No te preocupes, aún puedes terminar tu pago con:"="No te preocupes, aún puedes terminar tu pago con:";
 
 "Nombre y apellido"="Nombre y apellido";
 

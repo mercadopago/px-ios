@@ -109,6 +109,11 @@
 "Ingresa el nombre y apellido impreso en la tarjeta"="Enter the name and last name printed on the card";
 "Ingresa los %1$s números del código de seguridad"="Enter the %1$s security code numbers";
 "Método de pago no soportado"="Payment Method no supported";
+"Solo puedes pagar con "="You can only pay with ";
+"No puedes pagar con esta tarjeta"="Credit card not supported";
+"MAS INFO"="MORE INFO";
+"Ingresar tarjeta"="Enter Card";
+"No te preocupes, aún puedes terminar tu pago con:"="Don’t worry, you can still pay with:";
 
 "Nombre y apellido"="Name and surname";
 

@@ -105,6 +105,11 @@
 "Ingresa el nombre y apellido impreso en la tarjeta"="Digite o nome e sobrenome impresso no cartão";
 "Ingresa los %1$s números del código de seguridad"="Digite os %1$s números do código de segurança";
 "Método de pago no soportado"="Você não pode pagar com este método de pagamento";
+"Solo puedes pagar con "="Você só pode pagar com ";
+"No puedes pagar con esta tarjeta"="Você não pode pagar com este cartão";
+"MAS INFO"="MAIS INFO";
+"Ingresar tarjeta"="Insira o cartão";
+"No te preocupes, aún puedes terminar tu pago con:"="Não se preocupe, você ainda pode terminar o seu pagamento com:";
 "Salir" = "Sair";
 "Reintentar" = "Tentar novamente";
 "Hubo un error" = "Ocorreu um erro";

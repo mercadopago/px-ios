@@ -78,6 +78,9 @@ open class PaymentMethodSearchItem: Equatable, PaymentOptionDrawable, PaymentMet
     }
 
     public func getSubtitle() -> String? {
+        if self.idPaymentMethodSearchItem == PaymentTypeId.CREDIT_CARD.rawValue || self.idPaymentMethodSearchItem == PaymentTypeId.DEBIT_CARD.rawValue || self.idPaymentMethodSearchItem == PaymentTypeId.PREPAID_CARD.rawValue {
+            return nil
+        }
         return self.comment
     }
 

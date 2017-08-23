@@ -47,10 +47,13 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     var toolbar: UIToolbar?
     var errorLabel: MPLabel?
+    var onlyOnePaymentMethodLabel: MPLabel?
 
     var navItem: UINavigationItem?
 
     var cardFormManager: CardViewModelManager!
+    
+    var paymentMethods: [PaymentMethod]?
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM} }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM } }
@@ -59,6 +62,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
        super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.cardFormManager = cardFormManager
         self.callback = callback
+        self.paymentMethods = cardFormManager.getPaymentMethods()
     }
 
     override func trackInfo() {
@@ -317,6 +321,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     open func editingChanged(_ textField: UITextField) {
         hideErrorMessage()
+        showOnlyOneCardMessage()
         if editingLabel == cardNumberLabel {
             editingLabel?.text = textMaskFormater.textMasked(textEditMaskFormater.textUnmasked(textField.text!))
             textField.text! = textEditMaskFormater.textMasked(textField.text!, remasked: true)
@@ -525,7 +530,60 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.delegate = self
         self.toolbar = toolbar
         textBox.inputAccessoryView = toolbar
+        
+        showOnlyOneCardMessage()
 
+    }
+    
+    func setOnlyOneCardMessage(message: String,color: UIColor, isError: Bool){
+        onlyOnePaymentMethodLabel = MPCardFormToolbarLabel(frame: toolbar!.frame)
+        guard let onlyOnePaymentMethodLabel = onlyOnePaymentMethodLabel else {
+            return
+        }
+        onlyOnePaymentMethodLabel.backgroundColor = color
+        onlyOnePaymentMethodLabel.textColor = UIColor.white
+        onlyOnePaymentMethodLabel.text = message
+        onlyOnePaymentMethodLabel.adjustsFontSizeToFitWidth = true
+        
+        setTextBox(isError: isError, inputAccessoryView: onlyOnePaymentMethodLabel)
+        
+    }
+    
+    func showOnlyOneCardMessage(){
+        if self.paymentMethods?.count == 1{
+        
+            setOnlyOneCardMessage(message: "Solo puedes pagar con ".localized + (self.paymentMethods?[0].name)!, color: UIColor.px_grayBaseText(), isError: false)
+        
+        }
+    }
+    
+    func showCreditCardNotSupportedErrorMessage(_ errorMessage: String) {
+        
+        if self.paymentMethods != nil {
+            
+            if self.paymentMethods?.count == 1{
+            
+                setOnlyOneCardMessage(message: "Solo puedes pagar con ".localized + (self.paymentMethods?[0].name)!, color: UIColor.mpRedPinkErrorMessage(), isError: true)
+            
+            }else{
+                
+                let cardNotAvailableError = CardNotAvailableErrorView(frame: toolbar!.frame, paymentMethods: paymentMethods!, navigationController: navigationController!)
+                
+                setTextBox(isError: true, inputAccessoryView: cardNotAvailableError)
+
+            }
+        }
+    }
+    
+    func setTextBox(isError: Bool,inputAccessoryView: UIView){
+        if(isError){
+            textBox.borderInactiveColor = UIColor.red
+            textBox.borderActiveColor = UIColor.red
+        }
+        textBox.inputAccessoryView = inputAccessoryView
+        textBox.setNeedsDisplay()
+        textBox.resignFirstResponder()
+        textBox.becomeFirstResponder()
     }
 
     func showErrorMessage(_ errorMessage: String) {
@@ -536,12 +594,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        textBox.borderInactiveColor = UIColor.red
-        textBox.borderActiveColor = UIColor.red
-        textBox.inputAccessoryView = errorLabel
-        textBox.setNeedsDisplay()
-        textBox.resignFirstResponder()
-        textBox.becomeFirstResponder()
+        setTextBox(isError: true, inputAccessoryView: errorLabel!)
     }
 
     func hideErrorMessage() {
@@ -672,7 +725,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             self.clearCardSkin()
             return
         }
-        if textEditMaskFormater.textUnmasked(textBox.text).characters.count>=6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil {
+        if textEditMaskFormater.textUnmasked(textBox.text).characters.count>=6 || cardFormManager.customerCard != nil ||
+            cardFormManager.cardToken != nil {
+            hideErrorMessage()
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
@@ -706,7 +761,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                 textEditMaskFormater = textEditMaskFormaterAux
             } else {
                 self.clearCardSkin()
-                showErrorMessage("Método de pago no soportado".localized)
+                showCreditCardNotSupportedErrorMessage("Método de pago no soportado".localized);
                 return
             }
 

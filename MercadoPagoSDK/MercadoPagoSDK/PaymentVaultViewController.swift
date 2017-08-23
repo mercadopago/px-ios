@@ -364,6 +364,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         return cell
 
     }
+    
 
     fileprivate let itemsPerRow: CGFloat = 2
 
