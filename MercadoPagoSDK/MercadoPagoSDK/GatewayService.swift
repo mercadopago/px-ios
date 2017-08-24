@@ -10,8 +10,12 @@ import Foundation
 
 open class GatewayService: MercadoPagoService {
 
-    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", key: String, cardTokenJSON: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
-        self.request(uri: url, params: MercadoPagoContext.keyType() + "=" + key, body: cardTokenJSON, method: method, success: success, failure: { (error) -> Void in
+    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+
+        var params = "\(MercadoPagoContext.PRIVATE_KEY)=\(MercadoPagoContext.payerAccessToken())"
+        params += "&\(MercadoPagoContext.PUBLIC_KEY)=\(MercadoPagoContext.publicKey())"
+
+        self.request(uri: url, params: params, body: cardTokenJSON, method: method, success: success, failure: { (error) -> Void in
             if let failure = failure {
                 failure(NSError(domain: "mercadopago.sdk.GatewayService.getToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
             }

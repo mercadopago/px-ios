@@ -33,7 +33,7 @@ open class MPServicesBuilder: NSObject {
 
     open class func createToken(baseURL: String, cardTokenJSON: String, success: @escaping (_ token: Token) -> Void, failure: ((_ error: NSError) -> Void)?) {
         let service: GatewayService = GatewayService(baseURL: baseURL)
-        service.getToken(key: MercadoPagoContext.keyValue(), cardTokenJSON: cardTokenJSON, success: {(jsonResult: AnyObject?) -> Void in
+        service.getToken(cardTokenJSON: cardTokenJSON, success: {(jsonResult: AnyObject?) -> Void in
             var token : Token
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
@@ -77,7 +77,7 @@ open class MPServicesBuilder: NSObject {
                                       failure: ((_ error: NSError) -> Void)?) {
 
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getPaymentMethods(key: MercadoPagoContext.keyValue(), success: {(jsonResult: AnyObject?) -> Void in
+        service.getPaymentMethods(success: {(jsonResult: AnyObject?) -> Void in
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
                     if failure != nil {
@@ -105,7 +105,7 @@ open class MPServicesBuilder: NSObject {
                                            failure: ((_ error: NSError) -> Void)?) {
 
         let service: IdentificationService = IdentificationService(baseURL: baseURL)
-        service.getIdentificationTypes(key: MercadoPagoContext.keyValue(), success: {(jsonResult: AnyObject?) -> Void in
+        service.getIdentificationTypes(success: {(jsonResult: AnyObject?) -> Void in
 
             if let error = jsonResult as? NSDictionary {
                 if (error["status"]! as? Int) == 404 {
@@ -134,14 +134,14 @@ open class MPServicesBuilder: NSObject {
                                     failure: @escaping ((_ error: NSError) -> Void)) {
 
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getInstallments(key: MercadoPagoContext.keyValue(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
+        service.getInstallments(bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
 
     }
 
     open class func getIssuers(_ paymentMethod: PaymentMethod, bin: String? = nil, baseURL: String = ServicePreference.MP_API_BASE_URL, success: @escaping (_ issuers: [Issuer]) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getIssuers(key: MercadoPagoContext.keyValue(), payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
+        service.getIssuers(payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
 
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {

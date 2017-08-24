@@ -29,16 +29,21 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentService: MercadoPagoService {
 
-    open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, key: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: uri, params: MercadoPagoContext.keyType() + "=" + key, body: nil, method: method, success: success, failure: { (error) in
+    open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+
+        var params = "\(MercadoPagoContext.PRIVATE_KEY)=\(MercadoPagoContext.payerAccessToken())"
+        params += "&\(MercadoPagoContext.PUBLIC_KEY)=\(MercadoPagoContext.publicKey())"
+
+        self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) in
             if let failure = failure {
             failure(NSError(domain: "mercadopago.sdk.paymentService.getPaymentMethods", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
             }
             })
     }
 
-    open func getInstallments(_ method: String = "GET", uri: String = ServicePreference.MP_INSTALLMENTS_URI, key: String, bin: String?, amount: Double, issuer_id: String?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        var params: String = MercadoPagoContext.keyType() + "=" + key
+    open func getInstallments(_ method: String = "GET", uri: String = ServicePreference.MP_INSTALLMENTS_URI, bin: String?, amount: Double, issuer_id: String?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        var params = "\(MercadoPagoContext.PRIVATE_KEY)=\(MercadoPagoContext.payerAccessToken())"
+        params += "&\(MercadoPagoContext.PUBLIC_KEY)=\(MercadoPagoContext.publicKey())"
         if bin != nil {
                     params = params + "&bin=" + bin!
         }
@@ -76,8 +81,10 @@ open class PaymentService: MercadoPagoService {
         })
     }
 
-    open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, key: String, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        var params = MercadoPagoContext.keyType() + "=" + key + "&payment_method_id=" + payment_method_id
+    open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        var params = "\(MercadoPagoContext.PRIVATE_KEY)=\(MercadoPagoContext.payerAccessToken())"
+            params += "&\(MercadoPagoContext.PUBLIC_KEY)=\(MercadoPagoContext.publicKey())"
+            params += "&payment_method_id=" + payment_method_id
         
         params = params + "&processing_mode=" + MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString()
 
