@@ -151,6 +151,11 @@ extension MercadoPagoCheckout {
                 }
         })
 
+        checkoutVC.callbackCancel = {
+            self.viewModel.payerCosts = nil
+            self.viewModel.paymentData.payerCost = nil
+        }
+
         self.pushViewController(viewController: checkoutVC, animated: true, completion: {
             self.cleanNavigationStack()
         })
