@@ -26,7 +26,7 @@ open class ServicePreference: NSObject {
 
     static let MP_ALPHA_ENV = "/gamma"
     open static var MP_TEST_ENV = "/beta"
-    open static let MP_PROD_ENV = "/v1"
+    open static var MP_PROD_ENV = "/v1"
     open static var MP_SELECTED_ENV = MP_PROD_ENV
 
     static var API_VERSION = "1.3.X"
@@ -60,9 +60,14 @@ open class ServicePreference: NSObject {
     static let MP_CUSTOMER_URI = "/customers?preference_id="
     static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
 
-    private static let kIsProdApiEnvironemnt = "prod_mp_api_environment"
-    private static let kShouldGoToWrapperInstallments = "go_to_wrapper_installments"
-    private static let kShouldGoToWrapperIssuers = "go_to_wrapper_issuers"
+    private static let kIsProdApiEnvironemnt = "prod_api_environment"
+
+    private static let kServiceSettings = "services_settings"
+    private static let kURIInstallments = "uri_installments"
+    private static let kURIIssuers = "uri_issuers"
+    private static let kOPURI = "op_uri"
+    private static let kWrapperURI = "wrapper_uri"
+    private static let kShouldUseWrapper = "should_use_wrapper"
 
     private var useDefaultPaymentSettings = true
     private var defaultDiscountSettings = true
@@ -216,33 +221,40 @@ open class ServicePreference: NSObject {
         if Utils.isTesting() {
             ServicePreference.MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
         } else {
-            let isProdEnvironment: Bool = Utils.getSetting(identifier: ServicePreference.kIsProdApiEnvironemnt)
+
+            guard let serviceSettings: [String:Any] = Utils.getSetting(identifier: ServicePreference.kServiceSettings) else {
+                return
+            }
+
+            guard let isProdEnvironment = serviceSettings[ServicePreference.kIsProdApiEnvironemnt] as? Bool else {
+                return
+            }
             if isProdEnvironment {
+                ServicePreference.MP_SELECTED_ENV = MP_PROD_ENV
                 ServicePreference.MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
             } else {
+                ServicePreference.MP_SELECTED_ENV = MP_TEST_ENV
                 ServicePreference.MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
             }
 
-            let shouldGoToWrapperInstallments: Bool = Utils.getSetting(identifier: ServicePreference.kShouldGoToWrapperInstallments)
-
-            if shouldGoToWrapperInstallments {
-                ServicePreference.changeInstallmensEnv()
+            if let uriInstallmentSettings = serviceSettings[ServicePreference.kURIInstallments] as? [String:Any] {
+                ServicePreference.MP_INSTALLMENTS_URI = getFinalURIFor(settings: uriInstallmentSettings)
             }
 
-            let shouldGoToWrapperIssuers: Bool = Utils.getSetting(identifier: ServicePreference.kShouldGoToWrapperIssuers)
-
-            if shouldGoToWrapperIssuers {
-                ServicePreference.changeIssuersEnv()
+            if let uriIssuersSettings = serviceSettings[ServicePreference.kURIIssuers] as? [String:Any] {
+                ServicePreference.MP_ISSUERS_URI = getFinalURIFor(settings: uriIssuersSettings)
             }
+
         }
     }
 
-    static func changeInstallmensEnv() {
-        ServicePreference.MP_INSTALLMENTS_URI = MP_ENVIROMENT + INSTALLMENTS
-    }
-
-    static func changeIssuersEnv() {
-        ServicePreference.MP_ISSUERS_URI = MP_ENVIROMENT + CARD_ISSSUERS
+    static internal func getFinalURIFor(settings: [String:Any]) -> String {
+        let shouldUseWrapper: Bool = settings[ServicePreference.kShouldUseWrapper] as? Bool ?? false
+        if shouldUseWrapper {
+            return ServicePreference.MP_SELECTED_ENV + (settings[ServicePreference.kWrapperURI] as! String)
+        } else {
+            return ServicePreference.MP_OP_ENVIROMENT + (settings[ServicePreference.kOPURI] as! String)
+        }
     }
 
     public func getProcessingModeString() -> String {
