@@ -5,7 +5,11 @@
 	<key>flow_sdk_type_hybrid</key>
 	<false/>
 	<key>prod_mp_api_environment</key>
-	<true/>
+	<false/>
+	<key>go_to_wrapper_installments</key>
+	<false/>
+	<key>go_to_wrapper_issuers</key>
+	<false/>
 	<key>sdk_version</key>
 	<string>3.3.0</string>
 	<key>tracking_settings</key>
