@@ -35,14 +35,6 @@ open class MercadoPagoContext: NSObject {
 
     static let kSdkVersion = "sdk_version"
 
-    open class var PUBLIC_KEY: String {
-        return "public_key"
-    }
-
-    open class var PRIVATE_KEY: String {
-        return "access_token"
-    }
-
     open class func isAuthenticatedUser() -> Bool {
         return !sharedInstance.payer_access_token.isEmpty
     }
@@ -217,23 +209,6 @@ open class MercadoPagoContext: NSObject {
     open class func clearPaymentKey() {
         sharedInstance.payment_key = ""
     }
-
-    open class func keyType() -> String {
-        if MercadoPagoContext.isAuthenticatedUser() {
-            return MercadoPagoContext.PRIVATE_KEY
-        } else {
-            return MercadoPagoContext.PUBLIC_KEY
-        }
-    }
-
-    open class func keyValue() -> String {
-        if MercadoPagoContext.isAuthenticatedUser() {
-            return MercadoPagoContext.payerAccessToken()
-        } else {
-            return MercadoPagoContext.publicKey()
-        }
-    }
-
 }
 
 @objc public enum Languages: Int {

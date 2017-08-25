@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>GET/v1/payment_methods/installments?access_token=&amp;public_key=PK_MLA&amp;amount=1.00&amp;payment_method_id=amex</key>
+	<key>GET/v1/payment_methods/installments?public_key=PK_MLA&amp;amount=1.00&amp;payment_method_id=amex</key>
 	<string>[
   {
     &quot;payment_method_id&quot;: &quot;amex&quot;,
@@ -180,7 +180,7 @@
     ]
   }
 ]</string>
-	<key>POST/v1/card_tokens?access_token=&amp;public_key=PK_MLA_INVALID_ID_TEST</key>
+	<key>POST/v1/card_tokens?public_key=PK_MLA_INVALID_ID_TEST</key>
 	<string>{
     &quot;message&quot;: &quot;Invalid cardholder.identification.number: 312322222 in site_id: MLV&quot;,
     &quot;cause&quot;: [
@@ -2546,7 +2546,7 @@
     }
   ]
 }</string>
-	<key>GET/v1/payment_methods?access_token=&amp;public_key=PK_MLA</key>
+	<key>GET/v1/payment_methods?public_key=PK_MLA</key>
 	<string>[{
       &quot;id&quot;:&quot;visa&quot;,
       &quot;name&quot;:&quot;Visa&quot;,

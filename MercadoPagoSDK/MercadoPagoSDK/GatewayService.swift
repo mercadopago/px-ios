@@ -12,8 +12,7 @@ open class GatewayService: MercadoPagoService {
 
     open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
 
-        var params = "\(MercadoPagoContext.PRIVATE_KEY)=\(MercadoPagoContext.payerAccessToken())"
-        params += "&\(MercadoPagoContext.PUBLIC_KEY)=\(MercadoPagoContext.publicKey())"
+        let params: String = MPServicesBuilder.getParamsPublicKeyAndAcessToken()
 
         self.request(uri: url, params: params, body: cardTokenJSON, method: method, success: success, failure: { (error) -> Void in
             if let failure = failure {

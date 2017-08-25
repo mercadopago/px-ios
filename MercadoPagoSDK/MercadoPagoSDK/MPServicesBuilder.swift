@@ -20,14 +20,14 @@ open class MPServicesBuilder: NSObject {
     }
 
     open class func createSavedCardToken(_ savedCardToken: SavedCardToken,
-                                baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
-                                failure: ((_ error: NSError) -> Void)?) {
+                                         baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
+                                         failure: ((_ error: NSError) -> Void)?) {
         self.createToken(baseURL: baseURL, cardTokenJSON: savedCardToken.toJSONString(), success: success, failure: failure)
     }
 
     open class func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken,
-                                baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
-                                failure: ((_ error: NSError) -> Void)?) {
+                                            baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
+                                            failure: ((_ error: NSError) -> Void)?) {
         self.createToken(baseURL: baseURL, cardTokenJSON: savedESCCardToken.toJSONString(), success: success, failure: failure)
     }
 
@@ -219,6 +219,23 @@ open class MPServicesBuilder: NSObject {
             MercadoPagoContext.setSiteID(preference.siteId)
             success(preference)
         }, failure: failure)
+    }
+
+    internal class func getParamsPublicKey() -> String {
+        var params: String = ""
+
+        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: MercadoPagoContext.publicKey())
+
+        return params
+    }
+
+    internal class func getParamsPublicKeyAndAcessToken() -> String {
+        var params: String = ""
+
+        params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: MercadoPagoContext.payerAccessToken())
+        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: MercadoPagoContext.publicKey())
+
+        return params
     }
 
 }

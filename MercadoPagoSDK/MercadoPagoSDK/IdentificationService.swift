@@ -10,8 +10,7 @@ import Foundation
 open class IdentificationService: MercadoPagoService {
     open func getIdentificationTypes(_ method: String = "GET", uri: String = ServicePreference.MP_IDENTIFICATION_URI, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        var params = "\(MercadoPagoContext.PRIVATE_KEY)=\(MercadoPagoContext.payerAccessToken())"
-        params += "&\(MercadoPagoContext.PUBLIC_KEY)=\(MercadoPagoContext.publicKey())"
+        let params: String = MPServicesBuilder.getParamsPublicKeyAndAcessToken()
 
         self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) -> Void in
             if let failure = failure {

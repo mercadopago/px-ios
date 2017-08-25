@@ -75,4 +75,14 @@ extension String {
         stringTrimmed = stringTrimmed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return stringTrimmed
     }
+
+    mutating func paramsAppend(key: String, value: String?) {
+        if !key.isEmpty && !String.isNullOrEmpty(value) {
+            if self.isEmpty {
+                self = key + "=" + value!
+            } else {
+                self = self + "&" + key + "=" + value!
+            }
+        }
+    }
 }
