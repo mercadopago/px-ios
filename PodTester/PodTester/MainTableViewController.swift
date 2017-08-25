@@ -235,9 +235,9 @@ class MainTableViewController: UITableViewController {
         }
 
         var shoppingDecoration = ShoppingReviewPreference()
-        shoppingDecoration.setOneWordDescription(oneWordDescription: "Custom Description")
-        shoppingDecoration.setAmountTitle(amountTitle: "Amount Title : ")
-        shoppingDecoration.setQuantityTitle(quantityTitle: "Quantity Title : ")
+        shoppingDecoration.setOneWordDescription(oneWordDescription: "Entradas")
+        shoppingDecoration.setAmountTitle(amountTitle: "Valor de las entradas: ")
+        shoppingDecoration.setQuantityTitle(quantityTitle: "Cantidad de entradas:  ")
         checkout.setShoppingReviewPreference(shoppingDecoration)
 
         checkout.start()

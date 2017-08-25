@@ -32,10 +32,10 @@ open class CheckoutViewModel: NSObject {
         self.summaryRows = reviewScreenPreference.getSummaryRows()
         self.shoppingPreference = shoppingPreference
         super.init()
-        if shoppingPreference.getQuantityTitle() == ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE {
+        if shoppingPreference.getOneWordDescription() == ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE {
             setSummaryRows(shortTitle :reviewScreenPreference.getTitle())
         }else {
-             setSummaryRows(shortTitle :shoppingPreference.getQuantityTitle())
+             setSummaryRows(shortTitle :shoppingPreference.getOneWordDescription())
         }
 
     }
