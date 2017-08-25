@@ -124,6 +124,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData.payer = self.checkoutPreference.getPayer()
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
+        self.shoppingReviewPreference = ShoppingReviewPreference()
     }
 
     func hasError() -> Bool {

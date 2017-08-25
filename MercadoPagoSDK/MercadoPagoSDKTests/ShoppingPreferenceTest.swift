@@ -9,9 +9,10 @@
 import XCTest
 
 class ShoppingPreferenceTest: BaseTest {
-
+    var shoppingDecoration: ShoppingReviewPreference! = nil
     override func setUp() {
         super.setUp()
+        shoppingDecoration = ShoppingReviewPreference()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
@@ -21,12 +22,10 @@ class ShoppingPreferenceTest: BaseTest {
     }
 
     func testShoppingDecorationOneWordDescription() {
-        let shoppingDecoration = ShoppingReviewPreference()
         shoppingDecoration.setOneWordDescription(oneWordDescription: "Custom Description")
         XCTAssertEqual(shoppingDecoration.getOneWordDescription(), "Custom")
     }
     func testShoppingDecorationDefaults() {
-        let shoppingDecoration = ShoppingReviewPreference()
         XCTAssertEqual(shoppingDecoration.getOneWordDescription(), ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE)
         XCTAssertEqual(shoppingDecoration.getAmountTitle(), ShoppingReviewPreference.DEFAULT_AMOUNT_TITLE)
         XCTAssertEqual(shoppingDecoration.getQuantityTitle(), ShoppingReviewPreference.DEFAULT_QUANTITY_TITLE)
@@ -34,14 +33,12 @@ class ShoppingPreferenceTest: BaseTest {
         XCTAssertTrue(shoppingDecoration.shouldShowQuantityRow)
     }
     func testShoppingDecorationHiding() {
-        let shoppingDecoration = ShoppingReviewPreference()
         shoppingDecoration.hideAmountTitle()
         shoppingDecoration.hideQuantityRow()
         XCTAssertFalse(shoppingDecoration.shouldShowAmountTitle)
         XCTAssertFalse(shoppingDecoration.shouldShowQuantityRow)
     }
     func testShoppingDecorationQuantityHideWhenSetEmptyString() {
-        let shoppingDecoration = ShoppingReviewPreference()
         shoppingDecoration.setQuantityTitle(quantityTitle: "")
         XCTAssertFalse(shoppingDecoration.shouldShowQuantityRow)
     }
