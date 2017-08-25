@@ -26,7 +26,7 @@ class ReviewScreenPreferenceTest: BaseTest {
 
     func testSetTitle() {
 
-        XCTAssertEqual(reviewScreenPreference.getTitle(), "Confirma tu compra".localized)
+        XCTAssertEqual(reviewScreenPreference.getTitle(), "Revisa tu pago".localized)
 
         reviewScreenPreference.setTitle(title: "1")
         self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)
