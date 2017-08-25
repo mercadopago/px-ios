@@ -5,7 +5,7 @@
 	<key>services_settings</key>
 	<dict>
 		<key>prod_api_environment</key>
-		<true/>
+		<false/>
 		<key>uri_issuers</key>
 		<dict>
 			<key>op_uri</key>
