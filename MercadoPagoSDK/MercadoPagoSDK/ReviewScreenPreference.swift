@@ -10,7 +10,7 @@ import UIKit
 
 open class ReviewScreenPreference: NSObject {
 
-    private var title = "Confirma tu compra".localized
+    private var title = "Revisa tu pago".localized
     private var productsTitle = "Productos".localized
     private var confirmButtonText = "Confirmar".localized
     private var cancelButtonText = "Cancelar Pago".localized

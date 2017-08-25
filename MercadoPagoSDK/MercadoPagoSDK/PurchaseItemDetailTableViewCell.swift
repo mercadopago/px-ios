@@ -32,7 +32,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func fillCell(item: Item, currency: Currency) {
+    func fillCell(item: Item, currency: Currency, quantityHidden: Bool, amountTittleHidden: Bool, quantityTitle: String, amountTitle: String) {
         self.layoutIfNeeded()
         if let pictureUrl = item.pictureUrl {
             if let image = ViewUtils.loadImageFromUrl(pictureUrl) {
@@ -53,12 +53,22 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
             self.titleDescriptionConstraint.constant = 0
         }
 
-        self.itemQuantity.text = "Cantidad : ".localized + String(item.quantity)
-        self.itemQuantity.font = Utils.getFont(size: itemQuantity.font.pointSize)
+        if quantityHidden {
+             self.itemQuantity.text = ""
+        }else {
+            self.itemQuantity.text = quantityTitle + String(item.quantity)
+            self.itemQuantity.font = Utils.getFont(size: itemQuantity.font.pointSize)
+        }
         let unitPrice = Utils.getAttributedAmount(item.unitPrice, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.px_grayDark(), fontSize : 18, baselineOffset: 5)
-        let unitPriceTitle = NSMutableAttributedString(string: "Precio Unitario : ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.itemQuantity.font.pointSize)])
+        var unitPriceTitle: NSMutableAttributedString
+        if amountTittleHidden {
+           unitPriceTitle = NSMutableAttributedString(string: "", attributes: [NSFontAttributeName: Utils.getFont(size: self.itemQuantity.font.pointSize)])
+        }else {
+            unitPriceTitle = NSMutableAttributedString(string: amountTitle, attributes: [NSFontAttributeName: Utils.getFont(size: self.itemQuantity.font.pointSize)])
+        }
         unitPriceTitle.append(unitPrice)
         self.itemUnitPrice.attributedText = unitPriceTitle
+
     }
 
     static func getCellHeight(item: Item) -> CGFloat {

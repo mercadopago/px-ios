@@ -22,7 +22,7 @@ class CheckoutViewModelTest: BaseTest {
         let checkoutPref = CheckoutPreference()
         checkoutPref.items = [Item()]
 
-        self.instance = CheckoutViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
+        self.instance = CheckoutViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, shoppingPreference: ShoppingReviewPreference())
 
         paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
         paymentData.payerCost = MockBuilder.buildInstallment().payerCosts[1]
@@ -30,12 +30,12 @@ class CheckoutViewModelTest: BaseTest {
         paymentData.discount = MockBuilder.buildDiscount()
         paymentData.payer = MockBuilder.buildPayer("id")
 
-        self.instanceWithCoupon = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
+        self.instanceWithCoupon = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, shoppingPreference: ShoppingReviewPreference())
 
         let reviewScreenPreference = ReviewScreenPreference()
         reviewScreenPreference.setSummaryRows(summaryRows: [SummaryRow(customDescription: "lala", descriptionColor: nil, customAmount: 20.0, amountColor: nil)])
 
-        self.instanceWithCustomSummaryRow = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewScreenPreference: reviewScreenPreference)
+        self.instanceWithCustomSummaryRow = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewScreenPreference: reviewScreenPreference, shoppingPreference: ShoppingReviewPreference())
     }
 
     func testCells() {
@@ -397,7 +397,7 @@ class CheckoutViewModelTest: BaseTest {
 
         MercadoPagoCheckoutViewModel.flowPreference.enableDiscount()
         instanceWithCoupon!.summaryRows = []
-        instanceWithCoupon!.setSummaryRows()
+        instanceWithCoupon!.setSummaryRows(shortTitle: ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE)
 
         // Number of cells
         XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 4)
@@ -436,7 +436,7 @@ class CheckoutViewModelTest: BaseTest {
 
         MercadoPagoCheckoutViewModel.flowPreference.enableDiscount()
         instanceWithCoupon!.summaryRows = []
-        instanceWithCoupon!.setSummaryRows()
+        instanceWithCoupon!.setSummaryRows(shortTitle: ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE)
 
         self.instanceWithCoupon!.paymentData.payerCost = MockBuilder.buildPayerCost(installments: 3, hasCFT: true)
 

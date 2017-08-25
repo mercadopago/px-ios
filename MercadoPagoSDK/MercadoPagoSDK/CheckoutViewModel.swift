@@ -17,11 +17,12 @@ open class CheckoutViewModel: NSObject {
     var discount: DiscountCoupon?
 
     var reviewScreenPreference: ReviewScreenPreference!
+    var shoppingPreference: ShoppingReviewPreference!
     var summaryRows: [SummaryRow]!
 
     public static var CUSTOMER_ID = ""
 
-    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), shoppingPreference: ShoppingReviewPreference) {
         CheckoutViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
         self.paymentData = paymentData
@@ -29,13 +30,19 @@ open class CheckoutViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
         self.summaryRows = reviewScreenPreference.getSummaryRows()
+        self.shoppingPreference = shoppingPreference
         super.init()
-        setSummaryRows()
+        if shoppingPreference.getOneWordDescription() == ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE {
+            setSummaryRows(shortTitle :reviewScreenPreference.getProductsTitle())
+        }else {
+             setSummaryRows(shortTitle :shoppingPreference.getOneWordDescription())
+        }
+
     }
 
-    func setSummaryRows() {
+    func setSummaryRows(shortTitle: String) {
 
-        let productsSummary = SummaryRow(customDescription: reviewScreenPreference.getProductsTitle(), descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: shouldShowTotal())
+        let productsSummary = SummaryRow(customDescription: shortTitle, descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: shouldShowTotal())
 
         summaryRows.insert(productsSummary, at: 0)
 

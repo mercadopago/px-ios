@@ -38,7 +38,6 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoContext.setPublicKey(publicKey)
 
         MercadoPagoContext.setPayerAccessToken(accessToken)
-
     }
 
     public func setBinaryMode(_ binaryMode: Bool) {
