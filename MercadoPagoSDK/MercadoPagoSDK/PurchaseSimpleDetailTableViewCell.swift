@@ -20,6 +20,8 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         unitPrice.text = ""
+        titleLabel.adjustsFontSizeToFitWidth = false
+        titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.text = ""
     }
 

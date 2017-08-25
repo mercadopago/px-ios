@@ -234,9 +234,16 @@ class MainTableViewController: UITableViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
 
+        var shoppingDecoration = ShoppingReviewPreference()
+        shoppingDecoration.setOneWordDescription(oneWordDescription: "Custom Description")
+        shoppingDecoration.setAmountTitle(amountTitle: "Amount Title : ")
+        shoppingDecoration.setQuantityTitle(quantityTitle: "Quantity Title : ")
+        checkout.setShoppingReviewPreference(shoppingDecoration)
+
         checkout.start()
     }
 
+    static var pase = false
     /// Wallet Checkout
     func startWalletCheckout() {
         if !String.isNullOrEmpty(self.configJSON) {

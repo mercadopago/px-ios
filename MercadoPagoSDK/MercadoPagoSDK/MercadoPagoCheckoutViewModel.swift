@@ -39,9 +39,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var startedCheckout = false
     static var servicePreference = ServicePreference()
     static var decorationPreference = DecorationPreference()
+    var shoppingReviewPreference = ShoppingReviewPreference()
     static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
+
     static var paymentDataCallback: ((PaymentData) -> Void)?
     static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     static var paymentCallback: ((Payment) -> Void)?
@@ -206,7 +208,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     public func checkoutViewModel() -> CheckoutViewModel {
-        let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
+        let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference, shoppingPreference: self.shoppingReviewPreference)
         return checkoutViewModel
     }
 

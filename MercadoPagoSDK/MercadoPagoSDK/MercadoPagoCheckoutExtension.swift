@@ -44,6 +44,10 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.flowPreference = flowPreference
     }
 
+    open func setShoppingReviewPreference(_ shoppingReviewPreference: ShoppingReviewPreference) {
+        self.viewModel.shoppingReviewPreference = shoppingReviewPreference
+    }
+
     open func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference) {
         self.viewModel.paymentResultScreenPreference = paymentResultScreenPreference
     }

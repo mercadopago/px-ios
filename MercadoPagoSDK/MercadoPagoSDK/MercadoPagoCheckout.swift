@@ -39,6 +39,8 @@ open class MercadoPagoCheckout: NSObject {
 
         MercadoPagoContext.setPayerAccessToken(accessToken)
 
+        self.viewModel.shoppingReviewPreference = ShoppingReviewPreference()
+
     }
 
     public func setBinaryMode(_ binaryMode: Bool) {
