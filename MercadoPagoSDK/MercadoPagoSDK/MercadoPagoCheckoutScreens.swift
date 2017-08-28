@@ -125,7 +125,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-            if paymentData.paymentMethod == nil && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
+            if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
                 MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
             }
             strongSelf.executeNextStep()
@@ -183,7 +183,7 @@ extension MercadoPagoCheckout {
 
         let congratsViewController: MercadoPagoUIViewController
 
-        if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId) {
+        if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.getPaymentMethod()!.paymentTypeId) {
             congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
 
                 guard let strongSelf = self else {
@@ -234,7 +234,7 @@ extension MercadoPagoCheckout {
     }
 
     func showFinancialInstitutionsScreen() {
-        if let financialInstitutions = self.viewModel.paymentData.paymentMethod.financialInstitutions {
+        if let financialInstitutions = self.viewModel.paymentData.getPaymentMethod()!.financialInstitutions {
             self.viewModel.financialInstitutions = financialInstitutions
 
             if financialInstitutions.count == 1 {

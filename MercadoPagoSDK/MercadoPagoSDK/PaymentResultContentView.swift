@@ -180,11 +180,11 @@ class PaymentResultContentViewModel: NSObject {
     func getRejectedSubtitle() -> String {
         if paymentResult.statusDetail != "" {
 
-            let paymentTypeID = paymentResult.paymentData?.paymentMethod.paymentTypeId ?? "credit_card"
+            let paymentTypeID = paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId ?? "credit_card"
             let subtitle = (paymentResult.statusDetail + "_subtitle_" + paymentTypeID)
 
             if subtitle.existsLocalized() {
-                let paymentMethodName = paymentResult.paymentData?.paymentMethod.name.localized ?? ""
+                let paymentMethodName = paymentResult.paymentData?.getPaymentMethod()?.name.localized ?? ""
                 return (subtitle.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
             }
         } else if !String.isNullOrEmpty(paymentResultScreenPreference.getRejectedContentText()) {

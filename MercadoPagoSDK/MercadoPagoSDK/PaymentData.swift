@@ -10,7 +10,7 @@ import UIKit
 
 public class PaymentData: NSObject {
 
-    private var paymentMethod: PaymentMethod!
+    private var paymentMethod: PaymentMethod?
     private var issuer: Issuer?
     private var payerCost: PayerCost?
     private var token: Token?
@@ -30,7 +30,7 @@ public class PaymentData: NSObject {
 
     func isComplete() -> Bool {
 
-        if paymentMethod == nil {
+        guard let paymentMethod = self.paymentMethod else {
             return false
         }
 
@@ -46,7 +46,7 @@ public class PaymentData: NSObject {
             return true
         }
 
-        if paymentMethod!.isCard() && (token == nil || payerCost == nil) {
+        if paymentMethod.isCard() && (token == nil || payerCost == nil) {
 
             if (paymentMethod.paymentTypeId == PaymentTypeId.DEBIT_CARD.rawValue || paymentMethod.paymentTypeId == PaymentTypeId.PREPAID_CARD.rawValue ) && token != nil {
                 return true
@@ -74,7 +74,7 @@ public class PaymentData: NSObject {
     }
 
     func hasCustomerPaymentOption() -> Bool {
-        return hasPaymentMethod() && (self.paymentMethod.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
+        return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
     }
 
     public func updatePaymentDataWith(paymentMethod: PaymentMethod) {
@@ -125,7 +125,7 @@ public class PaymentData: NSObject {
         return issuer
     }
 
-    public func getPaymentMethod() -> PaymentMethod {
+    public func getPaymentMethod() -> PaymentMethod? {
         return paymentMethod
     }
 
@@ -135,9 +135,11 @@ public class PaymentData: NSObject {
 
     func toJSON() -> [String:Any] {
        var obj: [String:Any] = [
-            "payment_method": self.paymentMethod.toJSON(),
             "payer": payer.toJSON()
        ]
+        if let paymentMethod = self.paymentMethod {
+            obj["payment_method"] = paymentMethod.toJSON()
+        }
 
         if let payerCost = self.payerCost {
             obj["payer_cost"] = payerCost.toJSON()

@@ -63,7 +63,7 @@ class ApprovedTableViewCell: UITableViewCell {
 
             fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.getPaymentMethod())
 
-            fillPaymentMethodDescriptionLabel(paymentMethod: paymentResult.paymentData?.paymentMethod, token: paymentResult.paymentData?.token)
+            fillPaymentMethodDescriptionLabel(paymentMethod: paymentResult.paymentData?.getPaymentMethod(), token: paymentResult.paymentData?.getToken())
         } else {
             paymentMethodTotalConstraint.constant = 0
         }
