@@ -28,71 +28,85 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         subtitle.text = ""
     }
 
-    func fillCell(paymentResult: PaymentResult, paymentMethod: PaymentMethod?, color: UIColor, paymentResultScreenPreference: PaymentResultScreenPreference) {
+    func fillCell(paymentResult: PaymentResult, paymentMethod: PaymentMethod?, color: UIColor, paymentResultScreenPreference: PaymentResultScreenPreference, checkoutPreference: CheckoutPreference) {
 
         view.backgroundColor = color
 
-		if paymentResult.status == "approved" {
-			icon.image = paymentResultScreenPreference.getHeaderApprovedIcon()
-            title.text = paymentResultScreenPreference.getApprovedTitle()
-            subtitle.text = paymentResultScreenPreference.getApprovedSubtitle()
+		if paymentResult.status ==  PaymentStatus.APPROVED {
+            fillCellForAprrovedStatus(paymentResultScreenPreference: paymentResultScreenPreference)
 
-        } else if paymentResult.status == "in_process" {
-            icon.image = paymentResultScreenPreference.getHeaderPendingIcon()
-            title.text = paymentResultScreenPreference.getPendingTitle()
-            subtitle.text = paymentResultScreenPreference.getPendingSubtitle()
+        } else if paymentResult.status == PaymentStatus.IN_PROCESS {
+            fillCellForPendingStatus(paymentResultScreenPreference: paymentResultScreenPreference)
 
-        } else if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
-            icon.image = MercadoPago.getImage("MPSDK_payment_result_c4a")
-            var titleWithParams: String = ""
-            if let paymentMethodName = paymentMethod?.name {
-                titleWithParams = ("Debes autorizar ante %p el pago de %t a MercadoPago".localized as NSString).replacingOccurrences(of: "%p", with: "\(paymentMethodName)")
-            }
-            let currency = MercadoPagoContext.getCurrency()
-            let currencySymbol = currency.getCurrencySymbolOrDefault()
-            let thousandSeparator = currency.getThousandsSeparatorOrDefault()
-            let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+        } else if paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
+            fillCellForCallForAuthStatus(paymentResultScreenPreference: paymentResultScreenPreference, paymentResult: paymentResult, paymentMethod: paymentMethod, checkoutPreference: checkoutPreference)
+        } else {
+            fillCellForRejectedStatus(paymentResultScreenPreference: paymentResultScreenPreference, paymentResult: paymentResult, paymentMethod: paymentMethod)
+        }
+    }
 
-            let amountRange = titleWithParams.range(of: "%t")
+    func fillCellForAprrovedStatus(paymentResultScreenPreference: PaymentResultScreenPreference) {
+        icon.image = paymentResultScreenPreference.getHeaderApprovedIcon()
+        title.text = paymentResultScreenPreference.getApprovedTitle()
+        subtitle.text = paymentResultScreenPreference.getApprovedSubtitle()
+    }
 
-            if amountRange != nil {
-                let attributedTitle = NSMutableAttributedString(string: (titleWithParams.substring(to: (amountRange?.lowerBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
-                let attributedAmount = Utils.getAttributedAmount(paymentResult.paymentData!.payerCost!.totalAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white())
-                attributedTitle.append(attributedAmount)
-                let endingTitle = NSAttributedString(string: (titleWithParams.substring(from: (amountRange?.upperBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
-                attributedTitle.append(endingTitle)
-                self.title.attributedText = attributedTitle
+    func fillCellForPendingStatus(paymentResultScreenPreference: PaymentResultScreenPreference) {
+        icon.image = paymentResultScreenPreference.getHeaderPendingIcon()
+        title.text = paymentResultScreenPreference.getPendingTitle()
+        subtitle.text = paymentResultScreenPreference.getPendingSubtitle()
+    }
+
+    func fillCellForCallForAuthStatus(paymentResultScreenPreference: PaymentResultScreenPreference, paymentResult: PaymentResult, paymentMethod: PaymentMethod?, checkoutPreference: CheckoutPreference) {
+        icon.image = MercadoPago.getImage("MPSDK_payment_result_c4a")
+        var titleWithParams: String = ""
+        if let paymentMethodName = paymentMethod?.name {
+            titleWithParams = ("Debes autorizar ante %p el pago de %t a MercadoPago".localized as NSString).replacingOccurrences(of: "%p", with: "\(paymentMethodName)")
+        }
+        let currency = MercadoPagoContext.getCurrency()
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+
+        let totalAmount = getTotalAmount(paymentData: paymentResult.paymentData, checkoutPreference: checkoutPreference)
+
+        let amountRange = titleWithParams.range(of: "%t")
+
+        if amountRange != nil {
+            let attributedTitle = NSMutableAttributedString(string: (titleWithParams.substring(to: (amountRange?.lowerBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let attributedAmount = Utils.getAttributedAmount(totalAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white())
+            attributedTitle.append(attributedAmount)
+            let endingTitle = NSAttributedString(string: (titleWithParams.substring(from: (amountRange?.upperBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            attributedTitle.append(endingTitle)
+            self.title.attributedText = attributedTitle
+        }
+    }
+
+    func getTotalAmount(paymentData: PaymentData?, checkoutPreference: CheckoutPreference) -> Double {
+        guard let pd = paymentData, let payerCost = pd.payerCost else {
+            return checkoutPreference.getAmount()
+        }
+        return payerCost.totalAmount
+    }
+
+    func fillCellForRejectedStatus(paymentResultScreenPreference: PaymentResultScreenPreference, paymentResult: PaymentResult, paymentMethod: PaymentMethod?) {
+        icon.image = paymentResultScreenPreference.getHeaderRejectedIcon()
+        let title = (paymentResult.statusDetail + "_title")
+        if !title.existsLocalized() {
+            if !String.isNullOrEmpty(paymentResultScreenPreference.getRejectedTitle()) {
+                self.title.text = paymentResultScreenPreference.getRejectedTitle()
+                subtitle.text = paymentResultScreenPreference.getRejectedSubtitle()
+            } else {
+                self.title.text = "Uy, no pudimos procesar el pago".localized
             }
 
         } else {
-            icon.image = paymentResultScreenPreference.getHeaderRejectedIcon()
-            var title = (paymentResult.statusDetail + "_title")
-            if !title.existsLocalized() {
-                if !String.isNullOrEmpty(paymentResultScreenPreference.getRejectedTitle()) {
-                    self.title.text = paymentResultScreenPreference.getRejectedTitle()
-                    subtitle.text = paymentResultScreenPreference.getRejectedSubtitle()
-                } else {
-                    self.title.text = "Uy, no pudimos procesar el pago".localized
-                }
-
-            } else {
-                if let paymentMethodName = paymentMethod?.name {
-                    let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
-                    self.title.text = titleWithParams
-                }
+            if let paymentMethodName = paymentMethod?.name {
+                let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+                self.title.text = titleWithParams
             }
-
-            if CountdownTimer.getInstance().hasTimer() {
-                self.timerLabel = MPLabel(frame: CGRect(x: UIScreen.main.bounds.size.width - 66, y: 10, width: 56, height: 20))
-                self.timerLabel!.backgroundColor = color
-                self.timerLabel!.textColor = UIColor.px_white()
-                self.timerLabel!.textAlignment = .right
-                CountdownTimer.getInstance().delegate = self
-                self.addSubview(timerLabel!)
-            }
-
-            messageError.text = paymentResultScreenPreference.getRejectedIconSubtext()
         }
+        messageError.text = paymentResultScreenPreference.getRejectedIconSubtext()
     }
 
     func fillCell(instructionsInfo: InstructionsInfo, color: UIColor) {
