@@ -12,7 +12,7 @@ class PaymentResultViewModel: NSObject {
 
     var paymentResult: PaymentResult!
     var callback: ( _ status: PaymentResult.CongratsState) -> Void
-    var checkoutPreference: CheckoutPreference?
+    var checkoutPreference: CheckoutPreference!
 
     var contentCell: PaymentResultContentView?
 
