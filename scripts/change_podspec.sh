@@ -34,16 +34,16 @@ echo "=========================================="
 echo "3) Push podspec into mobile-ios_specs"
 echo "=========================================="
 
-OUTPUT="$(pod repo list | grep -c "MLPod")"
+OUTPUT="$(pod repo list | grep -c "MPPods")"
 
 # Add private repo if not set
 
 if test $OUTPUT != 2
 	then
-	pod repo add MLPods git@github.com:mercadolibre/mobile-ios_specs.git
+	pod repo add MPPods git@github.com:mercadolibre/mpmobile-ios_specs.git
 fi
 
-pod repo push MLPods $file_name --allow-warnings --verbose
+pod repo push MPPods $file_name --allow-warnings --verbose
 
 rm $file_name
 mv $temp_name $file_name
