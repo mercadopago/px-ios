@@ -104,7 +104,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
                     if paymentResult!.paymentData != nil && paymentResult!.paymentData!.isComplete() {
                         self.paymentData = paymentResult!.paymentData!
                     }
-                    if paymentResult!.isInvalidESC() && pm.token != nil {
+                    if paymentResult!.isInvalidESC() && pm.hasToken() {
                         self.prepareForInvalidPaymentWithESC()
                     }
                 }
@@ -156,12 +156,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
 
-        return EntityTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.paymentMethod, dataSource: self.entityTypes!)
+        return EntityTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod, dataSource: self.entityTypes!)
     }
 
     public func financialInstitutionViewModel() -> AdditionalStepViewModel {
 
-        return FinancialInstitutionAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.paymentMethod, dataSource: self.financialInstitutions!)
+        return FinancialInstitutionAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod(), dataSource: self.financialInstitutions!)
     }
 
     public func debitCreditViewModel() -> AdditionalStepViewModel {
@@ -221,7 +221,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     //SEARCH_PAYMENT_METHODS
     public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?) {
-        self.cleanToken()
+        self.paymentData.cleanToken()
         self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
         self.cardToken = cardToken
@@ -246,7 +246,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     public func updateCheckoutModel(identification: Identification) {
-        self.cleanToken()
+        self.paymentData.cleanToken()
         if paymentData.paymentMethod.isCard() {
             self.cardToken!.cardholder!.identification = identification
         } else {
@@ -665,10 +665,6 @@ extension MercadoPagoCheckoutViewModel {
         self.resetInformation()
         self.resetGroupSelection()
         self.rootVC = true
-    }
-
-    func cleanToken() {
-        self.paymentData.token = nil
     }
 
     func prepareForInvalidPaymentWithESC() {

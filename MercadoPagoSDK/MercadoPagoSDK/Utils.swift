@@ -244,7 +244,7 @@ class Utils {
 
     static internal func findCardInformationIn(customOptions: [CardInformation], paymentData: PaymentData, savedESCCardToken: SavedESCCardToken? = nil) -> CardInformation? {
         let customOptionsFound = customOptions.filter { (cardInformation: CardInformation) -> Bool in
-            if paymentData.paymentMethod.isAccountMoney() {
+            if paymentData.getPaymentMethod.isAccountMoney() {
                 return  cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
             } else {
                 if paymentData.token != nil {

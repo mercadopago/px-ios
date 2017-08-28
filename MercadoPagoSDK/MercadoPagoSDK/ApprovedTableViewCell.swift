@@ -43,7 +43,7 @@ class ApprovedTableViewCell: UITableViewCell {
         }
 
         if !paymentResultScreenPreference.isAmountDisable() {
-            if let payerCost = paymentResult.paymentData?.payerCost {
+            if let payerCost = paymentResult.paymentData?.getPayerCost() {
                 fillInstallmentLabel(amount: payerCost.totalAmount, payerCost: payerCost, currency: currency)
                 fillInterestLabel(payerCost: payerCost)
                 fillTotalLabel(payerCost: payerCost, currency: currency)
@@ -61,7 +61,7 @@ class ApprovedTableViewCell: UITableViewCell {
 
         if !paymentResultScreenPreference.isPaymentMethodDisable() {
 
-            fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.paymentMethod)
+            fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.getPaymentMethod())
 
             fillPaymentMethodDescriptionLabel(paymentMethod: paymentResult.paymentData?.paymentMethod, token: paymentResult.paymentData?.token)
         } else {

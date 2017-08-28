@@ -10,10 +10,10 @@ import UIKit
 
 public class PaymentData: NSObject {
 
-    public var paymentMethod: PaymentMethod!
-    public var issuer: Issuer?
-    public var payerCost: PayerCost?
-    public var token: Token?
+    private var paymentMethod: PaymentMethod!
+    private var issuer: Issuer?
+    private var payerCost: PayerCost?
+    private var token: Token?
     public var payer = Payer()
     public var transactionDetails: TransactionDetails?
     public var discount: DiscountCoupon?
@@ -75,6 +75,58 @@ public class PaymentData: NSObject {
 
     func hasCustomerPaymentOption() -> Bool {
         return hasPaymentMethod() && (self.paymentMethod.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
+    }
+
+    public func updatePaymentDataWith(paymentMethod: PaymentMethod) {
+        cleanIssuer()
+        cleanToken()
+        cleanPayerCost()
+        self.paymentMethod = paymentMethod
+    }
+
+    public func updatePaymentDataWith(token: Token) {
+        self.token = token
+    }
+
+    public func updatePaymentDataWith(payerCost: PayerCost) {
+        self.payerCost = payerCost
+    }
+
+    public func updatePaymentDataWith(issuer: Issuer) {
+        cleanPayerCost()
+        self.issuer = issuer
+    }
+
+    public func cleanToken() {
+        self.token = nil
+    }
+
+    public func cleanPayerCost() {
+        self.payerCost = nil
+    }
+
+    func cleanIssuer() {
+        self.issuer = nil
+    }
+
+    func cleanPaymentMethod() {
+        self.paymentMethod = nil
+    }
+
+   public func getToken() -> Token? {
+        return token
+    }
+
+    public func getPayerCost() -> PayerCost? {
+        return payerCost
+    }
+
+    public func getIssuer() -> Issuer? {
+        return issuer
+    }
+
+    public func getPaymentMethod() -> PaymentMethod {
+        return paymentMethod
     }
 
     func toJSONString() -> String {
