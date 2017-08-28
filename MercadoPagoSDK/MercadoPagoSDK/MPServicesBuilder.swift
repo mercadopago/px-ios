@@ -20,14 +20,14 @@ open class MPServicesBuilder: NSObject {
     }
 
     open class func createSavedCardToken(_ savedCardToken: SavedCardToken,
-                                baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
-                                failure: ((_ error: NSError) -> Void)?) {
+                                         baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
+                                         failure: ((_ error: NSError) -> Void)?) {
         self.createToken(baseURL: baseURL, cardTokenJSON: savedCardToken.toJSONString(), success: success, failure: failure)
     }
 
     open class func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken,
-                                baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
-                                failure: ((_ error: NSError) -> Void)?) {
+                                            baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
+                                            failure: ((_ error: NSError) -> Void)?) {
         self.createToken(baseURL: baseURL, cardTokenJSON: savedESCCardToken.toJSONString(), success: success, failure: failure)
     }
 
@@ -77,7 +77,7 @@ open class MPServicesBuilder: NSObject {
                                       failure: ((_ error: NSError) -> Void)?) {
 
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getPaymentMethods(key: MercadoPagoContext.keyValue(), success: {(jsonResult: AnyObject?) -> Void in
+        service.getPaymentMethods(success: {(jsonResult: AnyObject?) -> Void in
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
                     if failure != nil {
@@ -105,7 +105,7 @@ open class MPServicesBuilder: NSObject {
                                            failure: ((_ error: NSError) -> Void)?) {
 
         let service: IdentificationService = IdentificationService(baseURL: baseURL)
-        service.getIdentificationTypes(key: MercadoPagoContext.keyValue(), success: {(jsonResult: AnyObject?) -> Void in
+        service.getIdentificationTypes(success: {(jsonResult: AnyObject?) -> Void in
 
             if let error = jsonResult as? NSDictionary {
                 if (error["status"]! as? Int) == 404 {
@@ -134,14 +134,14 @@ open class MPServicesBuilder: NSObject {
                                     failure: @escaping ((_ error: NSError) -> Void)) {
 
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getInstallments(key: MercadoPagoContext.keyValue(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
+        service.getInstallments(bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
 
     }
 
     open class func getIssuers(_ paymentMethod: PaymentMethod, bin: String? = nil, baseURL: String = ServicePreference.MP_API_BASE_URL, success: @escaping (_ issuers: [Issuer]) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getIssuers(key: MercadoPagoContext.keyValue(), payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
+        service.getIssuers(payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
 
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
@@ -219,6 +219,23 @@ open class MPServicesBuilder: NSObject {
             MercadoPagoContext.setSiteID(preference.siteId)
             success(preference)
         }, failure: failure)
+    }
+
+    internal class func getParamsPublicKey() -> String {
+        var params: String = ""
+
+        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: MercadoPagoContext.publicKey())
+
+        return params
+    }
+
+    internal class func getParamsPublicKeyAndAcessToken() -> String {
+        var params: String = ""
+
+        params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: MercadoPagoContext.payerAccessToken())
+        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: MercadoPagoContext.publicKey())
+
+        return params
     }
 
 }

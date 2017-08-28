@@ -36,11 +36,11 @@ open class InstructionsService: MercadoPagoService {
     }
 
     open func getInstructions(for paymentId: String, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        var params =  "public_key=" + MercadoPagoContext.publicKey()
-        if paymentTypeId != nil && paymentTypeId?.characters.count > 0 {
-            params = params + "&payment_type=" + paymentTypeId!
-        }
-        params = params + "&api_version=" + ServicePreference.API_VERSION
+        var params =  MPServicesBuilder.getParamsPublicKey()
+
+        params.paramsAppend(key: ApiParams.PAYMENT_TYPE, value: paymentTypeId)
+
+        params.paramsAppend(key: ApiParams.API_VERSION, value : ServicePreference.API_VERSION)
 
         let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]
 

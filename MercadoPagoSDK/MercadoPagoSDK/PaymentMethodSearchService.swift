@@ -34,7 +34,10 @@ open class PaymentMethodSearchService: MercadoPagoService {
 //    }
 
     open func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
+
+        var params =  MPServicesBuilder.getParamsPublicKey()
+
+        params.paramsAppend(key: ApiParams.AMOUNT, value: String(amount))
 
         var newExcludedPaymentTypesIds = excludedPaymentTypeIds
 
@@ -44,31 +47,27 @@ open class PaymentMethodSearchService: MercadoPagoService {
 
         if newExcludedPaymentTypesIds != nil && newExcludedPaymentTypesIds!.count > 0 {
             let excludedPaymentTypesParams = newExcludedPaymentTypesIds!.map({$0}).joined(separator: ",")
-            params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()
+            params.paramsAppend(key: ApiParams.EXCLUDED_PAYMET_TYPES, value : String(excludedPaymentTypesParams).trimSpaces())
         }
 
         if excludedPaymentMethodIds != nil && excludedPaymentMethodIds!.count > 0 {
             let excludedPaymentMethodsParams = excludedPaymentMethodIds!.joined(separator: ",")
-            params = params + "&excluded_payment_methods=" + excludedPaymentMethodsParams.trimSpaces()
+            params.paramsAppend(key: ApiParams.EXCLUDED_PAYMENT_METHOD, value : excludedPaymentMethodsParams.trimSpaces())
         }
 
         if let defaultPaymenMethodId = defaultPaymenMethodId {
-            params = params + "&default_payment_method=" + defaultPaymenMethodId.trimSpaces()
+            params.paramsAppend(key: ApiParams.DEFAULT_PAYMENT_METHOD, value : defaultPaymenMethodId.trimSpaces())
         }
 
-        if customerEmail != nil && customerEmail!.characters.count > 0 {
-            params = params + "&email=" + customerEmail!
-        }
+        params.paramsAppend(key: ApiParams.EMAIL, value : customerEmail)
 
-        if customerId != nil && customerId!.characters.count > 0 {
-            params = params + "&customer_id=" + customerId!
-        }
+        params.paramsAppend(key: ApiParams.CUSTOMER_ID, value : customerId)
 
-        params = params + "&site_id=" + MercadoPagoContext.getSite()
+        params.paramsAppend(key: ApiParams.SITE_ID, value : MercadoPagoContext.getSite())
 
-        params = params + "&api_version=" + ServicePreference.API_VERSION
+        params.paramsAppend(key: ApiParams.API_VERSION, value : ServicePreference.API_VERSION)
 
-        params = params + "&processing_mode=" + MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString()
+        params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
 
         var groupsPayerBody: String = ""
         if !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {

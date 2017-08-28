@@ -74,7 +74,7 @@ open class Token: NSObject, CardInformationForm {
 	open class func fromJSON(_ json: NSDictionary) -> Token {
         let literalJson = json
         let _id = JSONHandler.attemptParseToString(literalJson["id"])
-        let key = JSONHandler.attemptParseToString(literalJson[MercadoPagoContext.keyType()])
+        let key = JSONHandler.attemptParseToString(literalJson["public_key"])
 		let cardId =  JSONHandler.attemptParseToString(literalJson["card_id"])
 		let status = JSONHandler.attemptParseToString(literalJson["status"])
 		let luhn = JSONHandler.attemptParseToString(literalJson["luhn_validation"], defaultReturn: "")

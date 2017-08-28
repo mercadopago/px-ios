@@ -6,7 +6,6 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-import UIKit
 import XCTest
 
 class ExtensionsTest: BaseTest {
@@ -52,5 +51,27 @@ class ExtensionsTest: BaseTest {
         XCTAssertEqual(dict.parseToQuery(), "2%20sarasa=B")
         dict = [:]
         XCTAssertEqual(dict.parseToQuery(), "")
+    }
+
+    func testParamsAppend() {
+        var params: String = ""
+
+        params.paramsAppend(key: "key", value: "value")
+        XCTAssertEqual(params, "key=value")
+
+        params.paramsAppend(key: "key2", value: "value2")
+        XCTAssertEqual(params, "key=value&key2=value2")
+
+        params.paramsAppend(key: "", value: "value2")
+        XCTAssertEqual(params, "key=value&key2=value2")
+
+        params.paramsAppend(key: "key2", value: "")
+        XCTAssertEqual(params, "key=value&key2=value2")
+
+        params.paramsAppend(key: "key2", value: nil)
+        XCTAssertEqual(params, "key=value&key2=value2")
+
+        params.paramsAppend(key: "", value: "")
+        XCTAssertEqual(params, "key=value&key2=value2")
     }
 }
