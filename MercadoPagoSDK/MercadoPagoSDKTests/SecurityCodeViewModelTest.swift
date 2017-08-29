@@ -19,7 +19,9 @@ class SecurityCodeViewModelTest: BaseTest {
         paymentMethod = MockBuilder.buildPaymentMethod("master", name: "MasterCard", paymentTypeId: "credit_card", multipleSettings: false)
         cardInfo = MockBuilder.buildToken()
 
-        securityCodeViewModel = SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo)
+        let reason = SecurityCodeViewModel.Reason.SAVED_CARD
+
+        securityCodeViewModel = SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo, reason: reason)
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 

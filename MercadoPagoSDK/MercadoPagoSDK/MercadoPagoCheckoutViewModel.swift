@@ -200,12 +200,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentOptionSelected as! CardInformation
-        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation)
+        var reason: SecurityCodeViewModel.Reason
+        if paymentResult != nil && paymentResult!.isInvalidESC() {
+            reason = SecurityCodeViewModel.Reason.INVALID_ESC
+        } else {
+            reason = SecurityCodeViewModel.Reason.SAVED_CARD
+        }
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation, reason: reason)
     }
 
     public func cloneTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentData.token
-        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!)
+        var reason = SecurityCodeViewModel.Reason.CALL_FOR_AUTH
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!, reason: reason)
     }
 
     public func checkoutViewModel() -> CheckoutViewModel {
