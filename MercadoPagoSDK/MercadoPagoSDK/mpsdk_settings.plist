@@ -5,7 +5,7 @@
 	<key>services_settings</key>
 	<dict>
 		<key>prod_api_environment</key>
-		<false/>
+		<true/>
 		<key>uri_issuers</key>
 		<dict>
 			<key>op_uri</key>
@@ -13,7 +13,7 @@
 			<key>wrapper_uri</key>
 			<string>/checkout/payment_methods/card_issuers</string>
 			<key>should_use_wrapper</key>
-			<false/>
+			<true/>
 		</dict>
 		<key>uri_installments</key>
 		<dict>
@@ -22,13 +22,13 @@
 			<key>wrapper_uri</key>
 			<string>/checkout/payment_methods/installments</string>
 			<key>should_use_wrapper</key>
-			<false/>
+			<true/>
 		</dict>
 	</dict>
 	<key>flow_sdk_type_hybrid</key>
 	<false/>
 	<key>sdk_version</key>
-	<string>3.3.0</string>
+	<string>3.3.1</string>
 	<key>tracking_settings</key>
 	<dict>
 		<key>tracking_enabled</key>
