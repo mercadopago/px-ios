@@ -62,7 +62,7 @@ open class SecurityCodeViewModel: NSObject {
     }
 
     public enum Reason: String {
-        case INVALID_ESC = "invalid_ec"
+        case INVALID_ESC = "invalid_esc"
         case CALL_FOR_AUTH = "call_for_auth"
         case SAVED_CARD = "saved_card"
     }
