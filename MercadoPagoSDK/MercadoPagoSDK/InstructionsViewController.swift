@@ -111,7 +111,8 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         if section == 1 {
             return 1
         } else {
-            return 2
+            let numberOfCells = MercadoPagoCheckoutViewModel.servicePreference.shouldShowEmailConfirmationCell() ? 2 : 1
+            return numberOfCells
         }
     }
 
@@ -136,7 +137,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
             bodyCell.fillCell(instruction: self.instructionsInfo!.instructions[0], paymentResult: paymentResult)
             return bodyCell
         default:
-            if indexPath.row == 0 {
+            if indexPath.row == 0 && MercadoPagoCheckoutViewModel.servicePreference.shouldShowEmailConfirmationCell() {
                 let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
                 confirmEmailCell.fillCell(instruction: instructionsInfo?.instructions[0])
                 confirmEmailCell.selectionStyle = .none
