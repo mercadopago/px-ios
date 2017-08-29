@@ -3753,7 +3753,7 @@
   &quot;site_id&quot;: &quot;MLA&quot;,
   &quot;brand_name&quot;: &quot;asdasd&quot;
 }</string>
-	<key>POST/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;site_id=MLA&amp;api_version=API_VERSION</key>
+	<key>POST/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;site_id=MLA&amp;api_version=API_VERSION&amp;processing_mode=aggregator</key>
 	<string>{
   &quot;groups&quot;: [
     {
@@ -5815,7 +5815,7 @@
   &quot;site_id&quot;: &quot;MLA&quot;,
   &quot;brand_name&quot;: &quot;asdasd&quot;
 }</string>
-	<key>POST/beta/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_types=account_money&amp;site_id=MLA&amp;api_version=API_VERSION</key>
+	<key>POST/beta/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_types=account_money&amp;site_id=MLA&amp;api_version=API_VERSION&amp;processing_mode=aggregator</key>
 	<string>{
   &quot;groups&quot;: [
     {
@@ -6252,7 +6252,7 @@
     }
   ]
 }</string>
-	<key>POST/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_types=account_money&amp;site_id=MLA&amp;api_version=API_VERSION</key>
+	<key>POST/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_types=account_money&amp;site_id=MLA&amp;api_version=API_VERSION&amp;processing_mode=aggregator</key>
 	<string>{
   &quot;groups&quot;: [
     {
