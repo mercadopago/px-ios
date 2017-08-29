@@ -66,6 +66,7 @@ open class TrackingUtil: NSObject {
     open static let METADATA_ERROR_STATUS = "error_status"
     open static let METADATA_ERROR_CODE = "error_code"
     open static let METADATA_ERROR_REQUEST = "error_request_origin"
+    open static let METATDATA_SECURITY_CODE_VIEW_REASON = "security_code_view_reason"
 
     //Default values
     open static let HAS_SHIPPING_DEFAULT_VALUE = "false"

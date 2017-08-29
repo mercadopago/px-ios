@@ -11,12 +11,14 @@ import Foundation
 open class SecurityCodeViewModel: NSObject {
     var paymentMethod: PaymentMethod!
     var cardInfo: CardInformationForm!
+    var reason: Reason
 
     var callback: ((_ cardInformation: CardInformationForm, _ securityCode: String) -> Void)?
 
-    public init(paymentMethod: PaymentMethod, cardInfo: CardInformationForm) {
+    public init(paymentMethod: PaymentMethod, cardInfo: CardInformationForm, reason: Reason) {
         self.paymentMethod = paymentMethod
         self.cardInfo = cardInfo
+        self.reason = reason
     }
 
     func secCodeInBack() -> Bool {
@@ -57,5 +59,11 @@ open class SecurityCodeViewModel: NSObject {
 
     func getCardBounds() -> CGRect {
         return CGRect(x: getCardX(), y: getCardY(), width: getCardWidth(), height: getCardHeight())
+    }
+
+    public enum Reason: String {
+        case INVALID_ESC = "invalid_esc"
+        case CALL_FOR_AUTH = "call_for_auth"
+        case SAVED_CARD = "saved_card"
     }
 }
