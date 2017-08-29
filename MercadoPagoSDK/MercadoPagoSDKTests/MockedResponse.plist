@@ -3330,7 +3330,7 @@
 	&quot;notification_url&quot;: null,
 	&quot;refunds&quot;: []
 }</string>
-	<key>POST/v1/checkout/payments?public_key=PK-PROCESSING-TEST&amp;payment_method_id=visa?processing_mode=aggregator</key>
+	<key>POST/v1/checkout/payments?public_key=PK-PROCESSING-TEST&amp;payment_method_id=visa</key>
 	<string>{
   &quot;message&quot;: &quot;&quot;,
   &quot;error&quot;: &quot;processing&quot;,

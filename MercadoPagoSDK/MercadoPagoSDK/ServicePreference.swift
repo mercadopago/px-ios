@@ -276,6 +276,10 @@ open class ServicePreference: NSObject {
     internal func shouldShowBankDeals() -> Bool {
         return self.processingMode == ProcessingMode.aggregator
     }
+    
+    internal func shouldShowEmailConfirmationCell() -> Bool {
+        return self.processingMode == ProcessingMode.aggregator
+    }
 
 }
 
