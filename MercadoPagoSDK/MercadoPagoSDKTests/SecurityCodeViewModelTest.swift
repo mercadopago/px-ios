@@ -37,6 +37,7 @@ class SecurityCodeViewModelTest: BaseTest {
     func testGetPaymentMethodColors() {
         let pmColor = securityCodeViewModel.getPaymentMethodColor()
         XCTAssertEqual(pmColor, paymentMethod.getColor(bin: cardInfo.getCardBin()))
+
         let pmFontColor = securityCodeViewModel.getPaymentMethodFontColor()
         XCTAssertEqual(pmFontColor, paymentMethod.getFontColor(bin: cardInfo.getCardBin()))
     }
