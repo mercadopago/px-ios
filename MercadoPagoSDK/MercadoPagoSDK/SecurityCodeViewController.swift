@@ -81,6 +81,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
         let toolbar = UIToolbar(frame: frame)
+
         toolbar.barStyle = UIBarStyle.default
         toolbar.backgroundColor = UIColor.mpLightGray()
         toolbar.alpha = 1

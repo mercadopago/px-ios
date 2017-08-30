@@ -63,13 +63,13 @@ extension MercadoPagoCheckout {
         MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
                                                baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
 
-                                                guard let strongSelf = self else {
-                                                    return
-                                                }
+            guard let strongSelf = self else {
+                return
+            }
 
-                                                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-                                                strongSelf.dismissLoading()
-                                                strongSelf.executeNextStep()
+            strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
+            strongSelf.dismissLoading()
+            strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) -> Void in
                 guard let strongSelf = self else {
@@ -325,7 +325,6 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(payment: payment)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-            
             }, failure: {[weak self] (error: NSError) -> Void in
                 guard let strongSelf = self else {
                     return
@@ -333,17 +332,15 @@ extension MercadoPagoCheckout {
                 
                 strongSelf.dismissLoading()
                 let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
-                
+               
                 if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
                     strongSelf.viewModel.prepareForInvalidPaymentWithESC()
                 } else {
                     strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
                         self?.createPayment()
                     })
-                    
                 }
                 strongSelf.executeNextStep()
         })
     }
 }
-

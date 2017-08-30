@@ -287,7 +287,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             startedCheckout = true
             return .START
         }
-
         if hasError() {
             return .SCREEN_ERROR
         }

@@ -598,22 +598,22 @@ class ESCFlowsTests: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_RESULT, step)
         XCTAssertFalse(mpCheckout.viewModel.saveOrDeleteESC())
-        
+
         // 10. Finish
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_FINISH, step)
-        
+
         // Ejecutar finish
         mpCheckout.executeNextStep()
     }
-    
+
 }
 open class MercadoPagoESCImplementationTest: NSObject, MercadoPagoESC {
-    
+
     public func hasESCEnable() -> Bool {
         return MercadoPagoCheckoutViewModel.flowPreference.isESCEnable()
     }
-    
+
     public func getESC(cardId: String) -> String? {
         if hasESCEnable() {
             if cardId == "esc" {
@@ -622,7 +622,6 @@ open class MercadoPagoESCImplementationTest: NSObject, MercadoPagoESC {
         }
         return nil
     }
-    
     public func saveESC(cardId: String, esc: String) -> Bool {
         if hasESCEnable() {
             return true
