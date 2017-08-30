@@ -104,16 +104,6 @@ public class MPXTracker: NSObject {
         ]
         return obj
     }
-    
-    static func isEnabled() -> Bool {
-        guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
-            return false
-        }
-        guard let trackingEnabled = trackiSettings[MPXTracker.kTrackingEnabled] as? Bool else {
-            return false
-        }
-        return trackingEnabled
-    }
 
     static func isEnabled() -> Bool {
         guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
