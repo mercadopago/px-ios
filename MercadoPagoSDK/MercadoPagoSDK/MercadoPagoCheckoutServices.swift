@@ -325,20 +325,22 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(payment: payment)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
+
             }, failure: {[weak self] (error: NSError) -> Void in
                 guard let strongSelf = self else {
                     return
                 }
-                
+
                 strongSelf.dismissLoading()
                 let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
-               
+
                 if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
                     strongSelf.viewModel.prepareForInvalidPaymentWithESC()
                 } else {
                     strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
                         self?.createPayment()
                     })
+
                 }
                 strongSelf.executeNextStep()
         })

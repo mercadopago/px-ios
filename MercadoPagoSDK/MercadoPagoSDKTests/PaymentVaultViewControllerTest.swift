@@ -1213,7 +1213,6 @@ class PaymentVaultViewModelTest: BaseTest {
 
     override func tearDown() {
         // Restore default value
-        super.tearDown()
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
     }
 

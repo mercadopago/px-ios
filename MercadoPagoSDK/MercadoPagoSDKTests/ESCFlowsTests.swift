@@ -622,18 +622,19 @@ open class MercadoPagoESCImplementationTest: NSObject, MercadoPagoESC {
         }
         return nil
     }
+
     public func saveESC(cardId: String, esc: String) -> Bool {
         if hasESCEnable() {
             return true
         }
         return false
     }
-    
+
     public func deleteESC(cardId: String) {
-        
+
     }
-    
+
     public func deleteAllESC() {
-        
+
     }
 }
