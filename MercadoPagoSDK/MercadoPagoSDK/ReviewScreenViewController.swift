@@ -430,7 +430,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         }
         let floatingButtonCoordinates = floatingButton.convert(CGPoint.zero, from: self.view.window)
         let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
-        return fixedButtonCoordinates.y > floatingButtonCoordinates.y
+        return fixedButtonCoordinates.y >= floatingButtonCoordinates.y
     }
 
     open func getFloatingButtonView() -> UIView {
@@ -455,6 +455,9 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     open func displayFloatingConfirmButton() {
+        if self.floatingConfirmButtonView != nil {
+            return
+        }
         self.floatingConfirmButtonView = self.getFloatingButtonView()
         let cell = self.getFloatingButtonCell()
         self.floatingConfirmButtonView.addSubview(cell)
