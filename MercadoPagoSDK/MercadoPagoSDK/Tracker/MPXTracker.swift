@@ -74,10 +74,7 @@ public class MPXTracker: NSObject {
         return obj
     }
     static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        let timestamp = Date().getCurrentMillis()
         let obj: [String:Any] = [
             "timestamp": timestamp,
             "type": "action",
@@ -91,10 +88,7 @@ public class MPXTracker: NSObject {
         return obj
     }
     static func screenJSON(screenId: String, screenName: String, metadata: [String:Any]) -> [String:Any] {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        let timestamp = Date().getCurrentMillis()
         let obj: [String:Any] = [
             "timestamp": timestamp,
             "type": "screenview",

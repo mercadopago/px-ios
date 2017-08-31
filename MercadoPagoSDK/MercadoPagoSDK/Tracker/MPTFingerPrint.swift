@@ -65,7 +65,7 @@ class ScreenTrackInfo {
 
     var screenName: String
     var screenId: String
-    var timestamp: String
+    var timestamp: Int64
     var type: String
     var metadata: [String:Any]
     init(screenName: String, screenId: String, metadata: [String:Any]) {
@@ -79,15 +79,12 @@ class ScreenTrackInfo {
         }
 
         let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-        var timestampStr = formatter.string(from: date)
-        self.timestamp = ScreenTrackInfo.formatTimestampString(timestamp:timestampStr)
+        self.timestamp = Date().getCurrentMillis()
         self.type = "screenview"
     }
     func toJSON() -> [String:Any] {
         var obj: [String:Any] = [
-            "timestamp": ScreenTrackInfo.formatTimestampString(timestamp: self.timestamp),
+            "timestamp": self.timestamp,
             "type": self.type,
             "screen_id": self.screenId,
             "screen_name": self.screenName,
@@ -96,24 +93,25 @@ class ScreenTrackInfo {
         return obj
     }
     init(from json: [String:Any]) {
+
         self.screenName = json["screen_name"] as! String
         self.screenId = json["screen_id"] as! String
-        self.timestamp = json["timestamp"] as! String
-        self.timestamp = self.timestamp .replacingOccurrences(of: "T", with: " ")
+        self.timestamp = json["timestamp"] as! Int64
         self.type = json["type"] as! String
         self.metadata = json["metadata"] as! [String:Any]
     }
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
+}
 
-    static func formatTimestampString(timestamp: String) -> String {
-        var timestampResult = timestamp.replacingOccurrences(of: " AM", with: "X1")
-        timestampResult = timestampResult.replacingOccurrences(of: " PM", with: "X2")
-        timestampResult = timestampResult.replacingOccurrences(of: " ", with: "T")
-        timestampResult = timestampResult.replacingOccurrences(of: "X1", with: " AM")
-        timestampResult = timestampResult.replacingOccurrences(of: "X2", with: " PM")
-        return timestampResult
+extension Date {
+    public func getCurrentMillis() -> Int64 {
+        return Int64(self.timeIntervalSince1970 * 1000)
     }
 
+    static public func from(millis: Int64) -> Date {
+        let timeInterval: TimeInterval = Double(millis) / 1000
+        return Date(timeIntervalSince1970: timeInterval)
+    }
 }

@@ -37,9 +37,9 @@
 		<true/>
 		<key>max_batch_size</key>
 		<integer>10</integer>
-		<key>max_lifetime</key>
+		<key>max_lifetime_days</key>
 		<integer>45</integer>
-		<key>max_ageing</key>
+		<key>max_ageing_seconds</key>
 		<integer>10</integer>
 	</dict>
 </dict>
