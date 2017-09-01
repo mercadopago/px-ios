@@ -75,8 +75,6 @@ open class MercadoPagoCheckout: NSObject {
             self.showIdentificationScreen()
         case .SCREEN_ENTITY_TYPE:
             self.showEntityTypesScreen()
-        case .SCREEN_CREDIT_DEBIT:
-            self.showCreditDebitScreen()
         case .SCREEN_FINANCIAL_INSTITUTIONS:
             self.showFinancialInstitutionsScreen()
         case .SERVICE_GET_ISSUERS:

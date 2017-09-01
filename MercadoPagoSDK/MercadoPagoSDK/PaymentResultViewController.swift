@@ -43,10 +43,10 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
                               TrackingUtil.METADATA_PAYMENT_STATUS: self.viewModel.paymentResult.status,
                               TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.paymentResult.statusDetail,
                               TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.paymentResult._id]
-        if let pm = self.viewModel.paymentResult.paymentData?.paymentMethod {
+        if let pm = self.viewModel.paymentResult.paymentData?.getPaymentMethod() {
             metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
         }
-        if let issuer = self.viewModel.paymentResult.paymentData?.issuer {
+        if let issuer = self.viewModel.paymentResult.paymentData?.getIssuer() {
             metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
         }
         let finalId = screenId + "/" + self.viewModel.paymentResult.status
@@ -197,7 +197,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     private func getCallForAuthCell() -> UITableViewCell {
         let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
         callFAuthCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(), paymentResult: self.viewModel.paymentResult, status: PaymentResult.CongratsState.call_FOR_AUTH)
-        callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentResult.paymentData?.paymentMethod)
+        callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentResult.paymentData?.getPaymentMethod())
         return callFAuthCell
     }
 

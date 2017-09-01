@@ -217,8 +217,8 @@ class PaymentResultContentViewModelTest: BaseTest {
 
     func testRejectedGetSubtitle() {
         self.instance.paymentResult.status = "rejected"
-        self.instance.paymentResult.paymentData?.paymentMethod.paymentTypeId = "credit_card"
-        self.instance.paymentResult.paymentData?.paymentMethod.name = "Visa"
+        self.instance.paymentResult.paymentData?.paymentMethod!.paymentTypeId = "credit_card"
+        self.instance.paymentResult.paymentData?.paymentMethod!.name = "Visa"
 
         // Con statusDetail = "other_reason"
         // Hay subtitulo
@@ -362,8 +362,8 @@ class PaymentResultContentViewModelTest: BaseTest {
 
     func testPendingGetSubtitle() {
         self.instance.paymentResult.status = "in_process"
-        self.instance.paymentResult.paymentData?.paymentMethod.paymentTypeId = "credit_card"
-        self.instance.paymentResult.paymentData?.paymentMethod.name = "Visa"
+        self.instance.paymentResult.paymentData?.paymentMethod!.paymentTypeId = "credit_card"
+        self.instance.paymentResult.paymentData?.paymentMethod!.name = "Visa"
 
         // Con statusDetail = "CONTINGENCY"
         // Hay subtitulo

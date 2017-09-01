@@ -46,11 +46,11 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
 
         fillPaymentMethodDescription(paymentData: paymentData)
 
-        fillCFT(payerCost: paymentData.payerCost)
+        fillCFT(payerCost: paymentData.getPayerCost())
 
         fillChangePaymentMethodButton(reviewScreenPreference: reviewScreenPreference)
 
-        fillSeparatorLine(payerCost: paymentData.payerCost, reviewScreenPreference: reviewScreenPreference)
+        fillSeparatorLine(payerCost: paymentData.getPayerCost(), reviewScreenPreference: reviewScreenPreference)
 
     }
 
@@ -59,16 +59,16 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
 
     func fillPaymentMethodDescription(paymentData: PaymentData) {
-        let paymentMethodDescription = NSMutableAttributedString(string: paymentData.paymentMethod.name.localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
-        if !String.isNullOrEmpty(paymentData.token?.lastFourDigits) {
-            paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized + (paymentData.token?.lastFourDigits)!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
+        let paymentMethodDescription = NSMutableAttributedString(string: paymentData.getPaymentMethod()!.name.localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
+        if !String.isNullOrEmpty(paymentData.getToken()?.lastFourDigits) {
+            paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized + (paymentData.getToken()?.lastFourDigits)!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
         }
         self.paymentMethodDescription.attributedText = paymentMethodDescription
     }
 
     func fillPayerCostAndTotal(paymentData: PaymentData, amount: Double) {
         let currency = MercadoPagoContext.getCurrency()
-        if let payerCost = paymentData.payerCost {
+        if let payerCost = paymentData.getPayerCost() {
             self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), currency:currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
             let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
 
@@ -98,11 +98,11 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
 
     func showBankInterestWarning(paymentData: PaymentData) -> Bool {
-        return paymentData.payerCost != nil && MercadoPagoCheckout.showBankInterestWarning()
+        return paymentData.hasPayerCost() && MercadoPagoCheckout.showBankInterestWarning()
     }
 
     func showPayerCostDescription(paymentData: PaymentData) -> Bool {
-        return paymentData.payerCost != nil && !paymentData.payerCost!.hasInstallmentsRate() && paymentData.payerCost?.installments != 1 && !showBankInterestWarning(paymentData: paymentData)
+        return paymentData.hasPayerCost() && !paymentData.getPayerCost()!.hasInstallmentsRate() && paymentData.getPayerCost()!.installments != 1 && !showBankInterestWarning(paymentData: paymentData)
     }
 
     func fillChangePaymentMethodButton(reviewScreenPreference: ReviewScreenPreference) {

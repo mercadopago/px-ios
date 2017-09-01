@@ -53,7 +53,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func isPaymentMethodSelectedCard() -> Bool {
-        return self.paymentData.paymentMethod != nil && self.paymentData.paymentMethod!.isCard()
+        return self.paymentData.hasPaymentMethod() && self.paymentData.getPaymentMethod()!.isCard()
     }
 
     func numberOfSections() -> Int {
@@ -61,7 +61,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func isPaymentMethodSelected() -> Bool {
-        return paymentData.paymentMethod != nil
+        return paymentData.hasPaymentMethod()
     }
 
     func isUserLogged() -> Bool {
@@ -115,7 +115,7 @@ open class CheckoutViewModel: NSObject {
             return numberOfRowsInMainSection() == 1 ? PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT : PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
 
         } else if self.isInstallmentsCellFor(indexPath: indexPath) {
-            return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
+            return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.getPayerCost())
 
         } else if self.isTotalCellFor(indexPath: indexPath) {
             return PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT
@@ -131,7 +131,7 @@ open class CheckoutViewModel: NSObject {
 
         } else if self.isPaymentMethodCellFor(indexPath: indexPath) {
             if isPaymentMethodSelectedCard() {
-                return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost, reviewScreenPreference: reviewScreenPreference)
+                return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.getPayerCost(), reviewScreenPreference: reviewScreenPreference)
             }
             return OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: self.paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
 
@@ -159,7 +159,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func shouldDisplayNoRate() -> Bool {
-        return self.paymentData.payerCost != nil && !self.paymentData.payerCost!.hasInstallmentsRate() && self.paymentData.payerCost!.installments != 1
+        return self.paymentData.hasPayerCost() && !self.paymentData.getPayerCost()!.hasInstallmentsRate() && self.paymentData.getPayerCost()!.installments != 1
     }
 
     func numberOfCustomAdditionalCells() -> Int {
@@ -185,7 +185,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func getTotalAmount() -> Double {
-        if let payerCost = paymentData.payerCost {
+        if let payerCost = paymentData.getPayerCost() {
             return payerCost.totalAmount
         }
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
@@ -195,14 +195,14 @@ open class CheckoutViewModel: NSObject {
     }
 
     func hasPayerCostAddionalInfo() -> Bool {
-        return self.paymentData.payerCost != nil && self.paymentData.payerCost!.getCFTValue() != nil && self.paymentData.payerCost?.installments != 1
+        return self.paymentData.hasPayerCost() && self.paymentData.getPayerCost()!.getCFTValue() != nil && self.paymentData.getPayerCost()!.installments != 1
     }
 
     func getUnlockLink() -> URL? {
         let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()
-        guard let issuerID = self.paymentData.issuer?._id else {
+        guard let issuerID = self.paymentData.getIssuer()?._id else {
             return nil
         }
         let searchString: String = site + "_" + "\(issuerID)"
@@ -273,7 +273,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func shouldShowInstallmentSummary() -> Bool {
-        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card" && paymentData.payerCost != nil && paymentData.payerCost?.installments != 1
+        return isPaymentMethodSelectedCard() && self.paymentData.getPaymentMethod()!.paymentTypeId != "debit_card" && paymentData.hasPayerCost() && paymentData.getPayerCost()!.installments != 1
     }
 
     func getClearPaymentData() -> PaymentData {

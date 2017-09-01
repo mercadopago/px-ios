@@ -87,8 +87,11 @@ extension MercadoPagoCheckout {
 
     func getIssuers() {
         self.presentLoading()
+        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
+            return
+        }
         let bin = self.viewModel.cardToken?.getBin()
-        MPServicesBuilder.getIssuers(self.viewModel.paymentData.paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (issuers) -> Void in
+        MPServicesBuilder.getIssuers(paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (issuers) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -268,9 +271,14 @@ extension MercadoPagoCheckout {
 
     func getPayerCosts(updateCallback: (() -> Void)? = nil) {
         self.presentLoading()
+
+        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
+            return
+        }
+
         let bin = self.viewModel.cardToken?.getBin()
 
-        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.issuer, paymentMethodId: self.viewModel.paymentData.paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (installments) -> Void in
+        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (installments) -> Void in
             guard let strongSelf = self else {
                 return
             }
