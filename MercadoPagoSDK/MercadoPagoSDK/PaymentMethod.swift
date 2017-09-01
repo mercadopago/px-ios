@@ -133,9 +133,9 @@ open class PaymentMethod: NSObject, Cellable {
             obj["settings"] = JSONHandler.null
 
         } else {
-            var settingsJson: [[String:Any]] = [[:]]
-            for (index, setting) in self.settings.enumerated() {
-                settingsJson[index] = setting.toJSON()
+            var settingsJson: [[String:Any]] = []
+            for setting in self.settings {
+                settingsJson.append(setting.toJSON())
             }
             obj["settings"] = settingsJson
         }
@@ -144,13 +144,13 @@ open class PaymentMethod: NSObject, Cellable {
             obj["financial_institutions"] = JSONHandler.null
 
         } else {
-            var financialInstitutionsJson: [[String:Any]] = [[:]]
-                for (index, financialInstitution) in self.financialInstitutions.enumerated() {
-                    financialInstitutionsJson[index] = financialInstitution.toJSON()
-                }
-                obj["financial_institutions"] = financialInstitutionsJson
+            var financialInstitutionsJson: [[String:Any]] = []
+            for financialInstitution in self.financialInstitutions {
+                financialInstitutionsJson.append(financialInstitution.toJSON())
+            }
+            obj["financial_institutions"] = financialInstitutionsJson
         }
-        
+
         if let merchantAccountID = self.merchantAccountId {
             obj["merchant_account_id"] = merchantAccountID
         }
@@ -195,7 +195,7 @@ open class PaymentMethod: NSObject, Cellable {
         if json["min_allowed_amount"] != nil && !(json["min_allowed_amount"]! is NSNull) {
             paymentMethod.minAllowedAmount = json["min_allowed_amount"] as! Double
         }
-        
+
         if json["merchant_account_id"] != nil && !(json["merchant_account_id"]! is NSNull) {
             paymentMethod.merchantAccountId = json["merchant_account_id"] as? String
         }
