@@ -216,12 +216,15 @@ open class CardViewModelManager: NSObject {
         }
 
     }
-    
+
     func getPaymentMethods() -> [PaymentMethod]? {
         var paymentMethods = [PaymentMethod]()
-        
-        for (_, value) in self.paymentMethods!.enumerated() {
-            if value.conformsPaymentPreferences(self.paymentSettings){
+        guard let pms = self.paymentMethods else {
+            return nil
+        }
+
+        for (_, value) in pms.enumerated() {
+            if value.conformsPaymentPreferences(self.paymentSettings) {
                 paymentMethods.append(value)
             }
         }
@@ -231,7 +234,6 @@ open class CardViewModelManager: NSObject {
             return paymentMethods
         }
     }
-
 
     func tokenHidratate(_ cardNumber: String, expirationDate: String, cvv: String, cardholderName: String) {
         let number = cardNumber
