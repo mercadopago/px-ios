@@ -8,13 +8,12 @@
 
 import UIKit
 
-class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
+class HeaderCongratsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var messageError: UILabel!
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var title: UILabel!
-    var timerLabel: MPLabel?
 
     @IBOutlet weak var subtitle: UILabel!
     override func awakeFromNib() {
@@ -136,13 +135,5 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
             self.title.attributedText = attributedTitle
         }
-
-    }
-
-    func updateTimer() {
-        if self.timerLabel != nil {
-            self.timerLabel!.text = CountdownTimer.getInstance().getCurrentTiming()
-        }
-
     }
 }
