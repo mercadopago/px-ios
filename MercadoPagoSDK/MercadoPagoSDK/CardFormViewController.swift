@@ -557,7 +557,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
     }
     
-    func showCreditCardNotSupportedErrorMessage(_ errorMessage: String) {
+    func showCreditCardNotSupportedErrorMessage() {
         
         if self.paymentMethods != nil {
             
@@ -761,7 +761,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                 textEditMaskFormater = textEditMaskFormaterAux
             } else {
                 self.clearCardSkin()
-                showCreditCardNotSupportedErrorMessage("Método de pago no soportado".localized);
+                showCreditCardNotSupportedErrorMessage();
                 return
             }
 

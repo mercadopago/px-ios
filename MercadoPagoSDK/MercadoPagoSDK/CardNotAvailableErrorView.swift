@@ -55,7 +55,6 @@ class CardNotAvailableErrorView: UIView {
         self.errorMessageLabel!.text = errorMessage
         self.errorMessageLabel.textColor = .white
         self.errorMessageLabel!.adjustsFontSizeToFitWidth = true
-//        self.errorMessageLabel.backgroundColor = .green
         self.addSubview(errorMessageLabel)
     }
     
@@ -63,23 +62,22 @@ class CardNotAvailableErrorView: UIView {
         
         let x = errorMessageWidth + 2 * margin
         self.moreInfoLabel = MPLabel(frame: CGRect(x: x, y: margin, width: moreInfoWidth, height: height))
-//        self.moreInfoLabel.backgroundColor = .black
         self.moreInfoLabel.text = moreInfoMessage
         self.moreInfoLabel.textColor = .white
         self.moreInfoLabel.adjustsFontSizeToFitWidth = true
         
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap"))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CardNotAvailableErrorView.handleTap))
         self.moreInfoLabel.isUserInteractionEnabled = true
         self.moreInfoLabel.addGestureRecognizer(tap)
         
         self.addSubview(moreInfoLabel)
         
     }
-    
 
     func handleTap (){
         let availableCardsDetail =  AvailableCardsViewController(paymentMethods: self.paymentMethods!)
         
         self.navigationController?.present(availableCardsDetail, animated: true, completion: {})
+        
     }
 }
