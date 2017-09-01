@@ -10,7 +10,7 @@ import UIKit
 
 public class PaymentData: NSObject {
 
-    public var paymentMethod: PaymentMethod!
+    public var paymentMethod: PaymentMethod?
     public var issuer: Issuer?
     public var payerCost: PayerCost?
     public var token: Token?
@@ -30,7 +30,7 @@ public class PaymentData: NSObject {
 
     func isComplete() -> Bool {
 
-        if paymentMethod == nil {
+        guard let paymentMethod = self.paymentMethod else {
             return false
         }
 
@@ -46,7 +46,7 @@ public class PaymentData: NSObject {
             return true
         }
 
-        if paymentMethod!.isCard() && (token == nil || payerCost == nil) {
+        if paymentMethod.isCard() && (token == nil || payerCost == nil) {
 
             if (paymentMethod.paymentTypeId == PaymentTypeId.DEBIT_CARD.rawValue || paymentMethod.paymentTypeId == PaymentTypeId.PREPAID_CARD.rawValue ) && token != nil {
                 return true
@@ -74,7 +74,71 @@ public class PaymentData: NSObject {
     }
 
     func hasCustomerPaymentOption() -> Bool {
-        return hasPaymentMethod() && (self.paymentMethod.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
+        return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
+    }
+
+    public func updatePaymentDataWith(paymentMethod: PaymentMethod?) {
+        guard let paymentMethod = paymentMethod else {
+            return
+        }
+        cleanIssuer()
+        cleanToken()
+        cleanPayerCost()
+        self.paymentMethod = paymentMethod
+    }
+
+    public func updatePaymentDataWith(token: Token?) {
+        guard let token = token else {
+            return
+        }
+        self.token = token
+    }
+
+    public func updatePaymentDataWith(payerCost: PayerCost?) {
+        guard let payerCost = payerCost else {
+            return
+        }
+        self.payerCost = payerCost
+    }
+
+    public func updatePaymentDataWith(issuer: Issuer?) {
+        guard let issuer = issuer else {
+            return
+        }
+        cleanPayerCost()
+        self.issuer = issuer
+    }
+
+    public func cleanToken() {
+        self.token = nil
+    }
+
+    public func cleanPayerCost() {
+        self.payerCost = nil
+    }
+
+    func cleanIssuer() {
+        self.issuer = nil
+    }
+
+    func cleanPaymentMethod() {
+        self.paymentMethod = nil
+    }
+
+   public func getToken() -> Token? {
+        return token
+    }
+
+    public func getPayerCost() -> PayerCost? {
+        return payerCost
+    }
+
+    public func getIssuer() -> Issuer? {
+        return issuer
+    }
+
+    public func getPaymentMethod() -> PaymentMethod? {
+        return paymentMethod
     }
 
     func toJSONString() -> String {
@@ -83,9 +147,11 @@ public class PaymentData: NSObject {
 
     func toJSON() -> [String:Any] {
        var obj: [String:Any] = [
-            "payment_method": self.paymentMethod.toJSON(),
             "payer": payer.toJSON()
        ]
+        if let paymentMethod = self.paymentMethod {
+            obj["payment_method"] = paymentMethod.toJSON()
+        }
 
         if let payerCost = self.payerCost {
             obj["payer_cost"] = payerCost.toJSON()

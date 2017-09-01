@@ -55,10 +55,10 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
                               TrackingUtil.METADATA_PAYMENT_STATUS: self.paymentResult.status,
                               TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.paymentResult.statusDetail,
                               TrackingUtil.METADATA_PAYMENT_ID: self.paymentResult._id]
-        if let pm = self.paymentResult.paymentData?.paymentMethod {
+        if let pm = self.paymentResult.paymentData?.getPaymentMethod() {
             metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
         }
-        if let issuer = self.paymentResult.paymentData?.issuer {
+        if let issuer = self.paymentResult.paymentData?.getIssuer() {
             metadata["issuer"] = issuer._id
         }
         MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
@@ -156,7 +156,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
 
     fileprivate func getInstructions() {
         if let paymentId = paymentResult._id,
-            let paymentTypeId = self.paymentResult.paymentData?.paymentMethod.paymentTypeId {
+            let paymentTypeId = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId {
             MPServicesBuilder.getInstructions(for: paymentId, paymentTypeId : paymentTypeId, baseURL:MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (instructionsInfo : InstructionsInfo) -> Void in
                 self.instructionsInfo = instructionsInfo
                 self.tableView.reloadData()

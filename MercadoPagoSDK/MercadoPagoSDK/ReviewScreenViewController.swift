@@ -49,9 +49,12 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.accessToken = MercadoPagoContext.merchantAccessToken()
     }
     override func trackInfo() {
-        var metadata = [TrackingUtil.METADATA_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.viewModel.paymentData.paymentMethod.paymentTypeId, TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.viewModel.paymentData.paymentMethod._id]
+        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
+            return
+        }
+        var metadata = [TrackingUtil.METADATA_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethod.paymentTypeId, TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethod._id]
 
-        if let issuer = self.viewModel.paymentData.issuer {
+        if let issuer = self.viewModel.paymentData.getIssuer() {
             metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
         }
         MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
@@ -112,7 +115,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             self.loadPreference()
         } else {
             //TODO : OJO TOKEN RECUPERABLE
-            if self.viewModel.paymentData.paymentMethod != nil {
+            if self.viewModel.paymentData.hasPaymentMethod() {
               //  self.checkoutTable.reloadData()
                 if recover {
                     recover = false
@@ -161,13 +164,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             return self.getSummaryCell(indexPath: indexPath)
 
         } else if self.viewModel.isInstallmentsCellFor(indexPath: indexPath) {
-            return self.getPurchaseDetailCell(indexPath: indexPath, title : "Pagas".localized, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.paymentData.payerCost, addSeparatorLine: true)
+            return self.getPurchaseDetailCell(indexPath: indexPath, title : "Pagas".localized, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.paymentData.getPayerCost(), addSeparatorLine: true)
 
         } else if self.viewModel.isTotalCellFor(indexPath: indexPath) {
             return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmount(), addSeparatorLine: false)
 
         } else if self.viewModel.isPayerCostAdditionalInfoFor(indexPath: indexPath) {
-            return self.getConfirmAdditionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
+            return self.getConfirmAdditionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.getPayerCost())
 
         } else if self.viewModel.isUnlockCardCellFor(indexPath: indexPath) {
             return self.getUnlockCardCell(indexPath: indexPath)
@@ -367,7 +370,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     private func getOfflinePaymentMethodSelectedCell(indexPath: IndexPath) -> UITableViewCell {
         let offlinePaymentMethodCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "offlinePaymentMethodCell", for: indexPath) as! OfflinePaymentMethodCell
-        offlinePaymentMethodCell.fillCell(self.viewModel.paymentOptionSelected, amount: self.viewModel.getTotalAmount(), paymentMethod : self.viewModel.paymentData.paymentMethod!, currency: MercadoPagoContext.getCurrency(), reviewScreenPreference: self.viewModel.reviewScreenPreference)
+        offlinePaymentMethodCell.fillCell(self.viewModel.paymentOptionSelected, amount: self.viewModel.getTotalAmount(), paymentMethod : self.viewModel.paymentData.getPaymentMethod()!, currency: MercadoPagoContext.getCurrency(), reviewScreenPreference: self.viewModel.reviewScreenPreference)
         offlinePaymentMethodCell.changePaymentButton.addTarget(self, action: #selector(self.changePaymentMethodSelected), for: .touchUpInside)
         return offlinePaymentMethodCell
     }

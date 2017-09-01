@@ -534,7 +534,7 @@ class CheckoutViewModelTest: BaseTest {
     }
 
     func testCleanPaymentData() {
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod._id, "visa")
+        XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!._id, "visa")
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payerCost!.installments, 3)
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payer.email, "thisisanem@il.com")
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!._id, "id")

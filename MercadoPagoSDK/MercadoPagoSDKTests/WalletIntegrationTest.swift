@@ -58,7 +58,7 @@ class WalletIntegrationTest: BaseTest {
         var localPaymentData: PaymentData?
         let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
         MercadoPagoCheckout.setPaymentDataCallback { (paymentData: PaymentData) in
-            XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
+            XCTAssertEqual(paymentData.paymentMethod!._id, "account_money")
             expectPaymentDataCallback.fulfill()
             localPaymentData = paymentData
         }
