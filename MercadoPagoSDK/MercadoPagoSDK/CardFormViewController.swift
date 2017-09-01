@@ -543,8 +543,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         onlyOnePaymentMethodLabel.backgroundColor = color
         onlyOnePaymentMethodLabel.textColor = UIColor.white
         onlyOnePaymentMethodLabel.text = message
-        onlyOnePaymentMethodLabel.adjustsFontSizeToFitWidth = true
-
+        onlyOnePaymentMethodLabel.font = Utils.getLightFont(size: 14)
         setTextBox(isError: isError, inputAccessoryView: onlyOnePaymentMethodLabel)
 
     }

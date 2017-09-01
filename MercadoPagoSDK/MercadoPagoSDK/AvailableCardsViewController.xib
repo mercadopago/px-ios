@@ -27,19 +27,6 @@
                         <constraint firstAttribute="height" constant="20" id="Y0u-1A-e7B"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QcA-qF-dPH">
-                    <rect key="frame" x="8" y="28" width="30" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="P3H-Ss-DG7"/>
-                        <constraint firstAttribute="width" constant="30" id="SfY-2G-KBL"/>
-                        <constraint firstAttribute="height" constant="30" id="h8R-83-ccY"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="vhR-AS-qD5"/>
-                    </constraints>
-                    <state key="normal" image="white_close"/>
-                    <connections>
-                        <action selector="exit" destination="-1" eventType="touchUpInside" id="RI7-91-bff"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3G8-ah-7Tz">
                     <rect key="frame" x="16" y="608" width="343" height="39"/>
                     <constraints>
@@ -58,9 +45,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="bcL-oW-74o" secondAttribute="trailing" id="DtY-EP-U4m"/>
                 <constraint firstItem="bcL-oW-74o" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="INk-sx-YVf"/>
-                <constraint firstItem="QcA-qF-dPH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="LnD-wd-VsT"/>
                 <constraint firstAttribute="trailing" secondItem="3G8-ah-7Tz" secondAttribute="trailing" constant="16" id="TfH-j5-8tj"/>
-                <constraint firstItem="QcA-qF-dPH" firstAttribute="top" secondItem="bcL-oW-74o" secondAttribute="bottom" constant="8" id="ZVu-ef-Yrm"/>
                 <constraint firstItem="3G8-ah-7Tz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="jp9-CZ-YhS"/>
                 <constraint firstItem="bcL-oW-74o" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="n0z-N8-4Th"/>
                 <constraint firstAttribute="bottom" secondItem="3G8-ah-7Tz" secondAttribute="bottom" constant="20" id="ome-Hh-Evr"/>
@@ -69,7 +54,4 @@
             <point key="canvasLocation" x="-1140.5" y="-828.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="white_close" width="16" height="16"/>
-    </resources>
 </document>

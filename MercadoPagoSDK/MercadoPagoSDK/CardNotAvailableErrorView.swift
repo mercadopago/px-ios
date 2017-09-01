@@ -53,7 +53,7 @@ class CardNotAvailableErrorView: UIView {
         self.errorMessageLabel = MPLabel(frame: CGRect(x: margin, y: margin, width: errorMessageWidth, height: height))
         self.errorMessageLabel!.text = errorMessage
         self.errorMessageLabel.textColor = .white
-        self.errorMessageLabel!.adjustsFontSizeToFitWidth = true
+        self.errorMessageLabel.font = Utils.getLightFont(size: 14)
         self.addSubview(errorMessageLabel)
     }
 
@@ -63,8 +63,7 @@ class CardNotAvailableErrorView: UIView {
         self.moreInfoLabel = MPLabel(frame: CGRect(x: x, y: margin, width: moreInfoWidth, height: height))
         self.moreInfoLabel.text = moreInfoMessage
         self.moreInfoLabel.textColor = .white
-        self.moreInfoLabel.adjustsFontSizeToFitWidth = true
-
+        self.moreInfoLabel.font = Utils.getFont(size: 14)
         let tap = UITapGestureRecognizer(target: self, action: #selector(CardNotAvailableErrorView.handleTap))
         self.moreInfoLabel.isUserInteractionEnabled = true
         self.moreInfoLabel.addGestureRecognizer(tap)
