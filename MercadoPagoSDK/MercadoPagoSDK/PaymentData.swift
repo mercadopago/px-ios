@@ -10,10 +10,10 @@ import UIKit
 
 public class PaymentData: NSObject {
 
-    private var paymentMethod: PaymentMethod?
-    private var issuer: Issuer?
-    private var payerCost: PayerCost?
-    private var token: Token?
+    public var paymentMethod: PaymentMethod?
+    public var issuer: Issuer?
+    public var payerCost: PayerCost?
+    public var token: Token?
     public var payer = Payer()
     public var transactionDetails: TransactionDetails?
     public var discount: DiscountCoupon?
@@ -77,22 +77,34 @@ public class PaymentData: NSObject {
         return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
     }
 
-    public func updatePaymentDataWith(paymentMethod: PaymentMethod) {
+    public func updatePaymentDataWith(paymentMethod: PaymentMethod?) {
+        guard let paymentMethod = paymentMethod else {
+            return
+        }
         cleanIssuer()
         cleanToken()
         cleanPayerCost()
         self.paymentMethod = paymentMethod
     }
 
-    public func updatePaymentDataWith(token: Token) {
+    public func updatePaymentDataWith(token: Token?) {
+        guard let token = token else {
+            return
+        }
         self.token = token
     }
 
-    public func updatePaymentDataWith(payerCost: PayerCost) {
+    public func updatePaymentDataWith(payerCost: PayerCost?) {
+        guard let payerCost = payerCost else {
+            return
+        }
         self.payerCost = payerCost
     }
 
-    public func updatePaymentDataWith(issuer: Issuer) {
+    public func updatePaymentDataWith(issuer: Issuer?) {
+        guard let issuer = issuer else {
+            return
+        }
         cleanPayerCost()
         self.issuer = issuer
     }

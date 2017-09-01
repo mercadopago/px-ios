@@ -217,28 +217,15 @@ class MercadoPagoCheckoutTest: BaseTest {
         XCTAssertTrue(lastVC.isKind(of: IdentificationViewController.self))
     }
 
-    func testCollectCreditDebit() {
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
-
-        self.mpCheckout?.showCreditDebitScreen()
-
-        XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
-        XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
-        XCTAssertNil(self.mpCheckout?.viewModel.paymentData.token)
-        XCTAssertNil(self.mpCheckout?.viewModel.paymentData.issuer)
-        XCTAssertEqual(self.mpCheckout?.navigationController.viewControllers.count, 1)
-        let lastVC = self.mpCheckout!.navigationController.viewControllers[0]
-        XCTAssertTrue(lastVC.isKind(of: AdditionalStepViewController.self))
-    }
-
     func testStartIssuersScreen() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout?.showCreditDebitScreen()
+        let issuers = [MockBuilder.buildIssuer()]
+        self.mpCheckout?.viewModel.issuers = issuers
+
+        self.mpCheckout?.showIssuersScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)
@@ -254,7 +241,10 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        self.mpCheckout?.showCreditDebitScreen()
+        let payerCost = [MockBuilder.buildPayerCost(installments: 1, installmentRate: 0, hasCFT: false)]
+        self.mpCheckout?.viewModel.payerCosts = payerCost
+
+        self.mpCheckout?.showPayerCostScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.payerCost)

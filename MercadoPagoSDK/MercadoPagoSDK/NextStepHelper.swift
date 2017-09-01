@@ -126,20 +126,8 @@ extension MercadoPagoCheckoutViewModel {
         if selectedType.isCustomerPaymentMethod() {
             return false
         }
-        if paymentData.issuer == nil  && pm.isCard() && !Array.isNullOrEmpty(issuers) {
+        if !paymentData.hasIssuer()  && pm.isCard() && !Array.isNullOrEmpty(issuers) {
             return true
-        }
-        return false
-    }
-
-    func needSelectCreditDebit() -> Bool {
-        if self.paymentMethods != nil && self.paymentMethods?.count == 2 {//&&
-            //((self.paymentMethods![0].paymentTypeId == PaymentTypeId.CREDIT_CARD && self.paymentMethods![1].paymentTypeId == PaymentTypeId.CREDIT_CARD) ||
-            //    (self.paymentMethods![1].paymentTypeId == PaymentTypeId.CREDIT_CARD && self.paymentMethods![0].paymentTypeId == PaymentTypeId.CREDIT_CARD))) {
-
-            self.paymentData.paymentMethod = self.paymentMethods?[0]
-
-            return false
         }
         return false
     }
