@@ -42,7 +42,7 @@ class CardNotAvailableErrorView: UIView {
         errorMessageWidth = (self.frame.width - (3 * margin)) * errorMessageLabelPercentage
         moreInfoWidth = (self.frame.width - (3 * margin)) * moreInfoLabelPercentage
         setErrorMessage()
-        setInfoButton()
+        setMoreInfoButton()
     
     }
     
@@ -58,7 +58,7 @@ class CardNotAvailableErrorView: UIView {
         self.addSubview(errorMessageLabel)
     }
     
-    func setInfoButton(){
+    func setMoreInfoButton(){
         
         let x = errorMessageWidth + 2 * margin
         self.moreInfoLabel = MPLabel(frame: CGRect(x: x, y: margin, width: moreInfoWidth, height: height))
