@@ -269,4 +269,17 @@ open class CardViewModelManager: NSObject {
     func showBankDeals() -> Bool {
         return !Array.isNullOrEmpty(self.promos) && CardFormViewController.showBankDeals && MercadoPagoCheckoutViewModel.servicePreference.shouldShowBankDeals()
     }
+    
+    func shoudShowOnlyOneCardMessage() -> Bool {
+        return getPaymentMethods()?.count == 1
+    }
+    
+    func getOnlyOneCardAvailableMessage() -> String {
+        if let name = getPaymentMethods()?[0].name {
+            return "Solo puedes pagar con ".localized + name
+        }
+        else {
+            return "Método de pago no soportado".localized
+        }
+    }
 }
