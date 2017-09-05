@@ -43,7 +43,7 @@ open class AvailableCardsViewController: MercadoPagoUIViewController {
         self.availableCardsDetailView.layer.masksToBounds = true
         self.view.addSubview(self.availableCardsDetailView)
 
-        self.retryButton.setTitle("Ingresar tarjeta".localized, for: .normal)
+        self.retryButton.setTitle(viewModel.getEnterCardMessage(), for: .normal)
         self.retryButton.titleLabel?.textColor = .white
         self.retryButton.titleLabel?.font = Utils.getFont(size: buttonFontSize)
     }
@@ -87,4 +87,7 @@ class AvailableCardsViewModel: NSObject {
         return CGRect(x: xPos, y: yPos, width:availableCardsViewWidth, height: availableCardsViewTotalHeight)
     }
 
+    func getEnterCardMessage() -> String {
+        return "Ingresar tarjeta".localized
+    }
 }
