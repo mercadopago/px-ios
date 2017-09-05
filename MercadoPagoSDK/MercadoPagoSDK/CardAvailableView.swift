@@ -29,27 +29,32 @@ class CardAvailableView: UIView {
     }
 
     func setPaymentMethodNameLabel(name: String) {
-
-        let heightImage: CGFloat = frame.size.height - (2*marginHeigh)
-        let x: CGFloat = (imageMargin*2) + imageWidth
-        let labelWidth: CGFloat = frame.size.width - x - marginHeigh
-
-        paymentMethodNameLabel.frame = CGRect(x: x, y: marginHeigh, width: labelWidth, height: heightImage)
+        paymentMethodNameLabel.frame = self.getFrameToLabel()
         paymentMethodNameLabel.text = name
-
         paymentMethodNameLabel.font = Utils.getFont(size: 16)
         paymentMethodNameLabel.textColor = UIColor.px_grayDark()
         self.addSubview(paymentMethodNameLabel)
     }
 
     func setImageView(image: UIImage?) {
-        imageMargin = marginHeigh*4
-        let heightImage: CGFloat = frame.size.height - (2*marginHeigh)
-        imageWidth = heightImage
-        imageView.frame = CGRect(x: imageMargin, y: marginHeigh, width: imageWidth, height: heightImage)
+        imageView.frame = getFrameOfImage()
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
         self.addSubview(imageView)
+    }
+
+    func getFrameToLabel() -> CGRect {
+        let heightImage: CGFloat = frame.size.height - (2*marginHeigh)
+        let x: CGFloat = (imageMargin*2) + imageWidth
+        let labelWidth: CGFloat = frame.size.width - x - marginHeigh
+        return CGRect(x: x, y: marginHeigh, width: labelWidth, height: heightImage)
+    }
+
+    func getFrameOfImage() -> CGRect {
+        imageMargin = marginHeigh*4
+        let heightImage: CGFloat = frame.size.height - (2*marginHeigh)
+        imageWidth = heightImage
+        return CGRect(x: imageMargin, y: marginHeigh, width: imageWidth, height: heightImage)
     }
 
 }

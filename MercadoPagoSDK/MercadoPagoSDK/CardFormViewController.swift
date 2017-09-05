@@ -53,7 +53,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     var cardFormManager: CardViewModelManager!
 
-    var paymentMethods: [PaymentMethod]?
+  //  var paymentMethods: [PaymentMethod]?
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM} }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM } }
@@ -62,7 +62,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
        super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.cardFormManager = cardFormManager
         self.callback = callback
-        self.paymentMethods = cardFormManager.getPaymentMethods()
+      //  self.paymentMethods = cardFormManager.getPaymentMethods()
     }
 
     override func trackInfo() {
@@ -203,10 +203,10 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
 
-        if self.cardFormManager.paymentMethods == nil {
+        if self.cardFormManager.getPaymentMethods() == nil {
             MPServicesBuilder.getPaymentMethods(baseURL:  MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (paymentMethods) -> Void in
 
-                self.cardFormManager.paymentMethods = paymentMethods
+                self.cardFormManager.setPaymentMethods(paymentMethods: paymentMethods)
                 self.getPromos()
             }) { (_) -> Void in
                 // Mensaje de error correspondiente, ver que hacemos con el flujo
@@ -320,7 +320,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     open func editingChanged(_ textField: UITextField) {
-        hideErrorMessage()
+        hideMessage()
         showOnlyOneCardMessage()
         if editingLabel == cardNumberLabel {
             editingLabel?.text = textMaskFormater.textMasked(textEditMaskFormater.textUnmasked(textField.text!))
@@ -549,33 +549,33 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func showOnlyOneCardMessage() {
-        if self.paymentMethods?.count == 1 {
-
-            setOnlyOneCardMessage(message: "Solo puedes pagar con ".localized + (self.paymentMethods?[0].name)!, color: UIColor.px_grayBaseText(), isError: false)
-
+        if self.cardFormManager.getPaymentMethods()?.count == 1 {
+            if let name = self.cardFormManager.getPaymentMethods()?[0].name {
+                setOnlyOneCardMessage(message: "Solo puedes pagar con ".localized + name, color: UIColor.mpRedPinkErrorMessage(), isError: true)
+            }
         }
     }
 
-    func showCreditCardNotSupportedErrorMessage() {
+    func showCardNotSupportedErrorMessage() {
 
-        if self.paymentMethods != nil {
-
-            if self.paymentMethods?.count == 1 {
-
-                setOnlyOneCardMessage(message: "Solo puedes pagar con ".localized + (self.paymentMethods?[0].name)!, color: UIColor.mpRedPinkErrorMessage(), isError: true)
+        guard let paymentMethods = self.cardFormManager.getPaymentMethods() else {
+            return
+        }
+        if self.cardFormManager.getPaymentMethods()?.count == 1 {
+            if let name = paymentMethods[0].name {
+                setOnlyOneCardMessage(message: "Solo puedes pagar con ".localized + name, color: UIColor.mpRedPinkErrorMessage(), isError: true)
             }else {
-
-                let cardNotAvailableError = CardNotAvailableErrorView(frame: (toolbar?.frame)!, paymentMethods: paymentMethods!, showAvaibleCardsCallback: {
-                    self.editingLabel?.text = ""
-                    self.textBox.text = ""
-                    self.hideErrorMessage()
-                    let availableCardsDetail =  AvailableCardsViewController(paymentMethods: self.paymentMethods!)
-                    self.navigationController?.present(availableCardsDetail, animated: true, completion: {})
-                })
-
-                setTextBox(isError: true, inputAccessoryView: cardNotAvailableError)
-
+                setOnlyOneCardMessage(message: "Método de pago no soportado".localized, color: UIColor.mpRedPinkErrorMessage(), isError: true)
             }
+        }else {
+            let cardNotAvailableError = CardNotAvailableErrorView(frame: (toolbar?.frame)!, paymentMethods: paymentMethods, showAvaibleCardsCallback: {
+                self.editingLabel?.text = ""
+                self.textBox.text = ""
+                self.hideMessage()
+                let availableCardsDetail =  AvailableCardsViewController(paymentMethods: paymentMethods)
+                self.navigationController?.present(availableCardsDetail, animated: true, completion: {})
+            })
+            setTextBox(isError: true, inputAccessoryView: cardNotAvailableError)
         }
     }
 
@@ -590,7 +590,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.becomeFirstResponder()
     }
 
-    func showErrorMessage(_ errorMessage: String) {
+    func showMessage(_ errorMessage: String) {
 
         errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor.mpLightGray()
@@ -601,7 +601,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         setTextBox(isError: true, inputAccessoryView: errorLabel!)
     }
 
-    func hideErrorMessage() {
+    func hideMessage() {
         self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
         self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
         self.textBox.inputAccessoryView = self.toolbar
@@ -637,13 +637,12 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         case cardNumberLabel! :
             if !validateCardNumber() {
                 if cardFormManager.guessedPMS != nil {
-                    //showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!)?.userInfo["cardNumber"] as? String)!)
-                    showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!))!)
+                    showMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!))!)
                 } else {
                     if cardNumberLabel?.text?.characters.count == 0 {
-                        showErrorMessage("Ingresa el número de la tarjeta de crédito".localized)
+                        showMessage("Ingresa el número de la tarjeta de crédito".localized)
                     } else {
-                        showErrorMessage("Revisa este dato".localized)
+                        showMessage("Revisa este dato".localized)
                     }
 
                 }
@@ -654,7 +653,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
         case nameLabel! :
             if !self.validateCardholderName() {
-                showErrorMessage("Ingresa el nombre y apellido impreso en la tarjeta".localized)
+                showMessage("Ingresa el nombre y apellido impreso en la tarjeta".localized)
 
                 return
             }
@@ -670,7 +669,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                 }
             }
             if !self.validateExpirationDate() {
-                showErrorMessage((cardFormManager.cardToken?.validateExpiryDate())!)
+                showMessage((cardFormManager.cardToken?.validateExpiryDate())!)
 
                 return
             }
@@ -679,7 +678,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         case cvvLabel! :
             if !self.validateCvv() {
 
-                showErrorMessage(("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((cardFormManager.getGuessedPM()?.secCodeLenght())! as NSNumber).stringValue))
+                showMessage(("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((cardFormManager.getGuessedPM()?.secCodeLenght())! as NSNumber).stringValue))
                 return
             }
             self.confirmPaymentMethod()
@@ -731,7 +730,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
         if textEditMaskFormater.textUnmasked(textBox.text).characters.count>=6 || cardFormManager.customerCard != nil ||
             cardFormManager.cardToken != nil {
-            hideErrorMessage()
+            hideMessage()
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
@@ -765,7 +764,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                 textEditMaskFormater = textEditMaskFormaterAux
             } else {
                 self.clearCardSkin()
-                showCreditCardNotSupportedErrorMessage()
+                showCardNotSupportedErrorMessage()
                 return
             }
 

@@ -348,7 +348,6 @@
 		4BFD90C21F58554C00ABC348 /* DateExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD90C11F58554C00ABC348 /* DateExtensionTest.swift */; };
 		534D841E1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D841D1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift */; };
 		534D84201F546FA000C2C6F9 /* AvailableCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D841F1F546FA000C2C6F9 /* AvailableCardsViewController.swift */; };
-		534D84221F54727000C2C6F9 /* ExclusionsErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D84211F54727000C2C6F9 /* ExclusionsErrorView.swift */; };
 		534D84241F5480F800C2C6F9 /* AvailableCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534D84231F5480F800C2C6F9 /* AvailableCardsViewController.xib */; };
 		534D84281F5485B000C2C6F9 /* CardAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D84271F5485B000C2C6F9 /* CardAvailableView.swift */; };
 		534D842A1F5593BC00C2C6F9 /* CardNotAvailableErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D84291F5593BC00C2C6F9 /* CardNotAvailableErrorView.swift */; };
@@ -829,7 +828,6 @@
 		4BFD90C11F58554C00ABC348 /* DateExtensionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensionTest.swift; sourceTree = "<group>"; };
 		534D841D1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableCardsDetailView.swift; sourceTree = "<group>"; };
 		534D841F1F546FA000C2C6F9 /* AvailableCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableCardsViewController.swift; sourceTree = "<group>"; };
-		534D84211F54727000C2C6F9 /* ExclusionsErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExclusionsErrorView.swift; sourceTree = "<group>"; };
 		534D84231F5480F800C2C6F9 /* AvailableCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AvailableCardsViewController.xib; sourceTree = "<group>"; };
 		534D84271F5485B000C2C6F9 /* CardAvailableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardAvailableView.swift; sourceTree = "<group>"; };
 		534D84291F5593BC00C2C6F9 /* CardNotAvailableErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNotAvailableErrorView.swift; sourceTree = "<group>"; };
@@ -1361,7 +1359,6 @@
 				15B8B1AD1E71DE950065DF50 /* DiscountBodyCell.swift */,
 				15B8B1AE1E71DE950065DF50 /* DiscountDetailView.swift */,
 				15B8B1AF1E71DE950065DF50 /* DiscountDetailView.xib */,
-				534D84211F54727000C2C6F9 /* ExclusionsErrorView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2306,7 +2303,6 @@
 				0F98835D1AD2AB6000F750F0 /* Card.swift in Sources */,
 				FCBF13421E7201570092B756 /* FinancialInstituion.swift in Sources */,
 				76445AEF1CCA73B2008EE68E /* MockManager.swift in Sources */,
-				534D84221F54727000C2C6F9 /* ExclusionsErrorView.swift in Sources */,
 				534D841E1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift in Sources */,
 				4B277F661E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */,
 				4B59F02B1E36676100B5837B /* FlowPreference.swift in Sources */,

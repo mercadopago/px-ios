@@ -20,7 +20,7 @@ fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class CardViewModelManager: NSObject {
 
-    var paymentMethods: [PaymentMethod]?
+    private var paymentMethods: [PaymentMethod]?
     var guessedPMS: [PaymentMethod]?
     var customerCard: CardInformation?
     var token: Token?
@@ -201,13 +201,9 @@ open class CardViewModelManager: NSObject {
         var paymentMethods = [PaymentMethod]()
 
         for (_, value) in self.paymentMethods!.enumerated() {
-
-            if value.conformsPaymentPreferences(self.paymentSettings) {
                 if value.conformsToBIN(getBIN(cardNumber)!) {
                     paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
                 }
-            }
-
         }
         if paymentMethods.isEmpty {
             return nil
@@ -218,21 +214,26 @@ open class CardViewModelManager: NSObject {
     }
 
     func getPaymentMethods() -> [PaymentMethod]? {
-        var paymentMethods = [PaymentMethod]()
-        guard let pms = self.paymentMethods else {
-            return nil
-        }
 
+        return self.paymentMethods
+    }
+
+    func setPaymentMethods(paymentMethods: [PaymentMethod]?) {
+        guard let pms = paymentMethods else {
+            return
+        }
+        var pMs = [PaymentMethod]()
         for (_, value) in pms.enumerated() {
             if value.conformsPaymentPreferences(self.paymentSettings) {
-                paymentMethods.append(value)
+                pMs.append(value)
             }
         }
-        if paymentMethods.isEmpty {
-            return nil
+        if pMs.isEmpty {
+            self.paymentMethods = nil
         } else {
-            return paymentMethods
+            self.paymentMethods = pMs
         }
+
     }
 
     func tokenHidratate(_ cardNumber: String, expirationDate: String, cvv: String, cardholderName: String) {
