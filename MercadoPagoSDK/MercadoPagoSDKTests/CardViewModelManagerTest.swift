@@ -10,12 +10,13 @@ import XCTest
 
 class CardViewModelManagerTest: BaseTest {
 
-    var cardFormManager: CardViewModelManager?
+    var cardFormManager: CardFormViewModel?
 
     override func setUp() {
         super.setUp()
         // Retomar valor default
         CardFormViewController.showBankDeals = true
+        self.cardFormManager = CardFormViewModel(amount: 10, paymentMethods: nil, paymentSettings: nil)
     }
 
     override func tearDown() {
@@ -28,8 +29,6 @@ class CardViewModelManagerTest: BaseTest {
      *
      */
     func testCvvLengthDefaultValue() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
-
         let cvvLengthDefault = self.cardFormManager?.cvvLenght()
         XCTAssertEqual(cvvLengthDefault, 3)
     }
@@ -40,7 +39,7 @@ class CardViewModelManagerTest: BaseTest {
         securityCode.length = 4
         customerCard.securityCode = securityCode
 
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: customerCard, token: nil, paymentSettings: nil)
+        self.cardFormManager?.customerCard = customerCard
 
         XCTAssertEqual(4, self.cardFormManager?.cvvLenght())
     }
@@ -52,7 +51,7 @@ class CardViewModelManagerTest: BaseTest {
         setting.securityCode.length = 4
         setting.securityCode.cardLocation = "front"
         paymentMethod.settings = [setting]
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [paymentMethod], customerCard: nil, token: nil, paymentSettings: nil)
+        self.cardFormManager?.guessedPMS = [paymentMethod]
 
         let cvvLengthFromPaymentMethodSetting = self.cardFormManager?.cvvLenght()
         XCTAssertEqual(cvvLengthFromPaymentMethodSetting, paymentMethod.secCodeLenght())
@@ -64,8 +63,6 @@ class CardViewModelManagerTest: BaseTest {
      *
      */
     func testGetLabelTextColorDefaultColor() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
-
         let color = self.cardFormManager!.getLabelTextColor(cardNumber: nil)
         XCTAssertEqual(color, MPLabel.defaultColorText)
     }
@@ -73,7 +70,7 @@ class CardViewModelManagerTest: BaseTest {
     func testGetPMLabelColors() {
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         let cardNumber = "4242424242424242"
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [paymentMethod], paymentSettings: nil)
+        self.cardFormManager?.guessedPMS = [paymentMethod]
 
         let fontColor = self.cardFormManager!.getLabelTextColor(cardNumber: cardNumber)
         XCTAssertEqual(fontColor, paymentMethod.getFontColor(bin: "424242"))
@@ -86,7 +83,7 @@ class CardViewModelManagerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("maestro", name : "Maestro", paymentTypeId : "debit_card", multipleSettings: true)
         let firstSettingCardNumber = "501041456060594693"
         let secondSettingCardNumber = "5010811232093852985"
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [paymentMethod], paymentSettings: nil)
+        self.cardFormManager?.guessedPMS = [paymentMethod]
 
         let firstBin = firstSettingCardNumber.substring(to: (firstSettingCardNumber.characters.index(firstSettingCardNumber.startIndex, offsetBy: 6)))
         let secondBin = secondSettingCardNumber.substring(to: (secondSettingCardNumber.characters.index(firstSettingCardNumber.startIndex, offsetBy: 6)))
@@ -106,28 +103,13 @@ class CardViewModelManagerTest: BaseTest {
         XCTAssertEqual(secondEditingFontColor, paymentMethod.getEditingFontColor(bin: secondBin))
     }
 
-//    func testGetLabelTextColorCustomerCard() {
-//        let customerCard = MockBuilder.buildCard(paymentMethodId: "master")
-//        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard : customerCard, paymentSettings: nil)
-//        
-//        let expectedPaymentMethod = MockBuilder.buildPaymentMethod("master")
-//        XCTAssertEqual(MercadoPago.getFontColorFor(expectedPaymentMethod), self.cardFormManager!.getLabelTextColor())
-//    }
-
-    /*
-     *
-     * showBankDeals() tests for no promos loaded, promos loaded and custom setting in CardFormVC
-     *
-     */
     func testShowBankDeals_noPromosLoaded() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
         let result = self.cardFormManager!.showBankDeals()
         XCTAssertNil(self.cardFormManager!.promos)
         XCTAssertFalse(result)
     }
 
     func testShowBankDeals_promosLoaded() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
         self.cardFormManager!.promos = [MockBuilder.buildPromo()]
         let result = self.cardFormManager!.showBankDeals()
 
@@ -135,41 +117,21 @@ class CardViewModelManagerTest: BaseTest {
     }
 
     func testShowBankDeals_promosLoadedIsEmpty() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
         self.cardFormManager!.promos = []
         let result = self.cardFormManager!.showBankDeals()
         XCTAssertFalse(result)
     }
 
     func testShowBankDeals_promosLoadedHidePromosByUser() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
         self.cardFormManager!.promos = [MockBuilder.buildPromo()]
         CardFormViewController.showBankDeals = false
         let result = self.cardFormManager!.showBankDeals()
         XCTAssertFalse(result)
     }
 
-    func testGetEditingLabelColorDefaultColor() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: nil, token: nil, paymentSettings: nil)
-
-     //   let color = self.cardFormManager?.getLabelTextColor()
-     //   XCTAssertEqual(color, MPLabel.highlightedColorText)
-    }
-
-    func testGetEditingLabelColorPaymentMethodColor() {
-        let paymentMethod = MockBuilder.buildPaymentMethod("master")
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [paymentMethod], customerCard: nil, token: nil, paymentSettings: nil)
-
-       // let color = self.cardFormManager?.getLabelTextColor()
-       // let expectedColor = MercadoPago.getEditingFontColorFor(paymentMethod)
-       // XCTAssertEqual(color, expectedColor)
-    }
-
     func testGetExpirationDateFromLabel() {
         let label = MPLabel()
         label.text = "11/22"
-
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: nil, token: nil, paymentSettings: nil)
 
         let year = self.cardFormManager?.getExpirationYearFromLabel(label)
         XCTAssertEqual(year, 22)
@@ -181,9 +143,7 @@ class CardViewModelManagerTest: BaseTest {
 
     func testGetBIN() {
         let cardNumber = "12345677777777"
-
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: nil, token: nil, paymentSettings: nil)
-
+        
         let bin = self.cardFormManager?.getBIN(cardNumber)
         XCTAssertEqual(bin, "123456")
     }
@@ -192,13 +152,13 @@ class CardViewModelManagerTest: BaseTest {
 
         let amexCardNumber = "371180111111111"
         let amexPaymentMethod = MockBuilder.buildPaymentMethod("amex")
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [amexPaymentMethod], customerCard: nil, token: nil, paymentSettings: nil)
+        self.cardFormManager?.guessedPMS = [amexPaymentMethod]
         var isAmex = self.cardFormManager!.isAmexCard(amexCardNumber)
         XCTAssertTrue(isAmex)
 
         let masterCardNumber = "503175111111111"
         let masterPaymentMethod = MockBuilder.buildPaymentMethod("master")
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [masterPaymentMethod], customerCard: nil, token: nil, paymentSettings: nil)
+        self.cardFormManager?.guessedPMS = [masterPaymentMethod]
         isAmex = self.cardFormManager!.isAmexCard(masterCardNumber)
         XCTAssertFalse(isAmex)
 
@@ -206,21 +166,7 @@ class CardViewModelManagerTest: BaseTest {
         XCTAssertFalse(isAmex)
     }
 
-    func testMatchedPaymentMethod() {
-        let defaultPaymentMethod = MockBuilder.buildPaymentMethod("master")
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [defaultPaymentMethod], customerCard: nil, token: nil, paymentSettings: nil)
-
-        let paymentMethodFound = self.cardFormManager?.matchedPaymentMethod("XXXX")
-        //XCTAssertEqual(defaultPaymentMethod, paymentMethodFound!)
-
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: nil, token: nil, paymentSettings: nil)
-        let noPaymentMethodFound = self.cardFormManager?.matchedPaymentMethod("XXXX")
-        XCTAssertNil(noPaymentMethodFound)
-
-    }
-
     func testTokenHidratate() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: nil, token: nil, paymentSettings: nil)
         self.cardFormManager?.cvvEmpty = false
         self.cardFormManager?.cardholderNameEmpty = false
         self.cardFormManager?.tokenHidratate("cardNumber", expirationDate: "11/22", cvv: "123", cardholderName: "cardholdername")
@@ -234,7 +180,7 @@ class CardViewModelManagerTest: BaseTest {
 
     func testBuildSavedCardToken() {
         let customerCard = MockBuilder.buildCard()
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: customerCard, token: nil, paymentSettings: nil)
+        self.cardFormManager?.customerCard = customerCard
         self.cardFormManager!.buildSavedCardToken("cvv")
 
         let savedCardToken = self.cardFormManager!.cardToken as! SavedCardToken
@@ -245,13 +191,33 @@ class CardViewModelManagerTest: BaseTest {
     }
 
     func testIsValidInputCVV() {
-        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: nil, token: nil, paymentSettings: nil)
         //TODO : acá hay casos locos
         XCTAssertFalse(self.cardFormManager!.isValidInputCVV(""))
         XCTAssertTrue(self.cardFormManager!.isValidInputCVV("123"))
     }
-
-    func testValidateCardNumber() {
-
+    
+    func testShouldShowOnlyOneCardMessage() {
+        let paymentMethods = MockBuilder.getMockPaymentMethods()
+        cardFormManager?.setPaymentMethods(paymentMethods: paymentMethods)
+        XCTAssertFalse(cardFormManager!.shoudShowOnlyOneCardMessage())
+        let paymentMethod = paymentMethods[0]
+        cardFormManager?.setPaymentMethods(paymentMethods: [paymentMethod])
+        XCTAssertTrue(cardFormManager!.shoudShowOnlyOneCardMessage())
+    }
+    
+    func testGetNotAvailableCardMessage() {
+        let defaultMessage = "Método de pago no soportado".localized
+        let message = "Solo puedes pagar con ".localized
+        let paymentMethods = MockBuilder.getMockPaymentMethods()
+        paymentMethods[0].name = "Visa"
+        cardFormManager?.setPaymentMethods(paymentMethods: paymentMethods)
+        XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), message + "Visa")
+        paymentMethods[0].name = ""
+        XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
+        cardFormManager?.setPaymentMethods(paymentMethods: nil)
+        XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
+        let emptyPaymentMethods = [PaymentMethod]()
+        cardFormManager?.setPaymentMethods(paymentMethods: emptyPaymentMethods)
+        XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
     }
 }

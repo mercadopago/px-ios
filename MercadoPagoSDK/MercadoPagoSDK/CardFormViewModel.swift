@@ -1,5 +1,5 @@
 //
-//  CardViewModelManager.swift
+//  CardFormViewModel.swift
 //  MercadoPagoSDK
 //
 //  Created by Maria cristina rodriguez on 9/8/16.
@@ -18,7 +18,7 @@ fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-open class CardViewModelManager: NSObject {
+open class CardFormViewModel: NSObject {
 
     private var paymentMethods: [PaymentMethod]?
     var guessedPMS: [PaymentMethod]?
@@ -38,10 +38,10 @@ open class CardViewModelManager: NSObject {
 
     var promos: [Promo]?
 
-    public init(amount: Double, paymentMethods: [PaymentMethod]?, paymentMethod: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
+    public init(amount: Double, paymentMethods: [PaymentMethod]?, guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
         self.amount = amount
         self.paymentMethods = paymentMethods
-        self.guessedPMS = paymentMethod
+        self.guessedPMS = guessedPaymentMethods
 
         if customerCard != nil {
             self.customerCard = customerCard
@@ -275,11 +275,17 @@ open class CardViewModelManager: NSObject {
     }
     
     func getOnlyOneCardAvailableMessage() -> String {
-        if let name = getPaymentMethods()?[0].name {
-            return "Solo puedes pagar con ".localized + name
+        let defaultMessage = "Método de pago no soportado".localized
+        
+        guard let paymentMethods = getPaymentMethods() else {
+            return defaultMessage
+        }
+        
+        if !String.isNullOrEmpty(paymentMethods[0].name) {
+            return "Solo puedes pagar con ".localized + paymentMethods[0].name
         }
         else {
-            return "Método de pago no soportado".localized
+            return defaultMessage
         }
     }
 }

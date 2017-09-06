@@ -620,7 +620,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         let cardFormManager = mpCheckout.viewModel.cardFormManager()
-        XCTAssertTrue(cardFormManager.isKind(of: CardViewModelManager.self))
+        XCTAssertTrue(cardFormManager.isKind(of: CardFormViewModel.self))
         XCTAssertEqual(cardFormManager.amount, checkoutPreference.getAmount())
     }
 
