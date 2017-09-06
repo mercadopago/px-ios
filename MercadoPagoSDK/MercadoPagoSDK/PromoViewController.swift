@@ -20,13 +20,13 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	var promos: [Promo]!
 
 	var bundle: Bundle? = MercadoPago.getBundle()
-    var callback: (() -> (Void))?
+    var callback: (() -> Void)?
 
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 
-	public init(promos: [Promo]? = nil, callback: (() -> (Void))? = nil) {
+	public init(promos: [Promo]? = nil, callback: (() -> Void)? = nil) {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
 		self.publicKey = MercadoPagoContext.publicKey()
         self.callback = callback

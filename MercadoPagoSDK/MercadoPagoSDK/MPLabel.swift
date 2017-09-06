@@ -63,5 +63,5 @@ open class MPLabel: UILabel {
         self.attributedText = attributedString
 
     }
-    
+
 }

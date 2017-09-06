@@ -39,16 +39,16 @@ class AvailableCardsDetailView: UIView {
         scrollCards.isUserInteractionEnabled = true
         scrollCards.frame = getScrollCardsFrame()
         scrollCards.contentSize = getScrollCardsContentSize()
-        
+
         scrollCards.addSubview(getHeaderView())
-        
+
         var y: CGFloat = AvailableCardsDetailView.HEADER_SCROLL_HEIGHT
 
         for paymentMethod in paymentMethods {
             scrollCards.addSubview(getCardAvailableView(y: y, paymentMethod: paymentMethod))
             y = y + AvailableCardsDetailView.ITEMS_HEIGHT
         }
-        
+
         self.addSubview(scrollCards)
     }
 
@@ -64,30 +64,30 @@ class AvailableCardsDetailView: UIView {
         self.addSubview(titleLable)
 
     }
-    
+
     func getScrollCardsFrame() -> CGRect {
         return CGRect(x: 0, y: AvailableCardsDetailView.HEADER_HEIGHT, width: self.frame.size.width, height: self.frame.size.height - AvailableCardsDetailView.HEADER_HEIGHT)
     }
-    
+
     func getScrollCardsContentSize() -> CGSize {
         return CGSize(width: self.frame.size.width, height: AvailableCardsDetailView.ITEMS_HEIGHT * CGFloat(paymentMethods.count) + AvailableCardsDetailView.HEADER_SCROLL_HEIGHT)
     }
-    
+
     func getHeaderView() -> UIView {
         let headerView = UIView(frame:CGRect(x: 0, y: 0, width: self.frame.size.width, height:  AvailableCardsDetailView.HEADER_SCROLL_HEIGHT))
         headerView.backgroundColor = .white
         return headerView
     }
-    
+
     func getCardAvailableView(y: CGFloat, paymentMethod: PaymentMethod) -> CardAvailableView {
         return CardAvailableView(frame: CGRect(x: 0, y: y, width: self.frame.size.width, height: AvailableCardsDetailView.ITEMS_HEIGHT), paymentMethod: paymentMethod)
     }
-    
+
     func getTitleLabelFrame() -> CGRect {
         let width = self.frame.size.width - (2*margin)
         return CGRect(x: 0, y: margin, width: width, height: AvailableCardsDetailView.HEADER_HEIGHT)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

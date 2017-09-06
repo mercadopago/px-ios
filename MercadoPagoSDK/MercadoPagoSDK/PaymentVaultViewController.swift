@@ -169,8 +169,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.viewWillDisappear(animated)
     }
 
-    fileprivate func cardFormCallbackCancel() -> (() -> (Void)) {
-        return { () -> (Void) in
+    fileprivate func cardFormCallbackCancel() -> (() -> Void) {
+        return { () -> Void in
             if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
             } else {
@@ -201,8 +201,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
     }
 
-    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> (Void)) {
-        return { () -> (Void) in
+    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> Void) {
+        return { () -> Void in
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()
             }
@@ -364,7 +364,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         return cell
 
     }
-    
 
     fileprivate let itemsPerRow: CGFloat = 2
 
