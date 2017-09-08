@@ -52,6 +52,7 @@ class MainTableViewController: UITableViewController {
     open var color: UIColor!
     open var configJSON: String!
     open var flowPreference = FlowPreference()
+    open var processingMode: String!
 
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
 
@@ -205,6 +206,7 @@ class MainTableViewController: UITableViewController {
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
+            showRyC ? flowPreference.enableReviewAndConfirmScreen() : flowPreference.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
 
@@ -232,6 +234,21 @@ class MainTableViewController: UITableViewController {
         checkout.setCallbackCancel {
             print("Se cerro al flujo")
             self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+        if let processingMode = self.processingMode {
+            let servicePreference = ServicePreference()
+
+            switch processingMode {
+            case ProcessingMode.aggregator.rawValue:
+                servicePreference.setAggregatorAsProcessingMode()
+            case ProcessingMode.gateway.rawValue:
+                servicePreference.setGatewayAsProcessingMode()
+            default:
+                servicePreference.setAggregatorAsProcessingMode()
+            }
+            
+            MercadoPagoCheckout.setServicePreference(servicePreference)
         }
 
         var shoppingDecoration = ShoppingReviewPreference()
@@ -302,6 +319,9 @@ class MainTableViewController: UITableViewController {
         let items: [NSDictionary] = json["items"] != nil ?  json["items"] as! [NSDictionary] : []
         let maxCards = json["show_max_saved_cards"] != nil ? json["show_max_saved_cards"] as? Int : nil
         let flowPreference = json["flow_preference"] != nil ? FlowPreference.fromJSON(json["flow_preference"] as! NSDictionary) : FlowPreference()
+        let servicePreferenceJson = json["service_preference"] != nil ? json["service_preference"] as? NSDictionary : nil
+        
+        let processingMode = servicePreferenceJson?["processing_mode"] != nil ? servicePreferenceJson?["processing_mode"] as? String : nil
 
         self.flowPreference = flowPreference
 
@@ -310,12 +330,14 @@ class MainTableViewController: UITableViewController {
             self.publicKey = PK
             self.prefID = prefID
             self.showMaxCards = maxCards
+            self.processingMode = processingMode
         case startForOptions.paymentData.rawValue:
             self.publicKey = PK
             MercadoPagoContext.setSiteID(site)
             let pref = createCheckoutPreference(payerEmail: payerEmail, site: site, itemsDictArray: items)
             self.customCheckoutPref = pref
             self.showMaxCards = maxCards
+            self.processingMode = processingMode
         default: break
         }
     }

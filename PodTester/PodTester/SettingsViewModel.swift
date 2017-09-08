@@ -244,7 +244,6 @@ open class SettingsViewModel: NSObject {
         cellTextfield.layer.borderWidth = 1
         cellTextfield.layer.cornerRadius = 5
         cellTextfield.placeholder = "{JSON}"
-        cellTextfield.autocapitalizationType = .allCharacters
         cellTextfield.addTarget(self, action: #selector(setConfigurationJSON(sender: )), for: UIControlEvents.allEditingEvents)
         cell.addSubview(cellTextfield)
 
