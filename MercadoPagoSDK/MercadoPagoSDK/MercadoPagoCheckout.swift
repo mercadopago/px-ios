@@ -147,6 +147,8 @@ open class MercadoPagoCheckout: NSObject {
         } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
             return
+        } else if let finishFlowCallback = MercadoPagoCheckoutViewModel.finishFlowCallback {
+            finishFlowCallback(self.viewModel.payment)
         }
 
         goToRootViewController()

@@ -64,8 +64,13 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = changePaymentMethodCallback
     }
 
+    @available(*, deprecated: 3.4.2, message: "Use setFinishFlowCallback instead")
     open static func setPaymentCallback(paymentCallback : @escaping (_ payment: Payment) -> Void) {
         MercadoPagoCheckoutViewModel.paymentCallback = paymentCallback
+    }
+
+    open static func setFinishFlowCallback(finishFlowCallback : @escaping (_ payment: Payment?) -> Void) {
+        MercadoPagoCheckoutViewModel.finishFlowCallback = finishFlowCallback
     }
 
     open static func setPaymentDataConfirmCallback(paymentDataConfirmCallback : @escaping (_ paymentData: PaymentData) -> Void) {
