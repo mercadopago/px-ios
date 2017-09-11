@@ -39,10 +39,9 @@ class TrackStorageManager: NSObject {
         for trackScreenJSON in arrayScreen {
             screenTrackArray.append(ScreenTrackInfo(from: JSONHandler.convertToDictionary(text: trackScreenJSON)!))
         }
-
-        let maxLifetimeMilliseconds = MAX_LIFETIME_IN_DAYS * 24 * 60 * 60 * 1000
+        let maxLifetimeMilliseconds = MAX_LIFETIME_IN_DAYS * 24 * 60 * 60
         let lastScreens = screenTrackArray.filter {
-            return $0.timestamp + maxLifetimeMilliseconds > Date().getCurrentMillis()
+            return ($0.timestamp / 1000) + maxLifetimeMilliseconds > Date().getCurrentMillis() / 1000
         }
         var screenTrackJSONArray = [String]()
         for trackScreen in lastScreens {
