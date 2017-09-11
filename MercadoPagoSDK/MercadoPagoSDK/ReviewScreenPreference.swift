@@ -11,12 +11,16 @@ import UIKit
 open class ReviewScreenPreference: NSObject {
 
     private var title = "Revisa tu pago".localized
-    private var productsTitle = "Productos".localized
     private var confirmButtonText = "Confirmar".localized
     private var cancelButtonText = "Cancelar Pago".localized
 	private var shouldDisplayChangeMethodOption = true
-
-    private var summaryRows = [SummaryRow]()
+    var details : [SummaryType:SummaryDetail] = [SummaryType:SummaryDetail]()
+    var disclaimer : String?
+    var disclaimerColor : UIColor = UIColor.mpGreenishTeal()
+    var showSubitle : Bool = false
+    let summaryTitles : [SummaryType:String] = [SummaryType.PRODUCT : "Producto".localized,SummaryType.ARREARS : "Mora".localized,SummaryType.CHARGE : "Cargos".localized,
+                                                            SummaryType.DISCOUNT : "Descuentos".localized, SummaryType.INTEREST : "Intereses".localized,SummaryType.TAXES : "Impuestos".localized, SummaryType.SHIPPING : "Envio".localized]
+    private var itemsReview : ItemsReview = ItemsReview()
 
     var additionalInfoCells = [MPCustomCell]()
     var customItemCells = [MPCustomCell]()
@@ -27,14 +31,6 @@ open class ReviewScreenPreference: NSObject {
 
     open func getTitle() -> String {
         return title
-    }
-
-    open func setProductsDetail(productsTitle: String) {
-        self.productsTitle = productsTitle
-    }
-
-    open func getProductsTitle() -> String {
-        return self.productsTitle
     }
 
     open func setConfirmButtonText(confirmButtonText: String) {
@@ -64,15 +60,7 @@ open class ReviewScreenPreference: NSObject {
 	open func enableChangeMethodOption() {
 		self.shouldDisplayChangeMethodOption = true
 	}
-
-    open func setSummaryRows(summaryRows: [SummaryRow]) {
-        self.summaryRows = summaryRows
-    }
-
-    open func getSummaryRows() -> [SummaryRow] {
-        return summaryRows
-    }
-
+    
     open func setCustomItemCell(customCell: [MPCustomCell]) {
         self.customItemCells = customCell
     }

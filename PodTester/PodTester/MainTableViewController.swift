@@ -234,12 +234,17 @@ class MainTableViewController: UITableViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
 
-        var shoppingDecoration = ShoppingReviewPreference()
-        shoppingDecoration.setOneWordDescription(oneWordDescription: "Entradas")
-        shoppingDecoration.setAmountTitle(amountTitle: "Valor de las entradas: ")
-        shoppingDecoration.setQuantityTitle(quantityTitle: "Cantidad de entradas:  ")
-        checkout.setShoppingReviewPreference(shoppingDecoration)
 
+        
+        var prefRS = ReviewScreenPreference()
+        prefRS.setSummaryProductTitle(oneWordTitle: "Cosas")
+        prefRS.addSummaryProductDetail(amount: 2400)
+        prefRS.addSummaryTaxesDetail(amount: 1000)
+        prefRS.addSummaryChargeDetail(amount: 1690)
+        prefRS.addSummaryDiscountDetail(amount: 190)
+        prefRS.setSummaryDisclaimer(disclaimerText: "Incluye comisión BACEN", disclaimerColor: .red)
+
+        checkout.setReviewScreenPreference(prefRS)
         checkout.start()
     }
 
