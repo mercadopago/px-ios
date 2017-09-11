@@ -25,7 +25,7 @@ open class SecurityCodeViewModel: NSObject {
         return paymentMethod.secCodeInBack()
     }
     func secCodeLenght() -> Int {
-        return paymentMethod.secCodeLenght()
+        return paymentMethod.secCodeLenght(cardInfo.getCardBin())
     }
 
     func executeCallback(secCode: String!) {
