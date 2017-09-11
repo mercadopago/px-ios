@@ -320,7 +320,7 @@
 	<key>mercadopago_cc</key>
 	<dict>
 		<key>image_name</key>
-		<string>icoTC_mppa</string>
+		<string>icoTc_mercadopago_cc</string>
 		<key>first_color</key>
 		<string>dcddd9</string>
 		<key>font_color</key>

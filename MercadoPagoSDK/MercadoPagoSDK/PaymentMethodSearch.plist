@@ -402,5 +402,10 @@
 		<key>image_name</key>
 		<string>mediosIconoMercadlivre</string>
 	</dict>
+	<key>mercadopago_cc</key>
+	<dict>
+		<key>image_name</key>
+		<string>medioMercadopago_cc</string>
+	</dict>
 </dict>
 </plist>
