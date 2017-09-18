@@ -74,7 +74,7 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolderSpec = 0;
 			files = (
 				15AF42AB1D36848100E70343 /* MercadoPagoSDK.framework in Embed Frameworks */,
 			);
