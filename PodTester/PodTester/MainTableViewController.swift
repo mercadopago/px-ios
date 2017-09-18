@@ -183,8 +183,15 @@ class MainTableViewController: UITableViewController {
 
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
+
+        var discount = DiscountCoupon()
+        discount.amount = 5000
+        discount.amount_off = "50"
+        discount.coupon_amount = "50"
+        discount.currency_id = "ARS"
+        discount._id = "77L"
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
-        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
+        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount: discount, navigationController: self.navigationController!)
 
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color)
@@ -234,14 +241,16 @@ class MainTableViewController: UITableViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
 
-
         var prefRS = ReviewScreenPreference()
-        prefRS.setSummaryProductTitle(oneWordTitle: "Cosas")
-        prefRS.addSummaryProductDetail(amount: 2400)
-        prefRS.addSummaryTaxesDetail(amount: 1000)
-        prefRS.addSummaryChargeDetail(amount: 1690)
-        prefRS.addSummaryDiscountDetail(amount: 190)
-        prefRS.setSummaryDisclaimer(disclaimerText: "Incluye comisión BACEN", disclaimerColor: .red)
+        prefRS.setSummaryProductTitle(oneWordTitle: "Cosas que lleveo")
+        prefRS.addSummaryProductDetail(amount: 6000)
+        //prefRS.addSummaryTaxesDetail(amount: 1000)
+       // prefRS.addSummaryChargeDetail(amount: 1000)
+       // prefRS.addSummaryChargeDetail(amount: 100)
+        prefRS.addSummaryDiscountDetail(amount: 1000)
+        prefRS.setQuantityTitle(title: "Quantity : ")
+        prefRS.setAmountTitle(title: "Amount : ")
+        prefRS.setSummaryDisclaimer(disclaimerText: "Incluye comisión BACEN")
         checkout.setReviewScreenPreference(prefRS)
         checkout.start()
     }

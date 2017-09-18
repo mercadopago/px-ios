@@ -248,6 +248,12 @@ open class CheckoutViewModel: NSObject {
             }
         }else {
             summary = defaultSummary()
+            if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
+                if let title = self.reviewScreenPreference.details[SummaryType.PRODUCT]?.title {
+                    summary.updateTitle(type: SummaryType.PRODUCT, oneWordTitle:title)
+                }
+            }
+
         }
         var amountPref = amount
         if let discount = self.paymentData.discount {

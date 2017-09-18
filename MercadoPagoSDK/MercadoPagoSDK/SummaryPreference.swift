@@ -28,9 +28,9 @@ extension ReviewScreenPreference {
         self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.ARREARS)
     }
     public func setSummaryProductTitle(oneWordTitle: String) {
-        self.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: oneWordTitle)
+        self.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: getOneWordDescription(oneWordDescription: oneWordTitle))
     }
-    public func setSummaryDisclaimer(disclaimerText: String, disclaimerColor: UIColor) {
+    public func setSummaryDisclaimer(disclaimerText: String, disclaimerColor: UIColor = UIColor.px_grayDark()) {
         self.disclaimer = disclaimerText
         self.disclaimerColor = disclaimerColor
     }
@@ -44,6 +44,17 @@ extension ReviewScreenPreference {
             self.details[type]?.titleColor = UIColor.mpGreenishTeal()
             self.details[type]?.amountColor = UIColor.mpGreenishTeal()
         }
+    }
+    public func getOneWordDescription(oneWordDescription: String) -> String {
+        if oneWordDescription.characters.count <= 0 {
+            return ""
+        }
+        if let firstWord = oneWordDescription.components(separatedBy: " ").first {
+            return firstWord
+        }else {
+            return oneWordDescription
+        }
+
     }
 
     func addDetail(detail: AmountDetail, type: SummaryType) {
