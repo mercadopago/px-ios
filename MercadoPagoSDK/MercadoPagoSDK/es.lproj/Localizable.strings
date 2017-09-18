@@ -6,6 +6,7 @@
   Copyright (c) 2015 MercadoPago. All rights reserved.
 */
 
+
 "Si" = "Si";
 "No" = "No";
 
@@ -245,3 +246,12 @@
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";
+
+//Summary Component
+
+"Producto" = "Producto";
+"Mora" = "Mora";
+"Cargos" = "Cargos";
+"Descuentos" = "Descuentos";
+"Impuestos" = "Impuestos";
+"Envío" = "Envío";

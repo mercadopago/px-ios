@@ -250,3 +250,13 @@
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="Which card?";
+
+
+//Summary Component
+
+"Producto" = "Product";
+"Mora" = "Arrear";
+"Cargos" = "Charges";
+"Descuentos" = "Discounts";
+"Impuestos" = "Taxes";
+"Envío" = "Shipping";

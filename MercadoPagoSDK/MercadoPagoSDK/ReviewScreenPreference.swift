@@ -19,7 +19,7 @@ open class ReviewScreenPreference: NSObject {
     var disclaimerColor: UIColor = UIColor.mpGreenishTeal()
     var showSubitle: Bool = false
     let summaryTitles: [SummaryType:String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
-                                                            SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envio".localized]
+                                                            SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envío".localized]
     private var itemsReview: ItemsReview = ItemsReview()
 
     var additionalInfoCells = [MPCustomCell]()
