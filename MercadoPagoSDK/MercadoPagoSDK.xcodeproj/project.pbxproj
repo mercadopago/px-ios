@@ -191,8 +191,8 @@
 		15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24721C5BFEA1008C5DC0 /* CardFormViewController.swift */; };
 		15ABAD591DB5489D00481E8E /* PaymentTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */; };
 		15ABAD5A1DB5489D00481E8E /* PaymentTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */; };
-		15AE1D971F60733700B0DAF8 /* AmountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D961F60733700B0DAF8 /* AmountDetail.swift */; };
-		15AE1D981F60733700B0DAF8 /* AmountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D961F60733700B0DAF8 /* AmountDetail.swift */; };
+		15AE1D971F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D961F60733700B0DAF8 /* SummaryItemDetail.swift */; };
+		15AE1D981F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D961F60733700B0DAF8 /* SummaryItemDetail.swift */; };
 		15AE1D9A1F6073AB00B0DAF8 /* SummaryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D991F6073AB00B0DAF8 /* SummaryDetail.swift */; };
 		15AE1D9B1F6073AB00B0DAF8 /* SummaryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D991F6073AB00B0DAF8 /* SummaryDetail.swift */; };
 		15AE1D9D1F60763400B0DAF8 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D9C1F60763400B0DAF8 /* Summary.swift */; };
@@ -744,7 +744,7 @@
 		15A7B18B1C88B2E4007D0C4E /* MockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockManager.swift; sourceTree = "<group>"; };
 		15A7B18D1C88BFDF007D0C4E /* CardTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTest.swift; sourceTree = "<group>"; };
 		15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTracker.swift; sourceTree = "<group>"; };
-		15AE1D961F60733700B0DAF8 /* AmountDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountDetail.swift; sourceTree = "<group>"; };
+		15AE1D961F60733700B0DAF8 /* SummaryItemDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryItemDetail.swift; sourceTree = "<group>"; };
 		15AE1D991F6073AB00B0DAF8 /* SummaryDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDetail.swift; sourceTree = "<group>"; };
 		15AE1D9C1F60763400B0DAF8 /* Summary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Summary.swift; sourceTree = "<group>"; };
 		15AE1D9F1F607BA000B0DAF8 /* ItemsReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsReview.swift; sourceTree = "<group>"; };
@@ -1391,7 +1391,7 @@
 		15AE1D951F6072E400B0DAF8 /* Summary Component */ = {
 			isa = PBXGroup;
 			children = (
-				15AE1D961F60733700B0DAF8 /* AmountDetail.swift */,
+				15AE1D961F60733700B0DAF8 /* SummaryItemDetail.swift */,
 				15AE1D991F6073AB00B0DAF8 /* SummaryDetail.swift */,
 				15AE1D9C1F60763400B0DAF8 /* Summary.swift */,
 				15AE1D9F1F607BA000B0DAF8 /* ItemsReview.swift */,
@@ -2441,7 +2441,7 @@
 				76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,
 				15840B8C1F06BF9D00701885 /* MPXReach.swift in Sources */,
 				15AE1DBE1F672FAE00B0DAF8 /* DisclaimerView.swift in Sources */,
-				15AE1D971F60733700B0DAF8 /* AmountDetail.swift in Sources */,
+				15AE1D971F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
 				15AE1DA61F60807900B0DAF8 /* SummaryPreference.swift in Sources */,
 				76128AC11DD10BA600D3B3CD /* MercadoPagoUIScrollViewController.swift in Sources */,
 				1553AF331E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
@@ -2526,7 +2526,7 @@
 				767C9CD41E266BF000BB4662 /* ExtensionsTest.swift in Sources */,
 				7672545B1C7CB0EC00EB5EBA /* BaseTest.swift in Sources */,
 				FC7E149B1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift in Sources */,
-				15AE1D981F60733700B0DAF8 /* AmountDetail.swift in Sources */,
+				15AE1D981F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
 				76EC47EC1C8614CA0086FA53 /* PaymentMethodTest.swift in Sources */,
 				76EC47E21C85ED9B0086FA53 /* MerchantPaymentTest.swift in Sources */,
 				76EC48021C862ABC0086FA53 /* PaymentMethodSearchTest.swift in Sources */,

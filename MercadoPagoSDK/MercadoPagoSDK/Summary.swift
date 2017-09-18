@@ -29,7 +29,7 @@ class Summary: NSObject {
             self.details[type] = summaryDetail
         }
     }
-    func addAmountDetail(detail: AmountDetail, type: SummaryType) {
+    func addAmountDetail(detail: SummaryItemDetail, type: SummaryType) {
         guard let summaryDetail = self.details[type] else {
             return
         }

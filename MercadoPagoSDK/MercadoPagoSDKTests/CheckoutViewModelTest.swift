@@ -227,6 +227,12 @@ class CheckoutViewModelTest: BaseTest {
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
     }
+    func getValidSummaryWithoutProductDetail() -> Summary {
+        var preference = ReviewScreenPreference()
+        preference.addSummaryTaxesDetail(amount: 900)
+        preference.addSummaryShippingDetail(amount: 100)
+        return Summary(details: preference.details)
+    }
     func testInvalidSummary() {
         instance?.reviewScreenPreference.details = getInvalidSummary().details
         var summary = instance?.getValidSummary(amount: 1000.0)
@@ -238,5 +244,11 @@ class CheckoutViewModelTest: BaseTest {
         var summary = instance?.getValidSummary(amount: 1000.0)
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
         XCTAssertEqual(summaryComponent.requiredHeight, 179.0)
+    }
+    func testValidSummaryWithoutProductDetail() {
+        instance?.reviewScreenPreference.details = getValidSummaryWithoutProductDetail().details
+        var summary = instance?.getValidSummary(amount: 1000.0)
+        var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
+        XCTAssertEqual(summaryComponent.requiredHeight, 112.0)
     }
 }

@@ -10,25 +10,25 @@ import UIKit
 extension ReviewScreenPreference {
 
     public func addSummaryProductDetail(amount: Double) {
-        self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.PRODUCT)
+        self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.PRODUCT)
     }
     public func addSummaryDiscountDetail(amount: Double) {
-        self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.DISCOUNT)
+        self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.DISCOUNT)
     }
     public func addSummaryChargeDetail(amount: Double) {
-        self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.CHARGE)
+        self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.CHARGE)
     }
     public func addSummaryTaxesDetail(amount: Double) {
-        self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.TAXES)
+        self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.TAXES)
     }
     public func addSummaryShippingDetail(amount: Double) {
-        self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.SHIPPING)
+        self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.SHIPPING)
     }
     public func addSummaryArrearsDetail(amount: Double) {
-        self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.ARREARS)
+        self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.ARREARS)
     }
     public func setSummaryProductTitle(oneWordTitle: String) {
-        self.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: getOneWordDescription(oneWordDescription: oneWordTitle))
+        self.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: oneWordTitle)
     }
     public func setSummaryDisclaimer(disclaimerText: String, disclaimerColor: UIColor = UIColor.px_grayDark()) {
         self.disclaimer = disclaimerText
@@ -57,7 +57,7 @@ extension ReviewScreenPreference {
 
     }
 
-    func addDetail(detail: AmountDetail, type: SummaryType) {
+    func addDetail(detail: SummaryItemDetail, type: SummaryType) {
         if self.details[type] != nil {
             self.details[type]?.details.append(detail)
         }else {
@@ -75,6 +75,12 @@ extension ReviewScreenPreference {
 
     func getSummaryTotalAmount() -> Double {
         var totalAmount = 0.0
+        guard let productDetail = details[SummaryType.PRODUCT] else {
+            return 0.0
+        }
+        if productDetail.getTotalAmount() <= 0 {
+            return 0.0
+        }
         for summaryType in details.keys {
             if let detailAmount = details[summaryType]?.getTotalAmount() {
                 if summaryType == SummaryType.DISCOUNT {

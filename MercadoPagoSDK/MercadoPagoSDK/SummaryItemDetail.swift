@@ -1,5 +1,5 @@
 //
-//  AmountDetail.swift
+//  SummaryItemDetail.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 9/6/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AmountDetail: NSObject {
+class SummaryItemDetail: NSObject {
     var name: String?
     var amount: Double
     init(name: String? = nil, amount: Double) {

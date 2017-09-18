@@ -10,7 +10,7 @@ import UIKit
 
 class SummaryDetail: NSObject {
     var title: String
-    var details: [AmountDetail]
+    var details: [SummaryItemDetail]
     var titleColor = UIColor.px_grayDark()
     var amountColor = UIColor.px_grayDark()
     func getTotalAmount() -> Double {
@@ -20,14 +20,14 @@ class SummaryDetail: NSObject {
         }
         return sum
     }
-    init(title: String, detail: AmountDetail?) {
+    init(title: String, detail: SummaryItemDetail?) {
         self.title = title
-        self.details = [AmountDetail]()
+        self.details = [SummaryItemDetail]()
         if let detail = detail {
             self.details.append(detail)
         }
     }
-    func addDetail(amountDetail: AmountDetail) {
-        self.details.append(amountDetail)
+    func addDetail(summaryItemDetail: SummaryItemDetail) {
+        self.details.append(summaryItemDetail)
     }
 }

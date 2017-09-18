@@ -235,15 +235,16 @@ class MainTableViewController: UITableViewController {
         }
 
         var prefRS = ReviewScreenPreference()
-        prefRS.setSummaryProductTitle(oneWordTitle: "Cosas que lleveo")
-        prefRS.addSummaryProductDetail(amount: 4800) //
-       // prefRS.addSummaryTaxesDetail(amount: 1000) //
-      //  prefRS.addSummaryChargeDetail(amount: 1000) //
-        prefRS.addSummaryChargeDetail(amount: 200) //
-      //  prefRS.addSummaryDiscountDetail(amount: 1000) //
- //       prefRS.setQuantityTitle(title: "Quantity : ")
- //       prefRS.setAmountTitle(title: "Amount : ")
-        prefRS.setSummaryDisclaimer(disclaimerText: "Incluye comisión BACEN")
+        prefRS.setSummaryProductTitle(oneWordTitle: "🐙 Remeras")
+        prefRS.addSummaryProductDetail(amount: 1)
+        prefRS.addSummaryTaxesDetail(amount: 2799)
+        prefRS.addSummaryChargeDetail(amount: 2000)
+        prefRS.addSummaryShippingDetail(amount: 200.45)
+        prefRS.addSummaryArrearsDetail(amount: 999.55)
+        prefRS.addSummaryDiscountDetail(amount: 1000)
+        prefRS.setQuantityTitle(title: "Quantity : ")
+        prefRS.setAmountTitle(title: "Amount : ")
+        prefRS.setSummaryDisclaimer(disclaimerText: "Incluye comisión BACEN", disclaimerColor: .red)
         checkout.setReviewScreenPreference(prefRS)
         checkout.start()
     }
