@@ -8,10 +8,9 @@
 
 import UIKit
 
-
-class AmountDetail : NSObject{
-    var name : String?
-    var amount : Double
+class AmountDetail: NSObject {
+    var name: String?
+    var amount: Double
     init(name: String? = nil, amount: Double) {
         self.name = name
         self.amount = amount

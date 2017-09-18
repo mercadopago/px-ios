@@ -9,31 +9,31 @@
 import UIKit
 
 class Summary: NSObject {
-    var details : [SummaryType:SummaryDetail]
-    var disclaimer : String? 
-    var disclaimerColor : UIColor = UIColor.mpGreenishTeal()
-    var showSubitle : Bool = false
-    
-    init(details : [SummaryType:SummaryDetail]) {
+    var details: [SummaryType:SummaryDetail]
+    var disclaimer: String?
+    var disclaimerColor: UIColor = UIColor.mpGreenishTeal()
+    var showSubitle: Bool = false
+
+    init(details: [SummaryType:SummaryDetail]) {
         self.details = details
     }
-    
-    func updateTitle(type: SummaryType, oneWordTitle: String){
+
+    func updateTitle(type: SummaryType, oneWordTitle: String) {
         guard let summaryDetail = self.details[type] else {
             return
         }
         summaryDetail.title = oneWordTitle
     }
-    func addSummaryDetail(summaryDetail: SummaryDetail, type: SummaryType){
+    func addSummaryDetail(summaryDetail: SummaryDetail, type: SummaryType) {
         if self.details[type] == nil {
             self.details[type] = summaryDetail
         }
     }
-    func addAmountDetail(detail : AmountDetail, type: SummaryType){
+    func addAmountDetail(detail: AmountDetail, type: SummaryType) {
         guard let summaryDetail = self.details[type] else {
             return
         }
         summaryDetail.details.append(detail)
     }
-    
+
 }

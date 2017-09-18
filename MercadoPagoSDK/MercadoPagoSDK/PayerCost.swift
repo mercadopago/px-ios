@@ -66,7 +66,6 @@ open class PayerCost: NSObject, Cellable {
         return payerCost
     }
 
-
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }

@@ -75,7 +75,7 @@ class ServicePreferenceTest: BaseTest {
 
         XCTAssertTrue(servicePreference.isCheckoutPreferenceSet())
     }
-    
+
     public func testSetAggregatorAsProcessingModeAndEnableBankDealsAndEnableEmailConfirmationCell() {
         let servicePreference = ServicePreference()
         servicePreference.setAggregatorAsProcessingMode()
@@ -83,7 +83,7 @@ class ServicePreferenceTest: BaseTest {
         XCTAssertTrue(servicePreference.shouldShowBankDeals())
         XCTAssertTrue(servicePreference.shouldShowEmailConfirmationCell())
     }
-    
+
     public func testSetGatewayAsProcessingModeAndDisableBankDealsAndDisableEmailConfirmationCell() {
         let servicePreference = ServicePreference()
         servicePreference.setGatewayAsProcessingMode()
@@ -91,7 +91,7 @@ class ServicePreferenceTest: BaseTest {
         XCTAssertFalse(servicePreference.shouldShowBankDeals())
         XCTAssertFalse(servicePreference.shouldShowEmailConfirmationCell())
     }
-    
+
     public func testSetHybridAsProcessingModeAndDisableBankDealsAndDisableEmailConfirmationCell() {
         let servicePreference = ServicePreference()
         servicePreference.setHybridAsProcessingMode()

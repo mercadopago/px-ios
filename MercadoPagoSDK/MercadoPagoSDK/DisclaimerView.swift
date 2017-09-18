@@ -10,34 +10,33 @@ import UIKit
 
 class DisclaimerView: UIView, PXComponent {
 
-    private let VERTICAL_MARGIN : CGFloat = 2.0
-    private let HORIZONTAL_MARGIN : CGFloat = 24.0
-    static private let FONT_SIZE : CGFloat = 14.0
-    private var textColor : CGColor!
+    private let VERTICAL_MARGIN: CGFloat = 2.0
+    private let HORIZONTAL_MARGIN: CGFloat = 24.0
+    static private let FONT_SIZE: CGFloat = 14.0
+    private var textColor: CGColor!
 
-    public init(frame: CGRect, disclaimerText: String, colorText: UIColor =  UIColor.px_grayDark(), disclaimerFontSize:CGFloat = FONT_SIZE) {
+    var disclaimerLabel: UILabel!
+    public init(frame: CGRect, disclaimerText: String, colorText: UIColor =  UIColor.px_grayDark(), disclaimerFontSize: CGFloat = FONT_SIZE) {
         super.init(frame: frame)
-        let disclaimerLabel = UILabel(frame:CGRect(x: HORIZONTAL_MARGIN, y: VERTICAL_MARGIN, width: frame.size.width - 2*HORIZONTAL_MARGIN , height: frame.size.height - 2 * VERTICAL_MARGIN))
+        disclaimerLabel = UILabel(frame:CGRect(x: HORIZONTAL_MARGIN, y: VERTICAL_MARGIN, width: frame.size.width - 2*HORIZONTAL_MARGIN, height: frame.size.height - 2 * VERTICAL_MARGIN))
         disclaimerLabel.textAlignment = .center
         disclaimerLabel.textColor = colorText
         disclaimerLabel.font = Utils.getFont(size: disclaimerFontSize)
         disclaimerLabel.text = disclaimerText
         self.addSubview(disclaimerLabel)
     }
-        
     required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
     }
-        
     func getHeight() -> CGFloat {
-        return self.frame.size.height
+        return self.disclaimerLabel.requiredHeight() + 2 * VERTICAL_MARGIN
     }
-    func getWeight() -> CGFloat{
+    func getWeight() -> CGFloat {
         return self.frame.size.width
     }
+    func adjustViewFrames() {
+        let frameDisclaimer = self.disclaimerLabel.frame
+        self.disclaimerLabel.frame = CGRect(x: frameDisclaimer.origin.x, y: frameDisclaimer.origin.y, width: frameDisclaimer.size.width, height: self.disclaimerLabel.requiredHeight())
+    }
 
-    
-    
 }
-    
-

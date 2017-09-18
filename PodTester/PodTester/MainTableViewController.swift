@@ -235,7 +235,6 @@ class MainTableViewController: UITableViewController {
         }
 
 
-        
         var prefRS = ReviewScreenPreference()
         prefRS.setSummaryProductTitle(oneWordTitle: "Cosas")
         prefRS.addSummaryProductDetail(amount: 2400)
@@ -243,7 +242,6 @@ class MainTableViewController: UITableViewController {
         prefRS.addSummaryChargeDetail(amount: 1690)
         prefRS.addSummaryDiscountDetail(amount: 190)
         prefRS.setSummaryDisclaimer(disclaimerText: "Incluye comisión BACEN", disclaimerColor: .red)
-
         checkout.setReviewScreenPreference(prefRS)
         checkout.start()
     }

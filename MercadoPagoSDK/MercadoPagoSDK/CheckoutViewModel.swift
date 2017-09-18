@@ -17,23 +17,21 @@ open class CheckoutViewModel: NSObject {
     var discount: DiscountCoupon?
 
     var reviewScreenPreference: ReviewScreenPreference!
-    var shoppingPreference: ShoppingReviewPreference!
 
-    var summaryComponent : SummaryComponent!
-    
+    var summaryComponent: SummaryComponent!
+
     public static var CUSTOMER_ID = ""
 
-    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), shoppingPreference: ShoppingReviewPreference) {
+    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         CheckoutViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
         self.paymentData = paymentData
         self.discount = discount
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
-        self.shoppingPreference = shoppingPreference
         super.init()
         let screenWidth = UIScreen.main.bounds.width
-        self.summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
+        self.summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(amount: checkoutPreference.getAmount()), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
 
     }
 
@@ -71,7 +69,6 @@ open class CheckoutViewModel: NSObject {
             return 0
         }
     }
-
 
     func heightForRow(_ indexPath: IndexPath) -> CGFloat {
         //TODO borrar
@@ -138,8 +135,6 @@ open class CheckoutViewModel: NSObject {
         return !Array.isNullOrEmpty(reviewScreenPreference.customItemCells)
     }
 
-
-
     func getTotalAmount() -> Double {
         if let payerCost = paymentData.getPayerCost() {
             return payerCost.totalAmount
@@ -196,8 +191,6 @@ open class CheckoutViewModel: NSObject {
         return indexPath.section == Sections.items.rawValue
     }
 
-
-
     func isAddtionalCustomCellsFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.additionalCustomCells.rawValue
     }
@@ -242,40 +235,42 @@ open class CheckoutViewModel: NSObject {
         case additionalCustomCells = 4
         case footer = 5
     }
-    
-    func getValidSummary() -> Summary {
-        var summary : Summary
-        guard let choPref = self.preference else{
+
+    func getValidSummary(amount: Double) -> Summary {
+        var summary: Summary
+        guard let choPref = self.preference else {
             return Summary(details: [:])
         }
-        if choPref.getAmount() == self.reviewScreenPreference.getSummaryTotalAmount() {
+        if amount == self.reviewScreenPreference.getSummaryTotalAmount() {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 summary.addAmountDetail(detail: AmountDetail(amount: choPref.getAmount()), type: SummaryType.PRODUCT)
             }
-        }else{
+        }else {
             summary = defaultSummary()
         }
+        var amountPref = amount
         if let discount = self.paymentData.discount {
             let discountAmountDetail = AmountDetail(name: discount.description, amount: Double(discount.coupon_amount)!)
+            amountPref = discount.newAmount()
             if summary.details[SummaryType.DISCOUNT] != nil {
                  summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)
-            }else{
+            }else {
                 let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
-                summary.addSummaryDetail(summaryDetail:discountSummaryDetail , type: SummaryType.DISCOUNT)
+                summary.addSummaryDetail(summaryDetail:discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
             summary.details[SummaryType.DISCOUNT]?.titleColor = UIColor.mpGreenishTeal()
             summary.details[SummaryType.DISCOUNT]?.amountColor = UIColor.mpGreenishTeal()
         }
         if let payerCost = self.paymentData.payerCost {
-            let interest = payerCost.totalAmount - choPref.getAmount()
+            let interest = payerCost.totalAmount - amount
             if interest > 0 {
                 let interestAmountDetail = AmountDetail(amount: interest)
-                if summary.details[SummaryType.INTEREST] != nil {
-                    summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.INTEREST)
-                }else{
-                    let interestSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.INTEREST]!, detail: interestAmountDetail)
-                    summary.addSummaryDetail(summaryDetail:interestSummaryDetail , type: SummaryType.INTEREST)
+                if summary.details[SummaryType.CHARGE] != nil {
+                    summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.CHARGE)
+                }else {
+                    let interestSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: interestAmountDetail)
+                    summary.addSummaryDetail(summaryDetail:interestSummaryDetail, type: SummaryType.CHARGE)
                 }
             }
         }
@@ -285,15 +280,13 @@ open class CheckoutViewModel: NSObject {
         }
         return summary
     }
-    
+
     func defaultSummary() -> Summary {
-        guard let choPref = self.preference else{
+        guard let choPref = self.preference else {
             return Summary(details: [:])
         }
         let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: AmountDetail(amount: choPref.getAmount()))
-        return Summary(details:[SummaryType.PRODUCT:productSummaryDetail])
+        return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
     }
-    
-    
-    
+
 }

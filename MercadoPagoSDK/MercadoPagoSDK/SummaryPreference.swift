@@ -8,39 +8,36 @@
 
 import UIKit
 extension ReviewScreenPreference {
-    
-    public func addSummaryProductDetail(amount: Double){
+
+    public func addSummaryProductDetail(amount: Double) {
         self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.PRODUCT)
     }
-    public func addSummaryDiscountDetail(amount: Double){
+    public func addSummaryDiscountDetail(amount: Double) {
         self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.DISCOUNT)
     }
-    public func addSummaryInterestDetail(amount: Double){
-        self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.INTEREST)
-    }
-    public func addSummaryChargeDetail(amount: Double){
+    public func addSummaryChargeDetail(amount: Double) {
         self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.CHARGE)
     }
-    public func addSummaryTaxesDetail(amount: Double){
+    public func addSummaryTaxesDetail(amount: Double) {
         self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.TAXES)
     }
-    public func addSummaryShippingDetail(amount: Double){
+    public func addSummaryShippingDetail(amount: Double) {
         self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.SHIPPING)
     }
-    public func addSummaryArrearsDetail(amount: Double){
+    public func addSummaryArrearsDetail(amount: Double) {
         self.addDetail(detail: AmountDetail(amount: amount), type: SummaryType.ARREARS)
     }
-    public func setSummaryProductTitle(oneWordTitle : String) {
+    public func setSummaryProductTitle(oneWordTitle: String) {
         self.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: oneWordTitle)
     }
-    public func setSummaryDisclaimer(disclaimerText : String, disclaimerColor : UIColor) {
+    public func setSummaryDisclaimer(disclaimerText: String, disclaimerColor: UIColor) {
         self.disclaimer = disclaimerText
         self.disclaimerColor = disclaimerColor
     }
-    func updateTitle(type: SummaryType, oneWordTitle: String){
+    func updateTitle(type: SummaryType, oneWordTitle: String) {
         if self.details[type] != nil {
             self.details[type]?.title = oneWordTitle
-        }else{
+        }else {
             self.details[type] = SummaryDetail(title: oneWordTitle, detail: nil)
         }
         if type == SummaryType.DISCOUNT {
@@ -48,11 +45,11 @@ extension ReviewScreenPreference {
             self.details[type]?.amountColor = UIColor.mpGreenishTeal()
         }
     }
-    
-    func addDetail(detail : AmountDetail, type: SummaryType){
+
+    func addDetail(detail: AmountDetail, type: SummaryType) {
         if self.details[type] != nil {
             self.details[type]?.details.append(detail)
-        }else{
+        }else {
             guard let title = self.summaryTitles[type] else {
                 self.details[type] = SummaryDetail(title: "", detail: detail)
                 return
@@ -64,7 +61,7 @@ extension ReviewScreenPreference {
             self.details[type]?.amountColor = UIColor.mpGreenishTeal()
         }
     }
-    
+
     func getSummaryTotalAmount() -> Double {
         var totalAmount = 0.0
         for summaryType in details.keys {
@@ -78,5 +75,5 @@ extension ReviewScreenPreference {
         }
         return totalAmount
     }
-    
+
 }

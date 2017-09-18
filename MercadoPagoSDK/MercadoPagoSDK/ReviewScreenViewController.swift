@@ -342,7 +342,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     private func getPurchaseItemDetailCell(indexPath: IndexPath) -> UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
         let purchaseItemDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseItemDetailTableViewCell", for: indexPath) as! PurchaseItemDetailTableViewCell
-        purchaseItemDetailCell.fillCell(item: self.viewModel.preference!.items[indexPath.row], currency: currency, quantityHidden: !self.viewModel.shoppingPreference.shouldShowQuantityRow, amountTittleHidden: !self.viewModel.shoppingPreference.shouldShowAmountTitle, quantityTitle: self.viewModel.shoppingPreference.getQuantityTitle(), amountTitle: self.viewModel.shoppingPreference.getAmountTitle())
+        purchaseItemDetailCell.fillCell(item: self.viewModel.preference!.items[indexPath.row], currency: currency, quantityHidden: !self.viewModel.reviewScreenPreference.shouldShowQuantityRow, amountTittleHidden: !self.viewModel.reviewScreenPreference.shouldShowAmountTitle, quantityTitle: self.viewModel.reviewScreenPreference.getQuantityTitle(), amountTitle: self.viewModel.reviewScreenPreference.getAmountTitle())
         return purchaseItemDetailCell
     }
 

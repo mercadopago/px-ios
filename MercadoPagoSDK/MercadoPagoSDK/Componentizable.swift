@@ -12,9 +12,3 @@ protocol PXComponent {
     func getHeight() -> CGFloat
     func getWeight() -> CGFloat
 }
-
-/*
- protocol PXContainer {
-    
-}
-*/

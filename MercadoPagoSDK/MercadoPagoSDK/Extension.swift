@@ -21,4 +21,11 @@ extension UIView {
         line.backgroundColor = UIColor.px_grayLight()
         addSubview(line)
     }
+    func addLine(y: CGFloat, horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {
+        let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y :y), size: CGSize(width: width, height: height))
+        let line = UIView(frame: lineFrame)
+        line.alpha = 0.6
+        line.backgroundColor = UIColor.px_grayLight()
+        addSubview(line)
+    }
 }

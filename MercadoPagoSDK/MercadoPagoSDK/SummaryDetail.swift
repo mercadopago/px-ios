@@ -9,12 +9,12 @@
 import UIKit
 
 class SummaryDetail: NSObject {
-    var title : String
-    var details : [AmountDetail]
+    var title: String
+    var details: [AmountDetail]
     var titleColor = UIColor.px_grayDark()
     var amountColor = UIColor.px_grayDark()
     func getTotalAmount() -> Double {
-        var sum : Double = 0
+        var sum: Double = 0
         for detail in details {
             sum = sum + detail.amount
         }
@@ -27,7 +27,7 @@ class SummaryDetail: NSObject {
             self.details.append(detail)
         }
     }
-    func addDetail(amountDetail : AmountDetail){
+    func addDetail(amountDetail: AmountDetail) {
         self.details.append(amountDetail)
     }
 }
