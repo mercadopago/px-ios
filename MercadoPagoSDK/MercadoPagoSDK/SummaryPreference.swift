@@ -27,18 +27,18 @@ extension ReviewScreenPreference {
     public func addSummaryArrearsDetail(amount: Double) {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.ARREARS)
     }
-    public func setSummaryProductTitle(oneWordTitle: String) {
-        self.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: oneWordTitle)
+    public func setSummaryProductTitle(productTitle: String) {
+        self.updateTitle(type: SummaryType.PRODUCT, title: productTitle)
     }
     public func setSummaryDisclaimer(disclaimerText: String, disclaimerColor: UIColor = UIColor.px_grayDark()) {
         self.disclaimer = disclaimerText
         self.disclaimerColor = disclaimerColor
     }
-    func updateTitle(type: SummaryType, oneWordTitle: String) {
+    func updateTitle(type: SummaryType, title: String) {
         if self.details[type] != nil {
-            self.details[type]?.title = oneWordTitle
+            self.details[type]?.title = title
         }else {
-            self.details[type] = SummaryDetail(title: oneWordTitle, detail: nil)
+            self.details[type] = SummaryDetail(title: title, detail: nil)
         }
         if type == SummaryType.DISCOUNT {
             self.details[type]?.titleColor = UIColor.mpGreenishTeal()

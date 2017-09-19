@@ -205,6 +205,7 @@ class MainTableViewController: UITableViewController {
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
+            showRyC ? flowPreference.enableReviewAndConfirmScreen() : flowPreference.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
 
@@ -236,7 +237,7 @@ class MainTableViewController: UITableViewController {
         }
 
         var prefRS = ReviewScreenPreference()
-        prefRS.setSummaryProductTitle(oneWordTitle: "🐙 Remeras")
+        prefRS.setSummaryProductTitle(productTitle: "🐙 Remeras")
         prefRS.addSummaryProductDetail(amount: 1)
         prefRS.addSummaryTaxesDetail(amount: 2799)
         prefRS.addSummaryChargeDetail(amount: 2000)
