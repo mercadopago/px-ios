@@ -201,7 +201,7 @@ open class CardFormViewModel: NSObject {
         var paymentMethods = [PaymentMethod]()
 
         for (_, value) in self.paymentMethods!.enumerated() {
-                if value.conformsToBIN(getBIN(cardNumber)!) {
+                if value.conformsToBIN(getBIN(cardNumber)!) && value.conformsPaymentPreferences(self.paymentSettings) {
                     paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
                 }
         }
