@@ -10,6 +10,7 @@ import Foundation
 
 open class CheckoutViewModel: NSObject {
 
+    static let ERROR_DELTA = 0.001
     var preference: CheckoutPreference?
     var paymentData: PaymentData!
     var paymentOptionSelected: PaymentMethodOption
@@ -241,7 +242,7 @@ open class CheckoutViewModel: NSObject {
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
-        if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= 0.001 {
+        if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= CheckoutViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 summary.addAmountDetail(detail: SummaryItemDetail(amount: choPref.getAmount()), type: SummaryType.PRODUCT)

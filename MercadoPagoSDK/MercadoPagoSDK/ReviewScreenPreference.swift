@@ -102,4 +102,7 @@ open class ReviewScreenPreference: NSObject {
     open func getAmountTitle() -> String {
         return amountTitle
     }
+    open func clearSummaryDetails() {
+        self.details = [SummaryType: SummaryDetail]()
+    }
 }
