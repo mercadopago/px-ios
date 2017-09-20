@@ -315,6 +315,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     private func getSummaryCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "summaryComponentCell")
         cell.contentView.addSubview(self.viewModel.summaryComponent)
+        cell.selectionStyle = .none
         return cell
     }
 

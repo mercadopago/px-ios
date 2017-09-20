@@ -241,7 +241,7 @@ open class CheckoutViewModel: NSObject {
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
-        if amount == self.reviewScreenPreference.getSummaryTotalAmount() {
+        if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= 0.001 {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 summary.addAmountDetail(detail: SummaryItemDetail(amount: choPref.getAmount()), type: SummaryType.PRODUCT)
