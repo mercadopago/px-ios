@@ -16,7 +16,7 @@ class CardViewModelManagerTest: BaseTest {
         super.setUp()
         // Retomar valor default
         CardFormViewController.showBankDeals = true
-        self.cardFormManager = CardFormViewModel(amount: 10, paymentMethods: nil, paymentSettings: nil)
+        self.cardFormManager = CardFormViewModel(amount: 10, paymentMethods: nil)
     }
 
     override func tearDown() {
@@ -143,7 +143,7 @@ class CardViewModelManagerTest: BaseTest {
 
     func testGetBIN() {
         let cardNumber = "12345677777777"
-        
+
         let bin = self.cardFormManager?.getBIN(cardNumber)
         XCTAssertEqual(bin, "123456")
     }
@@ -195,7 +195,7 @@ class CardViewModelManagerTest: BaseTest {
         XCTAssertFalse(self.cardFormManager!.isValidInputCVV(""))
         XCTAssertTrue(self.cardFormManager!.isValidInputCVV("123"))
     }
-    
+
     func testShouldShowOnlyOneCardMessage() {
         let paymentMethods = MockBuilder.getMockPaymentMethods()
         cardFormManager?.setPaymentMethods(paymentMethods: paymentMethods)
@@ -204,7 +204,7 @@ class CardViewModelManagerTest: BaseTest {
         cardFormManager?.setPaymentMethods(paymentMethods: [paymentMethod])
         XCTAssertTrue(cardFormManager!.shoudShowOnlyOneCardMessage())
     }
-    
+
     func testGetNotAvailableCardMessage() {
         let defaultMessage = "Método de pago no soportado".localized
         let message = "Solo puedes pagar con ".localized
