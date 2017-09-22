@@ -64,7 +64,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     override func trackInfo() {
         var finalId = screenId
-        if let cardType = self.viewModel.cardType() {
+        if let cardType = self.viewModel.getPaymentMethodTypeId() {
             finalId = finalId + "/" + cardType
         }
         MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
@@ -74,7 +74,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     func trackStatus() {
         var finalId = screenId
 
-        if let cardType = self.viewModel.cardType() {
+        if let cardType = self.viewModel.getPaymentMethodTypeId() {
             finalId = finalId + "/" + cardType
         }
 
@@ -126,7 +126,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod]? = nil, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token)
         self.callbackCancel = callbackCancel
@@ -198,19 +198,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     override open func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-
-        if self.viewModel.getPaymentMethods() == nil {
-            MPServicesBuilder.getPaymentMethods(baseURL:  MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (paymentMethods) -> Void in
-
-                self.viewModel.setPaymentMethods(paymentMethods: paymentMethods)
-                self.getPromos()
-            }) { (_) -> Void in
-                // Mensaje de error correspondiente, ver que hacemos con el flujo
-            }
-        } else {
-            self.getPromos()
-        }
-
+        self.getPromos()
         textBox.autocorrectionType = UITextAutocorrectionType.no
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)

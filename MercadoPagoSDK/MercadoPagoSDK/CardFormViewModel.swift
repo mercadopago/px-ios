@@ -20,7 +20,7 @@ fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class CardFormViewModel: NSObject {
 
-    private var paymentMethods: [PaymentMethod]?
+    private var paymentMethods: [PaymentMethod]
     var guessedPMS: [PaymentMethod]?
     var customerCard: CardInformation?
     var token: Token?
@@ -37,7 +37,7 @@ open class CardFormViewModel: NSObject {
 
     var promos: [Promo]?
 
-    public init(amount: Double, paymentMethods: [PaymentMethod]?, guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil) {
+    public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil) {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
@@ -50,20 +50,16 @@ open class CardFormViewModel: NSObject {
         self.token = token
     }
 
-    func cardType() -> String? {
-        guard let pms = self.paymentMethods else {
+    func getPaymentMethodTypeId() -> String? {
+        if paymentMethods.count == 0 {
             return nil
         }
-        let paymentMethod = pms[0]
-
-        if paymentMethod == nil {
+        let paymentMethod = paymentMethods[0]
+        if !Array.isNullOrEmpty(self.paymentMethods) {
+            let filterArray = paymentMethods.filter { return $0.paymentTypeId != paymentMethod.paymentTypeId}
+            return filterArray.isEmpty ? paymentMethod.paymentTypeId : nil
+        } else {
             return nil
-        }
-
-        for pm in pms {
-            if pm.paymentTypeId != paymentMethod.paymentTypeId {
-                return nil
-            }
         }
         return paymentMethod.paymentTypeId
     }
@@ -212,7 +208,7 @@ open class CardFormViewModel: NSObject {
 
         var paymentMethods = [PaymentMethod]()
 
-        for (_, value) in self.paymentMethods!.enumerated() {
+        for (_, value) in self.paymentMethods.enumerated() {
                 if value.conformsToBIN(getBIN(cardNumber)!) {
                     paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
                 }
@@ -228,22 +224,6 @@ open class CardFormViewModel: NSObject {
     func getPaymentMethods() -> [PaymentMethod]? {
 
         return self.paymentMethods
-    }
-
-    func setPaymentMethods(paymentMethods: [PaymentMethod]?) {
-        guard let pms = paymentMethods else {
-            return
-        }
-        var pMs = [PaymentMethod]()
-        for (_, value) in pms.enumerated() {
-            pMs.append(value)
-        }
-        if pMs.isEmpty {
-            self.paymentMethods = nil
-        } else {
-            self.paymentMethods = pMs
-        }
-
     }
 
     func tokenHidratate(_ cardNumber: String, expirationDate: String, cvv: String, cardholderName: String) {
