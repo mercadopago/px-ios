@@ -407,5 +407,25 @@
 		<key>image_name</key>
 		<string>medioMercadopago_cc</string>
 	</dict>
+	<key>bolbradesco</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoBoleto</string>
+	</dict>
+	<key>bolbradesco_atm</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoBoleto</string>
+	</dict>
+	<key>bolbradesco_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoBoleto</string>
+	</dict>
+	<key>bolbradesco_ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoBoleto</string>
+	</dict>
 </dict>
 </plist>

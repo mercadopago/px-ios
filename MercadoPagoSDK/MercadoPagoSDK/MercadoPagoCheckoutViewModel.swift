@@ -29,6 +29,7 @@ public enum CheckoutStep: String {
     case SCREEN_PAYER_COST
     case SCREEN_REVIEW_AND_CONFIRM
     case SERVICE_POST_PAYMENT
+    case SERVICE_GET_INSTRUCTIONS
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
 }
@@ -73,6 +74,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
     open var financialInstitutions: [FinancialInstitution]?
+    open var instructionsInfo: InstructionsInfo?
 
     static var error: MPSDKError?
 
@@ -295,6 +297,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if shouldExitCheckout() {
             return .ACTION_FINISH
+        }
+        
+        if needToGetInstructions() {
+            return .SERVICE_GET_INSTRUCTIONS
         }
 
         if shouldShowCongrats() {

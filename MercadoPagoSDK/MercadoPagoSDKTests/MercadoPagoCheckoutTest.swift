@@ -291,12 +291,13 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testDisplayPaymentResult_offlinePayment() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLB", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
-        let paymentMethod = MockBuilder.buildPaymentMethod("rapipago", paymentTypeId : "ticket")
-        self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("rapipago")
+        let paymentMethod = MockBuilder.buildPaymentMethod("bolbradesco", paymentTypeId : "bank_transfer")
+        self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("bolbradesco")
         self.mpCheckout!.viewModel.paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
-
+        self.mpCheckout?.viewModel.instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
+        
         self.mpCheckout!.showPaymentResultScreen()
 
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentResult)

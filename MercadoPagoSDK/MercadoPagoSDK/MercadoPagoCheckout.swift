@@ -93,6 +93,8 @@ open class MercadoPagoCheckout: NSObject {
             self.showSecurityCodeScreen()
         case .SERVICE_POST_PAYMENT:
             self.createPayment()
+        case .SERVICE_GET_INSTRUCTIONS:
+            self.getInstructions()
         case .SCREEN_PAYMENT_RESULT:
             self.showPaymentResultScreen()
         case .ACTION_FINISH:
