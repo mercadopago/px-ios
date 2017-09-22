@@ -185,7 +185,7 @@ extension MercadoPagoCheckout {
 
             })
         } else {
-            congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, callback: { [weak self] (_ :PaymentResult.CongratsState) in
+            congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo!, callback: { [weak self] (_ :PaymentResult.CongratsState) in
                 guard let strongSelf = self else {
                     return
                 }
@@ -193,7 +193,7 @@ extension MercadoPagoCheckout {
                 strongSelf.finish()
                 }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
         }
-        self.pushViewController(viewController : congratsViewController, animated: true)
+        self.pushViewController(viewController : congratsViewController, animated: false)
     }
 
     func showErrorScreen() {

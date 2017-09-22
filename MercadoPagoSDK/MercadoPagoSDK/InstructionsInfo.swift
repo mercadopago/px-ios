@@ -34,6 +34,14 @@ open class InstructionsInfo: NSObject {
         return instructionsInfo
     }
 
+    open func hasSecundaryInformation() -> Bool {
+        return instructions[0].hasSecondaryInformation()
+    }
+    
+    open func hasSubtitle() -> Bool {
+        return instructions[0].hasSubtitle()
+    }
+    
     open func toJSONString() -> String {
         var obj: [String:Any] = [
             "amount_info": self.amountInfo.toJSON()

@@ -211,6 +211,18 @@ extension MercadoPagoCheckoutViewModel {
         }
         return false
     }
+    
+    func needToGetInstructions() -> Bool {
+        guard let paymentMethod = self.paymentData.getPaymentMethod() else {
+            return false
+        }
+        
+        if !PaymentTypeId.isOnlineType(paymentTypeId: paymentMethod.paymentTypeId) && self.instructionsInfo == nil && self.paymentResult != nil{
+            return true
+        } else {
+            return false
+        }
+    }
 
     func shouldShowCongrats() -> Bool {
         if let paymentResult = self.paymentResult {

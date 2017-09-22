@@ -13,6 +13,7 @@ open class InstructionReference: Equatable {
     var label: String!
     var value: [String]!
     var separator: String!
+    var comment: String?
 
     open func getFullReferenceValue() -> String {
         if String.isNullOrEmpty(separator) {
@@ -47,6 +48,10 @@ open class InstructionReference: Equatable {
         if json["separator"] !=  nil && !(json["separator"]! is NSNull) {
             reference.separator = json["separator"] as! String
         }
+        
+        if json["comment"] !=  nil && !(json["comment"]! is NSNull) {
+            reference.comment = json["comment"] as? String
+        }
 
         return reference
     }
@@ -56,7 +61,8 @@ public func ==(obj1: InstructionReference, obj2: InstructionReference) -> Bool {
     let areEqual =
     obj1.label == obj2.label &&
     obj1.value == obj2.value &&
-    obj1.separator == obj2.separator
+    obj1.separator == obj2.separator &&
+    obj1.comment == obj2.comment
 
     return areEqual
 }
