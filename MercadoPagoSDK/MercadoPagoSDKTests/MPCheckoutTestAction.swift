@@ -48,10 +48,13 @@ class MPCheckoutTestAction: NSObject {
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let offlineOption = MockBuilder.buildPaymentMethodSearchItem("off", type: PaymentMethodSearchItemType.PAYMENT_METHOD)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethodMaster = MockBuilder.buildPaymentMethod("master")
+        let paymentMethodTicket = MockBuilder.buildPaymentMethod("ticket", paymentTypeId:"off")
+        let paymentMethodTicket2 = MockBuilder.buildPaymentMethod("ticket 2", paymentTypeId:"off")
         let paymentMethodAM = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
         let offlinePaymentMethod = MockBuilder.buildPaymentMethod("off", paymentTypeId : PaymentTypeId.TICKET.rawValue)
 
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption, offlineOption], paymentMethods : [paymentMethodVisa, paymentMethodAM, offlinePaymentMethod], customOptions : [customerCardOption, accountMoneyOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption, offlineOption], paymentMethods : [paymentMethodVisa, paymentMethodMaster, paymentMethodAM, offlinePaymentMethod, paymentMethodTicket, paymentMethodTicket2], customOptions : [customerCardOption, accountMoneyOption])
         mpCheckoutViewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
     }
 
