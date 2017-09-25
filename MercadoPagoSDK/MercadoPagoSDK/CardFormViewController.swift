@@ -546,9 +546,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func showCardNotSupportedErrorMessage() {
-        guard let paymentMethods = self.viewModel.getPaymentMethods() else {
-            return
-        }
+       let paymentMethods = self.viewModel.paymentMethods
+
         if viewModel.shoudShowOnlyOneCardMessage() {
                 setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.mpRedPinkErrorMessage(), isError: true)
         }else {

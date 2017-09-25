@@ -20,7 +20,7 @@ fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class CardFormViewModel: NSObject {
 
-    private var paymentMethods: [PaymentMethod]
+    var paymentMethods: [PaymentMethod]
     var guessedPMS: [PaymentMethod]?
     var customerCard: CardInformation?
     var token: Token?
@@ -221,11 +221,6 @@ open class CardFormViewModel: NSObject {
 
     }
 
-    func getPaymentMethods() -> [PaymentMethod]? {
-
-        return self.paymentMethods
-    }
-
     func tokenHidratate(_ cardNumber: String, expirationDate: String, cvv: String, cardholderName: String) {
         let number = cardNumber
         let year = Utils.getExpirationYearFromLabelText(expirationDate)
@@ -261,16 +256,14 @@ open class CardFormViewModel: NSObject {
     }
 
     func shoudShowOnlyOneCardMessage() -> Bool {
-        return getPaymentMethods()?.count == 1
+        return paymentMethods.count == 1
     }
 
     func getOnlyOneCardAvailableMessage() -> String {
         let defaultMessage = "Método de pago no soportado".localized
-
-        guard let paymentMethods = getPaymentMethods() else {
+        if Array.isNullOrEmpty(paymentMethods) {
             return defaultMessage
         }
-
         if !String.isNullOrEmpty(paymentMethods[0].name) {
             return "Solo puedes pagar con ".localized + paymentMethods[0].name
         }
