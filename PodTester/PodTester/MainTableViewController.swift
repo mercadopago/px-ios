@@ -237,7 +237,7 @@ class MainTableViewController: UITableViewController {
         }
 
         var prefRS = ReviewScreenPreference()
-        prefRS.setSummaryProductTitle(productTitle: "🐙 Remeras")
+        prefRS.setSummaryProductTitle(productTitle: "Carga de agua caliente")
         prefRS.addSummaryProductDetail(amount: 1)
         prefRS.addSummaryTaxesDetail(amount: 2799)
         prefRS.addSummaryChargeDetail(amount: 2000)

@@ -10,10 +10,10 @@ import Foundation
 
 extension UILabel {
 
-    open func requiredHeight() -> CGFloat {
+    open func requiredHeight(numberOfLines: Int = 0) -> CGFloat {
 
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
+        label.numberOfLines = numberOfLines
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.font = self.font
 

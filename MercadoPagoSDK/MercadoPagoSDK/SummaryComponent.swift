@@ -41,9 +41,11 @@ class SummaryComponent: UIView, PXComponent {
                 amount = discount.newAmount()
             }
             self.addMediumMargin()
-            self.addLine()
-            self.addMediumMargin()
-            self.addTotalView(totalAmount: amount)
+            if summary.details.count > 1 {
+                self.addLine()
+                self.addMediumMargin()
+                self.addTotalView(totalAmount: amount)
+            }
         }
         self.addLargeMargin()
         if let disclaimer = summary.disclaimer {

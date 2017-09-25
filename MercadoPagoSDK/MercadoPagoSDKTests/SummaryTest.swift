@@ -78,7 +78,7 @@ class SummaryTest: BaseTest {
     func testSummaryComponentJustProduct() {
         let summary = getSummaryJustProduct()
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 112.0)
+        XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
     }
     func testSummaryComponentSummaryProductTaxesShippingCharge() {
         let summary = getSummaryProductTaxesCharge()
