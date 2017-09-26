@@ -54,8 +54,10 @@ open class ErrorViewController: MercadoPagoUIViewController {
         if let statusError = error.apiException?.status {
             metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing:statusError)
         }
-        if (error.apiException?.cause?.count)! > 0 && !String.isNullOrEmpty(error.apiException?.cause?[0].code) {
-            metadata[TrackingUtil.METADATA_ERROR_CODE] = error.apiException?.cause?[0].code
+        if let causeArray = error.apiException?.cause, causeArray.count > 0 {
+            if !String.isNullOrEmpty(causeArray[0].code) {
+                metadata[TrackingUtil.METADATA_ERROR_CODE] = causeArray[0].code
+            }
         }
 
         if !String.isNullOrEmpty(error.requestOrigin) {
