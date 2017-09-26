@@ -10,6 +10,7 @@ import Foundation
 
 open class CheckoutViewModel: NSObject {
 
+    static let ERROR_DELTA = 0.001
     var preference: CheckoutPreference?
     var paymentData: PaymentData!
     var paymentOptionSelected: PaymentMethodOption
@@ -17,39 +18,22 @@ open class CheckoutViewModel: NSObject {
     var discount: DiscountCoupon?
 
     var reviewScreenPreference: ReviewScreenPreference!
-    var shoppingPreference: ShoppingReviewPreference!
-    var summaryRows: [SummaryRow]!
+
+    var summaryComponent: SummaryComponent!
 
     public static var CUSTOMER_ID = ""
 
-    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), shoppingPreference: ShoppingReviewPreference) {
+    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         CheckoutViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
         self.paymentData = paymentData
         self.discount = discount
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
-        self.summaryRows = reviewScreenPreference.getSummaryRows()
-        self.shoppingPreference = shoppingPreference
         super.init()
-        if shoppingPreference.getOneWordDescription() == ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE {
-            setSummaryRows(shortTitle :reviewScreenPreference.getProductsTitle())
-        }else {
-             setSummaryRows(shortTitle :shoppingPreference.getOneWordDescription())
-        }
+        let screenWidth = UIScreen.main.bounds.width
+        self.summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(amount: checkoutPreference.getAmount()), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
 
-    }
-
-    func setSummaryRows(shortTitle: String) {
-
-        let productsSummary = SummaryRow(customDescription: shortTitle, descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: shouldShowTotal())
-
-        summaryRows.insert(productsSummary, at: 0)
-
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.paymentData.discount {
-            let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount:-Double(discount.coupon_amount)!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
-            summaryRows.insert(discountSummary, at: 1)
-        }
     }
 
     func isPaymentMethodSelectedCard() -> Bool {
@@ -73,7 +57,7 @@ open class CheckoutViewModel: NSObject {
         case Sections.title.rawValue:
             return 1
         case Sections.summary.rawValue:
-            return self.numberOfRowsInMainSection()
+            return 1
         case Sections.items.rawValue:
             return self.hasCustomItemCells() ? self.numberOfCustomItemCells() : self.preference!.items.count
         case Sections.paymentMethod.rawValue:
@@ -87,41 +71,13 @@ open class CheckoutViewModel: NSObject {
         }
     }
 
-    func numberOfRowsInMainSection() -> Int {
-        // Productos
-        var numberOfRows = 0
-
-        if self.shouldShowInstallmentSummary() {
-            numberOfRows +=  1
-        }
-
-        if hasPayerCostAddionalInfo() {
-            numberOfRows += 1
-        }
-        // Productos + customSummaryRows
-        numberOfRows += summaryRows.count
-
-        numberOfRows += shouldShowTotal() ? 1 : 0
-
-        return numberOfRows
-
-    }
-
     func heightForRow(_ indexPath: IndexPath) -> CGFloat {
+        //TODO borrar
+        if indexPath.section == Sections.summary.rawValue {
+            return summaryComponent.requiredHeight
+        }
         if isTitleCellFor(indexPath: indexPath) {
             return 60
-
-        } else if self.isProductlCellFor(indexPath: indexPath) {
-            return numberOfRowsInMainSection() == 1 ? PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT : PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
-
-        } else if self.isInstallmentsCellFor(indexPath: indexPath) {
-            return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.getPayerCost())
-
-        } else if self.isTotalCellFor(indexPath: indexPath) {
-            return PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT
-
-        } else if self.isPayerCostAdditionalInfoFor(indexPath: indexPath) || self.isUnlockCardCellFor(indexPath: indexPath) {
-            return ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT
 
         } else if self.isConfirmButtonCellFor(indexPath: indexPath) {
             return ConfirmPaymentTableViewCell.ROW_HEIGHT
@@ -180,10 +136,6 @@ open class CheckoutViewModel: NSObject {
         return !Array.isNullOrEmpty(reviewScreenPreference.customItemCells)
     }
 
-    func numberOfSummaryRows() -> Int {
-        return summaryRows.count
-    }
-
     func getTotalAmount() -> Double {
         if let payerCost = paymentData.getPayerCost() {
             return payerCost.totalAmount
@@ -224,18 +176,8 @@ open class CheckoutViewModel: NSObject {
     func isTitleCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.title.rawValue
     }
-
-    func isProductlCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.summary.rawValue && indexPath.row < numberOfSummaryRows()
-    }
-
-    func isInstallmentsCellFor(indexPath: IndexPath) -> Bool {
-        return shouldShowInstallmentSummary() && indexPath.section == Sections.summary.rawValue && indexPath.row == numberOfSummaryRows()
-
-    }
-    func isTotalCellFor(indexPath: IndexPath) -> Bool {
-        let numberOfRows = numberOfSummaryRows() + (shouldShowInstallmentSummary() ? 1 : 0)
-        return shouldShowTotal() && indexPath.section == Sections.summary.rawValue && indexPath.row == numberOfRows
+    func isSummaryCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == Sections.summary.rawValue
     }
 
     func isConfirmButtonCellFor(indexPath: IndexPath) -> Bool {
@@ -250,26 +192,12 @@ open class CheckoutViewModel: NSObject {
         return indexPath.section == Sections.items.rawValue
     }
 
-    func isPayerCostAdditionalInfoFor(indexPath: IndexPath) -> Bool {
-        let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
-        return hasPayerCostAddionalInfo() && indexPath.section == Sections.summary.rawValue && indexPath.row == numberOfRows
-    }
-
-    func isUnlockCardCellFor(indexPath: IndexPath) -> Bool {
-        let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
-        return needUnlockCardCell() && indexPath.section == Sections.summary.rawValue && indexPath.row == numberOfRows
-    }
-
     func isAddtionalCustomCellsFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.additionalCustomCells.rawValue
     }
 
     func isPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.paymentMethod.rawValue
-    }
-
-    func shouldShowTotal() -> Bool {
-        return shouldShowInstallmentSummary() || numberOfSummaryRows() > 1
     }
 
     func shouldShowInstallmentSummary() -> Bool {
@@ -308,4 +236,64 @@ open class CheckoutViewModel: NSObject {
         case additionalCustomCells = 4
         case footer = 5
     }
+
+    func getValidSummary(amount: Double) -> Summary {
+        var summary: Summary
+        guard let choPref = self.preference else {
+            return Summary(details: [:])
+        }
+        if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= CheckoutViewModel.ERROR_DELTA {
+            summary = Summary(details: self.reviewScreenPreference.details)
+            if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
+                summary.addAmountDetail(detail: SummaryItemDetail(amount: choPref.getAmount()), type: SummaryType.PRODUCT)
+            }
+        }else {
+            summary = defaultSummary()
+            if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
+                if let title = self.reviewScreenPreference.details[SummaryType.PRODUCT]?.title {
+                    summary.updateTitle(type: SummaryType.PRODUCT, oneWordTitle:title)
+                }
+            }
+
+        }
+        var amountPref = amount
+        if let discount = self.paymentData.discount {
+            let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: Double(discount.coupon_amount)!)
+            amountPref = discount.newAmount()
+            if summary.details[SummaryType.DISCOUNT] != nil {
+                 summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)
+            }else {
+                let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
+                summary.addSummaryDetail(summaryDetail:discountSummaryDetail, type: SummaryType.DISCOUNT)
+            }
+            summary.details[SummaryType.DISCOUNT]?.titleColor = UIColor.mpGreenishTeal()
+            summary.details[SummaryType.DISCOUNT]?.amountColor = UIColor.mpGreenishTeal()
+        }
+        if let payerCost = self.paymentData.payerCost {
+            let interest = payerCost.totalAmount - amount
+            if interest > 0 {
+                let interestAmountDetail = SummaryItemDetail(amount: interest)
+                if summary.details[SummaryType.CHARGE] != nil {
+                    summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.CHARGE)
+                }else {
+                    let interestSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: interestAmountDetail)
+                    summary.addSummaryDetail(summaryDetail:interestSummaryDetail, type: SummaryType.CHARGE)
+                }
+            }
+        }
+        if let disclaimer = self.reviewScreenPreference.disclaimer {
+            summary.disclaimer = disclaimer
+            summary.disclaimerColor = self.reviewScreenPreference.disclaimerColor
+        }
+        return summary
+    }
+
+    func defaultSummary() -> Summary {
+        guard let choPref = self.preference else {
+            return Summary(details: [:])
+        }
+        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: choPref.getAmount()))
+        return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
+    }
+
 }

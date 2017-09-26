@@ -131,9 +131,9 @@ class WalletIntegrationTest: BaseTest {
 
         // Se modifica medio de pago => se llama a changePaymentMethodCallback y se desactiva nuevamente RyC
         // Se reinicia checkout automaticamente
-        
+
         // Se vuelve a llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
-        
+
         // Se realiza pago, se llama a confirmPaymentCallback
         // Se llama a congrats con paymentResult
     }

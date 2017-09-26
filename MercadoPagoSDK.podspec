@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDK"
-  s.version          = "3.4.1"
+  s.version          = "3.5.0"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.default_subspec = 'Default'
 
-  s.subspec 'Default' do |default| 
+  s.subspec 'Default' do |default|
     default.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf','MercadoPagoSDK/*.plist', 'MercadoPagoSDK/MercadoPagoSDK/*.lproj']
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/*' , 'MercadoPagoSDK/MercadoPagoSDK/Tracker/*']
-  end 
+  end
 
 s.pod_target_xcconfig = {
   'SWIFT_VERSION' => '3.0.1'

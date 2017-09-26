@@ -34,16 +34,6 @@ class ReviewScreenPreferenceTest: BaseTest {
         XCTAssertEqual(self.mpCheckout.viewModel.reviewScreenPreference.getTitle(), "1")
     }
 
-    func testSetProductDetail() {
-
-        XCTAssertEqual(reviewScreenPreference.getProductsTitle(), "Productos".localized)
-
-        reviewScreenPreference.setProductsDetail(productsTitle: "1")
-        self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)
-
-        XCTAssertEqual(self.mpCheckout.viewModel.reviewScreenPreference.getProductsTitle(), "1")
-    }
-
     func testSetConfirmButtonText() {
 
         XCTAssertEqual(reviewScreenPreference.getConfirmButtonText(), "Confirmar".localized)

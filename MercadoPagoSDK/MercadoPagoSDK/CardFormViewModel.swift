@@ -20,12 +20,11 @@ fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class CardFormViewModel: NSObject {
 
-    private var paymentMethods: [PaymentMethod]?
+    var paymentMethods: [PaymentMethod]
     var guessedPMS: [PaymentMethod]?
     var customerCard: CardInformation?
     var token: Token?
     var cardToken: CardToken?
-    var paymentSettings: PaymentPreference?
     var amount: Double?
 
     let textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
@@ -38,7 +37,7 @@ open class CardFormViewModel: NSObject {
 
     var promos: [Promo]?
 
-    public init(amount: Double, paymentMethods: [PaymentMethod]?, guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
+    public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil) {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
@@ -49,11 +48,20 @@ open class CardFormViewModel: NSObject {
             self.guessedPMS?.append((customerCard?.getPaymentMethod())!)
         }
         self.token = token
-        self.paymentSettings = paymentSettings
     }
 
-    func cardType() -> String? {
-        return self.paymentSettings?.defaultPaymentTypeId
+    func getPaymentMethodTypeId() -> String? {
+        if paymentMethods.count == 0 {
+            return nil
+        }
+        let paymentMethod = paymentMethods[0]
+        if !Array.isNullOrEmpty(self.paymentMethods) {
+            let filterArray = paymentMethods.filter { return $0.paymentTypeId != paymentMethod.paymentTypeId}
+            return filterArray.isEmpty ? paymentMethod.paymentTypeId : nil
+        } else {
+            return nil
+        }
+        return paymentMethod.paymentTypeId
     }
 
     func cvvLenght() -> Int {
@@ -200,7 +208,7 @@ open class CardFormViewModel: NSObject {
 
         var paymentMethods = [PaymentMethod]()
 
-        for (_, value) in self.paymentMethods!.enumerated() {
+        for (_, value) in self.paymentMethods.enumerated() {
                 if value.conformsToBIN(getBIN(cardNumber)!) {
                     paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
                 }
@@ -209,29 +217,6 @@ open class CardFormViewModel: NSObject {
             return nil
         } else {
             return paymentMethods
-        }
-
-    }
-
-    func getPaymentMethods() -> [PaymentMethod]? {
-
-        return self.paymentMethods
-    }
-
-    func setPaymentMethods(paymentMethods: [PaymentMethod]?) {
-        guard let pms = paymentMethods else {
-            return
-        }
-        var pMs = [PaymentMethod]()
-        for (_, value) in pms.enumerated() {
-            if value.conformsPaymentPreferences(self.paymentSettings) {
-                pMs.append(value)
-            }
-        }
-        if pMs.isEmpty {
-            self.paymentMethods = nil
-        } else {
-            self.paymentMethods = pMs
         }
 
     }
@@ -271,16 +256,14 @@ open class CardFormViewModel: NSObject {
     }
 
     func shoudShowOnlyOneCardMessage() -> Bool {
-        return getPaymentMethods()?.count == 1
+        return paymentMethods.count == 1
     }
 
     func getOnlyOneCardAvailableMessage() -> String {
         let defaultMessage = "Método de pago no soportado".localized
-
-        guard let paymentMethods = getPaymentMethods() else {
+        if Array.isNullOrEmpty(paymentMethods) {
             return defaultMessage
         }
-
         if !String.isNullOrEmpty(paymentMethods[0].name) {
             return "Solo puedes pagar con ".localized + paymentMethods[0].name
         }

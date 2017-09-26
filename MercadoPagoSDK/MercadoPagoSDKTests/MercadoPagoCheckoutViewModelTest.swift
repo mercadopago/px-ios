@@ -87,6 +87,54 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertEqual(CheckoutStep.ACTION_FINISH, step)
 
     }
+
+    func testFilterPaymentMethods() {
+
+        // Set access_token
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        XCTAssertNotNil(mpCheckout.viewModel)
+        MercadoPagoCheckoutViewModel.flowPreference.showDiscount = true
+
+        // 0. Start
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search Preference
+        step = mpCheckout.viewModel.nextStep()
+
+        XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
+
+        //2. Buscar DirectDiscount
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_GET_DIRECT_DISCOUNT, step)
+
+        // 3. Validate preference
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Search Payment Methods
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
+
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
+        mpCheckout.viewModel.paymentOptionSelected = mpCheckout.viewModel.search?.groups[0]
+        let pmsForSelectionCards = mpCheckout.viewModel.getPaymentMethodsForSelection()
+        XCTAssertEqual(pmsForSelectionCards[0].paymentTypeId, "credit_card")
+        XCTAssertEqual(pmsForSelectionCards[1].paymentTypeId, "credit_card")
+        XCTAssertEqual(pmsForSelectionCards[0]._id, "visa")
+        XCTAssertEqual(pmsForSelectionCards[1]._id, "master")
+        XCTAssertEqual(pmsForSelectionCards.count, 2)
+
+        mpCheckout.viewModel.paymentOptionSelected = mpCheckout.viewModel.search?.groups[1]
+        let pmsForSelectionOff = mpCheckout.viewModel.getPaymentMethodsForSelection()
+        XCTAssertEqual(pmsForSelectionOff[0].paymentTypeId, "off")
+        XCTAssertEqual(pmsForSelectionOff[1].paymentTypeId, "off")
+        XCTAssertEqual(pmsForSelectionOff[0]._id, "ticket")
+        XCTAssertEqual(pmsForSelectionOff[1]._id, "ticket 2")
+        XCTAssertEqual(pmsForSelectionOff.count, 2)
+    }
     func testPayerCostWithDiscount() {
         let viewModel = PayerCostAdditionalStepViewModel(amount: 1000, token: nil, paymentMethod: PaymentMethod(), dataSource: [Cellable](), discount: MockBuilder.buildDiscount(), email: "dummy@mail.com")
         let payerCostStep = AdditionalStepViewController(viewModel: viewModel, callback: {_ in })
@@ -878,39 +926,39 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let paymentResult = MockBuilder.buildPaymentResult("status", paymentMethodId: "paymentMethodId")
         let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : paymentResult, discount : nil)
-        
+
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.disablePaymentResultScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.enablePaymentResultScreen()
         flowPreference.disablePaymentApprovedScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         mpCheckoutViewModel.paymentResult!.status = "approved"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.enablePaymentResultScreen()
         flowPreference.enablePaymentApprovedScreen()
         flowPreference.disablePaymentPendingScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         mpCheckoutViewModel.paymentResult!.status = "in_process"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.enablePaymentResultScreen()
         flowPreference.enablePaymentApprovedScreen()
         flowPreference.enablePaymentPendingScreen()
         flowPreference.disablePaymentRejectedScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         mpCheckoutViewModel.paymentResult!.status = "rejected"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
     }
-    
+
 }

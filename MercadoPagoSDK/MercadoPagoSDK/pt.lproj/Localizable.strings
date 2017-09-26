@@ -251,3 +251,12 @@
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="Com qual cartão?";
+
+//Summary Component
+
+"Producto" = "Produto";
+"Mora" = "Atraso";
+"Cargos" = "Cobranças";
+"Descuentos" = "Descontos";
+"Impuestos" = "Impostos";
+"Envío" = "Remessa";
