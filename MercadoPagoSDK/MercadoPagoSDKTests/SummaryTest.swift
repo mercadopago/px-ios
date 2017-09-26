@@ -59,6 +59,35 @@ class SummaryTest: BaseTest {
         return summary
     }
 
+    let TITLE_VALUE_HEIGHT: CGFloat = 25.5
+    let SMALL_MARGIN_HEIGHT: CGFloat = 8.0
+    let LINE_HEIGHT: CGFloat = 1.0
+    let LARGE_MARIN: CGFloat = 28.0
+    let MEDIUM_MARGIN: CGFloat = 12.0
+    let DISCLAIMER_HEIGHT: CGFloat = 18.5
+    let PAYER_COST_HEIGHT: CGFloat = 33
+
+    func titleValueRequieredHeight() -> CGFloat {
+        return TITLE_VALUE_HEIGHT
+    }
+    func lineRequieredHeight() -> CGFloat {
+        return LINE_HEIGHT + SMALL_MARGIN_HEIGHT
+    }
+    func totalRequieredHeight() -> CGFloat {
+        return TITLE_VALUE_HEIGHT + MEDIUM_MARGIN + lineRequieredHeight() + MEDIUM_MARGIN + LARGE_MARIN
+    }
+    func heightFor3summaryDetails() -> CGFloat {
+        return  titleValueRequieredHeight() * 3 + 2 * SMALL_MARGIN_HEIGHT + totalRequieredHeight()
+    }
+    func heightFor1summaryDetails() -> CGFloat {
+        return  titleValueRequieredHeight()  + SMALL_MARGIN_HEIGHT + MEDIUM_MARGIN + LARGE_MARIN
+    }
+    func heightFor4summaryDetailsPayerCostAndDisclaimer() -> CGFloat {
+        return  titleValueRequieredHeight() * 4 + 3 * SMALL_MARGIN_HEIGHT + totalRequieredHeight() + LARGE_MARIN + DISCLAIMER_HEIGHT + PAYER_COST_HEIGHT
+    }
+    func heightFor4summaryDetailsAndDisclaimer() -> CGFloat {
+        return  titleValueRequieredHeight() * 4 + 3 * SMALL_MARGIN_HEIGHT + totalRequieredHeight() + LARGE_MARIN + DISCLAIMER_HEIGHT
+    }
     func testSummaryMultipleProductTaxesShipping() {
         let summary = getSummaryMultipleProductTaxesShipping()
         XCTAssertEqual(summary.details[SummaryType.PRODUCT]?.getTotalAmount(), 1020)
@@ -68,33 +97,39 @@ class SummaryTest: BaseTest {
     func testSummaryComponentMultipleProductTaxesShipping() {
         let summary = getSummaryMultipleProductTaxesShipping()
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 179.0)
+        XCTAssertTrue(summaryComponent.shouldAddTotal())
+        XCTAssertEqual(summaryComponent.requiredHeight, heightFor3summaryDetails())
     }
     func testSummaryComponentProductTaxesShipping() {
         let summary = getSummaryProductTaxesShipping()
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 179.0)
+        XCTAssertTrue(summaryComponent.shouldAddTotal())
+        XCTAssertEqual(summaryComponent.requiredHeight, heightFor3summaryDetails())
     }
     func testSummaryComponentJustProduct() {
         let summary = getSummaryJustProduct()
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
+        XCTAssertFalse(summaryComponent.shouldAddTotal())
+        XCTAssertEqual(summaryComponent.requiredHeight, heightFor1summaryDetails())
     }
     func testSummaryComponentSummaryProductTaxesShippingCharge() {
         let summary = getSummaryProductTaxesCharge()
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 179.0)
+        XCTAssertTrue(summaryComponent.shouldAddTotal())
+        XCTAssertEqual(summaryComponent.requiredHeight, heightFor3summaryDetails())
     }
     func testSummaryComponentSummaryProductTaxesShippingChargeDisclaimer() {
         let summary = getSummaryProductTaxesShippingChargeDisclaimer()
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 259.0)
+        XCTAssertTrue(summaryComponent.shouldAddTotal())
+        XCTAssertEqual(summaryComponent.requiredHeight, heightFor4summaryDetailsAndDisclaimer() )
     }
     func testSummaryComponentSummaryProductTaxesShippingChargeDisclaimerPayerCost() {
         let summary = getSummaryProductTaxesShippingChargeDisclaimer()
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary, paymentData: PaymentData(), totalAmount: 1000)
         summaryComponent.addPayerCost(payerCost: PayerCost(installments: 3, installmentRate: 1.0, labels: [], minAllowedAmount: 12, maxAllowedAmount: 123, recommendedMessage: "testes", installmentAmount: 123.0, totalAmount: 234.0))
-        XCTAssertEqual(summaryComponent.requiredHeight, 292.0)
+        XCTAssertTrue(summaryComponent.shouldAddTotal())
+        XCTAssertEqual(summaryComponent.requiredHeight, heightFor4summaryDetailsPayerCostAndDisclaimer())
     }
 
 }

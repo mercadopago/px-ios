@@ -20,12 +20,13 @@ class SummaryComponent: UIView, PXComponent {
     let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
     static let TOTAL_TITLE = "Total".localized
     var requiredHeight: CGFloat = 0.0
+    let summary: Summary!
 
     init(frame: CGRect, summary: Summary, paymentData: PaymentData, totalAmount: Double) {
+        self.summary = summary
         super.init(frame: frame)
         self.addDetailsViews(typeDetailDictionary: summary.details)
         var payerCost = paymentData.payerCost
-
         if payerCost != nil && (payerCost?.installments)! > 1 {
             self.addMediumMargin()
             self.addLine()
@@ -41,7 +42,7 @@ class SummaryComponent: UIView, PXComponent {
                 amount = discount.newAmount()
             }
             self.addMediumMargin()
-            if summary.details.count > 1 {
+            if shouldAddTotal() {
                 self.addLine()
                 self.addMediumMargin()
                 self.addTotalView(totalAmount: amount)
@@ -53,6 +54,10 @@ class SummaryComponent: UIView, PXComponent {
             self.addLargeMargin()
         }
 
+    }
+
+    func shouldAddTotal() -> Bool {
+        return self.summary.details.count > 1
     }
 
     required init?(coder aDecoder: NSCoder) {
