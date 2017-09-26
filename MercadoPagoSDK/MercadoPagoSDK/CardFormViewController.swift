@@ -242,7 +242,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
     func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height - 40
             self.view.layoutIfNeeded()
             self.view.setNeedsUpdateConstraints()
