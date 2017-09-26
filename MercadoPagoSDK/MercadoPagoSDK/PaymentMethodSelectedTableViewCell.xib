@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="496" height="432"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="496" height="431"/>
+                <rect key="frame" x="0.0" y="0.0" width="496" height="431.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mediosIconoTarjeta" translatesAutoresizingMaskIntoConstraints="NO" id="7IM-bU-WwN">
@@ -37,7 +38,7 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDj-L7-Gmd">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDj-L7-Gmd">
                         <rect key="frame" x="154" y="210" width="188" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Visa terminada en: 3456">
@@ -99,6 +100,7 @@
                 <constraints>
                     <constraint firstItem="Zf5-PV-8ZU" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="0xG-sJ-HHS"/>
                     <constraint firstItem="Yqy-D5-bms" firstAttribute="top" secondItem="B9H-cX-bxB" secondAttribute="bottom" constant="40" id="1MJ-vX-PPV"/>
+                    <constraint firstItem="aDj-L7-Gmd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="1UD-Zs-30K"/>
                     <constraint firstItem="Yqy-D5-bms" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="6tl-h1-Iib"/>
                     <constraint firstItem="e6B-2G-k5B" firstAttribute="top" secondItem="7IM-bU-WwN" secondAttribute="bottom" constant="20" id="7dY-qP-4SB"/>
                     <constraint firstItem="aDj-L7-Gmd" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="8U7-Ta-jXR"/>
