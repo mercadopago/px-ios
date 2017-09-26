@@ -16,7 +16,7 @@ class CardViewModelManagerTest: BaseTest {
         super.setUp()
         // Retomar valor default
         CardFormViewController.showBankDeals = true
-        self.cardFormManager = CardFormViewModel(amount: 10, paymentMethods: nil, paymentSettings: nil)
+        self.cardFormManager = CardFormViewModel(amount: 10, paymentMethods: [])
     }
 
     override func tearDown() {
@@ -143,7 +143,7 @@ class CardViewModelManagerTest: BaseTest {
 
     func testGetBIN() {
         let cardNumber = "12345677777777"
-        
+
         let bin = self.cardFormManager?.getBIN(cardNumber)
         XCTAssertEqual(bin, "123456")
     }
@@ -195,29 +195,54 @@ class CardViewModelManagerTest: BaseTest {
         XCTAssertFalse(self.cardFormManager!.isValidInputCVV(""))
         XCTAssertTrue(self.cardFormManager!.isValidInputCVV("123"))
     }
-    
+
+    /**
+     *
+     Test "cardType"
+     **/
+    func testCardTypeCredit() {
+        let amex = MockBuilder.buildPaymentMethod("amex", paymentTypeId: "credit_card")
+        let visa = MockBuilder.buildPaymentMethod("visa", paymentTypeId: "credit_card")
+        let master = MockBuilder.buildPaymentMethod("master")
+        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [amex, visa, master])
+        XCTAssertEqual(cardViewModel.getPaymentMethodTypeId(), "credit_card")
+    }
+
+    func testCardTypeDebit() {
+        let debVisa = MockBuilder.buildPaymentMethod("debvisa", paymentTypeId: "debit_card")
+        let debMaster = MockBuilder.buildPaymentMethod("debmaster", paymentTypeId: "debit_card")
+        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [debVisa, debMaster])
+        XCTAssertEqual(cardViewModel.getPaymentMethodTypeId(), "debit_card")
+
+    }
+
+    func testNoCardType() {
+        let debVisa = MockBuilder.buildPaymentMethod("amex", paymentTypeId: "credit_card")
+        let debMaster = MockBuilder.buildPaymentMethod("debmaster", paymentTypeId: "debit_card")
+        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [debVisa, debMaster])
+        XCTAssertNil(cardViewModel.getPaymentMethodTypeId())
+    }
+
     func testShouldShowOnlyOneCardMessage() {
         let paymentMethods = MockBuilder.getMockPaymentMethods()
-        cardFormManager?.setPaymentMethods(paymentMethods: paymentMethods)
+        cardFormManager?.paymentMethods = paymentMethods
         XCTAssertFalse(cardFormManager!.shoudShowOnlyOneCardMessage())
         let paymentMethod = paymentMethods[0]
-        cardFormManager?.setPaymentMethods(paymentMethods: [paymentMethod])
+        cardFormManager?.paymentMethods = [paymentMethod]
         XCTAssertTrue(cardFormManager!.shoudShowOnlyOneCardMessage())
     }
-    
+
     func testGetNotAvailableCardMessage() {
         let defaultMessage = "Método de pago no soportado".localized
         let message = "Solo puedes pagar con ".localized
         let paymentMethods = MockBuilder.getMockPaymentMethods()
         paymentMethods[0].name = "Visa"
-        cardFormManager?.setPaymentMethods(paymentMethods: paymentMethods)
+        cardFormManager?.paymentMethods = paymentMethods
         XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), message + "Visa")
         paymentMethods[0].name = ""
         XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
-        cardFormManager?.setPaymentMethods(paymentMethods: nil)
-        XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
         let emptyPaymentMethods = [PaymentMethod]()
-        cardFormManager?.setPaymentMethods(paymentMethods: emptyPaymentMethods)
-        XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
+        cardFormManager?.paymentMethods = emptyPaymentMethods
+         XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
     }
 }

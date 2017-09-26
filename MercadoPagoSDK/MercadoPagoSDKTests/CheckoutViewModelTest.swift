@@ -20,9 +20,9 @@ class CheckoutViewModelTest: BaseTest {
 
     override func setUp() {
         let checkoutPref = CheckoutPreference()
-        checkoutPref.items = [Item()]
+        checkoutPref.items = [Item(_id: "12", title: "test", quantity: 1, unitPrice: 1000.0, description: "dummy", currencyId: "ARG")]
 
-        self.instance = CheckoutViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, shoppingPreference: ShoppingReviewPreference())
+        self.instance = CheckoutViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
 
         paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
         paymentData.payerCost = MockBuilder.buildInstallment().payerCosts[1]
@@ -30,12 +30,11 @@ class CheckoutViewModelTest: BaseTest {
         paymentData.discount = MockBuilder.buildDiscount()
         paymentData.payer = MockBuilder.buildPayer("id")
 
-        self.instanceWithCoupon = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, shoppingPreference: ShoppingReviewPreference())
+        self.instanceWithCoupon = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
 
         let reviewScreenPreference = ReviewScreenPreference()
-        reviewScreenPreference.setSummaryRows(summaryRows: [SummaryRow(customDescription: "lala", descriptionColor: nil, customAmount: 20.0, amountColor: nil)])
 
-        self.instanceWithCustomSummaryRow = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewScreenPreference: reviewScreenPreference, shoppingPreference: ShoppingReviewPreference())
+        self.instanceWithCustomSummaryRow = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewScreenPreference: reviewScreenPreference)
     }
 
     func testCells() {
@@ -66,7 +65,6 @@ class CheckoutViewModelTest: BaseTest {
 
     func testNumberOfRowsInSection() {
         XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 0), 1)
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 1), self.instance!.numberOfRowsInMainSection())
         XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 2), self.instance!.preference!.items.count)
         XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 3), 1)
         XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 4), self.instance!.numberOfCustomAdditionalCells())
@@ -122,14 +120,6 @@ class CheckoutViewModelTest: BaseTest {
 
     }
 
-    func testNumberOfRowsInMainSectionWithOfflinePaymentMethod() {
-        let paymentMethodOff = MockBuilder.buildPaymentMethod("redlink", name: "redlink", paymentTypeId: PaymentTypeId.ATM.rawValue)
-        self.instance!.paymentData.paymentMethod = paymentMethodOff
-
-        let result = self.instance!.numberOfRowsInMainSection()
-        XCTAssertEqual(1, result)
-    }
-
     func testIsPreferenceLoaded() {
         XCTAssertTrue(self.instance!.isPreferenceLoaded())
 
@@ -183,331 +173,6 @@ class CheckoutViewModelTest: BaseTest {
         XCTAssertTrue(self.instance!.shouldDisplayNoRate())
     }
 
-    /// Summary's tests
-
-    func testSummaryAccountMoney() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-
-        self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "account_money", paymentMethodName: "account_money", paymentMethodTypeId: "account_money")
-
-        // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1)
-
-        // Cells
-        XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
-
-        // Extra checks
-        XCTAssertFalse(self.instance!.shouldShowInstallmentSummary())
-        XCTAssertFalse(self.instance!.shouldShowTotal())
-        XCTAssertFalse(self.instance!.shouldDisplayNoRate())
-        XCTAssertFalse(self.instance!.hasPayerCostAddionalInfo())
-    }
-
-    func testSummaryAccountMoneyWithCoupon() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-        /// Descuento --- -$10
-        /// Total --- $20
-
-        self.instanceWithCoupon!.paymentData.paymentMethod = PaymentMethod(_id: "account_money", name : "account_money", paymentTypeId : "account_money")
-
-        // Number of Rows
-        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 3)
-
-        // Cells
-        XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 1, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isTotalCellFor(indexPath: IndexPath(row: 2, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
-
-        // Extra checks
-        XCTAssertFalse(self.instanceWithCoupon!.shouldShowInstallmentSummary())
-        XCTAssertTrue(self.instanceWithCoupon!.shouldShowTotal())
-        XCTAssertFalse(self.instanceWithCoupon!.shouldDisplayNoRate())
-        XCTAssertFalse(self.instanceWithCoupon!.hasPayerCostAddionalInfo())
-    }
-
-    func testSummaryAccountMoneyWithCustomSumaryRowAndCoupon() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-        /// Comision --- -$10
-        /// Descuento --- -$10
-        /// Total --- $20
-
-        self.instanceWithCustomSummaryRow!.paymentData.paymentMethod = PaymentMethod(_id: "account_money", name : "account_money", paymentTypeId : "account_money")
-
-        // Number of Rows
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.numberOfRowsInMainSection(), 4)
-
-        // Cells
-        XCTAssertTrue(self.instanceWithCustomSummaryRow!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCustomSummaryRow!.isProductlCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 1, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCustomSummaryRow!.isProductlCellFor(indexPath: IndexPath(row: 2, section: 1)))
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCustomSummaryRow!.isTotalCellFor(indexPath: IndexPath(row: 3, section: 1)))
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 3, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCustomSummaryRow!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instanceWithCustomSummaryRow!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
-
-        // Extra checks
-        XCTAssertFalse(self.instanceWithCustomSummaryRow!.shouldShowInstallmentSummary())
-        XCTAssertTrue(self.instanceWithCustomSummaryRow!.shouldShowTotal())
-        XCTAssertFalse(self.instanceWithCustomSummaryRow!.shouldDisplayNoRate())
-        XCTAssertFalse(self.instanceWithCustomSummaryRow!.hasPayerCostAddionalInfo())
-    }
-
-    func testSummaryPaymentMethodOff() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-
-        self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "oxxo", paymentMethodName: "Oxxo", paymentMethodTypeId: "ticket")
-
-        // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1)
-
-        // Cells
-        XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), OfflinePaymentMethodCell.ROW_HEIGHT)
-
-        // Extra checks
-        XCTAssertFalse(self.instance!.shouldShowInstallmentSummary())
-        XCTAssertFalse(self.instance!.shouldShowTotal())
-        XCTAssertFalse(self.instance!.shouldDisplayNoRate())
-        XCTAssertFalse(self.instance!.hasPayerCostAddionalInfo())
-    }
-
-    func testSummaryCreditCardNoRateInstallments() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-
-        self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
-        self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost()
-
-        // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1)
-
-        // Cells
-        XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
-
-        // Extra checks
-        XCTAssertFalse(self.instance!.shouldShowInstallmentSummary())
-        XCTAssertFalse(self.instance!.shouldShowTotal())
-        XCTAssertFalse(self.instance!.shouldDisplayNoRate())
-        XCTAssertFalse(self.instance!.hasPayerCostAddionalInfo())
-    }
-    func testSummaryCreditCardWithInstallments() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-        /// Pagas --- 3X$10
-        /// Total --- 30
-
-        self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
-        self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost(installments: 3)
-
-        // Number of Rows
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 3)
-
-        // Cells
-        XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isInstallmentsCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 1)), PurchaseDetailTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost))
-
-        XCTAssertTrue(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 2, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
-
-        // Extra checks
-        XCTAssertTrue(self.instance!.shouldShowInstallmentSummary())
-        XCTAssertTrue(self.instance!.shouldShowTotal())
-        XCTAssertFalse(self.instance!.hasPayerCostAddionalInfo())
-    }
-    func testSummaryDebitCard() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-
-        self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "debit_card")
-
-        // Number of Cells
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 1) // Productos
-
-        // Cells
-        XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
-
-        // Extra checks
-        XCTAssertFalse(self.instance!.shouldShowInstallmentSummary())
-        XCTAssertFalse(self.instance!.shouldShowTotal())
-        XCTAssertFalse(self.instance!.hasPayerCostAddionalInfo())
-    }
-
-    func testSummaryCreditCardWithInstallmentsWithCoupon() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-        /// Descuento --- -$0
-        /// Pagas --- 3X$10
-        /// Total --- 30
-
-        MercadoPagoCheckoutViewModel.flowPreference.enableDiscount()
-        instanceWithCoupon!.summaryRows = []
-        instanceWithCoupon!.setSummaryRows(shortTitle: ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE)
-
-        // Number of cells
-        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 4)
-
-        // Cells
-        XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 1, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isInstallmentsCellFor(indexPath: IndexPath(row: 2, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseDetailTableViewCell.getCellHeight(payerCost : self.instanceWithCoupon!.paymentData.payerCost))
-
-        XCTAssertTrue(self.instanceWithCoupon!.isTotalCellFor(indexPath: IndexPath(row: 3, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 3, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instanceWithCoupon!.paymentData.payerCost, reviewScreenPreference: self.instanceWithCoupon!.reviewScreenPreference))
-
-        // Extra checks
-        XCTAssertTrue(self.instanceWithCoupon!.shouldShowInstallmentSummary())
-        XCTAssertTrue(self.instanceWithCoupon!.shouldShowTotal())
-        XCTAssertFalse(self.instanceWithCoupon!.hasPayerCostAddionalInfo())
-    }
-
-    func testSummaryCreditCardWithInstallmentsWithCouponAndCFT() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-        /// Descuento --- -$0
-        /// Pagas --- 3X$10
-        /// Total --- 30
-        /// CFT Y TEA
-
-        MercadoPagoCheckoutViewModel.flowPreference.enableDiscount()
-        instanceWithCoupon!.summaryRows = []
-        instanceWithCoupon!.setSummaryRows(shortTitle: ShoppingReviewPreference.DEFAULT_ONE_WORD_TITLE)
-
-        self.instanceWithCoupon!.paymentData.payerCost = MockBuilder.buildPayerCost(installments: 3, hasCFT: true)
-
-        // Number of cells
-        XCTAssertEqual(self.instanceWithCoupon!.numberOfRowsInMainSection(), 5)
-
-        // Cells
-        XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isProductlCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 1, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isInstallmentsCellFor(indexPath: IndexPath(row: 2, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseDetailTableViewCell.getCellHeight(payerCost : self.instanceWithCoupon!.paymentData.payerCost))
-
-        XCTAssertTrue(self.instanceWithCoupon!.isTotalCellFor(indexPath: IndexPath(row: 3, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 3, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isPayerCostAdditionalInfoFor(indexPath: IndexPath(row: 4, section: 1)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 4, section: 1)), ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT)
-
-        XCTAssertTrue(self.instanceWithCoupon!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instanceWithCoupon!.paymentData.payerCost, reviewScreenPreference: self.instanceWithCoupon!.reviewScreenPreference))
-
-        XCTAssertTrue(self.instanceWithCoupon!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instanceWithCoupon!.paymentData.payerCost, reviewScreenPreference: self.instanceWithCoupon!.reviewScreenPreference))
-
-        // Extra checks
-        XCTAssertTrue(self.instanceWithCoupon!.shouldShowInstallmentSummary())
-        XCTAssertTrue(self.instanceWithCoupon!.shouldShowTotal())
-        XCTAssertTrue(self.instanceWithCoupon!.hasPayerCostAddionalInfo())
-    }
-
-    func testSummaryCreditCardWithInstallmentsWithCFT() {
-
-        /// SUMARY:
-        ///
-        /// Productos --- $30
-        /// Pagas --- 3X$10
-        /// Total --- 30
-        /// CFT Y TEA
-
-        self.instance!.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
-        self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost(installments: 3, hasCFT: true)
-
-        // Number of cells
-        XCTAssertEqual(self.instance!.numberOfRowsInMainSection(), 4)
-
-        // Cells
-        XCTAssertTrue(self.instance!.isProductlCellFor(indexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 1)), PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isInstallmentsCellFor(indexPath: IndexPath(row: 1, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 1)), PurchaseDetailTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost))
-
-        XCTAssertTrue(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 2, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isPayerCostAdditionalInfoFor(indexPath: IndexPath(row: 3, section: 1)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 3, section: 1)), ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT)
-
-        XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 3)), PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.instance!.paymentData.payerCost, reviewScreenPreference: self.instance!.reviewScreenPreference))
-
-        // Extra checks
-        XCTAssertTrue(self.instance!.shouldShowInstallmentSummary())
-        XCTAssertTrue(self.instance!.shouldShowTotal())
-        XCTAssertTrue(self.instance!.hasPayerCostAddionalInfo())
-    }
-
     func testAddtitionalCustomCells() {
         XCTAssertEqual(self.instance!.numberOfCustomAdditionalCells(), 0)
 
@@ -544,5 +209,46 @@ class CheckoutViewModelTest: BaseTest {
         XCTAssertNil(newPaymentData.payerCost)
         XCTAssertEqual(newPaymentData.payer.email, "thisisanem@il.com")
         XCTAssertEqual(newPaymentData.discount!._id, "id")
+    }
+
+    func getInvalidSummary() -> Summary {
+        var preference = ReviewScreenPreference()
+        preference.addSummaryProductDetail(amount: 1000)
+        preference.addSummaryProductDetail(amount: 20)
+        preference.addSummaryTaxesDetail(amount: 190)
+        preference.addSummaryShippingDetail(amount: 100)
+        return Summary(details: preference.details)
+    }
+    func getValidSummary() -> Summary {
+        var preference = ReviewScreenPreference()
+        preference.addSummaryProductDetail(amount: 500)
+        preference.addSummaryProductDetail(amount: 200)
+        preference.addSummaryTaxesDetail(amount: 200)
+        preference.addSummaryShippingDetail(amount: 100)
+        return Summary(details: preference.details)
+    }
+    func getValidSummaryWithoutProductDetail() -> Summary {
+        var preference = ReviewScreenPreference()
+        preference.addSummaryTaxesDetail(amount: 900)
+        preference.addSummaryShippingDetail(amount: 100)
+        return Summary(details: preference.details)
+    }
+    func testInvalidSummary() {
+        instance?.reviewScreenPreference.details = getInvalidSummary().details
+        var summary = instance?.getValidSummary(amount: 1000.0)
+        var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
+        XCTAssertEqual(summaryComponent.requiredHeight, 112.0)
+    }
+    func testValidSummary() {
+        instance?.reviewScreenPreference.details = getValidSummary().details
+        var summary = instance?.getValidSummary(amount: 1000.0)
+        var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
+        XCTAssertEqual(summaryComponent.requiredHeight, 179.0)
+    }
+    func testValidSummaryWithoutProductDetail() {
+        instance?.reviewScreenPreference.details = getValidSummaryWithoutProductDetail().details
+        var summary = instance?.getValidSummary(amount: 1000.0)
+        var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
+        XCTAssertEqual(summaryComponent.requiredHeight, 112.0)
     }
 }

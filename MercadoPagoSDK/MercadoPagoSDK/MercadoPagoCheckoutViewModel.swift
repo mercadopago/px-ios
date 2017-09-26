@@ -38,7 +38,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var startedCheckout = false
     static var servicePreference = ServicePreference()
     static var decorationPreference = DecorationPreference()
-    var shoppingReviewPreference = ShoppingReviewPreference()
     static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
@@ -123,7 +122,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData.payer = self.checkoutPreference.getPayer()
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
-        self.shoppingReviewPreference = ShoppingReviewPreference()
     }
 
     func hasError() -> Bool {
@@ -138,7 +136,17 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         let paymentPreference = PaymentPreference()
         paymentPreference.defaultPaymentTypeId = self.paymentOptionSelected?.getId()
         // TODO : está bien que la paymentPreference se cree desde cero? puede que vengan exclusiones de entrada ya?
-        return CardFormViewModel(amount : self.getAmount(), paymentMethods: search?.paymentMethods, paymentSettings : paymentPreference)
+        return CardFormViewModel(amount : self.getAmount(), paymentMethods: getPaymentMethodsForSelection())
+    }
+
+    public func getPaymentMethodsForSelection() -> [PaymentMethod] {
+        let filteredPaymentMethods = search?.paymentMethods.filter {
+            return $0.conformsPaymentPreferences(self.getPaymentPreferences()) && $0.paymentTypeId ==  self.paymentOptionSelected?.getId()
+        }
+        guard let paymentMethods = filteredPaymentMethods else {
+            return []
+        }
+        return paymentMethods
     }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {
@@ -204,7 +212,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     public func checkoutViewModel() -> CheckoutViewModel {
-        let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference, shoppingPreference: self.shoppingReviewPreference)
+        let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
         return checkoutViewModel
     }
 

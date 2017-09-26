@@ -160,20 +160,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         if viewModel.isTitleCellFor(indexPath: indexPath) {
             return getMainTitleCell(indexPath : indexPath)
 
-        } else if self.viewModel.isProductlCellFor(indexPath: indexPath) {
+        } else if self.viewModel.isSummaryCellFor(indexPath: indexPath) {
             return self.getSummaryCell(indexPath: indexPath)
-
-        } else if self.viewModel.isInstallmentsCellFor(indexPath: indexPath) {
-            return self.getPurchaseDetailCell(indexPath: indexPath, title : "Pagas".localized, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.paymentData.getPayerCost(), addSeparatorLine: true)
-
-        } else if self.viewModel.isTotalCellFor(indexPath: indexPath) {
-            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmount(), addSeparatorLine: false)
-
-        } else if self.viewModel.isPayerCostAdditionalInfoFor(indexPath: indexPath) {
-            return self.getConfirmAdditionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.getPayerCost())
-
-        } else if self.viewModel.isUnlockCardCellFor(indexPath: indexPath) {
-            return self.getUnlockCardCell(indexPath: indexPath)
 
         } else if self.viewModel.isItemCellFor(indexPath: indexPath) {
             return viewModel.hasCustomItemCells() ? self.getCustomItemCell(indexPath: indexPath) : self.getPurchaseItemDetailCell(indexPath: indexPath)
@@ -325,10 +313,10 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     private func getSummaryCell(indexPath: IndexPath) -> UITableViewCell {
-        let currency = MercadoPagoContext.getCurrency()
-        let purchaseSimpleDetailTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseSimpleDetailTableViewCell", for: indexPath) as! PurchaseSimpleDetailTableViewCell
-        purchaseSimpleDetailTableViewCell.fillCell(summaryRow: self.viewModel.summaryRows[indexPath.row], currency: currency, payerCost: nil)
-        return purchaseSimpleDetailTableViewCell
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "summaryComponentCell")
+        cell.contentView.addSubview(self.viewModel.summaryComponent)
+        cell.selectionStyle = .none
+        return cell
     }
 
     private func getPurchaseSimpleDetailCell(indexPath: IndexPath, title: String, amount: Double, payerCost: PayerCost? = nil, addSeparatorLine: Bool = true) -> UITableViewCell {
@@ -355,7 +343,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     private func getPurchaseItemDetailCell(indexPath: IndexPath) -> UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
         let purchaseItemDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseItemDetailTableViewCell", for: indexPath) as! PurchaseItemDetailTableViewCell
-        purchaseItemDetailCell.fillCell(item: self.viewModel.preference!.items[indexPath.row], currency: currency, quantityHidden: !self.viewModel.shoppingPreference.shouldShowQuantityRow, amountTittleHidden: !self.viewModel.shoppingPreference.shouldShowAmountTitle, quantityTitle: self.viewModel.shoppingPreference.getQuantityTitle(), amountTitle: self.viewModel.shoppingPreference.getAmountTitle())
+        purchaseItemDetailCell.fillCell(item: self.viewModel.preference!.items[indexPath.row], currency: currency, quantityHidden: !self.viewModel.reviewScreenPreference.shouldShowQuantityRow, amountTittleHidden: !self.viewModel.reviewScreenPreference.shouldShowAmountTitle, quantityTitle: self.viewModel.reviewScreenPreference.getQuantityTitle(), amountTitle: self.viewModel.reviewScreenPreference.getAmountTitle())
         return purchaseItemDetailCell
     }
 

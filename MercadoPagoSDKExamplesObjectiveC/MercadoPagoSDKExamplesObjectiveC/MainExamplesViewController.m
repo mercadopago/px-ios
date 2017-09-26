@@ -288,7 +288,6 @@
 
     ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
     [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
-    [reviewPreference setProductsDetailWithProductsTitle:@"Carga SUBE"];
     [reviewPreference setConfirmButtonTextWithConfirmButtonText:@"Confirmar recarga"];
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
@@ -300,8 +299,6 @@
     SummaryRow *summaryRow2 = [[SummaryRow alloc] initWithCustomDescription:@"Incluye interes" descriptionColor: UIColor.grayColor customAmount:0 amountColor:UIColor.redColor separatorLine:YES];
     
     [summaryRow2 disableAmount];
-
-    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow,summaryRow2, nil]];
 
     [reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
 

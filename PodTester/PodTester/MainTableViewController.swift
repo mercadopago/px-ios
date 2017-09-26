@@ -205,12 +205,14 @@ class MainTableViewController: UITableViewController {
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
+            showRyC ? flowPreference.enableReviewAndConfirmScreen() : flowPreference.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
 
         if setPaymentDataCallback {
-            MercadoPagoCheckout.setPaymentDataCallback { (PaymentData) in
-                self.paymentData = PaymentData
+            MercadoPagoCheckout.setPaymentDataCallback { (paymentData) in
+                self.paymentData = paymentData
+                let pm = PaymentMethod.fromJSON(paymentData.paymentMethod?.toJSON() as! NSDictionary)
                 self.buttonViewControllerCreator(title: "Ir a Revisa y Confirma", walletStep: walletSteps.ryc)
             }
         }
@@ -234,12 +236,18 @@ class MainTableViewController: UITableViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
 
-        var shoppingDecoration = ShoppingReviewPreference()
-        shoppingDecoration.setOneWordDescription(oneWordDescription: "Entradas")
-        shoppingDecoration.setAmountTitle(amountTitle: "Valor de las entradas: ")
-        shoppingDecoration.setQuantityTitle(quantityTitle: "Cantidad de entradas:  ")
-        checkout.setShoppingReviewPreference(shoppingDecoration)
-
+        var prefRS = ReviewScreenPreference()
+        prefRS.setSummaryProductTitle(productTitle: "🐙 Remeras")
+        prefRS.addSummaryProductDetail(amount: 1)
+        prefRS.addSummaryTaxesDetail(amount: 2799)
+        prefRS.addSummaryChargeDetail(amount: 2000)
+        prefRS.addSummaryShippingDetail(amount: 200.45)
+        prefRS.addSummaryArrearsDetail(amount: 999.55)
+        prefRS.addSummaryDiscountDetail(amount: 1000)
+        prefRS.setQuantityTitle(title: "Quantity : ")
+        prefRS.setAmountTitle(title: "Amount : ")
+        prefRS.setSummaryDisclaimer(disclaimerText: "Incluye comisión BACEN", disclaimerColor: .red)
+        checkout.setReviewScreenPreference(prefRS)
         checkout.start()
     }
 
