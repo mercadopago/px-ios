@@ -78,7 +78,7 @@ open class InstructionsViewModel: NSObject {
         return indexPath.section == Sections.header.rawValue && indexPath.row == 0
     }
     func isHeaderSubtitleCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.header.rawValue && indexPath.row == 0
+        return indexPath.section == Sections.header.rawValue && indexPath.row == 1 && shouldShowSubtitle()
     }
 
     func isBodyCellFor(indexPath: IndexPath) -> Bool {
@@ -86,12 +86,12 @@ open class InstructionsViewModel: NSObject {
     }
 
     func isSecondaryInfoCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.footer.rawValue && indexPath.row == 0 && shouldShowSubtitle()
+        return indexPath.section == Sections.footer.rawValue && indexPath.row == 0 && shouldShowSecundaryInformation()
     }
 
     func isFooterCellFor(indexPath: IndexPath) -> Bool {
         let isSection = indexPath.section == Sections.footer.rawValue
-        let isRow = shouldShowSubtitle() ? indexPath.row == 1 : indexPath.row == 0
+        let isRow = shouldShowSecundaryInformation() ? indexPath.row == 1 : indexPath.row == 0
         return isSection && isRow
     }
 
