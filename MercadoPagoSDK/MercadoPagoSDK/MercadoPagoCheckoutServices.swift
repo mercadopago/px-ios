@@ -351,36 +351,35 @@ extension MercadoPagoCheckout {
                 strongSelf.executeNextStep()
         })
     }
-    
+
     func getInstructions() {
         self.presentLoading()
-        
+
         guard let paymentResult = self.viewModel.paymentResult else {
-            return
+            fatalError("Get Instructions - Payment Result does no exist")
         }
-        
+
         guard let paymentId = paymentResult._id else {
-            return
+           fatalError("Get Instructions - Payment Id does no exist")
         }
-        
+
         guard let paymentTypeId = paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId else {
-            return
+            fatalError("Get Instructions - Payment Method Type Id does no exist")
         }
-        
+
         MPServicesBuilder.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (instructionsInfo) in
+
             guard let strongSelf = self else {
                 return
             }
-            
             strongSelf.viewModel.instructionsInfo = instructionsInfo
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-            
+
         }) { [weak self] (error) -> Void in
             guard let strongSelf = self else {
                 return
             }
-            
             strongSelf.dismissLoading()
             strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue), errorCallback: { [weak self] (_) in
                 self?.getInstructions()
