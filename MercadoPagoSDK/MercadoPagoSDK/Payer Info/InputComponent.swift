@@ -78,11 +78,11 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     var dropDownOptions : [String]!
     var dropDownPlaceholder: String?
     var dropDownTextField : HoshiTextField!
-    init(frame: CGRect, textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false), numeric: Bool = true, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
+    init(frame: CGRect, textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false), numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
         self.dropDownSelectedOptionText = dropDownOptions[0]
         self.dropDownPlaceholder = dropDownPlaceholder
         self.dropDownOptions = dropDownOptions
-        super.init(frame: frame, textMask: textMask, numeric: numeric, textFieldDelegate: textFieldDelegate)
+        super.init(frame: frame, textMask: textMask, numeric: numeric, placeholder: placeholder, textFieldDelegate: textFieldDelegate)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -101,6 +101,10 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         inputTextField = HoshiTextField(frame: CGRect(x: getInputX(), y: getInputY(), width: getInputWidth(), height: INPUT_HEIGHT))
         inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
+        inputTextField.font = Utils.getFont(size: 20.0)
+        if numeric {
+            inputTextField.keyboardType = UIKeyboardType.numberPad
+        }
         if let placeholder = placeholder {
             inputTextField.placeholder = placeholder
         }
@@ -127,7 +131,6 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     func getToolBar() -> UIToolbar {
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
-        toolBar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(CompositeInputComponent.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let font = Utils.getFont(size: 14)
