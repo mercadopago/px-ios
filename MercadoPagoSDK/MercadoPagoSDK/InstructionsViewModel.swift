@@ -86,11 +86,11 @@ open class InstructionsViewModel: NSObject {
     }
 
     func isSecondaryInfoCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.header.rawValue && indexPath.row == 0 && shouldShowSubtitle()
+        return indexPath.section == Sections.footer.rawValue && indexPath.row == 0 && shouldShowSubtitle()
     }
 
     func isFooterCellFor(indexPath: IndexPath) -> Bool {
-        let isSection = indexPath.section == Sections.header.rawValue
+        let isSection = indexPath.section == Sections.footer.rawValue
         let isRow = shouldShowSubtitle() ? indexPath.row == 1 : indexPath.row == 0
         return isSection && isRow
     }
