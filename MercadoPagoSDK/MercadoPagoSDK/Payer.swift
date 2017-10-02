@@ -14,7 +14,7 @@ open class Payer: NSObject {
 	open var identification: Identification?
     open var entityType: EntityType?
 
-    public init(_id: String? = nil, email: String = "", type: String? = nil, identification: Identification? = nil, entityType: EntityType? = nil) {
+    public init(_id: String? = nil, email: String = "", identification: Identification? = nil, entityType: EntityType? = nil) {
 		self._id = _id
 		self.email = email
 		self.identification = identification

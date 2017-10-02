@@ -32,7 +32,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
 
-    @IBOutlet var typePicker: UIPickerView! = UIPickerView()
+    //@IBOutlet var typePicker: UIPickerView! = UIPickerView()
 
     override open var screenName: String { get { return "IDENTIFICATION_NUMBER" } }
 
@@ -157,7 +157,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
         self.setupInputAccessoryView()
         self.getIdentificationTypes()
-        typePicker.isHidden = true
+   //     typePicker.isHidden = true
 
     }
 
@@ -207,7 +207,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         identificationType =  self.identificationTypes![row]
     //    typeButton.setTitle( self.identificationTypes![row].name, forState: .Normal)
         textField.text = self.identificationTypes![row].name
-        typePicker.isHidden = true
+   //     typePicker.isHidden = true
         self.numberTextField.text = ""
         self.remask()
 
@@ -215,7 +215,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     @IBAction func setType(_ sender: AnyObject) {
         numberTextField.resignFirstResponder()
-        typePicker.isHidden = false
+     //   typePicker.isHidden = false
 
     }
 
@@ -309,7 +309,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (identificationTypes) -> Void in
             self.doneNext?.isEnabled = true
             self.identificationTypes = identificationTypes
-            self.typePicker.reloadAllComponents()
+     //       self.typePicker.reloadAllComponents()
             self.identificationType =  self.identificationTypes![0]
             self.textField.text = self.identificationTypes![0].name
             self.remask()

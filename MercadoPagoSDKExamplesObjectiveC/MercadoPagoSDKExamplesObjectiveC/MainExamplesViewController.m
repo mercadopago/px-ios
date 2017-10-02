@@ -181,7 +181,7 @@
 -(void)setCheckoutPref_CreditCardNotExcluded {
     Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
-    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" type:nil identification:nil entityType:nil];
+    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
     NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
 
@@ -195,7 +195,7 @@
 -(void)setCheckoutPref_CardsNotExcluded {
     Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
-    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" type:nil identification:nil entityType:nil];
+    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
     NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
 
