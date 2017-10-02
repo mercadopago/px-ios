@@ -14,6 +14,8 @@ protocol CompositeInputComponentListener {
     func textChangedTo(newText: String)
 }
 class SimpleInputComponent: UIView, PXComponent {
+    let INACTIVE_BORDER_COLOR = UIColor.px_grayLines()
+    let ACTIVE_BORDER_COLOR = UIColor.px_blueMercadoPago()
     let HEIGHT: CGFloat = 83.0
     let INPUT_HEIGHT: CGFloat = 45.0
     let HORIZONTAL_MARGIN: CGFloat = 31.0
@@ -28,6 +30,7 @@ class SimpleInputComponent: UIView, PXComponent {
         self.numeric = numeric
         self.placeholder = placeholder
         self.textFieldDelegate = textFieldDelegate
+        self.backgroundColor = .white
         self.setupView()
     }
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +47,9 @@ class SimpleInputComponent: UIView, PXComponent {
         if let placeholder = placeholder {
             inputTextField.placeholder = placeholder
         }
-        
+        inputTextField.font = Utils.getFont(size: 20.0)
+        inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
+        inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         self.addSubview(inputTextField)
         self.frame.size.height = getHeight()
     }
@@ -66,7 +71,7 @@ class SimpleInputComponent: UIView, PXComponent {
 }
 
 class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIPickerViewDelegate {
-    let COMBO_WEIGHT: CGFloat = 45.0
+    let COMBO_WEIGHT: CGFloat = 68.0
     let MARGIN_BETWEEN_ELEMENTS: CGFloat = 14.0
     let PICKER_HEIGHT :CGFloat = 216.0
     var dropDownSelectedOptionText : String!
@@ -78,8 +83,6 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         self.dropDownPlaceholder = dropDownPlaceholder
         self.dropDownOptions = dropDownOptions
         super.init(frame: frame, textMask: textMask, numeric: numeric, textFieldDelegate: textFieldDelegate)
-        self.backgroundColor = .white
-        self.setupView()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -92,7 +95,12 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.inputView = getPicker()
         dropDownTextField.inputAccessoryView = getToolBar()
         dropDownTextField.text = dropDownOptions[0]
+        dropDownTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
+        dropDownTextField.borderActiveColor = ACTIVE_BORDER_COLOR
+        dropDownTextField.font = Utils.getFont(size: 20.0)
         inputTextField = HoshiTextField(frame: CGRect(x: getInputX(), y: getInputY(), width: getInputWidth(), height: INPUT_HEIGHT))
+        inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
+        inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         if let placeholder = placeholder {
             inputTextField.placeholder = placeholder
         }
