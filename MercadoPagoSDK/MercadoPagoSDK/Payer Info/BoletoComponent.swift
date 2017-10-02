@@ -27,15 +27,15 @@ class BoletoComponent: UIView, PXComponent {
     }
 
     func setupView() {
-        var boletoImageView = UIImageView(frame: CGRect(x: getX(), y: getY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
+        var boletoImageView = UIImageView(frame: CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
         boletoImageView.image = MercadoPago.getImage("boleto")
         self.addSubview(boletoImageView)
     }
 
-    func getX() -> CGFloat {
+    func getImageX() -> CGFloat {
         return (self.getWeight() - BoletoComponent.IMAGE_WIDTH) / 2
     }
-    func getY() -> CGFloat {
+    func getImageY() -> CGFloat {
         return (self.getHeight() - BoletoComponent.IMAGE_HEIGHT) / 2
     }
 }
