@@ -22,7 +22,7 @@ class SimpleInputComponent: UIView, PXComponent {
     var textFieldDelegate: UITextFieldDelegate!
     var inputTextField : HoshiTextField!
     var textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false)
-    init(frame: CGRect, textMask: TextMaskFormater, numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
+    init(frame: CGRect, textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false), numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
         super.init(frame: frame)
         self.textMask = textMask
         self.numeric = numeric
@@ -46,6 +46,7 @@ class SimpleInputComponent: UIView, PXComponent {
         }
         
         self.addSubview(inputTextField)
+        self.frame.size.height = getHeight()
     }
     func getInputX() -> CGFloat {
         return HORIZONTAL_MARGIN
@@ -72,11 +73,12 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     var dropDownOptions : [String]!
     var dropDownPlaceholder: String?
     var dropDownTextField : HoshiTextField!
-    init(frame: CGRect, textMask: TextMaskFormater, numeric: Bool, dropDownPlaceholder:String, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
-        super.init(frame: frame, textMask: textMask, numeric: numeric, textFieldDelegate: textFieldDelegate)
+    init(frame: CGRect, textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false), numeric: Bool = true, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
         self.dropDownSelectedOptionText = dropDownOptions[0]
         self.dropDownPlaceholder = dropDownPlaceholder
         self.dropDownOptions = dropDownOptions
+        super.init(frame: frame, textMask: textMask, numeric: numeric, textFieldDelegate: textFieldDelegate)
+        self.backgroundColor = .white
         self.setupView()
     }
     required init?(coder aDecoder: NSCoder) {
@@ -96,6 +98,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         }
         self.addSubview(dropDownTextField)
         self.addSubview(inputTextField)
+        self.frame.size.height = getHeight()
     }
     override func getInputX() -> CGFloat {
         return HORIZONTAL_MARGIN + COMBO_WEIGHT + MARGIN_BETWEEN_ELEMENTS

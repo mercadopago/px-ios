@@ -8,10 +8,13 @@
 
 import UIKit
 
-class PayerInfoViewController: MercadoPagoUIViewController {
+class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate  {
 
     
     let KEYBOARD_HEIGHT : CGFloat = 216.0
+    let ACCESORY_VIEW_HEIGHT : CGFloat = 44.0
+    let INPUT_VIEW_HEIGHT : CGFloat = 83.0
+    
     var viewModel : PayerInfoViewModel!
     
     init(viewModel:PayerInfoViewModel) {
@@ -36,7 +39,12 @@ class PayerInfoViewController: MercadoPagoUIViewController {
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
-       
+        let boletoComponent = BoletoComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 157.0))
+        
+        let frameDummy = CGRect(x: 0, y: 157.0, width: screenWidth, height: 0)
+        let compositeInputComponent = CompositeInputComponent(frame: frameDummy, numeric: true, dropDownPlaceholder: "Tipo".localized, dropDownOptions: ["CFT", "CNPJ"], textFieldDelegate: self)
+        self.view.addSubview(boletoComponent)
+        self.view.addSubview(compositeInputComponent)
     }
 
 }

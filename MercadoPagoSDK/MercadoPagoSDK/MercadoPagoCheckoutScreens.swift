@@ -13,6 +13,8 @@ extension MercadoPagoCheckout {
     func showPaymentMethodsScreen() {
         // Se limpia paymentData antes de ofrecer selección de medio de pago
 
+        self.testBolbradesco()
+        return
         self.viewModel.paymentData.clearCollectedData()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
@@ -26,6 +28,11 @@ extension MercadoPagoCheckout {
         })
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
 
+    }
+    
+    func testBolbradesco() {
+        let vc = PayerInfoViewController(viewModel: PayerInfoViewModel())
+        self.pushViewController(viewController : vc, animated: true)
     }
 
     func showCardForm() {
