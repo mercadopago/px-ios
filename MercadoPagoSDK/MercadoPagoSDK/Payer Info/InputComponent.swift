@@ -68,6 +68,10 @@ class SimpleInputComponent: UIView, PXComponent {
     func componentResignFirstResponder() {
         self.inputTextField.resignFirstResponder()
     }
+    
+    open func setInputAccessoryView(inputAccessoryView : UIView){
+        self.inputTextField.inputAccessoryView = inputAccessoryView
+    }
 }
 
 class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -95,6 +99,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.inputView = getPicker()
         dropDownTextField.inputAccessoryView = getToolBar()
         dropDownTextField.text = dropDownOptions[0]
+        dropDownTextField.inputAccessoryView
         dropDownTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         dropDownTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         dropDownTextField.font = Utils.getFont(size: 20.0)
@@ -162,4 +167,6 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.resignFirstResponder()
         inputTextField.becomeFirstResponder()
     }
+    
+    
 }
