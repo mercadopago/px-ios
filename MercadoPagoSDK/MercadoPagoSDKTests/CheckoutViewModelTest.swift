@@ -237,7 +237,7 @@ class CheckoutViewModelTest: BaseTest {
         instance?.reviewScreenPreference.details = getInvalidSummary().details
         var summary = instance?.getValidSummary(amount: 1000.0)
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 112.0)
+        XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
     }
     func testValidSummary() {
         instance?.reviewScreenPreference.details = getValidSummary().details
@@ -249,6 +249,6 @@ class CheckoutViewModelTest: BaseTest {
         instance?.reviewScreenPreference.details = getValidSummaryWithoutProductDetail().details
         var summary = instance?.getValidSummary(amount: 1000.0)
         var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 112.0)
+        XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
     }
 }
