@@ -28,6 +28,7 @@ class TitleValueView: UIView, PXComponent {
         titleLabel.textColor = colorTitle
         titleLabel.font = Utils.getFont(size: titleFontSize)
         titleLabel.text = titleText
+        titleLabel.numberOfLines = 1
         self.addSubview(titleLabel)
         if valueEnable {
             valueLabel = UILabel(frame: getValueFrame())
@@ -54,7 +55,7 @@ class TitleValueView: UIView, PXComponent {
         fatalError("init(coder:) has not been implemented")
     }
     func getHeight() -> CGFloat {
-        return self.titleLabel.requiredHeight() + 2 * VERTICAL_MARGIN
+        return self.titleLabel.requiredHeight(numberOfLines: 1) + 2 * VERTICAL_MARGIN
     }
     func getWeight() -> CGFloat {
         return self.frame.size.width
@@ -69,7 +70,6 @@ class TitleValueView: UIView, PXComponent {
 
     func adjustViewFrames() {
         let frameTitle = self.titleLabel.frame
-
-        self.titleLabel.frame = CGRect(x: frameTitle.origin.x, y: frameTitle.origin.y, width: frameTitle.size.width, height: self.titleLabel.requiredHeight())
+        self.titleLabel.frame = CGRect(x: frameTitle.origin.x, y: frameTitle.origin.y, width: frameTitle.size.width, height: self.titleLabel.requiredHeight(numberOfLines: 1))
     }
 }
