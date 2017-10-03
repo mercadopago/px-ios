@@ -31,10 +31,9 @@ extension MercadoPagoCheckout {
     }
     
     func testBolbradesco() {
-        let strings = ["CPF","CNPJ","MELI"]
-        var defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: true, leftToRight: false)
-        var defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
-        let masks: [TextMaskFormater] = [defaultInitialMask,defaultMask]
+        let strings = ["CPF"]
+        var cpfMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX", completeEmptySpaces: false, leftToRight: false)
+        let masks: [TextMaskFormater] = [cpfMask]
         let viewModel = PayerInfoViewModel(dropDownOptions: strings, masks: masks)
         let vc = PayerInfoViewController(viewModel: viewModel)
         self.pushViewController(viewController : vc, animated: true)
