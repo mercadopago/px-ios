@@ -70,6 +70,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
             availableHeight -= (self.compositeInputComponent?.getHeight())!
             self.compositeInputComponent?.frame.origin.y = availableHeight
             self.boletoComponent?.frame.size.height = availableHeight
+            self.boletoComponent?.updateView()
         }
     }
     

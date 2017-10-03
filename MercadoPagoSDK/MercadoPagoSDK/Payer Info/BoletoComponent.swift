@@ -11,6 +11,7 @@ import UIKit
 class BoletoComponent: UIView, PXComponent {
     static let IMAGE_WIDTH: CGFloat = 242.0
     static let IMAGE_HEIGHT: CGFloat = 143.0
+    var boletoView : UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,21 +28,17 @@ class BoletoComponent: UIView, PXComponent {
     }
 
     func setupView() {
-        var boletoImageView = UIImageView(frame: CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
+        var boletoImageView = UIImageView(frame: CGRect(x: 0, y:0, width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
         boletoImageView.image = MercadoPago.getImage("boleto")
-        let xConstraint = NSLayoutConstraint(item: boletoImageView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
-        
-        let yConstraint = NSLayoutConstraint(item: boletoImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
-        
-        self.addConstraint(xConstraint)
-        self.addConstraint(yConstraint)
-      //  NSLayoutConstraint.activate([xConstraint, yConstraint])
-
-        self.addSubview(boletoImageView)
+        self.boletoView = UIView(frame: CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
+        self.boletoView.addSubview(boletoImageView)
+        self.addSubview(self.boletoView)
     }
     
    
-    
+    public func updateView(){
+        self.boletoView.frame = CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT)
+    }
     func getImageX() -> CGFloat {
         return (self.getWeight() - BoletoComponent.IMAGE_WIDTH) / 2
     }
