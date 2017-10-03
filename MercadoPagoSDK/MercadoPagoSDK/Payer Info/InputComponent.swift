@@ -82,11 +82,12 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     var dropDownOptions : [String]!
     var dropDownPlaceholder: String?
     var dropDownTextField : HoshiTextField!
-    init(frame: CGRect, textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false), numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
+    var textMasks : [TextMaskFormater]?
+    init(frame: CGRect, textMasks: [TextMaskFormater]? = nil, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
         self.dropDownSelectedOptionText = dropDownOptions[0]
         self.dropDownPlaceholder = dropDownPlaceholder
         self.dropDownOptions = dropDownOptions
-        super.init(frame: frame, textMask: textMask, numeric: numeric, placeholder: placeholder, textFieldDelegate: textFieldDelegate)
+        super.init(frame: frame, numeric: numeric, placeholder: placeholder, textFieldDelegate: textFieldDelegate)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -99,7 +100,6 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.inputView = getPicker()
         dropDownTextField.inputAccessoryView = getToolBar()
         dropDownTextField.text = dropDownOptions[0]
-        dropDownTextField.inputAccessoryView
         dropDownTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         dropDownTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         dropDownTextField.font = Utils.getFont(size: 20.0)
