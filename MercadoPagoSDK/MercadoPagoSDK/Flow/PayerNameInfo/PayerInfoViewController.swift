@@ -20,46 +20,101 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
     init(viewModel:PayerInfoViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        //setupView()
+        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-//        self.setupView()
-        let textfield = UITextField(frame: CGRect.zero)
-        self.view.addSubview(textfield)
-        textfield.becomeFirstResponder()
-        
-        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    var compositeInputComponent: CompositeInputComponent?
+    var boletoComponent: BoletoComponent?
     
     func setupView(){
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
-        let frame = CGRect(x: 0, y: 0, width: screenWidth, height: 157)
-//        CGRect(x: 0, y: 0, width: screenWidth, height: 157.0)
-        let boletoComponent = BoletoComponent(frame: frame)
-        boletoComponent.layer.borderWidth = 5
+        var barsHeight = UIApplication.shared.statusBarFrame.height
+        let cero: CGFloat = 0.0
+        barsHeight += self.navigationController?.navigationBar.frame.height != nil ? (self.navigationController?.navigationBar.frame.height)! : CGFloat(0.0)
+        var availableHeight = screenHeight - barsHeight
         
-        if let frame = keyboardFrame {
+        availableHeight = keyboardFrame != nil ? availableHeight - (keyboardFrame?.height)! : availableHeight
+        
+        if self.compositeInputComponent == nil && self.boletoComponent == nil {
             let frameDummy = CGRect(x: 0, y: 0, width: screenWidth, height: 0)
-            let compositeInputComponent = CompositeInputComponent(frame: frameDummy, numeric: true, dropDownPlaceholder: "Tipo".localized, dropDownOptions: ["CFT", "CNPJ"], textFieldDelegate: self)
+            let compositeInputComponent = CompositeInputComponent(frame: frameDummy, numeric: true, placeholder: "Número".localized, dropDownPlaceholder: "Tipo".localized, dropDownOptions: ["CFT", "CNPJ"], textFieldDelegate: self)
             compositeInputComponent.componentBecameFirstResponder()
-            compositeInputComponent.frame.origin.y = screenHeight - compositeInputComponent.getHeight() - frame.height - (self.navigationController?.navigationBar.frame.height)! - 20
-//            compositeInputComponent.frame.origin.y = frame.minY - compositeInputComponent.getHeight()
-            self.view.addSubview(boletoComponent)
-            self.view.addSubview(compositeInputComponent)
+            availableHeight -= compositeInputComponent.getHeight()
+            compositeInputComponent.frame.origin.y = availableHeight
+            self.compositeInputComponent = compositeInputComponent
+            setupToolbarButtons()
+            
+            let frame = CGRect(x: 0, y: 0, width: screenWidth, height: availableHeight)
+            let boletoComponent = BoletoComponent(frame: frame)
+            boletoComponent.layer.borderWidth = 5
+            self.boletoComponent = boletoComponent
+            
+            self.view.addSubview(self.boletoComponent!)
+            self.view.addSubview(self.compositeInputComponent!)
+        } else {
+            availableHeight -= (self.compositeInputComponent?.getHeight())!
+            self.compositeInputComponent?.frame.origin.y = availableHeight
+            self.boletoComponent?.frame.size.height = availableHeight
+        }
+    }
+    
+    var toolbar: UIToolbar?
+    
+    func setupToolbarButtons() {
+        
+        if self.toolbar == nil {
+            let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+            
+            let toolbar = UIToolbar(frame: frame)
+            
+            toolbar.barStyle = UIBarStyle.default
+            toolbar.backgroundColor = UIColor.mpLightGray()
+            toolbar.alpha = 1
+            toolbar.isUserInteractionEnabled = true
+            
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
+            
+            let font = Utils.getFont(size: 14)
+            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            
+            buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            
+            toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+        
+            self.toolbar = toolbar
         }
         
+        if self.compositeInputComponent != nil {
+            self.compositeInputComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
+        }        
+    }
+    
+    func rightArrowKeyTapped() {
+        
+    }
+    
+    func leftArrowKeyTapped() {
+
     }
     
     var keyboardFrame: CGRect?
@@ -67,7 +122,6 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
     func keyboardWasShown(_ notification: NSNotification) {
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        print("Height!!!! \(keyboardFrame.height)")
         self.keyboardFrame = keyboardFrame
         setupView()
     }
