@@ -101,7 +101,7 @@ open class MPServicesBuilder: NSObject {
     }
 
     open class func getIdentificationTypes(baseURL: String = ServicePreference.MP_API_BASE_URL,
-                                           _ success: @escaping (_ identificationTypes: [IdentificationType]?) -> Void,
+                                           _ success: @escaping (_ identificationTypes: [IdentificationType]) -> Void,
                                            failure: ((_ error: NSError) -> Void)?) {
 
         let service: IdentificationService = IdentificationService(baseURL: baseURL)
