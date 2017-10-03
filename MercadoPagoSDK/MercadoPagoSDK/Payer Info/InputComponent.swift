@@ -22,10 +22,8 @@ class SimpleInputComponent: UIView, PXComponent {
     var textFieldDelegate: UITextFieldDelegate!
     var inputTextField : HoshiTextField!
     var delegate: InputComponentListener?
-    var textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false)
-    init(frame: CGRect, textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false), numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
+    init(frame: CGRect, numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
         super.init(frame: frame)
-        self.textMask = textMask
         self.numeric = numeric
         self.placeholder = placeholder
         self.textFieldDelegate = textFieldDelegate
@@ -91,8 +89,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     var dropDownOptions : [String]!
     var dropDownPlaceholder: String?
     var dropDownTextField : HoshiTextField!
-    var textMasks : [TextMaskFormater]?
-    init(frame: CGRect, textMasks: [TextMaskFormater]? = nil, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
+    init(frame: CGRect, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
         self.dropDownSelectedOptionText = dropDownOptions[0]
         self.dropDownPlaceholder = dropDownPlaceholder
         self.dropDownOptions = dropDownOptions
