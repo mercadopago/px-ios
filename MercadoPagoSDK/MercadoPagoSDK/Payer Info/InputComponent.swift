@@ -99,7 +99,6 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.inputView = getPicker()
         dropDownTextField.inputAccessoryView = getToolBar()
         dropDownTextField.text = dropDownOptions[0]
-        dropDownTextField.inputAccessoryView
         dropDownTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         dropDownTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         dropDownTextField.font = Utils.getFont(size: 20.0)
