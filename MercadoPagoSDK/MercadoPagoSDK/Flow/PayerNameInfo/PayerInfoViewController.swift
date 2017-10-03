@@ -8,8 +8,7 @@
 
 import UIKit
 
-class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate  {
-
+class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate, InputComponentListener {
     
     let KEYBOARD_HEIGHT : CGFloat = 216.0
     let ACCESORY_VIEW_HEIGHT : CGFloat = 44.0
@@ -20,7 +19,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
     init(viewModel:PayerInfoViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,7 +62,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
             let boletoComponent = BoletoComponent(frame: frame)
             boletoComponent.layer.borderWidth = 5
             self.boletoComponent = boletoComponent
-            
+            self.compositeInputComponent?.delegate = self
             self.view.addSubview(self.boletoComponent!)
             self.view.addSubview(self.compositeInputComponent!)
         } else {
@@ -108,6 +107,10 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
         if self.compositeInputComponent != nil {
             self.compositeInputComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
         }        
+    }
+    var cpfMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX")
+    func textChanged(textField: UITextField)  {
+        textField.text! = cpfMask.textMasked(textField.text!, remasked: true)
     }
     
     func rightArrowKeyTapped() {
