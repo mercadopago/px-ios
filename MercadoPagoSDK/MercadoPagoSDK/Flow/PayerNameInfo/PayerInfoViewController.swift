@@ -57,6 +57,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
             availableHeight -= compositeInputComponent.getHeight()
             compositeInputComponent.frame.origin.y = availableHeight
             self.compositeInputComponent = compositeInputComponent
+            setupToolbarButtons()
             
             let frame = CGRect(x: 0, y: 0, width: screenWidth, height: availableHeight)
             let boletoComponent = BoletoComponent(frame: frame)
@@ -70,6 +71,50 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
             self.compositeInputComponent?.frame.origin.y = availableHeight
             self.boletoComponent?.frame.size.height = availableHeight
         }
+    }
+    
+    var toolbar: UIToolbar?
+    
+    func setupToolbarButtons() {
+        
+        if self.toolbar == nil {
+            let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+            
+            let toolbar = UIToolbar(frame: frame)
+            
+            toolbar.barStyle = UIBarStyle.default
+            toolbar.backgroundColor = UIColor.mpLightGray()
+            toolbar.alpha = 1
+            toolbar.isUserInteractionEnabled = true
+            
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
+            
+            let font = Utils.getFont(size: 14)
+            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            
+            buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            
+            toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+        
+            self.toolbar = toolbar
+        }
+        
+        if self.compositeInputComponent != nil {
+            self.compositeInputComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
+        }        
+    }
+    
+    func rightArrowKeyTapped() {
+        
+    }
+    
+    func leftArrowKeyTapped() {
+
     }
     
     var keyboardFrame: CGRect?
