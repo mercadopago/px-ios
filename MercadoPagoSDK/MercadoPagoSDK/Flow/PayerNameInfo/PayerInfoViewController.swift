@@ -20,7 +20,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
     init(viewModel:PayerInfoViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,7 +52,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
         
         if self.compositeInputComponent == nil && self.boletoComponent == nil {
             let frameDummy = CGRect(x: 0, y: 0, width: screenWidth, height: 0)
-            let compositeInputComponent = CompositeInputComponent(frame: frameDummy, numeric: true, placeholder: "Número".localized, dropDownPlaceholder: "Tipo".localized, dropDownOptions: ["CFT", "CNPJ"], textFieldDelegate: self)
+            let compositeInputComponent = CompositeInputComponent(frame: frameDummy, numeric: true, placeholder: "Número".localized, dropDownPlaceholder: "Tipo".localized, dropDownOptions: self.viewModel.dropDownOptions, textFieldDelegate: self)
             compositeInputComponent.componentBecameFirstResponder()
             availableHeight -= compositeInputComponent.getHeight()
             compositeInputComponent.frame.origin.y = availableHeight
@@ -61,7 +61,6 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate 
             
             let frame = CGRect(x: 0, y: 0, width: screenWidth, height: availableHeight)
             let boletoComponent = BoletoComponent(frame: frame)
-            boletoComponent.layer.borderWidth = 5
             self.boletoComponent = boletoComponent
             
             self.view.addSubview(self.boletoComponent!)
