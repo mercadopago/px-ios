@@ -352,6 +352,8 @@
 		4BAA56061DB57D1B00501061 /* IssuerRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA56051DB57D1B00501061 /* IssuerRowTableViewCell.xib */; };
 		4BAA56251DB6B58D00501061 /* CardTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA56231DB6B58D00501061 /* CardTypeTableViewCell.swift */; };
 		4BAA56261DB6B58D00501061 /* CardTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA56241DB6B58D00501061 /* CardTypeTableViewCell.xib */; };
+		4BABB4B41F83DBEC00C896D8 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C1A671F82AEB5008E56B9 /* UIView+Additions.swift */; };
+		4BABB4B71F83DD3600C896D8 /* InstructionsViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BABB4B61F83DD3600C896D8 /* InstructionsViewModelTest.swift */; };
 		4BAE1D421DCBE8FF0000ED5C /* ApprovedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D381DCBE8FF0000ED5C /* ApprovedTableViewCell.swift */; };
 		4BAE1D431DCBE8FF0000ED5C /* ApprovedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D391DCBE8FF0000ED5C /* ApprovedTableViewCell.xib */; };
 		4BAE1D441DCBE8FF0000ED5C /* CallForAuthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3A1DCBE8FF0000ED5C /* CallForAuthTableViewCell.swift */; };
@@ -862,6 +864,7 @@
 		4BAA56051DB57D1B00501061 /* IssuerRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IssuerRowTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA56231DB6B58D00501061 /* CardTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTypeTableViewCell.swift; sourceTree = "<group>"; };
 		4BAA56241DB6B58D00501061 /* CardTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardTypeTableViewCell.xib; sourceTree = "<group>"; };
+		4BABB4B61F83DD3600C896D8 /* InstructionsViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsViewModelTest.swift; sourceTree = "<group>"; };
 		4BAE1D381DCBE8FF0000ED5C /* ApprovedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApprovedTableViewCell.swift; sourceTree = "<group>"; };
 		4BAE1D391DCBE8FF0000ED5C /* ApprovedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApprovedTableViewCell.xib; sourceTree = "<group>"; };
 		4BAE1D3A1DCBE8FF0000ED5C /* CallForAuthTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallForAuthTableViewCell.swift; sourceTree = "<group>"; };
@@ -1133,6 +1136,7 @@
 		0F9883191AD2A97A00F750F0 /* MercadoPagoSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				4BABB4B51F83DD1600C896D8 /* ViewModels */,
 				156A6DCE1F6C6E1A00B17A20 /* SummaryComponent */,
 				153E7EF41EEB0F7200F58A1A /* Track */,
 				76294CED1E72186600CEAE6D /* MercadoPagoCheckout */,
@@ -1722,6 +1726,14 @@
 				FCA47E4B1E92925B003DB787 /* BankInsterestTableViewCell.xib */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		4BABB4B51F83DD1600C896D8 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4BABB4B61F83DD3600C896D8 /* InstructionsViewModelTest.swift */,
+			);
+			name = ViewModels;
 			sourceTree = "<group>";
 		};
 		4BEF80FE1E538C9000797CD1 /* Preferences */ = {
@@ -2618,6 +2630,7 @@
 				1563DCA81E9C11CB00A7E5C8 /* CardsAdminViewController.swift in Sources */,
 				0F9883881AD2AB6000F750F0 /* Payment.swift in Sources */,
 				76FD247E1C5BFEA1008C5DC0 /* CardFormViewController.swift in Sources */,
+				4BABB4B41F83DBEC00C896D8 /* UIView+Additions.swift in Sources */,
 				76FD24861C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */,
 				15DA4C9C1F7BF63A001CC874 /* PINextStepHelper.swift in Sources */,
 				7622E33A1DF5F1D200490C4E /* PurchaseSimpleDetailTableViewCell.swift in Sources */,
@@ -2752,6 +2765,7 @@
 				15DA4CAB1F7C2299001CC874 /* InputComponent.swift in Sources */,
 				7672546B1C7CB34200EB5EBA /* MockBuilder.swift in Sources */,
 				76CD12081D6F304D0052350D /* CardInformation.swift in Sources */,
+				4BABB4B71F83DD3600C896D8 /* InstructionsViewModelTest.swift in Sources */,
 				239A9C161F0FFA7100C338C7 /* Cause.swift in Sources */,
 				76743C791C46866D00120347 /* CheckoutPreference.swift in Sources */,
 				4BF80E581ED33899001D7915 /* PaymentResultContentView.swift in Sources */,

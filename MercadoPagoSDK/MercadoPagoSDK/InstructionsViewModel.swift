@@ -12,13 +12,11 @@ open class InstructionsViewModel: NSObject {
     var paymentResult: PaymentResult!
     var instructionsInfo: InstructionsInfo!
     var paymentResultScreenPreference: PaymentResultScreenPreference!
-    var callback : ( _ status: PaymentResult.CongratsState) -> Void
 
-    public init(paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference, instructionsInfo: InstructionsInfo, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
+    public init(paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference, instructionsInfo: InstructionsInfo) {
         self.paymentResult = paymentResult
         self.paymentResultScreenPreference = paymentResultScreenPreference
         self.instructionsInfo = instructionsInfo
-        self.callback = callback
     }
 
     func getHeaderColor() -> UIColor {
@@ -30,7 +28,7 @@ open class InstructionsViewModel: NSObject {
     }
 
     func numberOfSections() -> Int {
-        return (instructionsInfo != nil) ? 3 : 0
+        return 3
     }
 
     func numberOfRowsInSection(_ section: Int) -> Int {

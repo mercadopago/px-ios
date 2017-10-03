@@ -13,6 +13,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     var viewModel: InstructionsViewModel!
     var bundle = MercadoPago.getBundle()!
+    var callback : ( _ status: PaymentResult.CongratsState) -> Void
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_INSTRUCTIONS} }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT_INSTRUCTIONS } }
@@ -50,7 +51,14 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     }
 
     public init(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
-        self.viewModel = InstructionsViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference, instructionsInfo: instructionsInfo, callback: callback)
+        self.viewModel = InstructionsViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference, instructionsInfo: instructionsInfo)
+        self.callback = callback
+        super.init(nibName: "InstructionsViewController", bundle: bundle)
+    }
+
+    public init(viewModel: InstructionsViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
+        self.viewModel = viewModel
+        self.callback = callback
         super.init(nibName: "InstructionsViewController", bundle: bundle)
     }
 
@@ -104,7 +112,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         let cell: FooterTableViewCell = bundle.loadNibNamed("FooterTableViewCell", owner: nil, options: nil)?[0] as! FooterTableViewCell
         cell.selectionStyle = .none
         ViewUtils.drawBottomLine(y: cell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: cell.contentView)
-        cell.setCallbackStatus(callback: self.viewModel.callback, status: PaymentResult.CongratsState.ok)
+        cell.setCallbackStatus(callback: self.callback, status: PaymentResult.CongratsState.ok)
         cell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
         return cell
     }
