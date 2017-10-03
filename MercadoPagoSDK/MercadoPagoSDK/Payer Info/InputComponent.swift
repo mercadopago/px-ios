@@ -78,6 +78,9 @@ class SimpleInputComponent: UIView, PXComponent {
             delegate.textChanged(textField: textField)
         }
     }
+    open func setText(text:String) {
+        self.inputTextField.text = text
+    }
 }
 
 class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIPickerViewDelegate {

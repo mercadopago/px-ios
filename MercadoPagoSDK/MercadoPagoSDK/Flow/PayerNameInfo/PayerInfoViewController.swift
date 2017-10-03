@@ -61,6 +61,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             let boletoComponent = BoletoComponent(frame: frame)
             self.boletoComponent = boletoComponent
             self.compositeInputComponent?.delegate = self
+            self.compositeInputComponent?.setText(text: cpfMask.textMasked(""))
             self.view.addSubview(self.boletoComponent!)
             self.view.addSubview(self.compositeInputComponent!)
         } else {
@@ -106,9 +107,14 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             self.compositeInputComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
         }        
     }
+     
     var cpfMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX")
     func textChanged(textField: UITextField)  {
-        textField.text! = cpfMask.textMasked(textField.text!, remasked: true)
+        var textUnmasked = cpfMask.textUnmasked(textField.text)
+        if cpfMask.mask.characters.count > (textField.text?.characters.count)! {
+            textUnmasked?.characters = (textUnmasked?.characters.dropLast())!
+        }
+        textField.text! = cpfMask.textMasked(textUnmasked, remasked: true)
     }
     
     func rightArrowKeyTapped() {
