@@ -13,12 +13,15 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let KEYBOARD_HEIGHT : CGFloat = 216.0
     let ACCESORY_VIEW_HEIGHT : CGFloat = 44.0
     let INPUT_VIEW_HEIGHT : CGFloat = 83.0
-    
+    var currentInput : UIView!
     var viewModel : PayerInfoViewModel!
+    var callback : ((_ payer: Payer) -> Void)?
     
-    init(viewModel:PayerInfoViewModel) {
+    
+    init(viewModel:PayerInfoViewModel, callback: ((_ payer: Payer) -> Void)? ) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        self.callback = callback
         NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
@@ -35,7 +38,9 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         super.didReceiveMemoryWarning()
     }
     
-    var compositeInputComponent: CompositeInputComponent?
+    var identificationComponent: CompositeInputComponent?
+    var secondNameComponent: SimpleInputComponent?
+    var firstNameComponent: SimpleInputComponent?
     var boletoComponent: BoletoComponent?
     
     func setupView(){
@@ -48,25 +53,41 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         
         availableHeight = keyboardFrame != nil ? availableHeight - (keyboardFrame?.height)! : availableHeight
         
-        if self.compositeInputComponent == nil && self.boletoComponent == nil {
+        if self.identificationComponent == nil && self.boletoComponent == nil {
             let frameDummy = CGRect(x: 0, y: 0, width: screenWidth, height: 0)
-            let compositeInputComponent = CompositeInputComponent(frame: frameDummy, numeric: true, placeholder: "Número".localized, dropDownPlaceholder: "Tipo".localized, dropDownOptions: self.viewModel.dropDownOptions, textFieldDelegate: self)
-            compositeInputComponent.componentBecameFirstResponder()
-            availableHeight -= compositeInputComponent.getHeight()
-            compositeInputComponent.frame.origin.y = availableHeight
-            self.compositeInputComponent = compositeInputComponent
+           self.identificationComponent = CompositeInputComponent(frame: frameDummy, numeric: true, placeholder: "Número".localized, dropDownPlaceholder: "Tipo".localized, dropDownOptions: self.viewModel.getDropdownOptions(), textFieldDelegate: self)
+            self.presentIdentificationComponent()
+            availableHeight -= (self.identificationComponent?.getHeight())!
+            self.identificationComponent?.frame.origin.y = availableHeight
+            self.secondNameComponent = SimpleInputComponent(frame: frameDummy, numeric: false, placeholder: "Apellido".localized, textFieldDelegate: self)
+            self.secondNameComponent?.frame.origin.y = availableHeight
+            self.firstNameComponent = SimpleInputComponent(frame: frameDummy, numeric: false, placeholder: "Nombre".localized, textFieldDelegate: self)
+            self.firstNameComponent?.frame.origin.y = availableHeight
             setupToolbarButtons()
+            
             
             let frame = CGRect(x: 0, y: 0, width: screenWidth, height: availableHeight)
             let boletoComponent = BoletoComponent(frame: frame)
             self.boletoComponent = boletoComponent
-            self.compositeInputComponent?.delegate = self
-            self.compositeInputComponent?.setText(text: cpfMask.textMasked(""))
+            self.identificationComponent?.delegate = self
+            self.firstNameComponent?.delegate = self
+            self.secondNameComponent?.delegate = self
+            let type = self.viewModel.identificationTypes[(self.identificationComponent?.optionSelected)!].name
+            self.boletoComponent?.setType(text: type!)
+            if let currentMask = self.viewModel.currentMask {
+               self.identificationComponent?.setText(text: currentMask.textMasked(""))
+               let maskComplete = TextMaskFormater(mask: currentMask.mask, completeEmptySpaces: true, leftToRight: false, completeEmptySpacesWith: "*")
+               self.boletoComponent?.setNumberPlaceHolder(text: maskComplete.textMasked(""))
+            }
             self.view.addSubview(self.boletoComponent!)
-            self.view.addSubview(self.compositeInputComponent!)
+            self.view.addSubview(self.firstNameComponent!)
+            self.view.addSubview(self.secondNameComponent!)
+            self.view.addSubview(self.identificationComponent!)
         } else {
-            availableHeight -= (self.compositeInputComponent?.getHeight())!
-            self.compositeInputComponent?.frame.origin.y = availableHeight
+            availableHeight -= (self.identificationComponent?.getHeight())!
+            self.identificationComponent?.frame.origin.y = availableHeight
+             self.secondNameComponent?.frame.origin.y = availableHeight
+            self.firstNameComponent?.frame.origin.y = availableHeight
             self.boletoComponent?.frame.size.height = availableHeight
             self.boletoComponent?.updateView()
         }
@@ -103,28 +124,85 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             self.toolbar = toolbar
         }
         
-        if self.compositeInputComponent != nil {
-            self.compositeInputComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
-        }        
-    }
-     
-    var cpfMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX")
-    func textChanged(textField: UITextField)  {
-        var textUnmasked = cpfMask.textUnmasked(textField.text)
-        if cpfMask.mask.characters.count > (textField.text?.characters.count)! {
-            textUnmasked?.characters = (textUnmasked?.characters.dropLast())!
+        if self.identificationComponent != nil {
+            self.identificationComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
         }
-        textField.text! = cpfMask.textMasked(textUnmasked, remasked: true)
+        if self.secondNameComponent != nil {
+            self.secondNameComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
+        }
+        if self.firstNameComponent != nil {
+            self.firstNameComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
+        }
+
     }
-    
-    func rightArrowKeyTapped() {
+
+    func textChanged(textField: UITextField)  {
+        if currentInput == self.identificationComponent {
+            guard let mask = self.viewModel.currentMask else {
+                return
+            }
+            var textUnmasked = mask.textUnmasked(textField.text)
+            
+            textField.text! = mask.textMasked(textUnmasked, remasked: true)
+            
+            let maskComplete = TextMaskFormater(mask: mask.mask, completeEmptySpaces: true, leftToRight: true, completeEmptySpacesWith: "*")
+            
+            self.boletoComponent?.setNumber(text: maskComplete.textMasked(textUnmasked))
+        }else{
+            textField.text = textField.text?.uppercased()
+            self.boletoComponent?.setName(text: (self.firstNameComponent?.getInputText())!.uppercased() + " " + (self.secondNameComponent?.getInputText())!.uppercased())
+        }
         
     }
     
-    func leftArrowKeyTapped() {
-
+    func rightArrowKeyTapped() {
+        if self.currentInput == self.identificationComponent {
+            self.presentFirstNameComponent()
+        }else if self.currentInput == self.firstNameComponent {
+            self.presentSecondNameComponent()
+        }else if self.currentInput == self.secondNameComponent {
+            self.createPayerAndExecuteCallback()
+        }
     }
     
+    func leftArrowKeyTapped() {
+        if self.currentInput == self.identificationComponent {
+            self.navigationController?.popViewController(animated: true)
+        }else if self.currentInput == self.firstNameComponent {
+            self.presentIdentificationComponent()
+        }else if self.currentInput == self.secondNameComponent {
+            self.presentFirstNameComponent()
+        }
+    }
+    
+    func presentIdentificationComponent(){
+        self.view.bringSubview(toFront: self.identificationComponent!)
+        self.identificationComponent?.componentBecameFirstResponder()
+        self.currentInput = self.identificationComponent
+    }
+    func presentFirstNameComponent(){
+        self.view.bringSubview(toFront: self.firstNameComponent!)
+        self.firstNameComponent?.componentBecameFirstResponder()
+        self.currentInput = self.firstNameComponent
+    }
+    func presentSecondNameComponent(){
+        self.view.bringSubview(toFront: self.secondNameComponent!)
+        self.secondNameComponent?.componentBecameFirstResponder()
+        self.currentInput = self.secondNameComponent
+    }
+    
+    func createPayerAndExecuteCallback() {
+        let type = self.viewModel.identificationTypes[(self.identificationComponent?.optionSelected)!].name
+        let identification = Identification(type: type, number: self.identificationComponent?.getInputText())
+        let payer = Individual(_id: nil, email: "", identification: identification, name: (self.firstNameComponent?.getInputText())!, lastName: (self.secondNameComponent?.getInputText())!)
+        if let callback = self.callback {
+            callback(payer)
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print(textField.text)
+    }
     var keyboardFrame: CGRect?
     
     func keyboardWasShown(_ notification: NSNotification) {
