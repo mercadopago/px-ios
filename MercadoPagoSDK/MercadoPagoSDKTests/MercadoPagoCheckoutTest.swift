@@ -205,7 +205,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
-
+        mpCheckout!.viewModel.identificationTypes = MockBuilder.buildIdentificationTypes()
         self.mpCheckout?.showIdentificationScreen()
 
         XCTAssertNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)

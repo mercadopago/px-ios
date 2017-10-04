@@ -22,7 +22,7 @@ class MPPaymentTest: BaseTest {
         self.financialInstitution?._description = "FIdescription"
         self.transactionDetails = TransactionDetails(financialInstitution: self.financialInstitution)
 
-        self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
+        self.payer = Payer(_id: "id", email: "email", identification: nil, entityType: nil)
 
         self.mpPayment = MPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "pmId", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
         var jsonResult = mpPayment!.toJSON()
@@ -76,7 +76,7 @@ class CustomerPaymentTest: BaseTest {
         self.financialInstitution?._id = 1050
         self.financialInstitution?._description = "FIdescription"
         self.transactionDetails = TransactionDetails(financialInstitution: self.financialInstitution)
-        self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
+        self.payer = Payer(_id: "id", email: "email", identification: nil, entityType: nil)
 
         self.customerPayment = CustomerPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", customerId: "customerId", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
         var customerPaymentResult = self.customerPayment!.toJSON()
@@ -134,7 +134,7 @@ class BlacklabelPaymentTest: BaseTest {
         self.financialInstitution?._id = 1050
         self.financialInstitution?._description = "FIdescription"
         self.transactionDetails = TransactionDetails(financialInstitution: self.financialInstitution)
-        self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
+        self.payer = Payer(_id: "id", email: "email", identification: nil, entityType: nil)
 
         MercadoPagoContext.setPayerAccessToken("payerAccessToken")
         self.blacklabelPayment = BlacklabelPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", installments : 2, issuerId : "310", tokenId : "tokenId", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: false)
@@ -172,7 +172,7 @@ class MPPaymentFactoryTest: BaseTest {
         self.financialInstitution?._id = 1050
         self.financialInstitution?._description = "FIdescription"
         self.transactionDetails = TransactionDetails(financialInstitution: self.financialInstitution)
-        self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
+        self.payer = Payer(_id: "id", email: "email", identification: nil, entityType: nil)
 
         let regularPayment = MPPaymentFactory.createMPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "rapipago", isBlacklabelPayment : false, transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
 

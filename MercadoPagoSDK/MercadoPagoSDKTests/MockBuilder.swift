@@ -142,6 +142,11 @@ open class MockBuilder: NSObject {
         return identification
     }
 
+    class func buildIdentificationTypes() -> [IdentificationType] {
+        let identificationType = IdentificationType()
+        return [identificationType]
+    }
+
     class func buildCard(paymentMethodId: String? = "paymentMethodId") -> Card {
         let card = Card()
         card.idCard = "4"
