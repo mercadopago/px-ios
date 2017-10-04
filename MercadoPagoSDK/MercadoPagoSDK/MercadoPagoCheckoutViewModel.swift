@@ -305,7 +305,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if shouldExitCheckout() {
             return .ACTION_FINISH
         }
-        
+
         if needToGetInstructions() {
             return .SERVICE_GET_INSTRUCTIONS
         }

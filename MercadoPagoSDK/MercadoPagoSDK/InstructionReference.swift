@@ -48,7 +48,7 @@ open class InstructionReference: Equatable {
         if json["separator"] !=  nil && !(json["separator"]! is NSNull) {
             reference.separator = json["separator"] as! String
         }
-        
+
         if json["comment"] !=  nil && !(json["comment"]! is NSNull) {
             reference.comment = json["comment"] as? String
         }

@@ -90,9 +90,9 @@ class SimpleInputComponent: UIView, PXComponent {
 class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIPickerViewDelegate {
     let COMBO_WEIGHT: CGFloat = 68.0
     let MARGIN_BETWEEN_ELEMENTS: CGFloat = 14.0
-    let PICKER_HEIGHT :CGFloat = 216.0
-    var dropDownSelectedOptionText : String!
-    var dropDownOptions : [String]!
+    let PICKER_HEIGHT: CGFloat = 216.0
+    var dropDownSelectedOptionText: String!
+    var dropDownOptions: [String]!
     var dropDownPlaceholder: String?
     var dropDownTextField : HoshiTextField!
     var optionSelected : Int!
@@ -107,7 +107,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         fatalError("init(coder:) has not been implemented")
     }
     override func setupView() {
-        dropDownTextField = HoshiTextField(frame: CGRect(x: HORIZONTAL_MARGIN  , y: getInputY(), width: COMBO_WEIGHT, height: INPUT_HEIGHT))
+        dropDownTextField = HoshiTextField(frame: CGRect(x: HORIZONTAL_MARGIN, y: getInputY(), width: COMBO_WEIGHT, height: INPUT_HEIGHT))
         if let dropDownPlaceholder = dropDownPlaceholder {
             dropDownTextField.placeholder = dropDownPlaceholder
         }
@@ -163,20 +163,20 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         toolBar.isUserInteractionEnabled = true
         return toolBar
     }
-    
+
     //Picker View
     open func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.dropDownOptions.count
     }
-    
+
     open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.dropDownOptions[row]
     }
-    
+
     open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         dropDownSelectedOptionText =  self.dropDownOptions[row]
         self.optionSelected = row
