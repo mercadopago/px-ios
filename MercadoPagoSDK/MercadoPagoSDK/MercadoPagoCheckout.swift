@@ -73,6 +73,8 @@ open class MercadoPagoCheckout: NSObject {
             self.showCardForm()
         case .SCREEN_IDENTIFICATION:
             self.showIdentificationScreen()
+        case .SCREEN_PAYER_INFO_FLOW:
+            self.showPayerInfoFlow()
         case .SCREEN_ENTITY_TYPE:
             self.showEntityTypesScreen()
         case .SCREEN_FINANCIAL_INSTITUTIONS:

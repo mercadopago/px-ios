@@ -27,6 +27,7 @@ public enum CheckoutStep: String {
     case SCREEN_ENTITY_TYPE
     case SCREEN_FINANCIAL_INSTITUTIONS
     case SERVICE_GET_PAYER_COSTS
+    case SCREEN_PAYER_INFO_FLOW
     case SCREEN_PAYER_COST
     case SCREEN_REVIEW_AND_CONFIRM
     case SERVICE_POST_PAYMENT
@@ -238,6 +239,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cleanPayerCostSearch()
         self.paymentData.updatePaymentDataWith(issuer: issuer)
     }
+    
+    public func updateCheckoutModel(payer: Payer) {
+        self.paymentData.updatePaymentDataWith(payer: payer)
+    }
 
     public func updateCheckoutModel(identificationTypes: [IdentificationType]) {
         self.identificationTypes = identificationTypes
@@ -342,6 +347,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needToGetIdentificationTypes() {
             return .SERVICE_GET_IDENTIFICATION_TYPES
+        }
+        
+        if needToGetPayerInfo() {
+            return .SCREEN_PAYER_INFO_FLOW
         }
 
         if needGetIdentification() {

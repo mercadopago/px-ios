@@ -50,11 +50,23 @@ extension MercadoPagoCheckoutViewModel {
         return self.payment != nil
     }
     func needGetIdentification() -> Bool {
-       return isIdentificationNeeded() && self.identificationTypes != nil
+        guard let pm = self.paymentData.getPaymentMethod(), pm._id != "bolbradesco" else {
+            return false
+        }
+        
+        return isIdentificationNeeded() && self.identificationTypes != nil
     }
 
     func needToGetIdentificationTypes() -> Bool {
         return isIdentificationNeeded() && self.identificationTypes == nil
+    }
+    
+    func needToGetPayerInfo() -> Bool {
+        guard let pm = self.paymentData.getPaymentMethod(), pm._id == "bolbradesco" else {
+            return false
+        }
+        
+        return isIdentificationNeeded() && self.identificationTypes != nil
     }
 
     func isIdentificationNeeded() -> Bool {
@@ -62,7 +74,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if !pm.isOnlinePaymentMethod() && (pm.isIdentificationRequired() || pm.isIdentificationTypeRequired()) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
+        if !pm.isOnlinePaymentMethod() && (pm.isIdentificationRequired() || pm.isIdentificationTypeRequired() || pm.isPayerInfoRequired()) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
             return true
         }
 

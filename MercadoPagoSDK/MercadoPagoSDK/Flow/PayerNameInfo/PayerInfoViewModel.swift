@@ -36,7 +36,7 @@ class PayerInfoViewModel: NSObject {
         self.payer = payer
         super.init()
 
-        self.identificationTypes = filterSupported(indentificationTypes: identificationTypes)
+        self.identificationTypes = filterSupported(identificationTypes: identificationTypes)
 
         if identificationTypes.isEmpty {
             fatalError("No valid identification types for PayerInfo View Controller")
@@ -49,7 +49,7 @@ class PayerInfoViewModel: NSObject {
         }
     }
 
-    func filterSupported(indentificationTypes: [IdentificationType]) -> [IdentificationType] {
+    func filterSupported(identificationTypes: [IdentificationType]) -> [IdentificationType] {
         let supportedIdentificationTypes = identificationTypes.filter {$0.name == "CPF"}
         return supportedIdentificationTypes
     }

@@ -11,9 +11,6 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
-        // Se limpia paymentData antes de ofrecer selección de medio de pago
-        self.testBolbradesco()
-        return
         self.viewModel.paymentData.clearCollectedData()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
@@ -27,19 +24,6 @@ extension MercadoPagoCheckout {
         })
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
 
-    }
-
-    func testBolbradesco() {
-        let cpf = IdentificationType()
-        cpf.name = "CPF"
-        let identificationTypes = [cpf]
-        var cpfMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX", completeEmptySpaces: false, leftToRight: false)
-        let masks: [TextMaskFormater] = [cpfMask]
-        let viewModel = PayerInfoViewModel(identificationTypes: identificationTypes, payer: self.viewModel.paymentData.payer, masks: masks)
-        let vc = PayerInfoViewController(viewModel: viewModel) { (payer) in
-                print(payer.name)
-        }
-        self.pushViewController(viewController : vc, animated: true)
     }
 
     func showCardForm() {
@@ -71,6 +55,23 @@ extension MercadoPagoCheckout {
             self?.navigationController.popViewController(animated: true)
         }
         self.pushViewController(viewController : identificationStep, animated: true)
+    }
+    
+    func showPayerInfoFlow() {
+        let identificationTypes = self.viewModel.identificationTypes!
+        var cpfMask = TextMaskFormater(mask: "XXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
+        let masks: [TextMaskFormater] = [cpfMask]
+        let viewModel = PayerInfoViewModel(identificationTypes: identificationTypes, payer: self.viewModel.paymentData.payer, masks: masks)
+        let vc = PayerInfoViewController(viewModel: viewModel) { [weak self] (payer) in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.viewModel.updateCheckoutModel(payer : payer)
+            strongSelf.executeNextStep()
+        }
+        self.pushViewController(viewController : vc, animated: true)
     }
 
     func showIssuersScreen() {
