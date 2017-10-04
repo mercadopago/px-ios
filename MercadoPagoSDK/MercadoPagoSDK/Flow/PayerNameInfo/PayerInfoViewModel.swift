@@ -20,7 +20,7 @@ public enum PayerInfoFlowStep: String {
 
 class PayerInfoViewModel: NSObject {
     var identificationTypes: [IdentificationType]!
-    var masks: [TextMaskFormater]?
+    var masks: [TextMaskFormater]!
     var currentMask: TextMaskFormater?
 
     var name: String = ""
@@ -32,7 +32,7 @@ class PayerInfoViewModel: NSObject {
 
     var currentStep: PayerInfoFlowStep = PayerInfoFlowStep.SCREEN_IDENTIFICATION
 
-    init(identificationTypes: [IdentificationType], payer: Payer, masks: [TextMaskFormater]? = nil) {
+    init(identificationTypes: [IdentificationType], payer: Payer) {
         self.payer = payer
         super.init()
 
@@ -42,11 +42,8 @@ class PayerInfoViewModel: NSObject {
             fatalError("No valid identification types for PayerInfo View Controller")
         }
         self.identificationType = identificationTypes[0]
-        self.masks = masks
-
-        if !Array.isNullOrEmpty(masks) {
-            self.currentMask = masks![0]
-        }
+        self.masks = getIdMask(IDtype: self.identificationType)
+        self.currentMask = masks[0]
     }
 
     func filterSupported(identificationTypes: [IdentificationType]) -> [IdentificationType] {
@@ -155,5 +152,37 @@ class PayerInfoViewModel: NSObject {
         self.payer.surname = lastName
 
         return payer
+    }
+    
+    fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
+        let path = MercadoPago.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        
+        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
+            if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
+                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false)
+                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false, completeEmptySpacesWith: " ")
+                return[customInitialMask, customMask]
+            }
+        }
+        return nil
+    }
+    
+    fileprivate func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
+        let site = MercadoPagoContext.getSite()
+        let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
+        let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
+        
+        if IDtype != nil {
+            if let masks = maskFinder(dictID: site+"_"+(IDtype?._id)!, forKey: "identification_mask") {
+                return masks
+            } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
+                return masks
+            } else {
+                return [defaultInitialMask, defaultMask]
+            }
+        } else {
+            return [defaultInitialMask, defaultMask]
+        }
     }
 }

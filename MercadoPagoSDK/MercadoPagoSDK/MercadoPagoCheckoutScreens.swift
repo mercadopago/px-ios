@@ -58,9 +58,7 @@ extension MercadoPagoCheckout {
 
     func showPayerInfoFlow() {
         let identificationTypes = self.viewModel.identificationTypes!
-        var cpfMask = TextMaskFormater(mask: "XXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
-        let masks: [TextMaskFormater] = [cpfMask]
-        let viewModel = PayerInfoViewModel(identificationTypes: identificationTypes, payer: self.viewModel.paymentData.payer, masks: masks)
+        let viewModel = PayerInfoViewModel(identificationTypes: identificationTypes, payer: self.viewModel.paymentData.payer)
         let vc = PayerInfoViewController(viewModel: viewModel) { [weak self] (payer) in
 
             guard let strongSelf = self else {

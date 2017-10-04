@@ -46,6 +46,14 @@ open class Payer: NSObject {
         if let entityTypeDic = json["entity_type"] as? NSDictionary {
             payer.entityType = EntityType.fromJSON(entityTypeDic)
         }
+        
+        if let name = JSONHandler.attemptParseToString(json["first_name"]) {
+            payer.name = name
+        }
+        
+        if let surname = JSONHandler.attemptParseToString(json["last_name"]) {
+            payer.surname = surname
+        }
 
 		return payer
 	}
@@ -72,6 +80,14 @@ open class Payer: NSObject {
 
         if let ET = self.entityType {
             obj["entity_type"] = ET._id
+        }
+        
+        if self.name != nil {
+            obj["first_name"] = self.name
+        }
+        
+        if self.surname != nil {
+            obj["last_name"] = self.surname
         }
 
         return obj
