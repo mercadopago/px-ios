@@ -42,15 +42,15 @@
     self.paymentResult = nil;
 
     // Setear el idioma de la aplicación
-    [MercadoPagoContext setLanguageWithLanguage:"es"];
+    //[MercadoPagoContext setLanguageWithLanguage:"es"];
 
     ///  PASO 1: SETEAR PREFERENCIAS
 
     // Setear DecorationPreference
-    [self setDecorationPreference];
+    //[self setDecorationPreference];
 
     // Setear ServicePreference
-    [self setServicePreference];
+    //[self setServicePreference];
 
 
 
@@ -71,7 +71,7 @@
 
     //Setear PaymentCallback
 
-    [self setPaymentCallback];
+//    [self setPaymentCallback];
 
 
     DiscountCoupon* dc = [[DiscountCoupon alloc] init];
@@ -82,16 +82,16 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:TEST_PUBLIC_KEY checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-77d0c0c0-0594-4951-ac78-16c03461fcbc" checkoutPreference:self.pref paymentData:nil paymentResult:nil discount:nil navigationController:self.navigationController];
 
     // Setear PaymentResultScreenPreference
-    [self setPaymentResultScreenPreference];
+//    [self setPaymentResultScreenPreference];
 
     //Setear Callback Cancel
-    [self setVoidCallback];
+//    [self setVoidCallback];
 
     //Setear ReviewScreenPrefernce
-    [self setReviewScreenPreference];
+//    [self setReviewScreenPreference];
     
     [self.mpCheckout start];
 
@@ -207,7 +207,7 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+    self.pref = [[CheckoutPreference alloc] initWith_id: @"245099733-3a38ed92-f013-4bfd-861f-9a467f74204f"];
 }
 
 -(void)setPaymentResultScreenPreference {
