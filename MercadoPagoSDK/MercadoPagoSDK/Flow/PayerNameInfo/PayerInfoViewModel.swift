@@ -9,5 +9,12 @@
 import UIKit
 
 class PayerInfoViewModel: NSObject {
+    open var dropDownOptions: [String]!
+    open var masks: [TextMaskFormater]!
+    
+    init(dropDownOptions: [String], masks: [TextMaskFormater]) {
+        self.dropDownOptions = dropDownOptions
+        self.masks = masks
+    }
 
 }

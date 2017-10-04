@@ -16,6 +16,7 @@ public enum CheckoutStep: String {
     case SERVICE_GET_DIRECT_DISCOUNT
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
+    case SERVICE_GET_IDENTIFICATION_TYPES
     case SCREEN_PAYMENT_METHOD_SELECTION
     case SCREEN_CARD_FORM
     case SCREEN_SECURITY_CODE
@@ -62,6 +63,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     var rootPaymentMethodOptions: [PaymentMethodOption]?
     var customPaymentOptions: [CardInformation]?
+    var identificationTypes: [IdentificationType]?
 
     var rootVC = true
 
@@ -211,6 +213,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?) {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
+        self.cleanIdentificationTypesSearch()
         self.paymentData.updatePaymentDataWith(paymentMethod:  paymentMethods[0])
         self.cardToken = cardToken
     }
@@ -234,6 +237,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func updateCheckoutModel(issuer: Issuer) {
         self.cleanPayerCostSearch()
         self.paymentData.updatePaymentDataWith(issuer: issuer)
+    }
+
+    public func updateCheckoutModel(identificationTypes: [IdentificationType]) {
+        self.identificationTypes = identificationTypes
     }
 
     public func updateCheckoutModel(identification: Identification) {
@@ -331,6 +338,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needCompleteCard() {
             return .SCREEN_CARD_FORM
+        }
+
+        if needToGetIdentificationTypes() {
+            return .SERVICE_GET_IDENTIFICATION_TYPES
         }
 
         if needGetIdentification() {
@@ -627,6 +638,7 @@ extension MercadoPagoCheckoutViewModel {
         self.financialInstitutions = nil
         cleanPayerCostSearch()
         cleanIssuerSearch()
+        cleanIdentificationTypesSearch()
     }
 
     func cleanPayerCostSearch() {
@@ -635,6 +647,10 @@ extension MercadoPagoCheckoutViewModel {
 
     func cleanIssuerSearch() {
         self.issuers = nil
+    }
+
+    func cleanIdentificationTypesSearch() {
+        self.identificationTypes = nil
     }
 
     func cleanPaymentResult() {

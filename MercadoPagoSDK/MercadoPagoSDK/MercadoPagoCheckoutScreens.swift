@@ -12,7 +12,6 @@ extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
         // Se limpia paymentData antes de ofrecer selección de medio de pago
-
         self.testBolbradesco()
         return
         self.viewModel.paymentData.clearCollectedData()
@@ -31,7 +30,11 @@ extension MercadoPagoCheckout {
     }
     
     func testBolbradesco() {
-        let vc = PayerInfoViewController(viewModel: PayerInfoViewModel())
+        let strings = ["CPF"]
+        var cpfMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX", completeEmptySpaces: false, leftToRight: false)
+        let masks: [TextMaskFormater] = [cpfMask]
+        let viewModel = PayerInfoViewModel(dropDownOptions: strings, masks: masks)
+        let vc = PayerInfoViewController(viewModel: viewModel)
         self.pushViewController(viewController : vc, animated: true)
     }
 
@@ -49,7 +52,7 @@ extension MercadoPagoCheckout {
     }
 
     func showIdentificationScreen() {
-        let identificationStep = IdentificationViewController (callback: { [weak self] (identification : Identification) in
+        let identificationStep = IdentificationViewController (identificationTypes: self.viewModel.identificationTypes!, callback: { [weak self] (identification : Identification) in
             guard let strongSelf = self else {
                 return
             }

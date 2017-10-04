@@ -32,7 +32,13 @@ class BoletoComponent: UIView, PXComponent {
         boletoImageView.image = MercadoPago.getImage("boleto")
         self.boletoView = UIView(frame: CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
         self.boletoView.addSubview(boletoImageView)
+        let titleLabel = UILabel(frame: CGRect(x: 16, y: 15, width:BoletoComponent.IMAGE_WIDTH - 2 * 16 , height: 14))
+        titleLabel.text = "DADOS PARA VALIDAR O SEU PAGAMENTO".localized
+        titleLabel.font = Utils.getFont(size: 10.0)
+        titleLabel.textColor = UIColor.px_grayDark()
+        self.boletoView.addSubview(titleLabel)
         self.addSubview(self.boletoView)
+        
     }
     
    

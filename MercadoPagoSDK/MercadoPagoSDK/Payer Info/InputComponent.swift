@@ -7,12 +7,10 @@
 //
 
 import UIKit
-protocol SingleInputComponentListener {
-    func textChangedTo(newText: String)
+protocol InputComponentListener {
+    func textChanged(textField: UITextField)
 }
-protocol CompositeInputComponentListener {
-    func textChangedTo(newText: String)
-}
+
 class SimpleInputComponent: UIView, PXComponent {
     let INACTIVE_BORDER_COLOR = UIColor.px_grayLines()
     let ACTIVE_BORDER_COLOR = UIColor.px_blueMercadoPago()
@@ -22,11 +20,10 @@ class SimpleInputComponent: UIView, PXComponent {
     var placeholder: String?
     var numeric: Bool = false
     var textFieldDelegate: UITextFieldDelegate!
-    var inputTextField: HoshiTextField!
-    var textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false)
-    init(frame: CGRect, textMask: TextMaskFormater = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXXXX", completeEmptySpaces : false), numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
+    var inputTextField : HoshiTextField!
+    var delegate: InputComponentListener?
+    init(frame: CGRect, numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
         super.init(frame: frame)
-        self.textMask = textMask
         self.numeric = numeric
         self.placeholder = placeholder
         self.textFieldDelegate = textFieldDelegate
@@ -50,8 +47,10 @@ class SimpleInputComponent: UIView, PXComponent {
         inputTextField.font = Utils.getFont(size: 20.0)
         inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
+        inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControlEvents.editingChanged)
         self.addSubview(inputTextField)
         self.frame.size.height = getHeight()
+        inputTextField.text = ""
     }
     func getInputX() -> CGFloat {
         return HORIZONTAL_MARGIN
@@ -72,6 +71,14 @@ class SimpleInputComponent: UIView, PXComponent {
     open func setInputAccessoryView(inputAccessoryView : UIView){
         self.inputTextField.inputAccessoryView = inputAccessoryView
     }
+    open func editingChanged(textField: UITextField) {
+        if let delegate = self.delegate {
+            delegate.textChanged(textField: textField)
+        }
+    }
+    open func setText(text:String) {
+        self.inputTextField.text = text
+    }
 }
 
 class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -82,8 +89,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     var dropDownOptions: [String]!
     var dropDownPlaceholder: String?
     var dropDownTextField : HoshiTextField!
-    var textMasks : [TextMaskFormater]?
-    init(frame: CGRect, textMasks: [TextMaskFormater]? = nil, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
+    init(frame: CGRect, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
         self.dropDownSelectedOptionText = dropDownOptions[0]
         self.dropDownPlaceholder = dropDownPlaceholder
         self.dropDownOptions = dropDownOptions
@@ -99,14 +105,19 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         }
         dropDownTextField.inputView = getPicker()
         dropDownTextField.inputAccessoryView = getToolBar()
+        if dropDownOptions.count < 2 {
+            dropDownTextField.isEnabled = false
+        }
         dropDownTextField.text = dropDownOptions[0]
         dropDownTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         dropDownTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         dropDownTextField.font = Utils.getFont(size: 20.0)
         inputTextField = HoshiTextField(frame: CGRect(x: getInputX(), y: getInputY(), width: getInputWidth(), height: INPUT_HEIGHT))
+        inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControlEvents.editingChanged)
         inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         inputTextField.font = Utils.getFont(size: 20.0)
+        inputTextField.text = ""
         if numeric {
             inputTextField.keyboardType = UIKeyboardType.numberPad
         }

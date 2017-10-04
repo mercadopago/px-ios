@@ -83,6 +83,8 @@ open class MercadoPagoCheckout: NSObject {
             self.showIssuersScreen()
         case .SERVICE_CREATE_CARD_TOKEN:
             self.createCardToken()
+        case .SERVICE_GET_IDENTIFICATION_TYPES:
+            self.getIdentificationTypes()
         case .SERVICE_GET_PAYER_COSTS:
             self.getPayerCosts()
         case .SCREEN_PAYER_COST:

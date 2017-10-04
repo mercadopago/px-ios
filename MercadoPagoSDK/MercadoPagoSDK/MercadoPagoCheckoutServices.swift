@@ -63,13 +63,13 @@ extension MercadoPagoCheckout {
         MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
                                                baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
 
-            guard let strongSelf = self else {
-                return
-            }
+                                                guard let strongSelf = self else {
+                                                    return
+                                                }
 
-            strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-            strongSelf.dismissLoading()
-            strongSelf.executeNextStep()
+                                                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
+                                                strongSelf.dismissLoading()
+                                                strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) -> Void in
                 guard let strongSelf = self else {
@@ -375,8 +375,8 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.instructionsInfo = instructionsInfo
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-
-        }) { [weak self] (error) -> Void in
+            
+            }, failure : { [weak self] (error) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -385,6 +385,30 @@ extension MercadoPagoCheckout {
                 self?.getInstructions()
             })
             strongSelf.executeNextStep()
-        }
+        })
+    }
+
+    func getIdentificationTypes() {
+        self.presentLoading()
+        MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { [weak self] (identificationTypes) -> Void in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.viewModel.updateCheckoutModel(identificationTypes: identificationTypes)
+            strongSelf.dismissLoading()
+            strongSelf.executeNextStep()
+
+            } , failure : {   [weak self] (error) -> Void in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.dismissLoading()
+                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] (_) in
+                    self?.getIdentificationTypes()
+                })
+                strongSelf.executeNextStep()
+        })
     }
 }
