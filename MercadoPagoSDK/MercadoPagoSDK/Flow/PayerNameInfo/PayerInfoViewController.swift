@@ -14,8 +14,8 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let ACCESORY_VIEW_HEIGHT: CGFloat = 44.0
     let INPUT_VIEW_HEIGHT: CGFloat = 83.0
 
-    let NAME_INPUT_TEXT = "Nombre"
-    let SURNAME_INPUT_TEXT = "Apellido"
+    let NAME_INPUT_TEXT = "Nome"
+    let SURNAME_INPUT_TEXT = "Sobrenome"
     let NUMBER_INPUT_TEXT = "Número"
     let TYPE_INPUT_TEXT = "Tipo"
     let CONTINUE_INPUT_TEXT = "Continuar"

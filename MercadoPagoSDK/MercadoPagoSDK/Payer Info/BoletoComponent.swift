@@ -58,7 +58,7 @@ class BoletoComponent: UIView, PXComponent {
         self.nameTF.textAlignment = .left
         self.nameTF.font = Utils.getFont(size: 13.0)
         self.nameTF.textColor = UIColor.px_grayDark()
-        self.nameTF.placeholder = "NOMBRE Y APELLIDO".localized
+        self.nameTF.placeholder = "SOBRENOME E NOME".localized
         self.nameTF.isEnabled = false
 
         self.boletoView.addSubview(titleLabel)
