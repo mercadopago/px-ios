@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate, InputComponentListener {
     
     let KEYBOARD_HEIGHT : CGFloat = 216.0
@@ -24,11 +25,11 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         self.callback = callback
         NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -133,7 +134,6 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         if self.firstNameComponent != nil {
             self.firstNameComponent?.setInputAccessoryView(inputAccessoryView: self.toolbar!)
         }
-
     }
 
     func textChangedIn(component: SimpleInputComponent)  {
@@ -159,6 +159,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
     
     func rightArrowKeyTapped() {
+
         if self.currentInput == self.identificationComponent {
             self.presentFirstNameComponent()
         }else if self.currentInput == self.firstNameComponent {

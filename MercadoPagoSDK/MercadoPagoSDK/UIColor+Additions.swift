@@ -142,7 +142,7 @@ extension UIColor {
     class public func px_grayBackgroundColor() -> UIColor {
         return UIColorFromRGB(0xF7F7F7)
     }
-    
+
     class public func instructionsHeaderColor() -> UIColor {
         return UIColor(red: 255, green: 161, blue: 90)
     }

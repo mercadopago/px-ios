@@ -12,13 +12,20 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
     var viewModel: InstructionsViewModel!
-    var paymentResult: PaymentResult!
-    var bundle = MercadoPago.getBundle()
-    var color: UIColor?
-    var paymentResultScreenPreference: PaymentResultScreenPreference!
+    var bundle = MercadoPago.getBundle()!
+    var callback : ( _ status: PaymentResult.CongratsState) -> Void
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_INSTRUCTIONS} }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT_INSTRUCTIONS } }
+
+    fileprivate func addUpperFrame() {
+        var frame = self.tableView.bounds
+        frame.origin.y = -frame.size.height
+        frame.size.width = UIScreen.main.bounds.width
+        let view = UIView(frame: frame)
+        view.backgroundColor =  self.viewModel.getHeaderColor()
+        tableView.addSubview(view)
+    }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -27,49 +34,32 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 60
         self.tableView.separatorStyle = .none
-        self.color = self.viewModel.getHeaderColor()
 
-        var frame = self.tableView.bounds
-        frame.origin.y = -frame.size.height
-        frame.size.width = UIScreen.main.bounds.width
-        let view = UIView(frame: frame)
-        view.backgroundColor = self.color
-        tableView.addSubview(view)
+        addUpperFrame()
     }
 
     override  func trackInfo() {
-        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
-                              TrackingUtil.METADATA_PAYMENT_STATUS: self.paymentResult.status,
-                              TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.paymentResult.statusDetail,
-                              TrackingUtil.METADATA_PAYMENT_ID: self.paymentResult._id]
-        if let pm = self.paymentResult.paymentData?.getPaymentMethod() {
-            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
-        }
-        if let issuer = self.paymentResult.paymentData?.getIssuer() {
-            metadata["issuer"] = issuer._id
-        }
-        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: self.viewModel.getMetada())
     }
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
             self.navigationController?.setNavigationBarHidden(true, animated: false)
-            ViewUtils.addStatusBar(self.view, color: self.color!)
+            ViewUtils.addStatusBar(self.view, color: self.viewModel.getHeaderColor())
         }
-
     }
 
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tableView.reloadData()
-    }
-    
     public init(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
-        self.viewModel = InstructionsViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference, instructionsInfo: instructionsInfo, callback: callback)
+        self.viewModel = InstructionsViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference, instructionsInfo: instructionsInfo)
+        self.callback = callback
         super.init(nibName: "InstructionsViewController", bundle: bundle)
-        self.paymentResult = paymentResult
-        self.paymentResultScreenPreference = paymentResultScreenPreference
+    }
+
+    public init(viewModel: InstructionsViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
+        self.viewModel = viewModel
+        self.callback = callback
+        super.init(nibName: "InstructionsViewController", bundle: bundle)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -88,8 +78,58 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         return self.viewModel.numberOfRowsInSection(section)
     }
 
+    fileprivate func getHeaderTitleCell() -> UITableViewCell {
+        let cell: HeaderCongratsTableViewCell = bundle.loadNibNamed("HeaderCongratsTableViewCell", owner: nil, options: nil)?[0] as! HeaderCongratsTableViewCell
+        cell.fillCell(instructionsInfo: self.viewModel.instructionsInfo, color: self.viewModel.getHeaderColor())
+        cell.selectionStyle = .none
+        return cell
+    }
+
+    fileprivate func getHeaderSubtitleCell() -> UITableViewCell {
+        let cell: InstructionsSubtitleTableViewCell = bundle.loadNibNamed("InstructionsSubtitleTableViewCell", owner: nil, options: nil)?[0] as! InstructionsSubtitleTableViewCell
+        cell.fillCell(instruction: self.viewModel.getInstruction())
+        cell.selectionStyle = .none
+        return cell
+    }
+
+    fileprivate func getBodyCell() -> UITableViewCell {
+        let cell: InstructionBodyTableViewCell = bundle.loadNibNamed("InstructionBodyTableViewCell", owner: nil, options: nil)?[0] as! InstructionBodyTableViewCell
+        cell.selectionStyle = .none
+        ViewUtils.drawBottomLine(y: cell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: cell.contentView)
+        cell.fillCell(instruction: self.viewModel.getInstruction(), paymentResult: self.viewModel.paymentResult)
+        return cell
+    }
+
+    fileprivate func getSecondaryInfoCell() -> UITableViewCell {
+        let cell: SecondaryInfoTableViewCell = bundle.loadNibNamed("SecondaryInfoTableViewCell", owner: nil, options: nil)?[0] as! SecondaryInfoTableViewCell
+        cell.fillCell(instruction: self.viewModel.getInstruction())
+        cell.selectionStyle = .none
+        ViewUtils.drawBottomLine(y: cell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: cell.contentView)
+        return cell
+    }
+
+    fileprivate func getFooterCell() -> UITableViewCell {
+        let cell: FooterTableViewCell = bundle.loadNibNamed("FooterTableViewCell", owner: nil, options: nil)?[0] as! FooterTableViewCell
+        cell.selectionStyle = .none
+        ViewUtils.drawBottomLine(y: cell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: cell.contentView)
+        cell.setCallbackStatus(callback: self.callback, status: PaymentResult.CongratsState.ok)
+        cell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
+        return cell
+    }
+
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self.viewModel.getCellForRowAt(indexPath)
+        if self.viewModel.isHeaderTitleCellFor(indexPath: indexPath) {
+            return getHeaderTitleCell()
+        } else if self.viewModel.isHeaderSubtitleCellFor(indexPath: indexPath) {
+            return getHeaderSubtitleCell()
+        } else if self.viewModel.isBodyCellFor(indexPath: indexPath) {
+            return getBodyCell()
+        } else if self.viewModel.isSecondaryInfoCellFor(indexPath: indexPath) {
+            return getSecondaryInfoCell()
+        } else if self.viewModel.isFooterCellFor(indexPath: indexPath) {
+            return getFooterCell()
+        }
+        return UITableViewCell()
     }
 
 }

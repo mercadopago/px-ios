@@ -30,18 +30,33 @@ open class InstructionsInfo: NSObject {
             }
             instructionsInfo.instructions = instructions
         }
-
         return instructionsInfo
     }
 
     open func hasSecundaryInformation() -> Bool {
-        return instructions[0].hasSecondaryInformation()
+        if instructions.isEmpty {
+            return false
+        } else {
+            return instructions[0].hasSecondaryInformation()
+        }
     }
-    
+
     open func hasSubtitle() -> Bool {
-        return instructions[0].hasSubtitle()
+        if instructions.isEmpty {
+            return false
+        } else {
+            return instructions[0].hasSubtitle()
+        }
     }
-    
+
+    open func getInstruction() -> Instruction? {
+        if instructions.isEmpty {
+            return nil
+        } else {
+            return instructions[0]
+        }
+    }
+
     open func toJSONString() -> String {
         var obj: [String:Any] = [
             "amount_info": self.amountInfo.toJSON()
@@ -54,7 +69,7 @@ open class InstructionsInfo: NSObject {
                     array.add(instruction)
                 }
             }
-           obj["instructions"] = array
+            obj["instructions"] = array
         }
 
         return JSONHandler.jsonCoding(obj)

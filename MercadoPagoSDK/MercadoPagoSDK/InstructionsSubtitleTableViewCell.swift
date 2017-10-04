@@ -13,14 +13,14 @@ class InstructionsSubtitleTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         title.font = Utils.getFont(size: title.font.pointSize)
+        title.text = ""
 
     }
-    
+
     func fillCell(instruction: Instruction) {
-        if let subtitle = instruction.subtitle  {
-            let attributedTitle = NSMutableAttributedString(string: subtitle, attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+        if instruction.hasSubtitle() {
+            let attributedTitle = NSMutableAttributedString(string: instruction.subtitle!, attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
             self.title.attributedText = attributedTitle
         }
     }

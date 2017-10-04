@@ -19,6 +19,7 @@ open class Instruction: NSObject {
     open var secondaryInfo: [String]?
     open var tertiaryInfo: [String]?
     open var actions: [InstructionAction]?
+    open var type: String = ""
 
     open class func fromJSON(_ json: NSDictionary) -> Instruction {
         let instruction = Instruction()
@@ -26,7 +27,7 @@ open class Instruction: NSObject {
         if json["title"] != nil && !(json["title"]! is NSNull) {
             instruction.title = (json["title"]! as? String)!
         }
-        
+
         if json["subtitle"] != nil && !(json["subtitle"]! is NSNull) {
             instruction.subtitle = (json["subtitle"]! as? String)!
         }
@@ -34,16 +35,24 @@ open class Instruction: NSObject {
         if json["accreditation_message"] != nil && !(json["accreditation_message"]! is NSNull) {
             instruction.accreditationMessage = (json["accreditation_message"]! as? String)!
         }
-        
+
+        if json["type"] != nil && !(json["type"]! is NSNull) {
+            if let type = json["type"]! as? String {
+                instruction.type = type
+            }
+        }
+
         if json["accreditation_comments"] != nil && !(json["accreditation_comments"]! is NSNull) {
             var info = [String]()
-            
+
             if let arrayValues = json["accreditation_comments"] as? NSArray {
                 for value in arrayValues {
-                    info.append(value as! String)
+                    if let value = value as? String {
+                        info.append(value)
+                    }
                 }
             }
-            instruction.accreditationComment = info
+            instruction.accreditationComment = !info.isEmpty ? info : nil
         }
 
         if json["references"] != nil && !(json["references"]! is NSNull) {
@@ -55,7 +64,9 @@ open class Instruction: NSObject {
 
             if let arrayValues = json["info"] as? NSArray {
                 for value in arrayValues {
-                    info.append(value as! String)
+                    if let value = value as? String {
+                        info.append(value)
+                    }
                 }
             }
 
@@ -67,11 +78,13 @@ open class Instruction: NSObject {
 
             if let arrayValues = json["secondary_info"] as? NSArray {
                 for value in arrayValues {
-                info.append(value as! String)
+                    if let value = value as? String {
+                        info.append(value)
+                    }
                 }
 
             }
-            instruction.secondaryInfo = info
+            instruction.secondaryInfo = !info.isEmpty ? info : nil
         }
 
         if json["tertiary_info"] != nil && !(json["tertiary_info"]! is NSNull) {
@@ -79,11 +92,13 @@ open class Instruction: NSObject {
 
             if let arrayValues = json["tertiary_info"] as? NSArray {
                 for value in arrayValues {
-                    info.append(value as! String)
+                    if let value = value as? String {
+                        info.append(value)
+                    }
                 }
 
             }
-            instruction.tertiaryInfo = info
+            instruction.tertiaryInfo = !info.isEmpty ? info : nil
         }
 
         if json["actions"] != nil && !(json["actions"]! is NSNull) {
@@ -104,13 +119,29 @@ open class Instruction: NSObject {
         ]
         return obj
     }
-    
+
     open func hasSubtitle() -> Bool {
         return !String.isNullOrEmpty(subtitle)
     }
-    
+
+    open func hasTitle() -> Bool {
+        return !String.isNullOrEmpty(title)
+    }
+
+    open func hasAccreditationMessage() -> Bool {
+        return !String.isNullOrEmpty(accreditationMessage)
+    }
+
     open func hasSecondaryInformation() -> Bool {
         return !Array.isNullOrEmpty(secondaryInfo)
+    }
+
+    open func hasAccreditationComment() -> Bool {
+        return !Array.isNullOrEmpty(accreditationComment)
+    }
+
+    open func hasActions() -> Bool {
+        return !Array.isNullOrEmpty(actions)
     }
 }
 
