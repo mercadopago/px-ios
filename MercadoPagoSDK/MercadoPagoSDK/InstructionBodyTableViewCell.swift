@@ -75,7 +75,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
         }
     }
 
-    fileprivate func putAcrreditationMessageLabel(_ instruction: Instruction, _ previus: inout UIView?) {
+    fileprivate func putAccreditationMessageLabel(_ instruction: Instruction, _ previus: inout UIView?) {
         let clockImage = NSTextAttachment()
         clockImage.image = MercadoPago.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
@@ -201,7 +201,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
         putReferenceLabels(instruction, &previus, paymentResult)
 
         if instruction.hasAccreditationMessage() {
-            putAcrreditationMessageLabel(instruction, &previus)
+            putAccreditationMessageLabel(instruction, &previus)
         }
 
         if instruction.hasAccreditationComment() {
