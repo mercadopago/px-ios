@@ -47,6 +47,7 @@ class SimpleInputComponent: UIView, PXComponent {
         inputTextField.font = Utils.getFont(size: 20.0)
         inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
+        inputTextField.autocorrectionType = .no
         inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControlEvents.editingChanged)
         self.addSubview(inputTextField)
         self.frame.size.height = getHeight()
@@ -124,6 +125,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControlEvents.editingChanged)
         inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
+        inputTextField.autocorrectionType = .no
         inputTextField.font = Utils.getFont(size: 20.0)
         inputTextField.text = ""
         if numeric {

@@ -109,8 +109,8 @@ class PayerInfoViewModel: NSObject {
     }
 
     fileprivate func validateIdentificationNumber() -> Bool {
-        let length = identificationNumber.characters.count
-        return identificationType.minLength <= length &&  length <= identificationType.maxLength
+        let length = currentMask?.textUnmasked(identificationNumber).characters.count
+        return identificationType.minLength <= length! &&  length! <= identificationType.maxLength
     }
 
     func update(name: String) {
@@ -122,7 +122,8 @@ class PayerInfoViewModel: NSObject {
     }
 
     func update(identificationNumber: String) {
-        self.identificationNumber = identificationNumber
+        let maskedText = currentMask?.textMasked(identificationNumber, remasked: true)
+        self.identificationNumber = (currentMask?.textUnmasked(maskedText))!
     }
 
     func getFullName() -> String {
