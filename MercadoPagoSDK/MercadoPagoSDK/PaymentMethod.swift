@@ -54,7 +54,7 @@ open class PaymentMethod: NSObject, Cellable {
         }
         return false
     }
-    
+
     open func isPayerInfoRequired() -> Bool {
         if isAdditionalInfoNeeded("bolbradesco_name") || isAdditionalInfoNeeded("bolbradesco_identification_type") || isAdditionalInfoNeeded("bolbradesco_identification_number") {
             return true

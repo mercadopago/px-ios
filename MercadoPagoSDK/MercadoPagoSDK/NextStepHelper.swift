@@ -53,19 +53,19 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod(), pm._id != "bolbradesco" else {
             return false
         }
-        
+
         return isIdentificationNeeded() && self.identificationTypes != nil
     }
 
     func needToGetIdentificationTypes() -> Bool {
         return isIdentificationNeeded() && self.identificationTypes == nil
     }
-    
+
     func needToGetPayerInfo() -> Bool {
         guard let pm = self.paymentData.getPaymentMethod(), pm._id == "bolbradesco" else {
             return false
         }
-        
+
         return isIdentificationNeeded() && self.identificationTypes != nil
     }
 

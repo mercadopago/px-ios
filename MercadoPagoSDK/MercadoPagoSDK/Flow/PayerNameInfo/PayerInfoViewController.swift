@@ -22,6 +22,8 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let BEFORE_INPUT_TEXT = "Anterior"
 
     var currentInput: UIView!
+    var toolbar: UIToolbar?
+    var errorLabel: MPLabel?
 
     // View Components
     var identificationComponent: CompositeInputComponent?
@@ -56,63 +58,106 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         barsHeight += navigationBarHeight != nil ? navigationBarHeight! : CGFloat(0.0)
         var availableHeight = screenHeight - barsHeight
         availableHeight = keyboardFrame != nil ? availableHeight - (keyboardFrame?.height)! : availableHeight
+        availableHeight -= INPUT_VIEW_HEIGHT
         return availableHeight
     }
 
-    func setupView() {
+    func getDefaultFrame() -> CGRect {
+      let screenWidth = UIScreen.main.bounds.width
+      let frameIdentification = CGRect(x: 0, y: 0, width: screenWidth, height: 0)
+      return frameIdentification
+    }
+
+    func initBoletoComponent() {
         let screenWidth = UIScreen.main.bounds.width
+        let availableHeight = self.getAvailableHeight()
+        let boletoComponentFrame = CGRect(x: 0, y: 0, width: screenWidth, height: availableHeight)
+        self.boletoComponent = BoletoComponent(frame: boletoComponentFrame)
+        let type = self.viewModel.identificationType.name
+        self.boletoComponent?.setType(text: type!)
+        self.boletoComponent?.setNumberPlaceHolder(text: self.viewModel.getMaskedNumber(completeEmptySpaces: true))
+        self.view.addSubview(self.boletoComponent!)
+    }
+    func initFirstNameComponent() {
+        let availableHeight = self.getAvailableHeight()
         let nameText = NAME_INPUT_TEXT.localized
+        self.firstNameComponent = SimpleInputComponent(frame: getDefaultFrame(), numeric: false, placeholder: nameText, textFieldDelegate: self)
+        self.firstNameComponent?.frame.origin.y = availableHeight
+        self.firstNameComponent?.delegate = self
+        self.view.addSubview(self.firstNameComponent!)
+    }
+    func initSecondNameComponent() {
+        let availableHeight = self.getAvailableHeight()
         let surnameText = SURNAME_INPUT_TEXT.localized
+        self.secondNameComponent = SimpleInputComponent(frame: getDefaultFrame(), numeric: false, placeholder: surnameText, textFieldDelegate: self)
+        self.secondNameComponent?.frame.origin.y = availableHeight
+        self.secondNameComponent?.delegate = self
+        self.view.addSubview(self.secondNameComponent!)
+    }
+    func initIdentificationComponent() {
         let numberText = NUMBER_INPUT_TEXT.localized
         let typeText = TYPE_INPUT_TEXT.localized
+        let availableHeight = self.getAvailableHeight()
+        self.identificationComponent = CompositeInputComponent(frame: getDefaultFrame(), numeric: true, placeholder: numberText, dropDownPlaceholder: typeText, dropDownOptions: self.viewModel.getDropdownOptions(), textFieldDelegate: self)
+        self.identificationComponent?.frame.origin.y = availableHeight
+        self.identificationComponent?.delegate = self
+        self.identificationComponent?.setText(text: self.viewModel.getMaskedNumber())
+        self.view.addSubview(self.identificationComponent!)
+    }
 
-        var availableHeight = self.getAvailableHeight()
-
+    func setupView() {
         if self.identificationComponent == nil && self.boletoComponent == nil {
-            let frameIdentification = CGRect(x: 0, y: 0, width: screenWidth, height: 0)
-            self.identificationComponent = CompositeInputComponent(frame: frameIdentification, numeric: true, placeholder: numberText, dropDownPlaceholder: typeText, dropDownOptions: self.viewModel.getDropdownOptions(), textFieldDelegate: self)
-            self.presentIdentificationComponent()
-            availableHeight -= (self.identificationComponent?.getHeight())!
-            self.identificationComponent?.frame.origin.y = availableHeight
-            self.secondNameComponent = SimpleInputComponent(frame: frameIdentification, numeric: false, placeholder: surnameText, textFieldDelegate: self)
-            self.secondNameComponent?.frame.origin.y = availableHeight
-            self.firstNameComponent = SimpleInputComponent(frame: frameIdentification, numeric: false, placeholder: nameText, textFieldDelegate: self)
-            self.firstNameComponent?.frame.origin.y = availableHeight
-            setupToolbarButtons()
-
-            let frame = CGRect(x: 0, y: 0, width: screenWidth, height: availableHeight)
-            let boletoComponent = BoletoComponent(frame: frame)
-            self.boletoComponent = boletoComponent
-            self.identificationComponent?.delegate = self
-            self.firstNameComponent?.delegate = self
-            self.secondNameComponent?.delegate = self
-            let type = self.viewModel.identificationTypes[(self.identificationComponent?.optionSelected)!].name
-            self.boletoComponent?.setType(text: type!)
-            if let currentMask = self.viewModel.currentMask {
-               self.identificationComponent?.setText(text: currentMask.textMasked(""))
-               let maskComplete = TextMaskFormater(mask: currentMask.mask, completeEmptySpaces: true, leftToRight: false, completeEmptySpacesWith: "*")
-               self.boletoComponent?.setNumberPlaceHolder(text: maskComplete.textMasked(""))
-            }
-            self.view.addSubview(self.boletoComponent!)
-            self.view.addSubview(self.firstNameComponent!)
-            self.view.addSubview(self.secondNameComponent!)
-            self.view.addSubview(self.identificationComponent!)
+            self.initializeViews()
         } else {
-            availableHeight -= (self.identificationComponent?.getHeight())!
-            self.identificationComponent?.frame.origin.y = availableHeight
-             self.secondNameComponent?.frame.origin.y = availableHeight
-            self.firstNameComponent?.frame.origin.y = availableHeight
-            self.boletoComponent?.frame.size.height = availableHeight
-            self.boletoComponent?.updateView()
+            self.updateViewFrames()
         }
     }
 
-    var toolbar: UIToolbar?
+    fileprivate func getToolbarFrame() -> CGRect {
+        return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+    }
+
+    func showToolbarError(message: String) {
+        errorLabel!.backgroundColor = UIColor.mpLightGray()
+        errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        errorLabel!.text = message
+        errorLabel!.textAlignment = .center
+        errorLabel!.font = errorLabel!.font.withSize(12)
+        self.toolbar?.addSubview(errorLabel!)
+    }
+
+    func hideErrorMessage() {
+        self.errorLabel?.removeFromSuperview()
+    }
+
+    fileprivate func setUpToolbarErrorMessage() {
+        let frame =  getToolbarFrame()
+        self.errorLabel = MPLabel(frame: frame)
+    }
+
+    func initializeViews() {
+        self.initIdentificationComponent()
+        self.initBoletoComponent()
+        self.initFirstNameComponent()
+        self.initSecondNameComponent()
+        self.presentIdentificationComponent()
+        setupToolbarButtons()
+        setUpToolbarErrorMessage()
+    }
+
+    func updateViewFrames() {
+        let availableHeight = self.getAvailableHeight()
+        self.identificationComponent?.frame.origin.y = availableHeight
+        self.secondNameComponent?.frame.origin.y = availableHeight
+        self.firstNameComponent?.frame.origin.y = availableHeight
+        self.boletoComponent?.frame.size.height = availableHeight
+        self.boletoComponent?.updateView()
+    }
 
     func setupToolbarButtons() {
 
         if self.toolbar == nil {
-            let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+            let frame =  getToolbarFrame()
 
             let toolbar = UIToolbar(frame: frame)
 
@@ -150,6 +195,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     func textChangedIn(component: SimpleInputComponent) {
+        hideErrorMessage()
         guard let textField = component.inputTextField else {
             return
         }
@@ -203,7 +249,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             let currentStep = self.viewModel.getNextStep()
             executeStep(currentStep)
         } else {
-            // Mostrar error
+            showToolbarError(message: "Error")
         }
     }
 

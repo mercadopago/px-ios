@@ -25,7 +25,6 @@ extension MercadoPagoCheckout {
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
 
     }
-
     func showCardForm() {
         let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { [weak self](paymentMethods, cardToken) in
 
@@ -56,18 +55,18 @@ extension MercadoPagoCheckout {
         }
         self.pushViewController(viewController : identificationStep, animated: true)
     }
-    
+
     func showPayerInfoFlow() {
         let identificationTypes = self.viewModel.identificationTypes!
         var cpfMask = TextMaskFormater(mask: "XXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
         let masks: [TextMaskFormater] = [cpfMask]
         let viewModel = PayerInfoViewModel(identificationTypes: identificationTypes, payer: self.viewModel.paymentData.payer, masks: masks)
         let vc = PayerInfoViewController(viewModel: viewModel) { [weak self] (payer) in
-            
+
             guard let strongSelf = self else {
                 return
             }
-            
+
             strongSelf.viewModel.updateCheckoutModel(payer : payer)
             strongSelf.executeNextStep()
         }

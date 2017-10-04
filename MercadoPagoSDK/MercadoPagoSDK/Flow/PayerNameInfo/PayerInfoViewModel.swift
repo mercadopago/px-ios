@@ -50,14 +50,14 @@ class PayerInfoViewModel: NSObject {
     }
 
     func filterSupported(identificationTypes: [IdentificationType]) -> [IdentificationType] {
-        let supportedIdentificationTypes = identificationTypes.filter {$0.name == "CPF"}
+        let supportedIdentificationTypes = identificationTypes.filter {$0._id == "CPF"}
         return supportedIdentificationTypes
     }
 
     func getDropdownOptions() -> [String] {
         var options: [String] = []
         for identificationType in self.identificationTypes {
-            options.append(identificationType.name!)
+            options.append(identificationType._id!)
         }
         return options
     }
@@ -69,9 +69,9 @@ class PayerInfoViewModel: NSObject {
         case .SCREEN_NAME:
             currentStep = .SCREEN_LAST_NAME
         case .SCREEN_LAST_NAME:
-            currentStep = .FINISH
+            return .FINISH
         default:
-            currentStep = .CANCEL
+            return .CANCEL
         }
         return currentStep
     }
@@ -79,13 +79,13 @@ class PayerInfoViewModel: NSObject {
      func getPreviousStep() -> PayerInfoFlowStep {
         switch currentStep {
         case .SCREEN_IDENTIFICATION:
-            currentStep = .CANCEL
+            return .CANCEL
         case .SCREEN_NAME:
             currentStep = .SCREEN_IDENTIFICATION
         case .SCREEN_LAST_NAME:
             currentStep = .SCREEN_NAME
         default:
-            currentStep = .CANCEL
+            return .CANCEL
         }
         return currentStep
     }

@@ -239,7 +239,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cleanPayerCostSearch()
         self.paymentData.updatePaymentDataWith(issuer: issuer)
     }
-    
+
     public func updateCheckoutModel(payer: Payer) {
         self.paymentData.updatePaymentDataWith(payer: payer)
     }
@@ -348,7 +348,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needToGetIdentificationTypes() {
             return .SERVICE_GET_IDENTIFICATION_TYPES
         }
-        
+
         if needToGetPayerInfo() {
             return .SCREEN_PAYER_INFO_FLOW
         }

@@ -37,7 +37,7 @@ public class PaymentData: NSObject {
         if paymentMethod.isEntityTypeRequired() && payer.entityType == nil {
             return false
         }
-        
+
         if paymentMethod.isPayerInfoRequired() && payer.identification == nil {
             return false
         }
@@ -112,7 +112,7 @@ public class PaymentData: NSObject {
         cleanPayerCost()
         self.issuer = issuer
     }
-    
+
     public func updatePaymentDataWith(payer: Payer?) {
         guard let payer = payer else {
             return
