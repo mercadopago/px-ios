@@ -12,6 +12,10 @@ class BoletoComponent: UIView, PXComponent {
     static let IMAGE_WIDTH: CGFloat = 242.0
     static let IMAGE_HEIGHT: CGFloat = 143.0
     var boletoView : UIView!
+
+    var typeName: UILabel!
+    var numberTF: UITextField!
+    var nameTF: UITextField!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,15 +36,51 @@ class BoletoComponent: UIView, PXComponent {
         boletoImageView.image = MercadoPago.getImage("boleto")
         self.boletoView = UIView(frame: CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
         self.boletoView.addSubview(boletoImageView)
-        let titleLabel = UILabel(frame: CGRect(x: 16, y: 15, width:BoletoComponent.IMAGE_WIDTH - 2 * 16 , height: 14))
+        let titleLabel = UILabel(frame: CGRect(x: 5, y: 15, width:BoletoComponent.IMAGE_WIDTH - 2 * 5 , height: 14))
         titleLabel.text = "DADOS PARA VALIDAR O SEU PAGAMENTO".localized
+        titleLabel.textAlignment = .center
         titleLabel.font = Utils.getFont(size: 10.0)
         titleLabel.textColor = UIColor.px_grayDark()
+        
+        self.typeName = UILabel(frame: CGRect(x: 16, y: 57, width:40 , height: 14))
+        typeName.textAlignment = .left
+        typeName.font = Utils.getFont(size: 13.0)
+        typeName.textColor = UIColor.px_grayDark()
+        
+        self.numberTF = UITextField(frame: CGRect(x: 60, y: 57, width:BoletoComponent.IMAGE_WIDTH - 48 - 5 , height: 14))
+        self.numberTF.textAlignment = .left
+        self.numberTF.font = Utils.getFont(size: 13.0)
+        self.numberTF.textColor = UIColor.px_grayDark()
+        self.numberTF.placeholder = "**** ***** ***** *****"
+        self.numberTF.isEnabled = false
+        
+        self.nameTF = UITextField(frame: CGRect(x: 16, y: 81, width:BoletoComponent.IMAGE_WIDTH - 2 * 16 , height: 14))
+        self.nameTF.textAlignment = .left
+        self.nameTF.font = Utils.getFont(size: 13.0)
+        self.nameTF.textColor = UIColor.px_grayDark()
+        self.nameTF.placeholder = "NOMBRE Y APELLIDO".localized
+        self.nameTF.isEnabled = false
+        
         self.boletoView.addSubview(titleLabel)
+        self.boletoView.addSubview(self.numberTF)
+        self.boletoView.addSubview(self.nameTF)
+        self.boletoView.addSubview(self.typeName)
         self.addSubview(self.boletoView)
         
     }
     
+    func setType(text: String) {
+        self.typeName.text = text
+    }
+    func setNumber(text: String) {
+        self.numberTF.text = text
+    }
+    func setNumberPlaceHolder(text:String) {
+        self.numberTF.placeholder = text
+    }
+    func setName(text: String) {
+        self.nameTF.text = text
+    }
    
     public func updateView(){
         self.boletoView.frame = CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT)

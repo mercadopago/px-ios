@@ -8,7 +8,7 @@
 
 import UIKit
 protocol InputComponentListener {
-    func textChanged(textField: UITextField)
+    func textChangedIn(component: SimpleInputComponent)
 }
 
 class SimpleInputComponent: UIView, PXComponent {
@@ -73,11 +73,17 @@ class SimpleInputComponent: UIView, PXComponent {
     }
     open func editingChanged(textField: UITextField) {
         if let delegate = self.delegate {
-            delegate.textChanged(textField: textField)
+            delegate.textChangedIn(component: self)
         }
     }
     open func setText(text:String) {
         self.inputTextField.text = text
+    }
+    open func getInputText() -> String {
+        guard let text = self.inputTextField.text else{
+            return ""
+        }
+        return text
     }
 }
 
@@ -89,8 +95,10 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     var dropDownOptions: [String]!
     var dropDownPlaceholder: String?
     var dropDownTextField : HoshiTextField!
+    var optionSelected : Int!
     init(frame: CGRect, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
         self.dropDownSelectedOptionText = dropDownOptions[0]
+        self.optionSelected = 0
         self.dropDownPlaceholder = dropDownPlaceholder
         self.dropDownOptions = dropDownOptions
         super.init(frame: frame, numeric: numeric, placeholder: placeholder, textFieldDelegate: textFieldDelegate)
@@ -171,6 +179,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
 
     open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         dropDownSelectedOptionText =  self.dropDownOptions[row]
+        self.optionSelected = row
         dropDownTextField.text = dropDownSelectedOptionText
         self.inputTextField.text = ""
     }
@@ -179,5 +188,5 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         inputTextField.becomeFirstResponder()
     }
     
-    
+
 }
