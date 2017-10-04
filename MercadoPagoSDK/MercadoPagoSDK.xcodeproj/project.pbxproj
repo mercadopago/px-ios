@@ -241,10 +241,6 @@
 		15D79A081CA986E300623A84 /* MPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D79A061CA986E300623A84 /* MPTextField.swift */; };
 		15D79A0A1CA9B6B900623A84 /* MPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D79A091CA9B6B900623A84 /* MPButton.swift */; };
 		15D79A0B1CA9B6B900623A84 /* MPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D79A091CA9B6B900623A84 /* MPButton.swift */; };
-		15DA4C8E1F7BEF34001CC874 /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA4C8D1F7BEF34001CC874 /* Association.swift */; };
-		15DA4C8F1F7BEF34001CC874 /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA4C8D1F7BEF34001CC874 /* Association.swift */; };
-		15DA4C911F7BEF47001CC874 /* Individual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA4C901F7BEF47001CC874 /* Individual.swift */; };
-		15DA4C921F7BEF47001CC874 /* Individual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA4C901F7BEF47001CC874 /* Individual.swift */; };
 		15DA4C951F7BF4ED001CC874 /* PayerInfoFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA4C941F7BF4ED001CC874 /* PayerInfoFlow.swift */; };
 		15DA4C961F7BF4ED001CC874 /* PayerInfoFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA4C941F7BF4ED001CC874 /* PayerInfoFlow.swift */; };
 		15DA4C981F7BF50C001CC874 /* PayerInfoFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA4C971F7BF50C001CC874 /* PayerInfoFlowViewModel.swift */; };
@@ -791,8 +787,6 @@
 		15D79A031CA96D6400623A84 /* MPLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPLabel.swift; sourceTree = "<group>"; };
 		15D79A061CA986E300623A84 /* MPTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTextField.swift; sourceTree = "<group>"; };
 		15D79A091CA9B6B900623A84 /* MPButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPButton.swift; sourceTree = "<group>"; };
-		15DA4C8D1F7BEF34001CC874 /* Association.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Association.swift; sourceTree = "<group>"; };
-		15DA4C901F7BEF47001CC874 /* Individual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
 		15DA4C941F7BF4ED001CC874 /* PayerInfoFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayerInfoFlow.swift; sourceTree = "<group>"; };
 		15DA4C971F7BF50C001CC874 /* PayerInfoFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayerInfoFlowViewModel.swift; sourceTree = "<group>"; };
 		15DA4C9A1F7BF63A001CC874 /* PINextStepHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINextStepHelper.swift; sourceTree = "<group>"; };
@@ -1177,8 +1171,6 @@
 			isa = PBXGroup;
 			children = (
 				0F98834B1AD2AB6000F750F0 /* Payer.swift */,
-				15DA4C8D1F7BEF34001CC874 /* Association.swift */,
-				15DA4C901F7BEF47001CC874 /* Individual.swift */,
 				4BEF80FE1E538C9000797CD1 /* Preferences */,
 				15E08F6B1DA2CFC70087041B /* Parsed */,
 				15E7D6E51C85D4F900101872 /* Json */,
@@ -2406,7 +2398,6 @@
 				15F7F8BF1F0D34140093E2F9 /* TrackingStrategy.swift in Sources */,
 				4BEF80F61E53308C00797CD1 /* PaymentResult.swift in Sources */,
 				15C422C11EE072650039B80F /* MPXTracker.swift in Sources */,
-				15DA4C8E1F7BEF34001CC874 /* Association.swift in Sources */,
 				4BBF5B7D1F100CE500C0708F /* TrackingUtil.swift in Sources */,
 				76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				157704B51DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */,
@@ -2459,7 +2450,6 @@
 				4BAE1D441DCBE8FF0000ED5C /* CallForAuthTableViewCell.swift in Sources */,
 				0F9883A11AD2AB8000F750F0 /* GatewayService.swift in Sources */,
 				7656CA1D1C7646600043BDB2 /* InstructionAction.swift in Sources */,
-				15DA4C911F7BEF47001CC874 /* Individual.swift in Sources */,
 				0F98837B1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				0F98837D1AD2AB6000F750F0 /* Item.swift in Sources */,
 				4BAA56251DB6B58D00501061 /* CardTypeTableViewCell.swift in Sources */,
@@ -2704,11 +2694,9 @@
 				156A743C1F59CE5D006BC4A7 /* CardAvailableView.swift in Sources */,
 				FCBF132E1E71D6A60092B756 /* Updatable.swift in Sources */,
 				76445AF71CCF9B73008EE68E /* MPPayment.swift in Sources */,
-				15DA4C8F1F7BEF34001CC874 /* Association.swift in Sources */,
 				4B53C5F91E4B3FC200D6190A /* NextStepHelper.swift in Sources */,
 				765E7CAF1E736A32003AE4CD /* WalletIntegrationTest.swift in Sources */,
 				15AE1D9B1F6073AB00B0DAF8 /* SummaryDetail.swift in Sources */,
-				15DA4C921F7BEF47001CC874 /* Individual.swift in Sources */,
 				0F9883A21AD2AB8000F750F0 /* GatewayService.swift in Sources */,
 				4B0BAC431F1E81C60097103E /* MercadoPagoCheckoutScreens.swift in Sources */,
 				766012E31CEB963300897F9D /* MPSDKError.swift in Sources */,

@@ -20,7 +20,7 @@ class SimpleInputComponent: UIView, PXComponent {
     var placeholder: String?
     var numeric: Bool = false
     var textFieldDelegate: UITextFieldDelegate!
-    var inputTextField : HoshiTextField!
+    var inputTextField: HoshiTextField!
     var delegate: InputComponentListener?
     init(frame: CGRect, numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
         super.init(frame: frame)
@@ -67,8 +67,8 @@ class SimpleInputComponent: UIView, PXComponent {
     func componentResignFirstResponder() {
         self.inputTextField.resignFirstResponder()
     }
-    
-    open func setInputAccessoryView(inputAccessoryView : UIView){
+
+    open func setInputAccessoryView(inputAccessoryView: UIView) {
         self.inputTextField.inputAccessoryView = inputAccessoryView
     }
     open func editingChanged(textField: UITextField) {
@@ -76,11 +76,11 @@ class SimpleInputComponent: UIView, PXComponent {
             delegate.textChangedIn(component: self)
         }
     }
-    open func setText(text:String) {
+    open func setText(text: String) {
         self.inputTextField.text = text
     }
     open func getInputText() -> String {
-        guard let text = self.inputTextField.text else{
+        guard let text = self.inputTextField.text else {
             return ""
         }
         return text
@@ -94,9 +94,9 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     var dropDownSelectedOptionText: String!
     var dropDownOptions: [String]!
     var dropDownPlaceholder: String?
-    var dropDownTextField : HoshiTextField!
-    var optionSelected : Int!
-    init(frame: CGRect, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder:String? = nil, dropDownOptions:[String], textFieldDelegate: UITextFieldDelegate) {
+    var dropDownTextField: HoshiTextField!
+    var optionSelected: Int!
+    init(frame: CGRect, numeric: Bool = true, placeholder: String? = nil, dropDownPlaceholder: String? = nil, dropDownOptions: [String], textFieldDelegate: UITextFieldDelegate) {
         self.dropDownSelectedOptionText = dropDownOptions[0]
         self.optionSelected = 0
         self.dropDownPlaceholder = dropDownPlaceholder
@@ -187,6 +187,5 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.resignFirstResponder()
         inputTextField.becomeFirstResponder()
     }
-    
 
 }

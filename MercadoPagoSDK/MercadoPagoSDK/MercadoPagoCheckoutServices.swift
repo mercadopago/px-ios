@@ -375,7 +375,7 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.instructionsInfo = instructionsInfo
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-            
+
             }, failure : { [weak self] (error) -> Void in
             guard let strongSelf = self else {
                 return
@@ -399,7 +399,7 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            } , failure : {   [weak self] (error) -> Void in
+            }, failure : {   [weak self] (error) -> Void in
                 guard let strongSelf = self else {
                     return
                 }

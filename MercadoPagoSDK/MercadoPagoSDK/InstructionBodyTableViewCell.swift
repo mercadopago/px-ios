@@ -107,12 +107,12 @@ class InstructionBodyTableViewCell: UITableViewCell {
             let label = createLabel(labelAtributedText: labelTitle)
             let views = ["label": label] as [String : UIView]
 
-        if previus != nil {
-            Utils.setContrainsVertical(label: label, previus: previus, constrain: 15)
-        } else {
-            let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(30)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-            NSLayoutConstraint.activate(heightConstraints)
-        }
+            if previus != nil {
+                Utils.setContrainsVertical(label: label, previus: previus, constrain: 15)
+            } else {
+                let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(30)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                NSLayoutConstraint.activate(heightConstraints)
+            }
 
             Utils.setContrainsHorizontal(views: views, constrain: 20)
 
@@ -139,11 +139,11 @@ class InstructionBodyTableViewCell: UITableViewCell {
             Utils.setContrainsHorizontal(views: views, constrain: 60)
 
             if previus != nil {
-            Utils.setContrainsVertical(label: button, previus: previus, constrain: 30)
-        } else {
-            let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(30)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-            NSLayoutConstraint.activate(heightConstraints)
-        }
+                Utils.setContrainsVertical(label: button, previus: previus, constrain: 30)
+            } else {
+                let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(30)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                NSLayoutConstraint.activate(heightConstraints)
+            }
             previus = button
         }
     }

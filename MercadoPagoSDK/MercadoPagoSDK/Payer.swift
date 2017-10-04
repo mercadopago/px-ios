@@ -13,6 +13,8 @@ open class Payer: NSObject {
 	open var _id: String?
 	open var identification: Identification?
     open var entityType: EntityType?
+    open var name: String?
+    open var surname: String?
 
     public init(_id: String? = nil, email: String = "", identification: Identification? = nil, entityType: EntityType? = nil) {
 		self._id = _id
@@ -24,6 +26,8 @@ open class Payer: NSObject {
     func clearCollectedData() {
         self.entityType = nil
         self.identification = nil
+        self.name = nil
+        self.surname = nil
     }
 
 	open class func fromJSON(_ json: NSDictionary) -> Payer {
