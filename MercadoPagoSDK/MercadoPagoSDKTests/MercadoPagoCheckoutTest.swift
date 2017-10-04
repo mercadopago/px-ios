@@ -137,9 +137,9 @@ class MercadoPagoCheckoutTest: BaseTest {
         XCTAssertNotNil(self.mpCheckout?.viewModel.rootPaymentMethodOptions)
         XCTAssertNotNil(self.mpCheckout?.viewModel.search)
         XCTAssertNotNil(self.mpCheckout?.viewModel.availablePaymentMethods)
-        XCTAssertEqual(self.mpCheckout?.viewModel.availablePaymentMethods!.count, 17)
+        XCTAssertEqual(self.mpCheckout?.viewModel.availablePaymentMethods!.count, 12)
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentMethodOptions)
-        XCTAssertEqual(self.mpCheckout?.viewModel.paymentMethodOptions!.count, 3)
+        XCTAssertEqual(self.mpCheckout?.viewModel.paymentMethodOptions!.count, 1)
     }
 
     func testCollectPaymentMethods() {

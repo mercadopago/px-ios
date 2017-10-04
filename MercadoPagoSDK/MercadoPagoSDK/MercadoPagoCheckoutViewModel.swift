@@ -140,7 +140,17 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         let paymentPreference = PaymentPreference()
         paymentPreference.defaultPaymentTypeId = self.paymentOptionSelected?.getId()
         // TODO : está bien que la paymentPreference se cree desde cero? puede que vengan exclusiones de entrada ya?
-        return CardFormViewModel(amount : self.getAmount(), paymentMethods: search?.paymentMethods, paymentSettings : paymentPreference)
+        return CardFormViewModel(amount : self.getAmount(), paymentMethods: getPaymentMethodsForSelection())
+    }
+
+    public func getPaymentMethodsForSelection() -> [PaymentMethod] {
+        let filteredPaymentMethods = search?.paymentMethods.filter {
+            return $0.conformsPaymentPreferences(self.getPaymentPreferences()) && $0.paymentTypeId ==  self.paymentOptionSelected?.getId()
+        }
+        guard let paymentMethods = filteredPaymentMethods else {
+            return []
+        }
+        return paymentMethods
     }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {

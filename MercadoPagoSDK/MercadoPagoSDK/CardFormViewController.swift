@@ -64,7 +64,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     override func trackInfo() {
         var finalId = screenId
-        if let cardType = self.viewModel.cardType() {
+        if let cardType = self.viewModel.getPaymentMethodTypeId() {
             finalId = finalId + "/" + cardType
         }
         MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
@@ -74,7 +74,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     func trackStatus() {
         var finalId = screenId
 
-        if let cardType = self.viewModel.cardType() {
+        if let cardType = self.viewModel.getPaymentMethodTypeId() {
             finalId = finalId + "/" + cardType
         }
 
@@ -126,9 +126,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod]? = nil, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token, paymentSettings: paymentSettings)
+        self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token)
         self.callbackCancel = callbackCancel
         self.callback = callback
     }
@@ -198,19 +198,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     override open func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-
-        if self.viewModel.getPaymentMethods() == nil {
-            MPServicesBuilder.getPaymentMethods(baseURL:  MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (paymentMethods) -> Void in
-
-                self.viewModel.setPaymentMethods(paymentMethods: paymentMethods)
-                self.getPromos()
-            }) { (_) -> Void in
-                // Mensaje de error correspondiente, ver que hacemos con el flujo
-            }
-        } else {
-            self.getPromos()
-        }
-
+        self.getPromos()
         textBox.autocorrectionType = UITextAutocorrectionType.no
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
@@ -254,7 +242,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
     func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height - 40
             self.view.layoutIfNeeded()
             self.view.setNeedsUpdateConstraints()
@@ -317,8 +305,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     open func editingChanged(_ textField: UITextField) {
         hideMessage()
-        showOnlyOneCardMessage()
         if editingLabel == cardNumberLabel {
+            showOnlyOneCardMessage()
             editingLabel?.text = textMaskFormater.textMasked(textEditMaskFormater.textUnmasked(textField.text!))
             textField.text! = textEditMaskFormater.textMasked(textField.text!, remasked: true)
             self.updateCardSkin()
@@ -498,7 +486,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func setupInputAccessoryView() {
-        if viewModel.shoudShowOnlyOneCardMessage() {
+        if viewModel.shoudShowOnlyOneCardMessage() && self.editingLabel == self.cardNumberLabel {
             showOnlyOneCardMessage()
         } else {
             setupToolbarButtons()
@@ -558,9 +546,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func showCardNotSupportedErrorMessage() {
-        guard let paymentMethods = self.viewModel.getPaymentMethods() else {
-            return
-        }
+       let paymentMethods = self.viewModel.paymentMethods
+
         if viewModel.shoudShowOnlyOneCardMessage() {
                 setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.mpRedPinkErrorMessage(), isError: true)
         }else {

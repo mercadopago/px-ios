@@ -36,7 +36,7 @@ open class InstructionsService: MercadoPagoService {
     }
 
     open func getInstructions(for paymentId: String, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        var params =  MPServicesBuilder.getParamsPublicKey()
+        var params: String = MPServicesBuilder.getParamsPublicKeyAndAcessToken()
 
         params.paramsAppend(key: ApiParams.PAYMENT_TYPE, value: paymentTypeId)
 
