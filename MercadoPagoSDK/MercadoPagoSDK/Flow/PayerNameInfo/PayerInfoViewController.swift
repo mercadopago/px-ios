@@ -136,8 +136,11 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
 
     }
 
-    func textChanged(textField: UITextField)  {
-        if currentInput == self.identificationComponent {
+    func textChangedIn(component: SimpleInputComponent)  {
+        guard let textField = component.inputTextField else {
+            return
+        }
+        if component == self.identificationComponent {
             guard let mask = self.viewModel.currentMask else {
                 return
             }

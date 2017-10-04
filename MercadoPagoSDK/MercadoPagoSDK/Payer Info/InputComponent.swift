@@ -8,7 +8,7 @@
 
 import UIKit
 protocol InputComponentListener {
-    func textChanged(textField: UITextField)
+    func textChangedIn(component: SimpleInputComponent)
 }
 
 class SimpleInputComponent: UIView, PXComponent {
@@ -73,7 +73,7 @@ class SimpleInputComponent: UIView, PXComponent {
     }
     open func editingChanged(textField: UITextField) {
         if let delegate = self.delegate {
-            delegate.textChanged(textField: textField)
+            delegate.textChangedIn(component: self)
         }
     }
     open func setText(text:String) {
