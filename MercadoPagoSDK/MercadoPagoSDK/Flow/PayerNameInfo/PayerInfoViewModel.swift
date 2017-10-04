@@ -36,6 +36,7 @@ class PayerInfoViewModel: NSObject {
         self.payer = payer
         super.init()
 
+
         self.identificationTypes = filterSupported(identificationTypes: identificationTypes)
 
         if identificationTypes.isEmpty {

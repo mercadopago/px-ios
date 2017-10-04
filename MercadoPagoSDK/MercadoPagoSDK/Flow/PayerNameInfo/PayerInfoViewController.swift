@@ -37,6 +37,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     init(viewModel: PayerInfoViewModel, callback: @escaping ((_ payer: Payer) -> Void)) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        self.view.backgroundColor = UIColor.primaryColor()
         self.callback = callback
         NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
