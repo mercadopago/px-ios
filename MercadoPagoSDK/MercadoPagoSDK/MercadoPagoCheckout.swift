@@ -47,7 +47,23 @@ open class MercadoPagoCheckout: NSObject {
     public func start() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
+    }
 
+    public func setPaymentResult(paymentResult: PaymentResult) {
+        self.viewModel.paymentResult = paymentResult
+    }
+
+    public func setCheckoutPreference(checkoutPreference: CheckoutPreference) {
+        self.viewModel.checkoutPreference = checkoutPreference
+    }
+
+    public func setPaymentData(paymentData: PaymentData) {
+        self.viewModel.paymentData = paymentData
+    }
+
+    public func resume() {
+        MercadoPagoCheckout.currentCheckout = self
+        executeNextStep()
     }
 
     func initialize() {
