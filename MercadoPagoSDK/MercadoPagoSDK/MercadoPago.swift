@@ -175,7 +175,7 @@ import UIKit
 
         if defaultColor {
             description = description+"Azul"
-        } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" {
+        } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" || description.contains("bolbradesco") {
             description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description+"Azul" : description
         }
 
@@ -185,7 +185,7 @@ import UIKit
 
         let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
 
-        if description == "credit_card" || description == "account_money" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" {
+        if description == "credit_card" || description == "account_money" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
             return image?.imageWithOverlayTint(tintColor: UIColor.primaryColor())
         } else {
             return image

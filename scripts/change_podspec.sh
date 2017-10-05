@@ -13,11 +13,10 @@ cp $temp_name $file_name
 
 lf=$'\n'
 
-sed 's/:git.*/:git => "git@github.com:mercadopago\/px-ios.git", :tag => s.version.to_s }/' $temp_name | tee $file_name
 
-text="  s.subspec 'ESC' do |esc|	\\$lf	esc.dependency 'MercadoPagoSDK\/Default'  \\$lf    	esc.dependency 'MLESCManager' \\$lf     esc.pod_target_xcconfig = { \\$lf       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE' \\$lf     } \\$lf   end"
+text="  s.subspec 'ESC' do |esc|	\\$lf	esc.dependency 'MercadoPagoSDK\/Default'  \\$lf    	esc.dependency 'MLESCManager' \\$lf     esc.pod_target_xcconfig = { \\$lf       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D MPESC_ENABLE' \\$lf     } \\$lf   end"
 
-sed "18s/^//p; 18s/^.*/ $text\\$lf/g" $file_name | tee $file_name
+sed -e "18s/^//p; 18s/^.*/ $text\\$lf/g" -e 's/:git.*/:git => "git@github.com:mercadopago\/px-ios.git", :tag => s.version.to_s }/' $temp_name | tee $file_name
 
 
 echo "=========================================="

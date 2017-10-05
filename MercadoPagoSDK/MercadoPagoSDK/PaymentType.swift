@@ -10,7 +10,7 @@ import UIKit
 
 open class PaymentType: NSObject {
 
-    open static let allPaymentIDs: Set<String> = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.ACCOUNT_MONEY.rawValue, PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue, PaymentTypeId.ATM.rawValue, PaymentTypeId.BITCOIN.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
+    open static let allPaymentIDs: Set<String> = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.ACCOUNT_MONEY.rawValue, PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue, PaymentTypeId.ATM.rawValue, PaymentTypeId.BITCOIN.rawValue, PaymentTypeId.PREPAID_CARD.rawValue, PaymentTypeId.BOLBRADESCO.rawValue]
 
     var paymentTypeId: PaymentTypeId!
 
@@ -43,6 +43,7 @@ public enum PaymentTypeId: String {
     case ATM = "atm"
     case BITCOIN = "digital_currency"
     case PREPAID_CARD = "prepaid_card"
+    case BOLBRADESCO = "bolbradesco"
 
     public func isCard() -> Bool {
         return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD

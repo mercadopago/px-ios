@@ -14,5 +14,23 @@ class InstructionTest: BaseTest {
         let json: NSDictionary = MockManager.getMockFor("Instruction")!
         let instructionFromJSON = Instruction.fromJSON(json)
         XCTAssertEqual(instructionFromJSON, instructionFromJSON)
+
+        XCTAssertEqual(instructionFromJSON.title, "title")
+        XCTAssert(instructionFromJSON.hasTitle())
+
+        XCTAssertNil(instructionFromJSON.subtitle)
+        XCTAssertFalse(instructionFromJSON.hasSubtitle())
+
+        XCTAssertEqual(instructionFromJSON.accreditationMessage, "accreditation_message")
+        XCTAssert(instructionFromJSON.hasAccreditationMessage())
+
+        XCTAssertEqual(instructionFromJSON.secondaryInfo!, ["secondary_info"])
+        XCTAssert(instructionFromJSON.hasSecondaryInformation())
+
+        XCTAssertNil(instructionFromJSON.accreditationComment)
+        XCTAssertFalse(instructionFromJSON.hasAccreditationComment())
+
+        XCTAssertNil(instructionFromJSON.actions)
+        XCTAssertFalse(instructionFromJSON.hasActions())
     }
 }

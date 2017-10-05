@@ -142,6 +142,11 @@ open class MockBuilder: NSObject {
         return identification
     }
 
+    class func buildIdentificationTypes() -> [IdentificationType] {
+        let identificationType = IdentificationType()
+        return [identificationType]
+    }
+
     class func buildCard(paymentMethodId: String? = "paymentMethodId") -> Card {
         let card = Card()
         card.idCard = "4"
@@ -330,6 +335,12 @@ open class MockBuilder: NSObject {
         let paymentData = PaymentData()
         paymentData.paymentMethod = paymentMethod
         return paymentData
+    }
+    
+    class func buildInstructionsInfo(paymentMethod: PaymentMethod) -> InstructionsInfo {
+        let instructionInfoJson = MockManager.getMockFor("InstructionInfo")
+        let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
+        return intructionsInfo
     }
 
     class func buildPaymentData(paymentMethodId: String, paymentMethodName: String?, paymentMethodTypeId: String?) -> PaymentData {

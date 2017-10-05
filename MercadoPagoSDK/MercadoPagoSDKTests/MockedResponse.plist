@@ -6689,5 +6689,442 @@
     }
   ]
 }</string>
+	<key>POST/beta/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;site_id=MLA&amp;api_version=API_VERSION&amp;processing_mode=aggregator</key>
+	<string>{
+  &quot;groups&quot;: [
+    {
+      &quot;children&quot;: null,
+      &quot;children_header&quot;: null,
+      &quot;comment&quot;: &quot;&quot;,
+      &quot;description&quot;: &quot;Tarjeta de crédito&quot;,
+      &quot;id&quot;: &quot;credit_card&quot;,
+      &quot;show_icon&quot;: true,
+      &quot;type&quot;: &quot;payment_type&quot;
+    }
+  ],
+  &quot;payment_methods&quot;: [
+    {
+      &quot;id&quot;: &quot;visa&quot;,
+      &quot;name&quot;: &quot;Visa&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/visa.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/visa.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^4&quot;,
+            &quot;exclusion_pattern&quot;: &quot;^(487017)&quot;,
+            &quot;installments_pattern&quot;: &quot;^4&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;amex&quot;,
+      &quot;name&quot;: &quot;American Express&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/amex.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/amex.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^((34)|(37))&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^((34)|(37))&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 15,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 4,
+            &quot;card_location&quot;: &quot;front&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_identification_number&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_name&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;master&quot;,
+      &quot;name&quot;: &quot;Mastercard&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/master.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/master.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^5&quot;,
+            &quot;exclusion_pattern&quot;: &quot;^((520053)|(546553)|(554472)|(531847)|(527601)|(501105)|(522135)|(522137)|(527555)|((542702)|(544764)|(550073)|(528824))|(557039)|((515073)|(515070)))&quot;,
+            &quot;installments_pattern&quot;: &quot;^5&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_identification_number&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_name&quot;,
+        &quot;issuer_id&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;argencard&quot;,
+      &quot;name&quot;: &quot;Argencard&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/argencard.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/argencard.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^(501105)&quot;,
+            &quot;exclusion_pattern&quot;: &quot;^((589562)|(527571)|(527572))&quot;,
+            &quot;installments_pattern&quot;: &quot;^(501105)&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;cabal&quot;,
+      &quot;name&quot;: &quot;Cabal&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/cabal.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/cabal.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^((627170)|(589657)|(603522)|(604((20[1-9])|(2[1-9][0-9])|(3[0-9]{2})|(400))))&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^((627170)|(589657)|(603522)|(604((20[1-9])|(2[1-9][0-9])|(3[0-9]{2})|(400))))&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;cencosud&quot;,
+      &quot;name&quot;: &quot;Cencosud&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/cencosud.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/cencosud.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^(603493)&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^(603493)&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;diners&quot;,
+      &quot;name&quot;: &quot;Diners&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/diners.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/diners.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^((30)|(36)|(38))&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^((30)|(36)|(38))&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 14,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;naranja&quot;,
+      &quot;name&quot;: &quot;Naranja&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/naranja.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/naranja.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^(589562)&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^(589562)&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;none&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;nativa&quot;,
+      &quot;name&quot;: &quot;Nativa Mastercard&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/nativa.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/nativa.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;supported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^(546553)&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^(546553)&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;mandatory&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_identification_number&quot;,
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_type&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;cordobesa&quot;,
+      &quot;name&quot;: &quot;Cordobesa&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/cordobesa.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/cordobesa.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;unsupported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^((542702)|(544764)|(550073)|(528824))&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^((542702)|(544764)|(550073))&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;optional&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;cmr&quot;,
+      &quot;name&quot;: &quot;CMR&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/cmr.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/cmr.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;unsupported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^(557039)&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^(557039)&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;optional&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    },
+    {
+      &quot;id&quot;: &quot;cordial&quot;,
+      &quot;name&quot;: &quot;Cordial&quot;,
+      &quot;payment_type_id&quot;: &quot;credit_card&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/cordobesa.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/cordobesa.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;unsupported&quot;,
+      &quot;settings&quot;: [
+        {
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^(522135|522137|527555)&quot;,
+            &quot;exclusion_pattern&quot;: &quot;&quot;,
+            &quot;installments_pattern&quot;: &quot;^(522135|522137|527555)&quot;
+          },
+          &quot;card_number&quot;: {
+            &quot;length&quot;: 16,
+            &quot;validation&quot;: &quot;standard&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;mode&quot;: &quot;optional&quot;,
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;
+          }
+        }
+      ],
+      &quot;additional_info_needed&quot;: [
+        &quot;cardholder_name&quot;,
+        &quot;cardholder_identification_type&quot;,
+        &quot;cardholder_identification_number&quot;
+      ],
+      &quot;min_allowed_amount&quot;: 0,
+      &quot;max_allowed_amount&quot;: 250000,
+      &quot;accreditation_time&quot;: 2880
+    }
+  ]
+}</string>
 </dict>
 </plist>

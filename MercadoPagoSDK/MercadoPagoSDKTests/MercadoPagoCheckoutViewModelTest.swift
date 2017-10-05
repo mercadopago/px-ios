@@ -190,7 +190,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let cardToken = MockBuilder.buildCardToken()
         mpCheckout.viewModel.cardToken = cardToken
 
-        // 7. Identification
+        // 7. Buscar Identification
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_GET_IDENTIFICATION_TYPES, step)
+        mpCheckout.viewModel.identificationTypes = MockBuilder.buildIdentificationTypes()
+
+        // 8. Identification
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_IDENTIFICATION, step)
 
@@ -198,7 +203,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let identificationMock = MockBuilder.buildIdentification()
         mpCheckout.viewModel.updateCheckoutModel(identification: identificationMock)
 
-        // 8. Crear token
+        // 9. Crear token
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_CREATE_CARD_TOKEN, step)
 
@@ -206,7 +211,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mockToken = MockBuilder.buildToken()
         mpCheckout.viewModel.updateCheckoutModel(token: mockToken)
 
-        // 9 . Get Issuers
+        // 10 . Get Issuers
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_ISSUERS, step)
 
@@ -215,23 +220,23 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         mpCheckout.viewModel.issuers = [onlyIssuerAvailable]
         mpCheckout.viewModel.updateCheckoutModel(issuer: onlyIssuerAvailable)
 
-        // 10. Un solo banco disponible => Payer Costs
+        // 11. Un solo banco disponible => Payer Costs
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
 
-        // 11. Pantalla cuotas
+        // 12. Pantalla cuotas
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_PAYER_COST, step)
 
         //Simular cuotas seleccionadas
         mpCheckout.viewModel.paymentData.payerCost = MockBuilder.buildPayerCost()
 
-        // 12. RyC
+        // 13. RyC
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_REVIEW_AND_CONFIRM, step)
 
-        // 13. Simular pago
+        // 14. Simular pago
         let paymentDataMock = MockBuilder.buildPaymentData(paymentMethod: paymentMethodMaster)
         paymentDataMock.issuer = MockBuilder.buildIssuer()
         paymentDataMock.payerCost = MockBuilder.buildPayerCost()
@@ -240,7 +245,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_POST_PAYMENT, step)
 
-        // 14. Simular pago completo => Congrats
+        // 15. Simular pago completo => Congrats
         let paymentMock = MockBuilder.buildPayment("master")
         mpCheckout.viewModel.updateCheckoutModel(payment: paymentMock)
         mpCheckout.viewModel.paymentResult = MockBuilder.buildPaymentResult()
@@ -248,7 +253,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_RESULT, step)
 
-        // 11. Finish
+        // 16. Finish
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_FINISH, step)
 
