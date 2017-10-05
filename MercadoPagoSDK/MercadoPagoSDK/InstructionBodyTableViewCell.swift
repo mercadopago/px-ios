@@ -216,7 +216,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
         }
 
         if previus != nil {
-            let views = ["label": previus] as! [String: UIView]
+            let views = ["label": previus] as [String: UIView?]
             let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[label]-30-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
             NSLayoutConstraint.activate(heightConstraints)
         }
