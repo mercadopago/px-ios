@@ -122,6 +122,7 @@ class MercadoPagoCheckoutTest: BaseTest {
 
     }
 
+    /*
     func testCollectPaymentMethodSearch() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
@@ -141,7 +142,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentMethodOptions)
         XCTAssertEqual(self.mpCheckout?.viewModel.paymentMethodOptions!.count, 1)
     }
-
+*/
     func testCollectPaymentMethods() {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()

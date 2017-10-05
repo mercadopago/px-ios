@@ -83,7 +83,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
         labelAttributedString.insert(clockAttributedString, at: 0)
         let labelTitle = labelAttributedString
         let label = createLabel(labelAtributedText: labelTitle)
-        let views = ["label": label] as! [String : UIView]
+        let views = ["label": label] as [String : UIView?]
 
         if previus != nil {
             Utils.setContrainsVertical(label: label, previus: previus, constrain: 30)
@@ -91,7 +91,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
             let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(30)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
             NSLayoutConstraint.activate(heightConstraints)
         }
-        Utils.setContrainsHorizontal(views: views, constrain: 20)
+        Utils.setContrainsHorizontal(views: views as! [String : UIView], constrain: 20)
 
         let labelHeight = label.requiredHeight()
         label.frame.size.width = view.frame.width
@@ -105,7 +105,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
             let labelAttributedString = NSMutableAttributedString(string: String(describing: comment), attributes: getAttributes(fontSize: 12, color: UIColor.gray))
             let labelTitle = labelAttributedString
             let label = createLabel(labelAtributedText: labelTitle)
-            let views = ["label": label] as! [String : UIView]
+            let views = ["label": label] as! [String : UIView?]
 
             if previus != nil {
                 Utils.setContrainsVertical(label: label, previus: previus, constrain: 15)
@@ -114,7 +114,10 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 NSLayoutConstraint.activate(heightConstraints)
             }
 
-            Utils.setContrainsHorizontal(views: views, constrain: 20)
+  
+          Utils.setContrainsHorizontal(views: views as! [String : UIView], constrain: 20)
+            
+
 
             let labelHeight = label.requiredHeight()
             label.frame.size.width = view.frame.width
