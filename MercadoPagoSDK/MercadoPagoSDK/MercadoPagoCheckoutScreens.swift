@@ -57,8 +57,7 @@ extension MercadoPagoCheckout {
     }
 
     func showPayerInfoFlow() {
-        let identificationTypes = self.viewModel.identificationTypes!
-        let viewModel = PayerInfoViewModel(identificationTypes: identificationTypes, payer: self.viewModel.paymentData.payer)
+        let viewModel = self.viewModel.payerInfoFlow()
         let vc = PayerInfoViewController(viewModel: viewModel) { [weak self] (payer) in
 
             guard let strongSelf = self else {
