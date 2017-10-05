@@ -175,7 +175,7 @@ extension MercadoPagoCheckout {
 
         let congratsViewController: MercadoPagoUIViewController
 
-        if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.getPaymentMethod()!.paymentTypeId) {
+        if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.getPaymentMethod()!.paymentTypeId) || self.viewModel.paymentResult?.status == PaymentStatus.REJECTED {
             congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
 
                 guard let strongSelf = self else {

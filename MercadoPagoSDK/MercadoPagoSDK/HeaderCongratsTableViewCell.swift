@@ -90,7 +90,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
     }
 
     func fillCellForRejectedStatus(paymentResultScreenPreference: PaymentResultScreenPreference, paymentResult: PaymentResult, paymentMethod: PaymentMethod?) {
-        icon.image = paymentResultScreenPreference.getHeaderRejectedIcon()
+        icon.image = paymentResultScreenPreference.getHeaderRejectedIcon(paymentMethod)
         let title = (paymentResult.statusDetail + "_title")
         if !title.existsLocalized() {
             if !String.isNullOrEmpty(paymentResultScreenPreference.getRejectedTitle()) {
