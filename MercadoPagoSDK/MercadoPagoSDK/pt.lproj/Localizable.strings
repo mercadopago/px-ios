@@ -150,6 +150,7 @@
 
 "Ingresalo nuevamente" = "Digite novamente";
 "Algo salió mal… " = "Algo deu errado… ";
+"El número de identificación es inválido" = "O número de identificação é inválido";
 "Cancelar pago" = "Cancelar pagamento";
 "rejected_high_risk_title"="Por segurança, foi necessário recusar o seu pagamento";
 "cc_rejected_insufficient_amount_title" = "O seu %0 não possui saldo suficiente";

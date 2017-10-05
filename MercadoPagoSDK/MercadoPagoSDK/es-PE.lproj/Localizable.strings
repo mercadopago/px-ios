@@ -73,6 +73,7 @@
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Cancelar pago" = "Cancelar pago";
 "Algo salió mal… " = "Algo salió mal… ";
+"El número de identificación es inválido" = "El número de identificación es inválido";
 
 
 "rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. \n\nO si prefieres, puedes elegir otro medio de pago.";

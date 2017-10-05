@@ -20,6 +20,7 @@ open class ApiUtil {
         case INVALID_ESC = "E216"
         case INVALID_FINGERPRINT = "E217"
         case INVALID_PAYMENT_WITH_ESC = "2107"
+        case INVALID_PAYMENT_IDENTIFICATION_NUMBER = "2067"
     }
 
     enum RequestOrigin: String {
