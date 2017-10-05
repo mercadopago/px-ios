@@ -424,7 +424,10 @@ open class PaymentMethod: NSObject, Cellable {
         }
         return MercadoPago.getEditTextMaskFor(self, settings: settings)
     }
-
+    
+    open func isBolbradesco() -> Bool {
+        return self._id.contains(PaymentTypeId.BOLBRADESCO.rawValue)
+    }
 }
 
 public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
