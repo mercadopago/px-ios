@@ -29,7 +29,7 @@ open class ServicePreference: NSObject {
     open static var MP_PROD_ENV = "/v1"
     open static var MP_SELECTED_ENV = MP_PROD_ENV
 
-    static var API_VERSION = "1.3.X"
+    static var API_VERSION = "1.4.X"
 
     static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
 

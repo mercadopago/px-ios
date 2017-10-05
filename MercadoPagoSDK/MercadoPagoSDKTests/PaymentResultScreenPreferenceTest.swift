@@ -192,7 +192,7 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
 
     func testSetExitTitle() {
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getExitButtonTitle(), "Continuar".localized)
+        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getExitButtonTitle(), "Seguir comprando".localized)
 
         paymentResultScreenPreference.setExitButtonTitle(title: "lala")
         self.mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)

@@ -50,12 +50,31 @@ extension MercadoPagoCheckoutViewModel {
         return self.payment != nil
     }
     func needGetIdentification() -> Bool {
+        guard let pm = self.paymentData.getPaymentMethod(), pm._id != "bolbradesco" else {
+            return false
+        }
+
+        return isIdentificationNeeded() && self.identificationTypes != nil
+    }
+
+    func needToGetIdentificationTypes() -> Bool {
+        return isIdentificationNeeded() && self.identificationTypes == nil
+    }
+
+    func needToGetPayerInfo() -> Bool {
+        guard let pm = self.paymentData.getPaymentMethod(), pm._id == "bolbradesco" else {
+            return false
+        }
+
+        return isIdentificationNeeded() && self.identificationTypes != nil
+    }
+
+    func isIdentificationNeeded() -> Bool {
         guard let pm = self.paymentData.getPaymentMethod(), let option = self.paymentOptionSelected else {
             return false
         }
 
-        if !pm.isOnlinePaymentMethod() && (pm.isIdentificationRequired() || pm.isIdentificationTypeRequired()) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
-
+        if !pm.isOnlinePaymentMethod() && (pm.isIdentificationRequired() || pm.isIdentificationTypeRequired() || pm.isPayerInfoRequired()) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
             return true
         }
 
@@ -69,7 +88,6 @@ extension MercadoPagoCheckoutViewModel {
             }
         }
         return false
-
     }
 
     func needGetEntityTypes() -> Bool {
@@ -210,6 +228,26 @@ extension MercadoPagoCheckoutViewModel {
             return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
         }
         return false
+    }
+
+    func needToGetInstructions() -> Bool {
+        guard let paymentResult = self.paymentResult else {
+            return false
+        }
+
+        guard paymentResult._id != nil else {
+            return false
+        }
+
+        guard let paymentTypeId = paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId else {
+            return false
+        }
+
+        if !PaymentTypeId.isOnlineType(paymentTypeId: paymentTypeId) && self.instructionsInfo == nil {
+            return true
+        } else {
+            return false
+        }
     }
 
     func shouldShowCongrats() -> Bool {
