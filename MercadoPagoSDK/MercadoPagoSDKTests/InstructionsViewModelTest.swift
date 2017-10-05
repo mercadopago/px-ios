@@ -160,7 +160,7 @@ class InstructionsViewModelTest: BaseTest {
         XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL]!, self.paymentResult.statusDetail)
         XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_ID]!, self.paymentResult._id)
         XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_METHOD_ID]!, self.paymentResult.paymentData!.getPaymentMethod()!._id)
-        XCTAssertNil(metada[TrackingUtil.METADATA_ISSUER_ID] as? String)
+        XCTAssertNil(metada[TrackingUtil.METADATA_ISSUER_ID])
     }
 
 }
