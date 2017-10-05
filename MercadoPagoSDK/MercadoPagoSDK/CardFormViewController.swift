@@ -7,7 +7,7 @@
 //
 
 import UIKit
-fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
+private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
         return l < r
@@ -242,7 +242,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
     func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height - 40
             self.view.layoutIfNeeded()
             self.view.setNeedsUpdateConstraints()
@@ -305,8 +305,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     open func editingChanged(_ textField: UITextField) {
         hideMessage()
-        showOnlyOneCardMessage()
         if editingLabel == cardNumberLabel {
+            showOnlyOneCardMessage()
             editingLabel?.text = textMaskFormater.textMasked(textEditMaskFormater.textUnmasked(textField.text!))
             textField.text! = textEditMaskFormater.textMasked(textField.text!, remasked: true)
             self.updateCardSkin()
@@ -486,7 +486,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func setupInputAccessoryView() {
-        if viewModel.shoudShowOnlyOneCardMessage() {
+        if viewModel.shoudShowOnlyOneCardMessage() && self.editingLabel == self.cardNumberLabel {
             showOnlyOneCardMessage()
         } else {
             setupToolbarButtons()

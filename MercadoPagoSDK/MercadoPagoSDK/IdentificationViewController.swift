@@ -17,7 +17,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     var callback : (( Identification) -> Void)?
     var errorExitCallback: (() -> Void)?
-    var identificationTypes: [IdentificationType]?
+    var identificationTypes: [IdentificationType]!
     var identificationType: IdentificationType?
 
     //identification Masks
@@ -32,13 +32,14 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
 
-    @IBOutlet var typePicker: UIPickerView! = UIPickerView()
+    //@IBOutlet var typePicker: UIPickerView! = UIPickerView()
 
     override open var screenName: String { get { return "IDENTIFICATION_NUMBER" } }
 
-    public init(callback : @escaping (( _ identification: Identification) -> Void), errorExitCallback: (() -> Void)?) {
+    public init(identificationTypes: [IdentificationType], callback : @escaping (( _ identification: Identification) -> Void), errorExitCallback: (() -> Void)?) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
+        self.identificationTypes = identificationTypes
         self.errorExitCallback = errorExitCallback
     }
 
@@ -156,9 +157,10 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         numberTextField.keyboardType = UIKeyboardType.numberPad
         numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
         self.setupInputAccessoryView()
-        self.getIdentificationTypes()
-        typePicker.isHidden = true
-
+        identificationType =  self.identificationTypes[0]
+        textField.text = self.identificationTypes[0].name
+        self.numberTextField.text = ""
+        self.remask()
     }
 
     func getCardWidth() -> CGFloat {
@@ -196,18 +198,16 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
             return 0
         }
 
-        return self.identificationTypes!.count
+        return self.identificationTypes.count
     }
 
     open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.identificationTypes![row].name
+        return self.identificationTypes[row].name
     }
 
     open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        identificationType =  self.identificationTypes![row]
-    //    typeButton.setTitle( self.identificationTypes![row].name, forState: .Normal)
-        textField.text = self.identificationTypes![row].name
-        typePicker.isHidden = true
+        identificationType =  self.identificationTypes[row]
+        textField.text = self.identificationTypes[row].name
         self.numberTextField.text = ""
         self.remask()
 
@@ -215,8 +215,6 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     @IBAction func setType(_ sender: AnyObject) {
         numberTextField.resignFirstResponder()
-        typePicker.isHidden = false
-
     }
 
     var navItem: UINavigationItem?
@@ -301,32 +299,6 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     func leftArrowKeyTapped() {
         self.navigationController?.popViewController(animated: false)
-
-    }
-
-    fileprivate func getIdentificationTypes() {
-        doneNext?.isEnabled = false
-        MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (identificationTypes) -> Void in
-            self.doneNext?.isEnabled = true
-            self.identificationTypes = identificationTypes
-            self.typePicker.reloadAllComponents()
-            self.identificationType =  self.identificationTypes![0]
-            self.textField.text = self.identificationTypes![0].name
-            self.remask()
-            self.numberTextField.text = ""
-
-            }, failure : { (error) -> Void in
-                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue, callback: {
-                    self.dismiss(animated: true, completion: {})
-                    self.getIdentificationTypes()
-                    }, callbackCancel: {
-                        if let errorExitCallback = self.errorExitCallback {
-                            errorExitCallback()
-                        } else if self.callbackCancel != nil {
-                            self.callbackCancel!()
-                        }
-                    })
-        })
     }
 
     fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
@@ -365,25 +337,17 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
         if charactersCount! >= 1 {
             let identificationMask = masks[1]
-
             numberTextField.text = defaultEditTextMask.textMasked(numberTextField.text, remasked: true)
-
             self.numberDocLabel.text = identificationMask.textMasked(defaultEditTextMask.textUnmasked(numberTextField.text))
 
         } else {
             let identificationMask = masks[0]
-
             numberTextField.text = defaultEditTextMask.textMasked(numberTextField.text, remasked: true)
-
             self.numberDocLabel.text = identificationMask.textMasked(defaultEditTextMask.textUnmasked(numberTextField.text))
-
         }
-
     }
 
     fileprivate func remask() {
-
         drawMask(masks: getIdMask(IDtype: identificationType))
-
     }
 }

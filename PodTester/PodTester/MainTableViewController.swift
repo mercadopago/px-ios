@@ -253,7 +253,7 @@ class MainTableViewController: UITableViewController {
         }
 
         var prefRS = ReviewScreenPreference()
-        prefRS.setSummaryProductTitle(productTitle: "🐙 Remeras")
+        prefRS.setSummaryProductTitle(productTitle: "Carga de agua caliente")
         prefRS.addSummaryProductDetail(amount: 1)
         prefRS.addSummaryTaxesDetail(amount: 2799)
         prefRS.addSummaryChargeDetail(amount: 2000)
@@ -293,7 +293,7 @@ class MainTableViewController: UITableViewController {
         self.payment = Payment()
         self.payment.status = "rejected"
         self.payment.statusDetail = "cc_rejected_call_for_authorize"
-        self.payment.payer = Payer(_id: "1", email: "asd@asd.com", type: nil, identification: nil, entityType: nil)
+        self.payment.payer = Payer(_id: "1", email: "asd@asd.com", identification: nil, entityType: nil)
         //  self.payment.payer.email = "as@asd.com"
         self.payment.statementDescriptor = "description"
         let PR = PaymentResult(payment: self.payment, paymentData: self.paymentData)
