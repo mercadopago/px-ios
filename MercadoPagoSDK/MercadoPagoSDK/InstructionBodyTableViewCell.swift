@@ -83,7 +83,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
         labelAttributedString.insert(clockAttributedString, at: 0)
         let labelTitle = labelAttributedString
         let label = createLabel(labelAtributedText: labelTitle)
-        let views = ["label": label] as [String : UIView]
+        let views = ["label": label] as! [String : UIView]
 
         if previus != nil {
             Utils.setContrainsVertical(label: label, previus: previus, constrain: 30)
@@ -105,7 +105,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
             let labelAttributedString = NSMutableAttributedString(string: String(describing: comment), attributes: getAttributes(fontSize: 12, color: UIColor.gray))
             let labelTitle = labelAttributedString
             let label = createLabel(labelAtributedText: labelTitle)
-            let views = ["label": label] as [String : UIView]
+            let views = ["label": label] as! [String : UIView]
 
             if previus != nil {
                 Utils.setContrainsVertical(label: label, previus: previus, constrain: 15)

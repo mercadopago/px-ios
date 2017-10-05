@@ -157,6 +157,10 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         numberTextField.keyboardType = UIKeyboardType.numberPad
         numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
         self.setupInputAccessoryView()
+        identificationType =  self.identificationTypes[0]
+        textField.text = self.identificationTypes[0].name
+        self.numberTextField.text = ""
+        self.remask()
     }
 
     func getCardWidth() -> CGFloat {
