@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Default' do |default|
     default.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf','MercadoPagoSDK/*.plist', 'MercadoPagoSDK/MercadoPagoSDK/*.lproj']
-    default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/*' , 'MercadoPagoSDK/MercadoPagoSDK/Tracker/*']
+    default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/*' , 'MercadoPagoSDK/MercadoPagoSDK/Tracker/*',  'MercadoPagoSDK/MercadoPagoSDK/Flow/PayerNameInfo/*', 'MercadoPagoSDK/MercadoPagoSDK/Payer\ Info/*']
   end
 
 s.pod_target_xcconfig = {
