@@ -18,6 +18,11 @@ open class Identification: NSObject {
         self.number = number
     }
 
+    public init (identificationType: IdentificationType, identificationNumber: String) {
+        self.type = identificationType._id
+        self.number = identificationNumber
+    }
+
     open class func fromJSON(_ json: NSDictionary) -> Identification {
         let identification: Identification = Identification()
         identification.type = json["type"] as? String

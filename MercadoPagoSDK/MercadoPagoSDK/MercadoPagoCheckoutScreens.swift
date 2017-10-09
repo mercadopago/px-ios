@@ -11,8 +11,6 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
-        // Se limpia paymentData antes de ofrecer selección de medio de pago
-
         self.viewModel.paymentData.clearCollectedData()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
@@ -27,7 +25,6 @@ extension MercadoPagoCheckout {
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
 
     }
-
     func showCardForm() {
         let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { [weak self](paymentMethods, cardToken) in
 
@@ -42,7 +39,7 @@ extension MercadoPagoCheckout {
     }
 
     func showIdentificationScreen() {
-        let identificationStep = IdentificationViewController (callback: { [weak self] (identification : Identification) in
+        let identificationStep = IdentificationViewController (identificationTypes: self.viewModel.identificationTypes!, callback: { [weak self] (identification : Identification) in
             guard let strongSelf = self else {
                 return
             }
@@ -57,6 +54,21 @@ extension MercadoPagoCheckout {
             self?.navigationController.popViewController(animated: true)
         }
         self.pushViewController(viewController : identificationStep, animated: true)
+    }
+
+    func showPayerInfoFlow() {
+        let identificationTypes = self.viewModel.identificationTypes!
+        let viewModel = PayerInfoViewModel(identificationTypes: identificationTypes, payer: self.viewModel.paymentData.payer)
+        let vc = PayerInfoViewController(viewModel: viewModel) { [weak self] (payer) in
+
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.viewModel.updateCheckoutModel(payer : payer)
+            strongSelf.executeNextStep()
+        }
+        self.pushViewController(viewController : vc, animated: true)
     }
 
     func showIssuersScreen() {
@@ -185,7 +197,7 @@ extension MercadoPagoCheckout {
 
             })
         } else {
-            congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, callback: { [weak self] (_ :PaymentResult.CongratsState) in
+            congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo!, callback: { [weak self] (_ :PaymentResult.CongratsState) in
                 guard let strongSelf = self else {
                     return
                 }
@@ -193,7 +205,7 @@ extension MercadoPagoCheckout {
                 strongSelf.finish()
                 }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
         }
-        self.pushViewController(viewController : congratsViewController, animated: true)
+        self.pushViewController(viewController : congratsViewController, animated: false)
     }
 
     func showErrorScreen() {

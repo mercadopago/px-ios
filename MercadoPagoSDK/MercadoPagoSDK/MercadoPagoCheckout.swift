@@ -47,7 +47,23 @@ open class MercadoPagoCheckout: NSObject {
     public func start() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
+    }
 
+    public func setPaymentResult(paymentResult: PaymentResult) {
+        self.viewModel.paymentResult = paymentResult
+    }
+
+    public func setCheckoutPreference(checkoutPreference: CheckoutPreference) {
+        self.viewModel.checkoutPreference = checkoutPreference
+    }
+
+    public func setPaymentData(paymentData: PaymentData) {
+        self.viewModel.paymentData = paymentData
+    }
+
+    public func resume() {
+        MercadoPagoCheckout.currentCheckout = self
+        executeNextStep()
     }
 
     func initialize() {
@@ -73,6 +89,8 @@ open class MercadoPagoCheckout: NSObject {
             self.showCardForm()
         case .SCREEN_IDENTIFICATION:
             self.showIdentificationScreen()
+        case .SCREEN_PAYER_INFO_FLOW:
+            self.showPayerInfoFlow()
         case .SCREEN_ENTITY_TYPE:
             self.showEntityTypesScreen()
         case .SCREEN_FINANCIAL_INSTITUTIONS:
@@ -83,6 +101,8 @@ open class MercadoPagoCheckout: NSObject {
             self.showIssuersScreen()
         case .SERVICE_CREATE_CARD_TOKEN:
             self.createCardToken()
+        case .SERVICE_GET_IDENTIFICATION_TYPES:
+            self.getIdentificationTypes()
         case .SERVICE_GET_PAYER_COSTS:
             self.getPayerCosts()
         case .SCREEN_PAYER_COST:
@@ -93,6 +113,8 @@ open class MercadoPagoCheckout: NSObject {
             self.showSecurityCodeScreen()
         case .SERVICE_POST_PAYMENT:
             self.createPayment()
+        case .SERVICE_GET_INSTRUCTIONS:
+            self.getInstructions()
         case .SCREEN_PAYMENT_RESULT:
             self.showPaymentResultScreen()
         case .ACTION_FINISH:

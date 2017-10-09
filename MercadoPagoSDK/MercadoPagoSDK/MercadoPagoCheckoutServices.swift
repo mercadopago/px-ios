@@ -63,13 +63,13 @@ extension MercadoPagoCheckout {
         MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
                                                baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
 
-            guard let strongSelf = self else {
-                return
-            }
+                                                guard let strongSelf = self else {
+                                                    return
+                                                }
 
-            strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-            strongSelf.dismissLoading()
-            strongSelf.executeNextStep()
+                                                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
+                                                strongSelf.dismissLoading()
+                                                strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) -> Void in
                 guard let strongSelf = self else {
@@ -348,6 +348,66 @@ extension MercadoPagoCheckout {
                         self?.createPayment()
                     })
                 }
+                strongSelf.executeNextStep()
+        })
+    }
+
+    func getInstructions() {
+        self.presentLoading()
+
+        guard let paymentResult = self.viewModel.paymentResult else {
+            fatalError("Get Instructions - Payment Result does no exist")
+        }
+
+        guard let paymentId = paymentResult._id else {
+           fatalError("Get Instructions - Payment Id does no exist")
+        }
+
+        guard let paymentTypeId = paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId else {
+            fatalError("Get Instructions - Payment Method Type Id does no exist")
+        }
+
+        MPServicesBuilder.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (instructionsInfo) in
+
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.viewModel.instructionsInfo = instructionsInfo
+            strongSelf.dismissLoading()
+            strongSelf.executeNextStep()
+
+            }, failure : { [weak self] (error) -> Void in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue), errorCallback: { [weak self] (_) in
+                self?.getInstructions()
+            })
+            strongSelf.executeNextStep()
+        })
+    }
+
+    func getIdentificationTypes() {
+        self.presentLoading()
+        MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { [weak self] (identificationTypes) -> Void in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.viewModel.updateCheckoutModel(identificationTypes: identificationTypes)
+            strongSelf.dismissLoading()
+            strongSelf.executeNextStep()
+
+            }, failure : {   [weak self] (error) -> Void in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.dismissLoading()
+                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] (_) in
+                    self?.getIdentificationTypes()
+                })
                 strongSelf.executeNextStep()
         })
     }

@@ -387,6 +387,52 @@
 &quot;tertiary_info&quot;: [&quot;tertiary_info&quot;]
 }
 </string>
+	<key>InstructionInfo</key>
+	<string>{
+    &quot;amount_info&quot;: {
+        &quot;thousands_separator&quot;: &quot;.&quot;,
+        &quot;decimal_separator&quot;: &quot;,&quot;,
+        &quot;symbol&quot;: &quot;R$&quot;,
+        &quot;decimal_places&quot;: 2,
+        &quot;amount&quot;: 4001,
+        &quot;total_paid_amount&quot;: 4001
+    },
+    &quot;instructions&quot;: [
+        {
+            &quot;accreditation_message&quot;: &quot;Assim que você pagar, será aprovado automaticamente entre 1 e 2 dias úteis, mas considere: Em caso de feriados, será identificado até às 18h do segundo dia útil subsequente ao feriado.&quot;,
+            &quot;info&quot;: [
+                &quot;1. Acesse o seu Internet Banking ou abra o aplicativo do seu banco.&quot;,
+                &quot;2. Utilize o código abaixo para realizar o pagamento.&quot;
+            ],
+            &quot;references&quot;: [
+                {
+                    &quot;label&quot;: &quot;Número&quot;,
+                    &quot;field_value&quot;: [
+                        &quot;2379&quot;,
+                        &quot;1729&quot;,
+                        &quot;0000&quot;,
+                        &quot;0400&quot;,
+                        &quot;1003&quot;,
+                        &quot;3802&quot;,
+                        &quot;6025&quot;,
+                        &quot;4607&quot;,
+                        &quot;2909&quot;,
+                        &quot;0063&quot;,
+                        &quot;3330&quot;
+                    ],
+                    &quot;separator&quot;: &quot; &quot;,
+                    &quot;comment&quot;: &quot;Você pode copiar e colar o código no fluxo de pagamento do seu aplicativo para torná-lo mais simples e cômodo.&quot;
+                }
+            ],
+            &quot;secondary_info&quot;: [
+                &quot;Uma cópia desse boleto foi enviada ao seu e-mail -payer.email- caso você precise realizar o pagamento depois.&quot;
+            ],
+            &quot;subtitle&quot;: &quot;Veja como é fácil pagar o seu produto&quot;,
+            &quot;title&quot;: &quot;Pronto, pague o seu boleto de R$ 4.001,00&quot;,
+            &quot;type&quot;: &quot;bank_transfer&quot;
+        }
+    ]
+}</string>
 	<key>InstructionReference</key>
 	<string>{
 &quot;label&quot;: &quot;label&quot;,

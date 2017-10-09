@@ -1,5 +1,5 @@
 //
-//  ConfirmEmailTableViewCell.swift
+//  SecondaryInfoTableViewCell.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/26/16.
@@ -8,20 +8,20 @@
 
 import UIKit
 
-class ConfirmEmailTableViewCell: UITableViewCell {
+class SecondaryInfoTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.selectionStyle = .none
         label.font = Utils.getFont(size: label.font.pointSize)
-        label.text = "También enviamos el código a tu email".localized
+        label.text = ""
     }
     func fillCell(paymentResult: PaymentResult?) {
         if paymentResult?.status == "approved" {
             label.text = ("Te enviaremos este comprobante a %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentResult!.payerEmail!)")
-
         }
     }
 

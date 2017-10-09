@@ -42,7 +42,7 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedSecondaryExitButtonText = "Pagar con otro medio".localized
     var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
-    var exitButtonTitle = "Continuar".localized
+    var exitButtonTitle = "Seguir comprando"
 
     var statusBackgroundColor: UIColor?
 
@@ -347,7 +347,7 @@ open class PaymentResultScreenPreference: NSObject {
     }
 
     open func getExitButtonTitle() -> String {
-        return exitButtonTitle
+        return exitButtonTitle.localized
     }
 
     open func isContentCellDisable() -> Bool {

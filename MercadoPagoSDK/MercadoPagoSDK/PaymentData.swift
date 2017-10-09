@@ -38,6 +38,10 @@ public class PaymentData: NSObject {
             return false
         }
 
+        if paymentMethod.isPayerInfoRequired() && payer.identification == nil {
+            return false
+        }
+
         if !Array.isNullOrEmpty(paymentMethod.financialInstitutions) && transactionDetails?.financialInstitution == nil {
             return false
         }
@@ -107,6 +111,13 @@ public class PaymentData: NSObject {
         }
         cleanPayerCost()
         self.issuer = issuer
+    }
+
+    public func updatePaymentDataWith(payer: Payer?) {
+        guard let payer = payer else {
+            return
+        }
+        self.payer = payer
     }
 
     public func cleanToken() {

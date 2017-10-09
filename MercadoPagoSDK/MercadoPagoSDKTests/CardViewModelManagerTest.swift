@@ -196,6 +196,7 @@ class CardViewModelManagerTest: BaseTest {
         XCTAssertTrue(self.cardFormManager!.isValidInputCVV("123"))
     }
 
+
     /**
      *
      Test "cardType"

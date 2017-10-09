@@ -16,6 +16,7 @@ public enum CheckoutStep: String {
     case SERVICE_GET_DIRECT_DISCOUNT
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
+    case SERVICE_GET_IDENTIFICATION_TYPES
     case SCREEN_PAYMENT_METHOD_SELECTION
     case SCREEN_CARD_FORM
     case SCREEN_SECURITY_CODE
@@ -26,9 +27,11 @@ public enum CheckoutStep: String {
     case SCREEN_ENTITY_TYPE
     case SCREEN_FINANCIAL_INSTITUTIONS
     case SERVICE_GET_PAYER_COSTS
+    case SCREEN_PAYER_INFO_FLOW
     case SCREEN_PAYER_COST
     case SCREEN_REVIEW_AND_CONFIRM
     case SERVICE_POST_PAYMENT
+    case SERVICE_GET_INSTRUCTIONS
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
 }
@@ -62,6 +65,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     var rootPaymentMethodOptions: [PaymentMethodOption]?
     var customPaymentOptions: [CardInformation]?
+    var identificationTypes: [IdentificationType]?
 
     var rootVC = true
 
@@ -74,6 +78,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
     open var financialInstitutions: [FinancialInstitution]?
+    open var instructionsInfo: InstructionsInfo?
 
     static var error: MPSDKError?
 
@@ -220,6 +225,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?) {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
+        self.cleanIdentificationTypesSearch()
         self.paymentData.updatePaymentDataWith(paymentMethod:  paymentMethods[0])
         self.cardToken = cardToken
     }
@@ -243,6 +249,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func updateCheckoutModel(issuer: Issuer) {
         self.cleanPayerCostSearch()
         self.paymentData.updatePaymentDataWith(issuer: issuer)
+    }
+
+    public func updateCheckoutModel(payer: Payer) {
+        self.paymentData.updatePaymentDataWith(payer: payer)
+    }
+
+    public func updateCheckoutModel(identificationTypes: [IdentificationType]) {
+        self.identificationTypes = identificationTypes
     }
 
     public func updateCheckoutModel(identification: Identification) {
@@ -308,6 +322,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .ACTION_FINISH
         }
 
+        if needToGetInstructions() {
+            return .SERVICE_GET_INSTRUCTIONS
+        }
+
         if shouldShowCongrats() {
             return .SCREEN_PAYMENT_RESULT
         }
@@ -336,6 +354,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needCompleteCard() {
             return .SCREEN_CARD_FORM
+        }
+
+        if needToGetIdentificationTypes() {
+            return .SERVICE_GET_IDENTIFICATION_TYPES
+        }
+
+        if needToGetPayerInfo() {
+            return .SCREEN_PAYER_INFO_FLOW
         }
 
         if needGetIdentification() {
@@ -632,6 +658,7 @@ extension MercadoPagoCheckoutViewModel {
         self.financialInstitutions = nil
         cleanPayerCostSearch()
         cleanIssuerSearch()
+        cleanIdentificationTypesSearch()
     }
 
     func cleanPayerCostSearch() {
@@ -640,6 +667,10 @@ extension MercadoPagoCheckoutViewModel {
 
     func cleanIssuerSearch() {
         self.issuers = nil
+    }
+
+    func cleanIdentificationTypesSearch() {
+        self.identificationTypes = nil
     }
 
     func cleanPaymentResult() {

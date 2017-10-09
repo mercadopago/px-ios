@@ -13,8 +13,10 @@ open class Payer: NSObject {
 	open var _id: String?
 	open var identification: Identification?
     open var entityType: EntityType?
+    open var name: String?
+    open var surname: String?
 
-    public init(_id: String? = nil, email: String = "", type: String? = nil, identification: Identification? = nil, entityType: EntityType? = nil) {
+    public init(_id: String? = nil, email: String = "", identification: Identification? = nil, entityType: EntityType? = nil) {
 		self._id = _id
 		self.email = email
 		self.identification = identification
@@ -24,6 +26,8 @@ open class Payer: NSObject {
     func clearCollectedData() {
         self.entityType = nil
         self.identification = nil
+        self.name = nil
+        self.surname = nil
     }
 
 	open class func fromJSON(_ json: NSDictionary) -> Payer {
@@ -41,6 +45,14 @@ open class Payer: NSObject {
 
         if let entityTypeDic = json["entity_type"] as? NSDictionary {
             payer.entityType = EntityType.fromJSON(entityTypeDic)
+        }
+        
+        if let name = JSONHandler.attemptParseToString(json["first_name"]) {
+            payer.name = name
+        }
+        
+        if let surname = JSONHandler.attemptParseToString(json["last_name"]) {
+            payer.surname = surname
         }
 
 		return payer
@@ -68,6 +80,14 @@ open class Payer: NSObject {
 
         if let ET = self.entityType {
             obj["entity_type"] = ET._id
+        }
+        
+        if self.name != nil {
+            obj["first_name"] = self.name
+        }
+        
+        if self.surname != nil {
+            obj["last_name"] = self.surname
         }
 
         return obj
