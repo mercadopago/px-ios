@@ -180,7 +180,7 @@ class PaymentResultContentViewModel: NSObject {
     func getRejectedSubtitle() -> String {
         if paymentResult.statusDetail != "" {
             
-            if (paymentResult.paymentData?.paymentMethod?.isBolbradesco())! {
+            if (paymentResult.paymentData?.paymentMethod?.isBolbradesco)! {
                 return "Por favor, intenta pagar con otro medio.".localized
             }
 

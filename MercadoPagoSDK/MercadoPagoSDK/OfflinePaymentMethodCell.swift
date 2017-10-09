@@ -118,7 +118,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
             return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
         }
         
-        if paymentMethod.isBolbradesco() {
+        if paymentMethod.isBolbradesco {
             return MercadoPago.getImage("MPSDK_review_bolbradesco")!
         } else if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue {
             return MercadoPago.getImage("MPSDK_review_dineroEnCuenta")!

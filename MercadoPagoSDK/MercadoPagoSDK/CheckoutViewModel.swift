@@ -37,7 +37,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func isPaymentMethodSelectedCard() -> Bool {
-        return self.paymentData.hasPaymentMethod() && self.paymentData.getPaymentMethod()!.isCard()
+        return self.paymentData.hasPaymentMethod() && self.paymentData.getPaymentMethod()!.isCard
     }
 
     func numberOfSections() -> Int {

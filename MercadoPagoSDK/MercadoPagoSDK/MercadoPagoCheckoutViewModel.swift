@@ -270,7 +270,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
 
-        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard() {
+        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard {
             self.cardToken!.cardholder!.identification = identification
         } else {
             paymentData.payer.identification = identification
