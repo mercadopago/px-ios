@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Address: Equatable {
+open class Address: NSObject {
     open var streetName: String?
     open var streetNumber: NSNumber?
     open var zipCode: String?
