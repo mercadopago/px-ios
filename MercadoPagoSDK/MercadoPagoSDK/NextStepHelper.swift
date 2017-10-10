@@ -50,7 +50,7 @@ extension MercadoPagoCheckoutViewModel {
         return self.payment != nil
     }
     func needGetIdentification() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod(), pm._id != "bolbradesco" else {
+        guard let pm = self.paymentData.getPaymentMethod(), !pm.isBolbradesco else {
             return false
         }
 
@@ -62,7 +62,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToGetPayerInfo() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod(), pm._id == "bolbradesco" else {
+        guard let pm = self.paymentData.getPaymentMethod(), pm.isBolbradesco else {
             return false
         }
 
@@ -74,7 +74,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if !pm.isOnlinePaymentMethod() && (pm.isIdentificationRequired() || pm.isIdentificationTypeRequired() || pm.isPayerInfoRequired()) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
+        if !pm.isOnlinePaymentMethod && (pm.isIdentificationRequired || pm.isIdentificationTypeRequired || pm.isPayerInfoRequired) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
             return true
         }
 
@@ -83,7 +83,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         if let identification = holder.identification {
-            if String.isNullOrEmpty(identification.number) && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod() {
+            if String.isNullOrEmpty(identification.number) && pm.isIdentificationRequired && !option.isCustomerPaymentMethod() {
                 return true
             }
         }
@@ -97,7 +97,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if paymentData.payer.entityType == nil && pm.isEntityTypeRequired() {
+        if paymentData.payer.entityType == nil && pm.isEntityTypeRequired {
             return true
         }
         return false
@@ -128,7 +128,7 @@ extension MercadoPagoCheckoutViewModel {
         if selectedType.isCustomerPaymentMethod() {
             return false
         }
-        if !paymentData.hasIssuer() && pm.isCard() && Array.isNullOrEmpty(issuers) {
+        if !paymentData.hasIssuer() && pm.isCard && Array.isNullOrEmpty(issuers) {
             return true
         }
         return false
@@ -144,7 +144,7 @@ extension MercadoPagoCheckoutViewModel {
         if selectedType.isCustomerPaymentMethod() {
             return false
         }
-        if !paymentData.hasIssuer()  && pm.isCard() && !Array.isNullOrEmpty(issuers) {
+        if !paymentData.hasIssuer()  && pm.isCard && !Array.isNullOrEmpty(issuers) {
             return true
         }
         return false
@@ -154,7 +154,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if pm.isCreditCard() && !paymentData.hasPayerCost() && payerCosts == nil {
+        if pm.isCreditCard && !paymentData.hasPayerCost() && payerCosts == nil {
             return true
         }
         return false
@@ -164,7 +164,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if pm.isCreditCard() && !paymentData.hasPayerCost() && payerCosts != nil {
+        if pm.isCreditCard && !paymentData.hasPayerCost() && payerCosts != nil {
             return true
         }
         return false
@@ -179,7 +179,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !pm.isCreditCard()
+        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !pm.isCreditCard
         let isCustomerCard = pmSelected.isCustomerPaymentMethod() && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
@@ -197,10 +197,10 @@ extension MercadoPagoCheckoutViewModel {
         //Note: this is being used only for new cards, saved cards tokenization is
         //made in MercadoPagoCheckout#collectSecurityCode().
 
-        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard()
+        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard
 
-        let newCard = !paymentData.hasToken() && pm.isCard() && self.cardToken != nil
-        let savedCardWithESC = !paymentData.hasToken() && pm.isCard() && hasSavedESC() && hasInstallmentsIfNeeded
+        let newCard = !paymentData.hasToken() && pm.isCard && self.cardToken != nil
+        let savedCardWithESC = !paymentData.hasToken() && pm.isCard && hasSavedESC() && hasInstallmentsIfNeeded
 
         return newCard || savedCardWithESC
     }
@@ -287,7 +287,7 @@ extension MercadoPagoCheckoutViewModel {
             // Account_money o customer cards
             let customOption = Utils.findCardInformationIn(customOptions: self.customPaymentOptions!, paymentData: self.paymentData, savedESCCardToken: savedESCCardToken)
             self.paymentOptionSelected = customOption as? PaymentMethodOption
-        } else if !paymentMethod.isOnlinePaymentMethod() {
+        } else if !paymentMethod.isOnlinePaymentMethod {
             // Medios off
             if let paymentTypeId = PaymentTypeId(rawValue : paymentMethod.paymentTypeId) {
                 self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod._id, paymentTypeId: paymentTypeId)

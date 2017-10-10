@@ -49,7 +49,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
         self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
 
-        self.iconCash.image = MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")
+        self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -64,10 +64,11 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
         if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
             attributedTitle = NSMutableAttributedString(string : "Con dinero en cuenta".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()])
-            self.iconCash.image = MercadoPago.getImage("MPSDK_review_dineroEnCuenta")
+            self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage(paymentMethod)
             self.acreditationTimeLabel.isHidden = true
             self.accreditationTimeIcon.isHidden = true
         } else {
+            self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage(paymentMethod)
             var currentTitle = ""
             let titleI18N = "ryc_title_" + paymentMethodOption.getId()
             if titleI18N.existsLocalized() {
