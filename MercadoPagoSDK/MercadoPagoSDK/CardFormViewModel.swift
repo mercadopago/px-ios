@@ -188,7 +188,7 @@ open class CardFormViewModel: NSObject {
             return false
         }
         if self.guessedPMS != nil {
-            return self.getGuessedPM()!.isAmex()
+            return self.getGuessedPM()!.isAmex
         } else {
             return false
         }

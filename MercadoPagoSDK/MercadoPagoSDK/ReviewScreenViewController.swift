@@ -194,7 +194,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
         self.hideNavBar()
         self.hideBackButton()
-        self.hideTimer()
         self.callbackConfirm(self.viewModel.paymentData)
     }
 

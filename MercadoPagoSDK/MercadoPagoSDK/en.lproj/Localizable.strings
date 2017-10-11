@@ -54,6 +54,7 @@
 "En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="In a few hours we will tell you by e-mail if it is accredited or if we need more information.";
 
 // -- Rejected
+"Por favor, intenta pagar con otro medio." = "Please try to pay by other means.";
 "¿Qué puedo hacer?" = "What can I do?";
 "rejected_high_risk_title"="For security reasons, we had to reject your payment";
 "cc_rejected_insufficient_amount_title" = "Yours %0 has insufficient funds";

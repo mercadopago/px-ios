@@ -47,6 +47,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     static var paymentDataCallback: ((PaymentData) -> Void)?
     static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     static var paymentCallback: ((Payment) -> Void)?
+    static var finishFlowCallback: ((Payment?) -> Void)?
     var callbackCancel: (() -> Void)?
     static var changePaymentMethodCallback: (() -> Void)?
 
@@ -151,6 +152,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return []
         }
         return paymentMethods
+    }
+    
+    func payerInfoFlow() -> PayerInfoViewModel {
+        let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer)
+        return viewModel
     }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {
@@ -265,7 +271,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
 
-        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard() {
+        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard {
             self.cardToken!.cardholder!.identification = identification
         } else {
             paymentData.payer.identification = identification

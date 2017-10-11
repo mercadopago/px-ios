@@ -15,6 +15,7 @@ open class Payer: NSObject {
     open var entityType: EntityType?
     open var name: String?
     open var surname: String?
+    open var address: Address?
 
     public init(_id: String? = nil, email: String = "", identification: Identification? = nil, entityType: EntityType? = nil) {
 		self._id = _id
@@ -46,13 +47,17 @@ open class Payer: NSObject {
         if let entityTypeDic = json["entity_type"] as? NSDictionary {
             payer.entityType = EntityType.fromJSON(entityTypeDic)
         }
-        
+
         if let name = JSONHandler.attemptParseToString(json["first_name"]) {
             payer.name = name
         }
-        
+
         if let surname = JSONHandler.attemptParseToString(json["last_name"]) {
             payer.surname = surname
+        }
+
+        if let addressDic = json["address"] as? NSDictionary {
+            payer.address = Address.fromJSON(addressDic)
         }
 
 		return payer
@@ -64,8 +69,6 @@ open class Payer: NSObject {
 
     open func toJSON() -> [String:Any] {
         let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
-//        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSONString()
-//        let entityType : Any = self.entityType == nil ? JSONHandler.null : self.entityType!.toJSONString()
         var obj: [String:Any] = [
             "email": email,
         ]
@@ -81,13 +84,17 @@ open class Payer: NSObject {
         if let ET = self.entityType {
             obj["entity_type"] = ET._id
         }
-        
+
         if self.name != nil {
             obj["first_name"] = self.name
         }
-        
+
         if self.surname != nil {
             obj["last_name"] = self.surname
+        }
+
+        if let address = address {
+            obj["address"] = address.toJSON()
         }
 
         return obj
