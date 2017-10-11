@@ -345,8 +345,12 @@ extension MercadoPagoCheckout {
                     strongSelf.viewModel.prepareForInvalidPaymentWithESC()
                 } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
                     self?.viewModel.paymentData.clearCollectedData()
-                    let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido", retry: false)
-                    MercadoPagoCheckoutViewModel.error = mpInvalidIdentificationError
+                    let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
+                    strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
+                        self?.viewModel.resetInformation()
+                        self?.viewModel.resetGroupSelection()
+                        self?.executeNextStep()
+                    })
                 } else {
                     strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
                         self?.createPayment()
