@@ -34,8 +34,6 @@ open class MercadoPagoServices: NSObject {
         self.payerAccessToken = payerAccessToken
         self.proccesingMode = proccesingMode
     }
-
-    static let MP_PAYMENTS_URI = ServicePreference.MP_ENVIROMENT + "/checkout/payments"
     
     public func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void) {
         
@@ -176,6 +174,12 @@ open class MercadoPagoServices: NSObject {
     public func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
         self.getDiscountAdditionalInfo = getDiscountAdditionalInfo
     }
+
+    
+    
+    
+    
+    
 
     open class func createNewCardToken(_ cardToken: CardToken, baseURL: String = ServicePreference.MP_API_BASE_URL,
                                        success:@escaping (_ token: Token) -> Void,
