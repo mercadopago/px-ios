@@ -10,6 +10,31 @@ import Foundation
 
 open class MercadoPagoServices: NSObject {
 
+    private var merchantPublicKey: String
+    private var payerAccessToken: String
+    private var proccesingMode: String
+
+    private var baseURL: String!
+    private var gatewayBaseURL: String!
+    private var getCustomerBaseURL: String!
+    private var createCheckoutPreferenceURL: String!
+    private var getMerchantDiscountBaseURL: String!
+    private var getCustomerURI: String!
+    private var createPaymentURI: String!
+    private var createCheckoutPreferenceURI: String!
+    private var getMerchantDiscountURI: String!
+
+    private var getCustomerAdditionalInfo: [String:String]!
+    private var createPaymentAdditionalInfo: [String:String]!
+    private var createCheckoutPreferenceAdditionalInfo: [String:String]!
+    private var getDiscountAdditionalInfo: [String:String]!
+
+    init(merchantPublicKey: String, payerAccessToken: String, proccesingMode: String) {
+        self.merchantPublicKey = merchantPublicKey
+        self.payerAccessToken = payerAccessToken
+        self.proccesingMode = proccesingMode
+    }
+
     static let MP_PAYMENTS_URI = ServicePreference.MP_ENVIROMENT + "/checkout/payments"
 
     open class func createNewCardToken(_ cardToken: CardToken, baseURL: String = ServicePreference.MP_API_BASE_URL,
