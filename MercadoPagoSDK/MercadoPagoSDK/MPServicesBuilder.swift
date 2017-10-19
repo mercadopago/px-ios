@@ -36,6 +36,94 @@ open class MercadoPagoServices: NSObject {
     }
 
     static let MP_PAYMENTS_URI = ServicePreference.MP_ENVIROMENT + "/checkout/payments"
+    
+    public func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void) {
+        
+    }
+    
+    public func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void) {
+        
+    }
+    
+    public func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], payer: Payer, site: Site, callback : @escaping (PaymentMethodSearch) -> Void) {
+        
+    }
+    
+    public func createPayment(paymentBody: MPPayment, callback : @escaping (Payment) -> Void) {
+        
+    }
+    
+    public func createPayment(transactionId: String, paymentData: [String: Any], callback : @escaping (Payment) -> Void) {
+        
+    }
+    
+    public func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void) {
+        
+    }
+    
+    public func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void) {
+        
+    }
+    
+    public func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void) {
+        
+    }
+    
+    public func cloneToken(tokenId: String, callback : @escaping (Token) -> Void) {
+    
+    }
+    
+    public func getBankDeals(callback : @escaping ([Promo]) -> Void) {
+        
+    }
+    
+    public func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void) {
+        
+    }
+    
+    public func getInstallments(bin: String, amount: Double, issuerId: Int64, paymentMethodId: String, callback: @escaping ([Installment]) -> Void) {
+        
+    }
+    
+    public func getIssuers(paymentMethodId: String, bin: String, callback: @escaping ([Issuer]) -> Void) {
+        
+    }
+    
+    public func getPaymentMethods(callback: @escaping ([PaymentMethod]) -> Void) {
+        
+    }
+    
+    public func getDirectDiscount(amount: String, payerEmail: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void) {
+    
+    }
+    
+    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, callback: @escaping (DiscountCoupon) -> Void) {
+    
+    }
+    
+    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void) {
+        
+    }
+    
+    public func getCampaigns(callback: @escaping ([Campaign]) -> Void) {
+        
+    }
+    
+    public func getCustomer(callback: @escaping (Customer) -> Void) {
+        
+    }
+    
+    public func getCustomer(additionalInfo: NSDictionary, callback: @escaping (Customer) -> Void) {
+        
+    }
+    
+    public func createCheckoutPreference(bodyInfo: [String:Any], callback: @escaping (CheckoutPreference) -> Void) {
+    
+    }
+    
+    public func createCheckoutPreference(callback: @escaping (CheckoutPreference) -> Void) {
+        
+    }
 
     open class func createNewCardToken(_ cardToken: CardToken, baseURL: String = ServicePreference.MP_API_BASE_URL,
                                        success:@escaping (_ token: Token) -> Void,
