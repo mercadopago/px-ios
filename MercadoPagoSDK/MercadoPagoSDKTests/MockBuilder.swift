@@ -277,8 +277,8 @@ open class MockBuilder: NSObject {
         return cardNumber
     }
 
-    class func buildPromo() -> Promo {
-        let promo = Promo()
+    class func buildBankDeal() -> BankDeal {
+        let promo = BankDeal()
         promo.promoId = "promoId"
         promo.legals = "legals"
         promo.paymentMethods = [MockBuilder.buildPaymentMethod("idPaymentMethod")]

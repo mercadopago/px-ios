@@ -858,7 +858,7 @@
 &quot;area_code&quot;: &quot;area_code&quot;,
 &quot;number&quot;: &quot;number&quot;
 }</string>
-	<key>Promo</key>
+	<key>BankDeal</key>
 	<string>{
 &quot;id&quot;: &quot;id&quot;,
 &quot;issuer&quot;:{

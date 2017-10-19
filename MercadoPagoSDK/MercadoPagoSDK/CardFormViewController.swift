@@ -250,7 +250,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     private func getPromos() {
-        MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) -> Void in
+        MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [BankDeal]?) -> Void in
             self.viewModel.promos = promos
             self.updateCardSkin()
         }, failure: { (_: NSError) in
@@ -298,7 +298,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         self.navigationController?.present(UINavigationController(rootViewController: self.startPromosStep(promos : self.viewModel.promos)), animated: true, completion: {})
     }
 
-    func startPromosStep(promos: [Promo]? = nil,
+    func startPromosStep(promos: [BankDeal]? = nil,
                          _ callback: (() -> Void)? = nil) -> PromoViewController {
         return PromoViewController(promos : promos, callback : callback)
     }

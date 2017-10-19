@@ -17,7 +17,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 
 	@IBOutlet weak fileprivate var tableView: UITableView!
 
-	var promos: [Promo]!
+	var promos: [BankDeal]!
 
 	var bundle: Bundle? = MercadoPago.getBundle()
     var callback: (() -> Void)?
@@ -26,7 +26,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		super.init(coder: aDecoder)
 	}
 
-	public init(promos: [Promo]? = nil, callback: (() -> Void)? = nil) {
+	public init(promos: [BankDeal]? = nil, callback: (() -> Void)? = nil) {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
 		self.publicKey = MercadoPagoContext.publicKey()
         self.callback = callback
@@ -61,7 +61,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
         }
 
         if Array.isNullOrEmpty(self.promos) {
-            MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) in
+            MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [BankDeal]?) in
                 self.promos = promos
                 self.tableView.reloadData()
                 self.hideLoading()

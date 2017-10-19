@@ -35,7 +35,7 @@ open class CardFormViewModel: NSObject {
 
     let animationDuration: Double = 0.6
 
-    var promos: [Promo]?
+    var promos: [BankDeal]?
 
     public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil) {
         self.amount = amount
