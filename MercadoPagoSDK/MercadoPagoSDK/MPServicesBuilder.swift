@@ -124,6 +124,58 @@ open class MercadoPagoServices: NSObject {
     public func createCheckoutPreference(callback: @escaping (CheckoutPreference) -> Void) {
         
     }
+    
+    public func setBaseURL(_ baseURL: String) {
+        self.baseURL = baseURL
+    }
+    
+    public func setGatewayBaseURL(_ gatewayBaseURL: String) {
+        self.gatewayBaseURL = gatewayBaseURL
+    }
+    
+    public func setGetCustomerBaseURL(_ getCustomerBaseURL: String) {
+        self.getCustomerBaseURL = getCustomerBaseURL
+    }
+    
+    public func setCreateCheckoutPreferenceURL(_ createCheckoutPreferenceURL: String) {
+        self.createCheckoutPreferenceURL = createCheckoutPreferenceURL
+    }
+    
+    public func setGetMerchantDiscountBaseURL(_ getMerchantDiscountBaseURL: String) {
+        self.getMerchantDiscountBaseURL = getMerchantDiscountBaseURL
+    }
+    
+    public func setGetCustomerURI(_ getCustomerURI: String) {
+        self.getCustomerURI = getCustomerURI
+    }
+    
+    public func setCreatePaymentURI(_ createPaymentURI: String) {
+        self.createPaymentURI = createPaymentURI
+    }
+    
+    public func setCreateCheckoutPreferenceURI(_ createCheckoutPreferenceURI: String) {
+        self.createCheckoutPreferenceURI = createCheckoutPreferenceURI
+    }
+    
+    public func setGetMerchantDiscountURI(_ getMerchantDiscountURI: String) {
+        self.getMerchantDiscountURI = getMerchantDiscountURI
+    }
+    
+    public func setGetCustomerAdditionalInfo(_ getCustomerAdditionalInfo: NSDictionary) {
+        self.getCustomerAdditionalInfo = getCustomerAdditionalInfo
+    }
+    
+    public func setCreatePaymentAdditionalInfo(_ createPaymentAdditionalInfo: NSDictionary) {
+        self.createPaymentAdditionalInfo = createPaymentAdditionalInfo
+    }
+
+    public func setCreateCheckoutPreferenceAdditionalInfo(_ createCheckoutPreferenceAdditionalInfo: NSDictionary) {
+        self.createCheckoutPreferenceAdditionalInfo = createCheckoutPreferenceAdditionalInfo
+    }
+
+    public func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
+        self.getDiscountAdditionalInfo = getDiscountAdditionalInfo
+    }
 
     open class func createNewCardToken(_ cardToken: CardToken, baseURL: String = ServicePreference.MP_API_BASE_URL,
                                        success:@escaping (_ token: Token) -> Void,
