@@ -24,10 +24,10 @@ open class MercadoPagoServices: NSObject {
     private var createCheckoutPreferenceURI: String!
     private var getMerchantDiscountURI: String!
 
-    private var getCustomerAdditionalInfo: [String:String]!
-    private var createPaymentAdditionalInfo: [String:String]!
-    private var createCheckoutPreferenceAdditionalInfo: [String:String]!
-    private var getDiscountAdditionalInfo: [String:String]!
+    private var getCustomerAdditionalInfo: NSDictionary!
+    private var createPaymentAdditionalInfo: NSDictionary!
+    private var createCheckoutPreferenceAdditionalInfo: NSDictionary!
+    private var getDiscountAdditionalInfo: NSDictionary!
 
     init(merchantPublicKey: String, payerAccessToken: String, proccesingMode: String) {
         self.merchantPublicKey = merchantPublicKey
