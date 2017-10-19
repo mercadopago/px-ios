@@ -31,7 +31,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
 
     open func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        var params =  MPServicesBuilder.getParamsPublicKey()
+        var params =  MercadoPagoServices.getParamsPublicKey()
 
         params.paramsAppend(key: ApiParams.AMOUNT, value: String(amount))
 

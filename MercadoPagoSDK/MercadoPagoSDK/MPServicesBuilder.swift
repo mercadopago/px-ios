@@ -1,5 +1,5 @@
 //
-//  MPServicesBuilder.swift
+//  MercadoPagoServices.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 1/7/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class MPServicesBuilder: NSObject {
+open class MercadoPagoServices: NSObject {
 
     static let MP_PAYMENTS_URI = ServicePreference.MP_ENVIROMENT + "/checkout/payments"
 
@@ -197,7 +197,7 @@ open class MPServicesBuilder: NSObject {
                                     success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void,
                                     failure: ((_ error: NSError) -> Void)?) {
         let paymentId = String(paymentId)
-        MPServicesBuilder.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: success, failure: failure)
+        MercadoPagoServices.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: success, failure: failure)
     }
 
     open class func getInstructions(for paymentId: String, paymentTypeId: String? = "",

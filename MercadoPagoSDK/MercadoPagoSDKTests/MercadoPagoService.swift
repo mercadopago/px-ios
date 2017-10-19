@@ -53,7 +53,7 @@ open class MercadoPagoService: NSObject {
 
             if jsonResponse != nil {
                 // JSON responses should call success. Could be an API error, so each caller class checks:
-                // if dic["error"] == nil {...}. See MerchantServer or MPServicesBuilder methods as an example.
+                // if dic["error"] == nil {...}. See MerchantServer or MercadoPagoServices methods as an example.
                 success(jsonResponse)
                 //MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION + uri)
             } else {

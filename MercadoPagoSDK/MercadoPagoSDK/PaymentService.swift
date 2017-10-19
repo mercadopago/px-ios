@@ -31,7 +31,7 @@ open class PaymentService: MercadoPagoService {
 
     open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        let params: String = MPServicesBuilder.getParamsPublicKeyAndAcessToken()
+        let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
         self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) in
             if let failure = failure {
@@ -42,7 +42,7 @@ open class PaymentService: MercadoPagoService {
 
     open func getInstallments(_ method: String = "GET", uri: String = ServicePreference.MP_INSTALLMENTS_URI, bin: String?, amount: Double, issuer_id: String?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        var params: String = MPServicesBuilder.getParamsPublicKeyAndAcessToken()
+        var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
         params.paramsAppend(key: ApiParams.BIN, value: bin)
 
@@ -81,7 +81,7 @@ open class PaymentService: MercadoPagoService {
 
     open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        var params: String = MPServicesBuilder.getParamsPublicKeyAndAcessToken()
+        var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
         params.paramsAppend(key: ApiParams.PAYMENT_METHOD_ID, value: payment_method_id)
 

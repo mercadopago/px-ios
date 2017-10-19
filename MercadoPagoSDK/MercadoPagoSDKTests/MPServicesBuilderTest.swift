@@ -1,5 +1,5 @@
 //
-//  MPServicesBuilderTest.swift
+//  MercadoPagoServicesTest.swift
 //  MercadoPagoSDK
 //
 //  Created by Maria cristina rodriguez on 8/3/16.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class MPServicesBuilderTest: BaseTest {
+class MercadoPagoServicesTest: BaseTest {
 
     override func setUp() {
         super.setUp()

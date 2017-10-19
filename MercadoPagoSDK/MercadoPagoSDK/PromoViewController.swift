@@ -61,7 +61,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
         }
 
         if Array.isNullOrEmpty(self.promos) {
-            MPServicesBuilder.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) in
+            MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) in
                 self.promos = promos
                 self.tableView.reloadData()
                 self.hideLoading()

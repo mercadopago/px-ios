@@ -17,7 +17,7 @@ class PaymentMethodSearchServiceTest: BaseTest {
 
     func testMPServicePaymentMethodSearch() {
      /*   let expectation = expectationWithDescription("paymentMethodSearchService")
-        MPServicesBuilder.searchPaymentMethods(nil, excludedPaymentMethods: nil, success: { (PaymentMethodSearch) -> Void in
+        MercadoPagoServices.searchPaymentMethods(nil, excludedPaymentMethods: nil, success: { (PaymentMethodSearch) -> Void in
             expectation.fulfill()
             }) { (error) -> Void in
         }
@@ -26,7 +26,7 @@ class PaymentMethodSearchServiceTest: BaseTest {
 
     func testMPServicePaymentMethodSearchWithExcludedPaymentTypes() {
     /*     let expectation = expectationWithDescription("paymentMethodSearchService")
-       MPServicesBuilder.searchPaymentMethods(MockBuilder.getMockPaymentTypeIds(), excludedPaymentMethods: nil, success: { (PaymentMethodSearch) -> Void in
+       MercadoPagoServices.searchPaymentMethods(MockBuilder.getMockPaymentTypeIds(), excludedPaymentMethods: nil, success: { (PaymentMethodSearch) -> Void in
             expectation.fulfill()
             }) { (error) -> Void in
         }

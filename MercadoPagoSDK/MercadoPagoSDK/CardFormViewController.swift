@@ -250,7 +250,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     private func getPromos() {
-        MPServicesBuilder.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) -> Void in
+        MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) -> Void in
             self.viewModel.promos = promos
             self.updateCardSkin()
         }, failure: { (_: NSError) in

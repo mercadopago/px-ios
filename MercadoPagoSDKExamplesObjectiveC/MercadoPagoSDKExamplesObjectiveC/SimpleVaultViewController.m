@@ -25,7 +25,7 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
 
 - (void)viewDidLoad {
 //    [super viewDidLoad];
-//    [MPServicesBuilder getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
+//    [MercadoPagoServices getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
 //        currentPaymentMethods = paymentMethods;
 //        [[self tableView] reloadData];
 //        

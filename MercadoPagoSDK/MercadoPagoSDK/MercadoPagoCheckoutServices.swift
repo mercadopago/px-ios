@@ -12,7 +12,7 @@ extension MercadoPagoCheckout {
 
     func getCheckoutPreference() {
         self.presentLoading()
-        MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (checkoutPreference : CheckoutPreference) -> Void in
+        MercadoPagoServices.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (checkoutPreference : CheckoutPreference) -> Void in
 
             guard let strongSelf = self else {
                 return
@@ -60,7 +60,7 @@ extension MercadoPagoCheckout {
 
     func getPaymentMethodSearch() {
         self.presentLoading()
-        MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
+        MercadoPagoServices.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
                                                baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
 
                                                 guard let strongSelf = self else {
@@ -91,7 +91,7 @@ extension MercadoPagoCheckout {
             return
         }
         let bin = self.viewModel.cardToken?.getBin()
-        MPServicesBuilder.getIssuers(paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (issuers) -> Void in
+        MercadoPagoServices.getIssuers(paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (issuers) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -148,7 +148,7 @@ extension MercadoPagoCheckout {
     func createNewCardToken() {
         self.presentLoading()
 
-        MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token : Token?) -> Void in
+        MercadoPagoServices.createNewCardToken(self.viewModel.cardToken!, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token : Token?) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -184,7 +184,7 @@ extension MercadoPagoCheckout {
         let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
-        MPServicesBuilder.createSavedCardToken(saveCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token) in
+        MercadoPagoServices.createSavedCardToken(saveCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token) in
             guard let strongSelf = self else {
                 return
             }
@@ -211,7 +211,7 @@ extension MercadoPagoCheckout {
 
     func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
         self.presentLoading()
-        MPServicesBuilder.createSavedESCCardToken(savedESCCardToken: savedESCCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token) in
+        MercadoPagoServices.createSavedESCCardToken(savedESCCardToken: savedESCCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token) in
             guard let strongSelf = self else {
                 return
             }
@@ -247,7 +247,7 @@ extension MercadoPagoCheckout {
 
     func cloneCardToken(token: Token, securityCode: String) {
         self.presentLoading()
-        MPServicesBuilder.cloneToken(token, securityCode:securityCode, success: { [weak self] (token) in
+        MercadoPagoServices.cloneToken(token, securityCode:securityCode, success: { [weak self] (token) in
             guard let strongSelf = self else {
                 return
             }
@@ -278,7 +278,7 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (installments) -> Void in
+        MercadoPagoServices.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (installments) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -375,7 +375,7 @@ extension MercadoPagoCheckout {
             fatalError("Get Instructions - Payment Method Type Id does no exist")
         }
 
-        MPServicesBuilder.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (instructionsInfo) in
+        MercadoPagoServices.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (instructionsInfo) in
 
             guard let strongSelf = self else {
                 return
@@ -398,7 +398,7 @@ extension MercadoPagoCheckout {
 
     func getIdentificationTypes() {
         self.presentLoading()
-        MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { [weak self] (identificationTypes) -> Void in
+        MercadoPagoServices.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { [weak self] (identificationTypes) -> Void in
             guard let strongSelf = self else {
                 return
             }

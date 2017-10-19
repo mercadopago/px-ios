@@ -198,7 +198,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     fileprivate func loadPreference() {
-        MPServicesBuilder.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
+        MercadoPagoServices.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
                 if let error = preference.validate() {
                     // Invalid preference - cannot continue
                     let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
