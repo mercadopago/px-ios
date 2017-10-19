@@ -35,91 +35,91 @@ open class MercadoPagoServices: NSObject {
         self.proccesingMode = proccesingMode
     }
     
-    public func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void) {
+    public func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void) {
+    public func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], payer: Payer, site: Site, callback : @escaping (PaymentMethodSearch) -> Void) {
+    public func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], payer: Payer, site: Site, callback : @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func createPayment(paymentBody: MPPayment, callback : @escaping (Payment) -> Void) {
+    public func createPayment(paymentBody: MPPayment, callback : @escaping (Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func createPayment(transactionId: String, paymentData: [String: Any], callback : @escaping (Payment) -> Void) {
+    public func createPayment(transactionId: String, paymentData: [String: Any], callback : @escaping (Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void) {
+    public func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void) {
+    public func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void) {
+    public func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func cloneToken(tokenId: String, callback : @escaping (Token) -> Void) {
+    public func cloneToken(tokenId: String, callback : @escaping (Token) -> Void, failure: ((_ error: NSError) -> Void)?) {
     
     }
     
-    public func getBankDeals(callback : @escaping ([BankDeal]) -> Void) {
+    public func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void) {
+    public func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getInstallments(bin: String, amount: Double, issuerId: Int64, paymentMethodId: String, callback: @escaping ([Installment]) -> Void) {
+    public func getInstallments(bin: String, amount: Double, issuerId: Int64, paymentMethodId: String, callback: @escaping ([Installment]) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getIssuers(paymentMethodId: String, bin: String, callback: @escaping ([Issuer]) -> Void) {
+    public func getIssuers(paymentMethodId: String, bin: String, callback: @escaping ([Issuer]) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getPaymentMethods(callback: @escaping ([PaymentMethod]) -> Void) {
+    public func getPaymentMethods(callback: @escaping ([PaymentMethod]) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getDirectDiscount(amount: String, payerEmail: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void) {
+    public func getDirectDiscount(amount: String, payerEmail: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void, failure: ((_ error: NSError) -> Void)?) {
     
     }
     
-    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, callback: @escaping (DiscountCoupon) -> Void) {
+    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, callback: @escaping (DiscountCoupon) -> Void, failure: ((_ error: NSError) -> Void)?) {
     
     }
     
-    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void) {
+    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon, failure: ((_ error: NSError) -> Void)?) -> Void) {
         
     }
     
-    public func getCampaigns(callback: @escaping ([Campaign]) -> Void) {
+    public func getCampaigns(callback: @escaping ([Campaign]) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getCustomer(callback: @escaping (Customer) -> Void) {
+    public func getCustomer(callback: @escaping (Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func getCustomer(additionalInfo: NSDictionary, callback: @escaping (Customer) -> Void) {
+    public func getCustomer(additionalInfo: NSDictionary, callback: @escaping (Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
-    public func createCheckoutPreference(bodyInfo: [String:Any], callback: @escaping (CheckoutPreference) -> Void) {
+    public func createCheckoutPreference(bodyInfo: [String:Any], callback: @escaping (CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
     
     }
     
-    public func createCheckoutPreference(callback: @escaping (CheckoutPreference) -> Void) {
+    public func createCheckoutPreference(callback: @escaping (CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     
