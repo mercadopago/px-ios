@@ -61,11 +61,11 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
         }
 
         if Array.isNullOrEmpty(self.promos) {
-            MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [BankDeal]?) in
-                self.promos = promos
+            MercadoPagoServices.getBankDeals(callback: { (bankDeals) in
+                self.promos = bankDeals
                 self.tableView.reloadData()
                 self.hideLoading()
-            }, failure: { (error: NSError) in
+            }, failure: { (error) in
                 if error.code == MercadoPago.ERROR_API_CODE {
                     self.tableView.reloadData()
                     self.hideLoading()

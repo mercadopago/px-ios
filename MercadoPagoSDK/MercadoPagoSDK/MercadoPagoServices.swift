@@ -80,8 +80,20 @@ open class MercadoPagoServices: NSObject {
     
     }
     
-    public func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: ((_ error: NSError) -> Void)) {
-        
+    open class func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: PromosService = PromosService(baseURL: baseURL)
+        service.getPromos(public_key: MercadoPagoContext.publicKey(), success: { (jsonResult) -> Void in
+            let promosArray = jsonResult as? NSArray?
+            var promos : [BankDeal] = [BankDeal]()
+            if promosArray != nil {
+                for i in 0 ..< promosArray!!.count {
+                    if let promoDic = promosArray!![i] as? NSDictionary {
+                        promos.append(BankDeal.fromJSON(promoDic))
+                    }
+                }
+            }
+            callback(promos)
+        }, failure: failure)
     }
     
     open class func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -333,26 +345,6 @@ open class MercadoPagoServices: NSObject {
                 }
                 success(issuers)
             }
-        }, failure: failure)
-
-    }
-
-    open class func getPromos( baseURL: String = ServicePreference.MP_API_BASE_URL,
-                               _ success: @escaping (_ promos: [BankDeal]?) -> Void,
-                               failure: ((_ error: NSError) -> Void)?) {
-
-        let service: PromosService = PromosService(baseURL: baseURL)
-        service.getPromos(public_key: MercadoPagoContext.publicKey(), success: { (jsonResult) -> Void in
-            let promosArray = jsonResult as? NSArray?
-            var promos : [BankDeal] = [BankDeal]()
-            if promosArray != nil {
-                for i in 0 ..< promosArray!!.count {
-                    if let promoDic = promosArray!![i] as? NSDictionary {
-                        promos.append(BankDeal.fromJSON(promoDic))
-                    }
-                }
-            }
-            success(promos)
         }, failure: failure)
 
     }

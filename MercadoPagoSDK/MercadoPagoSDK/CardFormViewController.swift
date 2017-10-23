@@ -250,15 +250,14 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     private func getPromos() {
-        MercadoPagoServices.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [BankDeal]?) -> Void in
-            self.viewModel.promos = promos
+        MercadoPagoServices.getBankDeals(callback: { (bankDeals) in
+            self.viewModel.promos = bankDeals
             self.updateCardSkin()
-        }, failure: { (_: NSError) in
+        }) { (error) in
             // Si no se pudieron obtener promociones se ignora tal caso
             CardFormViewController.showBankDeals = false
             self.updateCardSkin()
-        })
-
+        }
     }
 
     func getCardWidth() -> CGFloat {
