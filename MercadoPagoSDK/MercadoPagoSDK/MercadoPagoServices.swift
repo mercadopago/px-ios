@@ -119,8 +119,9 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
     
-    open class func getInstallments(bin: String, amount: Double, issuerId: Int64, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+    open class func getInstallments(bin: String?, amount: Double, issuerId: Int64?, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL)
+        service.getInstallments(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, success: callback, failure: failure)
     }
     
     public func getIssuers(paymentMethodId: String, bin: String, callback: @escaping ([PXIssuer]) -> Void, failure: ((_ error: NSError) -> Void)) {
@@ -310,15 +311,6 @@ open class MercadoPagoServices: NSObject {
                 success(pms)
             }
         }, failure: failure)
-
-    }
-
-    open class func getInstallments(_ bin: String? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String, baseURL: String = ServicePreference.MP_API_BASE_URL,
-                                    success: @escaping (_ installments: [Installment]) -> Void,
-                                    failure: @escaping ((_ error: NSError) -> Void)) {
-
-        let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getInstallments(bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
 
     }
 

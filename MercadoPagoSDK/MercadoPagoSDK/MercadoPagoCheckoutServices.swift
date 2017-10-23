@@ -328,7 +328,8 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
         
-        MercadoPagoServices.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (installments) -> Void in
+        MercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, callback: { [weak self] (installments) in
+            
             guard let strongSelf = self else {
                 return
             }
@@ -344,12 +345,12 @@ extension MercadoPagoCheckout {
                 updateCallback()
                 strongSelf.dismissLoading()
             } else {
-
                 strongSelf.dismissLoading()
                 strongSelf.executeNextStep()
             }
 
-        }) { [weak self] (error) -> Void in
+        }) { [weak self] (error) in
+            
             guard let strongSelf = self else {
                 return
             }
@@ -359,6 +360,7 @@ extension MercadoPagoCheckout {
                 self?.getPayerCosts()
             })
             strongSelf.executeNextStep()
+            
         }
     }
 

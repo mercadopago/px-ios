@@ -40,7 +40,7 @@ open class PaymentService: MercadoPagoService {
             })
     }
 
-    open func getInstallments(_ method: String = "GET", uri: String = ServicePreference.MP_INSTALLMENTS_URI, bin: String?, amount: Double, issuer_id: String?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getInstallments(_ method: String = "GET", uri: String = ServicePreference.MP_INSTALLMENTS_URI, bin: String?, amount: Double, issuerId: Int64?, payment_method_id: String, success: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
@@ -48,7 +48,7 @@ open class PaymentService: MercadoPagoService {
 
         params.paramsAppend(key: ApiParams.AMOUNT, value: String(format:"%.2f", amount))
 
-        params.paramsAppend(key: ApiParams.ISSUER_ID, value: String(describing: issuer_id!))
+        params.paramsAppend(key: ApiParams.ISSUER_ID, value: String(describing: issuerId!))
 
         params.paramsAppend(key: ApiParams.PAYMENT_METHOD_ID, value: payment_method_id)
 
@@ -62,10 +62,10 @@ open class PaymentService: MercadoPagoService {
                 }
             } else {
                 let paymentMethods = jsonResult as? NSArray
-                var installments : [Installment] = [Installment]()
+                var installments : [PXInstallment] = [PXInstallment]()
                 if paymentMethods != nil && paymentMethods?.count > 0 {
-                    if let dic = paymentMethods![0] as? NSDictionary {
-                        installments.append(Installment.fromJSON(dic))
+                    if let dic = paymentMethods![0] as? [String: Any] {
+                        installments.append(PXInstallment.fromJSON(dic))
                     }
                     success(installments)
                 } else {
