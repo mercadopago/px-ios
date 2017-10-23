@@ -7,3 +7,26 @@
 //
 
 import Foundation
+open class PXItem: NSObject {
+
+    open var categoryId: String!
+    open var currencyId: String!
+    open var _description: String!
+    open var id: String!
+    open var pictureUrl: String!
+    open var quantity: Int!
+    open var title: String!
+    open var unitPrice: Double!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXItem {
+
+    }
+}

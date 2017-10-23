@@ -7,3 +7,25 @@
 //
 
 import Foundation
+open class PXPayerCost: NSObject {
+
+    open var installmentRate: Double!
+    open var labels: [String]!
+    open var minAllowedAmount: Double!
+    open var maxAllowedAmount: Double!
+    open var recommendMessage: String!
+    open var installmentAmount: Double!
+    open var totalAmount: Double!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXPayerCost {
+
+    }
+}

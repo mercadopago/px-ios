@@ -7,3 +7,17 @@
 //
 
 import Foundation
+open class PXSavedCardToken: NSObject {
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXSavedCardToken {
+
+    }
+}

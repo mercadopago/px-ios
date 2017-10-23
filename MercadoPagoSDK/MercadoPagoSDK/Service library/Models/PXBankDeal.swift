@@ -20,6 +20,18 @@ open class PXBankDeal: NSObject {
     open var paymentMethods: [PXPaymentMethod]!
     open var recommendedMessage: String!
     open var totalFinancialCost: Double!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXBankDeal {
+
+    }
 }
 
 

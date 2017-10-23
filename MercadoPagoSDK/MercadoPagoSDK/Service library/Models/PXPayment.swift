@@ -7,25 +7,24 @@
 //
 
 import Foundation
-
 open class PXPayment: NSObject {
     open var binaryMode: Bool!
     open var callForAuthorizeId: String!
     open var captured: Bool!
-    open var card: Card
+    open var card: PXCard!
     open var collectorId: String!
     open var couponAmount: Double!
     open var currencyId: String!
     open var dateApproved: Date!
     open var dateCreated: Date!
     open var dateLastUpdated: Date!
-    open var _description: Strin!
+    open var _description: String!
     open var differentialPricingId: Int64!
     open var externalReference: String!
-    open var feeDetails: [PXFeesDetail]!
+    open var feeDetails: [PXFeeDetail]!
     open var id: String!
-    open var installments: Integer!
-    open var issuerId: Integer!
+    open var installments: Int!
+    open var issuerId: Int!
     open var liveMode: Bool!
     open var metadata: NSDictionary!
     open var moneyReleaseDate: Date!
@@ -40,7 +39,19 @@ open class PXPayment: NSObject {
     open var status: String!
     open var statusDetail: String!
     open var transactionAmount: Double!
-    open var transactionAmountRefunded: Dounble!
-    open var transactionDetails: PXTransactionDetails
+    open var transactionAmountRefunded: Double!
+    open var transactionDetails: PXTransactionDetails!
     open var TokenId: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXPayment {
+
+    }
 }

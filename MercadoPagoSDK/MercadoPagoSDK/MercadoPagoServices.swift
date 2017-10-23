@@ -43,7 +43,7 @@ open class MercadoPagoServices: NSObject {
         
     }
     
-    public func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], payer: Payer, site: Site, callback : @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    public func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], payer: Payer, site: PXSite, callback : @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
     }
     

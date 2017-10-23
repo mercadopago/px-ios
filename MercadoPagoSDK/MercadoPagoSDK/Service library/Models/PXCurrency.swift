@@ -7,3 +7,24 @@
 //
 
 import Foundation
+open class PXCurrency: NSObject {
+
+    open var id: String!
+    open var desciption: String!
+    open var symbol: String!
+    open var decimalPlaces: Int!
+    open var decimalSeparator: String!
+    open var thousandsSeparator: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXCurrency {
+
+    }
+}

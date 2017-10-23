@@ -10,4 +10,16 @@ import Foundation
 open class PXInstructions: NSObject {
     open var amountInfo: PXAmountInfo!
     open var instructions: [PXInstruction]!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXInstructions {
+
+    }
 }

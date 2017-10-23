@@ -7,3 +7,21 @@
 //
 
 import Foundation
+open class PXSetting: NSObject {
+
+    open var bin: PXBin!
+    open var cardNumber: PXCardNumber!
+    open var securityCode: PXSecurityCode!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXSetting {
+
+    }
+}

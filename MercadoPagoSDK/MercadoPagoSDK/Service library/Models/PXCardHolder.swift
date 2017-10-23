@@ -7,3 +7,20 @@
 //
 
 import Foundation
+open class PXCardHolder: NSObject {
+
+    open var name: String!
+    open var identification: PXIdentification!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXCardHolder {
+
+    }
+}

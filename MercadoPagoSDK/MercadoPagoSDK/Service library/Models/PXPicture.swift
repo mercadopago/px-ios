@@ -12,4 +12,16 @@ open class PXPicture: NSObject {
     open var size: String!
     open var url: String!
     open var secureUrl: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXPicture {
+
+    }
 }

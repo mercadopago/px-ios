@@ -7,3 +7,26 @@
 //
 
 import Foundation
+open class PXPayer: NSObject {
+
+    open var id: String!
+    open var accessToken: String!
+    open var identification: PXIdentification!
+    open var type: String!
+    open var entityType: String!
+    open var email: String!
+    open var firstName: String!
+    open var lastName: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXPayer {
+
+    }
+}

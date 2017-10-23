@@ -7,3 +7,21 @@
 //
 
 import Foundation
+open class PXInstructionAction: NSObject {
+
+    open var label: String!
+    open var url: String!
+    open var tag: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXInstructionAction {
+
+    }
+}

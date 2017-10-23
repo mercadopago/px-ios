@@ -22,6 +22,18 @@ open class PXCustomer: NSObject {
     open var lastName: String!
     open var liveMode: Bool!
     open var metadata: [String: String]!
-    open var phone: PXPhone
+    open var phone: PXPhone!
     open var registrationDate: Date!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXCustomer {
+
+    }
 }

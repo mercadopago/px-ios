@@ -7,3 +7,21 @@
 //
 
 import Foundation
+open class PXAddress: NSObject {
+
+    open var streetName: String!
+    open var streetNumber: Int64!
+    open var zipCode: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXAddress {
+
+    }
+}

@@ -7,3 +7,19 @@
 //
 
 import Foundation
+open class PXIssuer: NSObject {
+    open var id: String!
+    open var name: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXIssuer {
+
+    }
+}

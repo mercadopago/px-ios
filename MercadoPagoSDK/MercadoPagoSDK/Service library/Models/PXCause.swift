@@ -7,3 +7,19 @@
 //
 
 import Foundation
+open class PXCause: NSObject {
+    open var code: String!
+    open var _description: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXCause {
+
+    }
+}

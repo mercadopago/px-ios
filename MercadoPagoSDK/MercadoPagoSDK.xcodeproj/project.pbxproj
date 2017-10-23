@@ -366,6 +366,8 @@
 		4B53C5FA1E4B3FDD00D6190A /* PaymentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AB4DB11E424BB10015EA3B /* PaymentData.swift */; };
 		4B59F02B1E36676100B5837B /* FlowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B59F02A1E36676100B5837B /* FlowPreference.swift */; };
 		4B59F02C1E36676800B5837B /* FlowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B59F02A1E36676100B5837B /* FlowPreference.swift */; };
+		4B59FD001F9E1B5C00A5FC96 /* PXPaymentPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B59FCFF1F9E1B5C00A5FC96 /* PXPaymentPreference.swift */; };
+		4B59FD021F9E206400A5FC96 /* PXPaymentMethodSearchItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B59FD011F9E206400A5FC96 /* PXPaymentMethodSearchItemType.swift */; };
 		4B5C1A681F82AEB6008E56B9 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C1A671F82AEB5008E56B9 /* UIView+Additions.swift */; };
 		4B68FFDC1EAFBB200048B62D /* PaymentResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */; };
 		4B762E9C1DCFAF4700694336 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsViewController.swift */; };
@@ -928,6 +930,8 @@
 		4B506FD71F9A70B6007EA74E /* PXPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPayment.swift; sourceTree = "<group>"; };
 		4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCellContentProvider.swift; sourceTree = "<group>"; };
 		4B59F02A1E36676100B5837B /* FlowPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreference.swift; sourceTree = "<group>"; };
+		4B59FCFF1F9E1B5C00A5FC96 /* PXPaymentPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentPreference.swift; sourceTree = "<group>"; };
+		4B59FD011F9E206400A5FC96 /* PXPaymentMethodSearchItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodSearchItemType.swift; sourceTree = "<group>"; };
 		4B5C1A671F82AEB5008E56B9 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewModelTest.swift; sourceTree = "<group>"; };
 		4B762E9A1DCFAF4700694336 /* InstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
@@ -1786,6 +1790,8 @@
 				4B262A991F9A812C0086DBC5 /* PXSavedESCCardToken.swift */,
 				4B262A9B1F9A81430086DBC5 /* PXFinantialInstitution.swift */,
 				4B262A9D1F9A81680086DBC5 /* PXSite.swift */,
+				4B59FCFF1F9E1B5C00A5FC96 /* PXPaymentPreference.swift */,
+				4B59FD011F9E206400A5FC96 /* PXPaymentMethodSearchItemType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2611,8 +2617,10 @@
 				4B08CDAE1F224CA600FE800A /* MercadoPagoESCImplementation.swift in Sources */,
 				7656CA1A1C7645450043BDB2 /* InstructionReference.swift in Sources */,
 				0F9883851AD2AB6000F750F0 /* PayerCost.swift in Sources */,
+				4B59FD001F9E1B5C00A5FC96 /* PXPaymentPreference.swift in Sources */,
 				534D84201F546FA000C2C6F9 /* AvailableCardsViewController.swift in Sources */,
 				4B262A6C1F9A7F970086DBC5 /* PXInstructionAction.swift in Sources */,
+				4B59FD021F9E206400A5FC96 /* PXPaymentMethodSearchItemType.swift in Sources */,
 				0FC4FC2D1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
 				4BE51C201E2CFEC6004E5F7D /* DecorationPreference.swift in Sources */,
 				4B262A501F9A7E900086DBC5 /* PXToken.swift in Sources */,

@@ -7,3 +7,21 @@
 //
 
 import Foundation
+open class PXIdentificationType: NSObject {
+    open var id: String!
+    open var name: String!
+    open var minLength: Int!
+    open var maxLength: Int!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXIdentificationType {
+
+    }
+}

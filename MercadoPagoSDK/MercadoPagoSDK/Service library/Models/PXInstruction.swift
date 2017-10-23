@@ -12,11 +12,23 @@ open class PXInstruction: NSObject {
     open var subtitle: String!
     open var accreditationMessage: String!
     open var acceditationComments: [String]!
-    open var action: [PXInstructionActionInfo]!
+    open var action: [PXInstructionAction]!
     open var type: String!
     open var references: [InstructionReference]!
     open var secondaryInfo: [String]!
     open var tertiaryInfo: [String]!
     open var info: [String]!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXInstruction {
+
+    }
 
 }

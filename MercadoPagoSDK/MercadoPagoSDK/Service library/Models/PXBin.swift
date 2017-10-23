@@ -7,3 +7,21 @@
 //
 
 import Foundation
+open class PXBin: NSObject {
+
+    open var exclusionPattern: String!
+    open var installmentPattern: String!
+    open var pattern: String!
+
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    open func toJSON() -> [String:Any] {
+
+    }
+
+    open class func fromJSON(_ json: [String:Any]) -> PXBin {
+
+    }
+}

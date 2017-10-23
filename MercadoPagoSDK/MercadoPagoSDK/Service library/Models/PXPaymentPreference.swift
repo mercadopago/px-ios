@@ -1,16 +1,13 @@
 //
-//  PXAmountInfo.swift
+//  PXPaymentPreference.swift
 //  MercadoPagoSDK
 //
-//  Created by Eden Torres on 10/20/17.
+//  Created by Eden Torres on 10/23/17.
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
 import Foundation
-open class PXAmountInfo: NSObject {
-
-    open var amount: Double!
-    open var currrency: PXCurrency!
+open class PXPaymentPreference: NSObject {
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
@@ -20,7 +17,7 @@ open class PXAmountInfo: NSObject {
 
     }
 
-    open class func fromJSON(_ json: [String:Any]) -> PXAmountInfo {
+    open class func fromJSON(_ json: [String:Any]) -> PXPaymentPreference {
 
     }
 }
