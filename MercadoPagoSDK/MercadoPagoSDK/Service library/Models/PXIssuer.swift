@@ -21,6 +21,15 @@ open class PXIssuer: NSObject {
     }
 
     open class func fromJSON(_ json: [String:Any]) -> PXIssuer {
-        return PXIssuer()
+        let pxIssuer: PXIssuer = PXIssuer()
+        
+        if let _id = json["id"] as? String {
+            pxIssuer.id = JSONHandler.attemptParseToString(json["id"])
+        }
+        if let name = JSONHandler.attemptParseToString(json["name"]) {
+            pxIssuer.name = name
+        }
+        
+        return pxIssuer
     }
 }

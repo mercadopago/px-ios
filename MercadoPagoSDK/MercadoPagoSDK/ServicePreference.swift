@@ -218,6 +218,7 @@ open class ServicePreference: NSObject {
 
     static public func setupMPEnvironment() {
         // En caso de correr los tests se toma environment como prod por default
+        MercadoPagoServices.setBaseURL("https://api.mercadopago.com")
         if Utils.isTesting() {
             ServicePreference.MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
         } else {

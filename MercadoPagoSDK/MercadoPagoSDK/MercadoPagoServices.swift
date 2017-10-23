@@ -14,7 +14,7 @@ open class MercadoPagoServices: NSObject {
     private var payerAccessToken: String
     private var proccesingMode: String
 
-    internal static var baseURL: String!
+    private static var baseURL: String!
     private var createPaymentBaseURL: String!
     private var gatewayBaseURL: String!
     private var getCustomerBaseURL: String!
@@ -119,7 +119,7 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open class func getInstallments(bin: String?, amount: Double, issuerId: Int64?, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getInstallments(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: PaymentService = PaymentService(baseURL: baseURL)
         service.getInstallments(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, success: callback, failure: failure)
     }
@@ -157,10 +157,9 @@ open class MercadoPagoServices: NSObject {
     }
 
     //SETS
-
-//    public func setBaseURL(_ baseURL: String) {
-//        self.baseURL = baseURL
-//    }
+    open static func setBaseURL(_ baseURL: String) {
+        MercadoPagoServices.baseURL = baseURL
+    }
 
     public func setGatewayBaseURL(_ gatewayBaseURL: String) {
         self.gatewayBaseURL = gatewayBaseURL
