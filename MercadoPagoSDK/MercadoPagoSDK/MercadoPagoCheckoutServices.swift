@@ -12,28 +12,52 @@ extension MercadoPagoCheckout {
 
     func getCheckoutPreference() {
         self.presentLoading()
-        MercadoPagoServices.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (checkoutPreference : CheckoutPreference) -> Void in
-
+        MercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: self.viewModel.checkoutPreference._id, callback: { [weak self] (checkoutPreference) in
+            
             guard let strongSelf = self else {
                 return
             }
-
+            
             strongSelf.viewModel.checkoutPreference = checkoutPreference
             strongSelf.viewModel.paymentData.payer = checkoutPreference.getPayer()
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-
-            }, failure: { [weak self] (error: NSError) -> Void in
-                guard let strongSelf = self else {
-                    return
-                }
-
-                strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
-                    self?.getCheckoutPreference()
-                })
-                strongSelf.executeNextStep()
-        })
+            
+        }) { [weak self] (error) in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
+                self?.getCheckoutPreference()
+            })
+            strongSelf.executeNextStep()
+            
+        }
+//        MercadoPagoServices.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (checkoutPreference : CheckoutPreference) -> Void in
+//
+//            guard let strongSelf = self else {
+//                return
+//            }
+//
+//            strongSelf.viewModel.checkoutPreference = checkoutPreference
+//            strongSelf.viewModel.paymentData.payer = checkoutPreference.getPayer()
+//            strongSelf.dismissLoading()
+//            strongSelf.executeNextStep()
+//
+//            }, failure: { [weak self] (error: NSError) -> Void in
+//                guard let strongSelf = self else {
+//                    return
+//                }
+//
+//                strongSelf.dismissLoading()
+//                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
+//                    self?.getCheckoutPreference()
+//                })
+//                strongSelf.executeNextStep()
+//        })
     }
 
     func getDirectDiscount() {
@@ -277,39 +301,71 @@ extension MercadoPagoCheckout {
         }
 
         let bin = self.viewModel.cardToken?.getBin()
-
-        MercadoPagoServices.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (installments) -> Void in
+        
+        MercadoPagoServices.getInstallments(bin: bin!, amount: self.viewModel.getFinalAmount(), issuerId: (self.viewModel.paymentData.getIssuer()?._id)!, paymentMethodId: paymentMethod._id, callback: { [weak self] (installments) in
             guard let strongSelf = self else {
                 return
             }
-
+            
             strongSelf.viewModel.payerCosts = installments[0].payerCosts
-
+            
             let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts)
             if let defaultPC = defaultPayerCost {
                 strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
             }
-
+            
             if let updateCallback = updateCallback {
                 updateCallback()
                 strongSelf.dismissLoading()
             } else {
-
+                
                 strongSelf.dismissLoading()
                 strongSelf.executeNextStep()
             }
-
-        }) { [weak self] (error) -> Void in
+        }) { [weak self] (error) in
             guard let strongSelf = self else {
                 return
             }
-
+            
             strongSelf.dismissLoading()
             strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] (_) in
                 self?.getPayerCosts()
             })
             strongSelf.executeNextStep()
         }
+
+//        MercadoPagoServices.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), callback: { [weak self] (installments) -> Void in
+//            guard let strongSelf = self else {
+//                return
+//            }
+//
+//            strongSelf.viewModel.payerCosts = installments[0].payerCosts
+//
+//            let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts)
+//            if let defaultPC = defaultPayerCost {
+//                strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
+//            }
+//
+//            if let updateCallback = updateCallback {
+//                updateCallback()
+//                strongSelf.dismissLoading()
+//            } else {
+//
+//                strongSelf.dismissLoading()
+//                strongSelf.executeNextStep()
+//            }
+//
+//        }) { [weak self] (error) -> Void in
+//            guard let strongSelf = self else {
+//                return
+//            }
+//
+//            strongSelf.dismissLoading()
+//            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] (_) in
+//                self?.getPayerCosts()
+//            })
+//            strongSelf.executeNextStep()
+//        }
     }
 
     func createPayment() {

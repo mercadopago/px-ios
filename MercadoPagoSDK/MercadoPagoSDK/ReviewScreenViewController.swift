@@ -198,24 +198,42 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     fileprivate func loadPreference() {
-        MercadoPagoServices.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
-                if let error = preference.validate() {
-                    // Invalid preference - cannot continue
-                    let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
-                    self.displayFailure(mpError)
-                } else {
-                    self.viewModel.preference = preference
-                    self.checkoutTable.reloadData()
-                   // self.loadGroupsAndStartPaymentVault(false)
-                }
-            }, failure: { (error) in
-                // Error in service - retry
-                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue, callback: {
-                    self.loadPreference()
-                    }, callbackCancel: {
-                    self.navigationController!.dismiss(animated: true, completion: {})
-                })
-        })
+        MercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: self.preferenceId, callback: { (preference) in
+            if let error = preference.validate() {
+                // Invalid preference - cannot continue
+                let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
+                self.displayFailure(mpError)
+            } else {
+                self.viewModel.preference = preference
+                self.checkoutTable.reloadData()
+                // self.loadGroupsAndStartPaymentVault(false)
+            }
+        }) { (error) in
+            // Error in service - retry
+            self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue, callback: {
+                self.loadPreference()
+            }, callbackCancel: {
+                self.navigationController!.dismiss(animated: true, completion: {})
+            })
+        }
+//        MercadoPagoServices.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
+//                if let error = preference.validate() {
+//                    // Invalid preference - cannot continue
+//                    let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
+//                    self.displayFailure(mpError)
+//                } else {
+//                    self.viewModel.preference = preference
+//                    self.checkoutTable.reloadData()
+//                   // self.loadGroupsAndStartPaymentVault(false)
+//                }
+//            }, failure: { (error) in
+//                // Error in service - retry
+//                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue, callback: {
+//                    self.loadPreference()
+//                    }, callbackCancel: {
+//                    self.navigationController!.dismiss(animated: true, completion: {})
+//                })
+//        })
     }
 
     fileprivate func registerAllCells() {
