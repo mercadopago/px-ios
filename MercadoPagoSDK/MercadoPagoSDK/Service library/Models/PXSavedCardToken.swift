@@ -9,12 +9,16 @@
 import Foundation
 open class PXSavedCardToken: NSObject {
 
+    open var cardId: String!
+    open var securityCode: String!
+    open var device: Device!
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

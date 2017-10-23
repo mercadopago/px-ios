@@ -9,12 +9,19 @@
 import Foundation
 open class PXPaymentPreference: NSObject {
 
+    open var maxAcceptedInstallments: Int!
+    open var defaultInstallments: Int!
+    open var excludedPaymentMethodIds: [String]!
+    open var excludedPaymentTypeIds: [String]!
+    open var defaultPaymentMethodId: String!
+    open var defaultPaymentTypeId: String!
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

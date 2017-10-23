@@ -14,11 +14,11 @@ open class PXFinancialInstitution: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 
     open class func fromJSON(_ json: [String:Any]) -> PXFinancialInstitution {
-
+        return PXFinancialInstitution()
     }
 }

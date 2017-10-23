@@ -18,7 +18,7 @@ open class PXFeeDetail: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

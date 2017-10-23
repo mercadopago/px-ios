@@ -9,12 +9,24 @@
 import Foundation
 open class PXSite: NSObject {
 
+    open var id: String!
+    open var currencyId: String!
+
+    override init() {
+        super.init()
+    }
+
+    public init(id: String, currencyId: String) {
+        self.id = id
+        self.currencyId = currencyId
+    }
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

@@ -316,7 +316,7 @@ open class PaymentResultScreenPreference: NSObject {
         guard let paymentMethod = paymentMethod else {
             return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
         }
-        
+
         if paymentMethod.isBolbradesco {
             return MercadoPago.getImage(rejectedBolbradescoIconName, bundle: rejectedIconBundle)
         }

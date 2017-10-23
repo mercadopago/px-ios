@@ -114,10 +114,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 NSLayoutConstraint.activate(heightConstraints)
             }
 
-  
           Utils.setContrainsHorizontal(views: views as! [String : UIView], constrain: 20)
-            
-
 
             let labelHeight = label.requiredHeight()
             label.frame.size.width = view.frame.width

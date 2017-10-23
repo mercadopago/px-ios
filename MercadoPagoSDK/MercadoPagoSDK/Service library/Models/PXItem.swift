@@ -23,7 +23,7 @@ open class PXItem: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

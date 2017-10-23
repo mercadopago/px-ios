@@ -18,7 +18,7 @@ open class PXPicture: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

@@ -8,14 +8,18 @@
 
 import Foundation
 open class PXApitUtil: NSObject {
-
+    open static let INTERNAL_SERVER_ERROR = 500
+    open static let PROCESSING = 499
+    open static let BAD_REQUEST = 400
+    open static let NOT_FOUND = 404
+    open static let OK = 200
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

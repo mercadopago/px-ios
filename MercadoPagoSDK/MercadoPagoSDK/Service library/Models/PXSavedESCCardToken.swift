@@ -7,18 +7,23 @@
 //
 
 import Foundation
-open class PXSavedESCCardToken: NSObject {
+open class PXSavedESCCardToken: PXSavedCardToken {
+    open var requireEsc: Bool!
+    open var esc: String!
 
-    open func toJSONString() -> String {
+    open override func toJSONString() -> String {
+        super.toJSONString()
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let map = ["":""]
+    open override func toJSON() -> [String:Any] {
+        super.toJSON()
+        let map = ["": ""]
         return map
     }
 
-    open class func fromJSON(_ json: [String:Any]) -> PXSavedESCCardToken {
+    open override class func fromJSON(_ json: [String:Any]) -> PXSavedESCCardToken {
+        //super.fromJSON(<#T##json: [String : Any]##[String : Any]#>)
         return PXSavedESCCardToken()
     }
 }

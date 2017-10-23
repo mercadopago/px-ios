@@ -8,17 +8,12 @@
 
 import Foundation
 open class PXPaymentTypes: NSObject {
-
-    open func toJSONString() -> String {
-        return JSONHandler.jsonCoding(self.toJSON())
-    }
-
-    open func toJSON() -> [String:Any] {
-        let map = ["":""]
-        return map
-    }
-
-    open class func fromJSON(_ json: [String:Any]) -> PXPaymentTypes {
-        return PXPaymentTypes()
-    }
+    open static let CREDIT_CARD = "credit_card"
+    open static let DEBIT_CARD = "debit_card"
+    open static let PREPAID_CARD = "prepaid_card"
+    open static let TICKET = "ticket"
+    open static let ATM = "atm"
+    open static let DIGITAL_CURRENCY = "digital_currency"
+    open static let BANK_TRANSFER = "bank_transfer"
+    open static let ACCOUNT_MONEY = "account_money"
 }

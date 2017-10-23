@@ -153,7 +153,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
         return paymentMethods
     }
-    
+
     func payerInfoFlow() -> PayerInfoViewModel {
         let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer)
         return viewModel

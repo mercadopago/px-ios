@@ -36,7 +36,6 @@ class PayerInfoViewModel: NSObject {
         self.payer = payer
         super.init()
 
-
         self.identificationTypes = filterSupported(identificationTypes: identificationTypes)
 
         if identificationTypes.isEmpty {
@@ -155,11 +154,11 @@ class PayerInfoViewModel: NSObject {
 
         return payer
     }
-    
+
     fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
         let path = MercadoPago.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
-        
+
         if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
             if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
                 let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false)
@@ -169,12 +168,12 @@ class PayerInfoViewModel: NSObject {
         }
         return nil
     }
-    
+
     fileprivate func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
         let site = MercadoPagoContext.getSite()
         let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
         let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
-        
+
         if IDtype != nil {
             if let masks = maskFinder(dictID: site+"_"+(IDtype?._id)!, forKey: "identification_mask") {
                 return masks

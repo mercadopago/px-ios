@@ -21,7 +21,7 @@ open class PXPaymentMethodSearchItem: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 

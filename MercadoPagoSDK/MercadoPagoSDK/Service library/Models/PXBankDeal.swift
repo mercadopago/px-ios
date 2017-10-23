@@ -26,7 +26,7 @@ open class PXBankDeal: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 
@@ -34,6 +34,3 @@ open class PXBankDeal: NSObject {
         return PXBankDeal()
     }
 }
-
-
-

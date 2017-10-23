@@ -48,11 +48,38 @@ open class PXPayment: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 
     open class func fromJSON(_ json: [String:Any]) -> PXPayment {
         return PXPayment()
+    }
+
+    open class Status: NSObject {
+        public static let APPROVED = "approved"
+        public static let IN_PROCESS = "in_process"
+        public static let REJECTED = "rejected"
+        public static let PENDING = "pending"
+    }
+
+    open class StatusDetails: NSObject {
+        public static let INVALID_ESC = "invalid_esc"
+        public static let ACCREDITED = "accredited"
+        public static let REJECTED_CALL_FOR_AUTHORIZE = "cc_rejected_call_for_authorize"
+        public static let PENDING_CONTINGENCY = "pending_contingency"
+        public static let PENDING_REVIEW_MANUAL = "pending_review_manual"
+        public static let PENDING_WAITING_PAYMENT = "pending_waiting_payment"
+        public static let REJECTED_OTHER_REASON = "cc_rejected_other_reason"
+        public static let REJECTED_BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
+        public static let REJECTED_BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
+        public static let REJECTED_BAD_FILLED_SECURITY_CODE = "cc_rejected_bad_filled_security_code"
+        public static let REJECTED_BAD_FILLED_DATE = "cc_rejected_bad_filled_date"
+        public static let REJECTED_HIGH_RISK = "rejected_high_risk"
+        public static let REJECTED_INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
+        public static let REJECTED_MAX_ATTEMPTS = "cc_rejected_max_attempts"
+        public static let REJECTED_DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
+        public static let REJECTED_CARD_DISABLED = "cc_rejected_card_disabled"
+        public static let REJECTED_REJECTED_INSUFFICIENT_DATA = "rejected_insufficient_data"
     }
 }

@@ -38,42 +38,42 @@ open class PaymentMethod: NSObject, Cellable {
         self.paymentTypeId = paymentTypeId
     }
 
-    open var isIssuerRequired : Bool {
+    open var isIssuerRequired: Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }
 
-    open var isIdentificationRequired : Bool {
+    open var isIdentificationRequired: Bool {
         if isAdditionalInfoNeeded("cardholder_identification_number") || isAdditionalInfoNeeded("identification_number") || isEntityTypeRequired {
             return true
         }
         return false
     }
-    open var isIdentificationTypeRequired : Bool {
+    open var isIdentificationTypeRequired: Bool {
         if isAdditionalInfoNeeded("cardholder_identification_type") || isAdditionalInfoNeeded("identification_type") || isEntityTypeRequired {
             return true
         }
         return false
     }
 
-    open var isPayerInfoRequired :  Bool {
+    open var isPayerInfoRequired: Bool {
         if isAdditionalInfoNeeded("bolbradesco_name") || isAdditionalInfoNeeded("bolbradesco_identification_type") || isAdditionalInfoNeeded("bolbradesco_identification_number") {
             return true
         }
         return false
     }
 
-    open var isEntityTypeRequired : Bool {
+    open var isEntityTypeRequired: Bool {
         return isAdditionalInfoNeeded("entity_type")
     }
 
-    open var isCard :  Bool {
+    open var isCard: Bool {
         if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
             return paymentTypeId.isCard()
         }
         return false
     }
 
-    open var isCreditCard : Bool {
+    open var isCreditCard: Bool {
         if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
             return paymentTypeId.isCreditCard()
         }
@@ -263,11 +263,11 @@ open class PaymentMethod: NSObject, Cellable {
         }
     }
 
-   open var isAmex : Bool {
+   open var isAmex: Bool {
         return self._id == "amex"
     }
 
-   open var isAccountMoney : Bool {
+   open var isAccountMoney: Bool {
         return self._id == PaymentTypeId.ACCOUNT_MONEY.rawValue
     }
 
@@ -322,14 +322,14 @@ open class PaymentMethod: NSObject, Cellable {
         }
     }
 
-    open var isOnlinePaymentMethod : Bool {
+    open var isOnlinePaymentMethod: Bool {
         return self.isCard || self.isAccountMoney
     }
 
-    open var isVISA : Bool {
+    open var isVISA: Bool {
         return ((self._id == "visa") && (self._id == "debvisa"))
     }
-    open var isMASTERCARD : Bool {
+    open var isMASTERCARD: Bool {
         return ((self._id == "master") && (self._id == "debmaster"))
     }
 
@@ -424,8 +424,8 @@ open class PaymentMethod: NSObject, Cellable {
         }
         return MercadoPago.getEditTextMaskFor(self, settings: settings)
     }
-    
-    var isBolbradesco : Bool {
+
+    var isBolbradesco: Bool {
         return self._id.contains(PaymentTypeId.BOLBRADESCO.rawValue)
     }
 }

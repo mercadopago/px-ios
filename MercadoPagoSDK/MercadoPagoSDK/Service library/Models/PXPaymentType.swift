@@ -9,13 +9,14 @@
 import Foundation
 open class PXPaymentType: NSObject {
 
+    open var id: String!
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
     open func toJSON() -> [String:Any] {
-        let map = ["":""]
+        let map = ["": ""]
         return map
     }
 
