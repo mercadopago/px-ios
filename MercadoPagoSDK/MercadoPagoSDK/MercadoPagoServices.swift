@@ -84,8 +84,27 @@ open class MercadoPagoServices: NSObject {
         
     }
     
-    public func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: ((_ error: NSError) -> Void)) {
-        
+    open class func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: IdentificationService = IdentificationService(baseURL: baseURL)
+        service.getIdentificationTypes(success: {(jsonResult: AnyObject?) -> Void in
+            
+            if let error = jsonResult as? NSDictionary {
+                if (error["status"]! as? Int) == 404 {
+                    failure(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: AnyObject]))
+                }
+            } else {
+                let identificationTypesResult = jsonResult as? NSArray?
+                var identificationTypes : [IdentificationType] = [IdentificationType]()
+                if identificationTypesResult != nil {
+                    for i in 0 ..< identificationTypesResult!!.count {
+                        if let identificationTypeDic = identificationTypesResult!![i] as? NSDictionary {
+                            identificationTypes.append(IdentificationType.fromJSON(identificationTypeDic))
+                        }
+                    }
+                }
+                callback(identificationTypes)
+            }
+        }, failure: failure)
     }
     
     open class func getInstallments(bin: String, amount: Double, issuerId: Int64, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -277,35 +296,6 @@ open class MercadoPagoServices: NSObject {
                     }
                 }
                 success(pms)
-            }
-        }, failure: failure)
-
-    }
-
-    open class func getIdentificationTypes(baseURL: String = ServicePreference.MP_API_BASE_URL,
-                                           _ success: @escaping (_ identificationTypes: [IdentificationType]) -> Void,
-                                           failure: ((_ error: NSError) -> Void)?) {
-
-        let service: IdentificationService = IdentificationService(baseURL: baseURL)
-        service.getIdentificationTypes(success: {(jsonResult: AnyObject?) -> Void in
-
-            if let error = jsonResult as? NSDictionary {
-                if (error["status"]! as? Int) == 404 {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: AnyObject]))
-                    }
-                }
-            } else {
-                let identificationTypesResult = jsonResult as? NSArray?
-                var identificationTypes : [IdentificationType] = [IdentificationType]()
-                if identificationTypesResult != nil {
-                    for i in 0 ..< identificationTypesResult!!.count {
-                        if let identificationTypeDic = identificationTypesResult!![i] as? NSDictionary {
-                            identificationTypes.append(IdentificationType.fromJSON(identificationTypeDic))
-                        }
-                    }
-                }
-                success(identificationTypes)
             }
         }, failure: failure)
 
