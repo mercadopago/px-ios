@@ -15,10 +15,11 @@ open class PXPaymentType: NSObject {
     }
 
     open func toJSON() -> [String:Any] {
-
+        let map = ["":""]
+        return map
     }
 
     open class func fromJSON(_ json: [String:Any]) -> PXPaymentType {
-
+        return PXPaymentType()
     }
 }
