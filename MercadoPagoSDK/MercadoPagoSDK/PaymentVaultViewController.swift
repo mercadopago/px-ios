@@ -212,21 +212,41 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate func loadPaymentMethodSearch() {
 
         if Array.isNullOrEmpty(self.viewModel.paymentMethodOptions) {
-            MercadoPagoServices.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
-                if paymentMethodSearchResponse.customerPaymentMethods?.count == 0 && paymentMethodSearchResponse.groups.count == 0 {
+            MercadoPagoServices.getPaymentMethodSearch(amount: self.viewModel.amount, excludedPaymentTypesIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodsIds: viewModel.getExcludedPaymentMethodIds(), payer: Payer(), site: PXSite(), callback: { (paymentMethodSearch) in
+                
+                if paymentMethodSearch.customerPaymentMethods?.count == 0 && paymentMethodSearch.groups.count == 0 {
                     let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
                     self.displayFailure(error)
                 }
-
+                
                 self.loadPaymentMethodSearch()
-
-            }, failure: { (error) -> Void in
+                
+            }, failure: { (error) in
+                
                 self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue, callback: {
                     self.navigationController!.dismiss(animated: true, completion: {})
                 }, callbackCancel: {
                     self.invokeCallbackCancelShowingNavBar()
                 })
+                
             })
+            
+            
+//            MercadoPagoServices.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+//                if paymentMethodSearchResponse.customerPaymentMethods?.count == 0 && paymentMethodSearchResponse.groups.count == 0 {
+//                    let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
+//                    self.displayFailure(error)
+//                }
+//
+//                self.loadPaymentMethodSearch()
+//
+//            }, failure: { (error) -> Void in
+//                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue, callback: {
+//                    self.navigationController!.dismiss(animated: true, completion: {})
+//                }, callbackCancel: {
+//                    self.invokeCallbackCancelShowingNavBar()
+//                })
+//            })
 
         } else {
             self.collectionSearch.delegate = self

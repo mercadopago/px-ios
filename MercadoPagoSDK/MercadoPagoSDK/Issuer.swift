@@ -11,14 +11,14 @@ import Foundation
 open class Issuer: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.issuer
-    open var _id: Int64?
+    open var _id: String?
     open var name: String?
 
     open class func fromJSON(_ json: NSDictionary) -> Issuer {
         let issuer: Issuer = Issuer()
 
         if let _id = json["id"] as? Int64 {
-            issuer._id = _id
+            issuer._id = JSONHandler.attemptParseToString(json["id"])
         }
         if let name = JSONHandler.attemptParseToString(json["name"]) {
             issuer.name = name
