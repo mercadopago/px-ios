@@ -31,11 +31,11 @@ open class InstructionsService: MercadoPagoService {
 
     @available(*, deprecated: 2.2.4, message: "Use getInstructions(_ paymentId : String, ...) instead. PaymentId can be greater than Int and might fail")
     open func getInstructions(_ paymentId: Int, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let paymentId = String(paymentId)
+        let paymentId = Int64(paymentId)
         self.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: success, failure: failure)
     }
 
-    open func getInstructions(for paymentId: String, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getInstructions(for paymentId: Int64, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?) {
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
         params.paramsAppend(key: ApiParams.PAYMENT_TYPE, value: paymentTypeId)
