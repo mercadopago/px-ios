@@ -124,8 +124,27 @@ open class MercadoPagoServices: NSObject {
         service.getInstallments(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, success: callback, failure: failure)
     }
 
-    public func getIssuers(paymentMethodId: String, bin: String, callback: @escaping ([PXIssuer]) -> Void, failure: ((_ error: NSError) -> Void)) {
-
+    open class func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL)
+        service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
+            
+            if let errorDic = jsonResult as? NSDictionary {
+                if errorDic["error"] != nil {
+                    failure(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
+                }
+            } else {
+                let issuersArray = jsonResult as? NSArray
+                var issuers : [PXIssuer] = [PXIssuer]()
+                if issuersArray != nil {
+                    for i in 0..<issuersArray!.count {
+                        if let issuerDic = issuersArray![i] as? [String:Any] {
+                            issuers.append(PXIssuer.fromJSON(issuerDic))
+                        }
+                    }
+                }
+                callback(issuers)
+            }
+        }, failure: failure)
     }
 
     open class func getPaymentMethods(callback: @escaping ([PaymentMethod]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -298,33 +317,6 @@ open class MercadoPagoServices: NSObject {
                     }
                 }
                 success(pms)
-            }
-        }, failure: failure)
-
-    }
-
-    open class func getIssuers(_ paymentMethod: PaymentMethod, bin: String? = nil, baseURL: String = ServicePreference.MP_API_BASE_URL, success: @escaping (_ issuers: [Issuer]) -> Void, failure: ((_ error: NSError) -> Void)?) {
-
-        let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getIssuers(payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
-
-            if let errorDic = jsonResult as? NSDictionary {
-                if errorDic["error"] != nil {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
-                    }
-                }
-            } else {
-                let issuersArray = jsonResult as? NSArray
-                var issuers : [Issuer] = [Issuer]()
-                if issuersArray != nil {
-                    for i in 0..<issuersArray!.count {
-                        if let issuerDic = issuersArray![i] as? NSDictionary {
-                            issuers.append(Issuer.fromJSON(issuerDic))
-                        }
-                    }
-                }
-                success(issuers)
             }
         }, failure: failure)
 

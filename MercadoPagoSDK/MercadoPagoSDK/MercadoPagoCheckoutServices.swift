@@ -141,7 +141,8 @@ extension MercadoPagoCheckout {
             return
         }
         let bin = self.viewModel.cardToken?.getBin()
-        MercadoPagoServices.getIssuers(paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (issuers) -> Void in
+        MercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod._id, bin: bin, callback: { [weak self] (issuers) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -153,8 +154,9 @@ extension MercadoPagoCheckout {
             }
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
+            
+        }) { [weak self] (error) in
 
-        }) { [weak self] (error) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -164,6 +166,7 @@ extension MercadoPagoCheckout {
                 self?.getIssuers()
             })
             strongSelf.executeNextStep()
+            
         }
     }
 

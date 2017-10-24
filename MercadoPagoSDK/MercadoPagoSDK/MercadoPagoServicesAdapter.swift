@@ -18,6 +18,19 @@ open class MercadoPagoServicesAdapter: NSObject {
                 let installment = getInstallmentByPXInstallment(pxInstallment)
                 installments.append(installment)
             }
+            callback(installments)
+        }, failure: failure)
+    }
+    
+    open class func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([Issuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.getIssuers(paymentMethodId: paymentMethodId, bin: bin, callback: { (pxIssuers) in
+            var issuers: [Issuer] = []
+            for pxIssuer in pxIssuers {
+                let issuer = getIssuerByPXIssuer(pxIssuer)
+                issuers.append(issuer)
+            }
+            callback(issuers)
         }, failure: failure)
     }
     
