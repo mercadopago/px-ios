@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 open class MercadoPagoServices: NSObject {
 
