@@ -312,42 +312,6 @@ open class MercadoPagoServices: NSObject {
 
     }
 
-//    open class func searchPaymentMethods(_ amount: Double, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, baseURL: String = ServicePreference.MP_API_BASE_URL, success: @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {
-//
-//        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL)
-//        paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId : defaultPaymenMethodId, excludedPaymentTypeIds: excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure!)
-//
-//    }
-
-//    @available(*, deprecated: 2.4.4, message: "Use getInstructions(for paymentId : String ...) instead")
-//    open class func getInstructions(_ paymentId: Int, paymentTypeId: String? = "",
-//                                    success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void,
-//                                    failure: ((_ error: NSError) -> Void)?) {
-//        let paymentId = String(paymentId)
-//        MercadoPagoServices.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: success, failure: failure)
-//    }
-//
-//    open class func getInstructions(for paymentId: String, paymentTypeId: String? = "",
-//                                    baseURL: String = ServicePreference.MP_API_BASE_URL, success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void,
-//                                    failure: ((_ error: NSError) -> Void)?) {
-//
-//        let instructionsService = InstructionsService(baseURL: baseURL)
-//        instructionsService.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: { (instructionsInfo : InstructionsInfo) -> Void in
-//            success(instructionsInfo)
-//        }, failure : failure)
-//    }
-
-//    open class func getPreference(_ preferenceId: String,
-//                                  baseURL: String = ServicePreference.MP_API_BASE_URL, success : @escaping (_ preference: CheckoutPreference) -> Void,
-//                                  failure: @escaping ((_ error: NSError) -> Void)) {
-//
-//        let preferenceService = PreferenceService(baseURL: baseURL)
-//        preferenceService.getPreference(preferenceId, success: { (preference : CheckoutPreference) in
-//            MercadoPagoContext.setSiteID(preference.siteId)
-//            success(preference)
-//        }, failure: failure)
-//    }
-
     internal class func getParamsPublicKey() -> String {
         var params: String = ""
 
