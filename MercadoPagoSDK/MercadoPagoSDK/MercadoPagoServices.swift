@@ -147,8 +147,26 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open class func getPaymentMethods(callback: @escaping ([PaymentMethod]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
+    open class func getPaymentMethods(callback: @escaping ([PXPaymentMethod]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL)
+        service.getPaymentMethods(success: {(jsonResult: AnyObject?) -> Void in
+            if let errorDic = jsonResult as? NSDictionary {
+                if errorDic["error"] != nil {
+                    failure(NSError(domain: "mercadopago.sdk.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
+                }
+            } else {
+                let paymentMethods = jsonResult as? NSArray
+                var pms : [PXPaymentMethod] = [PXPaymentMethod]()
+                if paymentMethods != nil {
+                    for i in 0..<paymentMethods!.count {
+                        if let pmDic = paymentMethods![i] as? [String:Any] {
+                            pms.append(PXPaymentMethod.fromJSON(pmDic))
+                        }
+                    }
+                }
+                callback(pms)
+            }
+        }, failure: failure)
     }
 
     public func getDirectDiscount(amount: String, payerEmail: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void, failure: ((_ error: NSError) -> Void)) {
@@ -289,34 +307,6 @@ open class MercadoPagoServices: NSObject {
                         failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
                     }
                 }
-            }
-        }, failure: failure)
-
-    }
-
-    open class func getPaymentMethods(baseURL: String = ServicePreference.MP_API_BASE_URL,
-                                      _ success: @escaping (_ paymentMethods: [PaymentMethod]?) -> Void,
-                                      failure: ((_ error: NSError) -> Void)?) {
-
-        let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getPaymentMethods(success: {(jsonResult: AnyObject?) -> Void in
-            if let errorDic = jsonResult as? NSDictionary {
-                if errorDic["error"] != nil {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
-                    }
-                }
-            } else {
-                let paymentMethods = jsonResult as? NSArray
-                var pms : [PaymentMethod] = [PaymentMethod]()
-                if paymentMethods != nil {
-                    for i in 0..<paymentMethods!.count {
-                        if let pmDic = paymentMethods![i] as? NSDictionary {
-                            pms.append(PaymentMethod.fromJSON(pmDic))
-                        }
-                    }
-                }
-                success(pms)
             }
         }, failure: failure)
 
