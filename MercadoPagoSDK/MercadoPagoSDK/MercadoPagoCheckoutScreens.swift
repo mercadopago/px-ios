@@ -167,6 +167,7 @@ extension MercadoPagoCheckout {
     }
 
     func showPaymentResultScreen() {
+       
         if self.viewModel.paymentResult == nil {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
@@ -175,6 +176,14 @@ extension MercadoPagoCheckout {
 
         var congratsViewController: MercadoPagoUIViewController
 
+        let viewModel = PXInstructionsViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo)
+        congratsViewController = PXInstructionsViewController(viewModel: viewModel, callback: { (state) in
+            print("hola")
+        })
+        self.pushViewController(viewController : congratsViewController, animated: false)
+        
+        return
+        
         if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.getPaymentMethod()!.paymentTypeId) || self.viewModel.paymentResult?.status == PaymentStatus.REJECTED {
             congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
 

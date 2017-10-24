@@ -62,4 +62,7 @@ open class PaymentResult: NSObject {
     func isInvalidESC() -> Bool {
         return self.statusDetail == RejectedStatusDetail.INVALID_ESC
     }
+    func isWaitingForPayment() -> Bool {
+        return self.statusDetail == PendingStatusDetail.WAITING_PAYMENT
+    }
 }

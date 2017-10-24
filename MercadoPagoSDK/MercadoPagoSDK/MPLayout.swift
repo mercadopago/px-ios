@@ -16,8 +16,8 @@ class MPLayout: NSObject {
     }
     
     //Ancho fijo
-    static func setWeight(owner:UIView, weight:CGFloat ) -> NSLayoutConstraint{
-        return NSLayoutConstraint(item: owner, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute,multiplier: 1, constant: weight)
+    static func setWidth(owner:UIView, width:CGFloat ) -> NSLayoutConstraint{
+        return NSLayoutConstraint(item: owner, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute,multiplier: 1, constant: width)
     }
     
     // Pin Left
@@ -81,6 +81,13 @@ class MPLayout: NSObject {
         return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
     }
     
+    static func setHeight(ofView view: UIView, asHeightOfView otherView: UIView, percent:CGFloat) -> NSLayoutConstraint{
+        return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0)
+    }
+    
+    static func setWidth(ofView view: UIView, asWidthOfView otherView: UIView, percent:CGFloat) -> NSLayoutConstraint{
+        return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0)
+    }
     
 }
 

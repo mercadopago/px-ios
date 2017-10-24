@@ -156,5 +156,44 @@ extension UIColor {
         self.getRed(&r, green: &g, blue: &b, alpha: &a)
         return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
     }
-
 }
+
+// COMPONENTS
+extension UIColor {
+    class var pxWarmGrey: UIColor {
+        return UIColor(white: 153.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxBrownishGrey: UIColor {
+        return UIColor(white: 102.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxBlack: UIColor {
+        return UIColor(white: 51.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxBlueMp: UIColor {
+        return UIColor(red: 0.0, green: 156.0 / 255.0, blue: 238.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxGreenMp: UIColor {
+        return UIColor(red: 0.0, green: 198.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxRedMp: UIColor {
+        return UIColor(red: 255.0 / 255.0, green: 78.0 / 255.0, blue: 85.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxOrangeMp: UIColor {
+        return UIColor(red: 255.0 / 255.0, green: 166.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxWhite: UIColor {
+        return UIColor(white: 255.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var pxLightGray: UIColor {
+        return UIColor(white: 247.0 / 255.0, alpha: 1.0)
+    }
+}
+

@@ -8,8 +8,10 @@
 
 import UIKit
 
-class PXInstructionsViewController: MercadoPagoUIViewController {
+class PXInstructionsViewController: MercadoPagoUIViewController
+{
 
+    let STATUS_BAR_HEIGHT : CGFloat = 20.0
     let viewModel : PXInstructionsViewModel
     var scrollView : UIScrollView!
     var headerView = UIView()
@@ -23,7 +25,7 @@ class PXInstructionsViewController: MercadoPagoUIViewController {
         self.viewModel = viewModel
         self.scrollView = UIScrollView()
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
-        self.scrollView.backgroundColor = .red
+        self.scrollView.backgroundColor = viewModel.primaryResultColor()
         //Set Content
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.addSubview(contentView)
@@ -37,7 +39,7 @@ class PXInstructionsViewController: MercadoPagoUIViewController {
         self.view.addSubview(self.scrollView)
         MPLayout.pinLeft(view: scrollView, to: self.view).isActive = true
         MPLayout.pinRight(view: scrollView, to: self.view).isActive = true
-        MPLayout.pinTop(view: scrollView, to: self.view).isActive = true
+        MPLayout.pinTop(view: scrollView, to: self.view, withMargin: STATUS_BAR_HEIGHT).isActive = true
         MPLayout.pinBottom(view: scrollView, to: self.view).isActive = true
     }
     
@@ -52,20 +54,19 @@ class PXInstructionsViewController: MercadoPagoUIViewController {
             view.removeFromSuperview()
         }
         //Add Header
-        let dataHeader = HeaderData(title: "Titulo \(contador)", subTitle: "Nada de subtitulo")
+        let dataHeader = self.viewModel.headerComponentData()
         let componentHeader = HeaderComponent(data: dataHeader)
         let rendererHeader = HeaderRenderer()
         headerView = rendererHeader.render(header: componentHeader)
         contentView.addSubview(headerView)
-        MPLayout.pinTop(view: headerView, to: contentView, withMargin: 20).isActive = true
+        MPLayout.pinTop(view: headerView, to: contentView).isActive = true
         MPLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
-        MPLayout.setHeight(owner: headerView, height: 250).isActive = true
+     //   MPLayout.setHeight(owner: headerView, height: 250).isActive = true
         
         
         //Add Foo
         
         let dataFoo = FooterData(titleLabel: "Aceptar", titleButton: "Nada") {
-            self.contador = self.contador + 1
             self.renderViews()
         }
         let componentFoo = FooterComponent(data: dataFoo)
@@ -92,10 +93,17 @@ class PXInstructionsViewController: MercadoPagoUIViewController {
         
         self.view.layoutIfNeeded()
     }
-    var contador = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.navigationController != nil && self.navigationController?.navigationBar != nil {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
+        }
+        renderViews()
     }
 
     override func didReceiveMemoryWarning() {

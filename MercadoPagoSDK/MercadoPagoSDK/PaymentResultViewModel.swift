@@ -254,5 +254,6 @@ struct RejectedStatusDetail {
 struct PendingStatusDetail {
     static let CONTINGENCY = "pending_contingency"
     static let REVIEW_MANUAL = "pending_review_manual"
+    static let WAITING_PAYMENT = "pending_waiting_payment"
 
 }
