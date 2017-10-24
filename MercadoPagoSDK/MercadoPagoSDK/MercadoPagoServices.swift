@@ -15,20 +15,20 @@ open class MercadoPagoServices: NSObject {
     private var proccesingMode: String
 
     private static var baseURL: String!
-    private var createPaymentBaseURL: String!
-    private var gatewayBaseURL: String!
-    private var getCustomerBaseURL: String!
-    private var createCheckoutPreferenceURL: String!
-    private var getMerchantDiscountBaseURL: String!
-    private var getCustomerURI: String!
-    private var createPaymentURI: String!
-    private var createCheckoutPreferenceURI: String!
-    private var getMerchantDiscountURI: String!
+    private static var createPaymentBaseURL: String!
+    private static var gatewayBaseURL: String!
+    private static var getCustomerBaseURL: String!
+    private static var createCheckoutPreferenceURL: String!
+    private static var getMerchantDiscountBaseURL: String!
+    private static var getCustomerURI: String!
+    private static var createPaymentURI: String!
+    private static var createCheckoutPreferenceURI: String!
+    private static var getMerchantDiscountURI: String!
 
-    private var getCustomerAdditionalInfo: NSDictionary!
-    private var createPaymentAdditionalInfo: NSDictionary!
-    private var createCheckoutPreferenceAdditionalInfo: NSDictionary!
-    private var getDiscountAdditionalInfo: NSDictionary!
+    private static var getCustomerAdditionalInfo: NSDictionary!
+    private static var createPaymentAdditionalInfo: NSDictionary!
+    private static var createCheckoutPreferenceAdditionalInfo: NSDictionary!
+    private static var getDiscountAdditionalInfo: NSDictionary!
 
     init(merchantPublicKey: String, payerAccessToken: String, proccesingMode: String) {
         self.merchantPublicKey = merchantPublicKey
@@ -217,58 +217,58 @@ open class MercadoPagoServices: NSObject {
         MercadoPagoServices.baseURL = baseURL
     }
 
-    public func setGatewayBaseURL(_ gatewayBaseURL: String) {
-        self.gatewayBaseURL = gatewayBaseURL
+    open static func setGatewayBaseURL(_ gatewayBaseURL: String) {
+        MercadoPagoServices.gatewayBaseURL = gatewayBaseURL
     }
 
-    public func setGetCustomerBaseURL(_ getCustomerBaseURL: String) {
-        self.getCustomerBaseURL = getCustomerBaseURL
+    open static func setGetCustomerBaseURL(_ getCustomerBaseURL: String) {
+        MercadoPagoServices.getCustomerBaseURL = getCustomerBaseURL
     }
 
-    public func setCreateCheckoutPreferenceURL(_ createCheckoutPreferenceURL: String) {
-        self.createCheckoutPreferenceURL = createCheckoutPreferenceURL
+    open static func setCreateCheckoutPreferenceURL(_ createCheckoutPreferenceURL: String) {
+        MercadoPagoServices.createCheckoutPreferenceURL = createCheckoutPreferenceURL
     }
 
-    public func setGetMerchantDiscountBaseURL(_ getMerchantDiscountBaseURL: String) {
-        self.getMerchantDiscountBaseURL = getMerchantDiscountBaseURL
+    open static func setGetMerchantDiscountBaseURL(_ getMerchantDiscountBaseURL: String) {
+        MercadoPagoServices.getMerchantDiscountBaseURL = getMerchantDiscountBaseURL
     }
 
-    public func setGetCustomerURI(_ getCustomerURI: String) {
-        self.getCustomerURI = getCustomerURI
+    open static func setGetCustomerURI(_ getCustomerURI: String) {
+        MercadoPagoServices.getCustomerURI = getCustomerURI
     }
 
-//    public func setCreatePayment(baseURL: String = MP_API_BASE_URL, URI: String = MP_PAYMENTS_URI + "?api_version=" + API_VERSION, additionalInfo: NSDictionary = [:]) {
-//        self.createPaymentBaseURL = baseURL
-//        self.createPaymentURI  = URI
-//        self.createPaymentAdditionalInfo = additionalInfo
+//    open static func setCreatePayment(baseURL: String = MP_API_BASE_URL, URI: String = MP_PAYMENTS_URI + "?api_version=" + API_VERSION, additionalInfo: NSDictionary = [:]) {
+//        MercadoPagoServices.createPaymentBaseURL = baseURL
+//        MercadoPagoServices.createPaymentURI  = URI
+//        MercadoPagoServices.createPaymentAdditionalInfo = additionalInfo
 //    }
 
-    public func setCreatePaymentURI(_ createPaymentURI: String) {
-        self.createPaymentURI = createPaymentURI
+    open static func setCreatePaymentURI(_ createPaymentURI: String) {
+        MercadoPagoServices.createPaymentURI = createPaymentURI
     }
 
-    public func setCreateCheckoutPreferenceURI(_ createCheckoutPreferenceURI: String) {
-        self.createCheckoutPreferenceURI = createCheckoutPreferenceURI
+    open static func setCreateCheckoutPreferenceURI(_ createCheckoutPreferenceURI: String) {
+        MercadoPagoServices.createCheckoutPreferenceURI = createCheckoutPreferenceURI
     }
 
-    public func setGetMerchantDiscountURI(_ getMerchantDiscountURI: String) {
-        self.getMerchantDiscountURI = getMerchantDiscountURI
+    open static func setGetMerchantDiscountURI(_ getMerchantDiscountURI: String) {
+        MercadoPagoServices.getMerchantDiscountURI = getMerchantDiscountURI
     }
 
-    public func setGetCustomerAdditionalInfo(_ getCustomerAdditionalInfo: NSDictionary) {
-        self.getCustomerAdditionalInfo = getCustomerAdditionalInfo
+    open static func setGetCustomerAdditionalInfo(_ getCustomerAdditionalInfo: NSDictionary) {
+        MercadoPagoServices.getCustomerAdditionalInfo = getCustomerAdditionalInfo
     }
 
-    public func setCreatePaymentAdditionalInfo(_ createPaymentAdditionalInfo: NSDictionary) {
-        self.createPaymentAdditionalInfo = createPaymentAdditionalInfo
+    open static func setCreatePaymentAdditionalInfo(_ createPaymentAdditionalInfo: NSDictionary) {
+        MercadoPagoServices.createPaymentAdditionalInfo = createPaymentAdditionalInfo
     }
 
-    public func setCreateCheckoutPreferenceAdditionalInfo(_ createCheckoutPreferenceAdditionalInfo: NSDictionary) {
-        self.createCheckoutPreferenceAdditionalInfo = createCheckoutPreferenceAdditionalInfo
+    open static func setCreateCheckoutPreferenceAdditionalInfo(_ createCheckoutPreferenceAdditionalInfo: NSDictionary) {
+        MercadoPagoServices.createCheckoutPreferenceAdditionalInfo = createCheckoutPreferenceAdditionalInfo
     }
 
-    public func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
-        self.getDiscountAdditionalInfo = getDiscountAdditionalInfo
+    open static func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
+        MercadoPagoServices.getDiscountAdditionalInfo = getDiscountAdditionalInfo
     }
 
     open class func cloneToken(_ token: Token,
