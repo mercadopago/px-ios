@@ -62,8 +62,8 @@ extension MercadoPagoCheckout {
 
     func getDirectDiscount() {
         self.presentLoading()
-        CustomServer.getDirectDiscount(transactionAmount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, url: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { [weak self] (discount) in
-
+        MercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, callback: { [weak self] (discount) in
+            
             guard let strongSelf = self else {
                 return
             }
@@ -71,14 +71,16 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.paymentData.discount = discount
             strongSelf.executeNextStep()
             strongSelf.dismissLoading()
-
-        }) { [weak self] (_: NSError) in
+            
+        }) { [weak self] (error) in
+            
             guard let strongSelf = self else {
                 return
             }
 
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
+            
         }
     }
 

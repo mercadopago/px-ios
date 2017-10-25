@@ -185,16 +185,18 @@ open class MercadoPagoServices: NSObject {
             } as! (Data?) -> Void, failure: failure)
     }
 
-    public func getDirectDiscount(amount: String, payerEmail: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void, failure: ((_ error: NSError) -> Void)) {
-
+    open class func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
     }
-
-    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, callback: @escaping (DiscountCoupon) -> Void, failure: ((_ error: NSError) -> Void)) {
-
-    }
-
-    public func getCodeDiscount(amount: String, payerEmail: String, couponCode: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void, failure: ((_ error: NSError) -> Void)) {
-
+    
+    open class func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        var addInfo: String? = nil
+        if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
+            addInfo = discountAdditionalInfo?.parseToQuery()
+        }
+        let discountService = DiscountService(baseURL: getMerchantDiscountBaseURL, URI: getMerchantDiscountURI)
+        
+        discountService.getDiscount(amount: amount, code: couponCode, payerEmail: payerEmail, additionalInfo: addInfo, success: callback, failure: failure)
     }
 
     //    public func getCampaigns(callback: @escaping ([Campaign]) -> Void, failure: ((_ error: NSError) -> Void)) {

@@ -10,6 +10,22 @@ import Foundation
 import MercadoPagoServices
 
 open class MercadoPagoServicesAdapter: NSObject {
+    
+    open class func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: discountAdditionalInfo, callback: { (pxDiscount) in
+            if let pxDiscount = pxDiscount {
+                let discountCoupon = getDiscountCouponByPXDiscount(pxDiscount)
+                callback(discountCoupon)
+            } else {
+                callback(nil)
+            }
+        }, failure: failure)
+    }
+    
+    open class func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
+    }
 
     open class func getInstallments(bin: String?, amount: Double, issuer: Issuer?, paymentMethodId: String, callback: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
@@ -70,6 +86,11 @@ open class MercadoPagoServicesAdapter: NSObject {
         let thousandSeparator: String = currency.thousandsSeparator
         let pxCurrency = PXCurrency(id: id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
         return pxCurrency
+    }
+    
+    open class func getDiscountCouponByPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
+        let discountCoupon = DiscountCoupon()
+        return discountCoupon
     }
     
     open class func getPXPayerByPayer(_ payer: Payer) -> PXPayer {
