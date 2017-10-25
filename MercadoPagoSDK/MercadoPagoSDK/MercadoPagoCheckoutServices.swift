@@ -36,28 +36,6 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
 
         }
-//        MercadoPagoServices.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (checkoutPreference : CheckoutPreference) -> Void in
-//
-//            guard let strongSelf = self else {
-//                return
-//            }
-//
-//            strongSelf.viewModel.checkoutPreference = checkoutPreference
-//            strongSelf.viewModel.paymentData.payer = checkoutPreference.getPayer()
-//            strongSelf.dismissLoading()
-//            strongSelf.executeNextStep()
-//
-//            }, failure: { [weak self] (error: NSError) -> Void in
-//                guard let strongSelf = self else {
-//                    return
-//                }
-//
-//                strongSelf.dismissLoading()
-//                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
-//                    self?.getCheckoutPreference()
-//                })
-//                strongSelf.executeNextStep()
-//        })
     }
 
     func getDirectDiscount() {
@@ -111,30 +89,6 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
 
         }
-
-//        MercadoPagoServices.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
-//                                               baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
-//
-//                                                guard let strongSelf = self else {
-//                                                    return
-//                                                }
-//
-//                                                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-//                                                strongSelf.dismissLoading()
-//                                                strongSelf.executeNextStep()
-//
-//            }, failure: { [weak self] (error) -> Void in
-//                guard let strongSelf = self else {
-//                    return
-//                }
-//
-//                strongSelf.dismissLoading()
-//                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] (_) -> Void in
-//
-//                    self?.getPaymentMethodSearch()
-//                })
-//                strongSelf.executeNextStep()
-//        })
     }
 
     func getIssuers() {
@@ -467,26 +421,6 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
 
         }
-
-//        MercadoPagoServices.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (instructionsInfo) in
-//
-//            guard let strongSelf = self else {
-//                return
-//            }
-//            strongSelf.viewModel.instructionsInfo = instructionsInfo
-//            strongSelf.dismissLoading()
-//            strongSelf.executeNextStep()
-//
-//            }, failure : { [weak self] (error) -> Void in
-//            guard let strongSelf = self else {
-//                return
-//            }
-//            strongSelf.dismissLoading()
-//            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue), errorCallback: { [weak self] (_) in
-//                self?.getInstructions()
-//            })
-//            strongSelf.executeNextStep()
-//        })
     }
 
     func getIdentificationTypes() {

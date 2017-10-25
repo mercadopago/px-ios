@@ -1,5 +1,5 @@
 //
-//  PXCampaings.swift
+//  PXCampaign.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/23/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class PXCampaings: NSObject {
+open class PXCampaign: NSObject {
 
     open var id: Int64!
     open var code: String!
