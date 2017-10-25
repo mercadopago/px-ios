@@ -16,4 +16,9 @@ open class PXCheckoutPreference: NSObject {
     open var expirationDateTo: Date!
     open var expirationDateFrom: Date!
     open var site: PXSite!
+    
+    open class func fromJSON(_ json: NSDictionary) -> PXCheckoutPreference {
+        let checkoutPreference: PXCheckoutPreference = PXCheckoutPreference()
+        return checkoutPreference
+    }
 }

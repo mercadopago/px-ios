@@ -217,8 +217,17 @@ open class MercadoPagoServices: NSObject {
         service.getCustomer(params: addInfo, success: callback, failure: failure)
     }
 
-    public func createCheckoutPreference(bodyInfo: NSDictionary? = nil, callback: @escaping (CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)) {
-
+    open class func createCheckoutPreference(bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: CustomService = CustomService(baseURL: createCheckoutPreferenceURL, URI: createCheckoutPreferenceURI)
+        
+        let body: String?
+        if let bodyInfo = bodyInfo {
+            body = bodyInfo.toJsonString()
+        } else {
+            body = nil
+        }
+        
+        service.createPreference(body: body, success: callback, failure: failure)
     }
 
     //SETS

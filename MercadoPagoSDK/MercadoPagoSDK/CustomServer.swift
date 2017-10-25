@@ -27,15 +27,6 @@ open class CustomServer: NSObject {
         service.createPayment(body: body, success: success, failure: failure)
     }
 
-    open class func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary, success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
-
-        let service: CustomService = CustomService(baseURL: url, URI: uri)
-
-        let body: String = bodyInfo.toJsonString()
-
-        service.createPreference(body: body, success: success, failure: failure)
-    }
-
     open class func getDirectDiscount(transactionAmount: Double, payerEmail: String?, url: String, uri: String, discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         getCodeDiscount(discountCode: nil, transactionAmount: transactionAmount, payerEmail: payerEmail, url: url, uri: uri, discountAdditionalInfo: discountAdditionalInfo, success: success, failure: failure)
