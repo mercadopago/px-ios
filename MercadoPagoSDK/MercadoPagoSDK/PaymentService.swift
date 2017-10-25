@@ -31,7 +31,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentService: MercadoPagoService {
 
-    open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, success: @escaping (_ data: Data) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
@@ -47,13 +47,9 @@ open class PaymentService: MercadoPagoService {
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
         params.paramsAppend(key: ApiParams.BIN, value: bin)
-
         params.paramsAppend(key: ApiParams.AMOUNT, value: String(format:"%.2f", amount))
-
         params.paramsAppend(key: ApiParams.ISSUER_ID, value: String(describing: issuerId!))
-
         params.paramsAppend(key: ApiParams.PAYMENT_METHOD_ID, value: payment_method_id)
-
         params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
 
         self.request( uri: uri, params:params, body: nil, method: method, success: {(data: Data) -> Void in
@@ -78,11 +74,8 @@ open class PaymentService: MercadoPagoService {
 open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, payment_method_id: String, bin: String? = nil, success:  @escaping (_ data: Data) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
     var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
-
     params.paramsAppend(key: ApiParams.PAYMENT_METHOD_ID, value: payment_method_id)
-
     params.paramsAppend(key: ApiParams.BIN, value: bin)
-
     params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
 
     if bin != nil {

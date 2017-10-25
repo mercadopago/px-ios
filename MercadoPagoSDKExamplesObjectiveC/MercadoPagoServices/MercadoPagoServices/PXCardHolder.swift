@@ -7,9 +7,33 @@
 //
 
 import Foundation
-open class PXCardHolder: NSObject {
+open class PXCardHolder: NSObject, Codable{
 
     open var name: String!
     open var identification: PXIdentification!
+
+    init(name: String, identification: PXIdentification) {
+        self.identification = identification
+        self.name = name
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXCardHolder {
+        return try JSONDecoder().decode(PXCardHolder.self, from: data)
+    }
+
+    open class func fromJSON(data: Data) throws -> [PXCardHolder] {
+        return try JSONDecoder().decode([PXCardHolder].self, from: data)
+    }
 
 }

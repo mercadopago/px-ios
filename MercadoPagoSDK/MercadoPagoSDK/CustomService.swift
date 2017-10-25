@@ -24,14 +24,16 @@ open class CustomService: MercadoPagoService {
 
     open func getCustomer(_ method: String = "GET", params: String, success: @escaping (_ jsonResult: PXCustomer) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        self.request(uri: self.URI, params: params, body: nil, method: method, cache: false, success: { (jsonResult) -> Void in
+        self.request(uri: self.URI, params: params, body: nil, method: method, cache: false, success: { (data) -> Void in
+          let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             if let custDic = jsonResult as? NSDictionary {
                 if custDic["error"] != nil {
                     if failure != nil {
                         failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
                     }
                 } else {
-                    success(PXCustomer.fromJSON(custDic))
+                    let customer: PXCustomer = try! PXCustomer.fromJSON(data: data)
+                    success(customer)
                 }
             } else {
                 if failure != nil {

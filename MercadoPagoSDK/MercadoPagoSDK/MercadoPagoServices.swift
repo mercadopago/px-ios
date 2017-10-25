@@ -18,10 +18,10 @@ open class MercadoPagoServices: NSObject {
     private static var baseURL: String!
     private static var createPaymentBaseURL: String!
     private static var gatewayBaseURL: String!
-    private static var getCustomerBaseURL: String!
+    private static var getCustomerBaseURL: String! = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() // TODO: Sacar!!
     private static var createCheckoutPreferenceURL: String!
     private static var getMerchantDiscountBaseURL: String!
-    private static var getCustomerURI: String!
+    private static var getCustomerURI: String! =  MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI()
     private static var createPaymentURI: String!
     private static var createCheckoutPreferenceURI: String!
     private static var getMerchantDiscountURI: String!
@@ -167,26 +167,19 @@ open class MercadoPagoServices: NSObject {
 
     open class func getPaymentMethods(callback: @escaping ([PXPaymentMethod]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getPaymentMethods(success: {(data: Data?) -> Void in
+        service.getPaymentMethods(success: {(data: Data) -> Void in
 
-            let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
+            let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
                     failure(NSError(domain: "mercadopago.sdk.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
                 }
             } else {
-                let paymentMethods = jsonResult as? NSArray
-                var pms : [PXPaymentMethod] = [PXPaymentMethod]()
-                if paymentMethods != nil {
-                    for i in 0..<paymentMethods!.count {
-                        if let pmDic = paymentMethods![i] as? [String:Any] {
-                            pms.append(PXPaymentMethod.fromJSON(pmDic as NSDictionary))
-                        }
-                    }
-                }
-                callback(pms)
+                var paymentMethods : [PXPaymentMethod] = [PXPaymentMethod]()
+                paymentMethods = try! PXPaymentMethod.fromJSON(data: data)
+                callback(paymentMethods)
             }
-            } as! (Data?) -> Void, failure: failure)
+            }, failure: failure)
     }
 
     public func getDirectDiscount(amount: String, payerEmail: String, discountAdditionalInfo: NSDictionary, callback: @escaping (DiscountCoupon) -> Void, failure: ((_ error: NSError) -> Void)) {
@@ -205,7 +198,9 @@ open class MercadoPagoServices: NSObject {
     //
     //    }
 
-    open class func getCustomer(additionalInfo: NSDictionary? = nil, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    // TODO: Sacar esto
+
+    open class func getCustomer(additionalInfo: NSDictionary? = MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: getCustomerBaseURL, URI: getCustomerURI)
         
         var addInfo: String = ""

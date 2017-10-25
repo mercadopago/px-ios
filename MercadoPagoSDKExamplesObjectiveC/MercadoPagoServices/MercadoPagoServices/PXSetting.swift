@@ -7,10 +7,50 @@
 //
 
 import Foundation
-open class PXSetting: NSObject {
+open class PXSetting: NSObject, Codable {
 
     open var bin: PXBin!
     open var cardNumber: PXCardNumber!
     open var securityCode: PXSecurityCode!
+
+    init(bin: PXBin, cardNumber: PXCardNumber, securityCode: PXSecurityCode) {
+        self.bin = bin
+        self.cardNumber = cardNumber
+        self.securityCode = securityCode
+    }
+
+    public enum PXSettingKeys: String, CodingKey {
+        case bin
+        case cardNumber = "card_number"
+        case securityCode = "security_code"
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXSettingKeys.self)
+        let bin: PXBin = try container.decode(PXBin.self, forKey: .bin)
+        let cardNumber: PXCardNumber = try container.decode(PXCardNumber.self, forKey: .cardNumber)
+        let securityCode: PXSecurityCode = try container.decode(PXSecurityCode.self, forKey: .securityCode)
+
+        self.init(bin: bin, cardNumber: cardNumber, securityCode: securityCode)
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXSetting {
+        return try JSONDecoder().decode(PXSetting.self, from: data)
+    }
+
+    open class func fromJSON(data: Data) throws -> [PXSetting] {
+        return try JSONDecoder().decode([PXSetting].self, from: data)
+    }
 
 }

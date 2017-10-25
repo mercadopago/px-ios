@@ -51,7 +51,7 @@ open class MercadoPagoServicesAdapter: NSObject {
     
     open class func getIssuerByPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
         let issuer = Issuer()
-        issuer._id = pxIssuer.id
+        issuer._id = pxIssuer._id
         issuer.name = pxIssuer.name
         return issuer
     }

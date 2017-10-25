@@ -7,7 +7,44 @@
 //
 
 import Foundation
-open class PXFinancialInstitution: NSObject {
+open class PXFinancialInstitution: NSObject, Codable {
     open var id: String!
     open var _description: String!
+
+    init(id: String, description: String) {
+        self.id = id
+        self._description = description
+    }
+
+    public enum PXFinancialInstitutionKeys: String, CodingKey {
+        case id
+        case description = "description"
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXFinancialInstitutionKeys.self)
+        let id: String = try container.decode(String.self, forKey: .id)
+        let description: String = try container.decode(String.self, forKey: .description)
+
+        self.init(id: id, description: description)
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXFinancialInstitution {
+        return try JSONDecoder().decode(PXFinancialInstitution.self, from: data)
+    }
+
+    open class func fromJSON(data: Data) throws -> [PXFinancialInstitution] {
+        return try JSONDecoder().decode([PXFinancialInstitution].self, from: data)
+    }
 }

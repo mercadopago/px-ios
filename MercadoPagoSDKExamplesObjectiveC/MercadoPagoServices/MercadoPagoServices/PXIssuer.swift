@@ -8,11 +8,11 @@
 
 import Foundation
 open class PXIssuer: NSObject, Codable {
-    open var id: String!
+    open var _id: String! // TODO: Cambiar
     open var name: String!
 
     init(id: String, name: String) {
-        self.id = id
+        self._id = id
         self.name = name
     }
 

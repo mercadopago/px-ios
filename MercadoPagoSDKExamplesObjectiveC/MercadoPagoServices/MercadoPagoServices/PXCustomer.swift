@@ -7,25 +7,97 @@
 //
 
 import Foundation
-open class PXCustomer: NSObject {
+open class PXCustomer: NSObject, Codable {
     open var address: PXAddress!
-    open var card: [PXCard]!
+    open var cards: [PXCard]!
     open var defaultCard: String!
-    open var _description: String!
+    open var _description: String?
     open var dateCreated: Date!
     open var dateLastUpdated: Date!
     open var email: String!
-    open var firstName: String!
+    open var firstName: String?
     open var id: String!
     open var identification: PXIdentification!
-    open var lastName: String!
+    open var lastName: String?
     open var liveMode: Bool!
     open var metadata: [String: String]!
     open var phone: PXPhone!
     open var registrationDate: Date!
     
-    open class func fromJSON(_ json: NSDictionary) -> PXCustomer {
-        let customer: PXCustomer = PXCustomer()
-        return customer
+    init(address: PXAddress, cards: [PXCard], defaultCard: String, description: String?, dateCreated: Date, dateLastUpdated: Date, email: String, firstName: String?, id: String, identification: PXIdentification, lastName: String?, liveMode: Bool, metadata: [String : String], phone: PXPhone, registrationDate: Date) {
+
+        self.address = address
+        self.cards = cards
+        self.defaultCard = defaultCard
+        self._description = description
+        self.dateCreated = dateCreated
+        self.dateLastUpdated =  dateLastUpdated
+        self.email = email
+        self.firstName = firstName
+        self.id = id
+        self.identification = identification
+        self.lastName = lastName
+        self.liveMode = liveMode
+        self.metadata = metadata
+        self.phone = phone
+        self.registrationDate = registrationDate
+    }
+
+    public enum PXCustomerKeys: String, CodingKey {
+        case address
+        case cards
+        case defaultCard = "default_card"
+        case _description = "description"
+        case dateCreated = "date_created"
+        case dateLastUpdated =  "date_last_updated"
+        case email
+        case firstName = "first_name"
+        case id
+        case identification
+        case lastName = "last_name"
+        case liveMode = "live_mode"
+        case metadata
+        case phone
+        case registrationDate = "registration_date"
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXCustomerKeys.self)
+        let address: PXAddress = try container.decode(PXAddress.self, forKey: .address)
+        let cards: [PXCard] = try container.decode([PXCard].self, forKey: .cards)
+        let defaultCard: String = try container.decode(String.self, forKey: .defaultCard)
+        let _description: String? = try container.decodeIfPresent(String.self, forKey: ._description)
+        let dateLastUpdated: Date = Date()// try container.decode(Date.self, forKey: .dateLastUpdated)
+        let dateCreated: Date = Date()// try container.decode(Date.self, forKey: .dateCreated)
+        let email: String = try container.decode(String.self, forKey: .email)
+        let firstName: String? = try container.decodeIfPresent(String.self, forKey: .firstName)
+        let id: String = try container.decode(String.self, forKey: .id)
+        let identification: PXIdentification = try container.decode(PXIdentification.self, forKey: .identification)
+        let lastName: String? = try container.decodeIfPresent(String.self, forKey: .lastName)
+        let liveMode: Bool = try container.decode(Bool.self, forKey: .liveMode)
+        let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
+        let phone: PXPhone = try container.decode(PXPhone.self, forKey: .phone)
+        let registrationDate: Date = Date() //try container.decode(Date.self, forKey: .registrationDate)
+
+        self.init(address: address, cards: cards, defaultCard: defaultCard, description: _description, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, email: email, firstName: firstName, id: id, identification: identification, lastName: lastName, liveMode: liveMode, metadata: metadata, phone: phone, registrationDate: registrationDate)
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXCustomer {
+        return try JSONDecoder().decode(PXCustomer.self, from: data)
+    }
+
+    open class func fromJSON(data: Data) throws -> [PXCustomer] {
+        return try JSONDecoder().decode([PXCustomer].self, from: data)
     }
 }
