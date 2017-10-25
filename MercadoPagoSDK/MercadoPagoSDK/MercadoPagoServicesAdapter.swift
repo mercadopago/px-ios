@@ -41,7 +41,37 @@ open class MercadoPagoServicesAdapter: NSObject {
             let customer = getCustomerByPXCustomer(pxCustomer)
             callback(customer)
         }, failure: failure)
+    }
+    
+    open class func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
+        let pxPayer = getPXPayerByPayer(payer)
+        let pxSite = getPXSiteById(site)
+        
+        MercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, payer: pxPayer, site: pxSite, callback: { (pxPaymentMethodSearch) in
+            let paymentMethodSearch = getPaymentMethodSearchByPXPaymentMethodSearch(pxPaymentMethodSearch)
+            callback(paymentMethodSearch)
+        }, failure: failure)
+    }
+    
+    open class func getPXSiteById(_ siteId: String) -> PXSite {
+        let pxSite = PXSite()
+        return pxSite
+    }
+    
+    open class func getPXPayerByPayer(_ payer: Payer) -> PXPayer {
+        let pxPayer = PXPayer()
+        return pxPayer
+    }
+    
+    open class func getPayerByPXPayer(_ pxPayer: PXPayer) -> Payer {
+        let payer = Payer()
+        return payer
+    }
+    
+    open class func getPaymentMethodSearchByPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
+        let paymentMethodSearch = PaymentMethodSearch()
+        return paymentMethodSearch
     }
     
     open class func getCustomerByPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
