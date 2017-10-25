@@ -94,7 +94,7 @@ open class MercadoPagoServices: NSObject {
                     failure(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
                 }
             }
-            }, failure: failure)
+        }, failure: failure)
     }
 
 
@@ -139,7 +139,7 @@ open class MercadoPagoServices: NSObject {
                 }
                 callback(identificationTypes)
             }
-            }, failure: failure)
+        }, failure: failure)
     }
 
     open class func getInstallments(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -149,19 +149,18 @@ open class MercadoPagoServices: NSObject {
 
     open class func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: PaymentService = PaymentService(baseURL: baseURL)
-        service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(jsonResult: Data?) -> Void in
-            
-            if let errorDic = jsonResult as? NSDictionary {
+        service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(data: Data) -> Void in
+
+            let jsonResponse = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
+
+            if let errorDic = jsonResponse as? NSDictionary {
                 if errorDic["error"] != nil {
                     failure(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
                 }
             } else {
                 var issuers : [PXIssuer] = [PXIssuer]()
-                if let data = jsonResult as? Data {
-                    issuers =  try! JSONDecoder().decode([PXIssuer].self, from: data)
-                    callback(issuers)
-
-                }
+                issuers =  try! PXIssuer.fromJSON(data: data)
+                callback(issuers)
             }
         }, failure: failure)
     }

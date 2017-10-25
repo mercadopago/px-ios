@@ -22,7 +22,7 @@ open class MercadoPagoService: NSObject {
         super.init()
     }
 
-    public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ jsonResult: Data?) -> Void,
+    public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
                         failure: ((_ error: NSError) -> Void)?) {
         var url = baseURL + uri
         var requesturl = url
@@ -63,12 +63,12 @@ open class MercadoPagoService: NSObject {
 
         NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            if error == nil {
+            if error == nil && data != nil {
                 do {
                     #if DEBUG
                         print("--REQUEST_RESPONSE: \(String(data: data!, encoding: String.Encoding.utf8) as! NSString)\n")
                     #endif
-                    success(data)
+                    success(data!)
                 } catch {
 
                     let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)

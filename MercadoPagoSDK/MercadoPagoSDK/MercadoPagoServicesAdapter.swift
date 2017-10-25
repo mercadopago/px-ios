@@ -59,7 +59,7 @@ open class MercadoPagoServicesAdapter: NSObject {
     open class func getInstallmentByPXInstallment(_ pxInstallment: PXInstallment) -> Installment {
         let installment = Installment()
         installment.issuer = getIssuerByPXIssuer(pxInstallment.issuer)
-        installment.paymentTypeId = pxInstallment.paymentType
+        installment.paymentTypeId = pxInstallment.paymentTypeId
         installment.paymentMethodId = pxInstallment.paymentMethodId
         for pxPayerCost in pxInstallment.payerCosts {
             let payerCost = getPayerCostByPXPayerCost(pxPayerCost)
@@ -74,7 +74,7 @@ open class MercadoPagoServicesAdapter: NSObject {
         payerCost.labels = pxPayerCost.labels
         payerCost.minAllowedAmount = pxPayerCost.minAllowedAmount
         payerCost.maxAllowedAmount = pxPayerCost.maxAllowedAmount
-        payerCost.recommendedMessage = pxPayerCost.recommendMessage
+        payerCost.recommendedMessage = pxPayerCost.recommendedMessage
         payerCost.installmentAmount = pxPayerCost.installmentAmount
         payerCost.totalAmount = pxPayerCost.totalAmount
         return payerCost

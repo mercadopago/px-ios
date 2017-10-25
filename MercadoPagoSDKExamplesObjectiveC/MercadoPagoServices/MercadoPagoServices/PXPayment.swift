@@ -48,6 +48,7 @@ open class PXPayment: NSObject {
         public static let IN_PROCESS = "in_process"
         public static let REJECTED = "rejected"
         public static let PENDING = "pending"
+        public static let RECOVERY = "recovery"
     }
 
     open class StatusDetails: NSObject {
@@ -67,6 +68,6 @@ open class PXPayment: NSObject {
         public static let REJECTED_MAX_ATTEMPTS = "cc_rejected_max_attempts"
         public static let REJECTED_DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
         public static let REJECTED_CARD_DISABLED = "cc_rejected_card_disabled"
-        public static let REJECTED_REJECTED_INSUFFICIENT_DATA = "rejected_insufficient_data"
+        public static let REJECTED_INSUFFICIENT_DATA = "rejected_insufficient_data"
     }
 }

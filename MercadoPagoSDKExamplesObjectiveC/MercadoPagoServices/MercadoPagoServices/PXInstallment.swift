@@ -7,15 +7,52 @@
 //
 
 import Foundation
-open class PXInstallment: NSObject {
+open class PXInstallment: NSObject, Codable {
     open var issuer: PXIssuer!
     open var payerCosts: [PXPayerCost]!
     open var paymentMethodId: String!
-    open var paymentType: String!
+    open var paymentTypeId: String!
 
-    open class func fromJSON(_ json: NSDictionary) -> PXInstallment {
-        let paymentMethod: PXInstallment = PXInstallment()
-        return paymentMethod
+    public init(issuer: PXIssuer, payerCosts: [PXPayerCost], paymentMethodId: String, paymentTypeId: String) {
+        self.issuer = issuer
+        self.payerCosts = payerCosts
+        self.paymentMethodId = paymentMethodId
+        self.paymentTypeId = paymentTypeId
     }
 
+    public enum PXInstallmentKeys: String, CodingKey {
+        case issuer = "issuer"
+        case payerCosts = "payer_costs"
+        case paymentMethodId = "payment_method_id"
+        case paymentTypeId = "payment_type_id"
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXInstallmentKeys.self)
+        let issuer: PXIssuer = try container.decode(PXIssuer.self, forKey: .issuer)
+        let payerCosts: [PXPayerCost] = try container.decode([PXPayerCost].self, forKey: .payerCosts)
+        let paymentMethodId: String = try container.decode(String.self, forKey: .paymentMethodId)
+        let paymentTypeId: String = try container.decode(String.self, forKey: .paymentTypeId)
+
+        self.init(issuer: issuer, payerCosts: payerCosts, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXInstallment {
+        return try JSONDecoder().decode(PXInstallment.self, from: data)
+    }
+
+    open class func fromJSON(data: Data) throws -> [PXInstallment] {
+        return try JSONDecoder().decode([PXInstallment].self, from: data)
+    }
 }
