@@ -11,18 +11,6 @@ import UIKit
 
 open class CustomServer: NSObject {
 
-    open class func getCustomer(url: String, uri: String, additionalInfo: NSDictionary? = nil, _ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
-
-        let service: CustomService = CustomService(baseURL: url, URI: uri)
-
-        var addInfo: String = ""
-        if !NSDictionary.isNullOrEmpty(additionalInfo), let addInfoDict = additionalInfo {
-            addInfo = addInfoDict.parseToQuery()
-        }
-
-        service.getCustomer(params: addInfo, success: success, failure: failure)
-    }
-
     open class func createPayment(url: String, uri: String, paymentData: NSDictionary, query: NSDictionary?, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 

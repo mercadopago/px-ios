@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServices
 
 open class CustomService: MercadoPagoService {
 
@@ -21,7 +22,7 @@ open class CustomService: MercadoPagoService {
         self.baseURL = baseURL
     }
 
-    open func getCustomer(_ method: String = "GET", params: String, success: @escaping (_ jsonResult: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getCustomer(_ method: String = "GET", params: String, success: @escaping (_ jsonResult: PXCustomer) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         self.request(uri: self.URI, params: params, body: nil, method: method, cache: false, success: { (jsonResult) -> Void in
             if let custDic = jsonResult as? NSDictionary {
@@ -30,7 +31,7 @@ open class CustomService: MercadoPagoService {
                         failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
                     }
                 } else {
-                    success(Customer.fromJSON(custDic))
+                    success(PXCustomer.fromJSON(custDic))
                 }
             } else {
                 if failure != nil {

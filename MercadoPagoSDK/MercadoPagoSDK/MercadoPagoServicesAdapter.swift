@@ -35,6 +35,20 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
     
+    open class func getCustomer(additionalInfo: NSDictionary? = nil, callback: @escaping (Customer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.getCustomer(additionalInfo: additionalInfo, callback: { (pxCustomer) in
+            let customer = getCustomerByPXCustomer(pxCustomer)
+            callback(customer)
+        }, failure: failure)
+        
+    }
+    
+    open class func getCustomerByPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
+        let customer = Customer()
+        return customer
+    }
+    
     open class func getIssuerByPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
         let issuer = Issuer()
         issuer._id = pxIssuer.id

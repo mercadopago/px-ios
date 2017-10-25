@@ -206,8 +206,15 @@ open class MercadoPagoServices: NSObject {
     //
     //    }
 
-    public func getCustomer(additionalInfo: NSDictionary? = nil, callback: @escaping (Customer) -> Void, failure: ((_ error: NSError) -> Void)) {
-
+    open class func getCustomer(additionalInfo: NSDictionary? = nil, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: CustomService = CustomService(baseURL: getCustomerBaseURL, URI: getCustomerURI)
+        
+        var addInfo: String = ""
+        if !NSDictionary.isNullOrEmpty(additionalInfo), let addInfoDict = additionalInfo {
+            addInfo = addInfoDict.parseToQuery()
+        }
+        
+        service.getCustomer(params: addInfo, success: callback, failure: failure)
     }
 
     public func createCheckoutPreference(bodyInfo: NSDictionary? = nil, callback: @escaping (CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)) {

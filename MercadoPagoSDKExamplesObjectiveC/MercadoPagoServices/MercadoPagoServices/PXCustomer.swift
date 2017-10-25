@@ -23,5 +23,9 @@ open class PXCustomer: NSObject {
     open var metadata: [String: String]!
     open var phone: PXPhone!
     open var registrationDate: Date!
-
+    
+    open class func fromJSON(_ json: NSDictionary) -> PXCustomer {
+        let customer: PXCustomer = PXCustomer()
+        return customer
+    }
 }
