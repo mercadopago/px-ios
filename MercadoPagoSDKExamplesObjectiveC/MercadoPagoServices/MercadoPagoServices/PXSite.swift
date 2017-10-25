@@ -12,10 +12,6 @@ open class PXSite: NSObject {
     open var id: String!
     open var currencyId: String!
 
-    override init() {
-        super.init()
-    }
-
     public init(id: String, currencyId: String) {
         self.id = id
         self.currencyId = currencyId

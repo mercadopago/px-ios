@@ -13,5 +13,9 @@ open class PXPaymentMethodSearch: NSObject {
     open var paymentMethods: [PXPaymentMethod]!
     open var cards: [PXCard]!
     open var defaultOption: PXPaymentMethodSearchItem!
-
+    
+    open class func fromJSON(_ json: NSDictionary) -> PXPaymentMethodSearch {
+        let pxPaymentMethodSearch: PXPaymentMethodSearch = PXPaymentMethodSearch()
+        return pxPaymentMethodSearch
+    }
 }

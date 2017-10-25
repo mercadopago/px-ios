@@ -43,20 +43,33 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
     
-    open class func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         let pxPayer = getPXPayerByPayer(payer)
         let pxSite = getPXSiteById(site)
         
-        MercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, payer: pxPayer, site: pxSite, callback: { (pxPaymentMethodSearch) in
+        MercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, defaultPaymentMethod: defaultPaymentMethod, payer: pxPayer, site: pxSite, callback: { (pxPaymentMethodSearch) in
             let paymentMethodSearch = getPaymentMethodSearchByPXPaymentMethodSearch(pxPaymentMethodSearch)
             callback(paymentMethodSearch)
         }, failure: failure)
     }
     
     open class func getPXSiteById(_ siteId: String) -> PXSite {
-        let pxSite = PXSite()
+        let currency = MercadoPagoContext.getCurrency()
+        let pxCurrency = getPXCurrencyByCurrency(currency)
+        let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
         return pxSite
+    }
+    
+    open class func getPXCurrencyByCurrency(_ currency: Currency) -> PXCurrency {
+        let id: String = currency._id
+        let description: String = currency._description
+        let symbol: String = currency.symbol
+        let decimalPlaces: Int = currency.decimalPlaces
+        let decimalSeparator: String = currency.decimalSeparator
+        let thousandSeparator: String = currency.thousandsSeparator
+        let pxCurrency = PXCurrency(id: id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
+        return pxCurrency
     }
     
     open class func getPXPayerByPayer(_ payer: Payer) -> PXPayer {
