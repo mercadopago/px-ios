@@ -54,12 +54,16 @@ open class MercadoPagoServices: NSObject {
         paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, success: callback, failure: failure)
     }
 
-    public func createPayment(paymentBody: MPPayment, callback : @escaping (Payment) -> Void, failure: ((_ error: NSError) -> Void)) {
-
-    }
-
-    public func createPayment(transactionId: String, paymentData: [String: Any], callback : @escaping (Payment) -> Void, failure: ((_ error: NSError) -> Void)) {
-
+    open class func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: CustomService = CustomService(baseURL: url, URI: uri)
+        var headers: [String: String]?
+        if !String.isNullOrEmpty(transactionId), let transactionId = transactionId {
+            headers = ["X-Idempotency-Key": transactionId]
+        } else {
+            headers = nil
+        }
+        
+        service.createPayment(headers: headers, body: paymentData.toJsonString(), success: callback, failure: failure)
     }
 
     open class func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {

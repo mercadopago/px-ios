@@ -390,8 +390,9 @@ extension MercadoPagoCheckout {
         }
 
         let createPaymentQuery = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo()
-
-        CustomServer.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, success: { [weak self] (payment : Payment) -> Void in
+        
+        MercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, callback: { [weak self] (payment) in
+            
             guard let strongSelf = self else {
                 return
             }
@@ -399,31 +400,35 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(payment: payment)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-            }, failure: {[weak self] (error: NSError) -> Void in
-                guard let strongSelf = self else {
-                    return
-                }
 
-                strongSelf.dismissLoading()
-                let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
-
-                if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
-                    strongSelf.viewModel.prepareForInvalidPaymentWithESC()
-                } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
-                    self?.viewModel.paymentData.clearCollectedData()
-                    let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
-                    strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
-                        self?.viewModel.resetInformation()
-                        self?.viewModel.resetGroupSelection()
-                        self?.executeNextStep()
-                    })
-                } else {
-                    strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
-                        self?.createPayment()
-                    })
-                }
-                strongSelf.executeNextStep()
-        })
+            
+        }) { [weak self] (error) in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.dismissLoading()
+            let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
+            
+            if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
+                strongSelf.viewModel.prepareForInvalidPaymentWithESC()
+            } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
+                self?.viewModel.paymentData.clearCollectedData()
+                let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
+                strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
+                    self?.viewModel.resetInformation()
+                    self?.viewModel.resetGroupSelection()
+                    self?.executeNextStep()
+                })
+            } else {
+                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
+                    self?.createPayment()
+                })
+            }
+            strongSelf.executeNextStep()
+            
+        }
     }
 
     func getInstructions() {

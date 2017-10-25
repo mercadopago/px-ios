@@ -11,6 +11,14 @@ import MercadoPagoServices
 
 open class MercadoPagoServicesAdapter: NSObject {
     
+    open class func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, callback: { (pxPayment) in
+            let payment = getPaymentByPXPayment(pxPayment)
+            callback(payment)
+        }, failure: failure)
+    }
+    
     open class func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: discountAdditionalInfo, callback: { (pxDiscount) in
@@ -91,6 +99,11 @@ open class MercadoPagoServicesAdapter: NSObject {
     open class func getDiscountCouponByPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
         return discountCoupon
+    }
+    
+    open class func getPaymentByPXPayment(_ pxPayment: PXPayment) -> Payment {
+        let payment = Payment()
+        return payment
     }
     
     open class func getPXPayerByPayer(_ payer: Payer) -> PXPayer {
