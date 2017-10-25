@@ -88,7 +88,7 @@ class TrackStorageManager: NSObject {
     }
 
     static func forceCauseAgeing(lastTrack: ScreenTrackInfo) -> Bool {
-        let maxAgeningInMilliseconds = TrackStorageManager.MAX_AGEING_SECONDS * 1000
+        let maxAgeningInMilliseconds: Int64 = Int64(TrackStorageManager.MAX_AGEING_SECONDS * 1000)
         return lastTrack.timestamp + maxAgeningInMilliseconds < Date().getCurrentMillis()
     }
 }
