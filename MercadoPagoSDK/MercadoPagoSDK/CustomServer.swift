@@ -10,36 +10,5 @@ import Foundation
 import UIKit
 
 open class CustomServer: NSObject {
-
-    open class func createPayment(url: String, uri: String, paymentData: NSDictionary, query: NSDictionary?, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let service: CustomService = CustomService(baseURL: url, URI: uri)
-
-        var queryString = ""
-        if let q = query, !NSDictionary.isNullOrEmpty(query) {
-            queryString = q.toJsonString()
-        }
-
-        var body = ""
-        if !NSDictionary.isNullOrEmpty(paymentData) {
-            body = Utils.append(firstJSON: paymentData.toJsonString(), secondJSON: queryString)
-        }
-
-        service.createPayment(body: body, success: success, failure: failure)
-    }
-
-    open class func getDirectDiscount(transactionAmount: Double, payerEmail: String?, url: String, uri: String, discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        getCodeDiscount(discountCode: nil, transactionAmount: transactionAmount, payerEmail: payerEmail, url: url, uri: uri, discountAdditionalInfo: discountAdditionalInfo, success: success, failure: failure)
-    }
-
-    open class func getCodeDiscount(discountCode: String?, transactionAmount: Double, payerEmail: String?, url: String, uri: String, discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        var addInfo: String? = nil
-        if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
-            addInfo = discountAdditionalInfo?.parseToQuery()
-        }
-        let discountService = DiscountService(baseURL: url, URI: uri)
-
-        discountService.getDiscount(amount: transactionAmount, code: discountCode, payerEmail: payerEmail, additionalInfo: addInfo, success: success, failure: failure)
-    }
-
+    
 }

@@ -43,16 +43,14 @@ open class CustomService: MercadoPagoService {
         }, failure: failure)
     }
 
-    open func createPayment(_ method: String = "POST", body: String, success: @escaping (_ jsonResult: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-
-        let headers = ["X-Idempotency-Key": MercadoPagoContext.paymentKey()]
+    open func createPayment(_ method: String = "POST", headers: [String:String]? = nil, body: String, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         self.request(uri: self.URI, params: nil, body: body, method: method, headers : headers, cache: false, success: { (data: Data?) -> Void in
                             let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if paymentDic["status"] as? Int == ApiUtil.StatusCodes.PROCESSING.rawValue {
-                        let inProcessPayment = Payment()
+                        let inProcessPayment = PXPayment()
                         inProcessPayment.status = PaymentStatus.IN_PROCESS
                         inProcessPayment.statusDetail = PendingStatusDetail.CONTINGENCY
                         success(inProcessPayment)
@@ -61,7 +59,7 @@ open class CustomService: MercadoPagoService {
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
-                        success(Payment.fromJSON(paymentDic))
+                        success(PXPayment.fromJSON(paymentDic))
                     } else {
                         failure?(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
                     }

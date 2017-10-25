@@ -70,4 +70,9 @@ open class PXPayment: NSObject {
         public static let REJECTED_CARD_DISABLED = "cc_rejected_card_disabled"
         public static let REJECTED_INSUFFICIENT_DATA = "rejected_insufficient_data"
     }
+    
+    open class func fromJSON(_ json: NSDictionary) -> PXPayment {
+        let pxPayment: PXPayment = PXPayment()
+        return pxPayment
+    }
 }

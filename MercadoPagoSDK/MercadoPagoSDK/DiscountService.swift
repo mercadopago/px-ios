@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 open class DiscountService: MercadoPagoService {
 
@@ -24,7 +25,7 @@ open class DiscountService: MercadoPagoService {
         self.baseURL = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL()
     }
 
-    open func getDiscount(amount: Double, code: String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getDiscount(amount: Double, code: String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&transaction_amount=" + String(amount)
 
         if !String.isNullOrEmpty(payerEmail) {
@@ -45,7 +46,7 @@ open class DiscountService: MercadoPagoService {
                 if let error = discount["error"] {
                     failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: error]))
                 } else {
-                    let discount = DiscountCoupon.fromJSON(jsonResult as! NSDictionary, amount: amount)
+                    let discount = PXDiscount.fromJSON(jsonResult as! NSDictionary, amount: amount)
                     success(discount)
                 }
             }

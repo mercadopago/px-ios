@@ -17,5 +17,8 @@ open class PXDiscount: NSObject {
     open var couponCode: String!
     open var concept: String!
 
-
+    open class func fromJSON(_ json: NSDictionary, amount: Double) -> PXDiscount {
+        let pxDiscount: PXDiscount = PXDiscount()
+        return pxDiscount
+    }
 }

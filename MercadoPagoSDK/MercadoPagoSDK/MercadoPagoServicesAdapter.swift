@@ -10,13 +10,37 @@ import Foundation
 import MercadoPagoServices
 
 open class MercadoPagoServicesAdapter: NSObject {
+    
+    open class func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, callback: { (pxPayment) in
+            let payment = getPaymentFromPXPayment(pxPayment)
+            callback(payment)
+        }, failure: failure)
+    }
+    
+    open class func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: discountAdditionalInfo, callback: { (pxDiscount) in
+            if let pxDiscount = pxDiscount {
+                let discountCoupon = getDiscountCouponFromPXDiscount(pxDiscount)
+                callback(discountCoupon)
+            } else {
+                callback(nil)
+            }
+        }, failure: failure)
+    }
+    
+    open class func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
+    }
 
     open class func getInstallments(bin: String?, amount: Double, issuer: Issuer?, paymentMethodId: String, callback: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         MercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?._id, paymentMethodId: paymentMethodId, callback: { (pxInstallments) in
             var installments: [Installment] = []
             for pxInstallment in pxInstallments {
-                let installment = getInstallmentByPXInstallment(pxInstallment)
+                let installment = getInstallmentFromPXInstallment(pxInstallment)
                 installments.append(installment)
             }
             callback(installments)
@@ -28,7 +52,7 @@ open class MercadoPagoServicesAdapter: NSObject {
         MercadoPagoServices.getIssuers(paymentMethodId: paymentMethodId, bin: bin, callback: { (pxIssuers) in
             var issuers: [Issuer] = []
             for pxIssuer in pxIssuers {
-                let issuer = getIssuerByPXIssuer(pxIssuer)
+                let issuer = getIssuerFromPXIssuer(pxIssuer)
                 issuers.append(issuer)
             }
             callback(issuers)
@@ -38,7 +62,7 @@ open class MercadoPagoServicesAdapter: NSObject {
     open class func getCustomer(additionalInfo: NSDictionary? = nil, callback: @escaping (Customer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.getCustomer(additionalInfo: additionalInfo, callback: { (pxCustomer) in
-            let customer = getCustomerByPXCustomer(pxCustomer)
+            let customer = getCustomerFromPXCustomer(pxCustomer)
             callback(customer)
         }, failure: failure)
         
@@ -56,27 +80,14 @@ open class MercadoPagoServicesAdapter: NSObject {
         return issuer
     }
     
-    open class func getInstallmentByPXInstallment(_ pxInstallment: PXInstallment) -> Installment {
-        let installment = Installment()
-        installment.issuer = getIssuerByPXIssuer(pxInstallment.issuer)
-        installment.paymentTypeId = pxInstallment.paymentTypeId
-        installment.paymentMethodId = pxInstallment.paymentMethodId
-        for pxPayerCost in pxInstallment.payerCosts {
-            let payerCost = getPayerCostByPXPayerCost(pxPayerCost)
-            installment.payerCosts.append(payerCost)
-        }
-        return installment
-    }
-    
-    open class func getPayerCostByPXPayerCost(_ pxPayerCost: PXPayerCost) -> PayerCost {
-        let payerCost = PayerCost()
-        payerCost.installmentRate = pxPayerCost.installmentRate
-        payerCost.labels = pxPayerCost.labels
-        payerCost.minAllowedAmount = pxPayerCost.minAllowedAmount
-        payerCost.maxAllowedAmount = pxPayerCost.maxAllowedAmount
-        payerCost.recommendedMessage = pxPayerCost.recommendedMessage
-        payerCost.installmentAmount = pxPayerCost.installmentAmount
-        payerCost.totalAmount = pxPayerCost.totalAmount
-        return payerCost
+    open class func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        let pxPayer = getPXPayerFromPayer(payer)
+        let pxSite = getPXSiteFromId(site)
+        
+        MercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, defaultPaymentMethod: defaultPaymentMethod, payer: pxPayer, site: pxSite, callback: { (pxPaymentMethodSearch) in
+            let paymentMethodSearch = getPaymentMethodSearchFromPXPaymentMethodSearch(pxPaymentMethodSearch)
+            callback(paymentMethodSearch)
+        }, failure: failure)
     }
 }

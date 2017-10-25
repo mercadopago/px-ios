@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MercadoPagoServices
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -29,7 +31,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentMethodSearchService: MercadoPagoService {
 
-    open func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         var params =  MercadoPagoServices.getParamsPublicKey()
 
@@ -83,7 +85,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
                 } else {
 
                     if paymentSearchDic.allKeys.count > 0 {
-                        let paymentSearch = PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
+                        let paymentSearch = PXPaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
                             success(paymentSearch)
                     } else {
                         failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago".localized]))
