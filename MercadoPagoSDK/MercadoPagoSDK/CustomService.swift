@@ -44,7 +44,8 @@ open class CustomService: MercadoPagoService {
 
         let headers = ["X-Idempotency-Key": MercadoPagoContext.paymentKey()]
 
-        self.request(uri: self.URI, params: nil, body: body, method: method, headers : headers, cache: false, success: { (jsonResult: AnyObject?) -> Void in
+        self.request(uri: self.URI, params: nil, body: body, method: method, headers : headers, cache: false, success: { (data: Data?) -> Void in
+                            let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if paymentDic["status"] as? Int == ApiUtil.StatusCodes.PROCESSING.rawValue {
@@ -64,7 +65,7 @@ open class CustomService: MercadoPagoService {
                 }
             } else if failure != nil {
                 failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
-            }}, failure: { (error) -> Void in
+            }} as! (Data?) -> Void, failure: { (error) -> Void in
                 if let failure = failure {
                     failure(NSError(domain: "mercadopago.sdk.CustomService.createPayment", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
                 }

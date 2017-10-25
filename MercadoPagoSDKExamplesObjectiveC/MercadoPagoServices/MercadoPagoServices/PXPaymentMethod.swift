@@ -23,4 +23,9 @@ open class PXPaymentMethod: NSObject {
     open var merchantAccountId: String!
     open var financialInstitutions: [PXFinancialInstitution]!
 
+    open class func fromJSON(_ json: NSDictionary) -> PXPaymentMethod {
+        let paymentMethod: PXPaymentMethod = PXPaymentMethod()
+        return paymentMethod
+    }
+
 }

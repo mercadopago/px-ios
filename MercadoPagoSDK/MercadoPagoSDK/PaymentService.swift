@@ -31,7 +31,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentService: MercadoPagoService {
 
-    open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
@@ -56,7 +56,9 @@ open class PaymentService: MercadoPagoService {
 
         params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
 
-        self.request( uri: uri, params:params, body: nil, method: method, success: {(jsonResult: AnyObject?) -> Void in
+        self.request( uri: uri, params:params, body: nil, method: method, success: {(data: Data?) -> Void in
+            let jsonResult = try! JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
+
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
                     failure(NSError(domain: "mercadopago.sdk.paymentService.getInstallments", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: errorDic["error"] as? String ?? "Unknowed Error"]))
@@ -67,7 +69,7 @@ open class PaymentService: MercadoPagoService {
                 var installments : [PXInstallment] = [PXInstallment]()
                 if paymentMethods != nil && paymentMethods?.count > 0 {
                     if let dic = paymentMethods![0] as? [String: Any] {
-                        installments.append(PXInstallment.fromJSON(dic))
+                        installments.append(PXInstallment.fromJSON(dic as NSDictionary))
                     }
                     success(installments)
                 } else {
@@ -81,7 +83,7 @@ open class PaymentService: MercadoPagoService {
         })
     }
 
-    open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: Data?) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 

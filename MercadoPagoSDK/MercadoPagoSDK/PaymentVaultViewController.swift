@@ -7,6 +7,8 @@
 //
 
 import UIKit
+
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -212,7 +214,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate func loadPaymentMethodSearch() {
 
         if Array.isNullOrEmpty(self.viewModel.paymentMethodOptions) {
-            MercadoPagoServices.getPaymentMethodSearch(amount: self.viewModel.amount, excludedPaymentTypesIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodsIds: viewModel.getExcludedPaymentMethodIds(), payer: Payer(), site: PXSite(), callback: { (paymentMethodSearch) in
+            MercadoPagoServices.getPaymentMethodSearch(amount: self.viewModel.amount, excludedPaymentTypesIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodsIds: viewModel.getExcludedPaymentMethodIds(), payer: Payer(), callback: { (paymentMethodSearch) in
 
                 if paymentMethodSearch.customerPaymentMethods?.count == 0 && paymentMethodSearch.groups.count == 0 {
                     let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)

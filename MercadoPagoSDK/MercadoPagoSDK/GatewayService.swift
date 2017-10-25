@@ -10,7 +10,7 @@ import Foundation
 
 open class GatewayService: MercadoPagoService {
 
-    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ data: Data?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
@@ -21,7 +21,7 @@ open class GatewayService: MercadoPagoService {
         })
     }
 
-    open func cloneToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", public_key: String, token: Token, securityCode: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+    open func cloneToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", public_key: String, token: Token, securityCode: String, success: @escaping (_ data: Data?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
         self.request(uri: url + "/" + token._id + "/clone", params: "public_key=" + public_key, body: nil, method: method, success: { (jsonResult) in
             var token : Token? = nil
             if let tokenDic = jsonResult as? NSDictionary {

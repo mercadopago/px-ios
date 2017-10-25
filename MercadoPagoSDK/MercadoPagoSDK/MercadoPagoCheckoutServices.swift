@@ -85,7 +85,7 @@ extension MercadoPagoCheckout {
     func getPaymentMethodSearch() {
         self.presentLoading()
 
-        MercadoPagoServices.getPaymentMethodSearch(amount: self.viewModel.getFinalAmount(), excludedPaymentTypesIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodsIds: self.viewModel.getExcludedPaymentMethodsIds(), payer: Payer(), site: PXSite(), callback: { [weak self] (paymentMethodSearch) in
+        MercadoPagoServices.getPaymentMethodSearch(amount: self.viewModel.getFinalAmount(), excludedPaymentTypesIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodsIds: self.viewModel.getExcludedPaymentMethodsIds(), payer: Payer(), callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return

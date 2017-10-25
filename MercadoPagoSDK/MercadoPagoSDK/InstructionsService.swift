@@ -44,15 +44,17 @@ open class InstructionsService: MercadoPagoService {
 
         let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]
 
-        self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (jsonResult) -> Void in
+        self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data?) -> Void in
 
-            let error = jsonResult?["error"] as? String
+            let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
+
+            let error = jsonResult["error"] as? String
             if error != nil && error!.characters.count > 0 {
-                let e : NSError = NSError(domain: "com.mercadopago.sdk.getInstructions", code: MercadoPago.ERROR_INSTRUCTIONS, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago".localized, NSLocalizedFailureReasonErrorKey: jsonResult!["error"] as! String])
+                let e : NSError = NSError(domain: "com.mercadopago.sdk.getInstructions", code: MercadoPago.ERROR_INSTRUCTIONS, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago".localized, NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String])
                 failure!(e)
             } else {
                 success(InstructionsInfo.fromJSON(jsonResult as! NSDictionary))
             }
-        }, failure: failure)
+            } as! (Data?) -> Void, failure: failure)
     }
 }

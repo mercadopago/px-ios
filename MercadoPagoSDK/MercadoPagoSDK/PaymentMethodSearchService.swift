@@ -75,8 +75,8 @@ open class PaymentMethodSearchService: MercadoPagoService {
 
         let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]
 
-        self.request(uri: ServicePreference.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (jsonResult) -> Void in
-
+        self.request(uri: ServicePreference.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (data) -> Void in
+             let jsonResult = try! JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
                     failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago".localized]))

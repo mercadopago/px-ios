@@ -13,4 +13,9 @@ open class PXInstallment: NSObject {
     open var paymentMethodId: String!
     open var paymentType: String!
 
+    open class func fromJSON(_ json: NSDictionary) -> PXInstallment {
+        let paymentMethod: PXInstallment = PXInstallment()
+        return paymentMethod
+    }
+
 }
