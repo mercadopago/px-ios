@@ -7,7 +7,7 @@
 //
 
 import Foundation
-open class PXTransactionDetails: NSObject {
+open class PXTransactionDetails: NSObject, Codable {
     open var externalResourceUrl: String!
     open var financialInstitution: String!
     open var installmentAmount: Double!
@@ -15,5 +15,54 @@ open class PXTransactionDetails: NSObject {
     open var overpaidAmount: Double!
     open var totalPaidAmount: Double!
     open var paymentMethodReferenceId: String!
+
+    init(externalResourceUrl: String, financialInstitution: String, installmentAmount: Double, netReivedAmount: Double, overpaidAmount: Double, totalPaidAmount: Double, paymentMethodReferenceId: String) {
+        self.externalResourceUrl = externalResourceUrl
+        self.financialInstitution = financialInstitution
+        self.installmentAmount = installmentAmount
+        self.netReivedAmount = netReivedAmount
+        self.overpaidAmount = overpaidAmount
+        self.totalPaidAmount = totalPaidAmount
+        self.paymentMethodReferenceId = paymentMethodReferenceId
+    }
+
+    public enum PXTransactionDetailsKeys: String, CodingKey {
+        case externalResourceUrl = "external_resource_url"
+        case financialInstitution = "financial_institution"
+        case installmentAmount = "installment_amount"
+        case netReivedAmount = "net_received_amount"
+        case overPaidAmount = "overpaid_amount"
+        case totalPaidAmount = "total_paid_amount"
+        case paymentMethodReferenceId = "payment_method_reference_id"
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXTransactionDetailsKeys.self)
+        let externalResourceUrl: String = try container.decode(String.self, forKey: .externalResourceUrl)
+        let financialInstitution: String = try container.decode(String.self, forKey: .financialInstitution)
+        let installmentAmount: Double = try container.decode(Double.self, forKey: .installmentAmount)
+        let netReivedAmount: Double = try container.decode(Double.self, forKey: .netReivedAmount)
+        let overpaidAmount: Double = try container.decode(Double.self, forKey: .overPaidAmount)
+        let totalPaidAmount: Double = try container.decode(Double.self, forKey: .totalPaidAmount)
+        let paymentMethodReferenceId: String = try container.decode(String.self, forKey: .paymentMethodReferenceId)
+
+
+        self.init(externalResourceUrl: externalResourceUrl, financialInstitution: financialInstitution, installmentAmount: installmentAmount, netReivedAmount: netReivedAmount, overpaidAmount: overpaidAmount, totalPaidAmount: totalPaidAmount, paymentMethodReferenceId: paymentMethodReferenceId)
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXTransactionDetails {
+        return try JSONDecoder().decode(PXTransactionDetails.self, from: data)
+    }
 
 }

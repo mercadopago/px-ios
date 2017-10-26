@@ -14,7 +14,7 @@ open class PXPayer: NSObject, Codable {
     open var identification: PXIdentification?
     open var type: String?
     open var entityType: String?
-    open var email: String? // TODO: Sacar como opcional
+    open var email: String?
     open var firstName: String?
     open var lastName: String?
 
@@ -41,8 +41,6 @@ open class PXPayer: NSObject, Codable {
     }
 
     required public convenience init(from decoder: Decoder) throws {
-//        let algo = try! decoder.unkeyedContainer()
-//        print(algo)
         let container = try decoder.container(keyedBy: PXPayerKeys.self)
         let accessToken: String? = try container.decodeIfPresent(String.self, forKey: .accessToken)
         let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
