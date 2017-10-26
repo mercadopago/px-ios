@@ -198,7 +198,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     fileprivate func loadPreference() {
-        MercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: self.preferenceId, callback: { (preference) in
+        MercadoPagoServicesAdapter.getCheckoutPreference(checkoutPreferenceId: self.preferenceId, callback: { (preference) in
             if let error = preference.validate() {
                 // Invalid preference - cannot continue
                 let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)

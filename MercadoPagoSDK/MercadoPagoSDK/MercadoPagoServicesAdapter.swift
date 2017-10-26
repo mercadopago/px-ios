@@ -11,6 +11,15 @@ import MercadoPagoServices
 
 open class MercadoPagoServicesAdapter: NSObject {
     
+    open class func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { (pxCheckoutPreference) in
+            MercadoPagoContext.setSiteID(pxCheckoutPreference.site.id)
+            let checkoutPreference = getCheckoutPreferenceFromPXCheckoutPreference(pxCheckoutPreference)
+            callback(checkoutPreference)
+        }, failure: failure)
+    }
+    
     open class func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, callback: { (pxPayment) in

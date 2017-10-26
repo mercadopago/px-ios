@@ -35,10 +35,9 @@ open class MercadoPagoServices: NSObject {
         self.proccesingMode = proccesingMode
     }
 
-    open class func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let preferenceService = PreferenceService(baseURL: baseURL)
-        preferenceService.getPreference(checkoutPreferenceId, success: { (preference : CheckoutPreference) in
-            MercadoPagoContext.setSiteID(preference.siteId) //TODO AUGUSTO: SACAR ESTO DE ACA.
+        preferenceService.getPreference(checkoutPreferenceId, success: { (preference : PXCheckoutPreference) in
             callback(preference)
         }, failure: failure)
     }

@@ -29,6 +29,11 @@ extension MercadoPagoServicesAdapter {
         return pxCurrency
     }
     
+    open class func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
+        let checkoutPreference = CheckoutPreference()
+        return checkoutPreference
+    }
+    
     open class func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
         return discountCoupon
