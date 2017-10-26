@@ -12,8 +12,8 @@ open class PXCustomer: NSObject, Codable {
     open var cards: [PXCard]!
     open var defaultCard: String!
     open var _description: String?
-    open var dateCreated: Date!
-    open var dateLastUpdated: Date!
+    open var dateCreated: Date?
+    open var dateLastUpdated: Date?
     open var email: String!
     open var firstName: String?
     open var id: String!
@@ -22,9 +22,9 @@ open class PXCustomer: NSObject, Codable {
     open var liveMode: Bool!
     open var metadata: [String: String]!
     open var phone: PXPhone!
-    open var registrationDate: Date!
+    open var registrationDate: Date?
     
-    init(address: PXAddress, cards: [PXCard], defaultCard: String, description: String?, dateCreated: Date, dateLastUpdated: Date, email: String, firstName: String?, id: String, identification: PXIdentification, lastName: String?, liveMode: Bool, metadata: [String : String], phone: PXPhone, registrationDate: Date) {
+    init(address: PXAddress, cards: [PXCard], defaultCard: String, description: String?, dateCreated: Date?, dateLastUpdated: Date?, email: String, firstName: String?, id: String, identification: PXIdentification, lastName: String?, liveMode: Bool, metadata: [String : String], phone: PXPhone, registrationDate: Date?) {
 
         self.address = address
         self.cards = cards
@@ -67,8 +67,8 @@ open class PXCustomer: NSObject, Codable {
         let cards: [PXCard] = try container.decode([PXCard].self, forKey: .cards)
         let defaultCard: String = try container.decode(String.self, forKey: .defaultCard)
         let _description: String? = try container.decodeIfPresent(String.self, forKey: ._description)
-        let dateLastUpdated: Date = Date()// try container.decode(Date.self, forKey: .dateLastUpdated)
-        let dateCreated: Date = Date()// try container.decode(Date.self, forKey: .dateCreated)
+        let dateLastUpdatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateLastUpdated)
+        let dateCreatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateCreated)
         let email: String = try container.decode(String.self, forKey: .email)
         let firstName: String? = try container.decodeIfPresent(String.self, forKey: .firstName)
         let id: String = try container.decode(String.self, forKey: .id)
@@ -77,9 +77,36 @@ open class PXCustomer: NSObject, Codable {
         let liveMode: Bool = try container.decode(Bool.self, forKey: .liveMode)
         let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
         let phone: PXPhone = try container.decode(PXPhone.self, forKey: .phone)
-        let registrationDate: Date = Date() //try container.decode(Date.self, forKey: .registrationDate)
+        let registrationDateString: String? = try container.decodeIfPresent(String.self, forKey: .registrationDate)
+        
+        func getDateFromString(_ string: String?) -> Date? {
+            if let dateString = string {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                let date = dateFormatter.date(from: dateString)
+                return date
+            } else {
+                return nil
+            }
+        }
 
+        let dateLastUpdated = getDateFromString(dateLastUpdatedString)
+        let dateCreated = getDateFromString(dateCreatedString)
+        let registrationDate = getDateFromString(registrationDateString)
+        
         self.init(address: address, cards: cards, defaultCard: defaultCard, description: _description, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, email: email, firstName: firstName, id: id, identification: identification, lastName: lastName, liveMode: liveMode, metadata: metadata, phone: phone, registrationDate: registrationDate)
+    }
+    
+    open func getDateFromString(_ string: String?) -> Date? {
+        if let dateString = string {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+            dateFormatter.locale = Locale(identifier: "en_US")
+            let date = dateFormatter.date(from: dateString)
+            return date
+        } else {
+            return nil
+        }
     }
 
     open func toJSONString() throws -> String? {
