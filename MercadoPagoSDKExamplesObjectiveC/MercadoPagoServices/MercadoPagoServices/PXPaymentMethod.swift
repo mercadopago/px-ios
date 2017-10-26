@@ -10,11 +10,11 @@ import Foundation
 open class PXPaymentMethod: NSObject, Codable {
     open var additionalInfoNeeded: [String]?
     open var id: String!
-    open var name: String!
-    open var paymentTypeId: String!
+    open var name: String?
+    open var paymentTypeId: String?
     open var status: String?
-    open var secureThumbnail: String!
-    open var thumbnail: String!
+    open var secureThumbnail: String?
+    open var thumbnail: String?
     open var deferredCapture: String?
     open var settings: [PXSetting]?
     open var minAllowedAmount: Double?
@@ -23,7 +23,7 @@ open class PXPaymentMethod: NSObject, Codable {
     open var merchantAccountId: String?
     open var financialInstitutions: [PXFinancialInstitution]?
 
-    init(additionalInfoNeeded: [String]?, id: String, name: String, paymentTypeId: String, status: String?, secureThumbnail: String, thumbnail: String, deferredCapture: String?, settings: [PXSetting]?, minAllowedAmount: Double?, maxAllowedAmount: Double?, accreditationTime: Int?, merchantAccountId: String?, financialInstitutions: [PXFinancialInstitution]?) {
+    init(additionalInfoNeeded: [String]?, id: String, name: String?, paymentTypeId: String?, status: String?, secureThumbnail: String?, thumbnail: String?, deferredCapture: String?, settings: [PXSetting]?, minAllowedAmount: Double?, maxAllowedAmount: Double?, accreditationTime: Int?, merchantAccountId: String?, financialInstitutions: [PXFinancialInstitution]?) {
         self.additionalInfoNeeded = additionalInfoNeeded
         self.id = id
         self.name = name
@@ -61,11 +61,11 @@ open class PXPaymentMethod: NSObject, Codable {
         let container = try decoder.container(keyedBy: PXPaymentMethodKeys.self)
         let additionalInfoNeeded: [String]? = try container.decodeIfPresent([String].self, forKey: .additionalInfoNeeded)
         let id: String = try container.decode(String.self, forKey: .id)
-        let name: String = try container.decode(String.self, forKey: .name)
-        let paymentTypeId: String = try container.decode(String.self, forKey: .paymentTypeId)
+        let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
+        let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
         let status: String? = try container.decodeIfPresent(String.self, forKey: .status)
-        let secureThumbnail: String = try container.decode(String.self, forKey: .secureThumbnail)
-        let thumbnail: String = try container.decode(String.self, forKey: .thumbnail)
+        let secureThumbnail: String? = try container.decodeIfPresent(String.self, forKey: .secureThumbnail)
+        let thumbnail: String? = try container.decodeIfPresent(String.self, forKey: .thumbnail)
         let deferredCapture: String? = try container.decodeIfPresent(String.self, forKey: .deferredCapture)
         let settings: [PXSetting]? = try container.decodeIfPresent([PXSetting].self, forKey: .settings)
         let minAllowedAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .minAllowedAmount)

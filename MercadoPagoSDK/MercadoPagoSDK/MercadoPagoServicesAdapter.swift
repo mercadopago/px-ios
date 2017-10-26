@@ -14,7 +14,7 @@ open class MercadoPagoServicesAdapter: NSObject {
     open class func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { (pxCheckoutPreference) in
-            MercadoPagoContext.setSiteID(pxCheckoutPreference.siteID)
+            MercadoPagoContext.setSiteID(pxCheckoutPreference.siteId)
             let checkoutPreference = getCheckoutPreferenceFromPXCheckoutPreference(pxCheckoutPreference)
             callback(checkoutPreference)
         }, failure: failure)

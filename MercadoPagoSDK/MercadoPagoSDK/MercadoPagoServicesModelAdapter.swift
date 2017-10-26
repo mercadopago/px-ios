@@ -81,7 +81,7 @@ extension MercadoPagoServicesAdapter {
     }
     
     open class func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
-        let pxPayer = PXPayer()
+        let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
         return pxPayer
     }
     
