@@ -29,6 +29,47 @@ extension MercadoPagoServicesAdapter {
         return pxCurrency
     }
     
+    open class func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
+        let checkoutPreference = CheckoutPreference()
+        return checkoutPreference
+    }
+    
+    open class func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
+        let instructionsInfo = InstructionsInfo()
+        return instructionsInfo
+    }
+    
+    open class func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
+        let id: String = pxToken.id
+        let publicKey: String = pxToken.publicKey
+        let cardId: String = pxToken.cardId
+        let luhnValidation: String = pxToken.luhnValidation
+        let status: String = pxToken.status
+        let usedDate: String = getStringDateFromDate(pxToken.usedDate)
+        let cardNumberLength: Int = pxToken.cardNumberLength
+        let creationDate: Date = pxToken.creationDate
+        let lastFourDigits: String = pxToken.lastFourDigits
+        let firstSixDigits: String = pxToken.firstSixDigits
+        let securityCodeLength: Int = pxToken.securityCodeLength
+        let expirationMonth: Int = pxToken.expirationMonth
+        let expirationYear: Int = pxToken.expirationYear
+        let lastModifiedDate: Date = pxToken.lastModifiedDate
+        let dueDate: Date = pxToken.dueDate
+        let cardholder = getCardholderFromPXCardHolder(pxToken.cardholder)
+        let token = Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
+        return token
+    }
+    
+    open class func getStringDateFromDate(_ Date: Date) -> String {
+        let stringDate = ""
+        return stringDate
+    }
+    
+    open class func getCardholderFromPXCardHolder(_ pxCardHolder: PXCardHolder) -> Cardholder {
+        let cardholder = Cardholder()
+        return cardholder
+    }
+    
     open class func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
         return discountCoupon
