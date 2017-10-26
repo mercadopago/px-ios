@@ -20,6 +20,14 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
     
+    open class func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { (pxInstructions) in
+            let instructionsInfo = getInstructionsInfoFromPXInstructions(pxInstructions)
+            callback(instructionsInfo)
+        }, failure: failure)
+    }
+    
     open class func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, callback: { (pxPayment) in

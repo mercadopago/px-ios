@@ -11,4 +11,8 @@ open class PXInstructions: NSObject {
     open var amountInfo: PXAmountInfo!
     open var instructions: [PXInstruction]!
 
+    open class func fromJSON(_ json: NSDictionary) -> PXInstructions {
+        let pxInstructions: PXInstructions = PXInstructions()
+        return pxInstructions
+    }
 }

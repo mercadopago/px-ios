@@ -34,6 +34,11 @@ extension MercadoPagoServicesAdapter {
         return checkoutPreference
     }
     
+    open class func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
+        let instructionsInfo = InstructionsInfo()
+        return instructionsInfo
+    }
+    
     open class func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
         return discountCoupon
@@ -66,7 +71,7 @@ extension MercadoPagoServicesAdapter {
     
     open class func getIssuerFromPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
         let issuer = Issuer()
-        issuer._id = pxIssuer.id
+        issuer._id = pxIssuer._id
         issuer.name = pxIssuer.name
         return issuer
     }
