@@ -157,7 +157,7 @@ extension MercadoPagoCheckout {
     func createNewCardToken() {
         self.presentLoading()
         
-        MercadoPagoServices.createToken(cardToken: self.viewModel.cardToken!, callback: { [weak self] (token) in
+        MercadoPagoServicesAdapter.createToken(cardToken: self.viewModel.cardToken!, callback: { [weak self] (token) in
             
             guard let strongSelf = self else {
                 return
@@ -196,7 +196,7 @@ extension MercadoPagoCheckout {
         let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
         
-        MercadoPagoServices.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
+        MercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
             
             guard let strongSelf = self else {
                 return
@@ -226,7 +226,7 @@ extension MercadoPagoCheckout {
 
     func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
         self.presentLoading()
-        MercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
+        MercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
             
             guard let strongSelf = self else {
                 return

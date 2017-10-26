@@ -27,4 +27,8 @@ open class PXToken: NSObject {
     open var cardholder: PXCardHolder!
     open var esc: String!
 
+    open class func fromJSON(_ json: NSDictionary) -> PXToken {
+        let pxToken = PXToken()
+        return pxToken
+    }
 }

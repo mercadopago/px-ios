@@ -66,29 +66,29 @@ open class MercadoPagoServices: NSObject {
         service.createPayment(headers: headers, body: paymentData.toJsonString(), success: callback, failure: failure)
     }
 
-    open class func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func createToken(cardToken: CardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         cardToken.device = Device()
         createToken(cardTokenJSON: cardToken.toJSONString(), callback: callback, failure: failure)
     }
 
-    open class func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         createToken(cardTokenJSON: savedESCCardToken.toJSONString(), callback: callback, failure: failure)
     }
 
-    open class func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func createToken(savedCardToken: SavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         createToken(cardTokenJSON: savedCardToken.toJSONString(), callback: callback, failure: failure)
     }
     
-    internal class func createToken(cardTokenJSON: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    internal class func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: baseURL)
         service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data?) -> Void in
 
             let jsonResult = try! JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
-            var token : Token
+            var token : PXToken
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
-                    token = Token.fromJSON(tokenDic)
-                    MPXTracker.trackToken(token: token._id)
+                    token = PXToken.fromJSON(tokenDic)
+                    MPXTracker.trackToken(token: token.id)
                     callback(token)
                 } else {
                     failure(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))

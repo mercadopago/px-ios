@@ -28,11 +28,54 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
     
+    open class func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        let pxPayer = getPXPayerFromPayer(payer)
+        let pxSite = getPXSiteFromId(site)
+        
+        MercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, defaultPaymentMethod: defaultPaymentMethod, payer: pxPayer, site: pxSite, callback: { (pxPaymentMethodSearch) in
+            let paymentMethodSearch = getPaymentMethodSearchFromPXPaymentMethodSearch(pxPaymentMethodSearch)
+            callback(paymentMethodSearch)
+        }, failure: failure)
+    }
+    
     open class func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, callback: { (pxPayment) in
             let payment = getPaymentFromPXPayment(pxPayment)
             callback(payment)
+        }, failure: failure)
+    }
+    
+    open class func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.createToken(cardToken: cardToken, callback: { (pxToken) in
+            let token = getTokenFromPXToken(pxToken)
+            callback(token)
+        }, failure: failure)
+    }
+    
+    open class func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { (pxToken) in
+            let token = getTokenFromPXToken(pxToken)
+            callback(token)
+        }, failure: failure)
+    }
+    
+    open class func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    
+        MercadoPagoServices.createToken(savedCardToken: savedCardToken, callback: { (pxToken) in
+            let token = getTokenFromPXToken(pxToken)
+            callback(token)
+        }, failure: failure)
+    }
+    
+    internal class func createToken(cardTokenJSON: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.createToken(cardTokenJSON: cardTokenJSON, callback: { (pxToken) in
+            let token = getTokenFromPXToken(pxToken)
+            callback(token)
         }, failure: failure)
     }
     
@@ -95,16 +138,5 @@ open class MercadoPagoServicesAdapter: NSObject {
         issuer._id = pxIssuer._id
         issuer.name = pxIssuer.name
         return issuer
-    }
-    
-    open class func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
-        let pxPayer = getPXPayerFromPayer(payer)
-        let pxSite = getPXSiteFromId(site)
-        
-        MercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, defaultPaymentMethod: defaultPaymentMethod, payer: pxPayer, site: pxSite, callback: { (pxPaymentMethodSearch) in
-            let paymentMethodSearch = getPaymentMethodSearchFromPXPaymentMethodSearch(pxPaymentMethodSearch)
-            callback(paymentMethodSearch)
-        }, failure: failure)
     }
 }
