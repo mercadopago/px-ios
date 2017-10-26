@@ -9,11 +9,11 @@
 import Foundation
 open class PXSetting: NSObject, Codable {
 
-    open var bin: PXBin!
+    open var bin: PXBin?
     open var cardNumber: PXCardNumber!
     open var securityCode: PXSecurityCode!
 
-    init(bin: PXBin, cardNumber: PXCardNumber, securityCode: PXSecurityCode) {
+    init(bin: PXBin?, cardNumber: PXCardNumber, securityCode: PXSecurityCode) {
         self.bin = bin
         self.cardNumber = cardNumber
         self.securityCode = securityCode
@@ -27,7 +27,7 @@ open class PXSetting: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSettingKeys.self)
-        let bin: PXBin = try container.decode(PXBin.self, forKey: .bin)
+        let bin: PXBin? = try container.decodeIfPresent(PXBin.self, forKey: .bin)
         let cardNumber: PXCardNumber = try container.decode(PXCardNumber.self, forKey: .cardNumber)
         let securityCode: PXSecurityCode = try container.decode(PXSecurityCode.self, forKey: .securityCode)
 

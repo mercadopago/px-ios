@@ -52,7 +52,6 @@
 		4BE4B2661F9FC25C00A08BCE /* PXCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B22F1F9FC25800A08BCE /* PXCard.swift */; };
 		4BE4B2671F9FC25C00A08BCE /* PXCardNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B2301F9FC25800A08BCE /* PXCardNumber.swift */; };
 		4BE4B2681F9FC25C00A08BCE /* PXIssuer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B2311F9FC25800A08BCE /* PXIssuer.swift */; };
-		4BE4B2691F9FC25C00A08BCE /* PXPaymentMethodSearchItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B2321F9FC25900A08BCE /* PXPaymentMethodSearchItemType.swift */; };
 		4BE4B26A1F9FC25C00A08BCE /* PXCheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B2331F9FC25900A08BCE /* PXCheckoutPreference.swift */; };
 		4BE4B26B1F9FC25C00A08BCE /* PXAmountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B2341F9FC25900A08BCE /* PXAmountInfo.swift */; };
 		4BE4B26C1F9FC25C00A08BCE /* PXDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B2351F9FC25A00A08BCE /* PXDevice.swift */; };
@@ -127,7 +126,6 @@
 		4BE4B22F1F9FC25800A08BCE /* PXCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCard.swift; sourceTree = "<group>"; };
 		4BE4B2301F9FC25800A08BCE /* PXCardNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCardNumber.swift; sourceTree = "<group>"; };
 		4BE4B2311F9FC25800A08BCE /* PXIssuer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXIssuer.swift; sourceTree = "<group>"; };
-		4BE4B2321F9FC25900A08BCE /* PXPaymentMethodSearchItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodSearchItemType.swift; sourceTree = "<group>"; };
 		4BE4B2331F9FC25900A08BCE /* PXCheckoutPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCheckoutPreference.swift; sourceTree = "<group>"; };
 		4BE4B2341F9FC25900A08BCE /* PXAmountInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAmountInfo.swift; sourceTree = "<group>"; };
 		4BE4B2351F9FC25A00A08BCE /* PXDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXDevice.swift; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 				4BE4B2161F9FC25000A08BCE /* PXPaymentMethods.swift */,
 				4BE4B2221F9FC25300A08BCE /* PXPaymentMethodSearch.swift */,
 				4BE4B2391F9FC25B00A08BCE /* PXPaymentMethodSearchItem.swift */,
-				4BE4B2321F9FC25900A08BCE /* PXPaymentMethodSearchItemType.swift */,
 				4BE4B2231F9FC25300A08BCE /* PXPaymentMethodSearchItemTypes.swift */,
 				4BE4B21A1F9FC25100A08BCE /* PXPaymentPreference.swift */,
 				4BE4B22D1F9FC25700A08BCE /* PXPaymentType.swift */,
@@ -371,7 +368,6 @@
 				4BE4B25A1F9FC25C00A08BCE /* PXPaymentMethodSearchItemTypes.swift in Sources */,
 				4BE4B2631F9FC25C00A08BCE /* PXApiException.swift in Sources */,
 				4BE4B2551F9FC25C00A08BCE /* PXOrder.swift in Sources */,
-				4BE4B2691F9FC25C00A08BCE /* PXPaymentMethodSearchItemType.swift in Sources */,
 				4BE4B2401F9FC25C00A08BCE /* PXPaymentTypes.swift in Sources */,
 				4BE4B26F1F9FC25C00A08BCE /* PXInstructionReference.swift in Sources */,
 				4BE4B25D1F9FC25C00A08BCE /* PXCustomOptionSearchItem.swift in Sources */,

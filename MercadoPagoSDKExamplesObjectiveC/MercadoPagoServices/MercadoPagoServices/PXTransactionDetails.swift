@@ -8,7 +8,6 @@
 
 import Foundation
 open class PXTransactionDetails: NSObject {
-
     open var externalResourceUrl: String!
     open var financialInstitution: String!
     open var installmentAmount: Double!

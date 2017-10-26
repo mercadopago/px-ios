@@ -8,7 +8,13 @@
 
 import Foundation
 open class PXFingerprint: NSObject {
-    open var fingerprint: [String : Any]
+    open var fingerprint: [String : Any]!
+    open var os: String!
+    open var vendorIds: String!
+    open var model: String!
+    open var systemVersion: String!
+    open var resolution: String!
+    open var vendorSpecificAttributes: String!
 
     public override init () {
         self.fingerprint = [:]
@@ -34,6 +40,10 @@ open class PXFingerprint: NSObject {
         let device: UIDevice = UIDevice.current
         var dictionary: [String : AnyObject] = [String: AnyObject]()
         dictionary["os"] = "iOS" as AnyObject?
+
+        self.os = "iOS"
+
+
         let devicesId: [AnyObject]? = devicesID()
         if devicesId != nil {
             dictionary["vendor_ids"] = devicesId! as AnyObject?

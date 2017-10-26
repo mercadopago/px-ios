@@ -58,13 +58,9 @@ open class PaymentMethodSearchService: MercadoPagoService {
         }
 
         params.paramsAppend(key: ApiParams.EMAIL, value : customerEmail)
-
         params.paramsAppend(key: ApiParams.CUSTOMER_ID, value : customerId)
-
         params.paramsAppend(key: ApiParams.SITE_ID, value : MercadoPagoContext.getSite())
-
         params.paramsAppend(key: ApiParams.API_VERSION, value : ServicePreference.API_VERSION)
-
         params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
 
         var groupsPayerBody: String = ""
@@ -85,7 +81,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
                 } else {
 
                     if paymentSearchDic.allKeys.count > 0 {
-                        let paymentSearch = PXPaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
+                            let paymentSearch = try! PXPaymentMethodSearch.fromJSON(data: data)
                             success(paymentSearch)
                     } else {
                         failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago".localized]))

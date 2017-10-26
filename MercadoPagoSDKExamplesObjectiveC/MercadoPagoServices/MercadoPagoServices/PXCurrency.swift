@@ -7,7 +7,7 @@
 //
 
 import Foundation
-open class PXCurrency: NSObject {
+open class PXCurrency: NSObject, Codable {
 
     open var id: String!
     open var _description: String!
@@ -23,5 +23,45 @@ open class PXCurrency: NSObject {
         self.decimalPlaces = decimalPlaces
         self.decimalSeparator = decimalSeparator
         self.thousandSeparator = thousandSeparator
+    }
+
+    public enum PXCurrencyKeys: String, CodingKey {
+        case id
+        case description
+        case symbol
+        case decimalPlaces = "decimal_places"
+        case decimalSeparator = "decimal_separator"
+        case thousandSeparator = "thousand_separator"
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXCurrencyKeys.self)
+        let description: String = try container.decode(String.self, forKey: .description)
+        let id: String = try container.decode(String.self, forKey: .id)
+        let symbol: String = try container.decode(String.self, forKey: .symbol)
+        let decimalPlaces: Int = try container.decode(Int.self, forKey: .decimalPlaces)
+        let decimalSeparator: String = try container.decode(String.self, forKey: .decimalSeparator)
+        let thousandSeparator: String = try container.decode(String.self, forKey: .thousandSeparator)
+
+        self.init(id: id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXCurrency {
+        return try JSONDecoder().decode(PXCurrency.self, from: data)
+    }
+
+    open class func fromJSON(data: Data) throws -> [PXCurrency] {
+        return try JSONDecoder().decode([PXCurrency].self, from: data)
     }
 }
