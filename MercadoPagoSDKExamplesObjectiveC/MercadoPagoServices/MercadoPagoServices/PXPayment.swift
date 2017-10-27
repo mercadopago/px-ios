@@ -26,7 +26,7 @@ open class PXPayment: NSObject, Codable {
     open var installments: Int!
     open var issuerId: Int!
     open var liveMode: Bool!
-    open var metadata: [String: AnyObject]!
+    open var metadata: [String: String]!
     open var moneyReleaseDate: Date?
     open var notificationUrl: String!
     open var operationType: String!
@@ -44,7 +44,7 @@ open class PXPayment: NSObject, Codable {
     open var tokenId: String!
 
 
-    init(binaryMode: Bool, callForAuthorizeId: String, captured: Bool, card: PXCard, collectorId: String, couponAmount: Double ,currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata:  [String: AnyObject], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
+    init(binaryMode: Bool, callForAuthorizeId: String, captured: Bool, card: PXCard, collectorId: String, couponAmount: Double ,currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata:  [String: String], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
 
         self.binaryMode = binaryMode
         self.callForAuthorizeId = callForAuthorizeId
@@ -140,7 +140,7 @@ open class PXPayment: NSObject, Codable {
         let installments: Int = try container.decode(Int.self, forKey: .installments)
         let issuerId: Int = try container.decode(Int.self, forKey: .issuerId)
         let liveMode: Bool = try container.decode(Bool.self, forKey: .liveMode)
-        let metadata: [String: AnyObject] = try container.decode([String: AnyObject].self, forKey: .metadata)
+        let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
         //let moneyReleaseDate: String = try container.decode(String.self, forKey: .moneyReleaseDate)
         let notificationUrl: String = try container.decode(String.self, forKey: .notificationUrl)
         let operationType: String = try container.decode(String.self, forKey: .operationType)

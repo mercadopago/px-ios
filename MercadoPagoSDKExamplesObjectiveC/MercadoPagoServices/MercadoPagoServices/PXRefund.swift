@@ -10,12 +10,12 @@ import Foundation
 open class PXRefund: NSObject, Codable {
     open var dateCreated: Date?
     open var id: String!
-    open var metadata:  [String: AnyObject]!
+    open var metadata:  [String: String]!
     open var paymentId: Int64!
     open var source: String!
     open var uniqueSecuenceNumber: String!
 
-    init(id: String, dateCreated: Date?, metadata:  [String: AnyObject], paymentId: Int64, source: String, uniqueSecuenceNumber: String) {
+    init(id: String, dateCreated: Date?, metadata:  [String: String], paymentId: Int64, source: String, uniqueSecuenceNumber: String) {
         self.dateCreated = dateCreated
         self.id = id
         self.metadata = metadata
@@ -35,7 +35,7 @@ open class PXRefund: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXRefundKeys.self)
-        let metadata: [String: AnyObject] = try container.decode([String: AnyObject].self, forKey: .metadata)
+        let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
         let id: String = try container.decode(String.self, forKey: .id)
         let paymentId: Int64 = try container.decode(Int64.self, forKey: .paymentId)
         let source: String = try container.decode(String.self, forKey: .source)
