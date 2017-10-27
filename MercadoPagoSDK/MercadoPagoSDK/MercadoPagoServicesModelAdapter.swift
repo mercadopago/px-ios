@@ -260,7 +260,93 @@ extension MercadoPagoServicesAdapter {
     
     open func getPaymentMethodSearchFromPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
         let paymentMethodSearch = PaymentMethodSearch()
+        
+        for pxPaymentMethodSearchItem in pxPaymentMethodSearch.paymentMethodSearchItem {
+            let paymentMethodSearchItem = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxPaymentMethodSearchItem)
+            paymentMethodSearch.groups.append(paymentMethodSearchItem)
+        }
+        
+        for pxPaymentMethod in pxPaymentMethodSearch.paymentMethods {
+            let paymentMethod = getPaymentMethodFromPXPaymentMethod(pxPaymentMethod)
+            paymentMethodSearch.paymentMethods.append(paymentMethod)
+        }
+        
+        for pxCustomOptionSearchItem in pxPaymentMethodSearch.customOptionSearchItems {
+            let customerPaymentMethod = getCustomerPaymentMethodFromPXCustomOptionSearchItem(pxCustomOptionSearchItem)
+            paymentMethodSearch.customerPaymentMethods?.append(customerPaymentMethod)
+        }
+        
+        for pxCard in pxPaymentMethodSearch.cards {
+            let card = getCardFromPXCard(pxCard)
+            paymentMethodSearch.cards?.append(card)
+        }
+        
+        if let pxDefaultOption = pxPaymentMethodSearch.defaultOption {
+            paymentMethodSearch.defaultOption = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxDefaultOption)
+        }
+    
         return paymentMethodSearch
+    }
+    
+    open func getCustomerPaymentMethodFromPXCustomOptionSearchItem(_ pxCustomOptionSearchItem: PXCustomOptionSearchItem) -> CustomerPaymentMethod {
+        let id: String = pxCustomOptionSearchItem.id
+        let paymentMethodId: String = pxCustomOptionSearchItem.paymentMethodId
+        let paymentMethodTypeId: String = pxCustomOptionSearchItem.paymentTypeId
+        let description: String = pxCustomOptionSearchItem._description
+        let customerPaymentMethod = CustomerPaymentMethod(id: id, paymentMethodId: paymentMethodId, paymentMethodTypeId: paymentMethodTypeId, description: description)
+        return customerPaymentMethod
+    }
+    
+    open func getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(_ pxPaymentMethodSearchItem: PXPaymentMethodSearchItem) -> PaymentMethodSearchItem {
+        let paymentMethodSearchItem = PaymentMethodSearchItem()
+        paymentMethodSearchItem.idPaymentMethodSearchItem = pxPaymentMethodSearchItem.id
+        paymentMethodSearchItem.type = getPaymentMethodSearchItemTypeFromString(pxPaymentMethodSearchItem.type)
+        paymentMethodSearchItem._description = pxPaymentMethodSearchItem._description
+        paymentMethodSearchItem.comment = pxPaymentMethodSearchItem.comment
+        paymentMethodSearchItem.childrenHeader = pxPaymentMethodSearchItem.childrenHeader
+        
+        if let pxChildren = pxPaymentMethodSearchItem.children {
+            for pxPaymentMethodSearchItem in pxChildren {
+                let childrenItem = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxPaymentMethodSearchItem)
+                paymentMethodSearchItem.children.append(childrenItem)
+            }
+        } else {
+            paymentMethodSearchItem.children = []
+        }
+        
+        paymentMethodSearchItem.showIcon = pxPaymentMethodSearchItem.showIcon
+        
+        return paymentMethodSearchItem
+    }
+    
+    open func getPaymentMethodSearchItemTypeFromString(_ typeString: String) -> PaymentMethodSearchItemType {
+        switch typeString {
+        case PaymentMethodSearchItemType.GROUP.rawValue:
+            return PaymentMethodSearchItemType.GROUP
+        case PaymentMethodSearchItemType.PAYMENT_METHOD.rawValue:
+            return PaymentMethodSearchItemType.PAYMENT_METHOD
+        case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:
+            return PaymentMethodSearchItemType.PAYMENT_TYPE
+        default:
+            return PaymentMethodSearchItemType.GROUP
+        }
+    }
+    
+    open func getCardFromPXCard(_ pxCard: PXCard) -> Card {
+        let card = Card()
+        card.cardHolder = getCardholderFromPXCardHolder(pxCard.cardHolder)
+        card.customerId = pxCard.customerId
+        card.dateCreated = pxCard.dateCreated
+        card.dateLastUpdated = nil
+        card.expirationMonth = pxCard.expirationMonth
+        card.expirationYear = pxCard.expirationYear
+        card.firstSixDigits = pxCard.firstSixDigits
+        card.idCard = pxCard.id
+        card.lastFourDigits = pxCard.lastFourDigits
+        card.paymentMethod = getPaymentMethodFromPXPaymentMethod(pxCard.paymentMethod)
+        card.issuer = getIssuerFromPXIssuer(pxCard.issuer)
+        card.securityCode = getSecurityCodeFromPXSecurityCode(pxCard.securityCode)
+        return card
     }
     
     open func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
