@@ -40,13 +40,14 @@ open class DiscountService: MercadoPagoService {
             params += "&" + additionalInfo!
         }
 
-        self.request(uri: self.URI, params: params, body: nil, method: "GET", cache: false, success: { (jsonResult) -> Void in
-
+        self.request(uri: self.URI, params: params, body: nil, method: "GET", cache: false, success: { (data) -> Void in
+            let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
+            
             if let discount = jsonResult as? NSDictionary {
                 if let error = discount["error"] {
                     failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: error]))
                 } else {
-                    let discount = PXDiscount.fromJSON(jsonResult as! NSDictionary, amount: amount)
+                    let discount = try! PXDiscount.fromJSON(data: data)
                     success(discount)
                 }
             }

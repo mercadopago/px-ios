@@ -46,16 +46,16 @@ open class InstructionsService: MercadoPagoService {
 
         let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]
 
-        self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data?) -> Void in
+        self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data) -> Void in
 
-            let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
+            let jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
 
             let error = jsonResult["error"] as? String
             if error != nil && error!.characters.count > 0 {
                 let e : NSError = NSError(domain: "com.mercadopago.sdk.getInstructions", code: MercadoPago.ERROR_INSTRUCTIONS, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago".localized, NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String])
                 failure!(e)
             } else {
-                success(PXInstructions.fromJSON(jsonResult as! NSDictionary))
+                success(try! PXInstructions.fromJSON(data: data))
             }
             } as! (Data?) -> Void, failure: failure)
     }

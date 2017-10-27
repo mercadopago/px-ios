@@ -43,6 +43,9 @@ open class PXPayment: NSObject, Codable {
     open var transactionDetails: PXTransactionDetails!
     open var tokenId: String!
 
+    public override init() {
+
+    }
 
     init(binaryMode: Bool, callForAuthorizeId: String, captured: Bool, card: PXCard, collectorId: String, couponAmount: Double ,currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata:  [String: String], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
 

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-open class PXDiscount: NSObject {
+open class PXDiscount: NSObject, Codable {
     open var id: String!
     open var name: String!
     open var percentOff: Double!
@@ -17,8 +17,55 @@ open class PXDiscount: NSObject {
     open var couponCode: String!
     open var concept: String!
 
-    open class func fromJSON(_ json: NSDictionary, amount: Double) -> PXDiscount {
-        let pxDiscount: PXDiscount = PXDiscount()
-        return pxDiscount
+    init(id: String, name: String, percentOff: Double, amountOff: Double, couponAmount: Double, currencyId: String, couponCode: String, concept: String) {
+        self.id = id
+        self.name = name
+        self.percentOff = percentOff
+        self.amountOff = amountOff
+        self.couponAmount = couponAmount
+        self.currencyId = currencyId
+        self.couponCode = couponCode
+        self.concept = concept
     }
+
+    public enum PXDiscountKeys: String, CodingKey {
+        case id
+        case name
+        case percentOff = "percent_off"
+        case amountOff = "amount_off"
+        case couponAmount = "coupon_amount"
+        case currencyId = "currency_id"
+        case couponCode = "coupon_code"
+        case concept
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXDiscountKeys.self)
+        let percentOff: Double = try container.decode(Double.self, forKey: .percentOff)
+        let amountOff: Double = try container.decode(Double.self, forKey: .amountOff)
+        let couponAmount: Double = try container.decode(Double.self, forKey: .couponAmount)
+        let id: String = try container.decode(String.self, forKey: .id)
+        let name: String = try container.decode(String.self, forKey: .name)
+        let currencyId: String = try container.decode(String.self, forKey: .currencyId)
+        let couponCode: String = try container.decode(String.self, forKey: .couponCode)
+        let concept: String = try container.decode(String.self, forKey: .concept)
+
+        self.init(id: id, name: name, percentOff: percentOff, amountOff: amountOff, couponAmount: couponAmount, currencyId: currencyId, couponCode: couponCode, concept: concept)
+    }
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXDiscount {
+        return try JSONDecoder().decode(PXDiscount.self, from: data)
+    }
+
 }
