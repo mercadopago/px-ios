@@ -351,7 +351,42 @@ extension MercadoPagoServicesAdapter {
     
     open func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
         let customer = Customer()
+        customer.address = getAddressFromPXAddress(pxCustomer.address)
+        
+        for pxCard in pxCustomer.cards {
+            let card = getCardFromPXCard(pxCard)
+            customer.cards?.append(card)
+        }
+        
+        customer.defaultCard = pxCustomer.defaultCard
+        customer._description = pxCustomer._description
+        customer.dateCreated = pxCustomer.dateCreated
+        customer.dateLastUpdated = pxCustomer.dateLastUpdated
+        customer.email = pxCustomer.email
+        customer.firstName = pxCustomer.firstName
+        customer._id = pxCustomer.id
+        customer.identification = getIdentificationFromPXIdentification(pxCustomer.identification)
+        customer.lastName = pxCustomer.lastName
+        customer.liveMode = pxCustomer.liveMode
+        customer.metadata = pxCustomer.metadata as NSDictionary
+        customer.phone = getPhoneFromPXPhone(pxCustomer.phone)
+        customer.registrationDate = pxCustomer.registrationDate
         return customer
+    }
+    
+    open func getAddressFromPXAddress(_ pxAddress: PXAddress) -> Address {
+        let streetName: String? = pxAddress.streetName
+        let streetNumber: NSNumber? = pxAddress.streetNumber != nil ? NSNumber(value: pxAddress.streetNumber!) : nil
+        let zipCode: String? = pxAddress.zipCode
+        let address = Address(streetName: streetName, streetNumber: streetNumber, zipCode: zipCode)
+        return address
+    }
+    
+    open func getPhoneFromPXPhone(_ pxPhone: PXPhone) -> Phone {
+        let phone = Phone()
+        phone.areaCode = pxPhone.areaCode
+        phone.number = pxPhone.number
+        return phone
     }
     
     open func getIssuerFromPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
