@@ -8,9 +8,17 @@
 
 import Foundation
 open class IdentificationService: MercadoPagoService {
+    let merchantPublicKey: String!
+    let payerAccessToken: String?
+
+    init (baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil) {
+        self.merchantPublicKey = merchantPublicKey
+        self.payerAccessToken = payerAccessToken
+        super.init(baseURL: baseURL)
+    }
     open func getIdentificationTypes(_ method: String = "GET", uri: String = ServicePreference.MP_IDENTIFICATION_URI, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
+        let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
 
         self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) -> Void in
             if let failure = failure {

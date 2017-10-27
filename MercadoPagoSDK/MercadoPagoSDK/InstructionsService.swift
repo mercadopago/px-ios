@@ -9,27 +9,17 @@
 import UIKit
 import MercadoPagoServices
 
-private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
 
 open class InstructionsService: MercadoPagoService {
+
+    let merchantPublicKey: String!
+    let payerAccessToken: String?
+
+    init (baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil) {
+        self.merchantPublicKey = merchantPublicKey
+        self.payerAccessToken = payerAccessToken
+        super.init(baseURL: baseURL)
+    }
 
     @available(*, deprecated: 2.2.4, message: "Use getInstructions(_ paymentId : String, ...) instead. PaymentId can be greater than Int and might fail")
     open func getInstructions(_ paymentId: Int, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: PXInstructions) -> Void, failure: ((_ error: NSError) -> Void)?) {
@@ -38,10 +28,9 @@ open class InstructionsService: MercadoPagoService {
     }
 
     open func getInstructions(for paymentId: Int64, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: PXInstructions) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
+        var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
         params.paramsAppend(key: ApiParams.PAYMENT_TYPE, value: paymentTypeId)
-
         params.paramsAppend(key: ApiParams.API_VERSION, value : ServicePreference.API_VERSION)
 
         let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]

@@ -10,10 +10,18 @@ import Foundation
 import MercadoPagoServices
 
 open class GatewayService: MercadoPagoService {
+    let merchantPublicKey: String!
+    let payerAccessToken: String?
+
+    init (baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil) {
+        self.merchantPublicKey = merchantPublicKey
+        self.payerAccessToken = payerAccessToken
+        super.init(baseURL: baseURL)
+    }
 
     open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: NSError) -> Void)?) {
 
-        let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
+        let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
 
         self.request(uri: url, params: params, body: cardTokenJSON, method: method, success: success, failure: { (error) -> Void in
             if let failure = failure {

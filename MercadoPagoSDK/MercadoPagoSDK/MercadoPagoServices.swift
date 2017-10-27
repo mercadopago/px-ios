@@ -13,48 +13,48 @@ open class MercadoPagoServices: NSObject {
 
     private var merchantPublicKey: String
     private var payerAccessToken: String
-    private var proccesingMode: String
+    private var procesingMode: String
 
-    private static var baseURL: String!
-    private static var gatewayBaseURL: String!
-    private static var getCustomerBaseURL: String! = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() // TODO: Sacar!!
-    private static var createCheckoutPreferenceURL: String!
-    private static var getMerchantDiscountBaseURL: String!
-    private static var getCustomerURI: String! =  MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI()
+    private var baseURL: String!
+    private var gatewayBaseURL: String!
+    private var getCustomerBaseURL: String! = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() // TODO: Sacar!!
+    private var createCheckoutPreferenceURL: String!
+    private var getMerchantDiscountBaseURL: String!
+    private var getCustomerURI: String! =  MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI()
 
-    private static var createCheckoutPreferenceURI: String!
-    private static var getMerchantDiscountURI: String!
+    private var createCheckoutPreferenceURI: String!
+    private var getMerchantDiscountURI: String!
 
-    private static var getCustomerAdditionalInfo: NSDictionary!
-    private static var createCheckoutPreferenceAdditionalInfo: NSDictionary!
-    private static var getDiscountAdditionalInfo: NSDictionary!
+    private var getCustomerAdditionalInfo: NSDictionary!
+    private var createCheckoutPreferenceAdditionalInfo: NSDictionary!
+    private var getDiscountAdditionalInfo: NSDictionary!
 
-    init(merchantPublicKey: String, payerAccessToken: String, proccesingMode: String) {
+    init(merchantPublicKey: String, payerAccessToken: String, procesingMode: String) {
         self.merchantPublicKey = merchantPublicKey
         self.payerAccessToken = payerAccessToken
-        self.proccesingMode = proccesingMode
+        self.procesingMode = procesingMode
     }
 
-    open class func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let preferenceService = PreferenceService(baseURL: baseURL)
         preferenceService.getPreference(checkoutPreferenceId, success: { (preference : PXCheckoutPreference) in
             callback(preference)
         }, failure: failure)
     }
 
-    open class func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let instructionsService = InstructionsService(baseURL: baseURL)
+    open func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let instructionsService = InstructionsService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         instructionsService.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: { (instructionsInfo : PXInstructions) -> Void in
             callback(instructionsInfo)
         }, failure : failure)
     }
 
-    open class func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: PXPayer, site: PXSite, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL)
+    open func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: PXPayer, site: PXSite, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, success: callback, failure: failure)
     }
 
-    open class func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
         var headers: [String: String]?
         if !String.isNullOrEmpty(transactionId), let transactionId = transactionId {
@@ -66,21 +66,21 @@ open class MercadoPagoServices: NSObject {
         service.createPayment(headers: headers, body: paymentData.toJsonString(), success: callback, failure: failure)
     }
 
-    open class func createToken(cardToken: CardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(cardToken: CardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         cardToken.device = Device()
         createToken(cardTokenJSON: cardToken.toJSONString(), callback: callback, failure: failure)
     }
 
-    open class func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         createToken(cardTokenJSON: savedESCCardToken.toJSONString(), callback: callback, failure: failure)
     }
 
-    open class func createToken(savedCardToken: SavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(savedCardToken: SavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         createToken(cardTokenJSON: savedCardToken.toJSONString(), callback: callback, failure: failure)
     }
     
-    internal class func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: baseURL)
+    internal func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: GatewayService = GatewayService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data) -> Void in
 
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
@@ -97,8 +97,8 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open class func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: baseURL)
+    open func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: GatewayService = GatewayService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.cloneToken(public_key: MercadoPagoContext.publicKey(), tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
             let jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             var token : PXToken
@@ -114,7 +114,7 @@ open class MercadoPagoServices: NSObject {
             } as! (Data?) -> Void, failure: failure)
     }
 
-    open class func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: PromosService = PromosService(baseURL: baseURL)
         service.getPromos(public_key: MercadoPagoContext.publicKey(), success: { (jsonResult) -> Void in
             var promos : [PXBankDeal] = [PXBankDeal]()
@@ -125,8 +125,8 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open class func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: IdentificationService = IdentificationService(baseURL: baseURL)
+    open func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: IdentificationService = IdentificationService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.getIdentificationTypes(success: {(data: Data!) -> Void in
             let jsonResult = try! JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
 
@@ -142,13 +142,13 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open class func getInstallments(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: PaymentService = PaymentService(baseURL: baseURL)
+    open func getInstallments(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         service.getInstallments(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, success: callback, failure: failure)
     }
 
-    open class func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: PaymentService = PaymentService(baseURL: baseURL)
+    open func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(data: Data) -> Void in
 
             let jsonResponse = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
@@ -165,8 +165,8 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open class func getPaymentMethods(callback: @escaping ([PXPaymentMethod]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: PaymentService = PaymentService(baseURL: baseURL)
+    open func getPaymentMethods(callback: @escaping ([PXPaymentMethod]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         service.getPaymentMethods(success: {(data: Data) -> Void in
 
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
@@ -182,11 +182,11 @@ open class MercadoPagoServices: NSObject {
             }, failure: failure)
     }
 
-    open class func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
     }
     
-    open class func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var addInfo: String? = nil
         if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
             addInfo = discountAdditionalInfo?.parseToQuery()
@@ -202,7 +202,7 @@ open class MercadoPagoServices: NSObject {
 
     // TODO: Sacar esto
 
-    open class func getCustomer(additionalInfo: NSDictionary? = MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getCustomer(additionalInfo: NSDictionary? = MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: getCustomerBaseURL, URI: getCustomerURI)
         
         var addInfo: String = ""
@@ -213,7 +213,7 @@ open class MercadoPagoServices: NSObject {
         service.getCustomer(params: addInfo, success: callback, failure: failure)
     }
 
-    open class func createCheckoutPreference(bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createCheckoutPreference(bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: createCheckoutPreferenceURL, URI: createCheckoutPreferenceURI)
         
         let body: String?
@@ -227,63 +227,66 @@ open class MercadoPagoServices: NSObject {
     }
 
     //SETS
-    open static func setBaseURL(_ baseURL: String) {
-        MercadoPagoServices.baseURL = baseURL
+    open func setBaseURL(_ baseURL: String) {
+        self.baseURL = baseURL
     }
 
-    open static func setGatewayBaseURL(_ gatewayBaseURL: String) {
-        MercadoPagoServices.gatewayBaseURL = gatewayBaseURL
+    open func setGatewayBaseURL(_ gatewayBaseURL: String) {
+        self.gatewayBaseURL = gatewayBaseURL
     }
 
-    open static func setGetCustomerBaseURL(_ getCustomerBaseURL: String) {
-        MercadoPagoServices.getCustomerBaseURL = getCustomerBaseURL
+    open func setGetCustomerBaseURL(_ getCustomerBaseURL: String) {
+        self.getCustomerBaseURL = getCustomerBaseURL
     }
 
-    open static func setCreateCheckoutPreferenceURL(_ createCheckoutPreferenceURL: String) {
-        MercadoPagoServices.createCheckoutPreferenceURL = createCheckoutPreferenceURL
+    open func setCreateCheckoutPreferenceURL(_ createCheckoutPreferenceURL: String) {
+        self.createCheckoutPreferenceURL = createCheckoutPreferenceURL
     }
 
-    open static func setGetMerchantDiscountBaseURL(_ getMerchantDiscountBaseURL: String) {
-        MercadoPagoServices.getMerchantDiscountBaseURL = getMerchantDiscountBaseURL
+    open func setGetMerchantDiscountBaseURL(_ getMerchantDiscountBaseURL: String) {
+        self.getMerchantDiscountBaseURL = getMerchantDiscountBaseURL
     }
 
-    open static func setGetCustomerURI(_ getCustomerURI: String) {
-        MercadoPagoServices.getCustomerURI = getCustomerURI
+    open func setGetCustomerURI(_ getCustomerURI: String) {
+        self.getCustomerURI = getCustomerURI
     }
 
-    open static func setCreateCheckoutPreferenceURI(_ createCheckoutPreferenceURI: String) {
-        MercadoPagoServices.createCheckoutPreferenceURI = createCheckoutPreferenceURI
+    open func setCreateCheckoutPreferenceURI(_ createCheckoutPreferenceURI: String) {
+        self.createCheckoutPreferenceURI = createCheckoutPreferenceURI
     }
 
-    open static func setGetMerchantDiscountURI(_ getMerchantDiscountURI: String) {
-        MercadoPagoServices.getMerchantDiscountURI = getMerchantDiscountURI
+    open func setGetMerchantDiscountURI(_ getMerchantDiscountURI: String) {
+        self.getMerchantDiscountURI = getMerchantDiscountURI
     }
 
-    open static func setGetCustomerAdditionalInfo(_ getCustomerAdditionalInfo: NSDictionary) {
-        MercadoPagoServices.getCustomerAdditionalInfo = getCustomerAdditionalInfo
+    open func setGetCustomerAdditionalInfo(_ getCustomerAdditionalInfo: NSDictionary) {
+        self.getCustomerAdditionalInfo = getCustomerAdditionalInfo
     }
 
-    open static func setCreateCheckoutPreferenceAdditionalInfo(_ createCheckoutPreferenceAdditionalInfo: NSDictionary) {
-        MercadoPagoServices.createCheckoutPreferenceAdditionalInfo = createCheckoutPreferenceAdditionalInfo
+    open func setCreateCheckoutPreferenceAdditionalInfo(_ createCheckoutPreferenceAdditionalInfo: NSDictionary) {
+        self.createCheckoutPreferenceAdditionalInfo = createCheckoutPreferenceAdditionalInfo
     }
 
-    open static func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
-        MercadoPagoServices.getDiscountAdditionalInfo = getDiscountAdditionalInfo
+    open func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
+        self.getDiscountAdditionalInfo = getDiscountAdditionalInfo
     }
  
-    internal class func getParamsPublicKey() -> String {
+    internal class func getParamsPublicKey(_ merchantPublicKey: String) -> String {
         var params: String = ""
 
-        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: MercadoPagoContext.publicKey())
+        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: merchantPublicKey)
 
         return params
     }
 
-    internal class func getParamsPublicKeyAndAcessToken() -> String {
+    internal class func getParamsPublicKeyAndAcessToken(_ merchantPublicKey: String, _ payerAccessToken: String?) -> String {
         var params: String = ""
 
-        params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: MercadoPagoContext.payerAccessToken())
-        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: MercadoPagoContext.publicKey())
+        if String.isNullOrEmpty(payerAccessToken) {
+            params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: payerAccessToken!)
+        }
+
+        params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: merchantPublicKey)
 
         return params
     }

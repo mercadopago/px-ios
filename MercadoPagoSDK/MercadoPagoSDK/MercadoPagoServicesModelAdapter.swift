@@ -11,14 +11,14 @@ import MercadoPagoServices
 
 extension MercadoPagoServicesAdapter {
     
-    open class func getPXSiteFromId(_ siteId: String) -> PXSite {
+    open func getPXSiteFromId(_ siteId: String) -> PXSite {
         let currency = MercadoPagoContext.getCurrency()
         let pxCurrency = getPXCurrencyFromCurrency(currency)
         let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
         return pxSite
     }
     
-    open class func getPXCurrencyFromCurrency(_ currency: Currency) -> PXCurrency {
+    open func getPXCurrencyFromCurrency(_ currency: Currency) -> PXCurrency {
         let id: String = currency._id
         let description: String = currency._description
         let symbol: String = currency.symbol
@@ -29,17 +29,17 @@ extension MercadoPagoServicesAdapter {
         return pxCurrency
     }
     
-    open class func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
+    open func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
         let checkoutPreference = CheckoutPreference()
         return checkoutPreference
     }
     
-    open class func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
+    open func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
         let instructionsInfo = InstructionsInfo()
         return instructionsInfo
     }
     
-    open class func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
+    open func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
         let id: String = pxToken.id
         let publicKey: String = pxToken.publicKey
         let cardId: String = pxToken.cardId ?? ""
@@ -60,17 +60,17 @@ extension MercadoPagoServicesAdapter {
         return token
     }
     
-    open class func getStringDateFromDate(_ Date: Date) -> String {
+    open func getStringDateFromDate(_ Date: Date) -> String {
         let stringDate = ""
         return stringDate
     }
     
-    open class func getCardholderFromPXCardHolder(_ pxCardHolder: PXCardHolder) -> Cardholder {
+    open func getCardholderFromPXCardHolder(_ pxCardHolder: PXCardHolder) -> Cardholder {
         let cardholder = Cardholder()
         return cardholder
     }
     
-    open class func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
+    open func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
         let bankDeal = BankDeal()
         bankDeal.promoId = pxBankDeal.id
         bankDeal.issuer = getIssuerFromPXIssuer(pxBankDeal.issuer)
@@ -84,7 +84,7 @@ extension MercadoPagoServicesAdapter {
         return bankDeal
     }
     
-    open class func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod) -> PaymentMethod {
+    open func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod) -> PaymentMethod {
         let paymentMethod = PaymentMethod()
         paymentMethod.name = pxPaymentMethod.name
         paymentMethod.paymentTypeId = pxPaymentMethod.paymentTypeId
@@ -116,7 +116,7 @@ extension MercadoPagoServicesAdapter {
         return paymentMethod
     }
     
-    open class func getSettingFromPXSetting(_ pxSetting: PXSetting) -> Setting {
+    open func getSettingFromPXSetting(_ pxSetting: PXSetting) -> Setting {
         let setting = Setting()
         setting.binMask = getBinMaskFromPXBin(pxSetting.bin)
         setting.cardNumber = getCardNumberFromPXCardNumber(pxSetting.cardNumber)
@@ -124,7 +124,7 @@ extension MercadoPagoServicesAdapter {
         return setting
     }
     
-    open class func getFinancialInstitutionFromPXFinancialInstitution(_ pxFinancialInstitution: PXFinancialInstitution?) -> FinancialInstitution {
+    open func getFinancialInstitutionFromPXFinancialInstitution(_ pxFinancialInstitution: PXFinancialInstitution?) -> FinancialInstitution {
         if let pxFinancialInstitution = pxFinancialInstitution {
             let financialInstitution = FinancialInstitution()
             financialInstitution._id = Int(pxFinancialInstitution.id)
@@ -136,7 +136,7 @@ extension MercadoPagoServicesAdapter {
         }
     }
     
-    open class func getBinMaskFromPXBin(_ pxBin: PXBin?) -> BinMask {
+    open func getBinMaskFromPXBin(_ pxBin: PXBin?) -> BinMask {
         if let pxBin = pxBin {
             let binMask = BinMask()
             binMask.exclusionPattern = pxBin.exclusionPattern
@@ -152,14 +152,14 @@ extension MercadoPagoServicesAdapter {
         }
     }
     
-    open class func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber) -> CardNumber {
+    open func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber) -> CardNumber {
         let cardNumber = CardNumber()
         cardNumber.length = pxCardNumber.length
         cardNumber.validation = pxCardNumber.validation
         return cardNumber
     }
     
-    open class func getSecurityCodeFromPXSecurityCode(_ pxSecurityCode: PXSecurityCode) -> SecurityCode {
+    open func getSecurityCodeFromPXSecurityCode(_ pxSecurityCode: PXSecurityCode) -> SecurityCode {
         let securityCode = SecurityCode()
         securityCode.length = pxSecurityCode.length
         securityCode.cardLocation = pxSecurityCode.cardLocation
@@ -167,7 +167,7 @@ extension MercadoPagoServicesAdapter {
         return securityCode
     }
     
-    open class func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
+    open func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
         let identificationType = IdentificationType()
         identificationType._id = pxIdentificationType.id
         identificationType.name = pxIdentificationType.name
@@ -177,44 +177,44 @@ extension MercadoPagoServicesAdapter {
         return identificationType
     }
 
-    open class func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
+    open func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
         return discountCoupon
     }
     
-    open class func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
+    open func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
         let payment = Payment()
         return payment
     }
     
-    open class func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
+    open func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
         let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
         return pxPayer
     }
     
-    open class func getPayerFromPXPayer(_ pxPayer: PXPayer) -> Payer {
+    open func getPayerFromPXPayer(_ pxPayer: PXPayer) -> Payer {
         let payer = Payer()
         return payer
     }
     
-    open class func getPaymentMethodSearchFromPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
+    open func getPaymentMethodSearchFromPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
         let paymentMethodSearch = PaymentMethodSearch()
         return paymentMethodSearch
     }
     
-    open class func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
+    open func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
         let customer = Customer()
         return customer
     }
     
-    open class func getIssuerFromPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
+    open func getIssuerFromPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
         let issuer = Issuer()
         issuer._id = pxIssuer._id // TODO: Sacar el _
         issuer.name = pxIssuer.name
         return issuer
     }
     
-    open class func getInstallmentFromPXInstallment(_ pxInstallment: PXInstallment) -> Installment {
+    open func getInstallmentFromPXInstallment(_ pxInstallment: PXInstallment) -> Installment {
         let installment = Installment()
         installment.issuer = getIssuerFromPXIssuer(pxInstallment.issuer)
         installment.paymentTypeId = pxInstallment.paymentTypeId
@@ -226,7 +226,7 @@ extension MercadoPagoServicesAdapter {
         return installment
     }
     
-    open class func getPayerCostFromPXPayerCost(_ pxPayerCost: PXPayerCost) -> PayerCost {
+    open func getPayerCostFromPXPayerCost(_ pxPayerCost: PXPayerCost) -> PayerCost {
         let payerCost = PayerCost()
         payerCost.installmentRate = pxPayerCost.installmentRate
         payerCost.labels = pxPayerCost.labels

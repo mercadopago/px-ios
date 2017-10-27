@@ -36,11 +36,13 @@ open class CardFormViewModel: NSObject {
     let animationDuration: Double = 0.6
 
     var promos: [BankDeal]?
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil) {
+    public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
+        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
 
         if customerCard != nil {
             self.customerCard = customerCard

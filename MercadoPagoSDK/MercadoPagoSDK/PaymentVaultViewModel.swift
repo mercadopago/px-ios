@@ -30,10 +30,11 @@ class PaymentVaultViewModel: NSObject {
     var callback : ((_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     var callbackCancel: (() -> Void)?
     var couponCallback: ((DiscountCoupon) -> Void)?
+    var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
     internal var isRoot = true
 
-    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], groupName: String? = nil, customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel: (() -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
+    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], groupName: String? = nil, customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
         self.amount = amount
         self.email = email
         self.groupName = groupName
@@ -43,6 +44,8 @@ class PaymentVaultViewModel: NSObject {
         self.customerPaymentOptions = customerPaymentOptions
         self.isRoot = isRoot
         self.couponCallback = couponCallback
+        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+
     }
 
     func shouldGetCustomerCardsInfo() -> Bool {

@@ -31,9 +31,20 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentMethodSearchService: MercadoPagoService {
 
+    let merchantPublicKey: String!
+    let payerAccessToken: String?
+    let processingMode: String!
+
+    init (baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil, processingMode: String) {
+        self.merchantPublicKey = merchantPublicKey
+        self.payerAccessToken = payerAccessToken
+        self.processingMode = processingMode
+        super.init(baseURL: baseURL)
+    }
+
     open func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        var params =  MercadoPagoServices.getParamsPublicKey()
+        var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
 
         params.paramsAppend(key: ApiParams.AMOUNT, value: String(amount))
 
@@ -61,10 +72,10 @@ open class PaymentMethodSearchService: MercadoPagoService {
         params.paramsAppend(key: ApiParams.CUSTOMER_ID, value : customerId)
         params.paramsAppend(key: ApiParams.SITE_ID, value : MercadoPagoContext.getSite())
         params.paramsAppend(key: ApiParams.API_VERSION, value : ServicePreference.API_VERSION)
-        params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
+        params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: processingMode)
 
-        var groupsPayerBody: String = ""
-        if !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {
+        var groupsPayerBody: String = "" //TODO pasarle el payer
+        if !String.isNullOrEmpty(payerAccessToken) {
             let groupsPayerBodyJson: [String:Any] = [
                 "payer": GroupsPayer().toJSON()
             ]

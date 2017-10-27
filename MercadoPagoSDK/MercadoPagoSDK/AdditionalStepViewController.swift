@@ -167,7 +167,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                     self.present(step, animated: false, completion: {})
                 }
             } else {
-                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, callback: { (coupon) in
+                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { (coupon) in
                     let couponDataDict: [String: DiscountCoupon] = ["coupon": coupon]
 
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil, userInfo: couponDataDict)

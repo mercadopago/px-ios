@@ -126,9 +126,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token)
+        self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel
         self.callback = callback
     }
@@ -250,7 +250,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     private func getPromos() {
-        MercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
+        self.viewModel.mercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
             self.viewModel.promos = bankDeals
             self.updateCardSkin()
         }) { (error) in
@@ -294,10 +294,13 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     open func verPromociones() {
-        self.navigationController?.present(UINavigationController(rootViewController: self.startPromosStep(promos : self.viewModel.promos)), animated: true, completion: {})
+        guard let promos = self.viewModel.promos else {
+            return
+        }
+        self.navigationController?.present(UINavigationController(rootViewController: self.startPromosStep(promos : promos)), animated: true, completion: {})
     }
 
-    func startPromosStep(promos: [BankDeal]? = nil,
+    func startPromosStep(promos: [BankDeal],
                          _ callback: (() -> Void)? = nil) -> PromoViewController {
         return PromoViewController(promos : promos, callback : callback)
     }

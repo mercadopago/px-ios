@@ -26,7 +26,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		super.init(coder: aDecoder)
 	}
 
-	public init(promos: [BankDeal]? = nil, callback: (() -> Void)? = nil) {
+	public init(promos: [BankDeal], callback: (() -> Void)? = nil) {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
 		self.publicKey = MercadoPagoContext.publicKey()
         self.callback = callback
@@ -53,29 +53,11 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 
-        self.showLoading()
         if self.callback == nil {
             self.callback = {
                 self.dismiss(animated: true, completion: {})
             }
         }
-
-        if Array.isNullOrEmpty(self.promos) {
-            MercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
-                self.promos = bankDeals
-                self.tableView.reloadData()
-                self.hideLoading()
-            }, failure: { (error) in
-                if error.code == MercadoPago.ERROR_API_CODE {
-                    self.tableView.reloadData()
-                    self.hideLoading()
-                }
-            })
-        } else {
-            self.tableView.reloadData()
-            self.hideLoading()
-        }
-
     }
 
 	open func back() {
