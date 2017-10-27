@@ -265,7 +265,8 @@ extension MercadoPagoCheckout {
 
     func cloneCardToken(token: Token, securityCode: String) {
         self.presentLoading()
-        MercadoPagoServices.cloneToken(token, securityCode:securityCode, success: { [weak self] (token) in
+        MercadoPagoServicesAdapter.cloneToken(tokenId: token._id, securityCode: securityCode, callback: { [weak self] (token) in
+            
             guard let strongSelf = self else {
                 return
             }
@@ -273,18 +274,20 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(token: token)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-
-            }, failure: { [weak self] (error) in
-                guard let strongSelf = self else {
-                    return
-                }
-
-                strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
-                    self?.cloneCardToken(token: token, securityCode: securityCode)
-                })
-                strongSelf.executeNextStep()
-        })
+            
+        }) { [weak self] (error) in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
+                self?.cloneCardToken(token: token, securityCode: securityCode)
+            })
+            strongSelf.executeNextStep()
+            
+        }
     }
 
     func getPayerCosts(updateCallback: (() -> Void)? = nil) {

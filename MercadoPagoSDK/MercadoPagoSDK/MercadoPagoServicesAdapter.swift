@@ -79,6 +79,14 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
     
+    open class func cloneToken(tokenId: String, securityCode: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.cloneToken(tokenId: tokenId, securityCode: securityCode, callback: { (pxToken) in
+            let token = getTokenFromPXToken(pxToken)
+            callback(token)
+        }, failure: failure)
+    }
+    
     open class func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: discountAdditionalInfo, callback: { (pxDiscount) in

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 open class GatewayService: MercadoPagoService {
 
@@ -21,17 +22,17 @@ open class GatewayService: MercadoPagoService {
         })
     }
 
-    open func cloneToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", public_key: String, token: Token, securityCode: String, success: @escaping (_ data: Data?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
-        self.request(uri: url + "/" + token._id + "/clone", params: "public_key=" + public_key, body: nil, method: method, success: { (jsonResult) in
-            var token : Token? = nil
+    open func cloneToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", public_key: String, tokenId: String, securityCode: String, success: @escaping (_ data: Data?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+        self.request(uri: url + "/" + tokenId + "/clone", params: "public_key=" + public_key, body: nil, method: method, success: { (jsonResult) in
+            var token : PXToken? = nil
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
-                    token = Token.fromJSON(tokenDic)
+                    token = PXToken.fromJSON(tokenDic)
                 }
             }
             let secCodeDic : [String:Any] = ["security_code": securityCode]
 
-            self.request(uri: url + "/" + token!._id, params: "public_key=" + public_key, body: JSONHandler.jsonCoding(secCodeDic), method: "PUT", success: success, failure: failure)
+            self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: JSONHandler.jsonCoding(secCodeDic), method: "PUT", success: success, failure: failure)
         }, failure: { (error) -> Void in
             if let failure = failure {
                 failure(NSError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))

@@ -98,8 +98,21 @@ open class MercadoPagoServices: NSObject {
     }
 
 
-    public func cloneToken(tokenId: String, callback : @escaping (Token) -> Void, failure: ((_ error: NSError) -> Void)) {
-
+    open class func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: GatewayService = GatewayService(baseURL: baseURL)
+        service.cloneToken(public_key: MercadoPagoContext.publicKey(), tokenId: tokenId, securityCode: securityCode, success: {(data: Data?) -> Void in
+            let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
+            var token : PXToken
+            if let tokenDic = jsonResult as? NSDictionary {
+                if tokenDic["error"] == nil {
+                    token = PXToken.fromJSON(tokenDic)
+                    MPXTracker.trackToken(token: token.id)
+                    callback(token)
+                } else {
+                    failure(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
+                }
+            }
+            } as! (Data?) -> Void, failure: failure)
     }
 
     open class func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -270,31 +283,7 @@ open class MercadoPagoServices: NSObject {
     open static func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
         MercadoPagoServices.getDiscountAdditionalInfo = getDiscountAdditionalInfo
     }
-
-    open class func cloneToken(_ token: Token,
-                               securityCode: String,
-                               baseURL: String = ServicePreference.MP_API_BASE_URL, success: @escaping (_ token: Token) -> Void,
-                               failure: ((_ error: NSError) -> Void)?) {
-
-        let service: GatewayService = GatewayService(baseURL: baseURL)
-        service.cloneToken(public_key: MercadoPagoContext.publicKey(), token: token, securityCode: securityCode, success: {(data: Data?) -> Void in
-            let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
-            var token : Token
-            if let tokenDic = jsonResult as? NSDictionary {
-                if tokenDic["error"] == nil {
-                    token = Token.fromJSON(tokenDic)
-                    MPXTracker.trackToken(token: token._id)
-                    success(token)
-                } else {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
-                    }
-                }
-            }
-            } as! (Data?) -> Void, failure: failure)
-
-    }
-
+ 
     internal class func getParamsPublicKey() -> String {
         var params: String = ""
 
