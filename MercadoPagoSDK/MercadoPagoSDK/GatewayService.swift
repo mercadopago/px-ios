@@ -11,7 +11,7 @@ import MercadoPagoServices
 
 open class GatewayService: MercadoPagoService {
 
-    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ data: Data?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+    open func getToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: NSError) -> Void)?) {
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken()
 
@@ -22,12 +22,14 @@ open class GatewayService: MercadoPagoService {
         })
     }
 
-    open func cloneToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", public_key: String, tokenId: String, securityCode: String, success: @escaping (_ data: Data?) -> Void, failure:  ((_ error: NSError) -> Void)?) {
-        self.request(uri: url + "/" + tokenId + "/clone", params: "public_key=" + public_key, body: nil, method: method, success: { (jsonResult) in
+    open func cloneToken(_ url: String = ServicePreference.MP_CREATE_TOKEN_URI, method: String = "POST", public_key: String, tokenId: String, securityCode: String, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: NSError) -> Void)?) {
+        self.request(uri: url + "/" + tokenId + "/clone", params: "public_key=" + public_key, body: nil, method: method, success: { (data) in
+             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
+
             var token : PXToken? = nil
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
-                    token = PXToken.fromJSON(tokenDic)
+                    token = try! PXToken.fromJSON(data: data)
                 }
             }
             let secCodeDic : [String:Any] = ["security_code": securityCode]

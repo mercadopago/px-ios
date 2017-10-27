@@ -81,13 +81,13 @@ open class MercadoPagoServices: NSObject {
     
     internal class func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: baseURL)
-        service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data?) -> Void in
+        service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data) -> Void in
 
-            let jsonResult = try! JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
+            let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             var token : PXToken
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
-                    token = PXToken.fromJSON(tokenDic)
+                    token = try! PXToken.fromJSON(data: data)
                     MPXTracker.trackToken(token: token.id)
                     callback(token)
                 } else {
@@ -100,12 +100,12 @@ open class MercadoPagoServices: NSObject {
 
     open class func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: baseURL)
-        service.cloneToken(public_key: MercadoPagoContext.publicKey(), tokenId: tokenId, securityCode: securityCode, success: {(data: Data?) -> Void in
-            let jsonResult = try JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
+        service.cloneToken(public_key: MercadoPagoContext.publicKey(), tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
+            let jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             var token : PXToken
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
-                    token = PXToken.fromJSON(tokenDic)
+                    token = try! PXToken.fromJSON(data: data)
                     MPXTracker.trackToken(token: token.id)
                     callback(token)
                 } else {

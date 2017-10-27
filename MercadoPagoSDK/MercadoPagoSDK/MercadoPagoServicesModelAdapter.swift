@@ -42,19 +42,19 @@ extension MercadoPagoServicesAdapter {
     open class func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
         let id: String = pxToken.id
         let publicKey: String = pxToken.publicKey
-        let cardId: String = pxToken.cardId
+        let cardId: String = pxToken.cardId ?? ""
         let luhnValidation: String = pxToken.luhnValidation
         let status: String = pxToken.status
-        let usedDate: String = getStringDateFromDate(pxToken.usedDate)
+        let usedDate: String = getStringDateFromDate(pxToken.usedDate ?? Date())
         let cardNumberLength: Int = pxToken.cardNumberLength
-        let creationDate: Date = pxToken.creationDate
+        let creationDate: Date = pxToken.dateCreated ?? Date()
         let lastFourDigits: String = pxToken.lastFourDigits
         let firstSixDigits: String = pxToken.firstSixDigits
         let securityCodeLength: Int = pxToken.securityCodeLength
         let expirationMonth: Int = pxToken.expirationMonth
         let expirationYear: Int = pxToken.expirationYear
-        let lastModifiedDate: Date = pxToken.lastModifiedDate
-        let dueDate: Date = pxToken.dueDate
+        let lastModifiedDate: Date = pxToken.dateLastUpdated ?? Date()
+        let dueDate: Date = pxToken.dueDate ?? Date()
         let cardholder = getCardholderFromPXCardHolder(pxToken.cardholder)
         let token = Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
         return token
