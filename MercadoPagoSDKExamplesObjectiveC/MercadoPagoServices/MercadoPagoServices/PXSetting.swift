@@ -53,4 +53,19 @@ open class PXSetting: NSObject, Codable {
         return try JSONDecoder().decode([PXSetting].self, from: data)
     }
 
+    internal class func getSettingByBin(_ settings: [PXSetting]!, bin: String!) -> [PXSetting]? {
+        var selectedSetting = [PXSetting] ()
+        if settings != nil && settings.count > 0 {
+            for setting in settings {
+
+                if "" != bin && Regex(setting.bin!.pattern! + ".*").test(bin) &&
+                    (String.isNullOrEmpty(setting.bin!.exclusionPattern) || !Regex(setting.bin!.exclusionPattern! + ".*").test(bin!)) {
+                    selectedSetting.append(setting)
+                }
+            }
+
+        }
+        return selectedSetting.isEmpty ? nil : selectedSetting
+    }
+
 }

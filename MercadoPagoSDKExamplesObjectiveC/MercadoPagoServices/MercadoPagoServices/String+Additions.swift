@@ -64,23 +64,34 @@ extension String {
     }
 }
 
-class JSONHandler: NSObject {
-    
-    class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
-        var result: String = ""
+open class Regex {
+    let internalExpression: NSRegularExpression?
+    let pattern: String
+
+    public init(_ pattern: String) {
+        self.pattern = pattern
         do {
-            let dict = NSMutableDictionary()
-            for (key, value) in jsonDictionary {
-                if let value = value as? AnyObject {
-                    dict.setValue(value, forKey: key)
-                }
-            }
-            let jsonData = try JSONSerialization.data(withJSONObject: dict)
-            result = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue)  as! String
+            self.internalExpression = try NSRegularExpression(pattern: pattern, options: [NSRegularExpression.Options.caseInsensitive])
         } catch {
-            print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
+            self.internalExpression = nil
         }
-        return result
-        
+    }
+
+    open func test(_ input: String) -> Bool {
+        if self.internalExpression != nil {
+            let matches = self.internalExpression!.matches(in: input, options: [], range:NSMakeRange(0, input.characters.count))
+            return matches.count > 0
+        } else {
+            return false
+        }
     }
 }
+
+extension Array {
+
+    static public func isNullOrEmpty(_ value: Array?) -> Bool {
+        return value == nil || value?.count == 0
+    }
+}
+
+
