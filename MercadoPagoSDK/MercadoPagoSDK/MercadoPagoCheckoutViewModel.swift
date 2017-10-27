@@ -52,7 +52,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     static var changePaymentMethodCallback: (() -> Void)?
 
     var checkoutPreference: CheckoutPreference!
-    var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter()
+    var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
     //    var paymentMethods: [PaymentMethod]?
     var cardToken: CardToken?

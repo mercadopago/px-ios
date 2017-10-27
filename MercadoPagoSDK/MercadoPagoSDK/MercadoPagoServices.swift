@@ -11,16 +11,16 @@ import MercadoPagoServices
 
 open class MercadoPagoServices: NSObject {
 
-    private var merchantPublicKey: String
-    private var payerAccessToken: String
-    private var procesingMode: String
+    open var merchantPublicKey: String
+    open var payerAccessToken: String
+    open var procesingMode: String
 
     private var baseURL: String!
     private var gatewayBaseURL: String!
-    private var getCustomerBaseURL: String! = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() // TODO: Sacar!!
+    private var getCustomerBaseURL: String!
     private var createCheckoutPreferenceURL: String!
     private var getMerchantDiscountBaseURL: String!
-    private var getCustomerURI: String! =  MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI()
+    private var getCustomerURI: String!
 
     private var createCheckoutPreferenceURI: String!
     private var getMerchantDiscountURI: String!
@@ -28,6 +28,41 @@ open class MercadoPagoServices: NSObject {
     private var getCustomerAdditionalInfo: NSDictionary!
     private var createCheckoutPreferenceAdditionalInfo: NSDictionary!
     private var getDiscountAdditionalInfo: NSDictionary!
+
+    open static var MP_TEST_ENV = "/beta"
+    open static var MP_PROD_ENV = "/v1"
+    open static var MP_SELECTED_ENV = MP_PROD_ENV
+
+    static var API_VERSION = "1.4.X"
+
+    static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
+
+    static let MP_OP_ENVIROMENT = "/v1"
+
+    static let MP_ALPHA_API_BASE_URL: String =  "http://api.mp.internal.ml.com"
+    static let MP_API_BASE_URL_PROD: String =  "https://api.mercadopago.com"
+
+    static let MP_API_BASE_URL: String =  MP_API_BASE_URL_PROD
+
+    static let PAYMENT_METHODS = "/payment_methods"
+    static let INSTALLMENTS = "\(PAYMENT_METHODS)/installments"
+    static let CARD_TOKEN = "/card_tokens"
+    static let CARD_ISSSUERS = "\(PAYMENT_METHODS)/card_issuers"
+    static let PAYMENTS = "/payments"
+
+    static let MP_CREATE_TOKEN_URI = MP_OP_ENVIROMENT + CARD_TOKEN
+    static let MP_PAYMENT_METHODS_URI = MP_OP_ENVIROMENT + PAYMENT_METHODS
+    static var MP_INSTALLMENTS_URI = MP_OP_ENVIROMENT + INSTALLMENTS
+    static var MP_ISSUERS_URI = MP_OP_ENVIROMENT + CARD_ISSSUERS
+    static let MP_IDENTIFICATION_URI = "/identification_types"
+    static let MP_PROMOS_URI = MP_OP_ENVIROMENT + PAYMENT_METHODS + "/deals"
+    static let MP_SEARCH_PAYMENTS_URI = MP_ENVIROMENT + PAYMENT_METHODS + "/search/options"
+    static let MP_INSTRUCTIONS_URI = MP_ENVIROMENT + PAYMENTS + "/${payment_id}/results"
+    static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
+    static let MP_DISCOUNT_URI =  "/discount_campaigns/"
+    static let MP_TRACKING_EVENTS_URI =  MP_ENVIROMENT + "/tracking/events"
+    static let MP_CUSTOMER_URI = "/customers?preference_id="
+    static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
 
     init(merchantPublicKey: String, payerAccessToken: String, procesingMode: String) {
         self.merchantPublicKey = merchantPublicKey
@@ -202,11 +237,11 @@ open class MercadoPagoServices: NSObject {
 
     // TODO: Sacar esto
 
-    open func getCustomer(additionalInfo: NSDictionary? = MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getCustomer(callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: getCustomerBaseURL, URI: getCustomerURI)
         
         var addInfo: String = ""
-        if !NSDictionary.isNullOrEmpty(additionalInfo), let addInfoDict = additionalInfo {
+        if !NSDictionary.isNullOrEmpty(getCustomerAdditionalInfo), let addInfoDict = getCustomerAdditionalInfo {
             addInfo = addInfoDict.parseToQuery()
         }
         
@@ -235,47 +270,35 @@ open class MercadoPagoServices: NSObject {
         self.gatewayBaseURL = gatewayBaseURL
     }
 
-    open func setGetCustomerBaseURL(_ getCustomerBaseURL: String) {
-        self.getCustomerBaseURL = getCustomerBaseURL
+    public func getGatewayURL() -> String {
+        return gatewayBaseURL ?? baseURL
     }
 
-    open func setCreateCheckoutPreferenceURL(_ createCheckoutPreferenceURL: String) {
-        self.createCheckoutPreferenceURL = createCheckoutPreferenceURL
+    public func setGetCustomer(baseURL: String, URI: String, additionalInfo: [String:String]? = [:]) {
+        getCustomerBaseURL = baseURL
+        getCustomerURI = URI
+        if let additionalInfo =  additionalInfo as NSDictionary? {
+            getCustomerAdditionalInfo = additionalInfo
+        }
     }
 
-    open func setGetMerchantDiscountBaseURL(_ getMerchantDiscountBaseURL: String) {
-        self.getMerchantDiscountBaseURL = getMerchantDiscountBaseURL
+    public func setDiscount(baseURL: String = MP_API_BASE_URL, URI: String = MP_DISCOUNT_URI, additionalInfo: [String:String]? = [:]) {
+        getMerchantDiscountBaseURL = baseURL
+        getMerchantDiscountURI = URI
+        if let additionalInfo =  additionalInfo as NSDictionary? {
+            getDiscountAdditionalInfo = additionalInfo
+        }
     }
 
-    open func setGetCustomerURI(_ getCustomerURI: String) {
-        self.getCustomerURI = getCustomerURI
-    }
-
-    open func setCreateCheckoutPreferenceURI(_ createCheckoutPreferenceURI: String) {
-        self.createCheckoutPreferenceURI = createCheckoutPreferenceURI
-    }
-
-    open func setGetMerchantDiscountURI(_ getMerchantDiscountURI: String) {
-        self.getMerchantDiscountURI = getMerchantDiscountURI
-    }
-
-    open func setGetCustomerAdditionalInfo(_ getCustomerAdditionalInfo: NSDictionary) {
-        self.getCustomerAdditionalInfo = getCustomerAdditionalInfo
-    }
-
-    open func setCreateCheckoutPreferenceAdditionalInfo(_ createCheckoutPreferenceAdditionalInfo: NSDictionary) {
-        self.createCheckoutPreferenceAdditionalInfo = createCheckoutPreferenceAdditionalInfo
-    }
-
-    open func setGetDiscountAdditionalInfo(_ getDiscountAdditionalInfo: NSDictionary) {
-        self.getDiscountAdditionalInfo = getDiscountAdditionalInfo
+    public func setCreateCheckoutPreference(baseURL: String, URI: String, additionalInfo: NSDictionary? = [:]) {
+        createCheckoutPreferenceURL = baseURL
+        createCheckoutPreferenceURI = URI
+        createCheckoutPreferenceAdditionalInfo = additionalInfo
     }
  
     internal class func getParamsPublicKey(_ merchantPublicKey: String) -> String {
         var params: String = ""
-
         params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: merchantPublicKey)
-
         return params
     }
 
@@ -285,7 +308,6 @@ open class MercadoPagoServices: NSObject {
         if String.isNullOrEmpty(payerAccessToken) {
             params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: payerAccessToken!)
         }
-
         params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: merchantPublicKey)
 
         return params

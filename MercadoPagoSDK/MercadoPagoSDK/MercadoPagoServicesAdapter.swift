@@ -11,7 +11,30 @@ import MercadoPagoServices
 
 open class MercadoPagoServicesAdapter: NSObject {
 
-    let mercadoPagoServices = MercadoPagoServices(merchantPublicKey: MercadoPagoContext.publicKey(), payerAccessToken: MercadoPagoContext.payerAccessToken(), procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
+    let mercadoPagoServices: MercadoPagoServices!
+
+    init(servicePreference: ServicePreference? = nil) {
+        mercadoPagoServices = MercadoPagoServices(merchantPublicKey: MercadoPagoContext.publicKey(), payerAccessToken: MercadoPagoContext.payerAccessToken(), procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
+        super.init()
+
+        if let servicePreference = servicePreference {
+            setServicePreference(servicePreference: servicePreference)
+        }
+    }
+
+    func setServicePreference(servicePreference: ServicePreference) {
+        
+        mercadoPagoServices.setBaseURL(servicePreference.baseURL)
+        mercadoPagoServices.setGatewayBaseURL(servicePreference.getGatewayURL())
+        if let customerURL = servicePreference.getCustomerURL() {
+            mercadoPagoServices.setGetCustomer(baseURL: customerURL, URI: servicePreference.customerURI, additionalInfo: servicePreference.customerAdditionalInfo as? [String : String])
+        }
+        if let checkoutPreferenceURL = servicePreference.getCheckoutPreferenceURL() {
+            mercadoPagoServices.setCreateCheckoutPreference(baseURL: checkoutPreferenceURL, URI: servicePreference.checkoutPreferenceURI, additionalInfo: servicePreference.checkoutAdditionalInfo)
+        }
+
+        mercadoPagoServices.setDiscount(baseURL: servicePreference.getDiscountURL(), URI: servicePreference.getDiscountURI(), additionalInfo: servicePreference.discountAdditionalInfo as? [String : String])
+    }
     
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
@@ -203,9 +226,9 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
     
-    open func getCustomer(additionalInfo: NSDictionary? = nil, callback: @escaping (Customer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getCustomer(callback: @escaping (Customer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
-        mercadoPagoServices.getCustomer(additionalInfo: additionalInfo, callback: { [weak self] (pxCustomer) in
+        mercadoPagoServices.getCustomer(callback: { [weak self] (pxCustomer) in
             guard let strongSelf = self else {
                 return
             }
