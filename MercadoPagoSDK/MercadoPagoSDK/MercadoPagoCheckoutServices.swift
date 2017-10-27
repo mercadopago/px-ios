@@ -428,7 +428,7 @@ extension MercadoPagoCheckout {
 
     func getIdentificationTypes() {
         self.presentLoading()
-        MercadoPagoServices.getIdentificationTypes(callback: { [weak self] (identificationTypes) in
+        MercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] (identificationTypes) in
 
             guard let strongSelf = self else {
                 return

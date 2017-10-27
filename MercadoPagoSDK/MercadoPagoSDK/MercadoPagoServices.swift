@@ -125,7 +125,7 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open class func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: IdentificationService = IdentificationService(baseURL: baseURL)
         service.getIdentificationTypes(success: {(data: Data!) -> Void in
             let jsonResult = try! JSONSerialization.jsonObject(with: data!, options:JSONSerialization.ReadingOptions.allowFragments)
@@ -135,15 +135,8 @@ open class MercadoPagoServices: NSObject {
                     failure(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: AnyObject]))
                 }
             } else {
-                let identificationTypesResult = jsonResult as? NSArray
-                var identificationTypes : [IdentificationType] = [IdentificationType]()
-                if identificationTypesResult != nil {
-                    for i in 0 ..< identificationTypesResult!.count {
-                        if let identificationTypeDic = identificationTypesResult![i] as? NSDictionary {
-                            identificationTypes.append(IdentificationType.fromJSON(identificationTypeDic))
-                        }
-                    }
-                }
+                var identificationTypes : [PXIdentificationType] = [PXIdentificationType]()
+                identificationTypes = try! PXIdentificationType.fromJSON(data: data)
                 callback(identificationTypes)
             }
         }, failure: failure)

@@ -166,6 +166,16 @@ extension MercadoPagoServicesAdapter {
         securityCode.mode = pxSecurityCode.mode
         return securityCode
     }
+    
+    open class func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
+        let identificationType = IdentificationType()
+        identificationType._id = pxIdentificationType.id
+        identificationType.name = pxIdentificationType.name
+        identificationType.type = nil
+        identificationType.minLength = pxIdentificationType.minLength
+        identificationType.maxLength = pxIdentificationType.maxLength
+        return identificationType
+    }
 
     open class func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
