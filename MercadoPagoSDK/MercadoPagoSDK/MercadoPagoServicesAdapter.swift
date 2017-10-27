@@ -87,6 +87,18 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
     
+    open class func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        MercadoPagoServices.getBankDeals(callback: { (pxBankDeals) in
+            var bankDeals: [BankDeal] = []
+            for pxBankDeal in pxBankDeals {
+                let bankDeal = getBankDealFromPXBankDeal(pxBankDeal)
+                bankDeals.append(bankDeal)
+            }
+            callback(bankDeals)
+        }, failure: failure)
+    }
+    
     open class func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: discountAdditionalInfo, callback: { (pxDiscount) in
@@ -134,17 +146,5 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(customer)
         }, failure: failure)
         
-    }
-    
-    open class func getCustomerByPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
-        let customer = Customer()
-        return customer
-    }
-    
-    open class func getIssuerByPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
-        let issuer = Issuer()
-        issuer._id = pxIssuer._id
-        issuer.name = pxIssuer.name
-        return issuer
     }
 }

@@ -250,7 +250,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     private func getPromos() {
-        MercadoPagoServices.getBankDeals(callback: { (bankDeals) in
+        MercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
             self.viewModel.promos = bankDeals
             self.updateCardSkin()
         }) { (error) in

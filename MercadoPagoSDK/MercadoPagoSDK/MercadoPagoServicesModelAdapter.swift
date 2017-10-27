@@ -70,6 +70,103 @@ extension MercadoPagoServicesAdapter {
         return cardholder
     }
     
+    open class func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
+        let bankDeal = BankDeal()
+        bankDeal.promoId = pxBankDeal.id
+        bankDeal.issuer = getIssuerFromPXIssuer(pxBankDeal.issuer)
+        bankDeal.recommendedMessage = pxBankDeal.recommendedMessage
+        for pxPaymentMethod in pxBankDeal.paymentMethods {
+            let paymentMethod = getPaymentMethodFromPXPaymentMethod(pxPaymentMethod)
+            bankDeal.paymentMethods.append(paymentMethod)
+        }
+        bankDeal.legals = pxBankDeal.legals
+        bankDeal.url = pxBankDeal.picture.url
+        return bankDeal
+    }
+    
+    open class func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod) -> PaymentMethod {
+        let paymentMethod = PaymentMethod()
+        paymentMethod.name = pxPaymentMethod.name
+        paymentMethod.paymentTypeId = pxPaymentMethod.paymentTypeId
+        if let pxSettings = pxPaymentMethod.settings {
+            for pxSetting in pxSettings {
+                let setting = getSettingFromPXSetting(pxSetting)
+                paymentMethod.settings.append(setting)
+            }
+        } else {
+            paymentMethod.settings = []
+        }
+        paymentMethod.additionalInfoNeeded = pxPaymentMethod.additionalInfoNeeded
+        if let pxFinancialInstitutions = pxPaymentMethod.financialInstitutions {
+            for pxFinancialInstitution in pxFinancialInstitutions {
+                let financialInstitution = getFinancialInstitutionFromPXFinancialInstitution(pxFinancialInstitution)
+                paymentMethod.financialInstitutions.append(financialInstitution)
+            }
+        } else {
+            paymentMethod.financialInstitutions = []
+        }
+        paymentMethod.accreditationTime = pxPaymentMethod.accreditationTime
+        paymentMethod.status = pxPaymentMethod.status
+        paymentMethod.secureThumbnail = pxPaymentMethod.secureThumbnail
+        paymentMethod.thumbnail = pxPaymentMethod.thumbnail
+        paymentMethod.deferredCapture = pxPaymentMethod.deferredCapture
+        paymentMethod.minAllowedAmount = pxPaymentMethod.minAllowedAmount!
+        paymentMethod.maxAllowedAmount = pxPaymentMethod.maxAllowedAmount
+        paymentMethod.merchantAccountId = pxPaymentMethod.merchantAccountId
+        return paymentMethod
+    }
+    
+    open class func getSettingFromPXSetting(_ pxSetting: PXSetting) -> Setting {
+        let setting = Setting()
+        setting.binMask = getBinMaskFromPXBin(pxSetting.bin)
+        setting.cardNumber = getCardNumberFromPXCardNumber(pxSetting.cardNumber)
+        setting.securityCode = getSecurityCodeFromPXSecurityCode(pxSetting.securityCode)
+        return setting
+    }
+    
+    open class func getFinancialInstitutionFromPXFinancialInstitution(_ pxFinancialInstitution: PXFinancialInstitution?) -> FinancialInstitution {
+        if let pxFinancialInstitution = pxFinancialInstitution {
+            let financialInstitution = FinancialInstitution()
+            financialInstitution._id = Int(pxFinancialInstitution.id)
+            financialInstitution._description = pxFinancialInstitution._description
+            return financialInstitution
+        } else {
+            let financialInstitution = FinancialInstitution()
+            return financialInstitution
+        }
+    }
+    
+    open class func getBinMaskFromPXBin(_ pxBin: PXBin?) -> BinMask {
+        if let pxBin = pxBin {
+            let binMask = BinMask()
+            binMask.exclusionPattern = pxBin.exclusionPattern
+            binMask.installmentsPattern = pxBin.installmentPattern
+            binMask.pattern = pxBin.pattern
+            return binMask
+        } else {
+            let binMask = BinMask()
+            binMask.exclusionPattern = ""
+            binMask.installmentsPattern = ""
+            binMask.pattern = ""
+            return binMask
+        }
+    }
+    
+    open class func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber) -> CardNumber {
+        let cardNumber = CardNumber()
+        cardNumber.length = pxCardNumber.length
+        cardNumber.validation = pxCardNumber.validation
+        return cardNumber
+    }
+    
+    open class func getSecurityCodeFromPXSecurityCode(_ pxSecurityCode: PXSecurityCode) -> SecurityCode {
+        let securityCode = SecurityCode()
+        securityCode.length = pxSecurityCode.length
+        securityCode.cardLocation = pxSecurityCode.cardLocation
+        securityCode.mode = pxSecurityCode.mode
+        return securityCode
+    }
+
     open class func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
         return discountCoupon

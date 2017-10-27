@@ -97,7 +97,6 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-
     open class func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: baseURL)
         service.cloneToken(public_key: MercadoPagoContext.publicKey(), tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
@@ -115,17 +114,12 @@ open class MercadoPagoServices: NSObject {
             } as! (Data?) -> Void, failure: failure)
     }
 
-    open class func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: PromosService = PromosService(baseURL: baseURL)
         service.getPromos(public_key: MercadoPagoContext.publicKey(), success: { (jsonResult) -> Void in
-            let promosArray = jsonResult as? NSArray?
-            var promos : [BankDeal] = [BankDeal]()
-            if promosArray != nil {
-                for i in 0 ..< promosArray!!.count {
-                    if let promoDic = promosArray!![i] as? NSDictionary {
-                        promos.append(BankDeal.fromJSON(promoDic))
-                    }
-                }
+            var promos : [PXBankDeal] = [PXBankDeal]()
+            if let data = jsonResult {
+                promos = try! PXBankDeal.fromJSON(data: data)
             }
             callback(promos)
         }, failure: failure)

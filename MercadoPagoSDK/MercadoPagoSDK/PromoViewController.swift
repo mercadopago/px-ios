@@ -61,7 +61,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
         }
 
         if Array.isNullOrEmpty(self.promos) {
-            MercadoPagoServices.getBankDeals(callback: { (bankDeals) in
+            MercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
                 self.promos = bankDeals
                 self.tableView.reloadData()
                 self.hideLoading()
