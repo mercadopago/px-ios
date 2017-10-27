@@ -31,7 +31,39 @@ extension MercadoPagoServicesAdapter {
     
     open func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
         let checkoutPreference = CheckoutPreference()
+        checkoutPreference._id = pxCheckoutPreference.id
+        for pxItem in pxCheckoutPreference.items {
+            let item = getItemFromPXItem(pxItem)
+            checkoutPreference.items.append(item)
+        }
+        checkoutPreference.payer = getPayerFromPXPayer(pxCheckoutPreference.payer)
+        checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
+        checkoutPreference.siteId = pxCheckoutPreference.siteId
+        checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom
+        checkoutPreference.expirationDateTo = pxCheckoutPreference.expirationDateTo
         return checkoutPreference
+    }
+    
+    open func getItemFromPXItem(_ pxItem: PXItem) -> Item {
+        let id: String = pxItem.id
+        let title: String = pxItem.title
+        let quantity: Int = pxItem.quantity
+        let unitPrice: Double = pxItem.unitPrice
+        let description: String = pxItem._description
+        let currencyId: String = pxItem.currencyId
+        let item = Item(_id: id, title: title, quantity: quantity, unitPrice: unitPrice, description: description, currencyId: currencyId)
+        return item
+    }
+    
+    open func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference) -> PaymentPreference {
+        let paymentPreference = PaymentPreference()
+        paymentPreference.excludedPaymentMethodIds = Set(pxPaymentPreference.excludedPaymentMethodIds)
+        paymentPreference.excludedPaymentTypeIds = Set(pxPaymentPreference.excludedPaymentTypeIds)
+        paymentPreference.defaultPaymentMethodId = pxPaymentPreference.defaultPaymentMethodId
+        paymentPreference.maxAcceptedInstallments = pxPaymentPreference.maxAcceptedInstallments != nil ? pxPaymentPreference.maxAcceptedInstallments! : paymentPreference.maxAcceptedInstallments
+        paymentPreference.defaultInstallments = pxPaymentPreference.defaultInstallments != nil ? pxPaymentPreference.defaultInstallments! : paymentPreference.defaultInstallments
+        paymentPreference.defaultPaymentTypeId = pxPaymentPreference.defaultPaymentTypeId
+        return paymentPreference
     }
     
     open func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
@@ -194,7 +226,36 @@ extension MercadoPagoServicesAdapter {
     
     open func getPayerFromPXPayer(_ pxPayer: PXPayer) -> Payer {
         let payer = Payer()
+        payer.email = pxPayer.email
+        payer._id = pxPayer.id
+        payer.identification = getIdentificationFromPXIdentification(pxPayer.identification)
+        payer.entityType = getEntityTypeFromId(pxPayer.entityType)
+        payer.name = pxPayer.firstName
+        payer.surname = pxPayer.lastName
+        payer.address = nil
         return payer
+    }
+
+    open func getIdentificationFromPXIdentification(_ pxIdentification: PXIdentification?) -> Identification? {
+        if let pxIdentification = pxIdentification {
+            let type: String = pxIdentification.type
+            let number: String = pxIdentification.number
+            let identification = Identification(type: type, number: number)
+            return identification
+        } else {
+            return nil
+        }
+    }
+    
+    open func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
+        if let entityTypeId = entityTypeId {
+            let entityType = EntityType()
+            entityType._id = entityTypeId
+            entityType.name = ""
+            return entityType
+        } else {
+            return nil
+        }
     }
     
     open func getPaymentMethodSearchFromPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
