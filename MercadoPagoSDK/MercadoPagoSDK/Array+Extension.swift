@@ -29,4 +29,13 @@ extension Array {
             self.removeFirst(suffix)
         }
     }
+    
+    static public func safeAppend(_ array: Array?, _ newElement: Element) -> Array {
+        if var array = array {
+            array.append(newElement)
+            return array
+        } else {
+            return [newElement]
+        }
+    }
 }

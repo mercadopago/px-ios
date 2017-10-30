@@ -45,7 +45,7 @@ extension MercadoPagoServicesAdapter {
         checkoutPreference._id = pxCheckoutPreference.id
         for pxItem in pxCheckoutPreference.items {
             let item = getItemFromPXItem(pxItem)
-            checkoutPreference.items.append(item)
+            checkoutPreference.items = Array.safeAppend(checkoutPreference.items, item)
         }
         checkoutPreference.payer = getPayerFromPXPayer(pxCheckoutPreference.payer)
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
@@ -83,7 +83,7 @@ extension MercadoPagoServicesAdapter {
         
         for pxInstruction in pxInstructions.instructions {
             let instruction = getInstructionFromPXInstruction(pxInstruction)
-            instructionsInfo.instructions.append(instruction)
+            instructionsInfo.instructions = Array.safeAppend(instructionsInfo.instructions, instruction)
         }
         
         return instructionsInfo
@@ -98,7 +98,7 @@ extension MercadoPagoServicesAdapter {
         
         for pxInstructionReference in pxInstruction.references {
             let instructionReference = getInstructionReferenceFromPXInstructionReference(pxInstructionReference)
-            instruction.references.append(instructionReference)
+            instruction.references = Array.safeAppend(instruction.references, instructionReference)
         }
         
         instruction.info = pxInstruction.info
@@ -107,7 +107,7 @@ extension MercadoPagoServicesAdapter {
 
         for pxInstructionAction in pxInstruction.action {
             let instructionAction = getInstructionActionFromPXInstructionAction(pxInstructionAction)
-            instruction.actions?.append(instructionAction)
+            instruction.actions = Array.safeAppend(instruction.actions, instructionAction)
         }
         
         instruction.type = pxInstruction.type
@@ -178,7 +178,7 @@ extension MercadoPagoServicesAdapter {
         bankDeal.recommendedMessage = pxBankDeal.recommendedMessage
         for pxPaymentMethod in pxBankDeal.paymentMethods {
             let paymentMethod = getPaymentMethodFromPXPaymentMethod(pxPaymentMethod)
-            bankDeal.paymentMethods.append(paymentMethod)
+            bankDeal.paymentMethods = Array.safeAppend(bankDeal.paymentMethods, paymentMethod)
         }
         bankDeal.legals = pxBankDeal.legals
         bankDeal.url = pxBankDeal.picture.url
@@ -187,12 +187,13 @@ extension MercadoPagoServicesAdapter {
 
     open func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod) -> PaymentMethod {
         let paymentMethod = PaymentMethod()
+        paymentMethod._id = pxPaymentMethod.id
         paymentMethod.name = pxPaymentMethod.name
         paymentMethod.paymentTypeId = pxPaymentMethod.paymentTypeId
         if let pxSettings = pxPaymentMethod.settings {
             for pxSetting in pxSettings {
                 let setting = getSettingFromPXSetting(pxSetting)
-                paymentMethod.settings.append(setting)
+                paymentMethod.settings = Array.safeAppend(paymentMethod.settings, setting)
             }
         } else {
             paymentMethod.settings = []
@@ -201,7 +202,7 @@ extension MercadoPagoServicesAdapter {
         if let pxFinancialInstitutions = pxPaymentMethod.financialInstitutions {
             for pxFinancialInstitution in pxFinancialInstitutions {
                 let financialInstitution = getFinancialInstitutionFromPXFinancialInstitution(pxFinancialInstitution)
-                paymentMethod.financialInstitutions.append(financialInstitution)
+                paymentMethod.financialInstitutions = Array.safeAppend(paymentMethod.financialInstitutions, financialInstitution)
             }
         } else {
             paymentMethod.financialInstitutions = []
@@ -211,7 +212,7 @@ extension MercadoPagoServicesAdapter {
         paymentMethod.secureThumbnail = pxPaymentMethod.secureThumbnail
         paymentMethod.thumbnail = pxPaymentMethod.thumbnail
         paymentMethod.deferredCapture = pxPaymentMethod.deferredCapture
-        paymentMethod.minAllowedAmount = pxPaymentMethod.minAllowedAmount!
+        paymentMethod.minAllowedAmount = pxPaymentMethod.minAllowedAmount ?? 0
         paymentMethod.maxAllowedAmount = pxPaymentMethod.maxAllowedAmount
         paymentMethod.merchantAccountId = pxPaymentMethod.merchantAccountId
         return paymentMethod
@@ -305,7 +306,7 @@ extension MercadoPagoServicesAdapter {
         
         for pxFeeDetail in pxPayment.feeDetails {
             let feesDetail = getFeesDetailFromPXFeeDetail(pxFeeDetail)
-            payment.feesDetails.append(feesDetail)
+            payment.feesDetails = Array.safeAppend(payment.feesDetails, feesDetail)
         }
         
         payment._id = pxPayment.id
@@ -321,7 +322,7 @@ extension MercadoPagoServicesAdapter {
         
         for pxRefund in pxPayment.refunds {
             let refund = getRefundFromPXRefund(pxRefund)
-            payment.refunds.append(refund)
+            payment.refunds = Array.safeAppend(payment.refunds, refund)
         }
         
         payment.statementDescriptor = pxPayment.statementDescriptor
@@ -442,22 +443,22 @@ extension MercadoPagoServicesAdapter {
 
         for pxPaymentMethodSearchItem in pxPaymentMethodSearch.paymentMethodSearchItem {
             let paymentMethodSearchItem = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxPaymentMethodSearchItem)
-            paymentMethodSearch.groups.append(paymentMethodSearchItem)
+            paymentMethodSearch.groups = Array.safeAppend(paymentMethodSearch.groups, paymentMethodSearchItem)
         }
 
         for pxPaymentMethod in pxPaymentMethodSearch.paymentMethods {
             let paymentMethod = getPaymentMethodFromPXPaymentMethod(pxPaymentMethod)
-            paymentMethodSearch.paymentMethods.append(paymentMethod)
+            paymentMethodSearch.paymentMethods = Array.safeAppend(paymentMethodSearch.paymentMethods, paymentMethod)
         }
 
         for pxCustomOptionSearchItem in pxPaymentMethodSearch.customOptionSearchItems {
             let customerPaymentMethod = getCustomerPaymentMethodFromPXCustomOptionSearchItem(pxCustomOptionSearchItem)
-            paymentMethodSearch.customerPaymentMethods?.append(customerPaymentMethod)
+            paymentMethodSearch.customerPaymentMethods = Array.safeAppend(paymentMethodSearch.customerPaymentMethods, customerPaymentMethod)
         }
 
         for pxCard in pxPaymentMethodSearch.cards {
             let card = getCardFromPXCard(pxCard)
-            paymentMethodSearch.cards?.append(card)
+            paymentMethodSearch.cards = Array.safeAppend(paymentMethodSearch.cards, card)
         }
 
         if let pxDefaultOption = pxPaymentMethodSearch.defaultOption {
@@ -487,7 +488,7 @@ extension MercadoPagoServicesAdapter {
         if let pxChildren = pxPaymentMethodSearchItem.children {
             for pxPaymentMethodSearchItem in pxChildren {
                 let childrenItem = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxPaymentMethodSearchItem)
-                paymentMethodSearchItem.children.append(childrenItem)
+                paymentMethodSearchItem.children = Array.safeAppend(paymentMethodSearchItem.children, childrenItem)
             }
         } else {
             paymentMethodSearchItem.children = []
@@ -534,7 +535,7 @@ extension MercadoPagoServicesAdapter {
 
         for pxCard in pxCustomer.cards {
             let card = getCardFromPXCard(pxCard)
-            customer.cards?.append(card)
+            customer.cards = Array.safeAppend(customer.cards, card)
         }
 
         customer.defaultCard = pxCustomer.defaultCard
@@ -582,7 +583,7 @@ extension MercadoPagoServicesAdapter {
         installment.paymentMethodId = pxInstallment.paymentMethodId
         for pxPayerCost in pxInstallment.payerCosts {
             let payerCost = getPayerCostFromPXPayerCost(pxPayerCost)
-            installment.payerCosts.append(payerCost)
+            installment.payerCosts = Array.safeAppend(installment.payerCosts, payerCost)
         }
         return installment
     }
