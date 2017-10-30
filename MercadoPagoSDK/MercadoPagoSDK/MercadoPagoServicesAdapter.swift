@@ -43,6 +43,7 @@ open class MercadoPagoServicesAdapter: NSObject {
                 return
             }
             MercadoPagoContext.setSiteID(pxCheckoutPreference.siteId)
+            //            MPXTracker.setSiteId(MercadoPagoContext.sharedInstance.siteId()) TODO AUGUSTO: DESCOMENTAR ESTO   
             let checkoutPreference = strongSelf.getCheckoutPreferenceFromPXCheckoutPreference(pxCheckoutPreference)
             callback(checkoutPreference)
         }, failure: failure)

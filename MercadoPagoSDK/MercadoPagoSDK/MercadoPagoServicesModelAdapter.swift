@@ -223,11 +223,105 @@ extension MercadoPagoServicesAdapter {
 
     open func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
         let payment = Payment()
+        payment.binaryMode = pxPayment.binaryMode
+        payment.callForAuthorizeId = pxPayment.callForAuthorizeId
+        payment.captured = pxPayment.captured
+        payment.card = getCardFromPXCard(pxPayment.card)
+        payment.currencyId = pxPayment.currencyId
+        payment.dateApproved = pxPayment.dateApproved
+        payment.dateCreated = pxPayment.dateCreated
+        payment.dateLastUpdated = pxPayment.dateLastUpdated
+        payment._description = pxPayment._description
+        payment.externalReference = pxPayment.externalReference
+        
+        for pxFeeDetail in pxPayment.feeDetails {
+            let feesDetail = getFeesDetailFromPXFeeDetail(pxFeeDetail)
+            payment.feesDetails.append(feesDetail)
+        }
+        
+        payment._id = pxPayment.id
+        payment.installments = pxPayment.installments
+        payment.liveMode = pxPayment.liveMode
+        payment.metadata = pxPayment.metadata! as NSObject
+        payment.moneyReleaseDate = pxPayment.moneyReleaseDate
+        payment.notificationUrl = pxPayment.notificationUrl
+        payment.order = getOrderFromPXOrder(pxPayment.order)
+        payment.payer = getPayerFromPXPayer(pxPayment.payer)
+        payment.paymentMethodId = pxPayment.paymentMethodId
+        payment.paymentTypeId = pxPayment.paymentTypeId
+        
+        for pxRefund in pxPayment.refunds {
+            let refund = getRefundFromPXRefund(pxRefund)
+            payment.refunds.append(refund)
+        }
+        
+        payment.statementDescriptor = pxPayment.statementDescriptor
+        payment.status = pxPayment.status
+        payment.statusDetail = pxPayment.statusDetail
+        payment.transactionAmount = pxPayment.transactionAmount
+        payment.transactionAmountRefunded = pxPayment.transactionAmountRefunded
+        payment.transactionDetails = getTransactionDetailsFromPXTransactionDetails(pxPayment.transactionDetails)
+        payment.collectorId = pxPayment.collectorId
+        payment.couponAmount = pxPayment.couponAmount
+        payment.differentialPricingId = NSNumber(value: pxPayment.differentialPricingId)
+        payment.issuerId = pxPayment.issuerId
+        payment.tokenId = pxPayment.tokenId
         return payment
+    }
+    
+    open func getFeesDetailFromPXFeeDetail(_ pxFeeDetail: PXFeeDetail) -> FeesDetail {
+        let feesDetail = FeesDetail()
+        feesDetail.amount = pxFeeDetail.amount
+        feesDetail.feePayer = pxFeeDetail.feePayer
+        feesDetail.type = pxFeeDetail.type
+        return feesDetail
+    }
+    
+    open func getOrderFromPXOrder(_ pxOrder: PXOrder) -> Order {
+        let order = Order()
+        order._id = Int(pxOrder.id)!
+        order.type = pxOrder.type
+        return order
+    }
+    
+    open func getRefundFromPXRefund(_ pxRefund: PXRefund) -> Refund {
+        let refund = Refund()
+        refund.dateCreated = pxRefund.dateCreated
+        refund._id = Int(pxRefund.id)!
+        refund.metadata = pxRefund.metadata! as NSObject
+        refund.paymentId = Int(pxRefund.paymentId)
+        refund.source = pxRefund.source
+        refund.uniqueSequenceNumber = pxRefund.uniqueSecuenceNumber
+        return refund
+    }
+    
+    open func getTransactionDetailsFromPXTransactionDetails(_ pxTransactionDetails: PXTransactionDetails) -> TransactionDetails {
+        let transactionDetails = TransactionDetails()
+        transactionDetails.couponAmount = nil
+        transactionDetails.externalResourceUrl = pxTransactionDetails.externalResourceUrl
+        transactionDetails.financialInstitution = getFinancialInstitutionFromId(pxTransactionDetails.financialInstitution) // TODO AUGUSTO: PORQUE ES UN STRING Y NO UN PXFINANCIALINSTUTION???
+        transactionDetails.installmentAmount = pxTransactionDetails.installmentAmount
+        transactionDetails.netReceivedAmount = pxTransactionDetails.netReceivedAmount
+        transactionDetails.overpaidAmount = pxTransactionDetails.overpaidAmount
+        transactionDetails.totalPaidAmount = pxTransactionDetails.totalPaidAmount
+        return transactionDetails
+    }
+    
+    open func getFinancialInstitutionFromId(_ financialInstitutionId: String) -> FinancialInstitution {
+        let financialInstitution = FinancialInstitution()
+        financialInstitution._id = Int(financialInstitutionId)
+        return financialInstitution
     }
 
     open func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
         let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
+        pxPayer.id = payer._id
+        pxPayer.accessToken = MercadoPagoContext.payerAccessToken()
+        pxPayer.identification = getPXIdentificationFromIdentification(payer.identification)
+        pxPayer.entityType = payer.entityType?._id
+        pxPayer.email = payer.email
+        pxPayer.firstName = payer.name
+        pxPayer.lastName = payer.surname
         return pxPayer
     }
 
@@ -244,11 +338,20 @@ extension MercadoPagoServicesAdapter {
     }
 
     open func getIdentificationFromPXIdentification(_ pxIdentification: PXIdentification?) -> Identification? {
-        if let pxIdentification = pxIdentification {
-            let type: String = pxIdentification.type
-            let number: String = pxIdentification.number
+        if let pxIdentification = pxIdentification, let type = pxIdentification.type, let number = pxIdentification.number {
             let identification = Identification(type: type, number: number)
             return identification
+        } else {
+            return nil
+        }
+    }
+    
+    open func getPXIdentificationFromIdentification(_ identification: Identification?) -> PXIdentification? {
+        if let identification = identification {
+            let number: String? = identification.number
+            let type: String? = identification.type
+            let pxIdentification = PXIdentification(number: number, type: type)
+            return pxIdentification
         } else {
             return nil
         }

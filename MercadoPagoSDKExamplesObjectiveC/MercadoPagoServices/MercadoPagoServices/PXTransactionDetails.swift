@@ -11,7 +11,7 @@ open class PXTransactionDetails: NSObject, Codable {
     open var externalResourceUrl: String!
     open var financialInstitution: String!
     open var installmentAmount: Double!
-    open var netReivedAmount: Double!
+    open var netReceivedAmount: Double!
     open var overpaidAmount: Double!
     open var totalPaidAmount: Double!
     open var paymentMethodReferenceId: String!
@@ -20,7 +20,7 @@ open class PXTransactionDetails: NSObject, Codable {
         self.externalResourceUrl = externalResourceUrl
         self.financialInstitution = financialInstitution
         self.installmentAmount = installmentAmount
-        self.netReivedAmount = netReivedAmount
+        self.netReceivedAmount = netReivedAmount
         self.overpaidAmount = overpaidAmount
         self.totalPaidAmount = totalPaidAmount
         self.paymentMethodReferenceId = paymentMethodReferenceId
@@ -54,7 +54,7 @@ open class PXTransactionDetails: NSObject, Codable {
         try container.encodeIfPresent(self.externalResourceUrl, forKey: .externalResourceUrl)
         try container.encodeIfPresent(self.financialInstitution, forKey: .financialInstitution)
         try container.encodeIfPresent(self.installmentAmount, forKey: .installmentAmount)
-        try container.encodeIfPresent(self.netReivedAmount, forKey: .netReivedAmount)
+        try container.encodeIfPresent(self.netReceivedAmount, forKey: .netReivedAmount)
         try container.encodeIfPresent(self.overpaidAmount, forKey: .overPaidAmount)
         try container.encodeIfPresent(self.totalPaidAmount, forKey: .totalPaidAmount)
         try container.encodeIfPresent(self.paymentMethodReferenceId, forKey: .paymentMethodReferenceId)
