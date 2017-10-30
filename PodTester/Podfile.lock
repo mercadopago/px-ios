@@ -1,7 +1,7 @@
 PODS:
-  - MercadoPagoSDK (3.6.1):
-    - MercadoPagoSDK/Default (= 3.6.1)
-  - MercadoPagoSDK/Default (3.6.1)
+  - MercadoPagoSDK (3.6.2):
+    - MercadoPagoSDK/Default (= 3.6.2)
+  - MercadoPagoSDK/Default (3.6.2)
 
 DEPENDENCIES:
   - MercadoPagoSDK (from `../`)
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MercadoPagoSDK: 25280857ff2a19055127cb800db43f1793ac0255
+  MercadoPagoSDK: 0011e5aab9c47c21dd629a62371742e68580d338
 
 PODFILE CHECKSUM: 7652d70c091fe815ac1f0c32abd1230fe0dccf1a
 
