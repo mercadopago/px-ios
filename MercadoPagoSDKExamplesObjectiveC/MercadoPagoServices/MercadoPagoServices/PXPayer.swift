@@ -51,8 +51,19 @@ open class PXPayer: NSObject, Codable {
         let lastName: String? = try container.decodeIfPresent(String.self, forKey: .lastName)
         let identification: PXIdentification? = try container.decodeIfPresent(PXIdentification.self, forKey: .identification)
 
-
         self.init(id: id, accessToken: accessToken, identification: identification, type: type, entityType: entityType, email: email, firstName: firstName, lastName: lastName)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXPayerKeys.self)
+        try container.encodeIfPresent(self.accessToken, forKey: .accessToken)
+        try container.encodeIfPresent(self.type, forKey: .type)
+        try container.encodeIfPresent(self.email, forKey: .email)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.entityType, forKey: .entityType)
+        try container.encodeIfPresent(self.firstName, forKey: .firstName)
+        try container.encodeIfPresent(self.lastName, forKey: .lastName)
+        try container.encodeIfPresent(self.identification, forKey: .identification)
     }
 
     open func toJSONString() throws -> String? {

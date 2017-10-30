@@ -38,6 +38,15 @@ open class PXInstructionReference: NSObject, Codable {
         self.init(label: label, fieldValue: fieldValue, separator: separator, comment: comment)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXInstructionReferenceKeys.self)
+        try container.encodeIfPresent(self.label, forKey: .label)
+        try container.encodeIfPresent(self.fieldValue, forKey: .fieldValue)
+        try container.encodeIfPresent(self.separator, forKey: .separator)
+        try container.encodeIfPresent(self.comment, forKey: .comment)
+
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

@@ -37,6 +37,15 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
     }
 
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXCustomOptionSearchItemKeys.self)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self._description, forKey: .description)
+        try container.encodeIfPresent(self.paymentMethodId, forKey: .paymentMethodId)
+        try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

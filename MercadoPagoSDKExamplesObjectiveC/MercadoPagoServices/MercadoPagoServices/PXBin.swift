@@ -34,6 +34,13 @@ open class PXBin: NSObject, Codable {
         self.init(exclusionPattern: exclusionPattern, installmentPattern: installmentPattern, pattern: pattern)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXBinKeys.self)
+        try container.encodeIfPresent(self.exclusionPattern, forKey: .exclusionPattern)
+        try container.encodeIfPresent(self.installmentPattern, forKey: .installmentPattern)
+        try container.encodeIfPresent(self.pattern, forKey: .pattern)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

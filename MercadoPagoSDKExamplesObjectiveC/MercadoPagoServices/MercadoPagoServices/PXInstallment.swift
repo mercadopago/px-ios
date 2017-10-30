@@ -37,6 +37,14 @@ open class PXInstallment: NSObject, Codable {
         self.init(issuer: issuer, payerCosts: payerCosts, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXInstallmentKeys.self)
+        try container.encodeIfPresent(self.issuer, forKey: .issuer)
+        try container.encodeIfPresent(self.payerCosts, forKey: .payerCosts)
+        try container.encodeIfPresent(self.paymentMethodId, forKey: .paymentMethodId)
+        try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

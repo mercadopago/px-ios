@@ -46,6 +46,17 @@ open class PXCurrency: NSObject, Codable {
         self.init(id: id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXCurrencyKeys.self)
+        try container.encodeIfPresent(self._description, forKey: .description)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.symbol, forKey: .symbol)
+        try container.encodeIfPresent(self.decimalPlaces, forKey: .decimalPlaces)
+        try container.encodeIfPresent(self.decimalSeparator, forKey: .decimalSeparator)
+        try container.encodeIfPresent(self.thousandSeparator, forKey: .thousandSeparator)
+
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

@@ -53,6 +53,16 @@ open class PXCheckoutPreference: NSObject, Codable {
         self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: nil, expirationDateFrom: nil, site: site)
     }
 
+     public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXCheckoutPreferenceKeys.self)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.items, forKey: .items)
+        try container.encodeIfPresent(self.paymentPreference, forKey: .paymentPreference)
+        try container.encodeIfPresent(self.payer, forKey: .payer)
+        try container.encodeIfPresent(self.siteId, forKey: .siteId)
+        try container.encodeIfPresent(self.site, forKey: .site)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

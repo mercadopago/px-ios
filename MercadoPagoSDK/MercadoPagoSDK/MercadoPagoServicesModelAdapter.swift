@@ -261,6 +261,7 @@ extension MercadoPagoServicesAdapter {
     open func getPaymentMethodSearchFromPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
         let paymentMethodSearch = PaymentMethodSearch()
         
+        
         for pxPaymentMethodSearchItem in pxPaymentMethodSearch.paymentMethodSearchItem {
             let paymentMethodSearchItem = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxPaymentMethodSearchItem)
             paymentMethodSearch.groups.append(paymentMethodSearchItem)

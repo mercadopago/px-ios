@@ -43,6 +43,14 @@ open class PXRefund: NSObject, Codable {
 
         self.init(id: id, dateCreated: nil, metadata: metadata, paymentId: paymentId, source: source, uniqueSecuenceNumber: uniqueSecuenceNumber)
     }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXRefundKeys.self)
+        try container.encodeIfPresent(self.metadata, forKey: .metadata)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.paymentId, forKey: .paymentId)
+        try container.encodeIfPresent(self.source, forKey: .source)
+        try container.encodeIfPresent(self.uniqueSecuenceNumber, forKey: .uniqueSecuenceNumber)
+    }
 
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()

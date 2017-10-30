@@ -61,6 +61,21 @@ open class PXInstruction: NSObject, Codable {
         self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, acceditationComments: acceditationComments, action: action, type: type, references: references, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXInstructionKeys.self)
+        try container.encodeIfPresent(self.title, forKey: .title)
+        try container.encodeIfPresent(self.subtitle, forKey: .subtitle)
+        try container.encodeIfPresent(self.accreditationMessage, forKey: .accreditationMessage)
+        try container.encodeIfPresent(self.acceditationComments, forKey: .acceditationComments)
+        try container.encodeIfPresent(self.action, forKey: .action)
+        try container.encodeIfPresent(self.type, forKey: .type)
+        try container.encodeIfPresent(self.references, forKey: .references)
+        try container.encodeIfPresent(self.secondaryInfo, forKey: .secondaryInfo)
+        try container.encodeIfPresent(self.tertiaryInfo, forKey: .tertiaryInfo)
+        try container.encodeIfPresent(self.info, forKey: .info)
+    }
+
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

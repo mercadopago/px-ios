@@ -53,6 +53,18 @@ open class PXDiscount: NSObject, Codable {
         self.init(id: id, name: name, percentOff: percentOff, amountOff: amountOff, couponAmount: couponAmount, currencyId: currencyId, couponCode: couponCode, concept: concept)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXDiscountKeys.self)
+        try container.encodeIfPresent(self.percentOff, forKey: .percentOff)
+        try container.encodeIfPresent(self.amountOff, forKey: .amountOff)
+        try container.encodeIfPresent(self.couponAmount, forKey: .couponAmount)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.name, forKey: .name)
+        try container.encodeIfPresent(self.currencyId, forKey: .currencyId)
+        try container.encodeIfPresent(self.couponCode, forKey: .couponCode)
+        try container.encodeIfPresent(self.concept, forKey: .concept)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

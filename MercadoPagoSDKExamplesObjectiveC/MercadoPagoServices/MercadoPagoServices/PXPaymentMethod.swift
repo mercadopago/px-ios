@@ -77,6 +77,24 @@ open class PXPaymentMethod: NSObject, Codable {
         self.init(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: settings, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXPaymentMethodKeys.self)
+        try container.encodeIfPresent(self.additionalInfoNeeded, forKey: .additionalInfoNeeded)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.name, forKey: .name)
+        try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
+        try container.encodeIfPresent(self.status, forKey: .status)
+        try container.encodeIfPresent(self.secureThumbnail, forKey: .secureThumbnail)
+        try container.encodeIfPresent(self.thumbnail, forKey: .thumbnail)
+        try container.encodeIfPresent(self.deferredCapture, forKey: .deferredCapture)
+        try container.encodeIfPresent(self.settings, forKey: .settings)
+        try container.encodeIfPresent(self.minAllowedAmount, forKey: .minAllowedAmount)
+        try container.encodeIfPresent(self.maxAllowedAmount, forKey: .maxAllowedAmount)
+        try container.encodeIfPresent(self.accreditationTime, forKey: .accreditationTime)
+        try container.encodeIfPresent(self.merchantAccountId, forKey: .merchantAccountId)
+        try container.encodeIfPresent(self.financialInstitutions, forKey: .financialInstitutions)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

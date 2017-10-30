@@ -37,6 +37,14 @@ open class PXIdentificationType: NSObject, Codable {
         self.init(id: id, name: name, minLength: minLength, maxLength: maxLength)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXIdentificationTypeKeys.self)
+        try container.encodeIfPresent(self.minLength, forKey: .minLength)
+        try container.encodeIfPresent(self.maxLength, forKey: .maxLength)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.name, forKey: .name)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

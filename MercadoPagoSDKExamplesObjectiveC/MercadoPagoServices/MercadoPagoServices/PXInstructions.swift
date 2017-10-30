@@ -30,6 +30,12 @@ open class PXInstructions: NSObject, Codable {
         self.init(amountInfo: amountInfo, instructions: instructions)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXInstructionsKeys.self)
+        try container.encodeIfPresent(self.amountInfo, forKey: .amountInfo)
+        try container.encodeIfPresent(self.instructions, forKey: .instructions)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

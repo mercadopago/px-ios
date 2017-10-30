@@ -72,6 +72,23 @@ open class PXCard: NSObject, Codable {
         self.init(cardHolder: cardHolder, customerId: customerId, dateCreated: nil, lastUpdated: nil, expirationMonth: expirationMonth, expirationYear: expirationYear, firstSixDigits: firstSixDigits, id: id, issuer: issuer, lastFourDigits: lastFourDigits, paymentMethod: paymentMethod, securityCode: securityCode)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXCardKeys.self)
+        try container.encodeIfPresent(self.cardHolder, forKey: .cardHolder)
+        try container.encodeIfPresent(self.customerId, forKey: .customerId)
+        try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
+        try container.encodeIfPresent(self.lastUpdated, forKey: .lastUpdated)
+        try container.encodeIfPresent(self.expirationMonth, forKey: .expirationMonth)
+        try container.encodeIfPresent(self.expirationYear, forKey: .expirationYear)
+        try container.encodeIfPresent(self.firstSixDigits, forKey: .firstSixDigits)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.issuer, forKey: .issuer)
+        try container.encodeIfPresent(self.lastFourDigits, forKey: .lastFourDigits)
+        try container.encodeIfPresent(self.paymentMethod, forKey: .paymentMethod)
+        try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
+    }
+
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

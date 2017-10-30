@@ -34,6 +34,14 @@ open class PXAddress: NSObject, Codable {
         self.init(streetName: streetName, streetNumber: streetNumber, zipCode: zipCode)
     }
 
+     public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXAddressKeys.self)
+        try container.encodeIfPresent(self.streetName, forKey: .streetName)
+        try container.encodeIfPresent(self.streetNumber, forKey: .streetNumber)
+        try container.encodeIfPresent(self.zipCode, forKey: .zipCode)
+
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

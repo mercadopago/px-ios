@@ -91,6 +91,27 @@ open class PXToken: NSObject, Codable {
         self.init(id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: nil, cardNumberLength: cardNumberLength, dateCreated: nil, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, dateLastUpdated: nil, dueDate: nil, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, cardholder: cardholder, esc: esc)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXTokenKeys.self)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.publicKey, forKey: .publicKey)
+        try container.encodeIfPresent(self.cardId, forKey: .cardId)
+        try container.encodeIfPresent(self.luhnValidation, forKey: .luhnValidation)
+        try container.encodeIfPresent(self.status, forKey: .status)
+        try container.encodeIfPresent(self.usedDate, forKey: .usedDate)
+        try container.encodeIfPresent(self.cardNumberLength, forKey: .cardNumberLength)
+        try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
+        try container.encodeIfPresent(self.securityCodeLength, forKey: .securityCodeLength)
+        try container.encodeIfPresent(self.expirationMonth, forKey: .expirationMonth)
+        try container.encodeIfPresent(self.expirationYear, forKey: .expirationYear)
+        try container.encodeIfPresent(self.dateLastUpdated, forKey: .dateLastUpdated)
+        try container.encodeIfPresent(self.dueDate, forKey: .dueDate)
+        try container.encodeIfPresent(self.firstSixDigits, forKey: .firstSixDigits)
+        try container.encodeIfPresent(self.lastFourDigits, forKey: .lastFourDigits)
+        try container.encodeIfPresent(self.cardholder, forKey: .cardholder)
+        try container.encodeIfPresent(self.esc, forKey: .esc)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

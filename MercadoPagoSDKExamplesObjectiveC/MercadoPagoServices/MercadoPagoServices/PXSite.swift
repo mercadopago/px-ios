@@ -30,6 +30,12 @@ open class PXSite: NSObject, Codable {
         self.init(id: id, currencyId: currencyId)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXSiteKeys.self)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.currencyId, forKey: .currencyId)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

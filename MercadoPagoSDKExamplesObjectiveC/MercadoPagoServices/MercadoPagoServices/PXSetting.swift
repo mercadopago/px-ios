@@ -34,6 +34,13 @@ open class PXSetting: NSObject, Codable {
         self.init(bin: bin, cardNumber: cardNumber, securityCode: securityCode)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXSettingKeys.self)
+        try container.encodeIfPresent(self.bin, forKey: .bin)
+        try container.encodeIfPresent(self.cardNumber, forKey: .cardNumber)
+        try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

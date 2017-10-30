@@ -54,6 +54,18 @@ open class PXItem: NSObject, Codable {
         self.init(categoryId: categoryId, currencyId: currencyId, description: description, id: id, pictureUrl: pictureUrl, quantity: quantity, title: title, unitPrice: unitPrice)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXItemKeys.self)
+        try container.encodeIfPresent(self.categoryId, forKey: .categoryId)
+        try container.encodeIfPresent(self.currencyId, forKey: .currencyId)
+        try container.encodeIfPresent(self._description, forKey: .description)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.pictureUrl, forKey: .pictureUrl)
+        try container.encodeIfPresent(self.title, forKey: .title)
+        try container.encodeIfPresent(self.unitPrice, forKey: .unitPrice)
+        try container.encodeIfPresent(self.quantity, forKey: .quantity)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

@@ -96,6 +96,25 @@ open class PXCustomer: NSObject, Codable {
         
         self.init(address: address, cards: cards, defaultCard: defaultCard, description: _description, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, email: email, firstName: firstName, id: id, identification: identification, lastName: lastName, liveMode: liveMode, metadata: metadata, phone: phone, registrationDate: registrationDate)
     }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXCustomerKeys.self)
+        try container.encodeIfPresent(self.address, forKey: .address)
+        try container.encodeIfPresent(self.cards, forKey: .cards)
+        try container.encodeIfPresent(self.defaultCard, forKey: .defaultCard)
+        try container.encodeIfPresent(self._description, forKey: ._description)
+        try container.encodeIfPresent(self.dateLastUpdated, forKey: .dateLastUpdated)
+        try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
+        try container.encodeIfPresent(self.email, forKey: .email)
+        try container.encodeIfPresent(self.firstName, forKey: .firstName)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.identification, forKey: .identification)
+        try container.encodeIfPresent(self.lastName, forKey: .lastName)
+        try container.encodeIfPresent(self.liveMode, forKey: .liveMode)
+        try container.encodeIfPresent(self.metadata, forKey: .metadata)
+        try container.encodeIfPresent(self.phone, forKey: .phone)
+        try container.encodeIfPresent(self.registrationDate, forKey: .registrationDate)
+    }
     
     open func getDateFromString(_ string: String?) -> Date? {
         if let dateString = string {

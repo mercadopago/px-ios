@@ -50,6 +50,18 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
         self.init(id: id, type: type, description: description, comment: comment, children: children, childrenHeader: childrenHeader, showIcon: showIcon)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXPaymentMethodSearchItemKeys.self)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.type, forKey: .type)
+        try container.encodeIfPresent(self._description, forKey: .description)
+        try container.encodeIfPresent(self.comment, forKey: .comment)
+        try container.encodeIfPresent(self.children, forKey: .children)
+        try container.encodeIfPresent(self.childrenHeader, forKey: .childrenHeader)
+        try container.encodeIfPresent(self.showIcon, forKey: .showIcon)
+
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

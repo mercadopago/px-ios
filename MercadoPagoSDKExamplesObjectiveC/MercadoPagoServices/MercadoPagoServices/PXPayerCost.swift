@@ -51,6 +51,17 @@ open class PXPayerCost: NSObject, Codable {
         self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = try encoder.container(keyedBy: PXPayerCostKeys.self)
+        try container.encodeIfPresent(self.installmentRate, forKey: .installmentRate)
+        try container.encodeIfPresent(self.labels, forKey: .labels)
+        try container.encodeIfPresent(self.minAllowedAmount, forKey: .minAllowedAmount)
+        try container.encodeIfPresent(self.maxAllowedAmount, forKey: .maxAllowedAmount)
+        try container.encodeIfPresent(self.recommendedMessage, forKey: .recommendedMessage)
+        try container.encodeIfPresent(self.installmentAmount, forKey: .installmentAmount)
+        try container.encodeIfPresent(self.totalAmount, forKey: .totalAmount)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

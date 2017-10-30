@@ -33,6 +33,13 @@ open class PXFeeDetail: NSObject, Codable {
         self.init(amount: amount, feePayer: feePayer, type: type)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXFeeDetailKeys.self)
+        try container.encodeIfPresent(self.amount, forKey: .amount)
+        try container.encodeIfPresent(self.feePayer, forKey: .feePayer)
+        try container.encodeIfPresent(self.type, forKey: .type)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

@@ -29,6 +29,11 @@ open class PXPhone: NSObject, Codable {
 
         self.init(areaCode: areaCode, number: number)
     }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXPhoneKeys.self)
+        try container.encodeIfPresent(self.areaCode, forKey: .areaCode)
+        try container.encodeIfPresent(self.number, forKey: .number)
+    }
 
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()

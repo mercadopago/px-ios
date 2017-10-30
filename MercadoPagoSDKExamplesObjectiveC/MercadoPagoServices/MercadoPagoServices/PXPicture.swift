@@ -37,6 +37,14 @@ open class PXPicture: NSObject, Codable {
         self.init(id: id, size: size, url: url, secureUrl: secureUrl)
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXPictureKeys.self)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.size, forKey: .size)
+        try container.encodeIfPresent(self.url, forKey: .url)
+        try container.encodeIfPresent(self.secureUrl, forKey: .secureUrl)
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
