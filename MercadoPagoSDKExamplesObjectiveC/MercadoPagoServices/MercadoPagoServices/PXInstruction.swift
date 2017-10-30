@@ -11,7 +11,7 @@ open class PXInstruction: NSObject, Codable {
     open var title: String!
     open var subtitle: String!
     open var accreditationMessage: String!
-    open var acceditationComments: [String]!
+    open var accreditationComments: [String]!
     open var action: [PXInstructionAction]!
     open var type: String!
     open var references: [PXInstructionReference]!
@@ -23,7 +23,7 @@ open class PXInstruction: NSObject, Codable {
         self.title = title
         self.subtitle = subtitle
         self.accreditationMessage = accreditationMessage
-        self.acceditationComments = acceditationComments
+        self.accreditationComments = acceditationComments
         self.action = action
         self.type = type
         self.references = references
@@ -66,7 +66,7 @@ open class PXInstruction: NSObject, Codable {
         try container.encodeIfPresent(self.title, forKey: .title)
         try container.encodeIfPresent(self.subtitle, forKey: .subtitle)
         try container.encodeIfPresent(self.accreditationMessage, forKey: .accreditationMessage)
-        try container.encodeIfPresent(self.acceditationComments, forKey: .acceditationComments)
+        try container.encodeIfPresent(self.accreditationComments, forKey: .acceditationComments)
         try container.encodeIfPresent(self.action, forKey: .action)
         try container.encodeIfPresent(self.type, forKey: .type)
         try container.encodeIfPresent(self.references, forKey: .references)

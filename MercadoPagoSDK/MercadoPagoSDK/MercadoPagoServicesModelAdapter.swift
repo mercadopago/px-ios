@@ -28,6 +28,17 @@ extension MercadoPagoServicesAdapter {
         let pxCurrency = PXCurrency(id: id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
         return pxCurrency
     }
+    
+    open func getCurrencyFromPXCurrency(_ pxCurrency: PXCurrency) -> Currency {
+        let _id: String = pxCurrency.id
+        let description: String = pxCurrency._description
+        let symbol: String = pxCurrency.symbol
+        let decimalPlaces: Int = pxCurrency.decimalPlaces
+        let decimalSeparator: String = pxCurrency.decimalSeparator
+        let thousandSeparator: String = pxCurrency.thousandSeparator
+        let currency = Currency(_id: _id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
+        return currency
+    }
 
     open func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
         let checkoutPreference = CheckoutPreference()
@@ -68,7 +79,63 @@ extension MercadoPagoServicesAdapter {
 
     open func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
         let instructionsInfo = InstructionsInfo()
+        instructionsInfo.amountInfo = getAmountInfoFromPXAmountInfo(pxInstructions.amountInfo)
+        
+        for pxInstruction in pxInstructions.instructions {
+            let instruction = getInstructionFromPXInstruction(pxInstruction)
+            instructionsInfo.instructions.append(instruction)
+        }
+        
         return instructionsInfo
+    }
+    
+    open func getInstructionFromPXInstruction(_ pxInstruction: PXInstruction) -> Instruction {
+        let instruction = Instruction()
+        instruction.title = pxInstruction.title
+        instruction.subtitle = pxInstruction.subtitle
+        instruction.accreditationMessage = pxInstruction.accreditationMessage
+        instruction.accreditationComment = pxInstruction.accreditationComments
+        
+        for pxInstructionReference in pxInstruction.references {
+            let instructionReference = getInstructionReferenceFromPXInstructionReference(pxInstructionReference)
+            instruction.references.append(instructionReference)
+        }
+        
+        instruction.info = pxInstruction.info
+        instruction.secondaryInfo = pxInstruction.secondaryInfo
+        instruction.tertiaryInfo = pxInstruction.tertiaryInfo
+
+        for pxInstructionAction in pxInstruction.action {
+            let instructionAction = getInstructionActionFromPXInstructionAction(pxInstructionAction)
+            instruction.actions?.append(instructionAction)
+        }
+        
+        instruction.type = pxInstruction.type
+        return instruction
+    }
+    
+    open func getInstructionReferenceFromPXInstructionReference(_ pxInstructionReference: PXInstructionReference) -> InstructionReference {
+        let instructionReference = InstructionReference()
+        instructionReference.label = pxInstructionReference.label
+        instructionReference.value = pxInstructionReference.fieldValue
+        instructionReference.separator = pxInstructionReference.separator
+        instructionReference.comment = pxInstructionReference.comment
+        return instructionReference
+    }
+    
+    open func getInstructionActionFromPXInstructionAction(_ pxInstructionAction: PXInstructionAction) -> InstructionAction {
+        let instructionAction = InstructionAction()
+        instructionAction.label = pxInstructionAction.label
+        instructionAction.url = pxInstructionAction.url
+        instructionAction.tag = pxInstructionAction.tag
+        return instructionAction
+    }
+    
+    open func getAmountInfoFromPXAmountInfo(_ pxAmountInfo: PXAmountInfo) -> AmountInfo {
+        let amountInfo = AmountInfo()
+        amountInfo.amount = pxAmountInfo.amount
+        amountInfo.currency = getCurrencyFromPXCurrency(pxAmountInfo.currency)
+        return amountInfo
     }
 
     open func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
@@ -92,13 +159,15 @@ extension MercadoPagoServicesAdapter {
         return token
     }
 
-    open func getStringDateFromDate(_ Date: Date) -> String {
-        let stringDate = ""
+    open func getStringDateFromDate(_ date: Date) -> String {
+        let stringDate = String(describing: date)
         return stringDate
     }
 
     open func getCardholderFromPXCardHolder(_ pxCardHolder: PXCardHolder) -> Cardholder {
         let cardholder = Cardholder()
+        cardholder.name = pxCardHolder.name
+        cardholder.identification = getIdentificationFromPXIdentification(pxCardHolder.identification)
         return cardholder
     }
 

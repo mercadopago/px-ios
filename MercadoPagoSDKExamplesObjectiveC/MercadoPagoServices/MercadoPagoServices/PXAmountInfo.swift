@@ -10,7 +10,7 @@ import Foundation
 open class PXAmountInfo: NSObject, Codable {
 
     open var amount: Double!
-    open var currrency: PXCurrency!
+    open var currency: PXCurrency!
 
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
