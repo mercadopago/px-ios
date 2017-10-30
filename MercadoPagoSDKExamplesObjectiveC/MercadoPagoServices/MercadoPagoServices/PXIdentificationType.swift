@@ -64,5 +64,4 @@ open class PXIdentificationType: NSObject, Codable {
         return try JSONDecoder().decode([PXIdentificationType].self, from: data)
     }
 
-
 }

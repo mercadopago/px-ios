@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -188,16 +187,16 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
             if let customerURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
                 self.viewModel.mercadoPagoServicesAdapter.getCustomer(callback: { [weak self] (customer) in
-                    
+
                     self?.viewModel.customerId = customer._id
                     self?.viewModel.customerPaymentOptions = customer.cards
                     self?.loadPaymentMethodSearch()
-                    
+
                 }, failure: { (error) in
-                    
+
                     // Ir a Grupos igual
                     self.loadPaymentMethodSearch()
-                    
+
                 })
             }
 

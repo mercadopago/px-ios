@@ -28,14 +28,14 @@ class AddCouponViewModel: NSObject {
 
     func getCoupon(code: String, success: @escaping () -> Void, failure: @escaping ((_ errorMessage: String) -> Void)) {
         self.mercadoPagoServicesAdapter.getCodeDiscount(amount: self.amount, payerEmail: self.email, couponCode: code, discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, callback: { [weak self] (discount) in
-            
+
             if let coupon = discount {
                 self?.coupon = discount
                 success()
             }
-            
+
         }) { (error) in
-            
+
             if error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_DOESNT_MATCH {
                 failure("Vendedor sin descuento disponible".localized)
             } else if error.localizedDescription == self.DISCOUNT_ERROR_RUN_OUT_OF_USES {
@@ -47,7 +47,7 @@ class AddCouponViewModel: NSObject {
             } else {
                 failure("Algo salió mal… ".localized)
             }
-            
+
         }
     }
 }

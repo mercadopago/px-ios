@@ -88,7 +88,6 @@ open class PXCard: NSObject, Codable {
         try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
     }
 
-
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

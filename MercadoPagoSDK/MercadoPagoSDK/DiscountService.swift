@@ -42,7 +42,7 @@ open class DiscountService: MercadoPagoService {
 
         self.request(uri: self.URI, params: params, body: nil, method: "GET", cache: false, success: { (data) -> Void in
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
-            
+
             if let discount = jsonResult as? NSDictionary {
                 if let error = discount["error"] {
                     failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: error]))

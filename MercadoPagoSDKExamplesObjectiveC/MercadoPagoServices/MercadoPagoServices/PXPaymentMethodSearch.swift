@@ -13,7 +13,6 @@ open class PXPaymentMethodSearch: NSObject, Codable {
     open var paymentMethods: [PXPaymentMethod]!
     open var cards: [PXCard]!
     open var defaultOption: PXPaymentMethodSearchItem?
-    
 
     init(paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard], defaultOption: PXPaymentMethodSearchItem?) {
         self.paymentMethodSearchItem = paymentMethodSearchItem
@@ -48,7 +47,7 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         try container.encodeIfPresent(self.customOptionSearchItems, forKey: .customOptionSearchItems)
         try container.encodeIfPresent(self.paymentMethods, forKey: .paymentMethods)
         try container.encodeIfPresent(self.cards, forKey: .cards)
-        try container.encodeIfPresent(self.defaultOption,forKey: .defaultOption)
+        try container.encodeIfPresent(self.defaultOption, forKey: .defaultOption)
     }
 
     open func toJSONString() throws -> String? {

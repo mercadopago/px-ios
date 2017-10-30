@@ -9,7 +9,6 @@
 import Foundation
 import MercadoPagoServices
 
-
 open class PaymentService: MercadoPagoService {
 
     let merchantPublicKey: String!

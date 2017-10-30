@@ -16,7 +16,6 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
     open var childrenHeader: String?
     open var showIcon: Bool!
 
-
     init(id: String, type: String, description: String, comment: String?, children: [PXPaymentMethodSearchItem]?, childrenHeader: String?, showIcon: Bool) {
         self.id = id
         self.type = type

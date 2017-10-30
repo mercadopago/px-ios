@@ -14,5 +14,4 @@ open class PXApitUtil: NSObject {
     open static let NOT_FOUND = 404
     open static let OK = 200
 
-
 }

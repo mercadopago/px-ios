@@ -75,7 +75,6 @@ open class PXInstruction: NSObject, Codable {
         try container.encodeIfPresent(self.info, forKey: .info)
     }
 
-
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
@@ -94,6 +93,5 @@ open class PXInstruction: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXInstruction] {
         return try JSONDecoder().decode([PXInstruction].self, from: data)
     }
-
 
 }

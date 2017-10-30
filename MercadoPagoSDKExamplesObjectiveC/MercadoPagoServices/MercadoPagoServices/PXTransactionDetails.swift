@@ -46,7 +46,6 @@ open class PXTransactionDetails: NSObject, Codable {
         let totalPaidAmount: Double = try container.decode(Double.self, forKey: .totalPaidAmount)
         let paymentMethodReferenceId: String = try container.decode(String.self, forKey: .paymentMethodReferenceId)
 
-
         self.init(externalResourceUrl: externalResourceUrl, financialInstitution: financialInstitution, installmentAmount: installmentAmount, netReivedAmount: netReivedAmount, overpaidAmount: overpaidAmount, totalPaidAmount: totalPaidAmount, paymentMethodReferenceId: paymentMethodReferenceId)
     }
 

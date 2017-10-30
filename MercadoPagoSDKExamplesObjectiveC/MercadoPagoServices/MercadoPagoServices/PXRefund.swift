@@ -10,12 +10,12 @@ import Foundation
 open class PXRefund: NSObject, Codable {
     open var dateCreated: Date?
     open var id: String!
-    open var metadata:  [String: String]!
+    open var metadata: [String: String]!
     open var paymentId: Int64!
     open var source: String!
     open var uniqueSecuenceNumber: String!
 
-    init(id: String, dateCreated: Date?, metadata:  [String: String], paymentId: Int64, source: String, uniqueSecuenceNumber: String) {
+    init(id: String, dateCreated: Date?, metadata: [String: String], paymentId: Int64, source: String, uniqueSecuenceNumber: String) {
         self.dateCreated = dateCreated
         self.id = id
         self.metadata = metadata

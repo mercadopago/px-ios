@@ -9,7 +9,6 @@
 import UIKit
 import MercadoPagoServices
 
-
 open class InstructionsService: MercadoPagoService {
 
     let merchantPublicKey: String!

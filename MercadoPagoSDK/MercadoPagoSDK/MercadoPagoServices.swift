@@ -97,7 +97,7 @@ open class MercadoPagoServices: NSObject {
         } else {
             headers = nil
         }
-        
+
         service.createPayment(headers: headers, body: paymentData.toJsonString(), success: callback, failure: failure)
     }
 
@@ -113,7 +113,7 @@ open class MercadoPagoServices: NSObject {
     open func createToken(savedCardToken: SavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         createToken(cardTokenJSON: savedCardToken.toJSONString(), callback: callback, failure: failure)
     }
-    
+
     internal func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data) -> Void in
@@ -220,14 +220,14 @@ open class MercadoPagoServices: NSObject {
     open func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
     }
-    
+
     open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var addInfo: String? = nil
         if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
             addInfo = discountAdditionalInfo?.parseToQuery()
         }
         let discountService = DiscountService(baseURL: getMerchantDiscountBaseURL, URI: getMerchantDiscountURI)
-        
+
         discountService.getDiscount(amount: amount, code: couponCode, payerEmail: payerEmail, additionalInfo: addInfo, success: callback, failure: failure)
     }
 
@@ -239,25 +239,25 @@ open class MercadoPagoServices: NSObject {
 
     open func getCustomer(callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: getCustomerBaseURL, URI: getCustomerURI)
-        
+
         var addInfo: String = ""
         if !NSDictionary.isNullOrEmpty(getCustomerAdditionalInfo), let addInfoDict = getCustomerAdditionalInfo {
             addInfo = addInfoDict.parseToQuery()
         }
-        
+
         service.getCustomer(params: addInfo, success: callback, failure: failure)
     }
 
     open func createCheckoutPreference(bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: createCheckoutPreferenceURL, URI: createCheckoutPreferenceURI)
-        
+
         let body: String?
         if let bodyInfo = bodyInfo {
             body = bodyInfo.toJsonString()
         } else {
             body = nil
         }
-        
+
         service.createPreference(body: body, success: callback, failure: failure)
     }
 
@@ -295,7 +295,7 @@ open class MercadoPagoServices: NSObject {
         createCheckoutPreferenceURI = URI
         createCheckoutPreferenceAdditionalInfo = additionalInfo
     }
- 
+
     internal class func getParamsPublicKey(_ merchantPublicKey: String) -> String {
         var params: String = ""
         params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: merchantPublicKey)

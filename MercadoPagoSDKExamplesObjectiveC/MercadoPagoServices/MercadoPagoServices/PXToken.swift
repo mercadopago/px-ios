@@ -87,7 +87,6 @@ open class PXToken: NSObject, Codable {
         let cardholder: PXCardHolder = try container.decode(PXCardHolder.self, forKey: .cardholder)
         let esc: String = try container.decode(String.self, forKey: .esc)
 
-
         self.init(id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: nil, cardNumberLength: cardNumberLength, dateCreated: nil, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, dateLastUpdated: nil, dueDate: nil, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, cardholder: cardholder, esc: esc)
     }
 

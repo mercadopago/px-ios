@@ -47,7 +47,7 @@ open class PXPayment: NSObject, Codable {
 
     }
 
-    init(binaryMode: Bool, callForAuthorizeId: String, captured: Bool, card: PXCard, collectorId: String, couponAmount: Double ,currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata:  [String: String], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
+    init(binaryMode: Bool, callForAuthorizeId: String, captured: Bool, card: PXCard, collectorId: String, couponAmount: Double, currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata: [String: String], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
 
         self.binaryMode = binaryMode
         self.callForAuthorizeId = callForAuthorizeId
@@ -160,8 +160,6 @@ open class PXPayment: NSObject, Codable {
         let transactionDetails: PXTransactionDetails = try container.decode(PXTransactionDetails.self, forKey: .transactionDetails)
         let tokenId: String = try container.decode(String.self, forKey: .tokenId)
 
-
-
 //        func getDateFromString(_ string: String?) -> Date? {
 //            if let dateString = string {
 //                let dateFormatter = DateFormatter()
@@ -245,9 +243,7 @@ open class PXPayment: NSObject, Codable {
         return try JSONDecoder().decode(PXPayment.self, from: data)
     }
 
-
 }
-
 
 extension PXPayment {
 

@@ -16,7 +16,6 @@ open class PXPaymentPreference: NSObject, Codable {
     open var defaultPaymentMethodId: String?
     open var defaultPaymentTypeId: String?
 
-
     init(maxAcceptedInstallments: Int?, defaultInstallments: Int?, excludedPaymentMethodIds: [String], excludedPaymentTypeIds: [String], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
         self.maxAcceptedInstallments = maxAcceptedInstallments
         self.defaultInstallments = defaultInstallments
@@ -25,7 +24,7 @@ open class PXPaymentPreference: NSObject, Codable {
         self.defaultPaymentMethodId = defaultPaymentMethodId
         self.defaultPaymentTypeId = defaultPaymentTypeId
     }
-    
+
     init(maxAcceptedInstallments: Int?, defaultInstallments: Int?, excludedPaymentMethods: [PXPaymentMethod], excludedPaymentTypes: [PXPaymentType], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
 
         var excludedPaymentTypeIds: [String] = []
@@ -68,7 +67,6 @@ open class PXPaymentPreference: NSObject, Codable {
         let defaultPaymentMethodId: String? = try container.decodeIfPresent(String.self, forKey: .defaultPaymentMethodId)
         let defaultPaymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .defaultPaymentTypeId)
 
-
         self.init(maxAcceptedInstallments: maxAcceptedInstallments, defaultInstallments: defaultInstallments, excludedPaymentMethods: excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, defaultPaymentTypeId: defaultPaymentTypeId)
     }
 
@@ -82,7 +80,6 @@ open class PXPaymentPreference: NSObject, Codable {
         try container.encodeIfPresent(self.defaultPaymentTypeId, forKey: .defaultPaymentTypeId)
 
     }
-
 
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()

@@ -11,5 +11,4 @@ open class PXCause: NSObject {
     open var code: String!
     open var _description: String!
 
-
 }

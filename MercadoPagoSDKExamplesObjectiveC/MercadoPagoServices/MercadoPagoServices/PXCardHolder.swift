@@ -7,7 +7,7 @@
 //
 
 import Foundation
-open class PXCardHolder: NSObject, Codable{
+open class PXCardHolder: NSObject, Codable {
 
     open var name: String!
     open var identification: PXIdentification!

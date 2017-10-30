@@ -23,7 +23,7 @@ open class PXCustomer: NSObject, Codable {
     open var metadata: [String: String]!
     open var phone: PXPhone!
     open var registrationDate: Date?
-    
+
     init(address: PXAddress, cards: [PXCard], defaultCard: String, description: String?, dateCreated: Date?, dateLastUpdated: Date?, email: String, firstName: String?, id: String, identification: PXIdentification, lastName: String?, liveMode: Bool, metadata: [String : String], phone: PXPhone, registrationDate: Date?) {
 
         self.address = address
@@ -78,7 +78,7 @@ open class PXCustomer: NSObject, Codable {
         let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
         let phone: PXPhone = try container.decode(PXPhone.self, forKey: .phone)
         let registrationDateString: String? = try container.decodeIfPresent(String.self, forKey: .registrationDate)
-        
+
         func getDateFromString(_ string: String?) -> Date? {
             if let dateString = string {
                 let dateFormatter = DateFormatter()
@@ -93,7 +93,7 @@ open class PXCustomer: NSObject, Codable {
         let dateLastUpdated = getDateFromString(dateLastUpdatedString)
         let dateCreated = getDateFromString(dateCreatedString)
         let registrationDate = getDateFromString(registrationDateString)
-        
+
         self.init(address: address, cards: cards, defaultCard: defaultCard, description: _description, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, email: email, firstName: firstName, id: id, identification: identification, lastName: lastName, liveMode: liveMode, metadata: metadata, phone: phone, registrationDate: registrationDate)
     }
 
@@ -115,7 +115,7 @@ open class PXCustomer: NSObject, Codable {
         try container.encodeIfPresent(self.phone, forKey: .phone)
         try container.encodeIfPresent(self.registrationDate, forKey: .registrationDate)
     }
-    
+
     open func getDateFromString(_ string: String?) -> Date? {
         if let dateString = string {
             let dateFormatter = DateFormatter()

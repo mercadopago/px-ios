@@ -23,7 +23,7 @@ open class MercadoPagoServicesAdapter: NSObject {
     }
 
     func setServicePreference(servicePreference: ServicePreference) {
-        
+
         mercadoPagoServices.setBaseURL(servicePreference.baseURL)
         mercadoPagoServices.setGatewayBaseURL(servicePreference.getGatewayURL())
         if let customerURL = servicePreference.getCustomerURL() {
@@ -35,9 +35,9 @@ open class MercadoPagoServicesAdapter: NSObject {
 
         mercadoPagoServices.setDiscount(baseURL: servicePreference.getDiscountURL(), URI: servicePreference.getDiscountURI(), additionalInfo: servicePreference.discountAdditionalInfo as? [String : String])
     }
-    
+
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { [weak self] (pxCheckoutPreference) in
             guard let strongSelf = self else {
                 return
@@ -47,9 +47,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(checkoutPreference)
         }, failure: failure)
     }
-    
+
     open func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (pxInstructions) in
             guard let strongSelf = self else {
                 return
@@ -59,12 +59,12 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(instructionsInfo)
         }, failure: failure)
     }
-    
+
     open func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         let pxPayer = getPXPayerFromPayer(payer)
         let pxSite = getPXSiteFromId(site)
-        
+
         mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, defaultPaymentMethod: defaultPaymentMethod, payer: pxPayer, site: pxSite, callback: {  [weak self] (pxPaymentMethodSearch) in
             guard let strongSelf = self else {
                 return
@@ -73,9 +73,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(paymentMethodSearch)
         }, failure: failure)
     }
-    
+
     open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, callback: { [weak self] (pxPayment) in
             guard let strongSelf = self else {
                 return
@@ -84,9 +84,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(payment)
         }, failure: failure)
     }
-    
+
     open func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.createToken(cardToken: cardToken, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
@@ -96,9 +96,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(token)
         }, failure: failure)
     }
-    
+
     open func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
@@ -108,9 +108,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(token)
         }, failure: failure)
     }
-    
+
     open func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-    
+
         mercadoPagoServices.createToken(savedCardToken: savedCardToken, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
@@ -120,9 +120,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(token)
         }, failure: failure)
     }
-    
+
     internal func createToken(cardTokenJSON: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.createToken(cardTokenJSON: cardTokenJSON, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
@@ -131,9 +131,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(token)
         }, failure: failure)
     }
-    
+
     open func cloneToken(tokenId: String, securityCode: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.cloneToken(tokenId: tokenId, securityCode: securityCode, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
@@ -142,9 +142,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(token)
         }, failure: failure)
     }
-    
+
     open func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.getBankDeals(callback: { [weak self] (pxBankDeals) in
             guard let strongSelf = self else {
                 return
@@ -157,9 +157,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(bankDeals)
         }, failure: failure)
     }
-    
+
     open func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.getIdentificationTypes(callback: { [weak self] (pxIdentificationTypes) in
             guard let strongSelf = self else {
                 return
@@ -173,9 +173,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(identificationTypes)
         }, failure: failure)
     }
-    
+
     open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: discountAdditionalInfo, callback: { [weak self] (pxDiscount) in
             guard let strongSelf = self else {
                 return
@@ -189,7 +189,7 @@ open class MercadoPagoServicesAdapter: NSObject {
             }
         }, failure: failure)
     }
-    
+
     open func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
     }
@@ -209,9 +209,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(installments)
         }, failure: failure)
     }
-    
+
     open func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([Issuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.getIssuers(paymentMethodId: paymentMethodId, bin: bin, callback: { [weak self] (pxIssuers) in
             guard let strongSelf = self else {
                 return
@@ -225,9 +225,9 @@ open class MercadoPagoServicesAdapter: NSObject {
             callback(issuers)
         }, failure: failure)
     }
-    
+
     open func getCustomer(callback: @escaping (Customer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        
+
         mercadoPagoServices.getCustomer(callback: { [weak self] (pxCustomer) in
             guard let strongSelf = self else {
                 return
@@ -236,6 +236,6 @@ open class MercadoPagoServicesAdapter: NSObject {
             let customer = strongSelf.getCustomerFromPXCustomer(pxCustomer)
             callback(customer)
         }, failure: failure)
-        
+
     }
 }

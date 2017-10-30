@@ -102,7 +102,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         self.showLoading()
 
         self.titleCellHeight = 44

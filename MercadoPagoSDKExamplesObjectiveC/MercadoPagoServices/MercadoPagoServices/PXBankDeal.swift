@@ -61,7 +61,7 @@ open class PXBankDeal: NSObject, Codable {
         let recommendedMessage: String = try container.decode(String.self, forKey: .recommendedMessage)
         let totalFinancialCost: Double = try container.decode(Double.self, forKey: .totalFinancialCost)
 
-        self.init(id: id, dateExpired: nil, dateStarted: nil, installments: installments , issuer: issuer, legals: legals, picture: picture, maxInstallments: maxInstallments, paymentMethods: paymentMethods, recommendedMessage: recommendedMessage, totalFinancialCost: totalFinancialCost)
+        self.init(id: id, dateExpired: nil, dateStarted: nil, installments: installments, issuer: issuer, legals: legals, picture: picture, maxInstallments: maxInstallments, paymentMethods: paymentMethods, recommendedMessage: recommendedMessage, totalFinancialCost: totalFinancialCost)
     }
 
     public func encode(to encoder: Encoder) throws {

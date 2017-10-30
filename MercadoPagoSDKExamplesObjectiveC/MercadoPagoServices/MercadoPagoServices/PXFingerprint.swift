@@ -101,4 +101,3 @@ open class PXFingerprint: NSObject, Codable {
         return "\(width)x\(height)"
     }
 }
-

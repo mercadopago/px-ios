@@ -16,7 +16,7 @@ open class PXCurrency: NSObject, Codable {
     open var decimalSeparator: String!
     open var thousandSeparator: String!
 
-    public init (id: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: String, thousandSeparator: String){
+    public init (id: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: String, thousandSeparator: String) {
         self.id = id
         self._description = description
         self.symbol = symbol

@@ -39,7 +39,6 @@ open class PXvendorSpecificAttributes: NSObject, Codable {
         }
     }
 
-
     public enum PXvendorSpecificAttributesKeys: String, CodingKey {
         case deviceIdiom = "device_idiom"
         case canSendSMS = "can_send_sms"
