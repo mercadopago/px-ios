@@ -9,11 +9,6 @@
 import UIKit
 
 extension Array {
-
-    static public func isNullOrEmpty(_ value: Array?) -> Bool {
-        return value == nil || value?.count == 0
-    }
-
     static public func safeAppend(_ array: Array?, _ newElement: Element) -> Array {
         if var array = array {
             array.append(newElement)

@@ -93,3 +93,70 @@ extension Array {
         return value == nil || value?.count == 0
     }
 }
+
+class JSONHandler: NSObject {
+
+    class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
+        var result: String = ""
+        do {
+            let dict = NSMutableDictionary()
+            for (key, value) in jsonDictionary {
+                if let value = value as? AnyObject {
+                    dict.setValue(value, forKey: key)
+                }
+            }
+            let jsonData = try JSONSerialization.data(withJSONObject: dict)
+            result = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue)  as! String
+        } catch {
+            print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
+        }
+        return result
+
+}
+}
+
+extension NSDictionary {
+
+    public func toJsonString() -> String {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+
+            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8) {
+                return jsonString
+            }
+            return ""
+
+        } catch {
+            return error.localizedDescription
+        }
+    }
+    public func parseToQuery() -> String {
+        if !NSDictionary.isNullOrEmpty(self) {
+            var parametersString = ""
+            for (key, value) in self {
+                if let key = key as? String,
+                    let value = value as? String {
+                    parametersString = parametersString + key + "=" + value + "&"
+                }
+            }
+            parametersString = parametersString.substring(to: parametersString.index(before: parametersString.endIndex))
+            return parametersString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        } else {
+            return ""
+        }
+    }
+
+    func parseToLiteral() -> [String:Any] {
+
+        var anyDict = [String: Any]()
+
+        for (key, value) in self {
+            anyDict[key as! String] = value
+        }
+        return anyDict
+    }
+    static public func isNullOrEmpty(_ value: NSDictionary?) -> Bool {
+        return value == nil || value?.count == 0
+    }
+
+}

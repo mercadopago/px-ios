@@ -16,7 +16,7 @@ class CardViewModelManagerTest: BaseTest {
         super.setUp()
         // Retomar valor default
         CardFormViewController.showBankDeals = true
-        self.cardFormManager = CardFormViewModel(amount: 10, paymentMethods: [])
+        self.cardFormManager = CardFormViewModel(amount: 10, paymentMethods: [], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     override func tearDown() {
@@ -205,14 +205,14 @@ class CardViewModelManagerTest: BaseTest {
         let amex = MockBuilder.buildPaymentMethod("amex", paymentTypeId: "credit_card")
         let visa = MockBuilder.buildPaymentMethod("visa", paymentTypeId: "credit_card")
         let master = MockBuilder.buildPaymentMethod("master")
-        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [amex, visa, master])
+        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [amex, visa, master], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
         XCTAssertEqual(cardViewModel.getPaymentMethodTypeId(), "credit_card")
     }
 
     func testCardTypeDebit() {
         let debVisa = MockBuilder.buildPaymentMethod("debvisa", paymentTypeId: "debit_card")
         let debMaster = MockBuilder.buildPaymentMethod("debmaster", paymentTypeId: "debit_card")
-        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [debVisa, debMaster])
+        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [debVisa, debMaster], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
         XCTAssertEqual(cardViewModel.getPaymentMethodTypeId(), "debit_card")
 
     }
@@ -220,7 +220,7 @@ class CardViewModelManagerTest: BaseTest {
     func testNoCardType() {
         let debVisa = MockBuilder.buildPaymentMethod("amex", paymentTypeId: "credit_card")
         let debMaster = MockBuilder.buildPaymentMethod("debmaster", paymentTypeId: "debit_card")
-        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [debVisa, debMaster])
+        let cardViewModel = CardFormViewModel(amount: 10, paymentMethods: [debVisa, debMaster], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
         XCTAssertNil(cardViewModel.getPaymentMethodTypeId())
     }
 

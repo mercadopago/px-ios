@@ -15,6 +15,7 @@ open class MercadoPagoServicesAdapter: NSObject {
 
     init(servicePreference: ServicePreference? = nil) {
         mercadoPagoServices = MercadoPagoServices(merchantPublicKey: MercadoPagoContext.publicKey(), payerAccessToken: MercadoPagoContext.payerAccessToken(), procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
+        mercadoPagoServices.setLanguage(language: MercadoPagoContext.getLanguage())
         super.init()
 
         if let servicePreference = servicePreference {
@@ -125,7 +126,7 @@ open class MercadoPagoServicesAdapter: NSObject {
     open func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let pxSavedCardToken = getPXSavedCardTokenFromSavedCardToken(savedCardToken)
-        
+
         mercadoPagoServices.createToken(savedCardToken: pxSavedCardToken, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
@@ -137,7 +138,6 @@ open class MercadoPagoServicesAdapter: NSObject {
     }
 
     internal func createToken(cardTokenJSON: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
         mercadoPagoServices.createToken(cardTokenJSON: cardTokenJSON, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
@@ -148,7 +148,6 @@ open class MercadoPagoServicesAdapter: NSObject {
     }
 
     open func cloneToken(tokenId: String, securityCode: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
         mercadoPagoServices.cloneToken(tokenId: tokenId, securityCode: securityCode, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return

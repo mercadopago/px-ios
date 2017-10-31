@@ -11,7 +11,7 @@ open class PXCardToken: NSObject, Codable {
 
     open var cardholder: PXCardHolder!
     open var cardNumber: String!
-    open var device: PXDevice!
+    open var device: PXDevice = PXDevice()
     open var expirationMonth: Int!
     open var expirationYear: Int!
     open var securityCode: String!

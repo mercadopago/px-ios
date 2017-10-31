@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import UIKit
-import MercadoPagoServices
 
 open class CustomService: MercadoPagoService {
 
@@ -29,7 +27,7 @@ open class CustomService: MercadoPagoService {
             if let custDic = jsonResult as? NSDictionary {
                 if custDic["error"] != nil {
                     if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
+                        failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: PXApitUtil.ERROR_API_CODE, userInfo: custDic as! [String : Any]))
                     }
                 } else {
                     let customer: PXCustomer = try! PXCustomer.fromJSON(data: data)
@@ -37,7 +35,7 @@ open class CustomService: MercadoPagoService {
                 }
             } else {
                 if failure != nil {
-                    failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                    failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: PXApitUtil.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
                 }
             }
         }, failure: failure)
@@ -49,26 +47,26 @@ open class CustomService: MercadoPagoService {
                             let jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
-                    if paymentDic["status"] as? Int == ApiUtil.StatusCodes.PROCESSING.rawValue {
+                    if paymentDic["status"] as? Int == PXApitUtil.PROCESSING {
                         let inProcessPayment = PXPayment()
-                        inProcessPayment.status = PaymentStatus.IN_PROCESS
-                        inProcessPayment.statusDetail = PendingStatusDetail.CONTINGENCY
+                        inProcessPayment.status = PXPayment.Status.IN_PROCESS
+                        inProcessPayment.statusDetail = PXPayment.StatusDetails.PENDING_CONTINGENCY
                         success(inProcessPayment)
                     } else if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: AnyObject]))
+                        failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: PXApitUtil.ERROR_API_CODE, userInfo: paymentDic as! [String : Any]))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
                         success(try! PXPayment.fromJSON(data: data))
                     } else {
-                        failure?(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
+                        failure?(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: PXApitUtil.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR"]))
                     }
                 }
             } else if failure != nil {
-                failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: PXApitUtil.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
             }} as! (Data?) -> Void, failure: { (error) -> Void in
                 if let failure = failure {
-                    failure(NSError(domain: "mercadopago.sdk.CustomService.createPayment", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
+                    failure(NSError(domain: "mercadopago.sdk.CustomService.createPayment", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
                 }
         })
     }
@@ -82,16 +80,16 @@ open class CustomService: MercadoPagoService {
 
             if let preferenceDic = jsonResult as? NSDictionary {
                 if preferenceDic["error"] != nil && failure != nil {
-                    failure!(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
+                    failure!(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: PXApitUtil.ERROR_API_CODE, userInfo: ["message": "PREFERENCE_ERROR"]))
                 } else {
                     if preferenceDic.allKeys.count > 0 {
                         success(try! PXCheckoutPreference.fromJSON(data: data))
                     } else {
-                        failure?(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
+                        failure?(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: PXApitUtil.ERROR_UNKNOWN_CODE, userInfo: ["message": "PREFERENCE_ERROR"]))
                     }
                 }
             } else {
-                failure?(NSError(domain: "mercadopago.sdk.customServer.createCheckoutPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                failure?(NSError(domain: "mercadopago.sdk.customServer.createCheckoutPreference", code: PXApitUtil.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
             }}, failure: failure)
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServices
 
 open class InstructionsService: MercadoPagoService {
 
@@ -23,24 +22,24 @@ open class InstructionsService: MercadoPagoService {
     @available(*, deprecated: 2.2.4, message: "Use getInstructions(_ paymentId : String, ...) instead. PaymentId can be greater than Int and might fail")
     open func getInstructions(_ paymentId: Int, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: PXInstructions) -> Void, failure: ((_ error: NSError) -> Void)?) {
         let paymentId = Int64(paymentId)
-        self.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: success, failure: failure)
+        self.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, language: "es", success: success, failure: failure)
     }
 
-    open func getInstructions(for paymentId: Int64, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: PXInstructions) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getInstructions(for paymentId: Int64, paymentTypeId: String? = "", language: String, success : @escaping (_ instructionsInfo: PXInstructions) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
         params.paramsAppend(key: ApiParams.PAYMENT_TYPE, value: paymentTypeId)
-        params.paramsAppend(key: ApiParams.API_VERSION, value : ServicePreference.API_VERSION)
+        params.paramsAppend(key: ApiParams.API_VERSION, value : MercadoPagoService.API_VERSION)
 
-        let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]
+        let headers = ["Accept-Language": language]
 
-        self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data) -> Void in
+        self.request(uri: MercadoPagoService.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data) -> Void in
 
             let jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
 
             let error = jsonResult["error"] as? String
             if error != nil && error!.characters.count > 0 {
-                let e : NSError = NSError(domain: "com.mercadopago.sdk.getInstructions", code: MercadoPago.ERROR_INSTRUCTIONS, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago".localized, NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String])
+                let e : NSError = NSError(domain: "com.mercadopago.sdk.getInstructions", code: PXApitUtil.ERROR_INSTRUCTIONS, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago", NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String])
                 failure!(e)
             } else {
                 success(try! PXInstructions.fromJSON(data: data))

@@ -13,20 +13,15 @@ open class DiscountService: MercadoPagoService {
 
     var URI: String
 
-    override init () {
-        self.URI = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI()
-        super.init()
-        self.baseURL = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL()
-    }
 
     init (baseURL: String, URI: String) {
-        self.URI = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI()
+        self.URI = URI
         super.init()
-        self.baseURL = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL()
+        self.baseURL = baseURL
     }
 
-    open func getDiscount(amount: Double, code: String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        var params = "public_key=" + MercadoPagoContext.publicKey() + "&transaction_amount=" + String(amount)
+    open func getDiscount(publicKey: String, amount: Double, code: String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        var params = "public_key=" + publicKey + "&transaction_amount=" + String(amount)
 
         if !String.isNullOrEmpty(payerEmail) {
             params += "&payer_email=" + payerEmail!
@@ -45,7 +40,7 @@ open class DiscountService: MercadoPagoService {
 
             if let discount = jsonResult as? NSDictionary {
                 if let error = discount["error"] {
-                    failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: error]))
+                    failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: PXApitUtil.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: error]))
                 } else {
                     let discount = try! PXDiscount.fromJSON(data: data)
                     success(discount)
@@ -53,7 +48,7 @@ open class DiscountService: MercadoPagoService {
             }
 
         }, failure: { (error) -> Void in
-            failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
+            failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 }
