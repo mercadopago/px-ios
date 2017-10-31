@@ -36,11 +36,11 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenName() {
-        XCTAssertEqual(self.instance!.getScreenName(), TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS)
+        XCTAssertEqual(self.instance!.getScreenName(), "CARD_INSTALLMENTS")
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS)
+        XCTAssertEqual(self.instance!.screenId, "/checkout_off/card" + "/installments")
     }
 
     func testNumberOfSections() {
@@ -221,11 +221,11 @@ class IssuerAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenName() {
-        XCTAssertEqual(self.instance!.getScreenName(), TrackingUtil.SCREEN_NAME_CARD_FORM_ISSUERS)
+        XCTAssertEqual(self.instance!.getScreenName(), "CARD_ISSUERS")
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER)
+        XCTAssertEqual(self.instance!.screenId, "/checkout_off/card" + "/issuer")
     }
 
     func testNumberOfSections() {
@@ -300,14 +300,6 @@ class CardTypeAdditionalStepViewModelTest: BaseTest {
 
     func testBankInterestCell() {
         XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
-    }
-
-    func testScreenName() {
-        XCTAssertEqual(self.instance!.getScreenName(), TrackingUtil.SCREEN_NAME_PAYMENT_TYPES)
-    }
-
-    func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_PAYMENT_TYPES)
     }
 
     func testNumberOfSections() {

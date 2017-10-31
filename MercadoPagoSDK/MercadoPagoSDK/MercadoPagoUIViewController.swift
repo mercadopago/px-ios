@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 

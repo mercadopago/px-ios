@@ -1,0 +1,6 @@
+framework module MercadoPagoPXTracking {
+  umbrella header "MercadoPagoPXTracking-umbrella.h"
+
+  export *
+  module * { export * }
+}

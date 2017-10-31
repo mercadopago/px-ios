@@ -56,7 +56,6 @@ open class ServicePreference: NSObject {
     static let MP_INSTRUCTIONS_URI = MP_ENVIROMENT + PAYMENTS + "/${payment_id}/results"
     static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
     static let MP_DISCOUNT_URI =  "/discount_campaigns/"
-    static let MP_TRACKING_EVENTS_URI =  MP_ENVIROMENT + "/tracking/events"
     static let MP_CUSTOMER_URI = "/customers?preference_id="
     static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
 
