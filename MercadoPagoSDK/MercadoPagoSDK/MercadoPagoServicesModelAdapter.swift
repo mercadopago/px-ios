@@ -273,7 +273,7 @@ extension MercadoPagoServicesAdapter {
         let identificationType = IdentificationType()
         identificationType._id = pxIdentificationType.id
         identificationType.name = pxIdentificationType.name
-        identificationType.type = nil
+        identificationType.type = pxIdentificationType.type
         identificationType.minLength = pxIdentificationType.minLength
         identificationType.maxLength = pxIdentificationType.maxLength
         return identificationType
