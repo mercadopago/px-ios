@@ -96,7 +96,9 @@ open class MercadoPagoServicesAdapter: NSObject {
 
     open func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createToken(cardToken: cardToken, callback: { [weak self] (pxToken) in
+        let pxCardToken = getPXCardTokenFromCardToken(cardToken)
+        
+        mercadoPagoServices.createToken(cardToken: pxCardToken, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
             }
@@ -107,8 +109,10 @@ open class MercadoPagoServicesAdapter: NSObject {
     }
 
     open func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        let pxSavedESCCardToken = getPXSavedESCCardTokenFromSavedESCCardToken(savedESCCardToken)
 
-        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (pxToken) in
+        mercadoPagoServices.createToken(savedESCCardToken: pxSavedESCCardToken, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
             }
@@ -120,7 +124,9 @@ open class MercadoPagoServicesAdapter: NSObject {
 
     open func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createToken(savedCardToken: savedCardToken, callback: { [weak self] (pxToken) in
+        let pxSavedCardToken = getPXSavedCardTokenFromSavedCardToken(savedCardToken)
+        
+        mercadoPagoServices.createToken(savedCardToken: pxSavedCardToken, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
             }

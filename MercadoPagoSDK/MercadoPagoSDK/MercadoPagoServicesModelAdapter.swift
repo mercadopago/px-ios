@@ -138,6 +138,47 @@ extension MercadoPagoServicesAdapter {
         return amountInfo
     }
 
+    open func getPXCardTokenFromCardToken(_ cardToken: CardToken) -> PXCardToken {
+        let pxCardToken = PXCardToken()
+        pxCardToken.cardholder = getPXCardHolderFromCardHolder(cardToken.cardholder!)
+        pxCardToken.cardNumber = cardToken.cardNumber
+        pxCardToken.device = getPXDeviceFromDevice(cardToken.device)
+        pxCardToken.expirationMonth = cardToken.expirationMonth
+        pxCardToken.expirationYear = cardToken.expirationYear
+        pxCardToken.securityCode = cardToken.securityCode
+        return pxCardToken
+    }
+    
+    open func getPXSavedESCCardTokenFromSavedESCCardToken(_ savedESCCardToken: SavedESCCardToken) -> PXSavedESCCardToken {
+        let pxSavedESCCardToken = PXSavedESCCardToken()
+        pxSavedESCCardToken.requireEsc = savedESCCardToken.requireESC
+        pxSavedESCCardToken.esc = savedESCCardToken.esc
+        return pxSavedESCCardToken
+    }
+    
+    open func getPXSavedCardTokenFromSavedCardToken(_ savedCardToken: SavedCardToken) -> PXSavedCardToken {
+        let pxSavedCardToken = PXSavedCardToken()
+        pxSavedCardToken.cardId = savedCardToken.cardId
+        pxSavedCardToken.securityCode = savedCardToken.securityCode
+        pxSavedCardToken.device = getPXDeviceFromDevice(savedCardToken.device)
+        return pxSavedCardToken
+    }
+    
+    open func getPXDeviceFromDevice(_ device: Device?) -> PXDevice {
+        if let device = device {
+            let pxDevice = PXDevice()
+            pxDevice.fingerprint = getPXFingerprintFromFingerprint(device.fingerprint)
+            return pxDevice
+        } else {
+            return PXDevice()
+        }
+    }
+    
+    open func getPXFingerprintFromFingerprint(_ fingerprint: Fingerprint) -> PXFingerprint {
+        let pxFingerprint = PXFingerprint()
+        return pxFingerprint
+    }
+    
     open func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
         let id: String = pxToken.id
         let publicKey: String = pxToken.publicKey
@@ -169,6 +210,13 @@ extension MercadoPagoServicesAdapter {
         cardholder.name = pxCardHolder.name
         cardholder.identification = getIdentificationFromPXIdentification(pxCardHolder.identification)
         return cardholder
+    }
+    
+    open func getPXCardHolderFromCardHolder(_ cardHolder: Cardholder) -> PXCardHolder {
+        let name: String = cardHolder.name!
+        let pxIdentification: PXIdentification = getPXIdentificationFromIdentification(cardHolder.identification)!
+        let pxCardholder = PXCardHolder(name: name, identification: pxIdentification)
+        return pxCardholder
     }
 
     open func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {

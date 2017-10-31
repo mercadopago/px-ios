@@ -102,17 +102,17 @@ open class MercadoPagoServices: NSObject {
         service.createPayment(headers: headers, body: paymentData.toJsonString(), success: callback, failure: failure)
     }
 
-    open func createToken(cardToken: CardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        cardToken.device = Device()
-        createToken(cardTokenJSON: cardToken.toJSONString(), callback: callback, failure: failure)
+    open func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        cardToken.device = PXDevice()
+        createToken(cardTokenJSON: (try! cardToken.toJSONString())!, callback: callback, failure: failure)
     }
 
-    open func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        createToken(cardTokenJSON: savedESCCardToken.toJSONString(), callback: callback, failure: failure)
+    open func createToken(savedESCCardToken: PXSavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        createToken(cardTokenJSON: (try! savedESCCardToken.toJSONString())!, callback: callback, failure: failure)
     }
 
-    open func createToken(savedCardToken: SavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        createToken(cardTokenJSON: savedCardToken.toJSONString(), callback: callback, failure: failure)
+    open func createToken(savedCardToken: PXSavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        createToken(cardTokenJSON: (try! savedCardToken.toJSONString())!, callback: callback, failure: failure)
     }
 
     internal func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {

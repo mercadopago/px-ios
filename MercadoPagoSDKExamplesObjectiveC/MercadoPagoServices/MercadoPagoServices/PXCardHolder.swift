@@ -12,7 +12,7 @@ open class PXCardHolder: NSObject, Codable {
     open var name: String!
     open var identification: PXIdentification!
 
-    init(name: String, identification: PXIdentification) {
+    public init(name: String, identification: PXIdentification) {
         self.identification = identification
         self.name = name
     }
