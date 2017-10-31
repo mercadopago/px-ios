@@ -49,14 +49,15 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideNavBar()
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.titleCellHeight = 44
     }
 
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
    //     self.title = ""
-        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
-        self.extendedLayoutIncludesOpaqueBars = true
-        self.titleCellHeight = 44
+
     }
 
     override func loadMPStyles() {
