@@ -124,7 +124,7 @@ open class MercadoPagoServices: NSObject {
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = try! PXToken.fromJSON(data: data)
-                    MPXTracker.trackToken(token: token.id, siteId: MercadoPagoContext.sharedInstance.siteId())
+                    MPXTracker.trackToken(token: token.id)
                     callback(token)
                 } else {
                     failure(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
@@ -141,7 +141,7 @@ open class MercadoPagoServices: NSObject {
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = try! PXToken.fromJSON(data: data)
-                    MPXTracker.trackToken(token: token.id, siteId: MercadoPagoContext.sharedInstance.siteId())
+                    MPXTracker.trackToken(token: token.id)
                     callback(token)
                 } else {
                     failure(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
