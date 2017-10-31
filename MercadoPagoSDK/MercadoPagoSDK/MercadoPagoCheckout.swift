@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 open class MercadoPagoCheckout: NSObject {
 
@@ -36,8 +37,12 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         MercadoPagoContext.setPublicKey(publicKey)
-
         MercadoPagoContext.setPayerAccessToken(accessToken)
+    }
+
+    func initMercadPagoPXTracking() {
+        MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
+        MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
     }
 
     public func setBinaryMode(_ binaryMode: Bool) {
@@ -67,6 +72,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func initialize() {
+        initMercadPagoPXTracking()
         MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
     }

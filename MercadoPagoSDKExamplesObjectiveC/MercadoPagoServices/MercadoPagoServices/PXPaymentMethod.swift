@@ -114,4 +114,20 @@ open class PXPaymentMethod: NSObject, Codable {
         return try JSONDecoder().decode([PXPaymentMethod].self, from: data)
     }
 
+    func isAdditionalInfoNeeded(_ param: String!) -> Bool {
+        if additionalInfoNeeded != nil && additionalInfoNeeded!.count > 0 {
+            for info in additionalInfoNeeded! {
+                if info == param {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+
+    open var isIssuerRequired: Bool {
+        return isAdditionalInfoNeeded("issuer_id")
+    }
+
 }

@@ -153,14 +153,4 @@ class InstructionsViewModelTest: BaseTest {
         XCTAssertEqual(viewModel.numberOfRowsInSection(InstructionsViewModel.Sections.footer.rawValue), 1)
     }
 
-    func test_metada() {
-        let metada = viewModel.getMetada()
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_IS_EXPRESS]!, TrackingUtil.IS_EXPRESS_DEFAULT_VALUE)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_STATUS]!, self.paymentResult.status)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL]!, self.paymentResult.statusDetail)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_ID]!, self.paymentResult._id)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_METHOD_ID]!, self.paymentResult.paymentData!.getPaymentMethod()!._id)
-        XCTAssertNil(metada[TrackingUtil.METADATA_ISSUER_ID])
-    }
-
 }

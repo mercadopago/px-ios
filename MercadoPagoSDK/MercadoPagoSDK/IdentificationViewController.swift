@@ -223,31 +223,34 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     func setupInputAccessoryView() {
 
-        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
-        let toolbar = UIToolbar(frame: frame)
+        if self.toolbar == nil {
+            let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+            
+            let toolbar = UIToolbar(frame: frame)
+            
+            toolbar.barStyle = UIBarStyle.default
+            toolbar.backgroundColor = UIColor.mpLightGray()
+            toolbar.alpha = 1
+            toolbar.isUserInteractionEnabled = true
+            
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+            
+            let font = Utils.getFont(size: 14)
+            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            
+            buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            
+            toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
 
-        toolbar.barStyle = UIBarStyle.default
-        toolbar.backgroundColor = UIColor.mpLightGray()
-        toolbar.alpha = 1
-        toolbar.isUserInteractionEnabled = true
-
-        let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-        let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
-
-        let font = Utils.getFont(size: 14)
-        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
-
-        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-
-        numberTextField.delegate = self
-        self.toolbar = toolbar
-        numberTextField.inputAccessoryView = toolbar
+            numberTextField.delegate = self
+            self.toolbar = toolbar
+        }
+        numberTextField.inputAccessoryView = self.toolbar
 
     }
 

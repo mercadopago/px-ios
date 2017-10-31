@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import MercadoPagoPXTracking
 
 open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 

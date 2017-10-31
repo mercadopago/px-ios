@@ -1,9 +1,13 @@
 PODS:
-  - MercadoPagoSDK (3.6.1):
-    - MercadoPagoSDK/Default (= 3.6.1)
-  - MercadoPagoSDK/Default (3.6.1)
+  - MercadoPagoPXTracking (1.0.0)
+  - MercadoPagoSDK (3.6.2):
+    - MercadoPagoPXTracking
+    - MercadoPagoSDK/Default (= 3.6.2)
+  - MercadoPagoSDK/Default (3.6.2):
+    - MercadoPagoPXTracking
 
 DEPENDENCIES:
+  - MercadoPagoPXTracking (= 1.0.0)
   - MercadoPagoSDK (from `../`)
 
 EXTERNAL SOURCES:
@@ -11,8 +15,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MercadoPagoSDK: 25280857ff2a19055127cb800db43f1793ac0255
+  MercadoPagoPXTracking: caae0dcc80005c6324f2ab24cbba6266fae87dda
+  MercadoPagoSDK: cbc966d244baa65761ae81a1ed0ed194d0f38937
 
-PODFILE CHECKSUM: 7652d70c091fe815ac1f0c32abd1230fe0dccf1a
+PODFILE CHECKSUM: 8f4cec42208f5c02d69592e4de73d4d908a59afc
 
 COCOAPODS: 1.3.1

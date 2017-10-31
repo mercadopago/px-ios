@@ -1,6 +1,6 @@
 {
   "name": "MercadoPagoSDK",
-  "version": "3.6.1",
+  "version": "3.6.2",
   "summary": "MercadoPagoSDK",
   "homepage": "https://www.mercadopago.com",
   "license": {
@@ -12,13 +12,18 @@
   },
   "source": {
     "git": "https://github.com/mercadopago/px-ios.git",
-    "tag": "3.6.1"
+    "tag": "3.6.2"
   },
   "platforms": {
     "ios": "8.0"
   },
   "requires_arc": true,
   "default_subspecs": "Default",
+  "dependencies": {
+    "MercadoPagoPXTracking": [
+
+    ]
+  },
   "pod_target_xcconfig": {
     "SWIFT_VERSION": "3.0.1"
   },
@@ -32,8 +37,7 @@
         "MercadoPagoSDK/MercadoPagoSDK/*.lproj"
       ],
       "source_files": [
-        "MercadoPagoSDK/MercadoPagoSDK/*",
-        "MercadoPagoSDK/MercadoPagoSDK/Tracker/*"
+        "MercadoPagoSDK/MercadoPagoSDK/*"
       ]
     }
   ]

@@ -53,7 +53,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.title = ""
+   //     self.title = ""
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         self.extendedLayoutIncludesOpaqueBars = true
         self.titleCellHeight = 44
