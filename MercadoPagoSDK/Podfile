@@ -6,7 +6,7 @@ target 'MercadoPagoSDK' do
   use_frameworks!
 
   # Pods for MercadoPagoSDK
-  pod 'MercadoPagoPXTracking', '1.0.0'
+  pod 'MercadoPagoPXTracking', '1.1.0'
 
   target 'MercadoPagoSDKTests' do
     inherit! :search_paths
