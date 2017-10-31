@@ -11,7 +11,7 @@ open class PXToken: NSObject, Codable {
     open var id: String!
     open var publicKey: String!
     open var cardId: String?
-    open var luhnValidation: String!
+    open var luhnValidation: Bool!
     open var status: String!
     open var usedDate: Date?
     open var cardNumberLength: Int!
@@ -24,9 +24,9 @@ open class PXToken: NSObject, Codable {
     open var firstSixDigits: String!
     open var lastFourDigits: String!
     open var cardholder: PXCardHolder!
-    open var esc: String!
+    open var esc: String?
 
-    init(id: String, publicKey: String, cardId: String?, luhnValidation: String, status: String, usedDate: Date?, cardNumberLength: Int, dateCreated: Date?, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, dateLastUpdated: Date?, dueDate: Date?, firstSixDigits: String, lastFourDigits: String, cardholder: PXCardHolder, esc: String) {
+    init(id: String, publicKey: String, cardId: String?, luhnValidation: Bool, status: String, usedDate: Date?, cardNumberLength: Int, dateCreated: Date?, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, dateLastUpdated: Date?, dueDate: Date?, firstSixDigits: String, lastFourDigits: String, cardholder: PXCardHolder, esc: String?) {
 
         self.id = id
         self.publicKey = publicKey
@@ -72,7 +72,7 @@ open class PXToken: NSObject, Codable {
         let id: String = try container.decode(String.self, forKey: .id)
         let publicKey: String = try container.decode(String.self, forKey: .publicKey)
         let cardId: String? = try container.decodeIfPresent(String.self, forKey: .cardId)
-        let luhnValidation: String = try container.decode(String.self, forKey: .luhnValidation)
+        let luhnValidation: Bool = try container.decode(Bool.self, forKey: .luhnValidation)
         let status: String = try container.decode(String.self, forKey: .status)
         //let usedDate: String = try container.decode(String.self, forKey: .usedDate)
         let cardNumberLength: Int = try container.decode(Int.self, forKey: .cardNumberLength)
@@ -85,7 +85,7 @@ open class PXToken: NSObject, Codable {
         let firstSixDigits: String = try container.decode(String.self, forKey: .firstSixDigits)
         let lastFourDigits: String = try container.decode(String.self, forKey: .lastFourDigits)
         let cardholder: PXCardHolder = try container.decode(PXCardHolder.self, forKey: .cardholder)
-        let esc: String = try container.decode(String.self, forKey: .esc)
+        let esc: String? = try container.decodeIfPresent(String.self, forKey: .esc)
 
         self.init(id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: nil, cardNumberLength: cardNumberLength, dateCreated: nil, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, dateLastUpdated: nil, dueDate: nil, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, cardholder: cardholder, esc: esc)
     }

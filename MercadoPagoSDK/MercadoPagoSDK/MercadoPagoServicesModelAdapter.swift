@@ -142,7 +142,7 @@ extension MercadoPagoServicesAdapter {
         let id: String = pxToken.id
         let publicKey: String = pxToken.publicKey
         let cardId: String = pxToken.cardId ?? ""
-        let luhnValidation: String = pxToken.luhnValidation
+        let luhnValidation: String = pxToken.luhnValidation.description
         let status: String = pxToken.status
         let usedDate: String = getStringDateFromDate(pxToken.usedDate ?? Date())
         let cardNumberLength: Int = pxToken.cardNumberLength
