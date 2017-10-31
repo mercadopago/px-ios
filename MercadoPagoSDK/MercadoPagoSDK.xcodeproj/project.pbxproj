@@ -1101,7 +1101,6 @@
 		0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */ = {
 			isa = PBXGroup;
 			children = (
-				4B506FCF1F9A6972007EA74E /* Service library */,
 				155954F21F87CD270086854B /* PreferenceDescriptionTableViewCell.xib */,
 				15AE1DAB1F61B8BA00B0DAF8 /* Components */,
 				15C6A37E1F4CA32900DBC32A /* Preferences */,
@@ -1633,13 +1632,6 @@
 				4B31AA371E5A078B0084C5DB /* InstructionsSubtitleTableViewCell.xib */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		4B506FCF1F9A6972007EA74E /* Service library */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Service library";
 			sourceTree = "<group>";
 		};
 		4BA78EB51EC0C5B600CA5D6E /* SecurityCode */ = {
