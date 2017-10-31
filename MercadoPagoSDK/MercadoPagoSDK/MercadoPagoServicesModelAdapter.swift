@@ -571,7 +571,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getIssuerFromPXIssuer(_ pxIssuer: PXIssuer) -> Issuer {
         let issuer = Issuer()
-        issuer._id = pxIssuer._id // TODO: Sacar el _
+        issuer._id = pxIssuer.id
         issuer.name = pxIssuer.name
         return issuer
     }

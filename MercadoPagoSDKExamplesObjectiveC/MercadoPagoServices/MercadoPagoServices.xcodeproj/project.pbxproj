@@ -67,6 +67,7 @@
 		4BE4B2741F9FC25C00A08BCE /* PXSecurityCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B23D1F9FC25B00A08BCE /* PXSecurityCode.swift */; };
 		4BE4B2751F9FC25C00A08BCE /* PXBin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B23E1F9FC25C00A08BCE /* PXBin.swift */; };
 		4BE4B27B1F9FC76F00A08BCE /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4B27A1F9FC76F00A08BCE /* String+Additions.swift */; };
+		FC6DC6DB1FA8D06200601314 /* Int+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6DC6DA1FA8D06200601314 /* Int+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		4BE4B23D1F9FC25B00A08BCE /* PXSecurityCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXSecurityCode.swift; sourceTree = "<group>"; };
 		4BE4B23E1F9FC25C00A08BCE /* PXBin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXBin.swift; sourceTree = "<group>"; };
 		4BE4B27A1F9FC76F00A08BCE /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
+		FC6DC6DA1FA8D06200601314 /* Int+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 			children = (
 				4B3C78CD1FA35F1200CB47B0 /* Models */,
 				4BE4B27A1F9FC76F00A08BCE /* String+Additions.swift */,
+				FC6DC6DA1FA8D06200601314 /* Int+Additions.swift */,
 				4BE4B1E71F9FC1C200A08BCE /* MercadoPagoServices.h */,
 				4BE4B1E81F9FC1C200A08BCE /* Info.plist */,
 			);
@@ -411,6 +414,7 @@
 				4BE4B2741F9FC25C00A08BCE /* PXSecurityCode.swift in Sources */,
 				4BE4B24F1F9FC25C00A08BCE /* PXPayment.swift in Sources */,
 				4BE4B25F1F9FC25C00A08BCE /* PXSite.swift in Sources */,
+				FC6DC6DB1FA8D06200601314 /* Int+Additions.swift in Sources */,
 				4BE4B26D1F9FC25C00A08BCE /* PXInstructions.swift in Sources */,
 				4BE4B2461F9FC25C00A08BCE /* PXItem.swift in Sources */,
 				4BE4B25C1F9FC25C00A08BCE /* PXPhone.swift in Sources */,

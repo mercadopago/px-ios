@@ -8,14 +8,34 @@
 
 import Foundation
 open class PXIssuer: NSObject, Codable {
-    open var _id: String! // TODO: Cambiar
+    open var id: String!
     open var name: String!
 
     init(id: String, name: String) {
-        self._id = id
+        self.id = id
         self.name = name
     }
 
+    public enum PXIssuerKeys: String, CodingKey {
+        case id
+        case name
+    }
+    
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXIssuerKeys.self)
+        let name: String = try container.decode(String.self, forKey: .name)
+        var id = ""
+        do {
+            let intId = try container.decodeIfPresent(Int.self, forKey: .id)
+            id = (intId?.stringValue)!
+        } catch {
+            let stringId = try container.decodeIfPresent(String.self, forKey: .id)
+            id = stringId!
+        }
+        
+        self.init(id: id, name: name)
+    }
+    
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
