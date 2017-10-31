@@ -9,7 +9,7 @@
 import Foundation
 open class PXPayment: NSObject, Codable {
     open var binaryMode: Bool!
-    open var callForAuthorizeId: String!
+    open var callForAuthorizeId: String?
     open var captured: Bool!
     open var card: PXCard!
     open var collectorId: String!
@@ -47,7 +47,7 @@ open class PXPayment: NSObject, Codable {
 
     }
 
-    init(binaryMode: Bool, callForAuthorizeId: String, captured: Bool, card: PXCard, collectorId: String, couponAmount: Double, currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata: [String: String], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
+    init(binaryMode: Bool, callForAuthorizeId: String?, captured: Bool, card: PXCard, collectorId: String, couponAmount: Double, currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata: [String: String], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
 
         self.binaryMode = binaryMode
         self.callForAuthorizeId = callForAuthorizeId
@@ -126,15 +126,15 @@ open class PXPayment: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentKeys.self)
         let binaryMode: Bool = try container.decode(Bool.self, forKey: .binaryMode)
-        let callForAuthorizeId: String = try container.decode(String.self, forKey: .callForAuthorizeId)
+        let callForAuthorizeId: String? = try container.decodeIfPresent(String.self, forKey: .callForAuthorizeId)
         let captured: Bool = try container.decode(Bool.self, forKey: .captured)
         let card: PXCard = try container.decode(PXCard.self, forKey: .card)
         let collectorId: String = try container.decode(String.self, forKey: .collectorId)
         let couponAmount: Double = try container.decode(Double.self, forKey: .couponAmount)
         let currencyId: String = try container.decode(String.self, forKey: .currencyId)
-        //let dateApproved: String = try container.decode(String.self, forKey: .dateApproved)
-        //let dateCreated: String = try container.decode(String.self, forKey: .dateCreated)
-        //let dateLastUpdated: String = try container.decode(String.self, forKey: .dateLastUpdated)
+        let dateApprovedString: String = try container.decode(String.self, forKey: .dateApproved)
+        let dateCreatedString: String = try container.decode(String.self, forKey: .dateCreated)
+        let dateLastUpdatedString: String = try container.decode(String.self, forKey: .dateLastUpdated)
         let description: String = try container.decode(String.self, forKey: .description)
         let differentialPricingId: Int64 = try container.decode(Int64.self, forKey: .differentialPricingId)
         let externalReference: String = try container.decode(String.self, forKey: .externalReference)
@@ -144,7 +144,7 @@ open class PXPayment: NSObject, Codable {
         let issuerId: Int = try container.decode(Int.self, forKey: .issuerId)
         let liveMode: Bool = try container.decode(Bool.self, forKey: .liveMode)
         let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
-        //let moneyReleaseDate: String = try container.decode(String.self, forKey: .moneyReleaseDate)
+        let moneyReleaseDateString: String = try container.decode(String.self, forKey: .moneyReleaseDate)
         let notificationUrl: String = try container.decode(String.self, forKey: .notificationUrl)
         let operationType: String = try container.decode(String.self, forKey: .operationType)
         let order: PXOrder = try container.decode(PXOrder.self, forKey: .order)
@@ -160,22 +160,23 @@ open class PXPayment: NSObject, Codable {
         let transactionDetails: PXTransactionDetails = try container.decode(PXTransactionDetails.self, forKey: .transactionDetails)
         let tokenId: String = try container.decode(String.self, forKey: .tokenId)
 
-//        func getDateFromString(_ string: String?) -> Date? {
-//            if let dateString = string {
-//                let dateFormatter = DateFormatter()
-//                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-//                let date = dateFormatter.date(from: dateString)
-//                return date
-//            } else {
-//                return nil
-//            }
-//        }
-//
-//        let dateLastUpdated = getDateFromString(dateLastUpdatedString)
-//        let dateCreated = getDateFromString(dateCreatedString)
-//        let registrationDate = getDateFromString(registrationDateString)
+        func getDateFromString(_ string: String?) -> Date? {
+            if let dateString = string {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                let date = dateFormatter.date(from: dateString)
+                return date
+            } else {
+                return nil
+            }
+        }
 
-        self.init(binaryMode: binaryMode, callForAuthorizeId: callForAuthorizeId, captured: captured, card: card, collectorId: collectorId, couponAmount: couponAmount, currencyId: currencyId, dateApproved: nil, dateCreated: nil, dateLastUpdated: nil, description: description, differentialPricingId: differentialPricingId, externalReference: externalReference, feeDetails: feeDetails, id: id, installments: installments, issuerId: issuerId, liveMode: liveMode, metadata: metadata, moneyReleaseDate: nil, notificationUrl: notificationUrl, operationType: operationType, order: order, payer: payer, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, refunds: refunds, statementDescriptor: statementDescriptor, status: status, statusDetail: statusDetail, transactionAmount: transactionAmount, transactionAmountRefunded: transactionAmountRefunded, transactionDetails: transactionDetails, tokenId: tokenId)
+        let dateApproved = getDateFromString(dateApprovedString)
+        let dateCreated = getDateFromString(dateCreatedString)
+        let dateLastUpdated = getDateFromString(dateLastUpdatedString)
+        let moneyReleaseDate = getDateFromString(moneyReleaseDateString)
+
+        self.init(binaryMode: binaryMode, callForAuthorizeId: callForAuthorizeId, captured: captured, card: card, collectorId: collectorId, couponAmount: couponAmount, currencyId: currencyId, dateApproved: dateApproved, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, description: description, differentialPricingId: differentialPricingId, externalReference: externalReference, feeDetails: feeDetails, id: id, installments: installments, issuerId: issuerId, liveMode: liveMode, metadata: metadata, moneyReleaseDate: moneyReleaseDate, notificationUrl: notificationUrl, operationType: operationType, order: order, payer: payer, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, refunds: refunds, statementDescriptor: statementDescriptor, status: status, statusDetail: statusDetail, transactionAmount: transactionAmount, transactionAmountRefunded: transactionAmountRefunded, transactionDetails: transactionDetails, tokenId: tokenId)
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -44,7 +44,7 @@ open class CustomService: MercadoPagoService {
     open func createPayment(_ method: String = "POST", headers: [String:String]? = nil, body: String, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         self.request(uri: self.URI, params: nil, body: body, method: method, headers : headers, cache: false, success: { (data: Data) -> Void in
-                            let jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
+                            let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if paymentDic["status"] as? Int == PXApitUtil.PROCESSING {
@@ -64,7 +64,7 @@ open class CustomService: MercadoPagoService {
                 }
             } else if failure != nil {
                 failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: PXApitUtil.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
-            }} as! (Data?) -> Void, failure: { (error) -> Void in
+            }}, failure: { (error) -> Void in
                 if let failure = failure {
                     failure(NSError(domain: "mercadopago.sdk.CustomService.createPayment", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
                 }
