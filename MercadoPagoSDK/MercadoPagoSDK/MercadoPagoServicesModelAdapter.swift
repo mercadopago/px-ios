@@ -597,6 +597,7 @@ extension MercadoPagoServicesAdapter {
         payerCost.recommendedMessage = pxPayerCost.recommendedMessage
         payerCost.installmentAmount = pxPayerCost.installmentAmount
         payerCost.totalAmount = pxPayerCost.totalAmount
+        payerCost.installments = pxPayerCost.installments
         return payerCost
     }
 }

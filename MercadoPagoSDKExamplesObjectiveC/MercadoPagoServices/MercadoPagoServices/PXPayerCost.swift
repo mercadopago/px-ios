@@ -16,8 +16,9 @@ open class PXPayerCost: NSObject, Codable {
     open var recommendedMessage: String!
     open var installmentAmount: Double!
     open var totalAmount: Double!
+    open var installments: Int!
 
-    init(installmentRate: Double, labels: [String], minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String, installmentAmount: Double, totalAmount: Double) {
+    init(installmentRate: Double, labels: [String], minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String, installmentAmount: Double, totalAmount: Double, installments: Int) {
         self.installmentRate = installmentRate
         self.labels = labels
         self.minAllowedAmount = minAllowedAmount
@@ -25,6 +26,7 @@ open class PXPayerCost: NSObject, Codable {
         self.recommendedMessage = recommendedMessage
         self.installmentAmount = installmentAmount
         self.totalAmount = totalAmount
+        self.installments = installments
     }
 
     public enum PXPayerCostKeys: String, CodingKey {
@@ -35,6 +37,7 @@ open class PXPayerCost: NSObject, Codable {
         case recommendedMessage = "recommended_message"
         case installmentAmount = "installment_amount"
         case totalAmount = "total_amount"
+        case installments
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -46,8 +49,9 @@ open class PXPayerCost: NSObject, Codable {
         let recommendedMessage: String = try container.decode(String.self, forKey: .recommendedMessage)
         let installmentAmount: Double = try container.decode(Double.self, forKey: .installmentAmount)
         let totalAmount: Double = try container.decode(Double.self, forKey: .totalAmount)
+        let installments: Int = try container.decode(Int.self, forKey: .installments)
 
-        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount)
+        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -59,6 +63,7 @@ open class PXPayerCost: NSObject, Codable {
         try container.encodeIfPresent(self.recommendedMessage, forKey: .recommendedMessage)
         try container.encodeIfPresent(self.installmentAmount, forKey: .installmentAmount)
         try container.encodeIfPresent(self.totalAmount, forKey: .totalAmount)
+        try container.encodeIfPresent(self.installments, forKey: .installments)
     }
 
     open func toJSONString() throws -> String? {
