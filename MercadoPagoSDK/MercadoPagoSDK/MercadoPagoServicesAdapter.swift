@@ -64,6 +64,15 @@ open class MercadoPagoServicesAdapter: NSObject {
 
         let pxPayer = getPXPayerFromPayer(payer)
         let pxSite = getPXSiteFromId(site)
+        
+        var excludedPaymentTypesIds = excludedPaymentTypesIds
+        if !MercadoPagoContext.accountMoneyAvailable() {
+            if excludedPaymentTypesIds != nil {
+                excludedPaymentTypesIds?.insert("account_money")
+            } else {
+                excludedPaymentTypesIds = ["account_money"]
+            }
+        }
 
         mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: excludedPaymentTypesIds, excludedPaymentMethodsIds: excludedPaymentMethodsIds, defaultPaymentMethod: defaultPaymentMethod, payer: pxPayer, site: pxSite, callback: {  [weak self] (pxPaymentMethodSearch) in
             guard let strongSelf = self else {
