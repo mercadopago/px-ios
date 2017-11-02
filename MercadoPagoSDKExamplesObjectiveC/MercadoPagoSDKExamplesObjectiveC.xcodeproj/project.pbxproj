@@ -48,20 +48,6 @@
 			remoteGlobalIDString = 0F9883091AD2A97A00F750F0;
 			remoteInfo = MercadoPagoSDK;
 		};
-		4B02E1C11FA8BD5E0086B309 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4B02E1BB1FA8BD5E0086B309 /* MercadoPagoServices.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4BE4B1E41F9FC1C200A08BCE;
-			remoteInfo = MercadoPagoServices;
-		};
-		4B02E1C31FA8BD5E0086B309 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4B02E1BB1FA8BD5E0086B309 /* MercadoPagoServices.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4BE4B1ED1F9FC1C300A08BCE;
-			remoteInfo = MercadoPagoServicesTests;
-		};
 		76EF7ED71D2559140087C785 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 76EF7EB51D2559140087C785 /* Project object */;
@@ -103,7 +89,6 @@
 		15C84A961D2D531E002E4988 /* MediosOffTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediosOffTableViewController.h; sourceTree = "<group>"; };
 		15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediosOffTableViewController.m; sourceTree = "<group>"; };
 		2E63040F2E13FF09B0FAC07F /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B02E1BB1FA8BD5E0086B309 /* MercadoPagoServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MercadoPagoServices.xcodeproj; path = MercadoPagoServices/MercadoPagoServices.xcodeproj; sourceTree = "<group>"; };
 		4B7AA97D1E55E64C000902B9 /* DineroEnCuentaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DineroEnCuentaTableViewCell.h; sourceTree = "<group>"; };
 		4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DineroEnCuentaTableViewCell.m; sourceTree = "<group>"; };
 		4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DineroEnCuentaTableViewCell.xib; sourceTree = "<group>"; };
@@ -197,15 +182,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		4B02E1BC1FA8BD5E0086B309 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4B02E1C21FA8BD5E0086B309 /* MercadoPagoServices.framework */,
-				4B02E1C41FA8BD5E0086B309 /* MercadoPagoServicesTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		76E6E0601D2AD29C006CE49B /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,7 +216,6 @@
 		76EF7EB41D2559140087C785 = {
 			isa = PBXGroup;
 			children = (
-				4B02E1BB1FA8BD5E0086B309 /* MercadoPagoServices.xcodeproj */,
 				76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */,
 				76EF7EBF1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */,
 				76EF7ED91D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCTests */,
@@ -409,10 +384,6 @@
 					ProductGroup = 76EF7EF61D255AA10087C785 /* Products */;
 					ProjectRef = 76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */;
 				},
-				{
-					ProductGroup = 4B02E1BC1FA8BD5E0086B309 /* Products */;
-					ProjectRef = 4B02E1BB1FA8BD5E0086B309 /* MercadoPagoServices.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -423,20 +394,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4B02E1C21FA8BD5E0086B309 /* MercadoPagoServices.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MercadoPagoServices.framework;
-			remoteRef = 4B02E1C11FA8BD5E0086B309 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4B02E1C41FA8BD5E0086B309 /* MercadoPagoServicesTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MercadoPagoServicesTests.xctest;
-			remoteRef = 4B02E1C31FA8BD5E0086B309 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -487,10 +444,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MercadoPagoPXTracking/MercadoPagoPXTracking.framework",
+				"${BUILT_PRODUCTS_DIR}/MercadoPagoServices/MercadoPagoServices.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoPXTracking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoServices.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
