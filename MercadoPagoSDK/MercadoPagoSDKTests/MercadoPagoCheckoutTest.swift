@@ -73,9 +73,10 @@ class MercadoPagoCheckoutTest: BaseTest {
         let reviewScreenPreference = ReviewScreenPreference()
         reviewScreenPreference.setTitle(title: "Title 1")
         self.mpCheckout?.setReviewScreenPreference(reviewScreenPreference)
+        self.mpCheckout?.viewModel.paymentOptionSelected = MockBuilder.buildPaymentMethodSearchComplete().groups[0]
         self.mpCheckout?.start()
         let currentViewController = self.mpCheckout?.navigationController.viewControllers
-        var reviewVC = currentViewController?.last as! ReviewScreenViewController
+        let reviewVC = currentViewController?.last as! ReviewScreenViewController
         XCTAssertEqual(reviewVC.viewModel.reviewScreenPreference.getTitle(), reviewScreenPreference.getTitle())
         let updatedReviewScreenPreference = ReviewScreenPreference()
         updatedReviewScreenPreference.setTitle(title: "Title 2")
@@ -112,13 +113,14 @@ class MercadoPagoCheckoutTest: BaseTest {
 
     func testCollectCheckoutPreference() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        checkoutPreference._id = "sarasa"
         let navControllerInstance = UINavigationController()
         self.mpCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
 
         self.mpCheckout!.getCheckoutPreference()
 
         // Se obtiene id de MockedResponse
-        XCTAssertEqual("150216849-e131b785-10d3-48c0-a58b-2910935512e0", self.mpCheckout!.viewModel.checkoutPreference._id)
+        XCTAssertEqual("NO_EXCLUSIONS", self.mpCheckout!.viewModel.checkoutPreference._id)
 
     }
 
@@ -297,7 +299,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("bolbradesco", paymentTypeId : "bank_transfer")
         self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("bolbradesco")
         self.mpCheckout!.viewModel.paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
-        self.mpCheckout?.viewModel.instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
+        self.mpCheckout?.viewModel.instructionsInfo = MockBuilder.buildInstructionsInfo()
         
         self.mpCheckout!.showPaymentResultScreen()
 
@@ -353,8 +355,10 @@ class MercadoPagoCheckoutTest: BaseTest {
 
         mpCheckout?.viewModel.updateCheckoutModel(paymentMethods: [MockBuilder.buildPaymentMethod("visa")], cardToken: MockBuilder.buildCardToken())
 
+        mpCheckout?.viewModel.cardToken?.cardNumber = "invalid_identification_number"
+
         mpCheckout?.createNewCardToken()
-        XCTAssertFalse(dummyExecutionCheckout.executedNextStep)
+        XCTAssertNil(MercadoPagoCheckoutViewModel.error)
     }
 }
 

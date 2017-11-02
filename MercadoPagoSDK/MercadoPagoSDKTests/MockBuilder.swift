@@ -236,6 +236,22 @@ open class MockBuilder: NSObject {
         return paymentMethodSearch
     }
 
+    class func buildPaymentMethodSearchComplete() -> PaymentMethodSearch {
+        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
+        let customerCardOption = MockBuilder.buildCustomerPaymentMethod("customerCardId", paymentMethodId: "visa")
+        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let offlineOption = MockBuilder.buildPaymentMethodSearchItem("off", type: PaymentMethodSearchItemType.PAYMENT_METHOD)
+        let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethodMaster = MockBuilder.buildPaymentMethod("master")
+        let paymentMethodTicket = MockBuilder.buildPaymentMethod("ticket", paymentTypeId:"off")
+        let paymentMethodTicket2 = MockBuilder.buildPaymentMethod("ticket 2", paymentTypeId:"off")
+        let paymentMethodAM = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
+        let offlinePaymentMethod = MockBuilder.buildPaymentMethod("off", paymentTypeId : PaymentTypeId.TICKET.rawValue)
+
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption, offlineOption], paymentMethods : [paymentMethodVisa, paymentMethodMaster, paymentMethodAM, offlinePaymentMethod, paymentMethodTicket, paymentMethodTicket2], customOptions : [customerCardOption, accountMoneyOption])
+        return paymentMethodSearchMock
+    }
+
     class func getMockPaymentMethods() -> [PaymentMethod] {
         return [self.buildPaymentMethod("amex"), self.buildPaymentMethod("oxxo")]
     }
@@ -337,7 +353,7 @@ open class MockBuilder: NSObject {
         return paymentData
     }
     
-    class func buildInstructionsInfo(paymentMethod: PaymentMethod) -> InstructionsInfo {
+    class func buildInstructionsInfo() -> InstructionsInfo {
         let instructionInfoJson = MockManager.getMockFor("InstructionInfo")
         let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
         return intructionsInfo

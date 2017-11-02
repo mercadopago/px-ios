@@ -17,8 +17,7 @@ class InstructionsViewModelTest: BaseTest {
         super.setUp()
         paymentResult = MockBuilder.buildPaymentResult()
         paymentResult.paymentData?.issuer = nil
-        let paymentMethod = MockBuilder.buildPaymentMethod("bolbradesco")
-        instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
+        instructionsInfo = MockBuilder.buildInstructionsInfo()
         let paymentResultScreenPreference = PaymentResultScreenPreference()
         viewModel = InstructionsViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference, instructionsInfo: instructionsInfo)
     }
