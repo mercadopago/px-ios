@@ -89,11 +89,6 @@ if [ $POD_TRUNK_STATUS -ne 0 ]
 fi
 
 echo "=========================================="
-echo "5) Push new podspec into master"
-echo "=========================================="
-pod trunk push $PODSPEC_FILE --allow-warnings
-
-echo "=========================================="
 echo "		Pod created from tag $VERSION. 		"
 echo " 			Versions available in 			"
 echo "https://github.com/CocoaPods/Specs/tree/master/Specs/$PROJECT"
