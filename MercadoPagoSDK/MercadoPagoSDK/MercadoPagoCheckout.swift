@@ -25,6 +25,10 @@ open class MercadoPagoCheckout: NSObject {
     var entro = false
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+
+        MercadoPagoContext.setPublicKey(publicKey)
+        MercadoPagoContext.setPayerAccessToken(accessToken)
+
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
@@ -35,9 +39,6 @@ open class MercadoPagoCheckout: NSObject {
             }
             viewControllerBase = newNavigationStack.last
         }
-
-        MercadoPagoContext.setPublicKey(publicKey)
-        MercadoPagoContext.setPayerAccessToken(accessToken)
     }
 
     func initMercadPagoPXTracking() {
