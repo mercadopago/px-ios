@@ -402,7 +402,7 @@ extension MercadoPagoCheckout {
             fatalError("Get Instructions - Payment Method Type Id does no exist")
         }
 
-        self.viewModel.mercadoPagoServicesAdapter.getInstructions(paymentId: Int64(paymentId)!, paymentTypeId: paymentTypeId, callback: { [weak self] (instructionsInfo) in
+        self.viewModel.mercadoPagoServicesAdapter.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (instructionsInfo) in
 
             guard let strongSelf = self else {
                 return

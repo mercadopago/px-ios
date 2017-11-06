@@ -43,15 +43,17 @@ open class MercadoPagoServicesAdapter: NSObject {
             guard let strongSelf = self else {
                 return
             }
-            MercadoPagoContext.setSiteID(pxCheckoutPreference.siteId)
+            MercadoPagoContext.setSiteID(pxCheckoutPreference.siteId ?? "MLA")
             let checkoutPreference = strongSelf.getCheckoutPreferenceFromPXCheckoutPreference(pxCheckoutPreference)
             callback(checkoutPreference)
         }, failure: failure)
     }
 
-    open func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (pxInstructions) in
+        let int64PaymentId = Int64(paymentId)
+        
+        mercadoPagoServices.getInstructions(paymentId: int64PaymentId!, paymentTypeId: paymentTypeId, callback: { [weak self] (pxInstructions) in
             guard let strongSelf = self else {
                 return
             }
