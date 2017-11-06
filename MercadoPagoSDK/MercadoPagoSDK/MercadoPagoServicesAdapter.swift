@@ -52,6 +52,7 @@ open class MercadoPagoServicesAdapter: NSObject {
     open func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let int64PaymentId = Int64(paymentId)
+        //TODO AUGUSTO: ARRRGLAR ESTO
         
         mercadoPagoServices.getInstructions(paymentId: int64PaymentId!, paymentTypeId: paymentTypeId, callback: { [weak self] (pxInstructions) in
             guard let strongSelf = self else {
