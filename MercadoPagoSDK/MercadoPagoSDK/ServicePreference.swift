@@ -117,6 +117,10 @@ open class ServicePreference: NSObject {
         self.gatewayURL = gatewayURL
     }
 
+    public func setBetaEnvironment() {
+        ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_TEST_ENV
+    }
+
     public func getDefaultBaseURL() -> String {
         return baseURL
     }

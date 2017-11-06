@@ -35,6 +35,10 @@ open class MercadoPagoServicesAdapter: NSObject {
         }
 
         mercadoPagoServices.setDiscount(baseURL: servicePreference.getDiscountURL(), URI: servicePreference.getDiscountURI(), additionalInfo: servicePreference.discountAdditionalInfo as? [String : String])
+
+        if ServicePreference.MP_SELECTED_ENV == ServicePreference.MP_TEST_ENV {
+            mercadoPagoServices.setBetaEnvironment()
+        }
     }
 
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
