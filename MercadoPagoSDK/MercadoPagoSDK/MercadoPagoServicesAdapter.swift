@@ -39,7 +39,7 @@ open class MercadoPagoServicesAdapter: NSObject {
 
 
         if servicePreference.getServiceEnvironment() == ServicePreference.MP_TEST_ENV {
-            mercadoPagoServices.setBetaEnvironment()
+            mercadoPagoServices.enableBetaServices()
         }
     }
 
