@@ -2,27 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>services_settings</key>
-	<dict>
-		<key>uri_issuers</key>
-		<dict>
-			<key>op_uri</key>
-			<string>/payment_methods/card_issuers</string>
-			<key>wrapper_uri</key>
-			<string>/checkout/payment_methods/card_issuers</string>
-			<key>should_use_wrapper</key>
-			<true/>
-		</dict>
-		<key>uri_installments</key>
-		<dict>
-			<key>op_uri</key>
-			<string>/payment_methods/installments</string>
-			<key>wrapper_uri</key>
-			<string>/checkout/payment_methods/installments</string>
-			<key>should_use_wrapper</key>
-			<true/>
-		</dict>
-	</dict>
 	<key>flow_sdk_type_hybrid</key>
 	<false/>
 	<key>sdk_version</key>

@@ -27,20 +27,16 @@ open class MercadoPagoServicesAdapter: NSObject {
 
         mercadoPagoServices.setBaseURL(servicePreference.baseURL)
         mercadoPagoServices.setGatewayBaseURL(servicePreference.getGatewayURL())
+
         if let customerURL = servicePreference.getCustomerURL() {
             mercadoPagoServices.setGetCustomer(baseURL: customerURL, URI: servicePreference.customerURI, additionalInfo: servicePreference.customerAdditionalInfo as? [String : String])
         }
+
         if let checkoutPreferenceURL = servicePreference.getCheckoutPreferenceURL() {
             mercadoPagoServices.setCreateCheckoutPreference(baseURL: checkoutPreferenceURL, URI: servicePreference.checkoutPreferenceURI, additionalInfo: servicePreference.checkoutAdditionalInfo)
         }
 
         mercadoPagoServices.setDiscount(baseURL: servicePreference.getDiscountURL(), URI: servicePreference.getDiscountURI(), additionalInfo: servicePreference.discountAdditionalInfo as? [String : String])
-
-
-
-        if servicePreference.getServiceEnvironment() == ServicePreference.MP_TEST_ENV {
-            mercadoPagoServices.enableBetaServices()
-        }
     }
 
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
