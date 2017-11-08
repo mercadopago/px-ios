@@ -59,8 +59,6 @@ open class ServicePreference: NSObject {
     static let MP_CUSTOMER_URI = "/customers?preference_id="
     static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
 
-    private static let kIsProdApiEnvironemnt = "prod_api_environment"
-
     private static let kServiceSettings = "services_settings"
     private static let kURIInstallments = "uri_installments"
     private static let kURIIssuers = "uri_issuers"
@@ -117,8 +115,13 @@ open class ServicePreference: NSObject {
         self.gatewayURL = gatewayURL
     }
 
-    public func setBetaEnvironment() {
+    public func enableBetaServices() {
         ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_TEST_ENV
+        ServicePreference.MP_ENVIROMENT = ServicePreference.MP_TEST_ENV  + "/checkout"
+    }
+
+    func getServiceEnvironment() -> String {
+        return ServicePreference.MP_SELECTED_ENV
     }
 
     public func getDefaultBaseURL() -> String {
@@ -228,18 +231,7 @@ open class ServicePreference: NSObject {
             guard let serviceSettings: [String:Any] = Utils.getSetting(identifier: ServicePreference.kServiceSettings) else {
                 return
             }
-
-            guard let isProdEnvironment = serviceSettings[ServicePreference.kIsProdApiEnvironemnt] as? Bool else {
-                return
-            }
-            if isProdEnvironment {
-                ServicePreference.MP_SELECTED_ENV = MP_PROD_ENV
-                ServicePreference.MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
-            } else {
-                ServicePreference.MP_SELECTED_ENV = MP_TEST_ENV
-                ServicePreference.MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
-            }
-
+            
             if let uriInstallmentSettings = serviceSettings[ServicePreference.kURIInstallments] as? [String:Any] {
                 ServicePreference.MP_INSTALLMENTS_URI = getFinalURIFor(settings: uriInstallmentSettings)
             }

@@ -36,7 +36,9 @@ open class MercadoPagoServicesAdapter: NSObject {
 
         mercadoPagoServices.setDiscount(baseURL: servicePreference.getDiscountURL(), URI: servicePreference.getDiscountURI(), additionalInfo: servicePreference.discountAdditionalInfo as? [String : String])
 
-        if ServicePreference.MP_SELECTED_ENV == ServicePreference.MP_TEST_ENV {
+
+
+        if servicePreference.getServiceEnvironment() == ServicePreference.MP_TEST_ENV {
             mercadoPagoServices.setBetaEnvironment()
         }
     }

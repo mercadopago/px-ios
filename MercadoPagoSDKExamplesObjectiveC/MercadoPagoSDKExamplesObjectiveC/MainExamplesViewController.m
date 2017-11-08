@@ -315,6 +315,7 @@
     //    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
     //
     [servicePreference setGetCustomerWithBaseURL:@"https://api.mercadopago.com" URI:@"/v1/customers/261207170-jxqdmty1ClVKjU" additionalInfo:extraParams];
+    [servicePreference enableBetaServices];
 
     [MercadoPagoCheckout setServicePreference:servicePreference];
 }
