@@ -15,6 +15,6 @@ open class PXSDKSettings: NSObject {
     open class func enableBetaServices() {
         URLConfigs.MP_SELECTED_ENV = URLConfigs.MP_TEST_ENV
         PXServicesSettings.enableBetaServices()
-        // TODO: Agregar tracking
+        PXTrackingSettings.enableBetaServices()
     }
 }

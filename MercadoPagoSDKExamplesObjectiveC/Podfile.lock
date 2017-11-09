@@ -4,17 +4,19 @@ PODS:
     - MercadoPagoPXTracking (= 1.1.0)
 
 DEPENDENCIES:
-  - MercadoPagoPXTracking (= 1.1.0)
+  - MercadoPagoPXTracking (from `../../px-ios_tracking`)
   - MercadoPagoServices (from `../../px-ios_services`)
 
 EXTERNAL SOURCES:
+  MercadoPagoPXTracking:
+    :path: ../../px-ios_tracking
   MercadoPagoServices:
     :path: ../../px-ios_services
 
 SPEC CHECKSUMS:
-  MercadoPagoPXTracking: c2c9710727dc42c195778cd620131af9b38cf505
+  MercadoPagoPXTracking: 589de3983bf97e685b9ada18d2e90a86ecc700bd
   MercadoPagoServices: c0adee718e3114612f230824f2a0458876aa86f2
 
-PODFILE CHECKSUM: 13df4c63d8209969dbdea92e46dba8b479fc2e61
+PODFILE CHECKSUM: 502849210d34eac1459af5de8a0626ad7966306a
 
 COCOAPODS: 1.3.1
