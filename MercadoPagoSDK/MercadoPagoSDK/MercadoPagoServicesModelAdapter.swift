@@ -167,6 +167,9 @@ extension MercadoPagoServicesAdapter {
 
     open func getPXSavedESCCardTokenFromSavedESCCardToken(_ savedESCCardToken: SavedESCCardToken) -> PXSavedESCCardToken {
         let pxSavedESCCardToken = PXSavedESCCardToken()
+        pxSavedESCCardToken.cardId = savedESCCardToken.cardId
+        pxSavedESCCardToken.securityCode = savedESCCardToken.securityCode
+        pxSavedESCCardToken.device = PXDevice()
         pxSavedESCCardToken.requireEsc = savedESCCardToken.requireESC
         pxSavedESCCardToken.esc = savedESCCardToken.esc
         return pxSavedESCCardToken
@@ -546,19 +549,25 @@ extension MercadoPagoServicesAdapter {
             }
         }
 
-        if let pxPaymentMethodSearchCustomOptionSearchItems = pxPaymentMethodSearch.customOptionSearchItems {
-            paymentMethodSearch.customerPaymentMethods = []
-            for pxCustomOptionSearchItem in pxPaymentMethodSearchCustomOptionSearchItems {
-                let customerPaymentMethod = getCustomerPaymentMethodFromPXCustomOptionSearchItem(pxCustomOptionSearchItem)
-                paymentMethodSearch.customerPaymentMethods = Array.safeAppend(paymentMethodSearch.customerPaymentMethods, customerPaymentMethod)
-            }
-        }
-
         if let pxPaymentMethodSearchCards = pxPaymentMethodSearch.cards {
             paymentMethodSearch.cards = []
             for pxCard in pxPaymentMethodSearchCards {
                 let card = getCardFromPXCard(pxCard)
                 paymentMethodSearch.cards = Array.safeAppend(paymentMethodSearch.cards, card)
+            }
+        }
+        
+        if let pxPaymentMethodSearchCustomOptionSearchItems = pxPaymentMethodSearch.customOptionSearchItems {
+            paymentMethodSearch.customerPaymentMethods = []
+            for pxCustomOptionSearchItem in pxPaymentMethodSearchCustomOptionSearchItems {
+                let customerPaymentMethod = getCustomerPaymentMethodFromPXCustomOptionSearchItem(pxCustomOptionSearchItem)
+                if let paymentMethodSearchCards = paymentMethodSearch.cards {
+                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.idCard == customerPaymentMethod._id})
+                    if !Array.isNullOrEmpty(filteredCustomerCard) {
+                        customerPaymentMethod.card = filteredCustomerCard[0]
+                    }
+                }
+                paymentMethodSearch.customerPaymentMethods = Array.safeAppend(paymentMethodSearch.customerPaymentMethods, customerPaymentMethod)
             }
         }
 
