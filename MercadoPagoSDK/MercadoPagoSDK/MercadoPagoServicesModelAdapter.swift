@@ -32,11 +32,11 @@ extension MercadoPagoServicesAdapter {
     open func getCurrencyFromPXCurrency(_ pxCurrency: PXCurrency?) -> Currency {
         if let pxCurrency = pxCurrency {
             let _id: String = pxCurrency.id
-            let description: String = pxCurrency._description
-            let symbol: String = pxCurrency.symbol
-            let decimalPlaces: Int = pxCurrency.decimalPlaces
-            let decimalSeparator: String = pxCurrency.decimalSeparator
-            let thousandSeparator: String = pxCurrency.thousandSeparator
+            let description: String = pxCurrency._description ?? ""
+            let symbol: String = pxCurrency.symbol ?? "$"
+            let decimalPlaces: Int = pxCurrency.decimalPlaces ?? 2
+            let decimalSeparator: String = pxCurrency.decimalSeparator ?? ","
+            let thousandSeparator: String = pxCurrency.thousandSeparator ?? "."
             let currency = Currency(_id: _id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
             return currency
         }
@@ -62,11 +62,11 @@ extension MercadoPagoServicesAdapter {
 
     open func getItemFromPXItem(_ pxItem: PXItem) -> Item {
         let id: String = pxItem.id
-        let title: String = pxItem.title
-        let quantity: Int = pxItem.quantity
-        let unitPrice: Double = pxItem.unitPrice
-        let description: String = pxItem._description
-        let currencyId: String = pxItem.currencyId
+        let title: String = pxItem.title ?? ""
+        let quantity: Int = pxItem.quantity ?? 1
+        let unitPrice: Double = pxItem.unitPrice ?? 0.0
+        let description: String = pxItem._description ?? ""
+        let currencyId: String = pxItem.currencyId ?? "ARS"
         let item = Item(_id: id, title: title, quantity: quantity, unitPrice: unitPrice, description: description, currencyId: currencyId)
         return item
     }
@@ -74,8 +74,8 @@ extension MercadoPagoServicesAdapter {
     open func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
         let paymentPreference = PaymentPreference()
         if let pxPaymentPreference = pxPaymentPreference{
-            paymentPreference.excludedPaymentMethodIds = Set(pxPaymentPreference.excludedPaymentMethodIds)
-            paymentPreference.excludedPaymentTypeIds = Set(pxPaymentPreference.excludedPaymentTypeIds)
+            paymentPreference.excludedPaymentMethodIds = Set(pxPaymentPreference.excludedPaymentMethodIds ?? [])
+            paymentPreference.excludedPaymentTypeIds = Set(pxPaymentPreference.excludedPaymentTypeIds ?? [])
             paymentPreference.defaultPaymentMethodId = pxPaymentPreference.defaultPaymentMethodId
             paymentPreference.maxAcceptedInstallments = pxPaymentPreference.maxAcceptedInstallments != nil ? pxPaymentPreference.maxAcceptedInstallments! : paymentPreference.maxAcceptedInstallments
             paymentPreference.defaultInstallments = pxPaymentPreference.defaultInstallments != nil ? pxPaymentPreference.defaultInstallments! : paymentPreference.defaultInstallments
@@ -327,17 +327,19 @@ extension MercadoPagoServicesAdapter {
         }
     }
 
-    open func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber) -> CardNumber {
+    open func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber?) -> CardNumber {
         let cardNumber = CardNumber()
-        cardNumber.length = pxCardNumber.length
-        cardNumber.validation = pxCardNumber.validation
+        if let pxCardNumber = pxCardNumber {
+            cardNumber.length = pxCardNumber.length ?? 17
+            cardNumber.validation = pxCardNumber.validation
+        }
         return cardNumber
     }
 
     open func getSecurityCodeFromPXSecurityCode(_ pxSecurityCode: PXSecurityCode?) -> SecurityCode {
         let securityCode = SecurityCode()
         if let pxSecurityCode = pxSecurityCode {
-            securityCode.length = pxSecurityCode.length
+            securityCode.length = pxSecurityCode.length ?? 3
             securityCode.cardLocation = pxSecurityCode.cardLocation
             securityCode.mode = pxSecurityCode.mode
         }
@@ -708,16 +710,18 @@ extension MercadoPagoServicesAdapter {
         return installment
     }
 
-    open func getPayerCostFromPXPayerCost(_ pxPayerCost: PXPayerCost) -> PayerCost {
+    open func getPayerCostFromPXPayerCost(_ pxPayerCost: PXPayerCost?) -> PayerCost {
         let payerCost = PayerCost()
-        payerCost.installmentRate = pxPayerCost.installmentRate
-        payerCost.labels = pxPayerCost.labels
-        payerCost.minAllowedAmount = pxPayerCost.minAllowedAmount
-        payerCost.maxAllowedAmount = pxPayerCost.maxAllowedAmount
-        payerCost.recommendedMessage = pxPayerCost.recommendedMessage
-        payerCost.installmentAmount = pxPayerCost.installmentAmount
-        payerCost.totalAmount = pxPayerCost.totalAmount
-        payerCost.installments = pxPayerCost.installments
+        if let pxPayerCost = pxPayerCost {
+            payerCost.installmentRate = pxPayerCost.installmentRate ?? 0.0
+            payerCost.labels = pxPayerCost.labels
+            payerCost.minAllowedAmount = pxPayerCost.minAllowedAmount ?? 1
+            payerCost.maxAllowedAmount = pxPayerCost.maxAllowedAmount ?? 1000000
+            payerCost.recommendedMessage = pxPayerCost.recommendedMessage
+            payerCost.installmentAmount = pxPayerCost.installmentAmount ?? 1000
+            payerCost.totalAmount = pxPayerCost.totalAmount ?? 1000
+            payerCost.installments = pxPayerCost.installments ?? 1
+        }
         return payerCost
     }
 }
