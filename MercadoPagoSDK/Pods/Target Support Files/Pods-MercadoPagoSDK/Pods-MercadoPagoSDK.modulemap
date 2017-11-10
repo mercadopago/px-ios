@@ -1,6 +1,0 @@
-framework module Pods_MercadoPagoSDK {
-  umbrella header "Pods-MercadoPagoSDK-umbrella.h"
-
-  export *
-  module * { export * }
-}
