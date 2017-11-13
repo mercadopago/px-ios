@@ -28,7 +28,7 @@ open class MercadoPagoServicesAdapter: NSObject {
         callback(MockBuilder.buildPaymentMethodSearchComplete())
     }
 
-    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, query: [String : String]? = nil, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         callback(MockBuilder.buildPayment("visa"))
     }
 
