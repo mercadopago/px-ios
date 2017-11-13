@@ -346,9 +346,14 @@ extension MercadoPagoCheckout {
             paymentBody = self.viewModel.paymentData.toJSON()
         }
 
-        let createPaymentQuery = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo()
+        var createPaymentQuery: [String:String]? = [:]
+        if let paymentAdditionalInfo = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo() as? [String:String] {
+            createPaymentQuery = paymentAdditionalInfo
+        } else {
+            createPaymentQuery = nil
+        }
 
-        self.viewModel.mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, callback: { [weak self] (payment) in
+        self.viewModel.mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { [weak self] (payment) in
 
             guard let strongSelf = self else {
                 return

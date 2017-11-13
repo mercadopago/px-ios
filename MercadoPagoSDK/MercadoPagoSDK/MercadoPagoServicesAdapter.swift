@@ -89,9 +89,9 @@ open class MercadoPagoServicesAdapter: NSObject {
         }, failure: failure)
     }
 
-    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, query: [String : String]? = nil, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, callback: { [weak self] (pxPayment) in
+        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, query: query, callback: { [weak self] (pxPayment) in
             guard let strongSelf = self else {
                 return
             }
