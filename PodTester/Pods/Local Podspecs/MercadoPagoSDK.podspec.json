@@ -24,7 +24,7 @@
       "2.0.1"
     ],
     "MercadoPagoServices": [
-      "0.1.0-BETA-3"
+      "0.1.0-BETA-4"
     ]
   },
   "pod_target_xcconfig": {
