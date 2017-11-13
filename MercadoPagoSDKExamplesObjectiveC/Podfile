@@ -7,7 +7,7 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
 
   # Pods for MercadoPagoSDKExamplesObjectiveC
     pod 'MercadoPagoPXTracking', '2.0.1'
-    pod 'MercadoPagoServices', '0.1.0-BETA-3'
+    pod 'MercadoPagoServices', '0.1.0-BETA-4'
 
   target 'MercadoPagoSDKExamplesObjectiveCTests' do
     inherit! :search_paths
