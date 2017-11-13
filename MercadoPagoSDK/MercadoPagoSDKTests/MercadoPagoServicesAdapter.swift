@@ -20,7 +20,7 @@ open class MercadoPagoServicesAdapter: NSObject {
         callback(MockBuilder.buildCheckoutPreference())
     }
 
-    open func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         callback(MockBuilder.buildInstructionsInfo())
     }
 

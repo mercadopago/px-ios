@@ -16,8 +16,8 @@ class MercadoPagoCheckoutTest: BaseTest {
         super.setUp()
         self.continueAfterFailure = false
         // Use v1 urls
-        ServicePreference.MP_ENVIROMENT = ServicePreference.MP_PROD_ENV  + "/checkout"
-        ServicePreference.API_VERSION = "API_VERSION"
+        URLConfigs.MP_ENVIROMENT = URLConfigs.MP_PROD_ENV  + "/checkout"
+        URLConfigs.API_VERSION = "API_VERSION"
     }
 
     override func tearDown() {
@@ -347,6 +347,7 @@ class MercadoPagoCheckoutTest: BaseTest {
     }
 
     func testWhenCreateNewCardTokenFailsWithInvalidIdNumberThenDoNotExecuteNextStep() {
+        MercadoPagoCheckoutViewModel.error = nil
         let navControllerInstance = UINavigationController()
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let dummyExecutionCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA_INVALID_ID_TEST", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)

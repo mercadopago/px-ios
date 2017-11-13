@@ -12,8 +12,8 @@ class ServicePreferenceTest: BaseTest {
 
     public func testInit() {
         let servicePreference = ServicePreference()
-        XCTAssertEqual(servicePreference.getPaymentURL(), ServicePreference.MP_API_BASE_URL)
-        XCTAssertEqual(servicePreference.getPaymentURI(), ServicePreference.MP_PAYMENTS_URI + "?api_version=" + ServicePreference.API_VERSION)
+        XCTAssertEqual(servicePreference.getPaymentURL(), URLConfigs.MP_API_BASE_URL)
+        XCTAssertEqual(servicePreference.getPaymentURI(), URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION)
     }
     public func testSetGetCustomer() {
         let servicePreference = ServicePreference()
@@ -38,8 +38,8 @@ class ServicePreferenceTest: BaseTest {
         let servicePreference = ServicePreference()
         XCTAssertTrue(servicePreference.isCreatePaymentSet())
         servicePreference.setAdditionalPaymentInfo(["sarasa": 4])
-        XCTAssertEqual(servicePreference.getPaymentURL(), ServicePreference.MP_API_BASE_URL)
-        XCTAssertEqual(servicePreference.getPaymentURI(), ServicePreference.MP_PAYMENTS_URI + "?api_version=" + ServicePreference.API_VERSION)
+        XCTAssertEqual(servicePreference.getPaymentURL(), URLConfigs.MP_API_BASE_URL)
+        XCTAssertEqual(servicePreference.getPaymentURI(), URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION)
         XCTAssertEqual(servicePreference.getPaymentAddionalInfo(), servicePreference.paymentAdditionalInfo)
 
         servicePreference.setCreatePayment(baseURL: "sarasa", URI: "sa", additionalInfo: ["sa": "sa"])
