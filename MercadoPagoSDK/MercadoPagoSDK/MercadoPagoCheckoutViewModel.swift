@@ -717,5 +717,6 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = nil
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
+        MercadoPagoCheckoutViewModel.error = nil
     }
 }
