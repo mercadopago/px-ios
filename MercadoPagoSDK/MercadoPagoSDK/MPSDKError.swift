@@ -70,7 +70,7 @@ open class MPSDKError: NSObject {
             for pxCause in pxApiException.cause! {
                 let cause = pxCauseToCause(pxCause: pxCause)
                 if cause != nil {
-                    Array.safeAppend(apiException.cause, cause)
+                    apiException.cause = Array.safeAppend(apiException.cause, cause!)
                 }
             }
         }

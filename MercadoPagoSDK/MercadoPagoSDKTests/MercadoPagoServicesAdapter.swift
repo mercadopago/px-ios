@@ -32,10 +32,16 @@ open class MercadoPagoServicesAdapter: NSObject {
         callback(MockBuilder.buildPayment("visa"))
     }
 
-    open func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         if cardToken.cardNumber == "invalid_identification_number" {
             let cause: [String: String] = ["code": "324", "description": "Invalid parameter 'cardholder.identification.number'"]
-            let error = NSError(domain: "mercadopago.sdk.GatewayService.getToken", code: 400, userInfo: ["cause": [cause]])
+            let apiException = PXApiException()
+
+            let pxCause = PXCause(code: "324", description: "Invalid parameter 'cardholder.identification.number'" )
+            apiException.cause = [pxCause]
+            apiException.error = "400"
+            apiException.status = 400
+            let error = PXError(domain: "mercadopago.sdk.GatewayService.getToken", code: 400, userInfo: ["cause": [cause]], apiException: apiException)
 
             failure(error)
         }
