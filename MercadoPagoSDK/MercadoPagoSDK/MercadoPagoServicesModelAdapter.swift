@@ -215,7 +215,9 @@ extension MercadoPagoServicesAdapter {
         let lastModifiedDate: Date = pxToken.dateLastUpdated ?? Date()
         let dueDate: Date = pxToken.dueDate ?? Date()
         let cardholder = getCardholderFromPXCardHolder(pxToken.cardholder)
+        let esc = pxToken.esc ?? nil
         let token = Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
+        token.esc = esc
         return token
     }
 
