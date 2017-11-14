@@ -186,10 +186,6 @@ class MainTableViewController: UITableViewController {
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
         let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
 
-        let servicePreference = ServicePreference()
-        servicePreference.setGetCustomer(baseURL: "https://api.mercadopago.com", URI: "/v1/customers/261207170-jxqdmty1ClVKjU", additionalInfo: ["access_token": "TEST-3284996600758722-031613-bd9e7923837b50bd493d18728eb971f0__LC_LD__-243966003"])
-        MercadoPagoCheckout.setServicePreference(servicePreference)
-
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color)
             MercadoPagoCheckout.setDecorationPreference(decorationPref)
