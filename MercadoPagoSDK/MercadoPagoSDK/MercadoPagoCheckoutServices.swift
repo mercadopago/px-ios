@@ -40,7 +40,7 @@ extension MercadoPagoCheckout {
 
     func getDirectDiscount() {
         self.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, callback: { [weak self] (discount) in
+        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (discount) in
 
             guard let strongSelf = self else {
                 return

@@ -12,7 +12,7 @@ open class ServicePreference: NSObject {
 
     var customerURL: String?
     var customerURI = ""
-    var customerAdditionalInfo: NSDictionary?
+    var customerAdditionalInfo: [String:String]?
     var checkoutPreferenceURL: String?
     var checkoutPreferenceURI = ""
     var checkoutAdditionalInfo: NSDictionary?
@@ -21,7 +21,7 @@ open class ServicePreference: NSObject {
     var paymentAdditionalInfo: NSDictionary?
     var discountURL: String = URLConfigs.MP_API_BASE_URL
     var discountURI: String = URLConfigs.MP_DISCOUNT_URI
-    var discountAdditionalInfo: NSDictionary?
+    var discountAdditionalInfo: [String:String]?
     var processingMode: ProcessingMode = ProcessingMode.aggregator
 
     private static let kServiceSettings = "services_settings"
@@ -44,7 +44,7 @@ open class ServicePreference: NSObject {
     public func setGetCustomer(baseURL: String, URI: String, additionalInfo: [String:String] = [:]) {
         customerURL = baseURL
         customerURI = URI
-        customerAdditionalInfo = additionalInfo as NSDictionary
+        customerAdditionalInfo = additionalInfo
     }
 
     public func setCreatePayment(baseURL: String = URLConfigs.MP_API_BASE_URL, URI: String = URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION, additionalInfo: NSDictionary = [:]) {
@@ -57,7 +57,7 @@ open class ServicePreference: NSObject {
     public func setDiscount(baseURL: String, URI: String, additionalInfo: [String:String] = [:]) {
         discountURL = baseURL
         discountURI = URI
-        discountAdditionalInfo = additionalInfo as NSDictionary?
+        discountAdditionalInfo = additionalInfo
         defaultDiscountSettings = false
     }
 
@@ -104,8 +104,8 @@ open class ServicePreference: NSObject {
     }
 
     public func getCustomerAddionalInfo() -> String {
-        if !NSDictionary.isNullOrEmpty(customerAdditionalInfo) {
-            return customerAdditionalInfo!.parseToQuery()
+        if let customerAdditionalInfo = customerAdditionalInfo as NSDictionary?, !NSDictionary.isNullOrEmpty(customerAdditionalInfo) {
+            return customerAdditionalInfo.parseToQuery()
         }
         return ""
     }
@@ -140,8 +140,8 @@ open class ServicePreference: NSObject {
     }
 
     public func getDiscountAddionalInfo() -> String {
-        if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
-            return discountAdditionalInfo!.parseToQuery()
+        if let discountAdditionalInfo = discountAdditionalInfo as NSDictionary?, !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
+            return discountAdditionalInfo.parseToQuery()
         }
         return ""
     }
