@@ -510,8 +510,8 @@ extension MercadoPagoServicesAdapter {
 
     open func getPXIdentificationFromIdentification(_ identification: Identification?) -> PXIdentification? {
         if let identification = identification {
-            let number: String? = identification.number
-            let type: String? = identification.type
+            let number: String = !String.isNullOrEmpty(identification.number) ? identification.number! : "null"
+            let type: String = !String.isNullOrEmpty(identification.type) ? identification.type! : "null"
             let pxIdentification = PXIdentification(number: number, type: type)
             return pxIdentification
         } else {
