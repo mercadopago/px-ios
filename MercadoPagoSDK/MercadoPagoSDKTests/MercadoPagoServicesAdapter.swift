@@ -72,11 +72,11 @@ open class MercadoPagoServicesAdapter: NSObject {
         callback(MockBuilder.buildIdentificationTypes())
     }
 
-    open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         callback(MockBuilder.buildDiscount())
     }
 
-    open func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getDirectDiscount(amount: Double, payerEmail: String, callback: @escaping (DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         callback(MockBuilder.buildDiscount())
     }
 
