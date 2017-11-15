@@ -21,6 +21,7 @@ install:
 
 script:
 - pod update
+- pod install
 - cd ../scripts
 - "./run_tests_on_devices.sh"
 
