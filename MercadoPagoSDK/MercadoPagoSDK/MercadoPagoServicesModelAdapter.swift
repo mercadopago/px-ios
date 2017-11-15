@@ -361,7 +361,7 @@ extension MercadoPagoServicesAdapter {
         return identificationType
     }
 
-    open func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount) -> DiscountCoupon {
+    open func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount, amount: Double) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
         discountCoupon._id = pxDiscount.id
         discountCoupon.name = pxDiscount.name
@@ -370,6 +370,7 @@ extension MercadoPagoServicesAdapter {
         discountCoupon.coupon_amount = pxDiscount.couponAmount?.stringValue ?? "0"
         discountCoupon.currency_id = pxDiscount.currencyId
         discountCoupon.concept = pxDiscount.concept
+        discountCoupon.amount = amount
         return discountCoupon
     }
 

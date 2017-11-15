@@ -195,7 +195,7 @@ open class MercadoPagoServicesAdapter: NSObject {
             }
             
             if let pxDiscount = pxDiscount {
-                let discountCoupon = strongSelf.getDiscountCouponFromPXDiscount(pxDiscount)
+                let discountCoupon = strongSelf.getDiscountCouponFromPXDiscount(pxDiscount, amount: amount)
                 callback(discountCoupon)
             } else {
                 callback(nil)

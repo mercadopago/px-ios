@@ -20,9 +20,7 @@ install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- pod cache clean --all
 - pod update
-- pod install
 - cd ../scripts
 - "./run_tests_on_devices.sh"
 
