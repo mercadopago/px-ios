@@ -120,7 +120,7 @@ open class DiscountCoupon: NSObject {
     open func getDiscountAmount() -> Double? {
         if percent_off != "0" && percent_off != "0.0" {
             return Double(percent_off) // Deberia devolver el monto que se descuenta
-        } else if amount_off != "0"  && amount_off != "0.0"  {
+        } else if amount_off != "0"  && amount_off != "0.0" {
             return  Double(amount_off)
         }
         return nil

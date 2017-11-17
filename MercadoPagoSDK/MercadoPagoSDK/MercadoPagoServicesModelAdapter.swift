@@ -73,7 +73,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
         let paymentPreference = PaymentPreference()
-        if let pxPaymentPreference = pxPaymentPreference{
+        if let pxPaymentPreference = pxPaymentPreference {
             paymentPreference.excludedPaymentMethodIds = Set(pxPaymentPreference.excludedPaymentMethodIds ?? [])
             paymentPreference.excludedPaymentTypeIds = Set(pxPaymentPreference.excludedPaymentTypeIds ?? [])
             paymentPreference.defaultPaymentMethodId = pxPaymentPreference.defaultPaymentMethodId
@@ -215,7 +215,7 @@ extension MercadoPagoServicesAdapter {
         let lastModifiedDate: Date = pxToken.dateLastUpdated ?? Date()
         let dueDate: Date = pxToken.dueDate ?? Date()
         let cardholder = getCardholderFromPXCardHolder(pxToken.cardholder)
-        let esc = pxToken.esc ?? nil
+        let esc = pxToken.esc
         let token = Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
         token.esc = esc
         return token
@@ -247,7 +247,7 @@ extension MercadoPagoServicesAdapter {
         bankDeal.promoId = pxBankDeal.id
         bankDeal.issuer = getIssuerFromPXIssuer(pxBankDeal.issuer)
         bankDeal.recommendedMessage = pxBankDeal.recommendedMessage
-        
+
         if let pxBankDealPaymentMethods = pxBankDeal.paymentMethods {
             bankDeal.paymentMethods = []
             for pxPaymentMethod in pxBankDealPaymentMethods {
@@ -255,7 +255,7 @@ extension MercadoPagoServicesAdapter {
                 bankDeal.paymentMethods = Array.safeAppend(bankDeal.paymentMethods, paymentMethod)
             }
         }
-        
+
         bankDeal.legals = pxBankDeal.legals
         bankDeal.url = pxBankDeal.picture?.url ?? ""
         return bankDeal
@@ -535,7 +535,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getPaymentMethodSearchFromPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
         let paymentMethodSearch = PaymentMethodSearch()
-        
+
         if let pxPaymentMethodSearchPaymentMethodSearchItem = pxPaymentMethodSearch.paymentMethodSearchItem {
             paymentMethodSearch.groups = []
             for pxPaymentMethodSearchItem in pxPaymentMethodSearchPaymentMethodSearchItem {
@@ -543,7 +543,7 @@ extension MercadoPagoServicesAdapter {
                 paymentMethodSearch.groups = Array.safeAppend(paymentMethodSearch.groups, paymentMethodSearchItem)
             }
         }
-        
+
         if let pxPaymentMethodSearchPaymentMethods = pxPaymentMethodSearch.paymentMethods {
             paymentMethodSearch.paymentMethods = []
             for pxPaymentMethod in pxPaymentMethodSearchPaymentMethods {
@@ -559,7 +559,7 @@ extension MercadoPagoServicesAdapter {
                 paymentMethodSearch.cards = Array.safeAppend(paymentMethodSearch.cards, card)
             }
         }
-        
+
         if let pxPaymentMethodSearchCustomOptionSearchItems = pxPaymentMethodSearch.customOptionSearchItems {
             paymentMethodSearch.customerPaymentMethods = []
             for pxCustomOptionSearchItem in pxPaymentMethodSearchCustomOptionSearchItems {
@@ -652,7 +652,7 @@ extension MercadoPagoServicesAdapter {
     open func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
         let customer = Customer()
         customer.address = getAddressFromPXAddress(pxCustomer.address)
-        
+
         if let pxCustomerCards = pxCustomer.cards {
             customer.cards = []
             for pxCard in pxCustomerCards {
@@ -711,7 +711,7 @@ extension MercadoPagoServicesAdapter {
         installment.issuer = getIssuerFromPXIssuer(pxInstallment.issuer)
         installment.paymentTypeId = pxInstallment.paymentTypeId
         installment.paymentMethodId = pxInstallment.paymentMethodId
-        
+
         if let pxInstallmentPayerCosts = pxInstallment.payerCosts {
             installment.payerCosts = []
             for pxPayerCost in pxInstallmentPayerCosts {
@@ -737,4 +737,3 @@ extension MercadoPagoServicesAdapter {
         return payerCost
     }
 }
-
