@@ -198,6 +198,11 @@ class MainTableViewController: UITableViewController {
 
             let flowPref: FlowPreference = FlowPreference()
 
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let hook = storyboard.instantiateViewController(withIdentifier: "HookViewController") as! HookViewController
+            hook.cho = checkout
+            flowPref.setHook(hooks: [hook])
+
             if let maxShowCards = self.showMaxCards {
                 flowPref.setMaxSavedCardsToShow(fromInt: maxShowCards)
             }

@@ -314,4 +314,8 @@ extension MercadoPagoCheckoutViewModel {
         }
         return false
     }
+
+    func shouldShowHook1() -> Bool {
+        return true
+    }
 }

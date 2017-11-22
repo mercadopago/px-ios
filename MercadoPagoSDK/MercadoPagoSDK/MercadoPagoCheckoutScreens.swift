@@ -276,4 +276,18 @@ extension MercadoPagoCheckout {
 
         self.navigationController.pushViewController(entityTypeStep, animated: true)
     }
+
+    func showHook1() {
+        let vc = UIViewController()
+        vc.view.backgroundColor = .white
+
+        HookStore.sharedInstance.paymentData = self.viewModel.paymentData
+        HookStore.sharedInstance.paymentOptionSelected = self.viewModel.paymentOptionSelected
+
+        MercadoPagoCheckoutViewModel.flowPreference.hooks[0].didRecive(hookStore: HookStore.sharedInstance)
+
+        vc.view.addSubview(MercadoPagoCheckoutViewModel.flowPreference.hooks[0].render())
+        MercadoPagoCheckoutViewModel.flowPreference.hooks[0].renderDidFinish()
+        self.navigationController.pushViewController(vc, animated: true)
+    }
 }

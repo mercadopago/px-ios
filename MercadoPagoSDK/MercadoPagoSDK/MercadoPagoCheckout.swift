@@ -16,6 +16,7 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
     var countLoadings: Int = 0
+    var mpAction: MPAction?
 
     private var currentLoadingView: UIViewController?
 
@@ -33,6 +34,11 @@ open class MercadoPagoCheckout: NSObject {
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
         self.navigationController = navigationController
+
+        super.init()
+
+        let action = MPAction()
+        mpAction = action.initialize(checkout: self)
 
         if self.navigationController.viewControllers.count > 0 {
             let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
@@ -128,6 +134,8 @@ open class MercadoPagoCheckout: NSObject {
             self.finish()
         case .SCREEN_ERROR:
             self.showErrorScreen()
+        case .SCREEN_HOOK_1:
+            self.showHook1()
         default: break
         }
     }
@@ -262,6 +270,68 @@ open class MercadoPagoCheckout: NSObject {
         if self.navigationController.viewControllers.contains(viewController) {
             self.viewControllerBase = viewController
         }
+    }
+
+}
+
+@objc
+public protocol Componetisable {
+    func render() -> UIView
+}
+
+public protocol Hookeable: Componetisable {
+    func getStep() -> HookStep
+    func render() -> UIView
+    func renderDidFinish()
+    func didRecive(hookStore: HookStore)
+    func didRecive(action: MPAction)
+
+}
+
+open class MPAction: NSObject {
+
+    private var checkout: MercadoPagoCheckout?
+
+    public override init() {}
+
+    open func initialize(checkout:MercadoPagoCheckout) -> MPAction {
+        self.checkout = checkout
+        return self
+    }
+
+    open func next() {
+        checkout?.executeNextStep()
+    }
+}
+
+open class HookStore: NSObject {
+
+    static let sharedInstance = HookStore()
+    private var data = [String : Any]()
+    var paymentData = PaymentData()
+    var paymentOptionSelected: PaymentMethodOption?
+
+    public func addData(forKey: String, value: Any) {
+        self.data[forKey] = value
+    }
+    public func remove(key: String) {
+        data.removeValue(forKey: key)
+    }
+
+    public func removeAll() {
+        data.removeAll()
+    }
+
+    public func getData(forKey: String) -> Any? {
+        return self.data[forKey]
+    }
+
+    public func getPaymentData() -> PaymentData {
+        return paymentData
+    }
+
+    public func getPaymentOptionSelected() -> PaymentMethodOption? {
+        return paymentOptionSelected
     }
 
 }

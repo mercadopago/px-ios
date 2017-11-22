@@ -8,6 +8,13 @@
 
 import Foundation
 
+
+public enum HookStep: String {
+    case STEP1
+    case STEP2
+    case STEP3
+}
+
 open class FlowPreference: NSObject {
 
     static let DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3
@@ -24,6 +31,8 @@ open class FlowPreference: NSObject {
     var showInstallmentsReviewScreen = true
     var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
     var saveESC = false
+
+    var hooks = [Hookeable]()
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -184,6 +193,10 @@ open class FlowPreference: NSObject {
         flowPreference.maxSavedCardsToShow = json["max_saved_cards_to_show"] as? Int ?? FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
 
         return flowPreference
+    }
+
+    public func setHook(hooks: [Hookeable]) {
+        self.hooks = hooks
     }
 
 }
