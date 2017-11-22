@@ -31,6 +31,10 @@ open class SettingsViewController: UIViewController, UITableViewDataSource, UITa
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.viewModel.getCellFor(indexPath: indexPath)
     }
+    
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
 
     func drawContinueButton() {
         continueButton.backgroundColor = UIColor.mpDefaultColor()
@@ -49,6 +53,7 @@ open class SettingsViewController: UIViewController, UITableViewDataSource, UITa
         NewView.color = self.viewModel.selectedColor
         NewView.configJSON = self.viewModel.configurationJSON
         NewView.title = "Options"
+        NewView.hooksEnabled = self.viewModel.hooksEnabled
 
         self.navigationController?.pushViewController(NewView, animated: true)
     }

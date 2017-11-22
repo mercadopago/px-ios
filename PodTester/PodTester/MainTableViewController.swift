@@ -52,6 +52,7 @@ class MainTableViewController: UITableViewController {
     open var color: UIColor!
     open var configJSON: String!
     open var flowPreference = FlowPreference()
+    open var hooksEnabled:Bool = false
 
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
 
@@ -97,7 +98,6 @@ class MainTableViewController: UITableViewController {
         if dataSource == nil {
             dataSource = opcionesPpal
         }
-
     }
 
     override func didReceiveMemoryWarning() {

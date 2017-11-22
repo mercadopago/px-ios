@@ -23,6 +23,7 @@ open class SettingsViewModel: NSObject {
     var configurationJSON: String!
     var includeOnlinePMS: Bool = true
     var includeOfflinePMS: Bool = true
+    var hooksEnabled: Bool = false
 
     let marginSpace: CGFloat = 10
 
@@ -30,7 +31,7 @@ open class SettingsViewModel: NSObject {
 
     //--TableView Build Logic
     open func getNumberOfRowsInSection(section: Int) -> Int {
-        return 7
+        return 8
     }
 
     open func getCellFor(indexPath: IndexPath) -> UITableViewCell {
@@ -45,6 +46,8 @@ open class SettingsViewModel: NSObject {
             return getSwitchCellFor(forSwitch: Switches.OnlinePaymentMethods)
         case Cells.offlinePMS.rawValue:
             return getSwitchCellFor(forSwitch: Switches.OfflinePaymentMethods)
+        case Cells.useHooks.rawValue:
+            return getSwitchCellForHooks()
         case Cells.colorPicker.rawValue:
             return getColorPickerCell()
         case Cells.jsonInput.rawValue:
@@ -163,7 +166,7 @@ open class SettingsViewModel: NSObject {
         case Switches.OfflinePaymentMethods:
             cellSwitch.addTarget(self, action: #selector(setOfflinePaymentMethods(sender: )), for: .valueChanged)
         }
-
+        
         return cell
 
     }
@@ -195,6 +198,41 @@ open class SettingsViewModel: NSObject {
     }
     //Payment Methods Exclusion Logic--
 
+    //--Hooks Logic
+    func getSwitchCellForHooks() -> UITableViewCell {
+        
+        let cell = UITableViewCell()
+        cell.frame.size.height = 40
+        cell.frame.size.width = Mainframe.width
+        cell.selectionStyle = .none
+        let cellFrame = cell.bounds
+        
+        let cellSwitch = UISwitch()
+        cellSwitch.frame = CGRect(x: cellFrame.maxX - cellSwitch.frame.width - marginSpace, y: cellFrame.midY - (cellSwitch.frame.height/2), width: cellSwitch.frame.width, height: cellSwitch.frame.height)
+        cell.addSubview(cellSwitch)
+        
+        cell.textLabel?.textColor = UIColor.black
+        cell.textLabel?.text = "Use Hooks"
+        
+        cellSwitch.addTarget(self, action: #selector(setHooksEnabled(sender: )), for: .valueChanged)
+        
+        return cell
+    }
+    
+    func setHooksEnabled(sender: UISwitch) {
+        if sender.isOn {
+            hooksEnabled = true
+        } else {
+            if hooksEnabled == true {
+                hooksEnabled = false
+            } else {
+                hooksEnabled = true
+                sender.setOn(true, animated: true)
+            }
+        }
+    }
+    //Hooks Logic--
+    
     //--Color Picker Logic
     func getColorPickerCell() -> UITableViewCell {
 
@@ -413,12 +451,13 @@ open class SettingsViewModel: NSObject {
 
     public enum Cells: Int {
         case siteSelector = 0
-        case environmentSelector = 1
-        case apiEnvironment = 2
-        case onlinePMs = 3
-        case offlinePMS = 4
-        case colorPicker = 5
-        case jsonInput = 6
+        case environmentSelector
+        case apiEnvironment
+        case onlinePMs
+        case offlinePMS
+        case useHooks
+        case colorPicker
+        case jsonInput
     }
 
     public enum Environments: String {
