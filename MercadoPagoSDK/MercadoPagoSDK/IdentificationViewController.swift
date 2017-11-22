@@ -123,9 +123,19 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         numberTextField.becomeFirstResponder()
     }
 
+    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
+    
+    func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.keyboardHeightConstraint.constant = keyboardSize.height + 61 // Keyboard + Vista, dejo el mismo nombre de variable para tener consistencia entre clases, pero esta constante no representa la altura real del teclado, sino una altura que varia dependiendo de la altura del teclado
+            self.view.layoutIfNeeded()
+            self.view.setNeedsUpdateConstraints()
+        }
+    }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
-
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         identificationCard = IdentificationCardView()
 
         self.identificationView = UIView()
