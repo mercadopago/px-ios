@@ -281,14 +281,13 @@ extension MercadoPagoCheckout {
         
         if let targetHook = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
             
-            let vc = UIViewController()
+            let vc = MercadoPagoUIViewController()
             vc.view.backgroundColor = .clear
             
             HookStore.sharedInstance.paymentData = self.viewModel.paymentData
             HookStore.sharedInstance.paymentOptionSelected = self.viewModel.paymentOptionSelected
             
             targetHook.didRecive(hookStore: HookStore.sharedInstance)
-            
         
             self.navigationController.title = targetHook.titleForNavigationBar()
             self.navigationController.navigationBar.isHidden = !targetHook.shouldShowNavigationBar()
@@ -297,8 +296,10 @@ extension MercadoPagoCheckout {
                 self.navigationController.navigationItem.leftBarButtonItem = nil
             }
             
-            
-            vc.view.addSubview(targetHook.render())
+            let hookView = targetHook.render()
+            hookView.removeFromSuperview()
+            hookView.frame = vc.view.frame
+            vc.view.addSubview(hookView)
             
             targetHook.renderDidFinish()
             
