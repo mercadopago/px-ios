@@ -23,7 +23,7 @@ echo "=========================================="
 echo "2) Validate .podspec --allow-warnings"
 echo "=========================================="
 
-pod lib lint --allow-warnings --verbose --sources='git@github.com:mercadolibre/mobile-ios_specs.git'
+pod lib lint --allow-warnings --verbose --sources='git@github.com:mercadolibre/mobile-ios_specs.git,https://github.com/CocoaPods/Specs'
 STATUS=$?
 if [ $STATUS -ne 0 ]
 	then
