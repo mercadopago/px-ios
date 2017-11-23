@@ -364,6 +364,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if shouldShowHook(hookStep: .STEP1) {
             return .SCREEN_HOOK_1
         }
+        
+        if shouldShowHook(hookStep: .STEP2) {
+            return .SCREEN_HOOK_2
+        }
+        
+        if shouldShowHook(hookStep: .STEP3) {
+            return .SCREEN_HOOK_3
+        }
 
         if needCompleteCard() {
             return .SCREEN_CARD_FORM

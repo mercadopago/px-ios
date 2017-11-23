@@ -279,6 +279,7 @@ public protocol Componetisable {
     func render() -> UIView
 }
 
+@objc
 public protocol Hookeable: Componetisable {
     func getStep() -> HookStep
     func render() -> UIView

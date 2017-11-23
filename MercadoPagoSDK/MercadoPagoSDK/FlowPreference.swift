@@ -8,9 +8,8 @@
 
 import Foundation
 
-
-public enum HookStep: String {
-    case STEP1
+@objc public enum HookStep: Int {
+    case STEP1 = 1
     case STEP2
     case STEP3
 }

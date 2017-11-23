@@ -12,6 +12,7 @@
 #import "SubeTableViewCell.h"
 #import "DineroEnCuentaTableViewCell.h"
 #import "CustomItemTableViewCell.h"
+#import "FirstHookViewController.h"
 
 @import MercadoPagoSDK;
 
@@ -92,6 +93,15 @@
 
     //Setear ReviewScreenPrefernce
     [self setReviewScreenPreference];
+    
+    FlowPreference *flowPref = [[FlowPreference alloc] init];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"Hooks" bundle:[NSBundle mainBundle]];
+    FirstHookViewController *firstHook = [storyboard instantiateViewControllerWithIdentifier:@"firstHook"];
+    
+    [flowPref setHookWithHooks:[NSArray arrayWithObjects: firstHook , nil]];
+    
+    [MercadoPagoCheckout setFlowPreference:flowPref];
     
     [self.mpCheckout start];
 
