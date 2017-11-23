@@ -10,11 +10,12 @@ import Foundation
 import MercadoPagoSDK
 import UIKit
 open class HookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     var paymentData: PaymentData = PaymentData()
     var paymentOptionSelected: PaymentMethodOption?
+    
     var mpAction : MPAction?
-    public var cho: MercadoPagoCheckout?
-
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -31,20 +32,21 @@ open class HookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     @IBOutlet weak var table: UITableView!
+    
     @IBAction func showNext(_ sender: Any) {
-        self.cho?.start()
-        self.mpAction?.next()
+        self.mpAction?.back()
     }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         table.delegate = self
         table.dataSource = self
         table.contentInset = UIEdgeInsets(top: 60, left: 0, bottom: 0, right: 0)
-
     }
 }
 
 extension HookViewController: Hookeable {
+    
     public func renderDidFinish() {
         self.table.reloadData()
     }
