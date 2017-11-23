@@ -34,14 +34,13 @@ open class HookViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var table: UITableView!
     
     @IBAction func showNext(_ sender: Any) {
-        self.mpAction?.back()
+        mpAction?.cancel()
     }
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         table.delegate = self
         table.dataSource = self
-        table.contentInset = UIEdgeInsets(top: 60, left: 0, bottom: 0, right: 0)
     }
 }
 
@@ -63,8 +62,16 @@ extension HookViewController: Hookeable {
         self.paymentData = hookStore.getPaymentData()
         self.paymentOptionSelected = hookStore.getPaymentOptionSelected()
     }
-
-    public func didRecive(action: MPAction) {
-        self.mpAction = action
+    
+    public func shouldShowBackArrow() -> Bool {
+        return false
+    }
+    
+    public func shouldShowNavigationBar() -> Bool {
+        return true
+    }
+    
+    public func titleForNavigationBar() -> String {
+        return "Soy hook 1"
     }
 }

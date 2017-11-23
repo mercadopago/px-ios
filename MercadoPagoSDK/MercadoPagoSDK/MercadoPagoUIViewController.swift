@@ -81,11 +81,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.clearMercadoPagoStyle()
-
     }
 
     internal func loadMPStyles() {
-
         if self.navigationController != nil {
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
@@ -166,22 +164,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             shoppingCartButton.action = action!
         }
         self.navigationItem.rightBarButtonItem = shoppingCartButton
-    }
-
-    open func rightButtonShoppingCart() {
-        let action = self.navigationItem.rightBarButtonItem?.action
-        var shoppingCartImage = MercadoPago.getImage("iconCart")
-        shoppingCartImage = shoppingCartImage!.withRenderingMode(.alwaysTemplate)
-        let shoppingCartButton = UIBarButtonItem()
-        shoppingCartButton.image = shoppingCartImage
-        shoppingCartButton.title = ""
-        shoppingCartButton.target = self
-        shoppingCartButton.tintColor = UIColor.px_white()
-        if action != nil {
-            shoppingCartButton.action = action!
-        }
-        self.navigationItem.rightBarButtonItem = shoppingCartButton
-
     }
 
     internal func displayBackButton() {

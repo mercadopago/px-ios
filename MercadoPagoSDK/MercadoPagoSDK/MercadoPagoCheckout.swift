@@ -284,8 +284,9 @@ public protocol Hookeable: Componetisable {
     func render() -> UIView
     func renderDidFinish()
     func didRecive(hookStore: HookStore)
-    func didRecive(action: MPAction)
-
+    func titleForNavigationBar() -> String
+    func shouldShowBackArrow() -> Bool
+    func shouldShowNavigationBar() -> Bool
 }
 
 open class MPAction: NSObject {
