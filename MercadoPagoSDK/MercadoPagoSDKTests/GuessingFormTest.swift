@@ -40,7 +40,7 @@ class GuessingFormTest: BaseTest {
 
         var pms : [PaymentMethod] = []
         
-        MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+        MercadoPagoServices.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!
         }) { (error) -> Void in
         }
@@ -63,7 +63,7 @@ class GuessingFormTest: BaseTest {
         pp?.excludedPaymentMethodIds = ["visa"]
         var pms : [PaymentMethod] = []
         
-        MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+        MercadoPagoServices.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!
         }) { (error) -> Void in
         }
@@ -93,7 +93,7 @@ class GuessingFormTest: BaseTest {
         pp?.excludedPaymentTypeIds = ["credit_card"]
         var pms : [PaymentMethod] = []
         
-        MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+        MercadoPagoServices.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!
             //     MercadoPagoTestContext.fulfillExpectation()
         }) { (error) -> Void in

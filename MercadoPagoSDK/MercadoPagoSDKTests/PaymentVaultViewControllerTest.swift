@@ -612,7 +612,7 @@ class PaymentVaultViewModelTest: BaseTest {
 
     //let paymentMethodSearch = MockBuilder.buildPaymentMethodSearch(paymentMethods : [paymentMethodOff, paymentMethodCreditCard])
 
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com")
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testShouldGetCustomerCardsInfo() {
@@ -866,7 +866,7 @@ class PaymentVaultViewModelTest: BaseTest {
         let pp = PaymentPreference()
         pp.excludedPaymentTypeIds = ["pm1", "pm2", "pm3"]
 
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com")
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
         paymentTypeIdsExcluded = instance?.getExcludedPaymentTypeIds()
         XCTAssertEqual(pp.excludedPaymentTypeIds, paymentTypeIdsExcluded)
 
@@ -880,7 +880,7 @@ class PaymentVaultViewModelTest: BaseTest {
         let pp = PaymentPreference()
         pp.excludedPaymentMethodIds = ["pmA", "pmB", "pmC"]
 
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com")
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
         paymentMethodIdsExcluded = instance!.getExcludedPaymentMethodIds()
         XCTAssertEqual(pp.excludedPaymentMethodIds, paymentMethodIdsExcluded)
 
@@ -894,7 +894,7 @@ class PaymentVaultViewModelTest: BaseTest {
         let pp = PaymentPreference()
         pp.defaultPaymentMethodId = "defaultPaymentMethodId"
 
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com")
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
         defaultPaymentMethodId = instance!.getPaymentPreferenceDefaultPaymentMethodId()
         XCTAssertEqual("defaultPaymentMethodId", defaultPaymentMethodId)
     }

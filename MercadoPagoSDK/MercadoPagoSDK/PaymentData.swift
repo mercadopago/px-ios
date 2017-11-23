@@ -34,11 +34,11 @@ public class PaymentData: NSObject {
             return false
         }
 
-        if paymentMethod.isEntityTypeRequired() && payer.entityType == nil {
+        if paymentMethod.isEntityTypeRequired && payer.entityType == nil {
             return false
         }
 
-        if paymentMethod.isPayerInfoRequired() && payer.identification == nil {
+        if paymentMethod.isPayerInfoRequired && payer.identification == nil {
             return false
         }
 
@@ -46,11 +46,11 @@ public class PaymentData: NSObject {
             return false
         }
 
-        if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod() {
+        if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
 
-        if paymentMethod.isCard() && (token == nil || payerCost == nil) {
+        if paymentMethod.isCard && (token == nil || payerCost == nil) {
 
             if (paymentMethod.paymentTypeId == PaymentTypeId.DEBIT_CARD.rawValue || paymentMethod.paymentTypeId == PaymentTypeId.PREPAID_CARD.rawValue ) && token != nil {
                 return true
@@ -78,7 +78,7 @@ public class PaymentData: NSObject {
     }
 
     func hasCustomerPaymentOption() -> Bool {
-        return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney() || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
+        return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
     }
 
     public func updatePaymentDataWith(paymentMethod: PaymentMethod?) {

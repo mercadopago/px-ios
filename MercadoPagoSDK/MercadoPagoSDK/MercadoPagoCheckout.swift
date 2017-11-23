@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 open class MercadoPagoCheckout: NSObject {
 
@@ -24,6 +25,10 @@ open class MercadoPagoCheckout: NSObject {
     var entro = false
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+
+        MercadoPagoContext.setPublicKey(publicKey)
+        MercadoPagoContext.setPayerAccessToken(accessToken)
+
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
@@ -34,10 +39,11 @@ open class MercadoPagoCheckout: NSObject {
             }
             viewControllerBase = newNavigationStack.last
         }
+    }
 
-        MercadoPagoContext.setPublicKey(publicKey)
-
-        MercadoPagoContext.setPayerAccessToken(accessToken)
+    func initMercadPagoPXTracking() {
+        MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
+        MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
     }
 
     public func setBinaryMode(_ binaryMode: Bool) {
@@ -67,6 +73,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func initialize() {
+        initMercadPagoPXTracking()
         MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
     }
@@ -169,6 +176,8 @@ open class MercadoPagoCheckout: NSObject {
         } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
             return
+        } else if let finishFlowCallback = MercadoPagoCheckoutViewModel.finishFlowCallback {
+            finishFlowCallback(self.viewModel.payment)
         }
 
         goToRootViewController()

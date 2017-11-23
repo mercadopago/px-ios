@@ -7,11 +7,11 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
-open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
+open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     open var callbackCancel: (() -> Void)?
-    public var timer: CountdownTimer?
     var navBarTextColor = UIColor.systemFontColor()
     private var navBarBackgroundColor = UIColor.primaryColor()
     var shouldDisplayBackButton = false
@@ -37,7 +37,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var lastDefaultFontLabel: String?
     var lastDefaultFontTextField: String?
     var lastDefaultFontButton: String?
-    var timerLabel: MPLabel?
 
     override open func viewDidAppear(_ animated: Bool) {
 
@@ -46,21 +45,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
             tracked = true
             trackInfo()
-        }
-
-        if CountdownTimer.getInstance().hasTimer() {
-            self.timer = CountdownTimer.getInstance()
-            self.timer!.delegate = self
-            self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 56, height: 20))
-            self.timerLabel!.backgroundColor = self.navBarBackgroundColor
-            self.timerLabel!.textColor = self.navBarTextColor
-            self.timerLabel!.textAlignment = .right
-            self.timerLabel!.isHidden = self.loadingInstance != nil
-            let button = UIButton(type: UIButtonType.custom)
-            button.frame = CGRect(x: 0, y: 0, width: 56, height: 20)
-            button.addSubview(timerLabel!)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-
         }
     }
 
@@ -91,7 +75,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         self.loadMPStyles()
-        hideTimer()
         MercadoPagoCheckout.firstViewControllerPushed = true
     }
 
@@ -225,10 +208,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     }
 
-    internal func hideTimer() {
-        self.timerLabel?.isHidden = true
-    }
-
     var fistResponder: UITextField?
 
     internal func hideKeyboard(_ view: UIView) -> Bool {
@@ -282,14 +261,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.navigationController?.present(errorVC, animated: true, completion: {})
         } else {
             self.present(errorVC, animated: true, completion: {})
-        }
-    }
-
-    open func updateTimer() {
-        if self.timerLabel != nil {
-            self.timerLabel!.text = self.timer!.getCurrentTiming()
-            self.timerLabel!.isHidden = self.loadingInstance != nil
-
         }
     }
 

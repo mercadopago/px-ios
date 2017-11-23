@@ -26,6 +26,11 @@ echo "    Creating POD Project : $PROJECT  "
 echo "=========================================="
 
 echo "======================================================"
+echo " 0) Delete Pods Cache"
+echo "======================================================"
+pod cache clean --all
+
+echo "======================================================"
 echo " 1) Update podspec file with spec version $VERSION"
 echo "======================================================"
 
@@ -82,11 +87,6 @@ if [ $POD_TRUNK_STATUS -ne 0 ]
 		echo "Error ocurred pushing pod into trunk."
 		exit 0
 fi
-
-echo "=========================================="
-echo "5) Push new podspec into master"
-echo "=========================================="
-pod trunk push $PODSPEC_FILE --allow-warnings
 
 echo "=========================================="
 echo "		Pod created from tag $VERSION. 		"

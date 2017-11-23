@@ -54,6 +54,7 @@
 "En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="In a few hours we will tell you by e-mail if it is accredited or if we need more information.";
 
 // -- Rejected
+"Por favor, intenta pagar con otro medio." = "Please try to pay by other means.";
 "¿Qué puedo hacer?" = "What can I do?";
 "rejected_high_risk_title"="For security reasons, we had to reject your payment";
 "cc_rejected_insufficient_amount_title" = "Yours %0 has insufficient funds";
@@ -68,7 +69,7 @@
 "cc_rejected_call_for_authorize_title" = "Could not authorize it?";
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Algo salió mal… " = "Something went wrong…";
-
+"El número de identificación es inválido" = "Invalid identification number";
 
 "rejected_high_risk_subtitle_credit_card"="If you want to pay with the money from your account, contact Mercado Pago customer service.\n\n Or if you prefer, you can choose other payment method.";
 "cc_rejected_insufficient_amount_subtitle_credit_card" = "Don't worry! You can choose another payment method.";

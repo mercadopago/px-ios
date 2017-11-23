@@ -17,8 +17,7 @@ class InstructionsViewModelTest: BaseTest {
         super.setUp()
         paymentResult = MockBuilder.buildPaymentResult()
         paymentResult.paymentData?.issuer = nil
-        let paymentMethod = MockBuilder.buildPaymentMethod("bolbradesco")
-        instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
+        instructionsInfo = MockBuilder.buildInstructionsInfo()
         let paymentResultScreenPreference = PaymentResultScreenPreference()
         viewModel = InstructionsViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference, instructionsInfo: instructionsInfo)
     }
@@ -151,16 +150,6 @@ class InstructionsViewModelTest: BaseTest {
         XCTAssertFalse(viewModel.isSecondaryInfoCellFor(indexPath: IndexPath(row: 0, section: InstructionsViewModel.Sections.footer.rawValue)))
         XCTAssert(viewModel.isFooterCellFor(indexPath: IndexPath(row: 0, section: InstructionsViewModel.Sections.footer.rawValue)))
         XCTAssertEqual(viewModel.numberOfRowsInSection(InstructionsViewModel.Sections.footer.rawValue), 1)
-    }
-
-    func test_metada() {
-        let metada = viewModel.getMetada()
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_IS_EXPRESS]!, TrackingUtil.IS_EXPRESS_DEFAULT_VALUE)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_STATUS]!, self.paymentResult.status)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL]!, self.paymentResult.statusDetail)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_ID]!, self.paymentResult._id)
-        XCTAssertEqual(metada[TrackingUtil.METADATA_PAYMENT_METHOD_ID]!, self.paymentResult.paymentData!.getPaymentMethod()!._id)
-        XCTAssertNil(metada[TrackingUtil.METADATA_ISSUER_ID])
     }
 
 }

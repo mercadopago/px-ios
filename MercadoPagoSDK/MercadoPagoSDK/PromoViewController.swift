@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import MercadoPagoPXTracking
 
 open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -17,7 +18,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 
 	@IBOutlet weak fileprivate var tableView: UITableView!
 
-	var promos: [Promo]!
+	var promos: [BankDeal]!
 
 	var bundle: Bundle? = MercadoPago.getBundle()
     var callback: (() -> Void)?
@@ -26,7 +27,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		super.init(coder: aDecoder)
 	}
 
-	public init(promos: [Promo]? = nil, callback: (() -> Void)? = nil) {
+	public init(promos: [BankDeal], callback: (() -> Void)? = nil) {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
 		self.publicKey = MercadoPagoContext.publicKey()
         self.callback = callback
@@ -53,29 +54,11 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 
-        self.showLoading()
         if self.callback == nil {
             self.callback = {
                 self.dismiss(animated: true, completion: {})
             }
         }
-
-        if Array.isNullOrEmpty(self.promos) {
-            MPServicesBuilder.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) in
-                self.promos = promos
-                self.tableView.reloadData()
-                self.hideLoading()
-            }, failure: { (error: NSError) in
-                if error.code == MercadoPago.ERROR_API_CODE {
-                    self.tableView.reloadData()
-                    self.hideLoading()
-                }
-            })
-        } else {
-            self.tableView.reloadData()
-            self.hideLoading()
-        }
-
     }
 
 	open func back() {

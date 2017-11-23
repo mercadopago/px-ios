@@ -109,18 +109,18 @@ open class DiscountCoupon: NSObject {
 
     open func getDiscountDescription() -> String {
         let currency = MercadoPagoContext.getCurrency()
-        if percent_off != "0" {
+        if percent_off != "0" && percent_off != "0.0" {
             return percent_off + " %"
-        } else if amount_off != "0" {
+        } else if amount_off != "0" && amount_off != "0.0" {
             return currency.symbol + amount_off
         } else {
             return ""
         }
     }
     open func getDiscountAmount() -> Double? {
-        if percent_off != "0" {
+        if percent_off != "0" && percent_off != "0.0" {
             return Double(percent_off) // Deberia devolver el monto que se descuenta
-        } else if amount_off != "0" {
+        } else if amount_off != "0"  && amount_off != "0.0" {
             return  Double(amount_off)
         }
         return nil
@@ -134,7 +134,7 @@ open class DiscountCoupon: NSObject {
            text  = "Descuento"
         }
 
-        if percent_off != "0" {
+        if percent_off != "0" && percent_off != "0.0" {
             return text + " " + percent_off + " %"
         }
         return text

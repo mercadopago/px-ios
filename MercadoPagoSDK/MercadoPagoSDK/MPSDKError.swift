@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 open class MPSDKError: NSObject {
 
@@ -35,6 +36,12 @@ open class MPSDKError: NSObject {
             let errorMessage = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
             mpError.message = errorMessage.localized
             mpError.apiException = ApiException.fromJSON(currentError.userInfo as NSDictionary)
+            if let apiException = mpError.apiException {
+                if apiException.error == nil {
+                    let pxError = currentError as? PXError
+                    mpError.apiException = MPSDKError.pxApiExceptionToApiException(pxApiException: pxError?.apiException)
+                }
+            }
             mpError.requestOrigin = requestOrigin
         }
         mpError.retry = (currentError.code == MercadoPago.ERROR_API_CODE || currentError.code == NSURLErrorCannotDecodeContentData || currentError.code == NSURLErrorNotConnectedToInternet || currentError.code == NSURLErrorTimedOut)
@@ -52,6 +59,35 @@ open class MPSDKError: NSObject {
 
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    class func pxApiExceptionToApiException(pxApiException: PXApiException?) -> ApiException {
+        let apiException = ApiException()
+        guard let pxApiException = pxApiException else {
+            return apiException
+        }
+        if !Array.isNullOrEmpty(pxApiException.cause) {
+            for pxCause in pxApiException.cause! {
+                let cause = pxCauseToCause(pxCause: pxCause)
+                if cause != nil {
+                    apiException.cause = Array.safeAppend(apiException.cause, cause!)
+                }
+            }
+        }
+        apiException.error = pxApiException.error
+        apiException.message = pxApiException.message
+        apiException.status = pxApiException.status ?? 0
+        return apiException
+    }
+
+    class func pxCauseToCause(pxCause: PXCause?) -> Cause? {
+        guard let pxCause = pxCause else {
+            return nil
+        }
+        let cause = Cause()
+        cause._description = pxCause._description
+        cause.code = pxCause.code
+        return cause
     }
 
 }

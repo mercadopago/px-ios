@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 
@@ -111,20 +112,16 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
 
-        if !self.viewModel.isPreferenceLoaded() {
-            self.loadPreference()
-        } else {
-            //TODO : OJO TOKEN RECUPERABLE
-            if self.viewModel.paymentData.hasPaymentMethod() {
-              //  self.checkoutTable.reloadData()
-                if recover {
-                    recover = false
-                    //self.startRecoverCard()
-                }
-                if auth {
-                    auth = false
-                    //self.startAuthCard(self.viewModel.paymentData.token!)
-                }
+        //TODO : OJO TOKEN RECUPERABLE
+        if self.viewModel.paymentData.hasPaymentMethod() {
+            //  self.checkoutTable.reloadData()
+            if recover {
+                recover = false
+                //self.startRecoverCard()
+            }
+            if auth {
+                auth = false
+                //self.startAuthCard(self.viewModel.paymentData.token!)
             }
         }
 
@@ -194,29 +191,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
         self.hideNavBar()
         self.hideBackButton()
-        self.hideTimer()
         self.callbackConfirm(self.viewModel.paymentData)
-    }
-
-    fileprivate func loadPreference() {
-        MPServicesBuilder.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
-                if let error = preference.validate() {
-                    // Invalid preference - cannot continue
-                    let mpError =  MPSDKError(message: "Hubo un error".localized, errorDetail: error.localized, retry: false)
-                    self.displayFailure(mpError)
-                } else {
-                    self.viewModel.preference = preference
-                    self.checkoutTable.reloadData()
-                   // self.loadGroupsAndStartPaymentVault(false)
-                }
-            }, failure: { (error) in
-                // Error in service - retry
-                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue, callback: {
-                    self.loadPreference()
-                    }, callbackCancel: {
-                    self.navigationController!.dismiss(animated: true, completion: {})
-                })
-        })
     }
 
     fileprivate func registerAllCells() {

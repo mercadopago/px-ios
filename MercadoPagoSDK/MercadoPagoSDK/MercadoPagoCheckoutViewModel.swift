@@ -47,10 +47,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     static var paymentDataCallback: ((PaymentData) -> Void)?
     static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     static var paymentCallback: ((Payment) -> Void)?
+    static var finishFlowCallback: ((Payment?) -> Void)?
     var callbackCancel: (() -> Void)?
     static var changePaymentMethodCallback: (() -> Void)?
 
     var checkoutPreference: CheckoutPreference!
+    var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
     //    var paymentMethods: [PaymentMethod]?
     var cardToken: CardToken?
@@ -140,7 +142,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         let paymentPreference = PaymentPreference()
         paymentPreference.defaultPaymentTypeId = self.paymentOptionSelected?.getId()
         // TODO : está bien que la paymentPreference se cree desde cero? puede que vengan exclusiones de entrada ya?
-        return CardFormViewModel(amount : self.getAmount(), paymentMethods: getPaymentMethodsForSelection())
+        return CardFormViewModel(amount : self.getAmount(), paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func getPaymentMethodsForSelection() -> [PaymentMethod] {
@@ -153,12 +155,17 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return paymentMethods
     }
 
+    func payerInfoFlow() -> PayerInfoViewModel {
+        let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer)
+        return viewModel
+    }
+
     func paymentVaultViewModel() -> PaymentVaultViewModel {
         var groupName: String?
         if let optionSelected = paymentOptionSelected {
             groupName = optionSelected.getId()
         }
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, groupName: groupName, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, couponCallback: {[weak self] (discount) in
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, groupName: groupName, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
             guard let object = self else {
                 return
             }
@@ -167,11 +174,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
-        return EntityTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.entityTypes!)
+        return EntityTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.entityTypes!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func financialInstitutionViewModel() -> AdditionalStepViewModel {
-        return FinancialInstitutionAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.financialInstitutions!)
+        return FinancialInstitutionAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.financialInstitutions!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func issuerViewModel() -> AdditionalStepViewModel {
@@ -180,7 +187,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             paymentMethod = pm
         }
 
-        return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: paymentMethod, dataSource: self.issuers!)
+        return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: paymentMethod, dataSource: self.issuers!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func payerCostViewModel() -> AdditionalStepViewModel {
@@ -195,7 +202,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
 
-        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email)
+        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
@@ -265,7 +272,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
 
-        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard() {
+        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard {
             self.cardToken!.cardholder!.identification = identification
         } else {
             paymentData.payer.identification = identification
@@ -710,5 +717,6 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = nil
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
+        MercadoPagoCheckoutViewModel.error = nil
     }
 }

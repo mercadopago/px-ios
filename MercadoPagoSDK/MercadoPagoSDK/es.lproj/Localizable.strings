@@ -61,6 +61,7 @@
 "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información." = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.";
 
 // -- Rejected
+"Por favor, intenta pagar con otro medio." = "Por favor, intenta pagar con otro medio.";
 "¿Qué puedo hacer?" = "¿Qué puedo hacer?";
 "rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
 "cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
@@ -76,6 +77,7 @@
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Cancelar pago" = "Cancelar pago";
 "Algo salió mal… " = "Algo salió mal… ";
+"El número de identificación es inválido" = "El número de identificación es inválido";
 
 
 "rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. \n\nO si prefieres, puedes elegir otro medio de pago.";

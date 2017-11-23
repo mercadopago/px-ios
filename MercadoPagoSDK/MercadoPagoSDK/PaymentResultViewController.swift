@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 open class PaymentResultViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource, MPCustomRowDelegate {
 
@@ -62,7 +63,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         let headerNib = UINib(nibName: "HeaderCongratsTableViewCell", bundle: self.bundle)
         self.tableView.register(headerNib, forCellReuseIdentifier: "headerNib")
 
-        let emailNib = UINib(nibName: "ConfirmEmailTableViewCell", bundle: self.bundle)
+        let emailNib = UINib(nibName: "SecondaryInfoTableViewCell", bundle: self.bundle)
         self.tableView.register(emailNib, forCellReuseIdentifier: "emailNib")
 
         let approvedNib = UINib(nibName: "ApprovedTableViewCell", bundle: self.bundle)

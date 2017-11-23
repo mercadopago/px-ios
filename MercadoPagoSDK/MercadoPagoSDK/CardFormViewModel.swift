@@ -35,12 +35,14 @@ open class CardFormViewModel: NSObject {
 
     let animationDuration: Double = 0.6
 
-    var promos: [Promo]?
+    var promos: [BankDeal]?
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil) {
+    public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
+        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
 
         if customerCard != nil {
             self.customerCard = customerCard
@@ -188,7 +190,7 @@ open class CardFormViewModel: NSObject {
             return false
         }
         if self.guessedPMS != nil {
-            return self.getGuessedPM()!.isAmex()
+            return self.getGuessedPM()!.isAmex
         } else {
             return false
         }

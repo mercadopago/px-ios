@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
@@ -126,9 +128,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token)
+        self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel
         self.callback = callback
     }
@@ -165,7 +167,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         super.viewDidAppear(animated)
 
         if self.navigationController != nil {
-            if self.timer == nil && viewModel.showBankDeals() {
+            if viewModel.showBankDeals() {
                 let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                 promocionesButton.tintColor = UIColor.systemFontColor()
                 promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)
@@ -250,15 +252,14 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     private func getPromos() {
-        MPServicesBuilder.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) -> Void in
-            self.viewModel.promos = promos
+        self.viewModel.mercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
+            self.viewModel.promos = bankDeals
             self.updateCardSkin()
-        }, failure: { (_: NSError) in
+        }) { (error) in
             // Si no se pudieron obtener promociones se ignora tal caso
             CardFormViewController.showBankDeals = false
             self.updateCardSkin()
-        })
-
+        }
     }
 
     func getCardWidth() -> CGFloat {
@@ -295,10 +296,13 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     open func verPromociones() {
-        self.navigationController?.present(UINavigationController(rootViewController: self.startPromosStep(promos : self.viewModel.promos)), animated: true, completion: {})
+        guard let promos = self.viewModel.promos else {
+            return
+        }
+        self.navigationController?.present(UINavigationController(rootViewController: self.startPromosStep(promos : promos)), animated: true, completion: {})
     }
 
-    func startPromosStep(promos: [Promo]? = nil,
+    func startPromosStep(promos: [BankDeal],
                          _ callback: (() -> Void)? = nil) -> PromoViewController {
         return PromoViewController(promos : promos, callback : callback)
     }

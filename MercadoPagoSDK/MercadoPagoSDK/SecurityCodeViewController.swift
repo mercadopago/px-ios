@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
@@ -30,8 +31,18 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
 
+    func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.keyboardHeightConstraint.constant = keyboardSize.height - 40
+            self.view.layoutIfNeeded()
+            self.view.setNeedsUpdateConstraints()
+        }
+    }
+    
+    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
     override open func viewDidLoad() {
         super.viewDidLoad()
+         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
          self.hideNavBar()
         loadMPStyles()
         self.securityCodeTextField.placeholder = "security_code".localized

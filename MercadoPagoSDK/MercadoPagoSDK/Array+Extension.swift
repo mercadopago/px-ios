@@ -9,24 +9,12 @@
 import UIKit
 
 extension Array {
-
-    static public func isNullOrEmpty(_ value: Array?) -> Bool {
-        return value == nil || value?.count == 0
-    }
-
-    public mutating func safeRemoveLast(_ suffix: Int) {
-        if suffix > self.count {
-            self.removeAll()
+    static public func safeAppend(_ array: Array?, _ newElement: Element) -> Array {
+        if var array = array {
+            array.append(newElement)
+            return array
         } else {
-            self.removeLast(suffix)
-        }
-    }
-
-    public mutating func safeRemoveFirst(_ suffix: Int) {
-        if suffix > self.count {
-            self.removeAll()
-        } else {
-            self.removeFirst(suffix)
+            return [newElement]
         }
     }
 }

@@ -18,11 +18,11 @@ open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewData
 
 	@IBOutlet weak fileprivate var tableView: UITableView!
 
-	var promos: [Promo]!
+	var promos: [BankDeal]!
 
 	var bundle: Bundle? = MercadoPago.getBundle()
 
-	public init(promos: [Promo]) {
+	public init(promos: [BankDeal]) {
 		super.init(nibName: "PromosTyCViewController", bundle: self.bundle)
 		self.promos = promos
 	}
@@ -97,7 +97,7 @@ open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewData
 		self.setTyCForCell(cell, promo: promo)
 	}
 
-	func setTyCForCell(_ cell: PromoTyCDetailTableViewCell, promo: Promo) {
+	func setTyCForCell(_ cell: PromoTyCDetailTableViewCell, promo: BankDeal) {
 		cell.setLabelWithIssuerName(promo.issuer!.name!, legals: promo.legals)
 	}
 

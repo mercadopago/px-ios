@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -185,14 +187,17 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.viewModel!.shouldGetCustomerCardsInfo() {
 
             if let customerURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
-                CustomServer.getCustomer(url: customerURL, uri: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI(), additionalInfo: MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, {[weak self] (customer: Customer) -> Void in
+                self.viewModel.mercadoPagoServicesAdapter.getCustomer(callback: { [weak self] (customer) in
+
                     self?.viewModel.customerId = customer._id
                     self?.viewModel.customerPaymentOptions = customer.cards
                     self?.loadPaymentMethodSearch()
 
-                }, failure: { (_: NSError?) -> Void in
+                }, failure: { (error) in
+
                     // Ir a Grupos igual
                     self.loadPaymentMethodSearch()
+
                 })
             }
 
@@ -210,34 +215,14 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func loadPaymentMethodSearch() {
+        self.collectionSearch.delegate = self
+        self.collectionSearch.dataSource = self
+        self.collectionSearch.reloadData()
+        self.loadingGroups = false
 
-        if Array.isNullOrEmpty(self.viewModel.paymentMethodOptions) {
-            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
-                if paymentMethodSearchResponse.customerPaymentMethods?.count == 0 && paymentMethodSearchResponse.groups.count == 0 {
-                    let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
-                    self.displayFailure(error)
-                }
-
-                self.loadPaymentMethodSearch()
-
-            }, failure: { (error) -> Void in
-                self.requestFailure(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue, callback: {
-                    self.navigationController!.dismiss(animated: true, completion: {})
-                }, callbackCancel: {
-                    self.invokeCallbackCancelShowingNavBar()
-                })
-            })
-
-        } else {
-            self.collectionSearch.delegate = self
-            self.collectionSearch.dataSource = self
-            self.collectionSearch.reloadData()
-            self.loadingGroups = false
-
-            if self.viewModel.getDisplayedPaymentMethodsCount() == 1 {
-                let paymentOptionDefault = self.viewModel.getPaymentMethodOption(row: 0) as! PaymentMethodOption
-                self.callback(paymentOptionDefault)
-            }
+        if self.viewModel.getDisplayedPaymentMethodsCount() == 1 {
+            let paymentOptionDefault = self.viewModel.getPaymentMethodOption(row: 0) as! PaymentMethodOption
+            self.callback(paymentOptionDefault)
         }
     }
 
@@ -295,7 +280,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 let step = CouponDetailViewController(coupon: coupon)
                 self.present(step, animated: false, completion: {})
             } else {
-                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email, callback: { (coupon) in
+                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { (coupon) in
                     self.viewModel.discount = coupon
                     self.collectionSearch.reloadData()
                     if let updateMercadoPagoCheckout = self.viewModel.couponCallback {

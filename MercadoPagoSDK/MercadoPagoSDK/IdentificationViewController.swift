@@ -123,9 +123,19 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         numberTextField.becomeFirstResponder()
     }
 
+    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
+    
+    func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.keyboardHeightConstraint.constant = keyboardSize.height + 61 // Keyboard + Vista, dejo el mismo nombre de variable para tener consistencia entre clases, pero esta constante no representa la altura real del teclado, sino una altura que varia dependiendo de la altura del teclado
+            self.view.layoutIfNeeded()
+            self.view.setNeedsUpdateConstraints()
+        }
+    }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
-
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         identificationCard = IdentificationCardView()
 
         self.identificationView = UIView()
@@ -223,31 +233,34 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     func setupInputAccessoryView() {
 
-        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
-        let toolbar = UIToolbar(frame: frame)
+        if self.toolbar == nil {
+            let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
 
-        toolbar.barStyle = UIBarStyle.default
-        toolbar.backgroundColor = UIColor.mpLightGray()
-        toolbar.alpha = 1
-        toolbar.isUserInteractionEnabled = true
+            let toolbar = UIToolbar(frame: frame)
 
-        let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-        let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+            toolbar.barStyle = UIBarStyle.default
+            toolbar.backgroundColor = UIColor.mpLightGray()
+            toolbar.alpha = 1
+            toolbar.isUserInteractionEnabled = true
 
-        let font = Utils.getFont(size: 14)
-        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
 
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let font = Utils.getFont(size: 14)
+            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
 
-        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+            buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
 
-        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-        numberTextField.delegate = self
-        self.toolbar = toolbar
-        numberTextField.inputAccessoryView = toolbar
+            toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+
+            numberTextField.delegate = self
+            self.toolbar = toolbar
+        }
+        numberTextField.inputAccessoryView = self.toolbar
 
     }
 

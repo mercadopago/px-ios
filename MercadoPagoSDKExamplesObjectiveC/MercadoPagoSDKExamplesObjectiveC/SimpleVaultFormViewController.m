@@ -76,7 +76,7 @@ UILabel *identificationType;
 //        NSInteger installments = (selectedPayerCost == nil) ? 1 : selectedPayerCost.installments;
 //        
 //        if (customerCard == nil) {
-//            [MPServicesBuilder createNewCardToken:cardToken success:^(Token *token) {
+//            [MercadoPagoServices createNewCardToken:cardToken success:^(Token *token) {
 ////                Item *item = [[Item alloc] initWith_id:@"1" title:@"item title" quantity:1 unitPrice:amount description:nil];
 ////                MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:paymentMethod campaignId:0];
 //////                [CustomServer createPayment:merchantPayment success:^(Payment *payment) {
@@ -97,7 +97,7 @@ UILabel *identificationType;
 //        } else {
 //            SavedCardToken *savedCardtoken = [[SavedCardToken alloc] initWithCard:customerCard securityCode:securityCode.text securityCodeRequired: [customerCard.paymentMethod isSecurityCodeRequired:customerCard.firstSixDigits]];
 //            
-//            [MPServicesBuilder createToken:savedCardtoken success:^(Token *token) {
+//            [MercadoPagoServices createToken:savedCardtoken success:^(Token *token) {
 ////                Item *item = [[Item alloc] initWith_id:@"1" title:@"item title" quantity:1 unitPrice:amount description:nil ];
 ////                MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:customerCard.paymentMethod campaignId:0];
 //////                [CustomServer createPayment:merchantPayment success:^(Payment *payment) {

@@ -17,7 +17,7 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
         let payerCosts = MockBuilder.buildInstallment().payerCosts
         let cardToken = MockBuilder.buildCardToken()
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
-        self.instance = PayerCostAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: nil, email: nil)
+        self.instance = PayerCostAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: nil, email: nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testTitle() {
@@ -36,11 +36,11 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenName() {
-        XCTAssertEqual(self.instance!.getScreenName(), TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS)
+        XCTAssertEqual(self.instance!.getScreenName(), "CARD_INSTALLMENTS")
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS)
+        XCTAssertEqual(self.instance!.screenId, "/checkout_off/card" + "/installments")
     }
 
     func testNumberOfSections() {
@@ -208,7 +208,7 @@ class IssuerAdditionalStepViewModelTest: BaseTest {
         let issuer = MockBuilder.buildIssuer()
         let cardToken = MockBuilder.buildCardToken()
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
-        self.instance = IssuerAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [issuer])
+        self.instance = IssuerAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [issuer], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testTitle() {
@@ -221,11 +221,11 @@ class IssuerAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenName() {
-        XCTAssertEqual(self.instance!.getScreenName(), TrackingUtil.SCREEN_NAME_CARD_FORM_ISSUERS)
+        XCTAssertEqual(self.instance!.getScreenName(), "CARD_ISSUERS")
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER)
+        XCTAssertEqual(self.instance!.screenId, "/checkout_off/card" + "/issuer")
     }
 
     func testNumberOfSections() {
@@ -290,7 +290,7 @@ class CardTypeAdditionalStepViewModelTest: BaseTest {
         super.setUp()
         let cardToken = MockBuilder.buildCardToken()
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
-        self.instance = CardTypeAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethods: [paymentMethod], dataSource: [paymentMethod, paymentMethod])
+        self.instance = CardTypeAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethods: [paymentMethod], dataSource: [paymentMethod, paymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testTitle() {
@@ -300,14 +300,6 @@ class CardTypeAdditionalStepViewModelTest: BaseTest {
 
     func testBankInterestCell() {
         XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
-    }
-
-    func testScreenName() {
-        XCTAssertEqual(self.instance!.getScreenName(), TrackingUtil.SCREEN_NAME_PAYMENT_TYPES)
-    }
-
-    func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, TrackingUtil.SCREEN_ID_PAYMENT_TYPES)
     }
 
     func testNumberOfSections() {
@@ -376,7 +368,7 @@ class FinancialInstitutionAdditionalStepViewModelTest: BaseTest {
         financialInstitution._id = 1232
         financialInstitution._description = "sarasa"
         paymentMethod.financialInstitutions = [financialInstitution, financialInstitution]
-        self.instance = FinancialInstitutionAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: paymentMethod.financialInstitutions)
+        self.instance = FinancialInstitutionAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: paymentMethod.financialInstitutions, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testTitle() {
@@ -456,7 +448,7 @@ class EntityTypeAdditionalStepViewModelTest: BaseTest {
         let entityType = EntityType()
         entityType._id = "1232"
         entityType.name = "sarasa"
-        self.instance = EntityTypeAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [entityType, entityType])
+        self.instance = EntityTypeAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [entityType, entityType], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testTitle() {

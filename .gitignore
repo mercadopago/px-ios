@@ -19,6 +19,8 @@ DerivedData
 .DS_Store
 MercadoPagoSDK/MercadoPagoSDK.framework
 PodTester/Pods/*
+MercadoPagoSDKExamplesObjectiveC/Pods/*
+MercadoPagoSDK/Pods/*
 
 
 # CocoaPods

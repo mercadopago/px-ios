@@ -193,6 +193,19 @@ import UIKit
 
     }
 
+    open class func getOfflineReviewAndConfirmImage(_ paymentMethod: PaymentMethod? = nil) -> UIImage {
+        guard let paymentMethod = paymentMethod else {
+            return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
+        }
+
+        if paymentMethod.isBolbradesco {
+            return MercadoPago.getImage("MPSDK_review_bolbradesco")!
+        } else if paymentMethod.isAccountMoney {
+            return MercadoPago.getImage("MPSDK_review_dineroEnCuenta")!
+        }
+        return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
+    }
+
     open class func getImageFor(cardInformation: CardInformation) -> UIImage? {
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)

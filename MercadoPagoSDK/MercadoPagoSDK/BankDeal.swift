@@ -1,5 +1,5 @@
 //
-//  Promo.swift
+//  BankDeal.swift
 //  MercadoPagoSDK
 //
 //  Created by Matias Gualino on 22/5/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Promo: NSObject {
+open class BankDeal: NSObject {
 
 	open var promoId: String!
 	open var issuer: Issuer!
@@ -17,9 +17,9 @@ open class Promo: NSObject {
 	open var legals: String!
 	open var url: String?
 
-	open class func fromJSON(_ json: NSDictionary) -> Promo {
+	open class func fromJSON(_ json: NSDictionary) -> BankDeal {
 
-		let promo: Promo = Promo()
+		let promo: BankDeal = BankDeal()
 		promo.promoId = json["id"] as? String
 
 		if let issuerDic = json["issuer"] as? NSDictionary {
@@ -92,7 +92,7 @@ open class Promo: NSObject {
 	}
 }
 
-public func ==(obj1: Promo, obj2: Promo) -> Bool {
+public func ==(obj1: BankDeal, obj2: BankDeal) -> Bool {
     let areEqual =
     obj1.promoId == obj2.promoId &&
     obj1.issuer == obj2.issuer &&

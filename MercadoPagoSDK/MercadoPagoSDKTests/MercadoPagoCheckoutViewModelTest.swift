@@ -136,7 +136,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertEqual(pmsForSelectionOff.count, 2)
     }
     func testPayerCostWithDiscount() {
-        let viewModel = PayerCostAdditionalStepViewModel(amount: 1000, token: nil, paymentMethod: PaymentMethod(), dataSource: [Cellable](), discount: MockBuilder.buildDiscount(), email: "dummy@mail.com")
+        let viewModel = PayerCostAdditionalStepViewModel(amount: 1000, token: nil, paymentMethod: PaymentMethod(), dataSource: [Cellable](), discount: MockBuilder.buildDiscount(), email: "dummy@mail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
         let payerCostStep = AdditionalStepViewController(viewModel: viewModel, callback: {_ in })
         XCTAssertNotNil(payerCostStep.viewModel.discount)
     }

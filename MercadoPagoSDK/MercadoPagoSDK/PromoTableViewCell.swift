@@ -26,9 +26,9 @@ open class PromoTableViewCell: UITableViewCell {
 		super.init(coder: aDecoder)
 	}
 
-	open func setPromoInfo(_ promo: Promo!) {
+	open func setPromoInfo(_ promo: BankDeal!) {
 		let placeholderImage = "empty_tc"
-		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil && promo.url != nil {
+		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil && !String.isNullOrEmpty(promo.url) {
 			let imgURL: URL = URL(string: promo.url!)!
 			let request: URLRequest = URLRequest(url: imgURL)
 			NSURLConnection.sendAsynchronousRequest(

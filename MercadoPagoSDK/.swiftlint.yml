@@ -99,6 +99,7 @@ disabled_rules:
   - empty_parameters
   - statement_position
   - unused_closure_parameter
+  - force_try
 
 # disabled_rules:
 #     - trailing_newline
@@ -110,7 +111,6 @@ disabled_rules:
 #     - type_name
 #     - variable_name_min_length
 #     - trailing_semicolon
-#     - force_try
 #     - function_body_length
 #     - nesting
 #     - identifier_name

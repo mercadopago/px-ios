@@ -27,10 +27,6 @@ extension String {
         return localizedString != self
     }
 
-    static public func isNullOrEmpty(_ value: String?) -> Bool {
-        return value == nil || value!.isEmpty
-    }
-
     static public func isDigitsOnly(_ a: String) -> Bool {
 		if Regex.init("^[0-9]*$").test(a) {
 			return true

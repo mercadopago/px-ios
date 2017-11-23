@@ -12,7 +12,7 @@ extension MercadoPagoCheckout {
 
     func getCheckoutPreference() {
         self.presentLoading()
-        MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (checkoutPreference : CheckoutPreference) -> Void in
+        self.viewModel.mercadoPagoServicesAdapter.getCheckoutPreference(checkoutPreferenceId: self.viewModel.checkoutPreference._id, callback: { [weak self] (checkoutPreference) in
 
             guard let strongSelf = self else {
                 return
@@ -23,22 +23,24 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            }, failure: { [weak self] (error: NSError) -> Void in
-                guard let strongSelf = self else {
-                    return
-                }
+        }) { [weak self] (error) in
 
-                strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
-                    self?.getCheckoutPreference()
-                })
-                strongSelf.executeNextStep()
-        })
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
+                self?.getCheckoutPreference()
+            })
+            strongSelf.executeNextStep()
+
+        }
     }
 
     func getDirectDiscount() {
         self.presentLoading()
-        CustomServer.getDirectDiscount(transactionAmount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, url: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { [weak self] (discount) in
+        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (discount) in
 
             guard let strongSelf = self else {
                 return
@@ -48,41 +50,45 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
             strongSelf.dismissLoading()
 
-        }) { [weak self] (_: NSError) in
+        }) { [weak self] (error) in
+
             guard let strongSelf = self else {
                 return
             }
 
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
+
         }
     }
 
     func getPaymentMethodSearch() {
         self.presentLoading()
-        MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
-                                               baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
 
-                                                guard let strongSelf = self else {
-                                                    return
-                                                }
+        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.getFinalAmount(), excludedPaymentTypesIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodsIds: self.viewModel.getExcludedPaymentMethodsIds(), defaultPaymentMethod: self.viewModel.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { [weak self] (paymentMethodSearch) in
 
-                                                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-                                                strongSelf.dismissLoading()
-                                                strongSelf.executeNextStep()
+            guard let strongSelf = self else {
+                return
+            }
 
-            }, failure: { [weak self] (error) -> Void in
-                guard let strongSelf = self else {
-                    return
-                }
+            strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+            strongSelf.dismissLoading()
+            strongSelf.executeNextStep()
 
-                strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] (_) -> Void in
+        }) { [weak self] (error) in
 
-                    self?.getPaymentMethodSearch()
-                })
-                strongSelf.executeNextStep()
-        })
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] (_) -> Void in
+
+                self?.getPaymentMethodSearch()
+            })
+            strongSelf.executeNextStep()
+
+        }
     }
 
     func getIssuers() {
@@ -91,7 +97,8 @@ extension MercadoPagoCheckout {
             return
         }
         let bin = self.viewModel.cardToken?.getBin()
-        MPServicesBuilder.getIssuers(paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (issuers) -> Void in
+        self.viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod._id, bin: bin, callback: { [weak self] (issuers) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -104,7 +111,8 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-        }) { [weak self] (error) -> Void in
+        }) { [weak self] (error) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -114,6 +122,7 @@ extension MercadoPagoCheckout {
                 self?.getIssuers()
             })
             strongSelf.executeNextStep()
+
         }
     }
 
@@ -148,34 +157,37 @@ extension MercadoPagoCheckout {
     func createNewCardToken() {
         self.presentLoading()
 
-        MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token : Token?) -> Void in
+        self.viewModel.mercadoPagoServicesAdapter.createToken(cardToken: self.viewModel.cardToken!, callback: { [weak self] (token) in
+
             guard let strongSelf = self else {
                 return
             }
 
-            strongSelf.viewModel.updateCheckoutModel(token: token!)
+            strongSelf.viewModel.updateCheckoutModel(token: token)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            }, failure : { [weak self] (error) -> Void in
-                guard let strongSelf = self else {
-                    return
-                }
-                let error = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
+        }) { [weak self] (error) in
 
-                if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
-                    if let identificationViewController = strongSelf.navigationController.viewControllers.last as? IdentificationViewController {
-                        identificationViewController.showErrorMessage("Revisa este dato".localized)
-                    }
-                    strongSelf.dismissLoading()
-                } else {
-                    strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] (_) in
-                        self?.createNewCardToken()
-                    })
-                    strongSelf.dismissLoading()
-                    strongSelf.executeNextStep()
+            guard let strongSelf = self else {
+                return
+            }
+            let error = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
+
+            if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
+                if let identificationViewController = strongSelf.navigationController.viewControllers.last as? IdentificationViewController {
+                    identificationViewController.showErrorMessage("Revisa este dato".localized)
                 }
-        })
+                strongSelf.dismissLoading()
+            } else {
+                strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] (_) in
+                    self?.createNewCardToken()
+                })
+                strongSelf.dismissLoading()
+                strongSelf.executeNextStep()
+            }
+
+        }
     }
 
     func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
@@ -184,7 +196,8 @@ extension MercadoPagoCheckout {
         let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
-        MPServicesBuilder.createSavedCardToken(saveCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token) in
+        self.viewModel.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -196,22 +209,25 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            }, failure: { [weak self] (error) in
-                guard let strongSelf = self else {
-                    return
-                }
+        }) { [weak self] (error) in
 
-                strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
-                    self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
-                })
-                strongSelf.executeNextStep()
-        })
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
+                self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
+            })
+            strongSelf.executeNextStep()
+
+        }
     }
 
     func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
         self.presentLoading()
-        MPServicesBuilder.createSavedESCCardToken(savedESCCardToken: savedESCCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { [weak self] (token) in
+        self.viewModel.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -224,30 +240,33 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            }, failure: { [weak self] (error) in
-                guard let strongSelf = self else {
-                    return
-                }
-                let mpError = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
+        }) { [weak self] (error) in
 
-                if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) ||  apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
+            guard let strongSelf = self else {
+                return
+            }
+            let mpError = MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
 
-                    strongSelf.viewModel.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
+            if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) ||  apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
 
-                } else {
-                    strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
-                        self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
-                    })
+                strongSelf.viewModel.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
 
-                }
-                strongSelf.dismissLoading()
-                strongSelf.executeNextStep()
-        })
+            } else {
+                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
+                    self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
+                })
+
+            }
+            strongSelf.dismissLoading()
+            strongSelf.executeNextStep()
+
+        }
     }
 
     func cloneCardToken(token: Token, securityCode: String) {
         self.presentLoading()
-        MPServicesBuilder.cloneToken(token, securityCode:securityCode, success: { [weak self] (token) in
+        self.viewModel.mercadoPagoServicesAdapter.cloneToken(tokenId: token._id, securityCode: securityCode, callback: { [weak self] (token) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -256,17 +275,19 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            }, failure: { [weak self] (error) in
-                guard let strongSelf = self else {
-                    return
-                }
+        }) { [weak self] (error) in
 
-                strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
-                    self?.cloneCardToken(token: token, securityCode: securityCode)
-                })
-                strongSelf.executeNextStep()
-        })
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
+                self?.cloneCardToken(token: token, securityCode: securityCode)
+            })
+            strongSelf.executeNextStep()
+
+        }
     }
 
     func getPayerCosts(updateCallback: (() -> Void)? = nil) {
@@ -278,7 +299,8 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (installments) -> Void in
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, callback: { [weak self] (installments) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -294,12 +316,12 @@ extension MercadoPagoCheckout {
                 updateCallback()
                 strongSelf.dismissLoading()
             } else {
-
                 strongSelf.dismissLoading()
                 strongSelf.executeNextStep()
             }
 
-        }) { [weak self] (error) -> Void in
+        }) { [weak self] (error) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -309,6 +331,7 @@ extension MercadoPagoCheckout {
                 self?.getPayerCosts()
             })
             strongSelf.executeNextStep()
+
         }
     }
 
@@ -323,9 +346,15 @@ extension MercadoPagoCheckout {
             paymentBody = self.viewModel.paymentData.toJSON()
         }
 
-        let createPaymentQuery = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo()
+        var createPaymentQuery: [String:String]? = [:]
+        if let paymentAdditionalInfo = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo() as? [String:String] {
+            createPaymentQuery = paymentAdditionalInfo
+        } else {
+            createPaymentQuery = nil
+        }
 
-        CustomServer.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, success: { [weak self] (payment : Payment) -> Void in
+        self.viewModel.mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { [weak self] (payment) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -333,23 +362,34 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(payment: payment)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-            }, failure: {[weak self] (error: NSError) -> Void in
-                guard let strongSelf = self else {
-                    return
-                }
 
-                strongSelf.dismissLoading()
-                let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
+        }) { [weak self] (error) in
 
-                if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
-                    strongSelf.viewModel.prepareForInvalidPaymentWithESC()
-                } else {
-                    strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
-                        self?.createPayment()
-                    })
-                }
-                strongSelf.executeNextStep()
-        })
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.dismissLoading()
+            let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
+
+            if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
+                strongSelf.viewModel.prepareForInvalidPaymentWithESC()
+            } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
+                self?.viewModel.paymentData.clearCollectedData()
+                let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
+                strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
+                    self?.viewModel.resetInformation()
+                    self?.viewModel.resetGroupSelection()
+                    self?.executeNextStep()
+                })
+            } else {
+                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
+                    self?.createPayment()
+                })
+            }
+            strongSelf.executeNextStep()
+
+        }
     }
 
     func getInstructions() {
@@ -367,7 +407,7 @@ extension MercadoPagoCheckout {
             fatalError("Get Instructions - Payment Method Type Id does no exist")
         }
 
-        MPServicesBuilder.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { [weak self] (instructionsInfo) in
+        self.viewModel.mercadoPagoServicesAdapter.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (instructionsInfo) in
 
             guard let strongSelf = self else {
                 return
@@ -376,7 +416,8 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            }, failure : { [weak self] (error) -> Void in
+        }) { [weak self] (error) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -385,12 +426,14 @@ extension MercadoPagoCheckout {
                 self?.getInstructions()
             })
             strongSelf.executeNextStep()
-        })
+
+        }
     }
 
     func getIdentificationTypes() {
         self.presentLoading()
-        MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { [weak self] (identificationTypes) -> Void in
+        self.viewModel.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] (identificationTypes) in
+
             guard let strongSelf = self else {
                 return
             }
@@ -399,16 +442,18 @@ extension MercadoPagoCheckout {
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
 
-            }, failure : {   [weak self] (error) -> Void in
-                guard let strongSelf = self else {
-                    return
-                }
+        }) { [weak self] (error) in
 
-                strongSelf.dismissLoading()
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] (_) in
-                    self?.getIdentificationTypes()
-                })
-                strongSelf.executeNextStep()
-        })
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.dismissLoading()
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] (_) in
+                self?.getIdentificationTypes()
+            })
+            strongSelf.executeNextStep()
+
+        }
     }
 }

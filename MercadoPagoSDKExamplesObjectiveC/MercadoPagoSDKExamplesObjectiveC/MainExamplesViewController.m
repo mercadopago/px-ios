@@ -82,7 +82,7 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-f3f035a2-d343-4a6f-bd3b-fc3c3cb72416" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -207,7 +207,7 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWith_id: @"245099733-8771f469-d68e-4863-b8cb-9402e22c6bb2"];
+    self.pref = [[CheckoutPreference alloc] initWith_id: @"241261722-fd934d99-cb91-48b9-880b-781a4dd2252f"];
 }
 
 -(void)setPaymentResultScreenPreference {
@@ -307,11 +307,15 @@
 
 -(void)setServicePreference {
     ServicePreference * servicePreference = [[ServicePreference alloc] init];
-    NSDictionary *extraParams = @{
-                                  @"merchant_access_token" : @"mla-cards-data" };
+//    NSDictionary *extraParams = @{
+//                                  @"merchant_access_token" : @"mla-cards-data" };
+
+       NSDictionary *extraParams = @{
+                                   @"access_token" : @"TEST-3284996600758722-031613-bd9e7923837b50bd493d18728eb971f0__LC_LD__-243966003" };
     //    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
     //
-    [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+    [servicePreference setGetCustomerWithBaseURL:@"https://api.mercadopago.com" URI:@"/v1/customers/261207170-jxqdmty1ClVKjU" additionalInfo:extraParams];
+    [PXSDKSettings enableBetaServices];
 
     [MercadoPagoCheckout setServicePreference:servicePreference];
 }

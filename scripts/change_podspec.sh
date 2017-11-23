@@ -16,14 +16,14 @@ lf=$'\n'
 
 text="  s.subspec 'ESC' do |esc|	\\$lf	esc.dependency 'MercadoPagoSDK\/Default'  \\$lf    	esc.dependency 'MLESCManager' \\$lf     esc.pod_target_xcconfig = { \\$lf       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D MPESC_ENABLE' \\$lf     } \\$lf   end"
 
-sed -e "18s/^//p; 18s/^.*/ $text\\$lf/g" -e 's/:git.*/:git => "git@github.com:mercadopago\/px-ios.git", :tag => s.version.to_s }/' $temp_name | tee $file_name
+sed -e "20s/^//p; 20s/^.*/ $text\\$lf/g" -e 's/:git.*/:git => "git@github.com:mercadopago\/px-ios.git", :tag => s.version.to_s }/' $temp_name | tee $file_name
 
 
 echo "=========================================="
 echo "2) Validate .podspec --allow-warnings"
 echo "=========================================="
 
-pod lib lint --allow-warnings --verbose --sources='git@github.com:mercadolibre/mobile-ios_specs.git'
+pod lib lint --allow-warnings --verbose --sources='git@github.com:mercadolibre/mobile-ios_specs.git,https://github.com/CocoaPods/Specs'
 STATUS=$?
 if [ $STATUS -ne 0 ]
 	then
