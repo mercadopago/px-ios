@@ -35,11 +35,6 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
         self.navigationController = navigationController
 
-        super.init()
-
-        let action = MPAction()
-        mpAction = action.initialize(checkout: self)
-
         if self.navigationController.viewControllers.count > 0 {
             let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
             }
@@ -83,6 +78,7 @@ open class MercadoPagoCheckout: NSObject {
         MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
     }
+    
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {
@@ -135,9 +131,13 @@ open class MercadoPagoCheckout: NSObject {
         case .SCREEN_ERROR:
             self.showErrorScreen()
         case .SCREEN_HOOK_1:
-            self.showHook1()
+            self.showHookScreen(hookStep: .STEP1)
         default: break
         }
+    }
+    
+    func executePreviousStep(animated:Bool=true) {
+        self.navigationController.popViewController(animated: animated)
     }
 
     func validatePreference() {
@@ -292,15 +292,20 @@ open class MPAction: NSObject {
 
     private var checkout: MercadoPagoCheckout?
 
-    public override init() {}
-
-    open func initialize(checkout:MercadoPagoCheckout) -> MPAction {
-        self.checkout = checkout
-        return self
+    public init(withCheckout:MercadoPagoCheckout) {
+        self.checkout = withCheckout
     }
-
+    
     open func next() {
         checkout?.executeNextStep()
+    }
+    
+    open func back() {
+        checkout?.executePreviousStep()
+    }
+    
+    open func cancel() {
+        checkout?.cancel()
     }
 }
 

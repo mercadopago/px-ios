@@ -198,5 +198,10 @@ open class FlowPreference: NSObject {
     public func setHook(hooks: [Hookeable]) {
         self.hooks = hooks
     }
-
+    
+    public func getHookForStep(hookStep:HookStep) -> Hookeable? {
+        let matchedHooksForStep = MercadoPagoCheckoutViewModel.flowPreference.hooks.filter { targetHook in
+            targetHook.getStep() == hookStep}
+        return matchedHooksForStep.first
+    }
 }

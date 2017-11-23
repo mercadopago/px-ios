@@ -315,7 +315,12 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
-    func shouldShowHook1() -> Bool {
-        return true
+    func shouldShowHook(hookStep:HookStep) -> Bool {
+        // TODO: Use Hook step to evaluate.
+        // The following condition is only for test.
+        if let _ = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
+            return true
+        }
+        return false
     }
 }

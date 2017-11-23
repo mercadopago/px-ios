@@ -35,6 +35,8 @@ public enum CheckoutStep: String {
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
     case SCREEN_HOOK_1
+    case SCREEN_HOOK_2
+    case SCREEN_HOOK_3
 }
 
 open class MercadoPagoCheckoutViewModel: NSObject {
@@ -359,7 +361,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .SCREEN_REVIEW_AND_CONFIRM
         }
 
-        if shouldShowHook1() {
+        if shouldShowHook(hookStep: .STEP1) {
             return .SCREEN_HOOK_1
         }
 
