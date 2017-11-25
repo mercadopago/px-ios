@@ -71,7 +71,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         super.viewDidLoad()
         self.errorTitle.text = error.message
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
+        let normalAttributes = [NSAttributedStringKey.font: Utils.getFont(size: 14)]
 
         self.errorSubtitle.attributedText = NSAttributedString(string :error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
@@ -90,7 +90,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    internal func invokeCallback() {
+    @objc internal func invokeCallback() {
         if callback != nil {
             callback!()
         } else {
@@ -102,7 +102,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         }
     }
 
-    internal func invokeExitCallback() {
+    @objc internal func invokeExitCallback() {
         if let cancelCallback = ErrorViewController.defaultErrorCancel {
             cancelCallback()
         }

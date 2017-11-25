@@ -218,7 +218,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func cloneTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentData.token
-        var reason = SecurityCodeViewModel.Reason.CALL_FOR_AUTH
+        let reason = SecurityCodeViewModel.Reason.CALL_FOR_AUTH
         return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!, reason: reason)
     }
 
@@ -421,8 +421,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
 
         if search?.getPaymentOptionsCount() == 0 {
-            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
-            })
+            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: nil)
         }
 
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
@@ -465,10 +464,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             transactionDetails = paymentData.transactionDetails!
         }
 
-        var payer = Payer()
-        if paymentData.payer != nil {
-            payer = paymentData.payer
-        }
+        let payer = paymentData.payer 
 
         let isBlacklabelPayment = paymentData.hasToken() && paymentData.getToken()!.cardId != nil && String.isNullOrEmpty(customerId)
 

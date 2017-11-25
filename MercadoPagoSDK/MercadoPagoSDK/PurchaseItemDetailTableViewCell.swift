@@ -62,9 +62,9 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         let unitPrice = Utils.getAttributedAmount(item.unitPrice, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.px_grayDark(), fontSize : 18, baselineOffset: 5)
         var unitPriceTitle: NSMutableAttributedString
         if amountTittleHidden {
-           unitPriceTitle = NSMutableAttributedString(string: "", attributes: [NSFontAttributeName: Utils.getFont(size: self.itemQuantity.font.pointSize)])
+           unitPriceTitle = NSMutableAttributedString(string: "", attributes: [NSAttributedStringKey.font: Utils.getFont(size: self.itemQuantity.font.pointSize)])
         }else {
-            unitPriceTitle = NSMutableAttributedString(string: amountTitle, attributes: [NSFontAttributeName: Utils.getFont(size: self.itemQuantity.font.pointSize)])
+            unitPriceTitle = NSMutableAttributedString(string: amountTitle, attributes: [NSAttributedStringKey.font: Utils.getFont(size: self.itemQuantity.font.pointSize)])
         }
         unitPriceTitle.append(unitPrice)
         self.itemUnitPrice.attributedText = unitPriceTitle

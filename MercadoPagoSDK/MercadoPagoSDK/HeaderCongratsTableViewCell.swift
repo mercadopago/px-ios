@@ -72,10 +72,10 @@ class HeaderCongratsTableViewCell: UITableViewCell {
         let amountRange = titleWithParams.range(of: "%t")
 
         if amountRange != nil {
-            let attributedTitle = NSMutableAttributedString(string: (titleWithParams.substring(to: (amountRange?.lowerBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let attributedTitle = NSMutableAttributedString(string: (titleWithParams.substring(to: (amountRange?.lowerBound)!)), attributes: [NSAttributedStringKey.font: Utils.getFont(size: 22)])
             let attributedAmount = Utils.getAttributedAmount(totalAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white())
             attributedTitle.append(attributedAmount)
-            let endingTitle = NSAttributedString(string: (titleWithParams.substring(from: (amountRange?.upperBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let endingTitle = NSAttributedString(string: (titleWithParams.substring(from: (amountRange?.upperBound)!)), attributes: [NSAttributedStringKey.font: Utils.getFont(size: 22)])
             attributedTitle.append(endingTitle)
             self.title.attributedText = attributedTitle
         }
@@ -124,15 +124,15 @@ class HeaderCongratsTableViewCell: UITableViewCell {
         let amountRange = instructionsInfo.getInstruction()!.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
 
         if amountRange != nil {
-            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title.substring(to: (amountRange?.lowerBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title.substring(to: (amountRange?.lowerBound)!)), attributes: [NSAttributedStringKey.font: Utils.getFont(size: 22)])
             let attributedAmount = Utils.getAttributedAmount(instructionsInfo.amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white())
             attributedTitle.append(attributedAmount)
-            let endingTitle = NSAttributedString(string: (instructionsInfo.instructions[0].title.substring(from: (amountRange?.upperBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let endingTitle = NSAttributedString(string: (instructionsInfo.instructions[0].title.substring(from: (amountRange?.upperBound)!)), attributes: [NSAttributedStringKey.font: Utils.getFont(size: 22)])
             attributedTitle.append(endingTitle)
 
             self.title.attributedText = attributedTitle
         } else {
-            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title), attributes: [NSAttributedStringKey.font: Utils.getFont(size: 22)])
             self.title.attributedText = attributedTitle
         }
     }

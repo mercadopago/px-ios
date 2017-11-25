@@ -38,7 +38,7 @@ extension DecorationPreference {
 internal class NavigationControllerMemento {
     var navBarTintColor: UIColor?
     var navTintColor: UIColor?
-    var navTitleTextAttributes: [String : Any]?
+    var navTitleTextAttributes: [NSAttributedStringKey : Any]?
     var navIsTranslucent: Bool = false
     var navViewBackgroundColor: UIColor?
     var navBackgroundColor: UIColor?

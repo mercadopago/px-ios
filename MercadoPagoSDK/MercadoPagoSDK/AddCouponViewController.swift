@@ -67,8 +67,8 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         buttonPrev = UIBarButtonItem(title: "Cancelar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.leftArrowKeyTapped))
 
          let font = Utils.getFont(size: 14)
-        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        buttonNext.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
+        buttonPrev.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
 
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
@@ -83,11 +83,11 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     }
 
-    func leftArrowKeyTapped() {
+    @objc func leftArrowKeyTapped() {
         self.exit()
     }
 
-    func rightArrowKeyTapped() {
+    @objc func rightArrowKeyTapped() {
         guard let couponCode = textBox.text else {
             return
         }

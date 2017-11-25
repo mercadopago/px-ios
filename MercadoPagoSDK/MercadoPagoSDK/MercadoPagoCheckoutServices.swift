@@ -30,7 +30,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] (_) -> Void in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] in
                 self?.getCheckoutPreference()
             })
             strongSelf.executeNextStep()
@@ -82,7 +82,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] (_) -> Void in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] in
 
                 self?.getPaymentMethodSearch()
             })
@@ -118,7 +118,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_ISSUERS.rawValue), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_ISSUERS.rawValue), errorCallback: {
                 self?.getIssuers()
             })
             strongSelf.executeNextStep()
@@ -180,7 +180,7 @@ extension MercadoPagoCheckout {
                 }
                 strongSelf.dismissLoading()
             } else {
-                strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] (_) in
+                strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] in
                     self?.createNewCardToken()
                 })
                 strongSelf.dismissLoading()
@@ -216,7 +216,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: .convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: {
                 self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
             })
             strongSelf.executeNextStep()
@@ -252,7 +252,7 @@ extension MercadoPagoCheckout {
                 strongSelf.viewModel.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
 
             } else {
-                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
+                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] in
                     self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
                 })
 
@@ -282,7 +282,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue), errorCallback: { [weak self] in
                 self?.cloneCardToken(token: token, securityCode: securityCode)
             })
             strongSelf.executeNextStep()
@@ -327,7 +327,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] in
                 self?.getPayerCosts()
             })
             strongSelf.executeNextStep()
@@ -377,13 +377,13 @@ extension MercadoPagoCheckout {
             } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
                 self?.viewModel.paymentData.clearCollectedData()
                 let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
-                strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
+                strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] in
                     self?.viewModel.resetInformation()
                     self?.viewModel.resetGroupSelection()
                     self?.executeNextStep()
                 })
             } else {
-                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
+                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] in
                     self?.createPayment()
                 })
             }
@@ -422,7 +422,7 @@ extension MercadoPagoCheckout {
                 return
             }
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue), errorCallback: { [weak self] in
                 self?.getInstructions()
             })
             strongSelf.executeNextStep()
@@ -449,7 +449,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.dismissLoading()
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] (_) in
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin:  ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] in
                 self?.getIdentificationTypes()
             })
             strongSelf.executeNextStep()

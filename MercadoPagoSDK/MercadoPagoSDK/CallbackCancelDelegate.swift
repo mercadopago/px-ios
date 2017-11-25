@@ -40,7 +40,7 @@ open class CallbackCancelTableViewCell: UITableViewCell {
             self.defaultCallback!()
         }
     }
-    func invokeCallback() {
+    @objc func invokeCallback() {
         if let paymentResult = paymentResult, let callbackStatusTracking = self.callbackStatusTracking, let status = status {
             callbackStatusTracking(paymentResult, status)
         } else if let callbackStatus = self.callbackStatus, let status = status {

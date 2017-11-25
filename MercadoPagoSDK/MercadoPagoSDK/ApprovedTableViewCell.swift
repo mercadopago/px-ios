@@ -98,7 +98,7 @@ class ApprovedTableViewCell: UITableViewCell {
             self.installments.attributedText  = attributedInstallment
         } else if amount != 0 {
             let totalAmount = Utils.getAttributedAmount(amount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
-            let installmentLabel = NSMutableAttributedString(string: "", attributes: [NSFontAttributeName: Utils.getFont(size: 24)])
+            let installmentLabel = NSMutableAttributedString(string: "", attributes: [NSAttributedStringKey.font: Utils.getFont(size: 24)])
             installmentLabel.append(totalAmount)
             self.installments.attributedText =  installmentLabel
 
@@ -125,9 +125,9 @@ class ApprovedTableViewCell: UITableViewCell {
 
     func fillTotalLabel(payerCost: PayerCost, currency: Currency) {
         if payerCost.totalAmount > 0 && payerCost.hasInstallmentsRate() {
-            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
+            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: Utils.getFont(size: 16)]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor.black, fontSize:16, baselineOffset:4))
-            attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
+            attributedTotal.append(NSAttributedString(string: " )", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: Utils.getFont(size: 16)]))
             total.attributedText = attributedTotal
         } else {
             paymentMethodTotalConstraint.constant = 0

@@ -352,7 +352,7 @@ open class CardToken: NSObject, CardInformationForm {
     }
     open func getCardLastForDigits() -> String? {
         let index = cardNumber?.characters.count
-        return cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)]
+        return String(cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)])
     }
     public func getCardBin() -> String? {
         return getBin()
