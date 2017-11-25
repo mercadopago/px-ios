@@ -24,9 +24,9 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
         self.termsAndConditionsText.attributedText = TermsAndConditionsViewCell.getTyCText()
 
-        let URLAttribute = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor.primaryColor()]
-
-        self.termsAndConditionsText.linkTextAttributes = URLAttribute
+        if let URLAttribute = [NSAttributedStringKey.font: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.primaryColor()] as? [String: Any] {
+            self.termsAndConditionsText.linkTextAttributes = URLAttribute
+        }
 
         let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: TermsAndConditionsViewCell.getCellHeight() - 1, width: UIScreen.main.bounds.width, height: 1)
         self.addSubview(separatorLine)
@@ -44,18 +44,21 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     private static func getTyCText() -> NSMutableAttributedString {
 
         let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 12), NSForegroundColorAttributeName: UIColor.px_grayLight()]
+        let normalAttributes = [
+            NSAttributedStringKey.font: Utils.getFont(size: 12),
+            NSAttributedStringKey.foregroundColor: UIColor.px_grayLight()
+        ]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: "Términos y Condiciones".localized)
 
-        mutableAttributedString.addAttribute(NSLinkAttributeName, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
+        mutableAttributedString.addAttribute(NSAttributedStringKey.link, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         style.lineSpacing = CGFloat(6)
 
-        mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, mutableAttributedString.length))
+        mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSMakeRange(0, mutableAttributedString.length))
         return mutableAttributedString
     }
 

@@ -14,7 +14,7 @@ open class URLConfigs: NSObject {
     static var MP_PROD_ENV = "/v1"
     static var MP_SELECTED_ENV = MP_PROD_ENV
 
-    static var API_VERSION = "1.4.X"
+    public static var API_VERSION = "1.4.X"
 
     static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
 
@@ -23,10 +23,10 @@ open class URLConfigs: NSObject {
     static let MP_ALPHA_API_BASE_URL: String =  "http://api.mp.internal.ml.com"
     static let MP_API_BASE_URL_PROD: String =  "https://api.mercadopago.com"
 
-    static let MP_API_BASE_URL: String =  MP_API_BASE_URL_PROD
+    public static let MP_API_BASE_URL: String =  MP_API_BASE_URL_PROD
 
     static let PAYMENTS = "/payments"
 
     static let MP_DISCOUNT_URI =  "/discount_campaigns/"
-    static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
+    public static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
 }

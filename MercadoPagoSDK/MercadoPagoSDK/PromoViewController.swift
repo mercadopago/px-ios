@@ -42,7 +42,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
         super.viewDidLoad()
         self.title = "Promociones".localized
         if self.navigationController != nil {
-            self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.systemFontColor()]
+            self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.systemFontColor()]
         }
 
 		self.tableView.register(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")

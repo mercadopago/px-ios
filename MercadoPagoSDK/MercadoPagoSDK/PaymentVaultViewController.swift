@@ -139,7 +139,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.viewWillAppear(animated)
 
         self.hideNavBar()
-        if let button = self.navigationItem.leftBarButtonItem {
+        if self.navigationItem.leftBarButtonItem != nil {
                self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         }
 

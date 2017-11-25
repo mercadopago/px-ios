@@ -20,7 +20,7 @@ class InstructionsSubtitleTableViewCell: UITableViewCell {
 
     func fillCell(instruction: Instruction) {
         if instruction.hasSubtitle() {
-            let attributedTitle = NSMutableAttributedString(string: instruction.subtitle!, attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let attributedTitle = NSMutableAttributedString(string: instruction.subtitle!, attributes: [NSAttributedStringKey.font: Utils.getFont(size: 22)])
             self.title.attributedText = attributedTitle
         }
     }

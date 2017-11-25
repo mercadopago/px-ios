@@ -47,8 +47,8 @@ open class DiscountCoupon: NSObject {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    func toJSON() -> [String:Any] {
-        var obj: [String:Any] = [
+    func toJSON() -> [String: Any] {
+        var obj: [String: Any] = [
             "id": Int(self._id),
             "percent_off": Int(self.percent_off),
             "amount_off": Int(self.amount_off),

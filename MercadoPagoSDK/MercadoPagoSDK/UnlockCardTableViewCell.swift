@@ -28,9 +28,9 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         self.unlockCardtextView.isUserInteractionEnabled = true
         self.unlockCardtextView.attributedText = UnlockCardTableViewCell.getUnlockCardText()
 
-        let URLAttribute = [NSFontAttributeName: Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.primaryColor()]
-
-        self.unlockCardtextView.linkTextAttributes = URLAttribute
+        if let URLAttribute = [NSAttributedStringKey.font: Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.primaryColor()] as? [String: Any] {
+            self.unlockCardtextView.linkTextAttributes = URLAttribute
+        }
 
         self.selectionStyle = .none
 
@@ -47,18 +47,18 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
     private static func getUnlockCardText() -> NSMutableAttributedString {
 
         let unlockCardText = "Recuerda desbloquear tu tarjeta antes de confirmar el pago.".localized
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14), NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0xA1924C)]
+        let normalAttributes = [NSAttributedStringKey.font: Utils.getFont(size: 14), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0xA1924C)]
 
         let mutableAttributedString = NSMutableAttributedString(string: unlockCardText, attributes: normalAttributes)
         let unlockCardLinkRange = (unlockCardText as NSString).range(of: "desbloquear tu tarjeta".localized)
 
-        mutableAttributedString.addAttribute(NSLinkAttributeName, value: self.unlockCardLink!, range: unlockCardLinkRange)
+        mutableAttributedString.addAttribute(NSAttributedStringKey.link, value: self.unlockCardLink!, range: unlockCardLinkRange)
 
         let style = NSMutableParagraphStyle()
         style.alignment = .left
         style.lineSpacing = CGFloat(0.5)
 
-        mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, mutableAttributedString.length))
+        mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSMakeRange(0, mutableAttributedString.length))
         return mutableAttributedString
     }
 
