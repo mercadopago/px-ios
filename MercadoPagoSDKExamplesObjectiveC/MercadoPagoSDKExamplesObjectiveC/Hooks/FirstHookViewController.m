@@ -52,11 +52,11 @@ id <PaymentMethodOption> paymentOptionSelected;
 }
 
 - (BOOL)shouldShowNavigationBar {
-    return YES;
+    return NO;
 }
 
 - (NSString * _Nullable)titleForNavigationBar {
-    return nil;
+    return @"Test hook";
 }
 
 - (UIColor * _Nullable)colorForNavigationBar {

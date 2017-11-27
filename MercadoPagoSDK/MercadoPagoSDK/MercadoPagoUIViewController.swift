@@ -15,6 +15,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var navBarTextColor = UIColor.systemFontColor()
     private var navBarBackgroundColor = UIColor.primaryColor()
     var shouldDisplayBackButton = false
+    var shouldHideNavigationBar = false
 
     var hideNavBarCallback: (() -> Void)?
 
@@ -77,12 +78,21 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         self.loadMPStyles()
+        
         MercadoPagoCheckout.firstViewControllerPushed = true
+        
+        if shouldHideNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+        }
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.clearMercadoPagoStyle()
+        
+        if shouldHideNavigationBar {
+            navigationController?.setNavigationBarHidden(false, animated: false)
+        }
     }
 
     internal func loadMPStyles() {

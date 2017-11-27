@@ -106,7 +106,6 @@
     [MercadoPagoCheckout setFlowPreference:flowPref];
     
     [self.mpCheckout start];
-
 }
 
 -(void)setPaymentResult {
