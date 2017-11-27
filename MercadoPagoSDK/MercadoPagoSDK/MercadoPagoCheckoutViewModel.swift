@@ -56,8 +56,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     var checkoutPreference: CheckoutPreference!
     var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
-
-    //    var paymentMethods: [PaymentMethod]?
     var cardToken: CardToken?
     var customerId: String?
 
@@ -284,6 +282,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func updateCheckoutModel(payerCost: PayerCost) {
         self.paymentData.updatePaymentDataWith(payerCost: payerCost)
+
+        if let paymentOptionSelected = paymentOptionSelected {
+            if paymentOptionSelected.isCustomerPaymentMethod() {
+                self.paymentData.cleanToken()
+            }
+        }
     }
 
     public func updateCheckoutModel(entityType: EntityType) {
@@ -352,6 +356,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .SCREEN_PAYMENT_METHOD_SELECTION
         }
 
+        if shouldShowHook(hookStep: .STEP1) {
+            return .SCREEN_HOOK_1
+        }
+
+        if shouldShowHook(hookStep: .STEP2) {
+            return .SCREEN_HOOK_2
+        }
+
+        if shouldShowHook(hookStep: .STEP3) {
+            return .SCREEN_HOOK_3
+        }
+
         if needToCreatePayment() {
             readyToPay = false
             return .SERVICE_POST_PAYMENT
@@ -359,18 +375,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needReviewAndConfirm() {
             return .SCREEN_REVIEW_AND_CONFIRM
-        }
-
-        if shouldShowHook(hookStep: .STEP1) {
-            return .SCREEN_HOOK_1
-        }
-        
-        if shouldShowHook(hookStep: .STEP2) {
-            return .SCREEN_HOOK_2
-        }
-        
-        if shouldShowHook(hookStep: .STEP3) {
-            return .SCREEN_HOOK_3
         }
 
         if needCompleteCard() {
@@ -661,6 +665,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return false
     }
 
+    public func wentBackFrom(hook: HookStep) {
+        MercadoPagoCheckoutViewModel.flowPreference.addHookToHooksToShow(hookStep: hook)
+    }
+
+    public func continueFrom(hook: HookStep) {
+        MercadoPagoCheckoutViewModel.flowPreference.removeHookFromHooksToShow(hookStep: hook)
+    }
+
 }
 
 extension MercadoPagoCheckoutViewModel {
@@ -712,6 +724,7 @@ extension MercadoPagoCheckoutViewModel {
         self.resetInformation()
         self.resetGroupSelection()
         self.rootVC = true
+        MercadoPagoCheckoutViewModel.flowPreference.resetHooksToShow()
     }
 
     func prepareForInvalidPaymentWithESC() {

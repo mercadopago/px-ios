@@ -13,6 +13,8 @@
 		238B721D1FC72F820072708E /* Hooks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238B721C1FC72F820072708E /* Hooks.storyboard */; };
 		238B72201FC7302A0072708E /* FirstHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 238B721F1FC7302A0072708E /* FirstHookViewController.m */; };
 		4B34DC331E5DA33100FDD295 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC41D2559140087C785 /* AppDelegate.m */; };
+		4B5C49DA1FCC59B500FB8C04 /* SecondHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C49D91FCC59B500FB8C04 /* SecondHookViewController.m */; };
+		4B5C49E01FCC7F5600FB8C04 /* ThirdHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C49DF1FCC7F5600FB8C04 /* ThirdHookViewController.m */; };
 		4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
 		4B7AA9811E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
 		4B7AA9821E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */; };
@@ -94,6 +96,10 @@
 		238B721E1FC7302A0072708E /* FirstHookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FirstHookViewController.h; path = Hooks/FirstHookViewController.h; sourceTree = "<group>"; };
 		238B721F1FC7302A0072708E /* FirstHookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FirstHookViewController.m; path = Hooks/FirstHookViewController.m; sourceTree = "<group>"; };
 		2E63040F2E13FF09B0FAC07F /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B5C49D81FCC59B500FB8C04 /* SecondHookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SecondHookViewController.h; path = Hooks/SecondHookViewController.h; sourceTree = "<group>"; };
+		4B5C49D91FCC59B500FB8C04 /* SecondHookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SecondHookViewController.m; path = Hooks/SecondHookViewController.m; sourceTree = "<group>"; };
+		4B5C49DE1FCC7F5600FB8C04 /* ThirdHookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThirdHookViewController.h; path = Hooks/ThirdHookViewController.h; sourceTree = "<group>"; };
+		4B5C49DF1FCC7F5600FB8C04 /* ThirdHookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ThirdHookViewController.m; path = Hooks/ThirdHookViewController.m; sourceTree = "<group>"; };
 		4B7AA97D1E55E64C000902B9 /* DineroEnCuentaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DineroEnCuentaTableViewCell.h; sourceTree = "<group>"; };
 		4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DineroEnCuentaTableViewCell.m; sourceTree = "<group>"; };
 		4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DineroEnCuentaTableViewCell.xib; sourceTree = "<group>"; };
@@ -173,6 +179,10 @@
 				238B721C1FC72F820072708E /* Hooks.storyboard */,
 				238B721E1FC7302A0072708E /* FirstHookViewController.h */,
 				238B721F1FC7302A0072708E /* FirstHookViewController.m */,
+				4B5C49D81FCC59B500FB8C04 /* SecondHookViewController.h */,
+				4B5C49D91FCC59B500FB8C04 /* SecondHookViewController.m */,
+				4B5C49DE1FCC7F5600FB8C04 /* ThirdHookViewController.h */,
+				4B5C49DF1FCC7F5600FB8C04 /* ThirdHookViewController.m */,
 			);
 			name = Hooks;
 			sourceTree = "<group>";
@@ -561,10 +571,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B5C49E01FCC7F5600FB8C04 /* ThirdHookViewController.m in Sources */,
 				76EF7EC51D2559140087C785 /* AppDelegate.m in Sources */,
 				767D8DBC1E5541EC0004FCA9 /* CustomItemTableViewCell.m in Sources */,
 				766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */,
 				4B7D07DB1E55324700E6CA78 /* SubeTableViewCell.m in Sources */,
+				4B5C49DA1FCC59B500FB8C04 /* SecondHookViewController.m in Sources */,
 				238B72201FC7302A0072708E /* FirstHookViewController.m in Sources */,
 				76EF7F221D255C7E0087C785 /* ExampleUtils.m in Sources */,
 				76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */,

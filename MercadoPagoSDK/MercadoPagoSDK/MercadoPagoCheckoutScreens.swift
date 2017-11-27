@@ -143,6 +143,10 @@ extension MercadoPagoCheckout {
                 }
         })
 
+        checkoutVC.callbackCancel = {
+            self.viewModel.readyToPay = false
+        }
+
         self.pushViewController(viewController: checkoutVC, animated: true, completion: {
             self.cleanNavigationStack()
         })
@@ -277,13 +281,17 @@ extension MercadoPagoCheckout {
         self.navigationController.pushViewController(entityTypeStep, animated: true)
     }
 
-    func showHookScreen(hookStep:HookStep) {
+    func showHookScreen(hookStep : HookStep) {
         
         if let targetHook = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
             
             let vc = MercadoPagoUIViewController()
             vc.view.backgroundColor = .clear
-            
+
+            vc.callbackCancel = {
+                self.viewModel.wentBackFrom(hook: hookStep)
+            }
+
             HookStore.sharedInstance.paymentData = self.viewModel.paymentData
             HookStore.sharedInstance.paymentOptionSelected = self.viewModel.paymentOptionSelected
             
@@ -293,7 +301,7 @@ extension MercadoPagoCheckout {
             vc.title = targetHook.titleForNavigationBar()
             vc.shouldShowBackArrow = targetHook.shouldShowBackArrow()
             vc.shouldHideNavigationBar = !targetHook.shouldShowNavigationBar()
-             if let navBarColor = targetHook.colorForNavigationBar() {
+            if let navBarColor = targetHook.colorForNavigationBar() {
                 vc.setNavBarBackgroundColor(color: navBarColor)
             }
 
@@ -305,6 +313,8 @@ extension MercadoPagoCheckout {
             targetHook.renderDidFinish()
             
             self.navigationController.pushViewController(vc, animated: true)
+
+            self.viewModel.continueFrom(hook: hookStep)
         }
     }
 }

@@ -1,27 +1,24 @@
 //
-//  FirstHookViewController.m
+//  SecondHookViewController.m
 //  MercadoPagoSDKExamplesObjectiveC
 //
-//  Created by Juan sebastian Sanzone on 23/11/17.
+//  Created by Eden Torres on 11/27/17.
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-#import "FirstHookViewController.h"
+#import "SecondHookViewController.h"
 
-id <PaymentMethodOption> paymentOptionSelected;
-
-@interface FirstHookViewController ()
-
-@property (weak, nonatomic) IBOutlet UILabel *paymentType;
+@interface SecondHookViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *paymentMethodLabel;
+@property PaymentData *paymentData;
 
 @end
 
-
-@implementation FirstHookViewController
+@implementation SecondHookViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"FirstHookViewController loaded");
+    NSLog(@"SecondHookViewController loaded");
 }
 
 - (IBAction)didTapOnNext {
@@ -35,15 +32,15 @@ id <PaymentMethodOption> paymentOptionSelected;
 }
 
 - (void)didReciveWithHookStore:(HookStore * _Nonnull)hookStore {
-    paymentOptionSelected = [hookStore getPaymentOptionSelected];
+    self.paymentData = [hookStore getPaymentData];
 }
 
 - (enum HookStep)getStep {
-    return HookStepSTEP1;
+    return HookStepSTEP2;
 }
 
 - (void)renderDidFinish {
-    self.paymentType.text = [paymentOptionSelected getDescription];
+    self.paymentMethodLabel.text = self.paymentData.paymentMethod._id;
     NSLog(@"renderDidFinish");
 }
 
@@ -56,11 +53,10 @@ id <PaymentMethodOption> paymentOptionSelected;
 }
 
 - (NSString * _Nullable)titleForNavigationBar {
-    return @"Soy hook 1";
+    return @"Soy hook 2";
 }
 
 - (UIColor * _Nullable)colorForNavigationBar {
     return nil;
 }
-
 @end

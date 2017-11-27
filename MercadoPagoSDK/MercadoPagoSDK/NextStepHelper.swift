@@ -25,7 +25,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         guard let selectedType = self.paymentOptionSelected else {
-                return false
+            return false
         }
         return !selectedType.hasChildren()
     }
@@ -112,7 +112,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         if paymentData.transactionDetails?.financialInstitution == nil && !Array.isNullOrEmpty(pm.financialInstitutions) {
-           return true
+            return true
         }
 
         return false
@@ -315,12 +315,44 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
-    func shouldShowHook(hookStep:HookStep) -> Bool {
-        // TODO: Use Hook step to evaluate.
-        // The following condition is only for test.
+    func shouldShowHook(hookStep: HookStep) -> Bool {
         if let _ = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
-            return true
+            switch hookStep {
+            case .STEP1:
+                return shouldShowHook1()
+            case .STEP2:
+                return shouldShowHook2()
+            case .STEP3:
+                return shouldShowHook3()
+            }
         }
         return false
+    }
+
+    func shouldShowHook1() -> Bool {
+        return paymentOptionSelected != nil
+    }
+
+    func shouldShowHook2() -> Bool {
+        guard let pm = self.paymentData.getPaymentMethod() else {
+            return false
+        }
+
+        if pm.isCreditCard && !(paymentData.hasPayerCost() && paymentData.hasToken()) {
+            return false
+        }
+
+        if (pm.isDebitCard || pm.isPrepaidCard) && !paymentData.hasToken() {
+            return false
+        }
+
+        if pm.isPayerInfoRequired && paymentData.getPayer().identification == nil {
+            return false
+        }
+        return true
+    }
+    
+    func shouldShowHook3() -> Bool {
+        return readyToPay
     }
 }

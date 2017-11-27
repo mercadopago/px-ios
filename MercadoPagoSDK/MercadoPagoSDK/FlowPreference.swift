@@ -32,6 +32,7 @@ open class FlowPreference: NSObject {
     var saveESC = false
 
     var hooks = [Hookeable]()
+    var hooksToShow = [Hookeable]()
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -196,11 +197,31 @@ open class FlowPreference: NSObject {
 
     public func setHook(hooks: [Hookeable]) {
         self.hooks = hooks
+        self.hooksToShow = hooks
     }
     
-    public func getHookForStep(hookStep:HookStep) -> Hookeable? {
-        let matchedHooksForStep = MercadoPagoCheckoutViewModel.flowPreference.hooks.filter { targetHook in
+    public func getHookForStep(hookStep: HookStep) -> Hookeable? {
+        let matchedHooksForStep = self.hooksToShow.filter { targetHook in
             targetHook.getStep() == hookStep}
         return matchedHooksForStep.first
+    }
+
+    public func removeHookFromHooksToShow(hookStep: HookStep) {
+        let noMatchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.getStep() != hookStep}
+        hooksToShow = noMatchedHooksForStep
+    }
+
+    public func addHookToHooksToShow(hookStep: HookStep) {
+        let matchedHooksForStep = self.hooks.filter { targetHook in
+            targetHook.getStep() == hookStep}
+
+        for hook in matchedHooksForStep {
+            hooksToShow.append(hook)
+        }
+    }
+
+    public func resetHooksToShow() {
+        hooksToShow = hooks
     }
 }

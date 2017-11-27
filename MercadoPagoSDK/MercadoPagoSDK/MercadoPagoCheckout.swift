@@ -132,6 +132,10 @@ open class MercadoPagoCheckout: NSObject {
             self.showErrorScreen()
         case .SCREEN_HOOK_1:
             self.showHookScreen(hookStep: .STEP1)
+        case .SCREEN_HOOK_2:
+            self.showHookScreen(hookStep: .STEP2)
+        case .SCREEN_HOOK_3:
+            self.showHookScreen(hookStep: .STEP3)
         default: break
         }
     }
@@ -295,11 +299,16 @@ open class MPAction: NSObject {
 
     private var checkout: MercadoPagoCheckout?
 
-    public init(withCheckout:MercadoPagoCheckout) {
+    public init(withCheckout: MercadoPagoCheckout) {
         self.checkout = withCheckout
     }
     
-    open func next() {
+    open func next(hook: HookStep) {
+        if hook == .STEP1 {
+            if let paymentOptionSelected = self.checkout?.viewModel.paymentOptionSelected {
+                self.checkout?.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
+            }
+        }
         checkout?.executeNextStep()
     }
     

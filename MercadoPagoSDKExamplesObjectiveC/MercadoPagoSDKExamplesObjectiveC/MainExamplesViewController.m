@@ -13,13 +13,12 @@
 #import "DineroEnCuentaTableViewCell.h"
 #import "CustomItemTableViewCell.h"
 #import "FirstHookViewController.h"
+#import "SecondHookViewController.h"
+#import "ThirdHookViewController.h"
 
 @import MercadoPagoSDK;
 
-
 @implementation MainExamplesViewController
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,7 +50,7 @@
     [self setDecorationPreference];
 
     // Setear ServicePreference
-    [self setServicePreference];
+    //[self setServicePreference];
 
 
 
@@ -83,7 +82,7 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8"  checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -97,11 +96,17 @@
     FlowPreference *flowPref = [[FlowPreference alloc] init];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"Hooks" bundle:[NSBundle mainBundle]];
+
     FirstHookViewController *firstHook = [storyboard instantiateViewControllerWithIdentifier:@"firstHook"];
-    
     firstHook.actionHandler = [[MPAction alloc] initWithCheckout:self.mpCheckout];
+
+    SecondHookViewController *secondHook = [storyboard instantiateViewControllerWithIdentifier:@"secondHook"];
+    secondHook.actionHandler = [[MPAction alloc] initWithCheckout:self.mpCheckout];
+
+    ThirdHookViewController *thirdHook = [storyboard instantiateViewControllerWithIdentifier:@"thirdHook"];
+    thirdHook.actionHandler = [[MPAction alloc] initWithCheckout:self.mpCheckout];
     
-    [flowPref setHookWithHooks:[NSArray arrayWithObjects: firstHook , nil]];
+    [flowPref setHookWithHooks:[NSArray arrayWithObjects: firstHook, secondHook, thirdHook, nil]];
     
     [MercadoPagoCheckout setFlowPreference:flowPref];
     
