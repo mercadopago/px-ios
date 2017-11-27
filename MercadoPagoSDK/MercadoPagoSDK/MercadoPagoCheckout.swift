@@ -310,6 +310,14 @@ open class MPAction: NSObject {
     open func cancel() {
         checkout?.cancel()
     }
+    
+    open func showLoading() {
+        checkout?.presentLoading()
+    }
+    
+    open func hideLoading() {
+        checkout?.dismissLoading()
+    }
 }
 
 open class HookStore: NSObject {
