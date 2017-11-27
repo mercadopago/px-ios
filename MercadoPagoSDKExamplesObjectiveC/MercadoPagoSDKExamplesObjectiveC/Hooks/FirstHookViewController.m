@@ -26,7 +26,17 @@ id <PaymentMethodOption> paymentOptionSelected;
 
 - (IBAction)didTapOnNext {
     if (self.actionHandler != nil) {
-        [self.actionHandler back];
+    
+        // Loading example
+        [self.actionHandler showLoading];
+        
+        double delay = 3.0;
+        dispatch_time_t tm = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
+        dispatch_after(tm, dispatch_get_main_queue(), ^(void){
+            // Hide loading and back action example
+            [self.actionHandler hideLoading];
+            [self.actionHandler back];
+        });
     }
 }
 
@@ -52,15 +62,15 @@ id <PaymentMethodOption> paymentOptionSelected;
 }
 
 - (BOOL)shouldShowNavigationBar {
-    return NO;
+    return YES;
 }
 
 - (NSString * _Nullable)titleForNavigationBar {
-    return @"Test hook";
+    return @"Clave de pagos y retiros";
 }
 
 - (UIColor * _Nullable)colorForNavigationBar {
-    return nil;
+    return UIColor.mpDefaultColor;
 }
 
 @end
