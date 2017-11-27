@@ -285,7 +285,8 @@ public protocol Hookeable: Componetisable {
     func render() -> UIView
     func renderDidFinish()
     func didRecive(hookStore: HookStore)
-    func titleForNavigationBar() -> String
+    func titleForNavigationBar() -> String?
+    func colorForNavigationBar() -> UIColor?
     func shouldShowBackArrow() -> Bool
     func shouldShowNavigationBar() -> Bool
 }

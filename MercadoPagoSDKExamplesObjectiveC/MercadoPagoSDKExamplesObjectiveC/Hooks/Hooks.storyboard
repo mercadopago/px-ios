@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EH4-EO-2gg">
-                                <rect key="frame" x="16" y="718" width="343" height="60"/>
+                                <rect key="frame" x="16" y="702" width="343" height="60"/>
                                 <color key="backgroundColor" red="0.0" green="0.6016324931" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Jde-s1-M7B"/>
@@ -45,7 +46,7 @@
                         <constraints>
                             <constraint firstItem="WSd-q3-SQO" firstAttribute="centerX" secondItem="PQg-GQ-Wte" secondAttribute="centerX" id="Dza-eW-D5W"/>
                             <constraint firstItem="PQg-GQ-Wte" firstAttribute="trailing" secondItem="EH4-EO-2gg" secondAttribute="trailing" constant="16" id="GjQ-sH-hb5"/>
-                            <constraint firstItem="PQg-GQ-Wte" firstAttribute="bottom" secondItem="EH4-EO-2gg" secondAttribute="bottom" id="Itc-XH-NQO"/>
+                            <constraint firstItem="PQg-GQ-Wte" firstAttribute="bottom" secondItem="EH4-EO-2gg" secondAttribute="bottom" constant="16" id="Itc-XH-NQO"/>
                             <constraint firstItem="WSd-q3-SQO" firstAttribute="centerY" secondItem="PQg-GQ-Wte" secondAttribute="centerY" id="OOq-ta-Z1M"/>
                             <constraint firstItem="EH4-EO-2gg" firstAttribute="leading" secondItem="PQg-GQ-Wte" secondAttribute="leading" constant="16" id="gxK-KR-Mo0"/>
                         </constraints>

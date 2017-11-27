@@ -22,7 +22,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open var screenId: String { get { return TrackingUtil.NO_SCREEN_ID } }
 
     var loadingInstance: UIView?
-
+    
+    var shouldShowBackArrow = true
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.loadMPStyles()
@@ -165,19 +167,31 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         }
         self.navigationItem.rightBarButtonItem = shoppingCartButton
     }
-
-    internal func displayBackButton() {
-        let backButton = UIBarButtonItem()
-        backButton.image = MercadoPago.getImage("back")
-        backButton.style = .plain
-        backButton.target = self
-        backButton.tintColor = navBarTextColor
-        backButton.action = #selector(MercadoPagoUIViewController.executeBack)
-        self.navigationItem.leftBarButtonItem = backButton
+    
+    open func hideBackButton() {
+        self.navigationItem.leftBarButtonItem = nil
     }
 
-    internal func hideBackButton() {
-        self.navigationItem.leftBarButtonItem = nil
+    internal func displayBackButton() {
+        if shouldShowBackArrow {
+            let backButton = UIBarButtonItem()
+            backButton.image = MercadoPago.getImage("back")
+            backButton.style = .plain
+            backButton.target = self
+            backButton.tintColor = navBarTextColor
+            backButton.action = #selector(MercadoPagoUIViewController.executeBack)
+            self.navigationItem.leftBarButtonItem = backButton
+        }
+    }
+
+    internal func hideBackArrow() {
+        let nullBack = UIBarButtonItem()
+        nullBack.image = nil
+        nullBack.style = .plain
+        nullBack.target = self
+        nullBack.tintColor = navBarTextColor
+        nullBack.action = nil
+        self.navigationItem.leftBarButtonItem = nullBack
     }
 
     internal func executeBack() {

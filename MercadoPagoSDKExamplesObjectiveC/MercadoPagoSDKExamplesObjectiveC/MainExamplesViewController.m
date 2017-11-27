@@ -99,6 +99,8 @@
                                 @"Hooks" bundle:[NSBundle mainBundle]];
     FirstHookViewController *firstHook = [storyboard instantiateViewControllerWithIdentifier:@"firstHook"];
     
+    firstHook.actionHandler = [[MPAction alloc] initWithCheckout:self.mpCheckout];
+    
     [flowPref setHookWithHooks:[NSArray arrayWithObjects: firstHook , nil]];
     
     [MercadoPagoCheckout setFlowPreference:flowPref];

@@ -289,13 +289,17 @@ extension MercadoPagoCheckout {
             
             targetHook.didRecive(hookStore: HookStore.sharedInstance)
         
-            self.navigationController.title = targetHook.titleForNavigationBar()
-            self.navigationController.navigationBar.isHidden = !targetHook.shouldShowNavigationBar()
-            
-            if !targetHook.shouldShowBackArrow() {
-                self.navigationController.navigationItem.leftBarButtonItem = nil
+            // Set custom attributes to Hook - NavigationBar
+            vc.title = targetHook.titleForNavigationBar()
+            vc.shouldShowBackArrow = targetHook.shouldShowBackArrow()
+            if let navBarColor = targetHook.colorForNavigationBar() {
+                vc.setNavBarBackgroundColor(color: navBarColor)
             }
             
+            if targetHook.shouldShowNavigationBar() {
+                
+            }
+
             let hookView = targetHook.render()
             hookView.removeFromSuperview()
             hookView.frame = vc.view.frame

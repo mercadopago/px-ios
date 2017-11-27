@@ -8,24 +8,25 @@
 
 #import "FirstHookViewController.h"
 
-id <PaymentMethodOption>  paymentOptionSelected;
+id <PaymentMethodOption> paymentOptionSelected;
 
 @interface FirstHookViewController ()
-@property (weak, nonatomic) MPAction * actionHandler;
+
 @property (weak, nonatomic) IBOutlet UILabel *paymentType;
 
-
 @end
+
 
 @implementation FirstHookViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"FirstHookViewController loaded");
 }
 
 - (IBAction)didTapOnNext {
-    if (_actionHandler != nil) {
-        [_actionHandler next];
+    if (self.actionHandler != nil) {
+        [self.actionHandler back];
     }
 }
 
@@ -54,8 +55,12 @@ id <PaymentMethodOption>  paymentOptionSelected;
     return YES;
 }
 
-- (NSString * _Nonnull)titleForNavigationBar {
-    return @"Soy un hook ObjectiveC";
+- (NSString * _Nullable)titleForNavigationBar {
+    return nil;
+}
+
+- (UIColor * _Nullable)colorForNavigationBar {
+    return nil;
 }
 
 @end

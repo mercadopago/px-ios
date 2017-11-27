@@ -11,4 +11,6 @@
 
 @interface FirstHookViewController : UIViewController  <Hookeable>
 
+@property (strong, nonatomic) MPAction * actionHandler;
+
 @end
