@@ -33,8 +33,8 @@
 
 }
 
-- (enum HookStep)hookForStep {
-    return HookStepBEFORE_PAYMENT;
+- (enum PXHookStep)hookForStep {
+    return PXHookStepBEFORE_PAYMENT;
 }
 
 - (void)renderDidFinish {

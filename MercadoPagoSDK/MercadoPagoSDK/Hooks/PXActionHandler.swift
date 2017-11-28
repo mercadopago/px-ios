@@ -11,9 +11,9 @@ import Foundation
 open class PXActionHandler: NSObject {
 
     private var checkout: MercadoPagoCheckout?
-    private var targetHook: HookStep?
+    private var targetHook: PXHookStep?
 
-    public init(withCheckout: MercadoPagoCheckout, targetHook: HookStep) {
+    public init(withCheckout: MercadoPagoCheckout, targetHook: PXHookStep) {
         self.checkout = withCheckout
         self.targetHook = targetHook
     }

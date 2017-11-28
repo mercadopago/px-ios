@@ -35,8 +35,8 @@
     self.paymentData = [hookStore getPaymentData];
 }
 
-- (enum HookStep)hookForStep {
-    return HookStepAFTER_PAYMENT_METHOD_SELECTED;
+- (enum PXHookStep)hookForStep {
+    return PXHookStepAFTER_PAYMENT_METHOD_SELECTED;
 }
 
 - (void)renderDidFinish {

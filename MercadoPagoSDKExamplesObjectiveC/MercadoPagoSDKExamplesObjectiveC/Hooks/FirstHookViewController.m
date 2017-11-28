@@ -88,8 +88,8 @@ id <PaymentMethodOption> paymentOptionSelected;
     paymentOptionSelected = [hookStore getPaymentOptionSelected];
 }
 
-- (enum HookStep)hookForStep {
-    return HookStepAFTER_PAYMENT_TYPE_SELECTED;
+- (enum PXHookStep)hookForStep {
+    return PXHookStepAFTER_PAYMENT_TYPE_SELECTED;
 }
 
 - (void)renderDidFinish {

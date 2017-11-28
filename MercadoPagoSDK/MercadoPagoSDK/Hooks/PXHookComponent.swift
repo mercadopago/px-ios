@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public protocol PXHookComponent: PXComponetizable {
-    func hookForStep() -> HookStep
+    func hookForStep() -> PXHookStep
     func render() -> UIView
     func renderDidFinish()
     func didReceive(hookStore: HookStore)

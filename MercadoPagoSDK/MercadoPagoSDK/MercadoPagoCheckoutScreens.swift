@@ -281,7 +281,7 @@ extension MercadoPagoCheckout {
         self.navigationController.pushViewController(entityTypeStep, animated: true)
     }
 
-    func showHookScreen(hookStep : HookStep) {
+    func showHookScreen(hookStep : PXHookStep) {
 
         if let targetHook = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
 

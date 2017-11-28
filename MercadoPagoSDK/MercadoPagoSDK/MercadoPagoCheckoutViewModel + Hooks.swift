@@ -8,7 +8,7 @@
 
 import Foundation
 extension MercadoPagoCheckoutViewModel {
-    func shouldShowHook(hookStep: HookStep) -> Bool {
+    func shouldShowHook(hookStep: PXHookStep) -> Bool {
         if let _ = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
             switch hookStep {
             case .AFTER_PAYMENT_TYPE_SELECTED:

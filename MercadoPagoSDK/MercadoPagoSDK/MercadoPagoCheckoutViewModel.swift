@@ -672,11 +672,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return false
     }
 
-    public func wentBackFrom(hook: HookStep) {
+    public func wentBackFrom(hook: PXHookStep) {
         MercadoPagoCheckoutViewModel.flowPreference.addHookToHooksToShow(hookStep: hook)
     }
 
-    public func continueFrom(hook: HookStep) {
+    public func continueFrom(hook: PXHookStep) {
         MercadoPagoCheckoutViewModel.flowPreference.removeHookFromHooksToShow(hookStep: hook)
     }
 

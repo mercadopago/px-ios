@@ -199,19 +199,19 @@ extension FlowPreference {
         self.hooksToShow = hooks
     }
 
-    public func getHookForStep(hookStep: HookStep) -> PXHookComponent? {
+    public func getHookForStep(hookStep: PXHookStep) -> PXHookComponent? {
         let matchedHooksForStep = self.hooksToShow.filter { targetHook in
             targetHook.hookForStep() == hookStep}
         return matchedHooksForStep.first
     }
 
-    public func removeHookFromHooksToShow(hookStep: HookStep) {
+    public func removeHookFromHooksToShow(hookStep: PXHookStep) {
         let noMatchedHooksForStep = self.hooksToShow.filter { targetHook in
             targetHook.hookForStep() != hookStep}
         hooksToShow = noMatchedHooksForStep
     }
 
-    public func addHookToHooksToShow(hookStep: HookStep) {
+    public func addHookToHooksToShow(hookStep: PXHookStep) {
         let matchedHooksForStep = self.hooks.filter { targetHook in
             targetHook.hookForStep() == hookStep}
 
