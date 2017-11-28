@@ -46,6 +46,10 @@ open class HookViewController: UIViewController, UITableViewDelegate, UITableVie
 
 extension HookViewController: Hookeable {
     
+    public func colorForNavigationBar() -> UIColor? {
+        return nil
+    }
+    
     public func renderDidFinish() {
         self.table.reloadData()
     }
@@ -71,7 +75,7 @@ extension HookViewController: Hookeable {
         return true
     }
     
-    public func titleForNavigationBar() -> String {
+    public func titleForNavigationBar() -> String? {
         return "Soy hook 1"
     }
 }

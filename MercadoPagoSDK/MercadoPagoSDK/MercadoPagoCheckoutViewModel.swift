@@ -39,7 +39,7 @@ public enum CheckoutStep: String {
     case SCREEN_HOOK_3
 }
 
-open class MercadoPagoCheckoutViewModel: NSObject {
+open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var startedCheckout = false
     static var servicePreference = ServicePreference()
@@ -746,5 +746,10 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
         MercadoPagoCheckoutViewModel.error = nil
+    }
+    
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentResult: self.paymentResult, discount: self.paymentData.discount)
+        return copyObj
     }
 }

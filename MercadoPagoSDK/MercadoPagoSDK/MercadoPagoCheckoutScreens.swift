@@ -292,8 +292,12 @@ extension MercadoPagoCheckout {
                 self.viewModel.wentBackFrom(hook: hookStep)
             }
 
-            HookStore.sharedInstance.paymentData = self.viewModel.paymentData
-            HookStore.sharedInstance.paymentOptionSelected = self.viewModel.paymentOptionSelected
+            
+            // Set a copy of CheckoutVM in HookStore
+            if let viewModelCopy = self.viewModel.copy() as? MercadoPagoCheckoutViewModel {
+                HookStore.sharedInstance.paymentData = viewModelCopy.paymentData
+                HookStore.sharedInstance.paymentOptionSelected = viewModelCopy.paymentOptionSelected
+            }
             
             targetHook.didRecive(hookStore: HookStore.sharedInstance)
         
