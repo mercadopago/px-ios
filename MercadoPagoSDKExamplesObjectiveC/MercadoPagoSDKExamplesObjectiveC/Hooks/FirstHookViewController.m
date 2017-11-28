@@ -25,6 +25,10 @@ id <PaymentMethodOption> paymentOptionSelected;
     [self setupNextButton];
 }
 
+- (void) viewDidAppear:(BOOL)animated{
+    [self.codeTextField becomeFirstResponder];
+}
+
 #pragma mark - Setup methods
 - (void)setupNextButton {
     
@@ -56,9 +60,9 @@ id <PaymentMethodOption> paymentOptionSelected;
             double delay = 3.0;
             dispatch_time_t tm = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
             dispatch_after(tm, dispatch_get_main_queue(), ^(void){
-                // Hide loading and back action example
+                // Hide loading and next action example
                 [self.actionHandler hideLoading];
-                [self.actionHandler back];
+                [self.actionHandler next];
             });
         }
     }
@@ -80,12 +84,12 @@ id <PaymentMethodOption> paymentOptionSelected;
     return self.view;
 }
 
-- (void)didReciveWithHookStore:(HookStore * _Nonnull)hookStore {
+- (void)didReceiveWithHookStore:(HookStore * _Nonnull)hookStore {
     paymentOptionSelected = [hookStore getPaymentOptionSelected];
 }
 
-- (enum HookStep)getStep {
-    return HookStepSTEP1;
+- (enum HookStep)hookForStep {
+    return HookStepAFTER_PAYMENT_TYPE_SELECTED;
 }
 
 - (void)renderDidFinish {

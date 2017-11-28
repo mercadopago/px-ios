@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @import MercadoPagoSDK;
 
-@interface SecondHookViewController : UIViewController  <Hookeable>
+@interface SecondHookViewController : UIViewController  <HookComponent>
 
 @property (strong, nonatomic) MPAction * actionHandler;
 @end

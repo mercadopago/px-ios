@@ -21,7 +21,7 @@
 
 - (IBAction)didTapOnNext {
     if (self.actionHandler != nil) {
-        [self.actionHandler nextWithHook:[self getStep]];
+        [self.actionHandler next];
     }
 }
 
@@ -29,12 +29,12 @@
     return self.view;
 }
 
-- (void)didReciveWithHookStore:(HookStore * _Nonnull)hookStore {
+- (void)didReceiveWithHookStore:(HookStore * _Nonnull)hookStore {
 
 }
 
-- (enum HookStep)getStep {
-    return HookStepSTEP3;
+- (enum HookStep)hookForStep {
+    return HookStepBEFORE_PAYMENT;
 }
 
 - (void)renderDidFinish {

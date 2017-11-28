@@ -23,7 +23,7 @@
 
 - (IBAction)didTapOnNext {
     if (self.actionHandler != nil) {
-        [self.actionHandler nextWithHook:[self getStep]];
+        [self.actionHandler next];
     }
 }
 
@@ -31,12 +31,12 @@
     return self.view;
 }
 
-- (void)didReciveWithHookStore:(HookStore * _Nonnull)hookStore {
+- (void)didReceiveWithHookStore:(HookStore * _Nonnull)hookStore {
     self.paymentData = [hookStore getPaymentData];
 }
 
-- (enum HookStep)getStep {
-    return HookStepSTEP2;
+- (enum HookStep)hookForStep {
+    return HookStepAFTER_PAYMENT_METHOD_SELECTED;
 }
 
 - (void)renderDidFinish {

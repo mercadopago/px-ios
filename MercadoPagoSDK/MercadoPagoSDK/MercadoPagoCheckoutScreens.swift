@@ -299,7 +299,7 @@ extension MercadoPagoCheckout {
                 HookStore.sharedInstance.paymentOptionSelected = viewModelCopy.paymentOptionSelected
             }
             
-            targetHook.didRecive(hookStore: HookStore.sharedInstance)
+            targetHook.didReceive(hookStore: HookStore.sharedInstance)
         
             // Set custom attributes to Hook NavigationBar
             vc.title = targetHook.titleForNavigationBar()

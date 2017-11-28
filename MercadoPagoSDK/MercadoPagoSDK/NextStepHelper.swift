@@ -318,11 +318,11 @@ extension MercadoPagoCheckoutViewModel {
     func shouldShowHook(hookStep: HookStep) -> Bool {
         if let _ = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
             switch hookStep {
-            case .STEP1:
+            case .AFTER_PAYMENT_TYPE_SELECTED:
                 return shouldShowHook1()
-            case .STEP2:
+            case .AFTER_PAYMENT_METHOD_SELECTED:
                 return shouldShowHook2()
-            case .STEP3:
+            case .BEFORE_PAYMENT:
                 return shouldShowHook3()
             }
         }
