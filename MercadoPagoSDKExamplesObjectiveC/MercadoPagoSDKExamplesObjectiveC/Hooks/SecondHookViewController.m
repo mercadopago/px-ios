@@ -33,12 +33,13 @@
     return self.view;
 }
 
-- (void)didReceiveWithHookStore:(HookStore * _Nonnull)hookStore {
-    self.paymentData = [hookStore getPaymentData];
-}
-
 - (enum PXHookStep)hookForStep {
     return PXHookStepAFTER_PAYMENT_METHOD_SELECTED;
+}
+
+- (BOOL)shouldSkipHookWithHookStore:(HookStore * _Nonnull)hookStore {
+    self.paymentData = [hookStore getPaymentData];
+    return NO;
 }
 
 - (void)renderDidFinish {

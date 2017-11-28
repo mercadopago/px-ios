@@ -12,8 +12,8 @@ import Foundation
 public protocol PXHookComponent: PXComponetizable {
     func hookForStep() -> PXHookStep
     func render() -> UIView
+    func shouldSkipHook(hookStore: HookStore) -> Bool
     func renderDidFinish()
-    func didReceive(hookStore: HookStore)
     func titleForNavigationBar() -> String?
     func colorForNavigationBar() -> UIColor?
     func shouldShowBackArrow() -> Bool

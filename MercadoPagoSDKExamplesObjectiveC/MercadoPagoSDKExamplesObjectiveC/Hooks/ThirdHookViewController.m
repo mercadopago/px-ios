@@ -30,12 +30,12 @@
     return self.view;
 }
 
-- (void)didReceiveWithHookStore:(HookStore * _Nonnull)hookStore {
-
-}
-
 - (enum PXHookStep)hookForStep {
     return PXHookStepBEFORE_PAYMENT;
+}
+
+- (BOOL)shouldSkipHookWithHookStore:(HookStore * _Nonnull)hookStore {
+    return NO;
 }
 
 - (void)renderDidFinish {
@@ -57,5 +57,6 @@
 - (UIColor * _Nullable)colorForNavigationBar {
     return nil;
 }
+
 @end
 
