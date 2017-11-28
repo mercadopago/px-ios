@@ -9,6 +9,7 @@
 #import "SecondHookViewController.h"
 
 @interface SecondHookViewController ()
+
 @property (weak, nonatomic) IBOutlet UILabel *paymentMethodLabel;
 @property PaymentData *paymentData;
 
@@ -27,6 +28,7 @@
     }
 }
 
+#pragma mark - PXHookComponent delegates
 - (UIView * _Nonnull)render {
     return self.view;
 }
@@ -59,4 +61,5 @@
 - (UIColor * _Nullable)colorForNavigationBar {
     return nil;
 }
+
 @end

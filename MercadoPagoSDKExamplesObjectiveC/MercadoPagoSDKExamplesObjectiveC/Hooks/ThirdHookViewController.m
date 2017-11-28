@@ -25,6 +25,7 @@
     }
 }
 
+#pragma mark - PXHookComponent delegates
 - (UIView * _Nonnull)render {
     return self.view;
 }
