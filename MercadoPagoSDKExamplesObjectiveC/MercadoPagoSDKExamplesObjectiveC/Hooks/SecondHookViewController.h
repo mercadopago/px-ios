@@ -1,16 +1,15 @@
 //
-//  FirstHookViewController.h
+//  SecondHookViewController.h
 //  MercadoPagoSDKExamplesObjectiveC
 //
-//  Created by Juan sebastian Sanzone on 23/11/17.
+//  Created by Eden Torres on 11/27/17.
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 @import MercadoPagoSDK;
 
-@interface FirstHookViewController : UIViewController  <HookComponent>
+@interface SecondHookViewController : UIViewController  <HookComponent>
 
 @property (strong, nonatomic) MPAction * actionHandler;
-
 @end

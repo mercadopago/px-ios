@@ -141,8 +141,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.showNavBar()
             self.callbackCancel!()
         }
-
     }
+
     internal func invokeCallbackCancel() {
         if self.callbackCancel != nil {
             self.callbackCancel!()
@@ -205,6 +205,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     internal func executeBack() {
+        if self.callbackCancel != nil {
+            self.callbackCancel!()
+        }
         self.navigationController!.popViewController(animated: true)
     }
 

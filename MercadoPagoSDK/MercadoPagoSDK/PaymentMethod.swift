@@ -78,7 +78,20 @@ open class PaymentMethod: NSObject, Cellable {
             return paymentTypeId.isCreditCard()
         }
         return false
+    }
 
+    open var isDebitCard: Bool {
+        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+            return paymentTypeId.isDebitCard()
+        }
+        return false
+    }
+
+    open var isPrepaidCard: Bool {
+        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+            return paymentTypeId.isPrepaidCard()
+        }
+        return false
     }
 
     open func isSecurityCodeRequired(_ bin: String) -> Bool {

@@ -100,6 +100,7 @@ disabled_rules:
   - statement_position
   - unused_closure_parameter
   - force_try
+  - trailing_whitespace
 
 # disabled_rules:
 #     - trailing_newline

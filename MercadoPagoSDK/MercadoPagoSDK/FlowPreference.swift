@@ -9,9 +9,9 @@
 import Foundation
 
 @objc public enum HookStep: Int {
-    case STEP1 = 1
-    case STEP2
-    case STEP3
+    case AFTER_PAYMENT_TYPE_SELECTED = 1
+    case AFTER_PAYMENT_METHOD_SELECTED
+    case BEFORE_PAYMENT
 }
 
 open class FlowPreference: NSObject {
@@ -31,7 +31,8 @@ open class FlowPreference: NSObject {
     var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
     var saveESC = false
 
-    var hooks = [Hookeable]()
+    var hooks = [HookComponent]()
+    var hooksToShow = [HookComponent]()
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -194,13 +195,33 @@ open class FlowPreference: NSObject {
         return flowPreference
     }
 
-    public func setHook(hooks: [Hookeable]) {
+    public func setHook(hooks: [HookComponent]) {
         self.hooks = hooks
+        self.hooksToShow = hooks
     }
     
-    public func getHookForStep(hookStep:HookStep) -> Hookeable? {
-        let matchedHooksForStep = MercadoPagoCheckoutViewModel.flowPreference.hooks.filter { targetHook in
-            targetHook.getStep() == hookStep}
+    public func getHookForStep(hookStep: HookStep) -> HookComponent? {
+        let matchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.hookForStep() == hookStep}
         return matchedHooksForStep.first
+    }
+
+    public func removeHookFromHooksToShow(hookStep: HookStep) {
+        let noMatchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.hookForStep() != hookStep}
+        hooksToShow = noMatchedHooksForStep
+    }
+
+    public func addHookToHooksToShow(hookStep: HookStep) {
+        let matchedHooksForStep = self.hooks.filter { targetHook in
+            targetHook.hookForStep() == hookStep}
+
+        for hook in matchedHooksForStep {
+            hooksToShow.append(hook)
+        }
+    }
+
+    public func resetHooksToShow() {
+        hooksToShow = hooks
     }
 }

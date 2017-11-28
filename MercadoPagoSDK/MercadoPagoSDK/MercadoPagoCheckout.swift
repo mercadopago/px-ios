@@ -130,8 +130,12 @@ open class MercadoPagoCheckout: NSObject {
             self.finish()
         case .SCREEN_ERROR:
             self.showErrorScreen()
-        case .SCREEN_HOOK_1:
-            self.showHookScreen(hookStep: .STEP1)
+        case .SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED:
+            self.showHookScreen(hookStep: .AFTER_PAYMENT_TYPE_SELECTED)
+        case .SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED:
+            self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_SELECTED)
+        case .SCREEN_HOOK_BEFORE_PAYMENT:
+            self.showHookScreen(hookStep: .BEFORE_PAYMENT)
         default: break
         }
     }
@@ -280,11 +284,11 @@ public protocol Componetisable {
 }
 
 @objc
-public protocol Hookeable: Componetisable {
-    func getStep() -> HookStep
+public protocol HookComponent: Componetisable {
+    func hookForStep() -> HookStep
     func render() -> UIView
     func renderDidFinish()
-    func didRecive(hookStore: HookStore)
+    func didReceive(hookStore: HookStore)
     func titleForNavigationBar() -> String?
     func colorForNavigationBar() -> UIColor?
     func shouldShowBackArrow() -> Bool
@@ -294,21 +298,24 @@ public protocol Hookeable: Componetisable {
 open class MPAction: NSObject {
 
     private var checkout: MercadoPagoCheckout?
+    private var targetHook: HookStep?
 
-    public init(withCheckout:MercadoPagoCheckout) {
+    public init(withCheckout: MercadoPagoCheckout, targetHook: HookStep) {
         self.checkout = withCheckout
+        self.targetHook = targetHook
     }
     
     open func next() {
+        if let targetHook = targetHook, targetHook == .AFTER_PAYMENT_TYPE_SELECTED {
+            if let paymentOptionSelected = self.checkout?.viewModel.paymentOptionSelected {
+                self.checkout?.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
+            }
+        }
         checkout?.executeNextStep()
     }
     
     open func back() {
         checkout?.executePreviousStep()
-    }
-    
-    open func cancel() {
-        checkout?.cancel()
     }
     
     open func showLoading() {

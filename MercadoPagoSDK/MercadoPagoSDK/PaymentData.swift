@@ -152,6 +152,10 @@ public class PaymentData: NSObject {
         return paymentMethod
     }
 
+    public func getPayer() -> Payer {
+        return payer
+    }
+
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
