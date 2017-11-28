@@ -8,12 +8,6 @@
 
 import Foundation
 
-public enum PXHookStep: String {
-    case STEP1
-    case STEP2
-    case STEP3
-}
-
 open class FlowPreference: NSObject {
 
     static let DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3
@@ -30,6 +24,9 @@ open class FlowPreference: NSObject {
     var showInstallmentsReviewScreen = true
     var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
     var saveESC = false
+
+    var hooks = [PXHookComponent]()
+    var hooksToShow = [PXHookComponent]()
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -192,4 +189,38 @@ open class FlowPreference: NSObject {
         return flowPreference
     }
 
+}
+
+// MARK: Hooks methods
+extension FlowPreference {
+
+    public func setHook(hooks: [PXHookComponent]) {
+        self.hooks = hooks
+        self.hooksToShow = hooks
+    }
+
+    public func getHookForStep(hookStep: HookStep) -> PXHookComponent? {
+        let matchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.hookForStep() == hookStep}
+        return matchedHooksForStep.first
+    }
+
+    public func removeHookFromHooksToShow(hookStep: HookStep) {
+        let noMatchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.hookForStep() != hookStep}
+        hooksToShow = noMatchedHooksForStep
+    }
+
+    public func addHookToHooksToShow(hookStep: HookStep) {
+        let matchedHooksForStep = self.hooks.filter { targetHook in
+            targetHook.hookForStep() == hookStep}
+
+        for hook in matchedHooksForStep {
+            hooksToShow.append(hook)
+        }
+    }
+
+    public func resetHooksToShow() {
+        hooksToShow = hooks
+    }
 }

@@ -17,6 +17,10 @@
 		4B7AA9831E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */; };
 		4B7D07DB1E55324700E6CA78 /* SubeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7D07D91E55324700E6CA78 /* SubeTableViewCell.m */; };
 		4B7D07DC1E55324700E6CA78 /* SubeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D07DA1E55324700E6CA78 /* SubeTableViewCell.xib */; };
+		4B811DEF1FCDD49A000611AD /* Hooks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B811DE91FCDD499000611AD /* Hooks.storyboard */; };
+		4B811DF01FCDD49A000611AD /* FirstHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DEA1FCDD499000611AD /* FirstHookViewController.m */; };
+		4B811DF11FCDD49A000611AD /* ThirdHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */; };
+		4B811DF21FCDD49A000611AD /* SecondHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DED1FCDD49A000611AD /* SecondHookViewController.m */; };
 		763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */; };
 		763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */; };
 		766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */; };
@@ -94,6 +98,13 @@
 		4B7D07D81E55324700E6CA78 /* SubeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubeTableViewCell.h; sourceTree = "<group>"; };
 		4B7D07D91E55324700E6CA78 /* SubeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubeTableViewCell.m; sourceTree = "<group>"; };
 		4B7D07DA1E55324700E6CA78 /* SubeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubeTableViewCell.xib; sourceTree = "<group>"; };
+		4B811DE81FCDD499000611AD /* ThirdHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThirdHookViewController.h; path = Hooks/ThirdHookViewController.h; sourceTree = "<group>"; };
+		4B811DE91FCDD499000611AD /* Hooks.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Hooks.storyboard; path = Hooks/Hooks.storyboard; sourceTree = "<group>"; };
+		4B811DEA1FCDD499000611AD /* FirstHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstHookViewController.m; path = Hooks/FirstHookViewController.m; sourceTree = "<group>"; };
+		4B811DEB1FCDD49A000611AD /* SecondHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondHookViewController.h; path = Hooks/SecondHookViewController.h; sourceTree = "<group>"; };
+		4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThirdHookViewController.m; path = Hooks/ThirdHookViewController.m; sourceTree = "<group>"; };
+		4B811DED1FCDD49A000611AD /* SecondHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondHookViewController.m; path = Hooks/SecondHookViewController.m; sourceTree = "<group>"; };
+		4B811DEE1FCDD49A000611AD /* FirstHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstHookViewController.h; path = Hooks/FirstHookViewController.h; sourceTree = "<group>"; };
 		542941FB936E655430F3C821 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54A09D77597BBEF1D367E95B /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; sourceTree = "<group>"; };
 		763B44F71D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPaymentMethodTableViewController.h; sourceTree = "<group>"; };
@@ -180,6 +191,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		4B811DE71FCDD48A000611AD /* Hooks */ = {
+			isa = PBXGroup;
+			children = (
+				4B811DEE1FCDD49A000611AD /* FirstHookViewController.h */,
+				4B811DEA1FCDD499000611AD /* FirstHookViewController.m */,
+				4B811DE91FCDD499000611AD /* Hooks.storyboard */,
+				4B811DEB1FCDD49A000611AD /* SecondHookViewController.h */,
+				4B811DED1FCDD49A000611AD /* SecondHookViewController.m */,
+				4B811DE81FCDD499000611AD /* ThirdHookViewController.h */,
+				4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */,
+			);
+			name = Hooks;
+			sourceTree = "<group>";
+		};
 		76E6E0601D2AD29C006CE49B /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +261,7 @@
 		76EF7EBF1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */ = {
 			isa = PBXGroup;
 			children = (
+				4B811DE71FCDD48A000611AD /* Hooks */,
 				76E6E0601D2AD29C006CE49B /* Example */,
 				76EF7F1E1D255B5F0087C785 /* Component Examples */,
 				76EF7EC31D2559140087C785 /* AppDelegate.h */,
@@ -416,6 +442,7 @@
 				76BAC64A1E4B30060081F675 /* CustomTableViewCell.xib in Resources */,
 				4B7AA9821E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */,
 				4B7D07DC1E55324700E6CA78 /* SubeTableViewCell.xib in Resources */,
+				4B811DEF1FCDD49A000611AD /* Hooks.storyboard in Resources */,
 				767D8DBD1E5541EC0004FCA9 /* CustomItemTableViewCell.xib in Resources */,
 				76EF7ED01D2559140087C785 /* LaunchScreen.storyboard in Resources */,
 				76EF7ECD1D2559140087C785 /* Assets.xcassets in Resources */,
@@ -546,8 +573,11 @@
 				767D8DBC1E5541EC0004FCA9 /* CustomItemTableViewCell.m in Sources */,
 				766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */,
 				4B7D07DB1E55324700E6CA78 /* SubeTableViewCell.m in Sources */,
+				4B811DF21FCDD49A000611AD /* SecondHookViewController.m in Sources */,
+				4B811DF01FCDD49A000611AD /* FirstHookViewController.m in Sources */,
 				76EF7F221D255C7E0087C785 /* ExampleUtils.m in Sources */,
 				76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */,
+				4B811DF11FCDD49A000611AD /* ThirdHookViewController.m in Sources */,
 				15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */,
 				763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */,
 				76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */,

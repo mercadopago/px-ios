@@ -34,9 +34,12 @@ public enum CheckoutStep: String {
     case SERVICE_GET_INSTRUCTIONS
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
+    case SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED
+    case SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED
+    case SCREEN_HOOK_BEFORE_PAYMENT
 }
 
-open class MercadoPagoCheckoutViewModel: NSObject {
+open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var startedCheckout = false
     static var servicePreference = ServicePreference()
@@ -128,6 +131,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData.payer = self.checkoutPreference.getPayer()
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
+    }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentResult: self.paymentResult, discount: self.paymentData.discount)
+        return copyObj
     }
 
     func hasError() -> Bool {
@@ -281,6 +289,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func updateCheckoutModel(payerCost: PayerCost) {
         self.paymentData.updatePaymentDataWith(payerCost: payerCost)
+
+        if let paymentOptionSelected = paymentOptionSelected {
+            if paymentOptionSelected.isCustomerPaymentMethod() {
+                self.paymentData.cleanToken()
+            }
+        }
     }
 
     public func updateCheckoutModel(entityType: EntityType) {
@@ -347,6 +361,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if !isPaymentTypeSelected() {
             return .SCREEN_PAYMENT_METHOD_SELECTION
+        }
+
+        if shouldShowHook(hookStep: .AFTER_PAYMENT_TYPE_SELECTED) {
+            return .SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED
+        }
+
+        if shouldShowHook(hookStep: .AFTER_PAYMENT_METHOD_SELECTED) {
+            return .SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED
+        }
+
+        if shouldShowHook(hookStep: .BEFORE_PAYMENT) {
+            return .SCREEN_HOOK_BEFORE_PAYMENT
         }
 
         if needToCreatePayment() {
@@ -644,6 +670,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
         return false
+    }
+
+    public func wentBackFrom(hook: HookStep) {
+        MercadoPagoCheckoutViewModel.flowPreference.addHookToHooksToShow(hookStep: hook)
+    }
+
+    public func continueFrom(hook: HookStep) {
+        MercadoPagoCheckoutViewModel.flowPreference.removeHookFromHooksToShow(hookStep: hook)
     }
 
 }

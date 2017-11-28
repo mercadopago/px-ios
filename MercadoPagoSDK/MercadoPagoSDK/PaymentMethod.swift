@@ -81,6 +81,21 @@ open class PaymentMethod: NSObject, Cellable {
 
     }
 
+    open var isPrepaidCard: Bool {
+        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+            return paymentTypeId.isPrepaidCard()
+        }
+        return false
+    }
+
+
+    open var isDebitCard: Bool {
+        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+            return paymentTypeId.isDebitCard()
+        }
+        return false
+    }
+
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
         let settings: [Setting]? = Setting.getSettingByBin(self.settings, bin: bin)
         if let settings = settings {

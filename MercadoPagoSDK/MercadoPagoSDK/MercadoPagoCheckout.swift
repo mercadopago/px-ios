@@ -72,6 +72,10 @@ open class MercadoPagoCheckout: NSObject {
         executeNextStep()
     }
 
+    func executePreviousStep(animated:Bool = true) {
+        self.navigationController.popViewController(animated: animated)
+    }
+
     func initialize() {
         initMercadPagoPXTracking()
         MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
@@ -128,6 +132,12 @@ open class MercadoPagoCheckout: NSObject {
             self.finish()
         case .SCREEN_ERROR:
             self.showErrorScreen()
+        case .SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED:
+            self.showHookScreen(hookStep: .AFTER_PAYMENT_TYPE_SELECTED)
+        case .SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED:
+            self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_SELECTED)
+        case .SCREEN_HOOK_BEFORE_PAYMENT:
+            self.showHookScreen(hookStep: .BEFORE_PAYMENT)
         default: break
         }
     }
