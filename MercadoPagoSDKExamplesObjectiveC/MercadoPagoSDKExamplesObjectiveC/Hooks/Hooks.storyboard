@@ -30,7 +30,7 @@
                                                     <constraint firstAttribute="height" constant="25" id="9gT-AG-Tax"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next" secureTextEntry="YES"/>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vw0-wj-nYL" userLabel="Underline">
                                                 <rect key="frame" x="20" y="187.33333333333334" width="335" height="1"/>
