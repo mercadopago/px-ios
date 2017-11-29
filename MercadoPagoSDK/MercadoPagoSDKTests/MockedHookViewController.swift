@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 open class MockedHookViewController: UIViewController, PXHookComponent {
 
     var hookStep: PXHookStep?
@@ -32,9 +33,9 @@ open class MockedHookViewController: UIViewController, PXHookComponent {
     public func renderDidFinish() {
 
     }
-
-    public func didReceive(hookStore: HookStore) {
-
+    
+    public func shouldSkipHook(hookStore: HookStore) -> Bool {
+        return false
     }
 
     public func titleForNavigationBar() -> String? {

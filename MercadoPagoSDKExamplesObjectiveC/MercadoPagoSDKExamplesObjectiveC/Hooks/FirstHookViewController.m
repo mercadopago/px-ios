@@ -25,7 +25,7 @@ id <PaymentMethodOption> paymentOptionSelected;
     [self setupNextButton];
 }
 
-- (void) viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     [self.codeTextField becomeFirstResponder];
 }
 
@@ -92,8 +92,11 @@ id <PaymentMethodOption> paymentOptionSelected;
     return PXHookStepAFTER_PAYMENT_TYPE_SELECTED;
 }
 
+- (BOOL)shouldSkipHookWithHookStore:(HookStore * _Nonnull)hookStore {
+    return NO;
+}
+
 - (void)renderDidFinish {
-    //self.paymentType.text = [paymentOptionSelected getDescription];
     self.messageLabel.text = nil;
     self.codeTextField.text = nil;
     [self.codeTextField becomeFirstResponder];
