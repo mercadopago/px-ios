@@ -292,18 +292,7 @@ extension MercadoPagoCheckout {
                 self.viewModel.wentBackFrom(hook: hookStep)
             }
 
-            // Set a copy of CheckoutVM in HookStore
-            if let viewModelCopy = self.viewModel.copy() as? MercadoPagoCheckoutViewModel {
-                HookStore.sharedInstance.paymentData = viewModelCopy.paymentData
-                HookStore.sharedInstance.paymentOptionSelected = viewModelCopy.paymentOptionSelected
-            }
-
-            // Skip hook if need and send hookstore data.
-            if targetHook.shouldSkipHook(hookStore: HookStore.sharedInstance) {
-                self.viewModel.continueFrom(hook: hookStep)
-                self.executeNextStep()
-                return
-            }
+            self.viewModel.copyViewModelAndAssignToHookStore()
 
             // Set custom attributes to Hook NavigationBar
             vc.title = targetHook.titleForNavigationBar()
@@ -321,7 +310,7 @@ extension MercadoPagoCheckout {
             targetHook.renderDidFinish()
 
             self.navigationController.pushViewController(vc, animated: true)
-
+            
             self.viewModel.continueFrom(hook: hookStep)
         }
     }

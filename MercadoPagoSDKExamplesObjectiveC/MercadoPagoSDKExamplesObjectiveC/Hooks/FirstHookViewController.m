@@ -84,7 +84,7 @@ id <PaymentMethodOption> paymentOptionSelected;
     return self.view;
 }
 
-- (void)didReceiveWithHookStore:(HookStore * _Nonnull)hookStore {
+- (void)didReceiveWithHookStore:(PXHookStore * _Nonnull)hookStore {
     paymentOptionSelected = [hookStore getPaymentOptionSelected];
 }
 
@@ -92,7 +92,7 @@ id <PaymentMethodOption> paymentOptionSelected;
     return PXHookStepAFTER_PAYMENT_TYPE_SELECTED;
 }
 
-- (BOOL)shouldSkipHookWithHookStore:(HookStore * _Nonnull)hookStore {
+- (BOOL)shouldSkipHookWithHookStore:(PXHookStore * _Nonnull)hookStore {
     return NO;
 }
 

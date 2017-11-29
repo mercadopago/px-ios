@@ -8,18 +8,26 @@
 
 import Foundation
 extension MercadoPagoCheckoutViewModel {
+
     func shouldShowHook(hookStep: PXHookStep) -> Bool {
-        if let _ = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
-            switch hookStep {
-            case .AFTER_PAYMENT_TYPE_SELECTED:
-                return shouldShowHook1()
-            case .AFTER_PAYMENT_METHOD_SELECTED:
-                return shouldShowHook2()
-            case .BEFORE_PAYMENT:
-                return shouldShowHook3()
-            }
+        guard let hookSelected = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) else {
+            return false
         }
-        return false
+
+        copyViewModelAndAssignToHookStore()
+        if hookSelected.shouldSkipHook(hookStore: PXHookStore.sharedInstance) {
+            self.continueFrom(hook: hookSelected.hookForStep())
+            return false
+        }
+
+        switch hookStep {
+        case .AFTER_PAYMENT_TYPE_SELECTED:
+            return shouldShowHook1()
+        case .AFTER_PAYMENT_METHOD_SELECTED:
+            return shouldShowHook2()
+        case .BEFORE_PAYMENT:
+            return shouldShowHook3()
+        }
     }
 
     func shouldShowHook1() -> Bool {
@@ -47,5 +55,12 @@ extension MercadoPagoCheckoutViewModel {
 
     func shouldShowHook3() -> Bool {
         return readyToPay
+    }
+    func copyViewModelAndAssignToHookStore() {
+        // Set a copy of CheckoutVM in HookStore
+        if self.copy() is MercadoPagoCheckoutViewModel {
+            PXHookStore.sharedInstance.paymentData = self.paymentData
+            PXHookStore.sharedInstance.paymentOptionSelected = self.paymentOptionSelected
+       }
     }
 }

@@ -37,7 +37,7 @@
     return PXHookStepAFTER_PAYMENT_METHOD_SELECTED;
 }
 
-- (BOOL)shouldSkipHookWithHookStore:(HookStore * _Nonnull)hookStore {
+- (BOOL)shouldSkipHookWithHookStore:(PXHookStore * _Nonnull)hookStore {
     self.paymentData = [hookStore getPaymentData];
     return NO;
 }

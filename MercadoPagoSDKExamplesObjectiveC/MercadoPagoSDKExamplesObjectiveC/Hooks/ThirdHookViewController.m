@@ -34,7 +34,7 @@
     return PXHookStepBEFORE_PAYMENT;
 }
 
-- (BOOL)shouldSkipHookWithHookStore:(HookStore * _Nonnull)hookStore {
+- (BOOL)shouldSkipHookWithHookStore:(PXHookStore * _Nonnull)hookStore {
     return NO;
 }
 

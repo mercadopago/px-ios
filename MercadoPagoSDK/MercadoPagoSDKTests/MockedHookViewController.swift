@@ -12,10 +12,12 @@ import UIKit
 open class MockedHookViewController: UIViewController, PXHookComponent {
 
     var hookStep: PXHookStep?
+    var shouldSkipHook = false
 
-    init(hookStep: PXHookStep) {
+    init(hookStep: PXHookStep, shouldSkipHook: Bool = false) {
         super.init(nibName: nil, bundle: nil)
         self.hookStep = hookStep
+        self.shouldSkipHook = shouldSkipHook
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -34,8 +36,8 @@ open class MockedHookViewController: UIViewController, PXHookComponent {
 
     }
     
-    public func shouldSkipHook(hookStore: HookStore) -> Bool {
-        return false
+    public func shouldSkipHook(hookStore: PXHookStore) -> Bool {
+        return shouldSkipHook
     }
 
     public func titleForNavigationBar() -> String? {
