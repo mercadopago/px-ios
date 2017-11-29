@@ -11,7 +11,7 @@ import Foundation
 open class PXHookStore: NSObject {
 
     static let sharedInstance = PXHookStore()
-    private var data = [String : Any]()
+    private var data = [String: Any]()
     var paymentData = PaymentData()
     var paymentOptionSelected: PaymentMethodOption?
 

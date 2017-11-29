@@ -312,7 +312,7 @@ extension MercadoPagoCheckout {
             targetHook.renderDidFinish()
 
             self.navigationController.pushViewController(vc, animated: true)
-            
+
             self.viewModel.continueFrom(hook: hookStep)
         }
     }

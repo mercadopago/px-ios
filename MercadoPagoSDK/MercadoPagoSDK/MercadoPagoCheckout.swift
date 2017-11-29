@@ -72,7 +72,7 @@ open class MercadoPagoCheckout: NSObject {
         executeNextStep()
     }
 
-    func executePreviousStep(animated:Bool = true) {
+    func executePreviousStep(animated: Bool = true) {
         self.navigationController.popViewController(animated: animated)
     }
 

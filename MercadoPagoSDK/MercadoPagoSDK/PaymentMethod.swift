@@ -88,7 +88,6 @@ open class PaymentMethod: NSObject, Cellable {
         return false
     }
 
-
     open var isDebitCard: Bool {
         if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
             return paymentTypeId.isDebitCard()
