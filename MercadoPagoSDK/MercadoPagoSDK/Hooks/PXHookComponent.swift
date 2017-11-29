@@ -12,10 +12,11 @@ import Foundation
 public protocol PXHookComponent: PXComponetizable {
     func hookForStep() -> PXHookStep
     func render() -> UIView
-    func shouldSkipHook(hookStore: PXHookStore) -> Bool
+    func shouldSkipHook(hookStore: PXHookStore) -> Bool // False
+    @objc optional func didReceive(hookStore: PXHookStore)
     func renderDidFinish()
-    func titleForNavigationBar() -> String?
-    func colorForNavigationBar() -> UIColor?
-    func shouldShowBackArrow() -> Bool
-    func shouldShowNavigationBar() -> Bool
+    func titleForNavigationBar() -> String? // nil
+    func colorForNavigationBar() -> UIColor? // nil
+    func shouldShowBackArrow() -> Bool // true
+    func shouldShowNavigationBar() -> Bool // true
 }

@@ -281,7 +281,7 @@ extension MercadoPagoCheckout {
         self.navigationController.pushViewController(entityTypeStep, animated: true)
     }
 
-    func showHookScreen(hookStep : PXHookStep) {
+    func showHookScreen(hookStep: PXHookStep) {
 
         if let targetHook = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
 
@@ -293,6 +293,8 @@ extension MercadoPagoCheckout {
             }
 
             self.viewModel.copyViewModelAndAssignToHookStore()
+
+            targetHook.didReceive?(hookStore: PXHookStore.sharedInstance)
 
             // Set custom attributes to Hook NavigationBar
             vc.title = targetHook.titleForNavigationBar()
