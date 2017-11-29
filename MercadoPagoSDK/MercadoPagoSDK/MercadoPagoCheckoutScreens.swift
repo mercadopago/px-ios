@@ -292,24 +292,33 @@ extension MercadoPagoCheckout {
                 self.viewModel.wentBackFrom(hook: hookStep)
             }
 
-            self.viewModel.copyViewModelAndAssignToHookStore()
-
-            targetHook.didReceive?(hookStore: PXHookStore.sharedInstance)
-
-            // Set custom attributes to Hook NavigationBar
-            vc.title = targetHook.titleForNavigationBar()
-            vc.shouldShowBackArrow = targetHook.shouldShowBackArrow()
-            vc.shouldHideNavigationBar = !targetHook.shouldShowNavigationBar()
-            if let navBarColor = targetHook.colorForNavigationBar() {
-                vc.setNavBarBackgroundColor(color: navBarColor)
+            if self.viewModel.copyViewModelAndAssignToHookStore() {
+                targetHook.didReceive?(hookStore: PXHookStore.sharedInstance)
             }
 
+            if let navTitle = targetHook.titleForNavigationBar?() {
+                vc.title = navTitle
+            }
+            
+            if let navBarColor = targetHook.colorForNavigationBar?() {
+                vc.setNavBarBackgroundColor(color: navBarColor)
+            }
+            
+            vc.shouldShowBackArrow = true
+            if let shouldShowBackArrow = targetHook.shouldShowBackArrow?() {
+                 vc.shouldShowBackArrow = shouldShowBackArrow
+            }
+            
+            if let shouldShowNavigationBar = targetHook.shouldShowNavigationBar?() {
+                vc.shouldHideNavigationBar = !shouldShowNavigationBar
+            }
+            
             let hookView = targetHook.render()
             hookView.removeFromSuperview()
             hookView.frame = vc.view.frame
             vc.view.addSubview(hookView)
 
-            targetHook.renderDidFinish()
+            targetHook.renderDidFinish?()
 
             self.navigationController.pushViewController(vc, animated: true)
 

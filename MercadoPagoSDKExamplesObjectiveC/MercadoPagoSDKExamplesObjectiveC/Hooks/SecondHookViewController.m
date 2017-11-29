@@ -28,7 +28,8 @@
     }
 }
 
-#pragma mark - PXHookComponent delegates
+
+#pragma mark - PXHookComponent mandatory delegates.
 - (UIView * _Nonnull)render {
     return self.view;
 }
@@ -37,9 +38,14 @@
     return PXHookStepAFTER_PAYMENT_METHOD_SELECTED;
 }
 
+
+#pragma mark - PXHookComponent optional delegates.
 - (BOOL)shouldSkipHookWithHookStore:(PXHookStore * _Nonnull)hookStore {
-    self.paymentData = [hookStore getPaymentData];
     return NO;
+}
+
+- (void)didReceiveWithHookStore:(PXHookStore * _Nonnull)hookStore {
+    self.paymentData = [hookStore getPaymentData];
 }
 
 - (void)renderDidFinish {

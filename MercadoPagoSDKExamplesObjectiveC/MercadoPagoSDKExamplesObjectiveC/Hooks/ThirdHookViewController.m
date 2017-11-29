@@ -9,7 +9,6 @@
 #import "ThirdHookViewController.h"
 
 @interface ThirdHookViewController ()
-
 @end
 
 @implementation ThirdHookViewController
@@ -25,7 +24,8 @@
     }
 }
 
-#pragma mark - PXHookComponent delegates
+
+#pragma mark - PXHookComponent mandatory delegates.
 - (UIView * _Nonnull)render {
     return self.view;
 }
@@ -34,6 +34,8 @@
     return PXHookStepBEFORE_PAYMENT;
 }
 
+
+#pragma mark - PXHookComponent optional delegates.
 - (BOOL)shouldSkipHookWithHookStore:(PXHookStore * _Nonnull)hookStore {
     return NO;
 }
@@ -59,4 +61,3 @@
 }
 
 @end
-

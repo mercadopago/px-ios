@@ -8,8 +8,6 @@
 
 #import "FirstHookViewController.h"
 
-id <PaymentMethodOption> paymentOptionSelected;
-
 @interface FirstHookViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
@@ -79,19 +77,18 @@ id <PaymentMethodOption> paymentOptionSelected;
     }
 }
 
-#pragma mark - PXHookComponent delegates
+
+#pragma mark - PXHookComponent mandatory delegates.
 - (UIView * _Nonnull)render {
     return self.view;
-}
-
-- (void)didReceiveWithHookStore:(PXHookStore * _Nonnull)hookStore {
-    paymentOptionSelected = [hookStore getPaymentOptionSelected];
 }
 
 - (enum PXHookStep)hookForStep {
     return PXHookStepAFTER_PAYMENT_TYPE_SELECTED;
 }
 
+
+#pragma mark - PXHookComponent optional delegates.
 - (BOOL)shouldSkipHookWithHookStore:(PXHookStore * _Nonnull)hookStore {
     return NO;
 }
