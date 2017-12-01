@@ -24,7 +24,7 @@
       "2.0.1"
     ],
     "MercadoPagoServices": [
-      "1.0.0"
+      "1.0.1"
     ]
   },
   "pod_target_xcconfig": {
@@ -40,8 +40,8 @@
         "MercadoPagoSDK/MercadoPagoSDK/*.lproj"
       ],
       "source_files": [
-        "MercadoPagoSDK/MercadoPagoSDK/**/*.{m,h,swift}",
-        "MercadoPagoSDK/MercadoPagoSDK/*.{m,h,swift}"
+        "MercadoPagoSDK/MercadoPagoSDK/*",
+        "MercadoPagoSDK/MercadoPagoSDK/Hooks/*"
       ]
     }
   ]

@@ -7,7 +7,7 @@ target 'MercadoPagoSDK' do
 
   # Pods for MercadoPagoSDK
     pod 'MercadoPagoPXTracking', '2.0.1'
-    pod 'MercadoPagoServices', '1.0.0’
+    pod 'MercadoPagoServices', '1.0.1’
 
 
   target 'MercadoPagoSDKTests' do
