@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B2BFC151FD1DB230069843C /* Hooks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2BFC101FD1DB210069843C /* Hooks.storyboard */; };
+		4B2BFC161FD1DB230069843C /* FirstHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2BFC111FD1DB220069843C /* FirstHookViewController.m */; };
+		4B2BFC171FD1DB230069843C /* SecondHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2BFC131FD1DB220069843C /* SecondHookViewController.m */; };
+		4B2BFC181FD1DB230069843C /* ThirdHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2BFC141FD1DB220069843C /* ThirdHookViewController.m */; };
 		4D1BA2FFECDADE21693F8479 /* Pods_PodTesterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA4C6DA5720ADA0D959E10D /* Pods_PodTesterUITests.framework */; };
 		7977B3C2CC366377F1711AB8 /* Pods_PodTester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F6C388D4809CF09D1B5C5F /* Pods_PodTester.framework */; };
 		96268BFEE693DF0EC8A35C50 /* Pods_PodTesterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D902B45F8C5F45AB09E44105 /* Pods_PodTesterTests.framework */; };
@@ -44,6 +48,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B2BFC0D1FD1DB1F0069843C /* PodTester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PodTester-Bridging-Header.h"; sourceTree = "<group>"; };
+		4B2BFC0E1FD1DB200069843C /* SecondHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondHookViewController.h; path = Hooks/SecondHookViewController.h; sourceTree = "<group>"; };
+		4B2BFC0F1FD1DB200069843C /* FirstHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstHookViewController.h; path = Hooks/FirstHookViewController.h; sourceTree = "<group>"; };
+		4B2BFC101FD1DB210069843C /* Hooks.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Hooks.storyboard; path = Hooks/Hooks.storyboard; sourceTree = "<group>"; };
+		4B2BFC111FD1DB220069843C /* FirstHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstHookViewController.m; path = Hooks/FirstHookViewController.m; sourceTree = "<group>"; };
+		4B2BFC121FD1DB220069843C /* ThirdHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThirdHookViewController.h; path = Hooks/ThirdHookViewController.h; sourceTree = "<group>"; };
+		4B2BFC131FD1DB220069843C /* SecondHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondHookViewController.m; path = Hooks/SecondHookViewController.m; sourceTree = "<group>"; };
+		4B2BFC141FD1DB220069843C /* ThirdHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThirdHookViewController.m; path = Hooks/ThirdHookViewController.m; sourceTree = "<group>"; };
 		788E4776CD9FAE0AEE06C75D /* Pods-PodTester.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodTester.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PodTester/Pods-PodTester.debug.xcconfig"; sourceTree = "<group>"; };
 		92F6C388D4809CF09D1B5C5F /* Pods_PodTester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PodTester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9754B13CFE395067E14B75EA /* Pods-PodTester.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodTester.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodTester/Pods-PodTester.release.xcconfig"; sourceTree = "<group>"; };
@@ -100,6 +112,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B2BFC0C1FD1DAED0069843C /* Hooks */ = {
+			isa = PBXGroup;
+			children = (
+				4B2BFC0F1FD1DB200069843C /* FirstHookViewController.h */,
+				4B2BFC111FD1DB220069843C /* FirstHookViewController.m */,
+				4B2BFC101FD1DB210069843C /* Hooks.storyboard */,
+				4B2BFC0E1FD1DB200069843C /* SecondHookViewController.h */,
+				4B2BFC131FD1DB220069843C /* SecondHookViewController.m */,
+				4B2BFC121FD1DB220069843C /* ThirdHookViewController.h */,
+				4B2BFC141FD1DB220069843C /* ThirdHookViewController.m */,
+				4B2BFC0D1FD1DB1F0069843C /* PodTester-Bridging-Header.h */,
+			);
+			name = Hooks;
+			sourceTree = "<group>";
+		};
 		6755D3BF18B7247BC009309C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +175,7 @@
 		FCCDCC1D1E0B2265005E7095 /* PodTester */ = {
 			isa = PBXGroup;
 			children = (
+				4B2BFC0C1FD1DAED0069843C /* Hooks */,
 				FCCDCC1E1E0B2265005E7095 /* AppDelegate.swift */,
 				FC579C2F1E0C047900F32F7B /* MainTableViewController.swift */,
 				FC333DD61EA67982009C746A /* SettingsViewController.swift */,
@@ -258,6 +286,7 @@
 					FCCDCC1A1E0B2265005E7095 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = FC266WG8NL;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					FCCDCC2E1E0B2265005E7095 = {
@@ -300,6 +329,7 @@
 				FCCDCC291E0B2265005E7095 /* LaunchScreen.storyboard in Resources */,
 				FCCDCC261E0B2265005E7095 /* Assets.xcassets in Resources */,
 				FC333DDD1EA6A4A6009C746A /* EnvironmentSettings.plist in Resources */,
+				4B2BFC151FD1DB230069843C /* Hooks.storyboard in Resources */,
 				FCCDCC241E0B2265005E7095 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,11 +510,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2BFC161FD1DB230069843C /* FirstHookViewController.m in Sources */,
 				FCCDCC1F1E0B2265005E7095 /* AppDelegate.swift in Sources */,
+				4B2BFC171FD1DB230069843C /* SecondHookViewController.m in Sources */,
 				FCF85BA31EAE402E00D45589 /* Site.swift in Sources */,
 				FC579C301E0C047900F32F7B /* MainTableViewController.swift in Sources */,
 				FC333DD71EA67982009C746A /* SettingsViewController.swift in Sources */,
 				FC333DDA1EA693A1009C746A /* SettingsViewModel.swift in Sources */,
+				4B2BFC181FD1DB230069843C /* ThirdHookViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,11 +673,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = FC266WG8NL;
 				INFOPLIST_FILE = PodTester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLx.PodTester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PodTester/PodTester-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -655,11 +691,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = FC266WG8NL;
 				INFOPLIST_FILE = PodTester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLx.PodTester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PodTester/PodTester-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
