@@ -121,9 +121,9 @@
     thirdHook.actionHandler = [[PXActionHandler alloc] initWithCheckout:self.mpCheckout targetHook:[thirdHook hookForStep]];
 
 
-    [flowPref setBeforePaymentMethodConfigWithHook:firstHook];
-    [flowPref setAfterPaymentMethodConfigWithHook:secondHook];
-    [flowPref setBeforePaymentWithHook:thirdHook];
+    [flowPref addHookToFlowWithHook:firstHook];
+    [flowPref addHookToFlowWithHook:secondHook];
+    [flowPref addHookToFlowWithHook:thirdHook];
 
     [MercadoPagoCheckout setFlowPreference:flowPref];
 }

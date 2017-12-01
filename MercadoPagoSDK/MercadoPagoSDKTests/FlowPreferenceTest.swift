@@ -19,9 +19,9 @@ class FlowPreferenceTest: BaseTest {
         let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_CONFIG)
         let thirdHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT)
 
-        flowPreference.setBeforePaymentMethodConfig(hook: firstHook)
-        flowPreference.setAfterPaymentMethodConfig(hook: secondHook)
-        flowPreference.setBeforePayment(hook: thirdHook)
+        flowPreference.addHookToFlow(hook: firstHook)
+        flowPreference.addHookToFlow(hook: secondHook)
+        flowPreference.addHookToFlow(hook: thirdHook)
     }
 
     func testDefaultState() {

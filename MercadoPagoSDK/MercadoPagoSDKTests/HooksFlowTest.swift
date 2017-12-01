@@ -23,9 +23,9 @@ class HooksFlowTest : BaseTest {
         let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_CONFIG)
         let thirdHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT)
 
-        flowPreference.setBeforePaymentMethodConfig(hook: firstHook)
-        flowPreference.setAfterPaymentMethodConfig(hook: secondHook)
-        flowPreference.setBeforePayment(hook: thirdHook)
+        flowPreference.addHookToFlow(hook: firstHook)
+        flowPreference.addHookToFlow(hook: secondHook)
+        flowPreference.addHookToFlow(hook: thirdHook)
 
         MercadoPagoCheckout.setFlowPreference(flowPreference)
     }
@@ -631,9 +631,9 @@ class HooksFlowTest : BaseTest {
         let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_CONFIG)
         let thirdHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT, shouldSkipHook: true)
 
-        flowPref.setBeforePaymentMethodConfig(hook: firstHook)
-        flowPref.setAfterPaymentMethodConfig(hook: secondHook)
-        flowPref.setBeforePayment(hook: thirdHook)
+        flowPref.addHookToFlow(hook: firstHook)
+        flowPref.addHookToFlow(hook: secondHook)
+        flowPref.addHookToFlow(hook: thirdHook)
 
         MercadoPagoCheckout.setFlowPreference(flowPref)
 
