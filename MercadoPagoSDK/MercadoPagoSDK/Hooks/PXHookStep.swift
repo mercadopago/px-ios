@@ -9,7 +9,7 @@
 import Foundation
 
 @objc public enum PXHookStep: Int {
-    case AFTER_PAYMENT_TYPE_SELECTED = 1
-    case AFTER_PAYMENT_METHOD_SELECTED
+    case BEFORE_PAYMENT_METHOD_CONFIG = 1
+    case AFTER_PAYMENT_METHOD_CONFIG
     case BEFORE_PAYMENT
 }

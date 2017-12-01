@@ -34,8 +34,8 @@ public enum CheckoutStep: String {
     case SERVICE_GET_INSTRUCTIONS
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
-    case SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED
-    case SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED
+    case SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
+    case SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
     case SCREEN_HOOK_BEFORE_PAYMENT
 }
 
@@ -363,12 +363,12 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SCREEN_PAYMENT_METHOD_SELECTION
         }
 
-        if shouldShowHook(hookStep: .AFTER_PAYMENT_TYPE_SELECTED) {
-            return .SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED
+        if shouldShowHook(hookStep: .BEFORE_PAYMENT_METHOD_CONFIG) {
+            return .SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
         }
 
-        if shouldShowHook(hookStep: .AFTER_PAYMENT_METHOD_SELECTED) {
-            return .SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED
+        if shouldShowHook(hookStep: .AFTER_PAYMENT_METHOD_CONFIG) {
+            return .SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
         }
 
         if shouldShowHook(hookStep: .BEFORE_PAYMENT) {

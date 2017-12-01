@@ -19,13 +19,13 @@ class HooksFlowTest : BaseTest {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
-        let firstHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_TYPE_SELECTED)
-        let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_SELECTED)
+        let firstHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT_METHOD_CONFIG)
+        let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_CONFIG)
         let thirdHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT)
 
-        let hooks: [PXHookComponent] = [firstHook, secondHook, thirdHook]
-
-        flowPreference.setHook(hooks: hooks)
+        flowPreference.setBeforePaymentMethodConfig(hook: firstHook)
+        flowPreference.setAfterPaymentMethodConfig(hook: secondHook)
+        flowPreference.setBeforePayment(hook: thirdHook)
 
         MercadoPagoCheckout.setFlowPreference(flowPreference)
     }
@@ -69,13 +69,13 @@ class HooksFlowTest : BaseTest {
 
         // 7. Display HOOK 1: After payment type selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_TYPE_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
 
         // 8. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 9. Display Review and Confirm y setear Payment data
         step = mpCheckout.viewModel.nextStep()
@@ -143,8 +143,8 @@ class HooksFlowTest : BaseTest {
 
         // 6. Display HOOK 1: After payment type selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_TYPE_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
         XCTAssertEqual(PXHookStore.sharedInstance.getPaymentOptionSelected()?.getId(), "credit_card")
 
         // 7. Display Form Tarjeta
@@ -204,8 +204,8 @@ class HooksFlowTest : BaseTest {
 
         // 14. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 15. RyC
         step = mpCheckout.viewModel.nextStep()
@@ -285,8 +285,8 @@ class HooksFlowTest : BaseTest {
 
         // 6. Display HOOK 1: After payment type selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_TYPE_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
 
         // 7.  Search Cuotas
         step = mpCheckout.viewModel.nextStep()
@@ -308,8 +308,8 @@ class HooksFlowTest : BaseTest {
 
         // 10. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 11. RyC
         step = mpCheckout.viewModel.nextStep()
@@ -384,13 +384,13 @@ class HooksFlowTest : BaseTest {
 
         // 5. Display HOOK 1: After payment type selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_TYPE_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
 
         // 6. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 7. Display RyC y simular paymentData
         step = mpCheckout.viewModel.nextStep()
@@ -466,8 +466,8 @@ class HooksFlowTest : BaseTest {
 
         // 6. Display HOOK 1: After payment type selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_TYPE_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
 
         // 7. Display Cuotas
         step = mpCheckout.viewModel.nextStep()
@@ -489,8 +489,8 @@ class HooksFlowTest : BaseTest {
 
         // 10. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 11. RyC
         step = mpCheckout.viewModel.nextStep()
@@ -587,13 +587,13 @@ class HooksFlowTest : BaseTest {
 
         // 7. Display HOOK 1: After payment type selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_TYPE_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
 
         // 8. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 9. Display Review and Confirm y setear Payment data
         step = mpCheckout.viewModel.nextStep()
@@ -627,13 +627,13 @@ class HooksFlowTest : BaseTest {
     // MARK: Test Credit Card with Hooks, Hook 1 and 3 disable
     func testNextStep_withCheckoutPreference_masterCreditCardWithHooks_Hook1and3Disable() {
         let flowPref = FlowPreference()
-        let firstHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_TYPE_SELECTED, shouldSkipHook: true)
-        let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_SELECTED)
+        let firstHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT_METHOD_CONFIG, shouldSkipHook: true)
+        let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_CONFIG)
         let thirdHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT, shouldSkipHook: true)
 
-        let hooks: [PXHookComponent] = [firstHook, secondHook, thirdHook]
-
-        flowPref.setHook(hooks: hooks)
+        flowPref.setBeforePaymentMethodConfig(hook: firstHook)
+        flowPref.setAfterPaymentMethodConfig(hook: secondHook)
+        flowPref.setBeforePayment(hook: thirdHook)
 
         MercadoPagoCheckout.setFlowPreference(flowPref)
 
@@ -726,8 +726,8 @@ class HooksFlowTest : BaseTest {
 
         // 13. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 14. RyC
         step = mpCheckout.viewModel.nextStep()
@@ -798,14 +798,14 @@ class HooksFlowTest : BaseTest {
 
         // 7. Display HOOK 1: After payment type selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_TYPE_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
         XCTAssertEqual(PXHookStore.sharedInstance.getPaymentOptionSelected()?.getId(), "account_money")
 
         // 8. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED, step)
-        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_SELECTED)
+        XCTAssertEqual(CheckoutStep.SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG, step)
+        mpCheckout.viewModel.continueFrom(hook: .AFTER_PAYMENT_METHOD_CONFIG)
 
         // 9. Display Review and Confirm y setear Payment data
         step = mpCheckout.viewModel.nextStep()

@@ -194,9 +194,21 @@ open class FlowPreference: NSObject {
 // MARK: Hooks methods
 extension FlowPreference {
 
-    public func setHook(hooks: [PXHookComponent]) {
-        self.hooks = hooks
-        self.hooksToShow = hooks
+    public func setBeforePaymentMethodConfig(hook: PXHookComponent) {
+        addHookToFlow(hook: hook)
+    }
+
+    public func setAfterPaymentMethodConfig(hook: PXHookComponent) {
+        addHookToFlow(hook: hook)
+    }
+
+    public func setBeforePayment(hook: PXHookComponent) {
+        addHookToFlow(hook: hook)
+    }
+
+    func addHookToFlow(hook: PXHookComponent) {
+        self.hooks.append(hook)
+        self.hooksToShow.append(hook)
     }
 
     public func getHookForStep(hookStep: PXHookStep) -> PXHookComponent? {
@@ -222,5 +234,10 @@ extension FlowPreference {
 
     public func resetHooksToShow() {
         hooksToShow = hooks
+    }
+
+    public func cleanHooks() {
+        hooks = []
+        hooksToShow = []
     }
 }

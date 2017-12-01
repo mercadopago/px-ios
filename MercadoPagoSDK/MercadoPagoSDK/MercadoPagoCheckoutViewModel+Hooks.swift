@@ -1,5 +1,5 @@
 //
-//  MercadoPagoCheckoutViewModel + Hooks.swift
+//  MercadoPagoCheckoutViewModel+Hooks.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 11/28/17.
@@ -23,9 +23,9 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         switch hookStep {
-        case .AFTER_PAYMENT_TYPE_SELECTED:
+        case .BEFORE_PAYMENT_METHOD_CONFIG:
             return shouldShowHook1()
-        case .AFTER_PAYMENT_METHOD_SELECTED:
+        case .AFTER_PAYMENT_METHOD_CONFIG:
             return shouldShowHook2()
         case .BEFORE_PAYMENT:
             return shouldShowHook3()

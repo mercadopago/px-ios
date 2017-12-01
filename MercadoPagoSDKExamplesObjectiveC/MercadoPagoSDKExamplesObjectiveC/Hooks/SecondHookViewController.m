@@ -35,7 +35,7 @@
 }
 
 - (enum PXHookStep)hookForStep {
-    return PXHookStepAFTER_PAYMENT_METHOD_SELECTED;
+    return PXHookStepAFTER_PAYMENT_METHOD_CONFIG;
 }
 
 

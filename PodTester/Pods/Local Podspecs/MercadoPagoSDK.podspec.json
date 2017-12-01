@@ -40,7 +40,8 @@
         "MercadoPagoSDK/MercadoPagoSDK/*.lproj"
       ],
       "source_files": [
-        "MercadoPagoSDK/MercadoPagoSDK/*"
+        "MercadoPagoSDK/MercadoPagoSDK/**/*.{m,h,swift}",
+        "MercadoPagoSDK/MercadoPagoSDK/*.{m,h,swift}"
       ]
     }
   ]

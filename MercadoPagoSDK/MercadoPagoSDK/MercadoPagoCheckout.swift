@@ -26,6 +26,8 @@ open class MercadoPagoCheckout: NSObject {
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
 
+        MercadoPagoCheckoutViewModel.flowPreference.cleanHooks()
+
         MercadoPagoContext.setPublicKey(publicKey)
         MercadoPagoContext.setPayerAccessToken(accessToken)
 
@@ -132,10 +134,10 @@ open class MercadoPagoCheckout: NSObject {
             self.finish()
         case .SCREEN_ERROR:
             self.showErrorScreen()
-        case .SCREEN_HOOK_AFTER_PAYMENT_TYPE_SELECTED:
-            self.showHookScreen(hookStep: .AFTER_PAYMENT_TYPE_SELECTED)
-        case .SCREEN_HOOK_AFTER_PAYMENT_METHOD_SELECTED:
-            self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_SELECTED)
+        case .SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG:
+            self.showHookScreen(hookStep: .BEFORE_PAYMENT_METHOD_CONFIG)
+        case .SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG:
+            self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
         case .SCREEN_HOOK_BEFORE_PAYMENT:
             self.showHookScreen(hookStep: .BEFORE_PAYMENT)
         default: break
