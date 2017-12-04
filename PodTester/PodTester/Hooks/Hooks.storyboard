@@ -122,7 +122,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="brN-28-uP8"/>
                                 </constraints>
                                 <color key="tintColor" red="0.98297846499999997" green="0.98297846499999997" blue="0.98297846499999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="Siguiente"/>
+                                <state key="normal" title="Continuar"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="6"/>
@@ -132,11 +132,51 @@
                                     <action selector="didTapOnNext" destination="tMt-rH-7sH" eventType="touchUpInside" id="OJv-55-Kzf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="euS-zo-00k">
+                                <rect key="frame" x="87.666666666666686" y="361" width="200" height="60"/>
+                                <color key="backgroundColor" red="0.36518377590000001" green="0.36518377590000001" blue="0.36518377590000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="JGg-qO-Eg3"/>
+                                    <constraint firstAttribute="height" constant="60" id="Niy-M6-I0e"/>
+                                </constraints>
+                                <color key="tintColor" red="0.98297846499999997" green="0.98297846499999997" blue="0.98297846499999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Show Hook Loading"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTapOnloadingExample" destination="tMt-rH-7sH" eventType="touchUpInside" id="44w-PX-dRa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mly-CC-6xh">
+                                <rect key="frame" x="87" y="450" width="200" height="60"/>
+                                <color key="backgroundColor" red="0.36518377590000001" green="0.36518377590000001" blue="0.36518377590000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="jPT-fN-kQL"/>
+                                    <constraint firstAttribute="height" constant="60" id="qUR-YB-Rjx"/>
+                                </constraints>
+                                <color key="tintColor" red="0.98297846499999997" green="0.98297846499999997" blue="0.98297846499999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Set Data in HookStore"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTapOnSetData" destination="tMt-rH-7sH" eventType="touchUpInside" id="x5n-ai-cCU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="euS-zo-00k" firstAttribute="centerX" secondItem="sjc-8W-ZtY" secondAttribute="centerX" id="5z0-YZ-5yY"/>
                             <constraint firstItem="kd5-nT-14E" firstAttribute="leading" secondItem="sjc-8W-ZtY" secondAttribute="leading" constant="16" id="F64-uY-yCB"/>
+                            <constraint firstItem="euS-zo-00k" firstAttribute="centerY" secondItem="sjc-8W-ZtY" secondAttribute="centerY" constant="-20" id="MFG-dk-rbP"/>
+                            <constraint firstItem="Mly-CC-6xh" firstAttribute="top" secondItem="euS-zo-00k" secondAttribute="bottom" constant="29" id="OHa-I3-Uiu"/>
                             <constraint firstItem="sjc-8W-ZtY" firstAttribute="trailing" secondItem="kd5-nT-14E" secondAttribute="trailing" constant="16" id="ZT9-PZ-VVx"/>
+                            <constraint firstItem="Mly-CC-6xh" firstAttribute="centerX" secondItem="euS-zo-00k" secondAttribute="centerX" id="hTV-XG-CCX"/>
                             <constraint firstItem="sjc-8W-ZtY" firstAttribute="bottom" secondItem="kd5-nT-14E" secondAttribute="bottom" constant="16" id="zIu-NO-KP2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sjc-8W-ZtY"/>
@@ -163,7 +203,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="aoo-3O-fyW"/>
                                 </constraints>
                                 <color key="tintColor" red="0.98297846499999997" green="0.98297846499999997" blue="0.98297846499999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="Siguiente"/>
+                                <state key="normal" title="Continuar"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="6"/>
@@ -173,19 +213,39 @@
                                     <action selector="didTapOnNext" destination="1j9-fc-JT4" eventType="touchUpInside" id="mMv-qn-KoQ"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hook Store Debug" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mtt-Pu-rR4">
+                                <rect key="frame" x="20" y="62" width="164" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="{empty}" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aRn-hc-79x">
+                                <rect key="frame" x="20" y="106" width="355" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.17408234710000001" green="0.45740140150000003" blue="0.73413212439999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Mtt-Pu-rR4" firstAttribute="top" secondItem="zXW-vd-vni" secondAttribute="top" constant="18" id="0d7-xK-gkD"/>
+                            <constraint firstItem="Mtt-Pu-rR4" firstAttribute="leading" secondItem="zXW-vd-vni" secondAttribute="leading" constant="20" id="GBA-RY-NYC"/>
                             <constraint firstItem="zXW-vd-vni" firstAttribute="bottom" secondItem="pVc-ET-lpY" secondAttribute="bottom" constant="16" id="Ia4-Yr-cSj"/>
                             <constraint firstItem="zXW-vd-vni" firstAttribute="trailing" secondItem="pVc-ET-lpY" secondAttribute="trailing" constant="16" id="gdO-oW-7fJ"/>
+                            <constraint firstItem="aRn-hc-79x" firstAttribute="top" secondItem="Mtt-Pu-rR4" secondAttribute="bottom" constant="20" id="lO7-Rs-xvr"/>
+                            <constraint firstItem="aRn-hc-79x" firstAttribute="leading" secondItem="Mtt-Pu-rR4" secondAttribute="leading" id="pqh-87-MEM"/>
+                            <constraint firstItem="zXW-vd-vni" firstAttribute="trailing" secondItem="aRn-hc-79x" secondAttribute="trailing" id="rp9-NH-EmG"/>
                             <constraint firstItem="pVc-ET-lpY" firstAttribute="leading" secondItem="zXW-vd-vni" secondAttribute="leading" constant="16" id="zo3-4x-afl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zXW-vd-vni"/>
                     </view>
+                    <connections>
+                        <outlet property="hookStoreDebugLabel" destination="aRn-hc-79x" id="yVk-N1-gQ6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U7a-Sx-avD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1455" y="-266"/>
+            <point key="canvasLocation" x="1453.5999999999999" y="-266.00985221674875"/>
         </scene>
     </scenes>
     <resources>

@@ -40,7 +40,7 @@ extension FirstHookViewController: PXHookComponent {
     }
     
     func titleForNavigationBar() -> String? {
-        return "Clave de pagos y retiros."
+        return "Hook 1"
     }
 }
 

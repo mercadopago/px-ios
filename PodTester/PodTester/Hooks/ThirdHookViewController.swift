@@ -13,6 +13,10 @@ class ThirdHookViewController: UIViewController {
     
     var actionHandler: PXActionHandler?
     
+    var targetHookStore: PXHookStore?
+    
+    @IBOutlet weak var hookStoreDebugLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -35,6 +39,18 @@ extension ThirdHookViewController: PXHookComponent {
     
     func titleForNavigationBar() -> String? {
         return "Hook 3"
+    }
+    
+    func renderDidFinish() {
+        if let savedValue = targetHookStore?.getData(forKey: "key"), let savedValueStr = savedValue as? String  {
+            hookStoreDebugLabel.text = savedValueStr.debugDescription
+        } else {
+            hookStoreDebugLabel.text = "{empty}"
+        }
+    }
+    
+    func didReceive(hookStore: PXHookStore) {
+        targetHookStore = hookStore
     }
 }
 
