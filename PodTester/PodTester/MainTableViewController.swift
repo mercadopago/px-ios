@@ -187,19 +187,15 @@ class MainTableViewController: UITableViewController {
         let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
 
 
-        let storyboard = UIStoryboard(name: "Hooks", bundle: nil)
-
-        let firsHook = storyboard.instantiateViewController(withIdentifier: "firstHooks") as! FirstHookViewController
-        var action = PXActionHandler(withCheckout: checkout, targetHook: firsHook.hookForStep())
-        firsHook.actionHandler = action
-
-        let secondHook = storyboard.instantiateViewController(withIdentifier: "secondHook") as! SecondHookViewController
-        action = PXActionHandler(withCheckout: checkout, targetHook: secondHook.hookForStep())
-        secondHook.actionHandler = action
-
-        let thirdHook = storyboard.instantiateViewController(withIdentifier: "thirdHook") as! ThirdHookViewController
-        action = PXActionHandler(withCheckout: checkout, targetHook: thirdHook.hookForStep())
-        thirdHook.actionHandler = action
+         // Define hooks.
+        let firstHook = HooksNavigationManager().getFirstHook()
+        firstHook.actionHandler = PXActionHandler(withCheckout: checkout, targetHook: firstHook.hookForStep())
+        
+        let secondHook = HooksNavigationManager().getSecondHook()
+        secondHook.actionHandler = PXActionHandler(withCheckout: checkout, targetHook: secondHook.hookForStep())
+        
+        let thirdHook = HooksNavigationManager().getThirdHook()
+        thirdHook.actionHandler = PXActionHandler(withCheckout: checkout, targetHook: thirdHook.hookForStep())
 
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color)
@@ -218,14 +214,14 @@ class MainTableViewController: UITableViewController {
             }
 
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
-            flowPref.addHookToHooksToShow(hookStep: firsHook)
-            flowPref.addHookToHooksToShow(hookStep: secondHook)
-            flowPref.addHookToHooksToShow(hookStep: thirdHook)
+            let _ = flowPref.addHookToFlow(hook: firstHook)
+            let _ = flowPref.addHookToFlow(hook: secondHook)
+            let _ = flowPref.addHookToFlow(hook: thirdHook)
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
-            flowPreference.addHookToHooksToShow(hookStep: firsHook)
-            flowPreference.addHookToHooksToShow(hookStep: secondHook)
-            flowPreference.addHookToHooksToShow(hookStep: thirdHook)
+            let _ = flowPreference.addHookToFlow(hook: firstHook)
+            let _ = flowPreference.addHookToFlow(hook: secondHook)
+            let _ = flowPreference.addHookToFlow(hook: thirdHook)
             showRyC ? flowPreference.enableReviewAndConfirmScreen() : flowPreference.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
