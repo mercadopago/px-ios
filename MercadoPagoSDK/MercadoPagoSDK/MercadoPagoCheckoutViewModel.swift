@@ -723,6 +723,7 @@ extension MercadoPagoCheckoutViewModel {
     func prepareForClone() {
         self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.cleanPaymentResult()
+        self.wentBackFrom(hook: .BEFORE_PAYMENT)
     }
 
     func prepareForNewSelection() {
@@ -731,6 +732,7 @@ extension MercadoPagoCheckoutViewModel {
         self.resetInformation()
         self.resetGroupSelection()
         self.rootVC = true
+        MercadoPagoCheckoutViewModel.flowPreference.resetHooksToShow()
     }
 
     func prepareForInvalidPaymentWithESC() {

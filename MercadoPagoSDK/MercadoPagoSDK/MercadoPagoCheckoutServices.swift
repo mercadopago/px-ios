@@ -378,8 +378,7 @@ extension MercadoPagoCheckout {
                 self?.viewModel.paymentData.clearCollectedData()
                 let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
                 strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
-                    self?.viewModel.resetInformation()
-                    self?.viewModel.resetGroupSelection()
+                    self?.viewModel.prepareForNewSelection()
                     self?.executeNextStep()
                 })
             } else {
