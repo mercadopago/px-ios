@@ -105,7 +105,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         collectionSearch.addSubview(upperView)
 
         if self.title == nil || self.title!.isEmpty {
-            self.title = "¿Cómo quiéres pagar?".localized
+            self.title = "¿Cómo quieres pagar?".localized
         }
 
         self.registerAllCells()

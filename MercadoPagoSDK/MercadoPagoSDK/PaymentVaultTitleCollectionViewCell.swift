@@ -24,7 +24,7 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScroll
     }
 
     func fillCell() {
-        title.text = "¿Cómo quiéres pagar?".localized
+        title.text = "¿Cómo quieres pagar?".localized
         title.textColor = UIColor.systemFontColor()
 
     }
