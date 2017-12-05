@@ -38,7 +38,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
             self.view.setNeedsUpdateConstraints()
         }
     }
-    
+
     @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
     override open func viewDidLoad() {
         super.viewDidLoad()

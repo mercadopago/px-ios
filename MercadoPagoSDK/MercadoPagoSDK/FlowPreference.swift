@@ -8,12 +8,6 @@
 
 import Foundation
 
-public enum PXHookStep: String {
-    case STEP1
-    case STEP2
-    case STEP3
-}
-
 open class FlowPreference: NSObject {
 
     static let DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3
@@ -30,6 +24,9 @@ open class FlowPreference: NSObject {
     var showInstallmentsReviewScreen = true
     var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
     var saveESC = false
+
+    var hooks = [PXHookComponent]()
+    var hooksToShow = [PXHookComponent]()
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -192,4 +189,48 @@ open class FlowPreference: NSObject {
         return flowPreference
     }
 
+}
+
+// MARK: Hooks methods
+extension FlowPreference {
+
+    public func addHookToFlow(hook: PXHookComponent) -> Bool {
+        let matchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.hookForStep() == hook.hookForStep()}
+        if matchedHooksForStep.isEmpty {
+            self.hooks.append(hook)
+            self.hooksToShow.append(hook)
+        }
+        return matchedHooksForStep.isEmpty
+    }
+
+    public func getHookForStep(hookStep: PXHookStep) -> PXHookComponent? {
+        let matchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.hookForStep() == hookStep}
+        return matchedHooksForStep.first
+    }
+
+    public func removeHookFromHooksToShow(hookStep: PXHookStep) {
+        let noMatchedHooksForStep = self.hooksToShow.filter { targetHook in
+            targetHook.hookForStep() != hookStep}
+        hooksToShow = noMatchedHooksForStep
+    }
+
+    public func addHookToHooksToShow(hookStep: PXHookStep) {
+        let matchedHooksForStep = self.hooks.filter { targetHook in
+            targetHook.hookForStep() == hookStep}
+
+        for hook in matchedHooksForStep {
+            hooksToShow.append(hook)
+        }
+    }
+
+    public func resetHooksToShow() {
+        hooksToShow = hooks
+    }
+
+    public func removeHooks() {
+        hooks = []
+        hooksToShow = []
+    }
 }

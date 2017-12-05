@@ -12,6 +12,9 @@
 #import "SubeTableViewCell.h"
 #import "DineroEnCuentaTableViewCell.h"
 #import "CustomItemTableViewCell.h"
+#import "FirstHookViewController.h"
+#import "SecondHookViewController.h"
+#import "ThirdHookViewController.h"
 
 @import MercadoPagoSDK;
 
@@ -50,8 +53,7 @@
     [self setDecorationPreference];
 
     // Setear ServicePreference
-    [self setServicePreference];
-
+    //[self setServicePreference];
 
 
     //Setear flowPreference
@@ -82,7 +84,13 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8"
+    accessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"
+    checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+
+    [self setHooks];
+
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -95,6 +103,29 @@
     
     [self.mpCheckout start];
 
+}
+
+-(void)setHooks {
+    
+    FlowPreference *flowPref = [[FlowPreference alloc] init];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"Hooks" bundle:[NSBundle mainBundle]];
+
+    FirstHookViewController *firstHook = [storyboard instantiateViewControllerWithIdentifier:@"firstHook"];
+    firstHook.actionHandler = [[PXActionHandler alloc] initWithCheckout:self.mpCheckout targetHook:[firstHook hookForStep]];
+
+    SecondHookViewController *secondHook = [storyboard instantiateViewControllerWithIdentifier:@"secondHook"];
+    secondHook.actionHandler = [[PXActionHandler alloc] initWithCheckout:self.mpCheckout targetHook:[secondHook hookForStep]];
+
+    ThirdHookViewController *thirdHook = [storyboard instantiateViewControllerWithIdentifier:@"thirdHook"];
+    thirdHook.actionHandler = [[PXActionHandler alloc] initWithCheckout:self.mpCheckout targetHook:[thirdHook hookForStep]];
+
+
+    [flowPref addHookToFlowWithHook:firstHook];
+    [flowPref addHookToFlowWithHook:secondHook];
+    [flowPref addHookToFlowWithHook:thirdHook];
+
+    [MercadoPagoCheckout setFlowPreference:flowPref];
 }
 
 -(void)setPaymentResult {

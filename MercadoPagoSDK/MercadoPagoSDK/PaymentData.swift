@@ -148,6 +148,10 @@ public class PaymentData: NSObject {
         return issuer
     }
 
+    public func getPayer() -> Payer {
+        return payer
+    }
+
     public func getPaymentMethod() -> PaymentMethod? {
         return paymentMethod
     }

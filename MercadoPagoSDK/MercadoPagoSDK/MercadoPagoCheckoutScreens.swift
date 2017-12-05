@@ -143,6 +143,10 @@ extension MercadoPagoCheckout {
                 }
         })
 
+        checkoutVC.callbackCancel = {
+            self.viewModel.readyToPay = false
+        }
+
         self.pushViewController(viewController: checkoutVC, animated: true, completion: {
             self.cleanNavigationStack()
         })
@@ -275,5 +279,50 @@ extension MercadoPagoCheckout {
         }
 
         self.navigationController.pushViewController(entityTypeStep, animated: true)
+    }
+
+    func showHookScreen(hookStep: PXHookStep) {
+
+        if let targetHook = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
+
+            let vc = MercadoPagoUIViewController()
+            vc.view.backgroundColor = .clear
+
+            vc.callbackCancel = {
+                self.viewModel.wentBackFrom(hook: hookStep)
+            }
+
+            if self.viewModel.copyViewModelAndAssignToHookStore() {
+                targetHook.didReceive?(hookStore: PXHookStore.sharedInstance)
+            }
+
+            if let navTitle = targetHook.titleForNavigationBar?() {
+                vc.title = navTitle
+            }
+            
+            if let navBarColor = targetHook.colorForNavigationBar?() {
+                vc.setNavBarBackgroundColor(color: navBarColor)
+            }
+            
+            vc.shouldShowBackArrow = true
+            if let shouldShowBackArrow = targetHook.shouldShowBackArrow?() {
+                 vc.shouldShowBackArrow = shouldShowBackArrow
+            }
+            
+            if let shouldShowNavigationBar = targetHook.shouldShowNavigationBar?() {
+                vc.shouldHideNavigationBar = !shouldShowNavigationBar
+            }
+            
+            let hookView = targetHook.render()
+            hookView.removeFromSuperview()
+            hookView.frame = vc.view.frame
+            vc.view.addSubview(hookView)
+
+            targetHook.renderDidFinish?()
+
+            self.navigationController.pushViewController(vc, animated: true)
+
+            self.viewModel.continueFrom(hook: hookStep)
+        }
     }
 }
