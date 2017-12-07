@@ -1,7 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDK"
+<<<<<<< HEAD
   s.version          = "3.8.0"
 
+=======
+  s.version          = "3.7.1"
+>>>>>>> 3b214888... Merge pull request #1268 from mercadopago/fix/keyboard-iphonex
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
