@@ -235,7 +235,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        guard paymentResult._id != nil else {
+        guard !String.isNullOrEmpty(paymentResult._id) else {
             return false
         }
 
