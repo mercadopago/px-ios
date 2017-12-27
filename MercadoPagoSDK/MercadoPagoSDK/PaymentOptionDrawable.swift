@@ -10,8 +10,7 @@ import UIKit
 
 @objc
 public protocol PaymentOptionDrawable {
-
-    func getImageDescription() -> String
+    func getImage() -> UIImage?
 
     func getTitle() -> String
 
@@ -20,7 +19,6 @@ public protocol PaymentOptionDrawable {
 
 @objc
 public protocol PaymentMethodOption {
-
     func getId() -> String
 
     func getDescription() -> String

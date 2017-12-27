@@ -135,14 +135,28 @@ class ApprovedTableViewCell: UITableViewCell {
     }
 
     func fillPaymentMethodIcon(paymentMethod: PaymentMethod?) {
-        self.paymentMethod.image = MercadoPago.getImage(paymentMethod?._id)
+        
+        var paymentMethodImage: UIImage? = MercadoPago.getImage(paymentMethod?._id)
+        
+        // Retrieve image for payment plugin or any external payment method.
+        if paymentMethodImage == nil {
+            paymentMethodImage = paymentMethod?.getImageForExtenalPaymentMethod()
+        }
+        
+        self.paymentMethod.image = paymentMethodImage
     }
 
     func fillPaymentMethodDescriptionLabel(paymentMethod: PaymentMethod?, token: Token?) {
         if let token = token {
             self.lastFourDigits.text = "Terminada en ".localized + String(describing: token.lastFourDigits!)
         } else if let paymentMethod = paymentMethod {
-            self.lastFourDigits.text = paymentMethod._id == "account_money" ? "Con dinero en cuenta".localized : ""
+            if paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+                self.lastFourDigits.text = "Con dinero en cuenta".localized
+            } else if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+                self.lastFourDigits.text = paymentMethod.name
+            } else {
+                self.lastFourDigits.text = ""
+            }
         }
     }
 

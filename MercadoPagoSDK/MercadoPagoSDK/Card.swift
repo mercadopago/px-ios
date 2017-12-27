@@ -166,8 +166,8 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
         return nil
     }
 
-    public func getImageDescription() -> String {
-        return self.getPaymentMethodId()
+    public func getImage() -> UIImage? {
+        return MercadoPago.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
     }
 
     /** PaymentMethodOption implementation */

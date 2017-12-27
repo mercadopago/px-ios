@@ -34,6 +34,7 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedIconSubtext = "Algo salió mal… ".localized
     var rejectedIconName = "MPSDK_payment_result_error"
     var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
+    var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedContentTitle = "¿Qué puedo hacer?".localized
     var rejectedContentText = ""
@@ -319,6 +320,10 @@ open class PaymentResultScreenPreference: NSObject {
 
         if paymentMethod.isBolbradesco {
             return MercadoPago.getImage(rejectedBolbradescoIconName, bundle: rejectedIconBundle)
+        }
+
+        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+            return MercadoPago.getImage(rejectedPaymentMethodPluginIconName, bundle: rejectedIconBundle)
         }
         return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
     }

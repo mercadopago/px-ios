@@ -12,6 +12,11 @@
 #import "SubeTableViewCell.h"
 #import "DineroEnCuentaTableViewCell.h"
 #import "CustomItemTableViewCell.h"
+#import "FirstHookViewController.h"
+#import "SecondHookViewController.h"
+#import "ThirdHookViewController.h"
+#import "PaymentMethodPluginConfigViewController.h"
+#import "PaymentPluginViewController.h"
 
 @import MercadoPagoSDK;
 
@@ -50,8 +55,7 @@
     [self setDecorationPreference];
 
     // Setear ServicePreference
-    [self setServicePreference];
-
+    //[self setServicePreference];
 
 
     //Setear flowPreference
@@ -82,7 +86,14 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8"
+    accessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"
+    checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+
+    [self setHooks];
+    
+    [self setPaymentMethodPlugins];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -95,6 +106,43 @@
     
     [self.mpCheckout start];
 
+}
+
+-(void)setHooks {
+    
+    FlowPreference *flowPref = [[FlowPreference alloc] init];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"Hooks" bundle:[NSBundle mainBundle]];
+
+    FirstHookViewController *firstHook = [storyboard instantiateViewControllerWithIdentifier:@"firstHook"];
+    SecondHookViewController *secondHook = [storyboard instantiateViewControllerWithIdentifier:@"secondHook"];
+    ThirdHookViewController *thirdHook = [storyboard instantiateViewControllerWithIdentifier:@"thirdHook"];
+
+    [flowPref addHookToFlowWithHook:firstHook];
+    [flowPref addHookToFlowWithHook:secondHook];
+    [flowPref addHookToFlowWithHook:thirdHook];
+
+    [MercadoPagoCheckout setFlowPreference:flowPref];
+}
+
+-(void)setPaymentMethodPlugins {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
+    
+    PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
+    
+    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithId:@"bitcoin_payment" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
+    
+    // Payment method config plugin component.
+    PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
+
+    [bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
+    
+    NSMutableArray *paymentMethodPlugins = [[NSMutableArray alloc] init];
+    [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
+    
+    [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 }
 
 -(void)setPaymentResult {

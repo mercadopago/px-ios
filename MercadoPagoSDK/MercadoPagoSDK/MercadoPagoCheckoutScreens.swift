@@ -11,7 +11,14 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
+        
         self.viewModel.paymentData.clearCollectedData()
+        
+        // If paymentMethodsPlugins is available, disable discounts.
+        if !viewModel.paymentMethodPlugins.isEmpty && viewModel.paymentData.discount == nil {
+            MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
+        }
+        
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
@@ -142,6 +149,10 @@ extension MercadoPagoCheckout {
                     strongSelf.executeNextStep()
                 }
         })
+
+        checkoutVC.callbackCancel = {
+            self.viewModel.readyToPay = false
+        }
 
         self.pushViewController(viewController: checkoutVC, animated: true, completion: {
             self.cleanNavigationStack()

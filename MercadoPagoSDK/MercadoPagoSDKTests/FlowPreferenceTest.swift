@@ -12,6 +12,18 @@ class FlowPreferenceTest: BaseTest {
 
     let flowPreference = FlowPreference()
 
+    override func setUp() {
+        super.setUp()
+
+        let firstHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT_METHOD_CONFIG)
+        let secondHook = MockedHookViewController(hookStep: PXHookStep.AFTER_PAYMENT_METHOD_CONFIG)
+        let thirdHook = MockedHookViewController(hookStep: PXHookStep.BEFORE_PAYMENT)
+
+        flowPreference.addHookToFlow(hook: firstHook)
+        flowPreference.addHookToFlow(hook: secondHook)
+        flowPreference.addHookToFlow(hook: thirdHook)
+    }
+
     func testDefaultState() {
         XCTAssertFalse(flowPreference.isESCEnable())
         XCTAssert(flowPreference.isReviewAndConfirmScreenEnable())
@@ -166,6 +178,61 @@ class FlowPreferenceTest: BaseTest {
         flowPreference.disableInstallmentsReviewScreen()
         flowPreference.enableInstallmentsReviewScreen()
         XCTAssert(flowPreference.isInstallmentsReviewScreenEnable())
+    }
+
+    func test_GetHookForHookStep() {
+        var hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertEqual(hook!.hookForStep(), .AFTER_PAYMENT_METHOD_CONFIG)
+
+        hook = flowPreference.getHookForStep(hookStep: .BEFORE_PAYMENT)
+        XCTAssertEqual(hook!.hookForStep(), .BEFORE_PAYMENT)
+
+        flowPreference.removeHookFromHooksToShow(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertNil(hook)
+    }
+
+    func test_removeHookFromHookToShow() {
+        // Check if a hook step exits
+        var hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertEqual(hook!.hookForStep(), .AFTER_PAYMENT_METHOD_CONFIG)
+
+        // Remove that step
+        flowPreference.removeHookFromHooksToShow(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertNil(hook)
+    }
+
+    func test_addHookFromHookToShow() {
+        // Check if a hook step exits
+        var hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertEqual(hook!.hookForStep(), .AFTER_PAYMENT_METHOD_CONFIG)
+
+        // Remove that step
+        flowPreference.removeHookFromHooksToShow(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertNil(hook)
+
+        // Re add that step and check
+        flowPreference.addHookToHooksToShow(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertEqual(hook!.hookForStep(), .AFTER_PAYMENT_METHOD_CONFIG)
+    }
+
+    func test_resetHookToShow() {
+        // Check if a hook step exits
+        var hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertEqual(hook!.hookForStep(), .AFTER_PAYMENT_METHOD_CONFIG)
+
+        // Remove that step
+        flowPreference.removeHookFromHooksToShow(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertNil(hook)
+
+        // Reset HookToShow and check that has previous step
+        flowPreference.resetHooksToShow()
+        hook = flowPreference.getHookForStep(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
+        XCTAssertEqual(hook!.hookForStep(), .AFTER_PAYMENT_METHOD_CONFIG)
     }
 
 }

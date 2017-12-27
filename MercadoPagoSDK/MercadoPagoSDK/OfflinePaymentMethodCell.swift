@@ -56,6 +56,32 @@ class OfflinePaymentMethodCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    fileprivate func setTitle(_ paymentMethodOption: PaymentMethodOption, _ attributedTitle: NSMutableAttributedString) {
+        var currentTitle = ""
+        let titleI18N = "ryc_title_" + paymentMethodOption.getId()
+        if titleI18N.existsLocalized() {
+            currentTitle = titleI18N.localized
+        } else {
+            currentTitle = "ryc_title_default".localized
+        }
+
+        attributedTitle.append(NSAttributedString(string : currentTitle, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
+
+        let complementaryTitle = "ryc_complementary_" + paymentMethodOption.getId()
+        if complementaryTitle.existsLocalized() {
+            attributedTitle.append(NSAttributedString(string : complementaryTitle.localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
+        }
+        var paymentMethodName = "ryc_payment_method_" + paymentMethodOption.getId()
+
+        if paymentMethodName.existsLocalized() {
+            paymentMethodName = paymentMethodName.localized
+        } else {
+            paymentMethodName = paymentMethodOption.getDescription()
+        }
+
+        attributedTitle.append(NSAttributedString(string : paymentMethodName, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
+    }
+
     internal func fillCell(_ paymentMethodOption: PaymentMethodOption, amount: Double, paymentMethod: PaymentMethod, currency: Currency, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
 
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.black)
@@ -67,31 +93,17 @@ class OfflinePaymentMethodCell: UITableViewCell {
             self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage(paymentMethod)
             self.acreditationTimeLabel.isHidden = true
             self.accreditationTimeIcon.isHidden = true
+
+        } else if let paymentMethodPlugin =  paymentMethodOption as? PXPaymentMethodPlugin {
+
+            self.iconCash.image = paymentMethodPlugin.getImage()
+            self.acreditationTimeLabel.isHidden = true
+            self.accreditationTimeIcon.isHidden = true
+            self.setTitle(paymentMethodOption, attributedTitle)
+
         } else {
             self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage(paymentMethod)
-            var currentTitle = ""
-            let titleI18N = "ryc_title_" + paymentMethodOption.getId()
-            if titleI18N.existsLocalized() {
-                currentTitle = titleI18N.localized
-            } else {
-                currentTitle = "ryc_title_default".localized
-            }
-
-            attributedTitle.append(NSAttributedString(string : currentTitle, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
-
-            let complementaryTitle = "ryc_complementary_" + paymentMethodOption.getId()
-            if complementaryTitle.existsLocalized() {
-                attributedTitle.append(NSAttributedString(string : complementaryTitle.localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
-            }
-            var paymentMethodName = "ryc_payment_method_" + paymentMethodOption.getId()
-
-            if paymentMethodName.existsLocalized() {
-                paymentMethodName = paymentMethodName.localized
-            } else {
-                paymentMethodName = paymentMethodOption.getDescription()
-            }
-
-            attributedTitle.append(NSAttributedString(string : paymentMethodName, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
+            setTitle(paymentMethodOption, attributedTitle)
 
             self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodOption.getComment(), attributes: [NSFontAttributeName: Utils.getFont(size: 12)])
         }

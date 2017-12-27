@@ -48,8 +48,8 @@ open class MPSDKError: NSObject {
         return mpError
     }
 
-    func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+    func toJSON() -> [String: Any] {
+        let obj: [String: Any] = [
             "message": self.message,
             "error_detail": self.errorDetail,
             "recoverable": self.retry ?? true

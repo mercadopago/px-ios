@@ -53,7 +53,7 @@ open class MercadoPagoContext: NSObject {
         return sdkVersion
     }
 
-    static let siteIdsSettings: [String : NSDictionary] = [
+    static let siteIdsSettings: [String: NSDictionary] = [
         //Argentina
         "MLA": ["language": "es", "currency": "ARS", "termsconditions": "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
         //Brasil

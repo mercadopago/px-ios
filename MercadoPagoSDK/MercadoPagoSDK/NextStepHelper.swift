@@ -235,7 +235,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        guard paymentResult._id != nil else {
+        guard !String.isNullOrEmpty(paymentResult._id) else {
             return false
         }
 
@@ -268,7 +268,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToSearchDirectDiscount() -> Bool {
-        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete()
+        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && paymentMethodPlugins.isEmpty
     }
 
     func needToCreatePayment() -> Bool {
@@ -313,5 +313,9 @@ extension MercadoPagoCheckoutViewModel {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
         return false
+    }
+
+    func isDiscountEnable() -> Bool {
+         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.paymentMethodPlugins.isEmpty
     }
 }

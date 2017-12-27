@@ -84,8 +84,8 @@ open class PaymentMethodSearchItem: Equatable, PaymentOptionDrawable, PaymentMet
         return self.comment
     }
 
-    public func getImageDescription() -> String {
-        return self.idPaymentMethodSearchItem
+    public func getImage() -> UIImage? {
+        return MercadoPago.getImageForPaymentMethod(withDescription: self.idPaymentMethodSearchItem)
     }
 
     /*

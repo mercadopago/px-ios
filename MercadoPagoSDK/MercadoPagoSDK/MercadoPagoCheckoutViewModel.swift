@@ -34,9 +34,14 @@ public enum CheckoutStep: String {
     case SERVICE_GET_INSTRUCTIONS
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
+    case SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
+    case SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
+    case SCREEN_HOOK_BEFORE_PAYMENT
+    case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
+    case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
 }
 
-open class MercadoPagoCheckoutViewModel: NSObject {
+open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var startedCheckout = false
     static var servicePreference = ServicePreference()
@@ -92,8 +97,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var directDiscountSearched = false
     var savedESCCardToken: SavedESCCardToken?
     private var checkoutComplete = false
+    var paymentMethodConfigPluginShowed = false
 
     var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
+
+    // Plugins payment method.
+    var paymentMethodPlugins = [PXPaymentMethodPlugin]()
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
         super.init()
@@ -128,6 +137,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData.payer = self.checkoutPreference.getPayer()
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
+    }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentResult: self.paymentResult, discount: self.paymentData.discount)
+        return copyObj
     }
 
     func hasError() -> Bool {
@@ -165,7 +179,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let optionSelected = paymentOptionSelected {
             groupName = optionSelected.getId()
         }
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, groupName: groupName, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPlugins, groupName: groupName, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
             guard let object = self else {
                 return
             }
@@ -281,30 +295,45 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func updateCheckoutModel(payerCost: PayerCost) {
         self.paymentData.updatePaymentDataWith(payerCost: payerCost)
+
+        if let paymentOptionSelected = paymentOptionSelected {
+            if paymentOptionSelected.isCustomerPaymentMethod() {
+                self.paymentData.cleanToken()
+            }
+        }
     }
 
     public func updateCheckoutModel(entityType: EntityType) {
         self.paymentData.payer.entityType = entityType
     }
 
-    //PAYMENT_METHOD_SELECTION
+    // MARK: PAYMENT METHOD OPTION SELECTION
     public func updateCheckoutModel(paymentOptionSelected: PaymentMethodOption) {
         if !self.initWithPaymentData {
-            resetInformation()
+            resetInFormationOnNewPaymentMethodOptionSelected()
+        }
+        resetPaymentOptionSelectedWith(newPaymentOptionSelected: paymentOptionSelected)
+    }
+
+    public func resetPaymentOptionSelectedWith(newPaymentOptionSelected: PaymentMethodOption) {
+        self.paymentOptionSelected = newPaymentOptionSelected
+
+        if let targetPlugin = paymentOptionSelected as? PXPaymentMethodPlugin {
+            self.paymentMethodPluginToPaymentMethod(plugin: targetPlugin)
+            return
         }
 
-        self.paymentOptionSelected = paymentOptionSelected
-        if paymentOptionSelected.hasChildren() {
-            self.paymentMethodOptions =  paymentOptionSelected.getChildren()
+        if newPaymentOptionSelected.hasChildren() {
+            self.paymentMethodOptions =  newPaymentOptionSelected.getChildren()
         }
 
         if self.paymentOptionSelected!.isCustomerPaymentMethod() {
-            self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
-        } else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
-            self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId()))
+            self.findAndCompletePaymentMethodFor(paymentMethodId: newPaymentOptionSelected.getId())
+        } else if !newPaymentOptionSelected.isCard() && !newPaymentOptionSelected.hasChildren() {
+            self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: newPaymentOptionSelected.getId()))
         }
-
     }
+
     public func nextStep() -> CheckoutStep {
 
         if !startedCheckout {
@@ -347,6 +376,28 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if !isPaymentTypeSelected() {
             return .SCREEN_PAYMENT_METHOD_SELECTION
+        }
+
+        if shouldShowHook(hookStep: .BEFORE_PAYMENT_METHOD_CONFIG) {
+            return .SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
+        }
+
+        if needToShowPaymentMethodConfigPlugin() {
+            willShowPaymentMethodConfigPlugin()
+            return .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
+        }
+
+        if shouldShowHook(hookStep: .AFTER_PAYMENT_METHOD_CONFIG) {
+            return .SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
+        }
+
+        if shouldShowHook(hookStep: .BEFORE_PAYMENT) {
+            return .SCREEN_HOOK_BEFORE_PAYMENT
+        }
+
+        if needToCreatePaymentForPlugin() {
+            readyToPay = false
+            return .SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
         }
 
         if needToCreatePayment() {
@@ -407,7 +458,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
 
         return .ACTION_FINISH
-
     }
 
     var search: PaymentMethodSearch?
@@ -515,7 +565,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     internal func getFinalAmount() -> Double {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
+        if isDiscountEnable(), let discount = paymentData.discount {
             return discount.newAmount()
         } else {
             return self.checkoutPreference.getAmount()
@@ -646,6 +696,15 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return false
     }
 
+    func copyViewModelAndAssignToCheckoutStore() -> Bool {
+        // Set a copy of CheckoutVM in HookStore
+        if self.copy() is MercadoPagoCheckoutViewModel {
+            PXCheckoutStore.sharedInstance.paymentData = self.paymentData
+            PXCheckoutStore.sharedInstance.paymentOptionSelected = self.paymentOptionSelected
+            return true
+        }
+        return false
+    }
 }
 
 extension MercadoPagoCheckoutViewModel {
@@ -657,6 +716,11 @@ extension MercadoPagoCheckoutViewModel {
         self.updateCheckoutModel(paymentMethodSearch: search)
     }
 
+    func resetInFormationOnNewPaymentMethodOptionSelected() {
+        resetInformation()
+        MercadoPagoCheckoutViewModel.flowPreference.resetHooksToShow()
+    }
+
     func resetInformation() {
         self.paymentData.clearCollectedData()
         self.cardToken = nil
@@ -665,6 +729,7 @@ extension MercadoPagoCheckoutViewModel {
         cleanPayerCostSearch()
         cleanIssuerSearch()
         cleanIdentificationTypesSearch()
+        resetPaymentMethodConfigPlugin()
     }
 
     func cleanPayerCostSearch() {
@@ -689,6 +754,7 @@ extension MercadoPagoCheckoutViewModel {
     func prepareForClone() {
         self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.cleanPaymentResult()
+        self.wentBackFrom(hook: .BEFORE_PAYMENT)
     }
 
     func prepareForNewSelection() {
@@ -697,6 +763,7 @@ extension MercadoPagoCheckoutViewModel {
         self.resetInformation()
         self.resetGroupSelection()
         self.rootVC = true
+        MercadoPagoCheckoutViewModel.flowPreference.resetHooksToShow()
     }
 
     func prepareForInvalidPaymentWithESC() {

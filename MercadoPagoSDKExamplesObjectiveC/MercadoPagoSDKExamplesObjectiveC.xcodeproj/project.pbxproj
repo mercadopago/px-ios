@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A98F4C4CFBB17028235DDCF /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542941FB936E655430F3C821 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */; };
 		15AF42AA1D36848100E70343 /* MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; };
 		15AF42AB1D36848100E70343 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */; };
-		49912F160C51404B7FDBEB5E /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542941FB936E655430F3C821 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */; };
+		23346C341FE83734005FD8C9 /* PaymentPluginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */; };
+		23346C351FE83734005FD8C9 /* PaymentMethodPlugins.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */; };
+		23346C361FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */; };
 		4B34DC331E5DA33100FDD295 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC41D2559140087C785 /* AppDelegate.m */; };
 		4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
 		4B7AA9811E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
@@ -18,6 +21,10 @@
 		4B7AA9831E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */; };
 		4B7D07DB1E55324700E6CA78 /* SubeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7D07D91E55324700E6CA78 /* SubeTableViewCell.m */; };
 		4B7D07DC1E55324700E6CA78 /* SubeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D07DA1E55324700E6CA78 /* SubeTableViewCell.xib */; };
+		4B811DEF1FCDD49A000611AD /* Hooks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B811DE91FCDD499000611AD /* Hooks.storyboard */; };
+		4B811DF01FCDD49A000611AD /* FirstHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DEA1FCDD499000611AD /* FirstHookViewController.m */; };
+		4B811DF11FCDD49A000611AD /* ThirdHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */; };
+		4B811DF21FCDD49A000611AD /* SecondHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DED1FCDD49A000611AD /* SecondHookViewController.m */; };
 		763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */; };
 		763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */; };
 		766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */; };
@@ -88,6 +95,11 @@
 /* Begin PBXFileReference section */
 		15C84A961D2D531E002E4988 /* MediosOffTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediosOffTableViewController.h; sourceTree = "<group>"; };
 		15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediosOffTableViewController.m; sourceTree = "<group>"; };
+		23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentPluginViewController.m; sourceTree = "<group>"; };
+		23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PaymentMethodPlugins.storyboard; sourceTree = "<group>"; };
+		23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentMethodPluginConfigViewController.m; sourceTree = "<group>"; };
+		23346C321FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentMethodPluginConfigViewController.h; sourceTree = "<group>"; };
+		23346C331FE83734005FD8C9 /* PaymentPluginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentPluginViewController.h; sourceTree = "<group>"; };
 		2E63040F2E13FF09B0FAC07F /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7AA97D1E55E64C000902B9 /* DineroEnCuentaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DineroEnCuentaTableViewCell.h; sourceTree = "<group>"; };
 		4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DineroEnCuentaTableViewCell.m; sourceTree = "<group>"; };
@@ -95,6 +107,13 @@
 		4B7D07D81E55324700E6CA78 /* SubeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubeTableViewCell.h; sourceTree = "<group>"; };
 		4B7D07D91E55324700E6CA78 /* SubeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubeTableViewCell.m; sourceTree = "<group>"; };
 		4B7D07DA1E55324700E6CA78 /* SubeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubeTableViewCell.xib; sourceTree = "<group>"; };
+		4B811DE81FCDD499000611AD /* ThirdHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThirdHookViewController.h; path = Hooks/ThirdHookViewController.h; sourceTree = "<group>"; };
+		4B811DE91FCDD499000611AD /* Hooks.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Hooks.storyboard; path = Hooks/Hooks.storyboard; sourceTree = "<group>"; };
+		4B811DEA1FCDD499000611AD /* FirstHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstHookViewController.m; path = Hooks/FirstHookViewController.m; sourceTree = "<group>"; };
+		4B811DEB1FCDD49A000611AD /* SecondHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondHookViewController.h; path = Hooks/SecondHookViewController.h; sourceTree = "<group>"; };
+		4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThirdHookViewController.m; path = Hooks/ThirdHookViewController.m; sourceTree = "<group>"; };
+		4B811DED1FCDD49A000611AD /* SecondHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondHookViewController.m; path = Hooks/SecondHookViewController.m; sourceTree = "<group>"; };
+		4B811DEE1FCDD49A000611AD /* FirstHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstHookViewController.h; path = Hooks/FirstHookViewController.h; sourceTree = "<group>"; };
 		542941FB936E655430F3C821 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54A09D77597BBEF1D367E95B /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; sourceTree = "<group>"; };
 		763B44F71D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPaymentMethodTableViewController.h; sourceTree = "<group>"; };
@@ -162,6 +181,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23346C371FE83738005FD8C9 /* PaymentMethodPlugins */ = {
+			isa = PBXGroup;
+			children = (
+				23346C321FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.h */,
+				23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */,
+				23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */,
+				23346C331FE83734005FD8C9 /* PaymentPluginViewController.h */,
+				23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */,
+			);
+			name = PaymentMethodPlugins;
+			sourceTree = "<group>";
+		};
 		250DBD73536A8A42B1E606E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +211,20 @@
 				79454058DF14964C486F6C88 /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		4B811DE71FCDD48A000611AD /* Hooks */ = {
+			isa = PBXGroup;
+			children = (
+				4B811DEE1FCDD49A000611AD /* FirstHookViewController.h */,
+				4B811DEA1FCDD499000611AD /* FirstHookViewController.m */,
+				4B811DE91FCDD499000611AD /* Hooks.storyboard */,
+				4B811DEB1FCDD49A000611AD /* SecondHookViewController.h */,
+				4B811DED1FCDD49A000611AD /* SecondHookViewController.m */,
+				4B811DE81FCDD499000611AD /* ThirdHookViewController.h */,
+				4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */,
+			);
+			name = Hooks;
 			sourceTree = "<group>";
 		};
 		76E6E0601D2AD29C006CE49B /* Example */ = {
@@ -238,6 +283,8 @@
 		76EF7EBF1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */ = {
 			isa = PBXGroup;
 			children = (
+				23346C371FE83738005FD8C9 /* PaymentMethodPlugins */,
+				4B811DE71FCDD48A000611AD /* Hooks */,
 				76E6E0601D2AD29C006CE49B /* Example */,
 				76EF7F1E1D255B5F0087C785 /* Component Examples */,
 				76EF7EC31D2559140087C785 /* AppDelegate.h */,
@@ -415,9 +462,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23346C351FE83734005FD8C9 /* PaymentMethodPlugins.storyboard in Resources */,
 				76BAC64A1E4B30060081F675 /* CustomTableViewCell.xib in Resources */,
 				4B7AA9821E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */,
 				4B7D07DC1E55324700E6CA78 /* SubeTableViewCell.xib in Resources */,
+				4B811DEF1FCDD49A000611AD /* Hooks.storyboard in Resources */,
 				767D8DBD1E5541EC0004FCA9 /* CustomItemTableViewCell.xib in Resources */,
 				76EF7ED01D2559140087C785 /* LaunchScreen.storyboard in Resources */,
 				76EF7ECD1D2559140087C785 /* Assets.xcassets in Resources */,
@@ -548,8 +597,11 @@
 				767D8DBC1E5541EC0004FCA9 /* CustomItemTableViewCell.m in Sources */,
 				766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */,
 				4B7D07DB1E55324700E6CA78 /* SubeTableViewCell.m in Sources */,
+				4B811DF21FCDD49A000611AD /* SecondHookViewController.m in Sources */,
+				4B811DF01FCDD49A000611AD /* FirstHookViewController.m in Sources */,
 				76EF7F221D255C7E0087C785 /* ExampleUtils.m in Sources */,
 				76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */,
+				4B811DF11FCDD49A000611AD /* ThirdHookViewController.m in Sources */,
 				15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */,
 				763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */,
 				76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */,
@@ -557,6 +609,8 @@
 				76E6E06A1D2AD33F006CE49B /* SimpleVaultViewController.m in Sources */,
 				76EF7F601D2706720087C785 /* ServicesExamplesViewController.m in Sources */,
 				76EF7EC21D2559140087C785 /* main.m in Sources */,
+				23346C341FE83734005FD8C9 /* PaymentPluginViewController.m in Sources */,
+				23346C361FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m in Sources */,
 				763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */,
 				76BAC6471E4B2F220081F675 /* CustomTableViewCell.m in Sources */,
 				4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */,

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Payment Plugin View Controller-->
+        <scene sceneID="nuM-fJ-dE4">
+            <objects>
+                <viewController storyboardIdentifier="paymentPlugin" id="L3t-t9-oKL" customClass="PaymentPluginViewController" customModule="PodTester" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zP3-4f-wv2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="cIt-ge-cQh">
+                                <rect key="frame" x="169" y="325" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cIt-ge-cQh" firstAttribute="centerX" secondItem="wES-fp-81a" secondAttribute="centerX" id="jyP-r1-1iV"/>
+                            <constraint firstItem="cIt-ge-cQh" firstAttribute="centerY" secondItem="wES-fp-81a" secondAttribute="centerY" id="y5E-5P-LRv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wES-fp-81a"/>
+                    </view>
+                    <connections>
+                        <outlet property="loadingView" destination="cIt-ge-cQh" id="uao-Ta-DBa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X68-tP-HIH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="268" y="125"/>
+        </scene>
+        <!--Payment Method Plugin Config View Controller-->
+        <scene sceneID="44E-Mb-Tdh">
+            <objects>
+                <viewController storyboardIdentifier="paymentMethodConfigPlugin" id="uvW-WR-tpH" customClass="PaymentMethodPluginConfigViewController" customModule="PodTester" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GbD-Y1-4xk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Msd-7Z-SFt">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cuf-qO-jgc" userLabel="Container View">
+                                        <rect key="frame" x="0.0" y="8" width="375" height="250"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1HB5XMLmzFVj8ALj6mfBsbifRoD4" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kcP-sw-bN9">
+                                                <rect key="frame" x="20" y="158" width="335" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="Tv8-Lp-DkQ"/>
+                                                </constraints>
+                                                <color key="textColor" red="1" green="0.42893415178571431" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="namePhonePad" returnKeyType="next" smartQuotesType="no"/>
+                                            </textField>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgE-oZ-nGV" userLabel="Underline">
+                                                <rect key="frame" x="20" y="187" width="335" height="1"/>
+                                                <color key="backgroundColor" red="0.77798477560000001" green="0.77798477560000001" blue="0.77798477560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="eWH-z8-05T"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debes completar este dato" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9P-58-QFr">
+                                                <rect key="frame" x="16" y="194" width="343" height="19"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <color key="textColor" red="0.81188405119999996" green="0.23072348200000001" blue="0.083309273140000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bitcoin_wallet" translatesAutoresizingMaskIntoConstraints="NO" id="ZLe-Wf-5iy">
+                                                <rect key="frame" x="122" y="10" width="132" height="95"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="95" id="4yu-Ts-n4I"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¿A qué dirección quieres pagar?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hph-A7-pIc">
+                                                <rect key="frame" x="65" y="113" width="245.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.224275421" green="0.224275421" blue="0.224275421" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Hph-A7-pIc" firstAttribute="top" secondItem="ZLe-Wf-5iy" secondAttribute="bottom" constant="8" id="0Jn-lY-HJp"/>
+                                            <constraint firstItem="kcP-sw-bN9" firstAttribute="top" secondItem="Hph-A7-pIc" secondAttribute="bottom" constant="25" id="4jl-UR-0pz"/>
+                                            <constraint firstAttribute="height" constant="250" id="5oB-N4-dig"/>
+                                            <constraint firstItem="Hph-A7-pIc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Cuf-qO-jgc" secondAttribute="leading" constant="10" id="7RH-gk-0Io"/>
+                                            <constraint firstItem="kcP-sw-bN9" firstAttribute="centerX" secondItem="Cuf-qO-jgc" secondAttribute="centerX" id="84b-fZ-ouH"/>
+                                            <constraint firstAttribute="trailing" secondItem="t9P-58-QFr" secondAttribute="trailing" constant="16" id="8Zk-Nq-H52"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Hph-A7-pIc" secondAttribute="trailing" constant="10" id="FRM-L2-gNz"/>
+                                            <constraint firstItem="ZLe-Wf-5iy" firstAttribute="top" secondItem="Cuf-qO-jgc" secondAttribute="top" constant="10" id="Fau-Wf-bsl"/>
+                                            <constraint firstItem="t9P-58-QFr" firstAttribute="top" secondItem="pgE-oZ-nGV" secondAttribute="bottom" constant="6" id="HYB-03-NWz"/>
+                                            <constraint firstAttribute="trailing" secondItem="kcP-sw-bN9" secondAttribute="trailing" constant="20" id="LuE-2Y-xY2"/>
+                                            <constraint firstItem="pgE-oZ-nGV" firstAttribute="leading" secondItem="Cuf-qO-jgc" secondAttribute="leading" constant="20" id="UVR-eD-496"/>
+                                            <constraint firstItem="pgE-oZ-nGV" firstAttribute="top" secondItem="kcP-sw-bN9" secondAttribute="bottom" constant="4" id="a6j-o7-MBN"/>
+                                            <constraint firstAttribute="trailing" secondItem="pgE-oZ-nGV" secondAttribute="trailing" constant="20" id="ah3-nP-t2m"/>
+                                            <constraint firstItem="ZLe-Wf-5iy" firstAttribute="centerX" secondItem="Cuf-qO-jgc" secondAttribute="centerX" id="dNi-S1-DwV"/>
+                                            <constraint firstItem="Hph-A7-pIc" firstAttribute="centerX" secondItem="Cuf-qO-jgc" secondAttribute="centerX" id="kBf-Yf-wxV"/>
+                                            <constraint firstItem="t9P-58-QFr" firstAttribute="leading" secondItem="Cuf-qO-jgc" secondAttribute="leading" constant="16" id="kon-dn-YsZ"/>
+                                            <constraint firstItem="kcP-sw-bN9" firstAttribute="leading" secondItem="Cuf-qO-jgc" secondAttribute="leading" constant="20" id="zOO-qN-IGM"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Cuf-qO-jgc" firstAttribute="leading" secondItem="Msd-7Z-SFt" secondAttribute="leading" id="Ihh-jJ-g6c"/>
+                                    <constraint firstItem="Cuf-qO-jgc" firstAttribute="top" secondItem="Msd-7Z-SFt" secondAttribute="top" constant="8" id="UTb-Ld-HXX"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cuf-qO-jgc" secondAttribute="trailing" id="dUx-Yw-qCd"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wuT-XJ-yFV" firstAttribute="leading" secondItem="Msd-7Z-SFt" secondAttribute="leading" id="33v-R7-T4r"/>
+                            <constraint firstItem="wuT-XJ-yFV" firstAttribute="trailing" secondItem="Msd-7Z-SFt" secondAttribute="trailing" id="KZX-13-CTJ"/>
+                            <constraint firstItem="Msd-7Z-SFt" firstAttribute="top" secondItem="wuT-XJ-yFV" secondAttribute="top" id="gbE-Q4-0Tl"/>
+                            <constraint firstItem="wuT-XJ-yFV" firstAttribute="bottom" secondItem="Msd-7Z-SFt" secondAttribute="bottom" id="gwQ-iK-vTK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wuT-XJ-yFV"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="t9P-58-QFr" id="6dx-0q-ger"/>
+                        <outlet property="passwordTextfield" destination="kcP-sw-bN9" id="T70-w4-3ky"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f3G-Va-L4E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-498" y="125"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bitcoin_wallet" width="132" height="128"/>
+    </resources>
+</document>

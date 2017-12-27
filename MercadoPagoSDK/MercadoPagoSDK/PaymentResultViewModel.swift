@@ -229,30 +229,29 @@ class PaymentResultViewModel: NSObject {
     }
 }
 
-struct PaymentStatus {
-    static let APPROVED = "approved"
-    static let REJECTED = "rejected"
-    static let RECOVERY = "recovery"
-    static let IN_PROCESS = "in_process"
+public struct PaymentStatus {
+    public static let APPROVED = "approved"
+    public static let REJECTED = "rejected"
+    public static let RECOVERY = "recovery"
+    public static let IN_PROCESS = "in_process"
 }
 
-struct RejectedStatusDetail {
-    static let HIGH_RISK = "rejected_high_risk"
-    static let OTHER_REASON = "cc_rejected_other_reason"
-    static let MAX_ATTEMPTS = "cc_rejected_max_attempts"
-    static let CARD_DISABLE = "cc_rejected_card_disabled"
-    static let BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
-    static let BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
-    static let BAD_FILLED_SECURITY_CODE = "cc_rejected_bad_filled_security_code"
-    static let BAD_FILLED_DATE = "cc_rejected_bad_filled_date"
-    static let CALL_FOR_AUTH = "cc_rejected_call_for_authorize"
-    static let DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
-    static let INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
-    static let INVALID_ESC = "invalid_esc"
+public struct RejectedStatusDetail {
+    public static let HIGH_RISK = "rejected_high_risk"
+    public static let OTHER_REASON = "cc_rejected_other_reason"
+    public static let MAX_ATTEMPTS = "cc_rejected_max_attempts"
+    public static let CARD_DISABLE = "cc_rejected_card_disabled"
+    public static let BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
+    public static let BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
+    public static let BAD_FILLED_SECURITY_CODE = "cc_rejected_bad_filled_security_code"
+    public static let BAD_FILLED_DATE = "cc_rejected_bad_filled_date"
+    public static let CALL_FOR_AUTH = "cc_rejected_call_for_authorize"
+    public static let DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
+    public static let INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
+    public static let INVALID_ESC = "invalid_esc"
 }
 
 struct PendingStatusDetail {
-    static let CONTINGENCY = "pending_contingency"
-    static let REVIEW_MANUAL = "pending_review_manual"
-
+    public static let CONTINGENCY = "pending_contingency"
+    public static let REVIEW_MANUAL = "pending_review_manual"
 }

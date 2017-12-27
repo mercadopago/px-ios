@@ -338,7 +338,7 @@ extension MercadoPagoCheckout {
     func createPayment() {
         self.presentLoading()
 
-        var paymentBody: [String:Any]
+        var paymentBody: [String: Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
             let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData, binaryMode: self.viewModel.binaryMode)
             paymentBody = mpPayment.toJSON()
@@ -346,8 +346,8 @@ extension MercadoPagoCheckout {
             paymentBody = self.viewModel.paymentData.toJSON()
         }
 
-        var createPaymentQuery: [String:String]? = [:]
-        if let paymentAdditionalInfo = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo() as? [String:String] {
+        var createPaymentQuery: [String: String]? = [:]
+        if let paymentAdditionalInfo = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo() as? [String: String] {
             createPaymentQuery = paymentAdditionalInfo
         } else {
             createPaymentQuery = nil
@@ -378,8 +378,7 @@ extension MercadoPagoCheckout {
                 self?.viewModel.paymentData.clearCollectedData()
                 let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal… ".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
                 strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
-                    self?.viewModel.resetInformation()
-                    self?.viewModel.resetGroupSelection()
+                    self?.viewModel.prepareForNewSelection()
                     self?.executeNextStep()
                 })
             } else {

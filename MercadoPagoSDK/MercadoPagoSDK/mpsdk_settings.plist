@@ -5,7 +5,7 @@
 	<key>flow_sdk_type_hybrid</key>
 	<false/>
 	<key>sdk_version</key>
-	<string>3.7.1</string>
+	<string>3.8.0</string>
 	<key>tracking_settings</key>
 	<dict>
 		<key>tracking_enabled</key>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Payment Method Plugin Config View Controller-->
+        <scene sceneID="3PE-Xy-Qxk">
+            <objects>
+                <viewController storyboardIdentifier="paymentMethodConfigPlugin" id="B1m-E3-Gb3" customClass="PaymentMethodPluginConfigViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Gm3-eR-7eC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Eu-Ah-ETg">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btl-IM-e8r" userLabel="Container View">
+                                        <rect key="frame" x="0.0" y="8" width="375" height="250"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1HB5XMLmzFVj8ALj6mfBsbifRoD4" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hdF-Ms-Aht">
+                                                <rect key="frame" x="20" y="158" width="335" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="pyQ-cr-pl3"/>
+                                                </constraints>
+                                                <color key="textColor" red="1" green="0.4289341518" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="namePhonePad" returnKeyType="next" smartQuotesType="no"/>
+                                            </textField>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Mt-qm-ccF" userLabel="Underline">
+                                                <rect key="frame" x="20" y="187" width="335" height="1"/>
+                                                <color key="backgroundColor" red="0.77798477560000001" green="0.77798477560000001" blue="0.77798477560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="GWe-Bd-db4"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debes completar este dato" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7F-0s-T4j">
+                                                <rect key="frame" x="16" y="194" width="343" height="19"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <color key="textColor" red="0.81188405119999996" green="0.23072348200000001" blue="0.083309273140000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bitcoin_wallet" translatesAutoresizingMaskIntoConstraints="NO" id="qL0-n9-Htg">
+                                                <rect key="frame" x="122" y="10" width="132" height="95"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="95" id="dRx-9m-8rJ"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¿A qué dirección quieres pagar?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFb-G3-C3T">
+                                                <rect key="frame" x="65" y="113" width="245.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.224275421" green="0.224275421" blue="0.224275421" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="t7F-0s-T4j" firstAttribute="leading" secondItem="Btl-IM-e8r" secondAttribute="leading" constant="16" id="8o2-IM-9ao"/>
+                                            <constraint firstItem="hdF-Ms-Aht" firstAttribute="leading" secondItem="Btl-IM-e8r" secondAttribute="leading" constant="20" id="F4e-D4-tg4"/>
+                                            <constraint firstItem="GFb-G3-C3T" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Btl-IM-e8r" secondAttribute="leading" constant="10" id="Ffp-fm-hfe"/>
+                                            <constraint firstItem="GFb-G3-C3T" firstAttribute="centerX" secondItem="Btl-IM-e8r" secondAttribute="centerX" id="LA1-YV-dEk"/>
+                                            <constraint firstItem="t7F-0s-T4j" firstAttribute="top" secondItem="9Mt-qm-ccF" secondAttribute="bottom" constant="6" id="M1W-lQ-n8W"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GFb-G3-C3T" secondAttribute="trailing" constant="10" id="M6s-Ba-2kf"/>
+                                            <constraint firstAttribute="trailing" secondItem="hdF-Ms-Aht" secondAttribute="trailing" constant="20" id="U8i-Oz-Y7G"/>
+                                            <constraint firstItem="9Mt-qm-ccF" firstAttribute="leading" secondItem="Btl-IM-e8r" secondAttribute="leading" constant="20" id="YC2-1q-l8V"/>
+                                            <constraint firstAttribute="height" constant="250" id="Z7P-5f-BZV"/>
+                                            <constraint firstItem="qL0-n9-Htg" firstAttribute="top" secondItem="Btl-IM-e8r" secondAttribute="top" constant="10" id="aDc-gi-oMB"/>
+                                            <constraint firstItem="hdF-Ms-Aht" firstAttribute="centerX" secondItem="Btl-IM-e8r" secondAttribute="centerX" id="ezx-Eo-JGK"/>
+                                            <constraint firstAttribute="trailing" secondItem="9Mt-qm-ccF" secondAttribute="trailing" constant="20" id="fZU-pG-oWL"/>
+                                            <constraint firstItem="qL0-n9-Htg" firstAttribute="centerX" secondItem="Btl-IM-e8r" secondAttribute="centerX" id="hMr-7g-Xe2"/>
+                                            <constraint firstItem="9Mt-qm-ccF" firstAttribute="top" secondItem="hdF-Ms-Aht" secondAttribute="bottom" constant="4" id="oC5-tb-Zg5"/>
+                                            <constraint firstItem="hdF-Ms-Aht" firstAttribute="top" secondItem="GFb-G3-C3T" secondAttribute="bottom" constant="25" id="oas-78-TA4"/>
+                                            <constraint firstAttribute="trailing" secondItem="t7F-0s-T4j" secondAttribute="trailing" constant="16" id="vJq-rJ-S8N"/>
+                                            <constraint firstItem="GFb-G3-C3T" firstAttribute="top" secondItem="qL0-n9-Htg" secondAttribute="bottom" constant="8" id="ypH-W6-u8d"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Btl-IM-e8r" firstAttribute="leading" secondItem="2Eu-Ah-ETg" secondAttribute="leading" id="Jw2-OL-HHt"/>
+                                    <constraint firstAttribute="trailing" secondItem="Btl-IM-e8r" secondAttribute="trailing" id="U84-Ty-BEP"/>
+                                    <constraint firstItem="Btl-IM-e8r" firstAttribute="top" secondItem="2Eu-Ah-ETg" secondAttribute="top" constant="8" id="qrJ-yN-7J5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2Eu-Ah-ETg" firstAttribute="top" secondItem="J8C-pC-xP4" secondAttribute="top" id="9Ad-s9-pdX"/>
+                            <constraint firstItem="J8C-pC-xP4" firstAttribute="trailing" secondItem="2Eu-Ah-ETg" secondAttribute="trailing" id="IiY-Xl-rQW"/>
+                            <constraint firstItem="J8C-pC-xP4" firstAttribute="bottom" secondItem="2Eu-Ah-ETg" secondAttribute="bottom" id="YlH-Z3-DtG"/>
+                            <constraint firstItem="J8C-pC-xP4" firstAttribute="leading" secondItem="2Eu-Ah-ETg" secondAttribute="leading" id="vXe-pJ-Ce7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="J8C-pC-xP4"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="t7F-0s-T4j" id="X9A-9g-viy"/>
+                        <outlet property="walletTextField" destination="hdF-Ms-Aht" id="a0q-L6-dBs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pgJ-xY-eDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-498" y="125"/>
+        </scene>
+        <!--Payment Plugin View Controller-->
+        <scene sceneID="wWt-1w-hlK">
+            <objects>
+                <viewController storyboardIdentifier="paymentPlugin" id="IZ2-GF-NaC" customClass="PaymentPluginViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Em8-0i-Qz3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZFT-31-E7T">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZFT-31-E7T" firstAttribute="top" secondItem="p2e-n1-B5A" secondAttribute="top" id="JoY-e6-eJ1"/>
+                            <constraint firstItem="p2e-n1-B5A" firstAttribute="leading" secondItem="ZFT-31-E7T" secondAttribute="leading" id="Yr8-a4-ALh"/>
+                            <constraint firstItem="p2e-n1-B5A" firstAttribute="bottom" secondItem="ZFT-31-E7T" secondAttribute="bottom" id="bTg-Gz-TT3"/>
+                            <constraint firstItem="p2e-n1-B5A" firstAttribute="trailing" secondItem="ZFT-31-E7T" secondAttribute="trailing" id="t7F-qN-1Yx"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="p2e-n1-B5A"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d0c-Un-WgJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="159" y="125"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bitcoin_wallet" width="132" height="128"/>
+    </resources>
+</document>

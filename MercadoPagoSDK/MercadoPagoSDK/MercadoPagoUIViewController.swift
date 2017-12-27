@@ -15,6 +15,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var navBarTextColor = UIColor.systemFontColor()
     private var navBarBackgroundColor = UIColor.primaryColor()
     var shouldDisplayBackButton = false
+    var shouldHideNavigationBar = false
+    var shouldShowBackArrow = true
+    var tracked: Bool = false
 
     var hideNavBarCallback: (() -> Void)?
 
@@ -28,7 +31,39 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.loadMPStyles()
     }
 
-    var tracked: Bool = false
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
+            tracked = true
+            trackInfo()
+        }
+    }
+
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        UIApplication.shared.statusBarStyle = .lightContent
+
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+
+        self.loadMPStyles()
+        MercadoPagoCheckout.firstViewControllerPushed = true
+
+        if shouldHideNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+        }
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.clearMercadoPagoStyle()
+
+        if shouldHideNavigationBar {
+            navigationController?.setNavigationBarHidden(false, animated: false)
+        }
+
+    }
 
     func trackInfo() {
          MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
@@ -37,16 +72,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var lastDefaultFontLabel: String?
     var lastDefaultFontTextField: String?
     var lastDefaultFontButton: String?
-
-    override open func viewDidAppear(_ animated: Bool) {
-
-        super.viewDidAppear(animated)
-
-        if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
-            tracked = true
-            trackInfo()
-        }
-    }
 
     static func loadFont(_ fontName: String) -> Bool {
 
@@ -65,23 +90,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             }
         }
         return false
-    }
-
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        UIApplication.shared.statusBarStyle = .lightContent
-
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
-        self.loadMPStyles()
-        MercadoPagoCheckout.firstViewControllerPushed = true
-    }
-
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.clearMercadoPagoStyle()
-
     }
 
     internal func loadMPStyles() {
@@ -168,30 +176,16 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.navigationItem.rightBarButtonItem = shoppingCartButton
     }
 
-    open func rightButtonShoppingCart() {
-        let action = self.navigationItem.rightBarButtonItem?.action
-        var shoppingCartImage = MercadoPago.getImage("iconCart")
-        shoppingCartImage = shoppingCartImage!.withRenderingMode(.alwaysTemplate)
-        let shoppingCartButton = UIBarButtonItem()
-        shoppingCartButton.image = shoppingCartImage
-        shoppingCartButton.title = ""
-        shoppingCartButton.target = self
-        shoppingCartButton.tintColor = UIColor.px_white()
-        if action != nil {
-            shoppingCartButton.action = action!
-        }
-        self.navigationItem.rightBarButtonItem = shoppingCartButton
-
-    }
-
     internal func displayBackButton() {
-        let backButton = UIBarButtonItem()
-        backButton.image = MercadoPago.getImage("back")
-        backButton.style = .plain
-        backButton.target = self
-        backButton.tintColor = navBarTextColor
-        backButton.action = #selector(MercadoPagoUIViewController.executeBack)
-        self.navigationItem.leftBarButtonItem = backButton
+        if shouldShowBackArrow {
+            let backButton = UIBarButtonItem()
+            backButton.image = MercadoPago.getImage("back")
+            backButton.style = .plain
+            backButton.target = self
+            backButton.tintColor = navBarTextColor
+            backButton.action = #selector(MercadoPagoUIViewController.executeBack)
+            self.navigationItem.leftBarButtonItem = backButton
+        }
     }
 
     internal func hideBackButton() {
@@ -199,6 +193,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     internal func executeBack() {
+        if let callbackCancel = callbackCancel {
+            callbackCancel()
+        }
         self.navigationController!.popViewController(animated: true)
     }
 

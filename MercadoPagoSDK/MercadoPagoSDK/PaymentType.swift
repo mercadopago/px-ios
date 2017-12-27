@@ -44,6 +44,7 @@ public enum PaymentTypeId: String {
     case BITCOIN = "digital_currency"
     case PREPAID_CARD = "prepaid_card"
     case BOLBRADESCO = "bolbradesco"
+    case PAYMENT_METHOD_PLUGIN = "paymentMethodPlugin"
 
     public func isCard() -> Bool {
         return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD
@@ -51,6 +52,14 @@ public enum PaymentTypeId: String {
 
     public func isCreditCard() -> Bool {
         return self == PaymentTypeId.CREDIT_CARD
+    }
+
+    public func isPrepaidCard() -> Bool {
+        return self == PaymentTypeId.PREPAID_CARD
+    }
+
+    public func isDebitCard() -> Bool {
+        return self == PaymentTypeId.DEBIT_CARD
     }
 
     public func isOnlinePaymentType() -> Bool {
@@ -63,7 +72,7 @@ public enum PaymentTypeId: String {
     }
 
     public static func onlinePaymentTypes() -> [String] {
-        return [DEBIT_CARD.rawValue, CREDIT_CARD.rawValue, ACCOUNT_MONEY.rawValue, PREPAID_CARD.rawValue]
+        return [DEBIT_CARD.rawValue, CREDIT_CARD.rawValue, ACCOUNT_MONEY.rawValue, PREPAID_CARD.rawValue, PAYMENT_METHOD_PLUGIN.rawValue]
     }
 
     public static func offlinePaymentTypes() -> [String] {
