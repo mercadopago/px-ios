@@ -36,8 +36,8 @@ open class FeesDetail: NSObject {
     }
 
     open func toJSONString() -> String {
-        let type : Any = self.type != nil ? JSONHandler.null : self.type!
-        let obj: [String:Any] = [
+        let type: Any = self.type != nil ? JSONHandler.null : self.type!
+        let obj: [String: Any] = [
             "type": type,
             "amountRefunded": self.amountRefunded,
             "amount": self.amount,

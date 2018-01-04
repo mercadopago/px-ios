@@ -11,7 +11,7 @@ import UIKit
 
 open class Fingerprint: NSObject {
 
-    open var fingerprint: [String : Any]
+    open var fingerprint: [String: Any]
 
     public override init () {
         self.fingerprint = [:]
@@ -24,9 +24,9 @@ open class Fingerprint: NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String : Any] {
+    open func toJSON() -> [String: Any] {
 
-        let obj: [String:Any] = [
+        let obj: [String: Any] = [
             "os": fingerprint["os"] as Any,
             "vendor_ids": fingerprint["vendor_ids"] as Any,
             "model": fingerprint["model"] as Any,
@@ -37,9 +37,9 @@ open class Fingerprint: NSObject {
         return obj
     }
 
-    open func deviceFingerprint() -> [String : AnyObject] {
+    open func deviceFingerprint() -> [String: AnyObject] {
         let device: UIDevice = UIDevice.current
-        var dictionary: [String : AnyObject] = [String: AnyObject]()
+        var dictionary: [String: AnyObject] = [String: AnyObject]()
 		dictionary["os"] = "iOS" as AnyObject?
 		let devicesId: [AnyObject]? = devicesID()
         if devicesId != nil {
@@ -101,7 +101,7 @@ open class Fingerprint: NSObject {
             let uuid: String = UUID().uuidString
             if !String.isNullOrEmpty(uuid) {
 
-                var dic: [String : AnyObject] = ["name": "uuid" as AnyObject]
+                var dic: [String: AnyObject] = ["name": "uuid" as AnyObject]
                 dic["value"] = uuid as AnyObject?
                 return [dic as AnyObject]
             }
@@ -109,9 +109,9 @@ open class Fingerprint: NSObject {
             let vendorId: String = UIDevice.current.identifierForVendor!.uuidString
             let uuid: String = UUID().uuidString
 
-            var dicVendor: [String : AnyObject] = ["name": "vendor_id" as AnyObject]
+            var dicVendor: [String: AnyObject] = ["name": "vendor_id" as AnyObject]
             dicVendor["value"] = vendorId as AnyObject?
-            var dic: [String : AnyObject] = ["name": "uuid" as AnyObject]
+            var dic: [String: AnyObject] = ["name": "uuid" as AnyObject]
             dic["value"] = uuid as AnyObject?
             return [dicVendor as AnyObject, dic as AnyObject]
         }

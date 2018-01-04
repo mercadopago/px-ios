@@ -70,8 +70,8 @@ open class PayerCost: NSObject, Cellable {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let obj: [String: Any] = [
             "installments": self.installments,
             "installment_rate": self.installmentRate,
             "min_allowed_amount": self.minAllowedAmount,

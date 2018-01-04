@@ -58,14 +58,14 @@ open class InstructionsInfo: NSObject {
     }
 
     open func toJSONString() -> String {
-        var obj: [String:Any] = [
+        var obj: [String: Any] = [
             "amount_info": self.amountInfo.toJSON()
         ]
 
         if self.instructions != nil && self.instructions.count > 0 {
             let array = NSMutableArray()
             for inst in instructions {
-                if let instruction = inst.toJSON() as? [String : AnyObject] {
+                if let instruction = inst.toJSON() as? [String: AnyObject] {
                     array.add(instruction)
                 }
             }

@@ -19,8 +19,8 @@ class PaymentVaultViewModelTest: BaseTest {
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: [mockPmSearchitem] as [PaymentMethodOption])
     }
 
-    func createPaymentVaulViewModelInstance(paymentMethodOptions: [PaymentMethodOption], customerPaymentMethods: [CardInformation] = [], paymentMethodPlugins: [PXPaymentMethodPlugin] = []) -> PaymentVaultViewModel{
-        return  PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil, paymentMethodOptions: paymentMethodOptions , customerPaymentOptions: customerPaymentMethods, paymentMethodPlugins: paymentMethodPlugins, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+    func createPaymentVaulViewModelInstance(paymentMethodOptions: [PaymentMethodOption], customerPaymentMethods: [CardInformation] = [], paymentMethodPlugins: [PXPaymentMethodPlugin] = []) -> PaymentVaultViewModel {
+        return  PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil, paymentMethodOptions: paymentMethodOptions, customerPaymentOptions: customerPaymentMethods, paymentMethodPlugins: paymentMethodPlugins, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testSetMaxSavedCardsInFlowPreference() {
@@ -508,7 +508,6 @@ class PaymentVaultViewModelTest: BaseTest {
         result = instance!.getPaymentMethodOption(row : 5)
         XCTAssertEqual("Plugin 2", result!.getTitle())
     }
-
 
     override func tearDown() {
         // Restore default value

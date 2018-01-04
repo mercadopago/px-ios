@@ -100,7 +100,7 @@ extension TrackStorageManager {
     static let SCREEN_TRACK_INFO_ARRAY_KEY = "screens-tracks-info"
     static var SETTING_MAX_BATCH_SIZE: Int {
         get {
-            guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+            guard let trackiSettings: [String: Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
                 return 0
             }
             guard let trackingEnabled = trackiSettings[TrackStorageManager.kMaxBatchSize] as? Int else {
@@ -111,7 +111,7 @@ extension TrackStorageManager {
     }
     static var SETTING_MAX_AGEING: Int {
         get {
-            guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+            guard let trackiSettings: [String: Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
                 return 0
             }
             guard let maxAgening = trackiSettings[TrackStorageManager.kMaxAgeing] as? Int else {
@@ -122,7 +122,7 @@ extension TrackStorageManager {
     }
     static var SETTING_MAX_LIFETIME: Int {
         get {
-            guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+            guard let trackiSettings: [String: Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
                 return 0
             }
             guard let maxLifetime = trackiSettings[TrackStorageManager.kMaxLifetime] as? Int else {

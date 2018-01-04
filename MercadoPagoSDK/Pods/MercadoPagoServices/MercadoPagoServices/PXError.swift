@@ -12,7 +12,7 @@ open class PXError: NSError {
     open var type: String?
     open var apiException: PXApiException?
 
-    public init(domain: String, code: Int, userInfo dict: [String : Any]? = nil, apiException: PXApiException? = nil) {
+    public init(domain: String, code: Int, userInfo dict: [String: Any]? = nil, apiException: PXApiException? = nil) {
         super.init(domain: domain, code: code, userInfo: dict)
         self.apiException = apiException
     }

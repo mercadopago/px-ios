@@ -78,7 +78,7 @@ extension PaymentVaultViewModel {
     func hasOnlyCustomerPaymentMethodAvailable() -> Bool {
         return Array.isNullOrEmpty(self.paymentMethodOptions) && !Array.isNullOrEmpty(self.customerPaymentOptions) && self.customerPaymentOptions?.count == 1
     }
-    
+
     func getPaymentMethodOption(row: Int) -> PaymentOptionDrawable? {
         if displayItems.indices.contains(row) {
             return displayItems[row]
@@ -87,32 +87,31 @@ extension PaymentVaultViewModel {
     }
 }
 
-
-//MARK: Drawable Builders
+// MARK: Drawable Builders
 extension PaymentVaultViewModel {
-    
+
     fileprivate func populateDisplayItemsDrawable() {
-        
+
         var topPluginsDrawable = [PaymentOptionDrawable]()
         var bottomPluginsDrawable = [PaymentOptionDrawable]()
         var customerPaymentOptionsDrawable = [PaymentOptionDrawable]()
         var paymentOptionsDrawable = [PaymentOptionDrawable]()
-        
+
         buildTopBottomPaymentPluginsAsDrawable(&topPluginsDrawable, &bottomPluginsDrawable)
-        
+
         // Populate customer payment options.
         customerPaymentOptionsDrawable = buildCustomerPaymentOptionsAsDrawable()
-        
+
         // Populate payment methods search items.
         paymentOptionsDrawable = buildPaymentMethodSearchItemsAsDrawable()
-        
+
         // Fill displayItems
         displayItems.append(contentsOf: topPluginsDrawable)
         displayItems.append(contentsOf: customerPaymentOptionsDrawable)
         displayItems.append(contentsOf: paymentOptionsDrawable)
         displayItems.append(contentsOf: bottomPluginsDrawable)
     }
-    
+
     fileprivate func buildTopBottomPaymentPluginsAsDrawable(_ topPluginsDrawable: inout [PaymentOptionDrawable], _ bottomPluginsDrawable: inout [PaymentOptionDrawable]) {
         // Populate payments methods plugins.
         if hasPaymentMethodsPlugins() {
@@ -125,7 +124,7 @@ extension PaymentVaultViewModel {
             }
         }
     }
-    
+
     fileprivate func buildCustomerPaymentOptionsAsDrawable() -> [PaymentOptionDrawable] {
         var returnDrawable = [PaymentOptionDrawable]()
         let customerPaymentMethodsCount = getCustomerPaymentMethodsToDisplayCount()
@@ -139,7 +138,7 @@ extension PaymentVaultViewModel {
         }
         return returnDrawable
     }
-    
+
     fileprivate func buildPaymentMethodSearchItemsAsDrawable() -> [PaymentOptionDrawable] {
         var returnDrawable = [PaymentOptionDrawable]()
         for targetPaymentMethodOption in paymentMethodOptions {
@@ -150,7 +149,6 @@ extension PaymentVaultViewModel {
         return returnDrawable
     }
 }
-
 
 // MARK: Counters
 extension PaymentVaultViewModel {

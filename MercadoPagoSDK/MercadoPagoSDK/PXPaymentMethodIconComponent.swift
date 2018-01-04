@@ -10,7 +10,7 @@ import UIKit
 
 public class PXPaymentMethodIconComponent: NSObject, PXComponentizable {
     var props: PXPaymentMethodIconProps
-    
+
     init(props: PXPaymentMethodIconProps) {
         self.props = props
     }
@@ -21,7 +21,7 @@ public class PXPaymentMethodIconComponent: NSObject, PXComponentizable {
 
 class PXPaymentMethodIconProps: NSObject {
     var paymentMethodIcon: UIImage?
-    
+
     init(paymentMethodIcon: UIImage?) {
         self.paymentMethodIcon = paymentMethodIcon
     }

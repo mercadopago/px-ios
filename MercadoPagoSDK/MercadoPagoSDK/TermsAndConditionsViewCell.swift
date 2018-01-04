@@ -44,7 +44,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     private static func getTyCText() -> NSMutableAttributedString {
 
         let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 12), NSForegroundColorAttributeName: UIColor.px_grayLight()]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 12), NSForegroundColorAttributeName: UIColor.px_grayLight()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: "Términos y Condiciones".localized)

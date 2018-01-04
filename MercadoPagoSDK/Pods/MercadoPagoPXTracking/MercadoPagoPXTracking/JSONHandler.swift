@@ -9,7 +9,7 @@
 import Foundation
 class JSONHandler: NSObject {
 
-    class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
+    class func jsonCoding(_ jsonDictionary: [String: Any]) -> String {
         var result: String = ""
         do {
             let dict = NSMutableDictionary()

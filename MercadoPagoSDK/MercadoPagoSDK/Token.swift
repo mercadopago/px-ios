@@ -108,16 +108,16 @@ open class Token: NSObject, CardInformationForm {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let _id : Any = self._id == nil ? JSONHandler.null : self._id!
-        let cardId : Any = self.cardId == nil ? JSONHandler.null : self.cardId!
-        let luhn : Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!
-        let lastFour : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
-        let firstSix : Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
+    open func toJSON() -> [String: Any] {
+        let _id: Any = self._id == nil ? JSONHandler.null : self._id!
+        let cardId: Any = self.cardId == nil ? JSONHandler.null : self.cardId!
+        let luhn: Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!
+        let lastFour: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
+        let firstSix: Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
         let cardHolderToJsonString: Any = self.cardHolder?.toJSON() ?? JSONHandler.null
         let esc: Any = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc
 
-        let obj: [String:Any] = [
+        let obj: [String: Any] = [
             "id": _id,
             "card_id": cardId,
             "luhn_validation": luhn,

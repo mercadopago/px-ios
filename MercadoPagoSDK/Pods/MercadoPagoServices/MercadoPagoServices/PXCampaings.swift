@@ -117,7 +117,6 @@ open class PXCampaign: NSObject, Codable {
         let couponAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .couponAmount)
         let collectors: [Int64]? = try container.decodeIfPresent([Int64].self, forKey: .collectors)
 
-
        self.init(id: id, code: code, name: name, discountType: discountType, minPaymentAmount: minPaymentAmount, maxPaymentAmount: maxPaymentAmount, totalAmountLimit: totalAmountLimit, maxCoupons: maxCoupons, maxCouponsByCode: maxCouponsByCode, maxRedeemPerUser: maxRedeemPerUser, siteId: siteId, marketplace: marketplace, codeType: codeType, maxUserAmountPerCampaign: maxUserAmountPerCampaign, paymentMethodsIds: paymentMethodsIds, paymentTypesIds: paymentTypesIds, cardIssuersIds: cardIssuersIds, shippingModes: shippingModes, clientId: clientId, tags: tags, multipleCodeLimit: multipleCodeLimit, codeCount: codeCount, couponAmount: couponAmount, collectors: collectors)
     }
 

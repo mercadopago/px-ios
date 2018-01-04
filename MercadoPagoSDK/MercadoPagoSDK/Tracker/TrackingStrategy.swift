@@ -18,7 +18,7 @@ class RealTimeStrategy: TrackingStrategy { // V1
     }
     private func send(trackList: Array<ScreenTrackInfo>) {
         var jsonBody = MPXTracker.generateJSONDefault()
-        var arrayEvents = Array<[String:Any]>()
+        var arrayEvents = Array<[String: Any]>()
         for elementToTrack in trackList {
             arrayEvents.append(elementToTrack.toJSON())
         }
@@ -56,7 +56,7 @@ class BatchStrategy: TrackingStrategy { // V2
     }
     private func send(trackList: Array<ScreenTrackInfo>) {
         var jsonBody = MPXTracker.generateJSONDefault()
-        var arrayEvents = Array<[String:Any]>()
+        var arrayEvents = Array<[String: Any]>()
         for elementToTrack in trackList {
             arrayEvents.append(elementToTrack.toJSON())
         }

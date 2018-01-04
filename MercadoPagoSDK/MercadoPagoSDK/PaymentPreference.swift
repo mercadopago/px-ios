@@ -194,10 +194,10 @@ open class PaymentPreference: NSObject {
     }
 
     open func toJSONString() -> String {
-        let default_installments : Any = self.defaultInstallments == 0 ? JSONHandler.null : (self.defaultInstallments)
-        let default_payment_method_id : Any =  self.defaultPaymentMethodId == nil ? JSONHandler.null : (self.defaultPaymentMethodId)!
-        let installments : Any =  self.maxAcceptedInstallments == 0 ? JSONHandler.null : (self.maxAcceptedInstallments)
-        var obj: [String:Any] = [
+        let default_installments: Any = self.defaultInstallments == 0 ? JSONHandler.null : (self.defaultInstallments)
+        let default_payment_method_id: Any =  self.defaultPaymentMethodId == nil ? JSONHandler.null : (self.defaultPaymentMethodId)!
+        let installments: Any =  self.maxAcceptedInstallments == 0 ? JSONHandler.null : (self.maxAcceptedInstallments)
+        var obj: [String: Any] = [
 
             "default_installments": default_installments,
             "default_payment_method_id": default_payment_method_id,

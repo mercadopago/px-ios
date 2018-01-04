@@ -41,7 +41,7 @@ open class PXRefund: NSObject, Codable {
         let paymentId: Int64? = try container.decodeIfPresent(Int64.self, forKey: .paymentId)
         let source: String? = try container.decodeIfPresent(String.self, forKey: .source)
         let uniqueSecuenceNumber: String? = try container.decodeIfPresent(String.self, forKey: .uniqueSecuenceNumber)
-        
+
         let dateCreated = String.getDate(dateCreatedString)
 
         self.init(id: id, dateCreated: dateCreated, metadata: metadata, paymentId: paymentId, source: source, uniqueSecuenceNumber: uniqueSecuenceNumber)

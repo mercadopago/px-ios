@@ -36,4 +36,3 @@ open class PXServicesURLConfigs: NSObject {
     open static let MP_CUSTOMER_URI = "/customers?preference_id="
     open static let MP_CAMPAIGNS_URI = "/campaigns/check_availability"
 }
-

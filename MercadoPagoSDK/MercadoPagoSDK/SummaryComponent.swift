@@ -70,7 +70,7 @@ class SummaryComponent: UIView, PXComponent {
         return self.frame.size.width
     }
 
-    func addDetailsViews(typeDetailDictionary: [SummaryType:SummaryDetail]) {
+    func addDetailsViews(typeDetailDictionary: [SummaryType: SummaryDetail]) {
         for type in iterateEnum(SummaryType.self) {
             let frame = CGRect(x: 0.0, y: requiredHeight, width: self.frame.size.width, height: DETAILS_HEIGHT)
             if let detail = typeDetailDictionary[type] {

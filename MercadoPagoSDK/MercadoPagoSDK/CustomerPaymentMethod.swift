@@ -61,8 +61,8 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
         return card?.issuer
     }
 
-    open func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let obj: [String: Any] = [
             "_id": self._id,
             "_description": self._description == nil ? "" : self._description!,
             "payment_method_id": self.paymentMethodId,

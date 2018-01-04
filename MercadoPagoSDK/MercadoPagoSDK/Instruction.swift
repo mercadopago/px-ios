@@ -112,8 +112,8 @@ open class Instruction: NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let obj: [String: Any] = [
             "title": self.title,
             "accreditationMessage": self.accreditationMessage
         ]

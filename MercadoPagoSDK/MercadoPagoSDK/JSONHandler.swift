@@ -10,7 +10,7 @@ import UIKit
 
 class JSONHandler: NSObject {
 
-    class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
+    class func jsonCoding(_ jsonDictionary: [String: Any]) -> String {
         var result: String = ""
         do {
             let dict = NSMutableDictionary()
@@ -40,7 +40,7 @@ class JSONHandler: NSObject {
     }
 
     class func parseToJSON(_ data: Data) -> Any {
-        var result : Any = []
+        var result: Any = []
         do {
             result = try JSONSerialization.jsonObject(with: data, options: [])
         } catch {

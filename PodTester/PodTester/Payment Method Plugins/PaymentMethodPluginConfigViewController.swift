@@ -22,7 +22,7 @@ class PaymentMethodPluginConfigViewController: UIViewController {
     }
 }
 
-//MARK: - Setup methods.
+// MARK: - Setup methods.
 extension PaymentMethodPluginConfigViewController {
 
     fileprivate func setupNextButton() {
@@ -43,7 +43,7 @@ extension PaymentMethodPluginConfigViewController {
     }
 }
 
-//MARK: Plugin implementation.
+// MARK: Plugin implementation.
 extension PaymentMethodPluginConfigViewController: PXPluginComponent {
 
     func render() -> UIView {
@@ -59,7 +59,7 @@ extension PaymentMethodPluginConfigViewController: PXPluginComponent {
     func titleForNavigationBar() -> String? {
         return "Pagar con Bitcoin"
     }
-    
+
     func navigationHandlerForPlugin(navigationHandler: PXPluginNavigationHandler) {
         self.navigationHandler = navigationHandler
     }

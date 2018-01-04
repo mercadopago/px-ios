@@ -10,17 +10,17 @@ import Foundation
 import MercadoPagoSDK
 
 class HooksNavigationManager {
-    
+
     let hooksStoryboard = UIStoryboard(name: "Hooks", bundle: nil)
-    
+
     func getFirstHook() -> FirstHookViewController {
         return hooksStoryboard.instantiateViewController(withIdentifier: "firstHook") as! FirstHookViewController
     }
-    
+
     func getSecondHook() -> SecondHookViewController {
         return hooksStoryboard.instantiateViewController(withIdentifier: "secondHook") as! SecondHookViewController
     }
-    
+
     func getThirdHook() -> ThirdHookViewController {
         return hooksStoryboard.instantiateViewController(withIdentifier: "thirdHook") as! ThirdHookViewController
     }
@@ -37,5 +37,5 @@ class PaymentMethodPluginsNavigationManager {
     func getPaymentPlugin() -> PaymentPluginViewController {
         return storyboard.instantiateViewController(withIdentifier: "paymentPlugin") as! PaymentPluginViewController
     }
-    
+
 }

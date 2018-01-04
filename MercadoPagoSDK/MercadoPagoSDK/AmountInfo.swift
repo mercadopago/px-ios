@@ -43,13 +43,13 @@ open class AmountInfo: NSObject {
        return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let thousands_separator : Any = self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator)
-        let decimal_separator : Any = self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator)
-        let symbol : Any = self.currency == nil ? JSONHandler.null : self.currency!.symbol
-        let decimal_places : Any = self.currency == nil ? JSONHandler.null : self.currency!.decimalPlaces
+    open func toJSON() -> [String: Any] {
+        let thousands_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator)
+        let decimal_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator)
+        let symbol: Any = self.currency == nil ? JSONHandler.null : self.currency!.symbol
+        let decimal_places: Any = self.currency == nil ? JSONHandler.null : self.currency!.decimalPlaces
 
-        let obj: [String:Any] = ["amount": self.amount!,
+        let obj: [String: Any] = ["amount": self.amount!,
             "thousands_separator": thousands_separator,
             "decimal_separator": decimal_separator,
             "symbol": symbol,

@@ -51,9 +51,9 @@ open class TransactionDetails: NSObject {
         return transactionDetails
     }
 
-    open func toJSON() -> [String:Any] {
+    open func toJSON() -> [String: Any] {
 
-        var obj: [String:Any] = [:]
+        var obj: [String: Any] = [:]
 
         if self.couponAmount != nil {
             obj["coupon_amount"] = self.couponAmount

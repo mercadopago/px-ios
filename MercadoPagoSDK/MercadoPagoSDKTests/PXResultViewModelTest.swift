@@ -267,7 +267,7 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("need_action_badge"))
         XCTAssertEqual(headerView.statusLabel?.attributedText?.string, "Algo salió mal...".localized.toAttributedString().string)
-        
+
         //Body
         //Error View
         guard let errorView = bodyView as? PXErrorView else {
@@ -284,16 +284,16 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertNotNil(errorView.secondaryTitleLabel)
         XCTAssertEqual(errorView.secondaryTitleLabel?.text, "¿No pudiste autorizarlo?")
         XCTAssertNotNil(errorView.bottomDivider)
-        
+
         //Footer
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Cancelar pago".localized)
-        
+
         XCTAssertFalse(resultViewModel.isAccepted())
         XCTAssertTrue(resultViewModel.isWarning())
         XCTAssertFalse(resultViewModel.isError())
     }
-    
+
     func testBodyWithErrorREJECTED_INSUFFICIENT_AMOUNT() {
         MercadoPagoContext.setLanguage(language: Languages._SPANISH)
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "Visa")
@@ -324,7 +324,7 @@ class PXResultViewModelTest: BaseTest {
         paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-        
+
         //Body
         //Error View
         guard let errorView = bodyView as? PXErrorView else {
@@ -340,7 +340,7 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertNil(errorView.secondaryTitleLabel)
         XCTAssertNil(errorView.bottomDivider)
     }
-    
+
     func testBodyWithErrorREJECTED_DUPLICATED_PAYMENT() {
         MercadoPagoContext.setLanguage(language: Languages._PORTUGUESE)
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "Visa")
@@ -364,7 +364,7 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertNil(errorView.secondaryTitleLabel)
         XCTAssertNil(errorView.bottomDivider)
     }
-    
+
     func testBodyWithErrorREJECTED_CARD_DISABLED() {
         MercadoPagoContext.setLanguage(language: Languages._PORTUGUESE)
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "Mastercard")
@@ -388,7 +388,7 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertNil(errorView.secondaryTitleLabel)
         XCTAssertNil(errorView.bottomDivider)
     }
-    
+
     func testBodyWithErrorPENDING_REVIEW_MANUAL() {
         MercadoPagoContext.setLanguage(language: Languages._PORTUGUESE)
         let paymentResult = MockBuilder.buildPaymentResult("pending", paymentMethodId: "Mastercard")
@@ -412,14 +412,14 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertNil(errorView.secondaryTitleLabel)
         XCTAssertNil(errorView.bottomDivider)
     }
-    
+
     func testExpandedHeader() {
         MercadoPagoContext.setLanguage(language: Languages._PORTUGUESE)
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "Mastercard")
         paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_SECURITY_CODE
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let resultViewController = PXResultViewController(viewModel: resultViewModel) { (congratsState) in
-            
+
         }
         resultViewController.renderViews()
         let scrollView = resultViewController.scrollView
@@ -431,14 +431,14 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertEqual(bodyView?.frame.height, 0)
         XCTAssertEqual(scrollView?.frame.height, resultViewController.contentView.frame.height)
     }
-    
+
     func testExpandedBody() {
         MercadoPagoContext.setLanguage(language: Languages._PORTUGUESE)
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "Mastercard")
         paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let resultViewController = PXResultViewController(viewModel: resultViewModel) { (congratsState) in
-            
+
         }
         resultViewController.renderViews()
         let scrollView = resultViewController.scrollView
@@ -467,7 +467,7 @@ class PXResultViewModelTest: BaseTest {
 
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
-        
+
         //Instructions Subtitle View
         XCTAssertNotNil(instructionsView.subtitleView)
         let subtitleView = instructionsView.subtitleView as! PXInstructionsSubtitleView
@@ -538,7 +538,7 @@ class PXResultViewModelTest: BaseTest {
 
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
-        
+
         //Instructions Subtitle View
         XCTAssertNotNil(instructionsView.subtitleView)
         let subtitleView = instructionsView.subtitleView as! PXInstructionsSubtitleView
@@ -654,13 +654,13 @@ class PXResultViewModelTest: BaseTest {
         let footerComponent = PXFooterComponent(props: data)
         return PXFooterRenderer().render(footerComponent)
     }
-    
+
     func buildReceiptView(resultViewModel: PXResultViewModel) -> PXReceiptView {
         let data = resultViewModel.getReceiptComponentProps()
         let receiptComponent = PXReceiptComponent(props: data)
         return PXReceiptRenderer().render(receiptComponent)
     }
-    
+
     func testViewModelWithTextAndCustomComponentPreferenceAndApprovedPayment() {
         let ownComponent = TestComponent()
         let preference = PaymentResultScreenPreference()
@@ -707,7 +707,7 @@ class PXResultViewModelTest: BaseTest {
 }
 
 @objc public class TestComponent: NSObject, PXComponentizable {
-    
+
     static public func getPreference() -> PaymentResultScreenPreference {
         let top = TestComponent()
         let bottom = TestComponent()
@@ -716,7 +716,7 @@ class PXResultViewModelTest: BaseTest {
         //        preference.setApprovedBottomCustomComponent(bottom)
         return preference
     }
-    
+
     public func render() -> UIView {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 100))
         view.translatesAutoresizingMaskIntoConstraints = false

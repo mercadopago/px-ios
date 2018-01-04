@@ -79,11 +79,11 @@ open class PXBodyComponent: NSObject, PXComponentizable {
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
-    
+
     public func hasBodyError() -> Bool {
         return isPendingWithBody() || isRejectedWithBody()
     }
-    
+
     public func getBodyErrorComponent() -> PXErrorComponent {
         let status = props.paymentResult.status
         let statusDetail = props.paymentResult.statusDetail
@@ -92,24 +92,24 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         let errorComponent = PXErrorComponent(props: errorProps)
         return errorComponent
     }
-    
+
     public func isPendingWithBody() -> Bool {
         let hasPendingStatus = props.paymentResult.status.elementsEqual(PXPayment.Status.PENDING) || props.paymentResult.status.elementsEqual(PXPayment.Status.IN_PROCESS)
         return hasPendingStatus && pendingStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
-    
+
     public func isRejectedWithBody() -> Bool {
         return props.paymentResult.status.elementsEqual(PXPayment.Status.REJECTED) && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
-    
+
     func getCallback() -> (() -> Void) {
         return { self.executeCallback() }
     }
-    
+
     func executeCallback() {
         self.props.callback()
     }
-    
+
     public func render() -> UIView {
         return PXBodyRenderer().render(self)
     }

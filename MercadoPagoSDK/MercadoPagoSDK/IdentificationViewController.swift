@@ -50,7 +50,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
             titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
 
             if self.navigationController != nil {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.px_white()
@@ -124,7 +124,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
-    
+
     func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height + 61 // Keyboard + Vista, dejo el mismo nombre de variable para tener consistencia entre clases, pero esta constante no representa la altura real del teclado, sino una altura que varia dependiendo de la altura del teclado
@@ -132,7 +132,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
             self.view.setNeedsUpdateConstraints()
         }
     }
-    
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)

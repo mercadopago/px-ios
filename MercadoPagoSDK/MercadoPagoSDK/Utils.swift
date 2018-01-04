@@ -68,8 +68,8 @@ class Utils {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSForegroundColorAttributeName: color]
-        let smallAttributes: [String:AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName: baselineOffset as AnyObject]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSForegroundColorAttributeName: color]
+        let smallAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName: baselineOffset as AnyObject]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -90,8 +90,8 @@ class Utils {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator : thousandSeparator, decimalSeparator: ".")
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSForegroundColorAttributeName: color]
-        let smallAttributes: [String:AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName: baselineOffset as AnyObject]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSForegroundColorAttributeName: color]
+        let smallAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName: baselineOffset as AnyObject]
 
         var symbols: String!
         if negativeAmount {
@@ -142,7 +142,7 @@ class Utils {
         let color = color ?? UIColor.lightBlue()
         let currency = MercadoPagoContext.getCurrency()
 
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName: getFont(size: fontSize), NSForegroundColorAttributeName: color]
+        let descriptionAttributes: [String: AnyObject] = [NSFontAttributeName: getFont(size: fontSize), NSForegroundColorAttributeName: color]
 
         let stringToWrite = NSMutableAttributedString()
 
@@ -404,8 +404,8 @@ class Utils {
         let environment = ProcessInfo.processInfo.environment
         return environment["testing"] != nil
     }
-    
-    static func getFormatedStringDate(_ date : Date) -> String {
+
+    static func getFormatedStringDate(_ date: Date) -> String {
         let formatterDay = DateFormatter()
         formatterDay.dateFormat = "dd"
         let formatterMonth = DateFormatter()

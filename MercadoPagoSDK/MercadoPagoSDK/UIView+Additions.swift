@@ -7,7 +7,7 @@
 //
 
 extension UIView {
-    
+
     //Eventualmente hay que borrar esto. Cuando summary deje de usarlo
     func addSeparatorLineToTop(horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y :0), size: CGSize(width: width, height: height))
@@ -16,7 +16,7 @@ extension UIView {
         line.backgroundColor = UIColor.pxMediumLightGray
         addSubview(line)
     }
-    
+
     func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .pxMediumLightGray) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
@@ -27,7 +27,7 @@ extension UIView {
         PXLayout.centerHorizontally(view: line).isActive = true
         PXLayout.setHeight(owner: line, height: height).isActive = true
     }
-    
+
     //Eventualmente hay que borrar esto. Cuando summary deje de usarlo
     func addSeparatorLineToBottom(horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y :self.frame.size.height - height), size: CGSize(width: width, height: height))
@@ -36,7 +36,7 @@ extension UIView {
         line.backgroundColor = UIColor.pxMediumLightGray
         addSubview(line)
     }
-    
+
     func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .pxMediumLightGray) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ extension UIView {
         PXLayout.centerHorizontally(view: line).isActive = true
         PXLayout.setHeight(owner: line, height: height).isActive = true
     }
-    
+
     //Eventualmente hay que borrar esto. Cuando summary deje de usarlo
     func addLine(y: CGFloat, horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y :y), size: CGSize(width: width, height: height))
@@ -56,7 +56,7 @@ extension UIView {
         line.backgroundColor = UIColor.px_grayLight()
         addSubview(line)
     }
-    
+
     func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .pxMediumLightGray) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false

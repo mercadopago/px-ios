@@ -64,17 +64,17 @@ open class Customer: NSObject {
     }
 
     open func toJSONString() -> String {
-        let defaultCard : Any =  self.defaultCard == nil ? JSONHandler.null : self.defaultCard!
-        let description : Any =   self._description == nil ? JSONHandler.null : self._description!
-        let email : Any =  self.email == nil ? JSONHandler.null : self.email!
-        let firstName : Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
-        let lastName : Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
-        let id : Any =   self._id == nil ? JSONHandler.null : self._id!
+        let defaultCard: Any =  self.defaultCard == nil ? JSONHandler.null : self.defaultCard!
+        let description: Any =   self._description == nil ? JSONHandler.null : self._description!
+        let email: Any =  self.email == nil ? JSONHandler.null : self.email!
+        let firstName: Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
+        let lastName: Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
+        let id: Any =   self._id == nil ? JSONHandler.null : self._id!
         let identification: Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
         let address: Any = self.address == nil ? JSONHandler.null : self.address!.toJSON()
         let liveMode: Any = self.liveMode == nil ? JSONHandler.null : self.liveMode!
 
-        var obj: [String:Any] = [
+        var obj: [String: Any] = [
             "default_card": defaultCard,
             "description": description,
             "date_created": Utils.getStringFromDate(self.dateCreated) ?? JSONHandler.null,
@@ -87,7 +87,7 @@ open class Customer: NSObject {
             "address": address
         ]
 
-        var cardsJson: [[String:Any]] = []
+        var cardsJson: [[String: Any]] = []
         if !Array.isNullOrEmpty(cards) {
             for card in cards! {
                 cardsJson.append(card.toJSON())

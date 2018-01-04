@@ -10,29 +10,29 @@ import Foundation
 import MercadoPagoServices
 
 open class PXResourceProvider: NSObject {
-    
+
     static var error_body_title_base = "error_body_title_"
     static var error_body_description_base = "error_body_description_"
     static var error_body_action_text_base = "error_body_action_text_"
     static var error_body_secondary_title_base = "error_body_secondary_title_"
     static var spanishId = "es"
-    
+
     static open func getTitleForErrorBody() -> String {
         return getWord(key: error_body_title_base, statusDetail: "")
     }
-    
+
     static open func getDescriptionForErrorBodyForPENDING_CONTINGENCY() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.PENDING_CONTINGENCY)
     }
-    
+
     static open func getDescriptionForErrorBodyForPENDING_REVIEW_MANUAL() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.PENDING_REVIEW_MANUAL)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_CARD_DISABLED(_ paymentMethodName: String?) -> String {
         if let paymentMethodName = paymentMethodName {
             let string = getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_CARD_DISABLED)
@@ -41,31 +41,31 @@ open class PXResourceProvider: NSObject {
             return getWord(key: error_body_description_base, statusDetail: "")
         }
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_AMOUNT() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_OTHER_REASON() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_OTHER_REASON)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_BY_BANK() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_BY_BANK)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_DATA() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_DUPLICATED_PAYMENT() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_MAX_ATTEMPTS() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS)
     }
-    
+
     static open func getDescriptionForErrorBodyForREJECTED_HIGH_RISK() -> String {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_HIGH_RISK)
     }

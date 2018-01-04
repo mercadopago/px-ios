@@ -58,7 +58,7 @@ extension String {
             }
         }
     }
-    
+
     static public func getDate(_ string: String?) -> Date? {
         guard let dateString = string else {
             return nil
@@ -101,7 +101,7 @@ extension Array {
 
 class JSONHandler: NSObject {
 
-    class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
+    class func jsonCoding(_ jsonDictionary: [String: Any]) -> String {
         var result: String = ""
         do {
             let dict = NSMutableDictionary()
@@ -151,7 +151,7 @@ extension NSDictionary {
         }
     }
 
-    func parseToLiteral() -> [String:Any] {
+    func parseToLiteral() -> [String: Any] {
 
         var anyDict = [String: Any]()
 

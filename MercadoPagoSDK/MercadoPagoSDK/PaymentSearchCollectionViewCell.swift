@@ -17,7 +17,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     override func prepareForReuse() {
         for subview in paymentOptionImageContainer.subviews {
             subview.removeFromSuperview()
@@ -30,7 +30,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         subtitleSearch.text = subtitle
         subtitleSearch.font = Utils.getFont(size: subtitleSearch.font.pointSize)
-        
+
         addPaymentOptionIconComponent(image: image)
 
         backgroundColor = UIColor.px_white()
@@ -51,7 +51,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())
     }
-    
+
     func fillCell(optionText: String) {
         self.fillCell(image: nil, title:optionText, subtitle: nil)
     }
@@ -79,17 +79,17 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 }
 
 extension PaymentSearchCollectionViewCell {
-    
+
     fileprivate func addPaymentOptionIconComponent(image: UIImage?) {
-        
+
         let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: PXPaymentMethodIconProps(paymentMethodIcon: image)).render()
-        
+
         paymentMethodIconComponent.layer.cornerRadius = paymentOptionImageContainer.frame.width/2
-        
+
         paymentMethodIconComponent.removeFromSuperview()
-        
+
         paymentOptionImageContainer.insertSubview(paymentMethodIconComponent, at: 0)
-        
+
         PXLayout.centerHorizontally(view: paymentMethodIconComponent).isActive = true
         PXLayout.setHeight(owner: paymentMethodIconComponent, height: paymentOptionImageContainer.frame.width).isActive = true
         PXLayout.setWidth(owner: paymentMethodIconComponent, width: paymentOptionImageContainer.frame.width).isActive = true

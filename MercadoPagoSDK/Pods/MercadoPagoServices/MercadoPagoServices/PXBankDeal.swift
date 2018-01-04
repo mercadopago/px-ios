@@ -62,7 +62,7 @@ open class PXBankDeal: NSObject, Codable {
         let picture: PXPicture? = try container.decodeIfPresent(PXPicture.self, forKey: .picture)
         let recommendedMessage: String? = try container.decodeIfPresent(String.self, forKey: .recommendedMessage)
         let totalFinancialCost: Double? = try container.decodeIfPresent(Double.self, forKey: .totalFinancialCost)
-        
+
         let dateExpired = String.getDate(dateExpiredString)
         let dateStarted = String.getDate(dateStartedString)
 

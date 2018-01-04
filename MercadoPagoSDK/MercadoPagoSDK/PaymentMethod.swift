@@ -121,18 +121,18 @@ open class PaymentMethod: NSObject, Cellable {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let id : Any = String.isNullOrEmpty(self._id) ?  JSONHandler.null : self._id!
-        let name : Any = self.name == nil ?  JSONHandler.null : self.name
-        let payment_type_id : Any = self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId
-        let status : Any = self.status == nil ? JSONHandler.null : self.status
-        let secureThumbnail : Any = self.secureThumbnail == nil ? JSONHandler.null : self.secureThumbnail
-        let thumbnail : Any = self.thumbnail == nil ? JSONHandler.null : self.thumbnail
-        let deferredCapture : Any = self.deferredCapture == nil ? JSONHandler.null : self.deferredCapture
-        let maxAllowedAmount : Any = self.maxAllowedAmount == nil ? JSONHandler.null : self.maxAllowedAmount
-        let accreditationTime : Any = self.accreditationTime == nil ? JSONHandler.null : self.accreditationTime!
+    open func toJSON() -> [String: Any] {
+        let id: Any = String.isNullOrEmpty(self._id) ?  JSONHandler.null : self._id!
+        let name: Any = self.name == nil ?  JSONHandler.null : self.name
+        let payment_type_id: Any = self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId
+        let status: Any = self.status == nil ? JSONHandler.null : self.status
+        let secureThumbnail: Any = self.secureThumbnail == nil ? JSONHandler.null : self.secureThumbnail
+        let thumbnail: Any = self.thumbnail == nil ? JSONHandler.null : self.thumbnail
+        let deferredCapture: Any = self.deferredCapture == nil ? JSONHandler.null : self.deferredCapture
+        let maxAllowedAmount: Any = self.maxAllowedAmount == nil ? JSONHandler.null : self.maxAllowedAmount
+        let accreditationTime: Any = self.accreditationTime == nil ? JSONHandler.null : self.accreditationTime!
 
-        var obj: [String:Any] = [
+        var obj: [String: Any] = [
             "id": id,
             "name": name,
             "payment_type_id": payment_type_id,
@@ -155,7 +155,7 @@ open class PaymentMethod: NSObject, Cellable {
             obj["settings"] = JSONHandler.null
 
         } else {
-            var settingsJson: [[String:Any]] = []
+            var settingsJson: [[String: Any]] = []
             for setting in self.settings {
                 settingsJson.append(setting.toJSON())
             }
@@ -166,7 +166,7 @@ open class PaymentMethod: NSObject, Cellable {
             obj["financial_institutions"] = JSONHandler.null
 
         } else {
-            var financialInstitutionsJson: [[String:Any]] = []
+            var financialInstitutionsJson: [[String: Any]] = []
             for financialInstitution in self.financialInstitutions {
                 financialInstitutionsJson.append(financialInstitution.toJSON())
             }
@@ -387,13 +387,13 @@ open class PaymentMethod: NSObject, Cellable {
     open func getImage() -> UIImage? {
         return MercadoPago.getImageFor(self)
     }
-    
-    open func setExternalPaymentMethodImage(externalImage:UIImage?) {
+
+    open func setExternalPaymentMethodImage(externalImage: UIImage?) {
         if let imageResource = externalImage {
             externalPaymentPluginImageData = UIImagePNGRepresentation(imageResource) as NSData?
         }
     }
-    
+
     open func getImageForExtenalPaymentMethod() -> UIImage? {
         if let imageDataStream = externalPaymentPluginImageData as Data? {
             return UIImage(data: imageDataStream)

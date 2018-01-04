@@ -29,10 +29,10 @@ open class Cardholder: NSObject {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let name : Any = String.isNullOrEmpty(self.name) ? JSONHandler.null : self.name!
-        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let name: Any = String.isNullOrEmpty(self.name) ? JSONHandler.null : self.name!
+        let identification: Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
+        let obj: [String: Any] = [
             "name": name,
             "identification": identification
         ]

@@ -50,7 +50,7 @@ public class PXComponentView: UIView {
     override func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
         self.bottomGuideView.addSeparatorLineToBottom(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
-    
+
     override func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor) {
         super.addLine(yCoordinate: yCoordinate, height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
@@ -70,7 +70,7 @@ public class PXComponentView: UIView {
         }
         return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
     }
-    
+
     //Put view on bottom of content view last subview
     public func putOnBottomOfLastView(view: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint? {
         if !self.contentView.subviews.contains(view) {

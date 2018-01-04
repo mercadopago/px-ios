@@ -24,8 +24,8 @@ class MPTDevice: NSObject {
         self.screenSize = String(describing: screenWidth) + "x" + String(describing: screenHeight)
         self.resolution = String(describing: UIScreen.main.scale)
     }
-    open func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let obj: [String: Any] = [
             "model": model,
             "os": os,
             "system_version": systemVersion,
@@ -48,8 +48,8 @@ class MPTApplication: NSObject {
         self.checkoutVersion = checkoutVersion
         self.platform = platform
     }
-    open func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let obj: [String: Any] = [
             "public_key": publicKey,
             "checkout_version": checkoutVersion,
             "platform": platform
@@ -67,8 +67,8 @@ class ScreenTrackInfo {
     var screenId: String
     var timestamp: Int64
     var type: String
-    var metadata: [String:Any]
-    init(screenName: String, screenId: String, metadata: [String:Any]) {
+    var metadata: [String: Any]
+    init(screenName: String, screenId: String, metadata: [String: Any]) {
         self.screenName = screenName
         self.screenId = screenId
         self.metadata = metadata
@@ -82,8 +82,8 @@ class ScreenTrackInfo {
         self.timestamp = Date().getCurrentMillis()
         self.type = "screenview"
     }
-    func toJSON() -> [String:Any] {
-        var obj: [String:Any] = [
+    func toJSON() -> [String: Any] {
+        var obj: [String: Any] = [
             "timestamp": self.timestamp,
             "type": self.type,
             "screen_id": self.screenId,
@@ -92,13 +92,13 @@ class ScreenTrackInfo {
         ]
         return obj
     }
-    init(from json: [String:Any]) {
+    init(from json: [String: Any]) {
 
         self.screenName = json["screen_name"] as! String
         self.screenId = json["screen_id"] as! String
         self.timestamp = json["timestamp"] as! Int64
         self.type = json["type"] as! String
-        self.metadata = json["metadata"] as! [String:Any]
+        self.metadata = json["metadata"] as! [String: Any]
     }
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())

@@ -70,17 +70,17 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
-        let customer_id : Any = self.customerId == nil ? JSONHandler.null : self.customerId!
-        let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
-        let dateLastUpdated : Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
-        let firstSixDigits : Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
-        let lastFourDigits : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
-        let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
-        let issuer : Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSON()
-        let securityCode : Any = self.securityCode == nil ? JSONHandler.null : self.securityCode!.toJSON()
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let cardHolder: Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
+        let customer_id: Any = self.customerId == nil ? JSONHandler.null : self.customerId!
+        let dateCreated: Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
+        let dateLastUpdated: Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
+        let firstSixDigits: Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
+        let lastFourDigits: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
+        let paymentMethod: Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
+        let issuer: Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSON()
+        let securityCode: Any = self.securityCode == nil ? JSONHandler.null : self.securityCode!.toJSON()
+        let obj: [String: Any] = [
             "card_holder": cardHolder,
             "customer_id": customer_id,
             "date_created": dateCreated,

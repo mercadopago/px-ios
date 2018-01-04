@@ -44,7 +44,7 @@ class DiscountBodyCell: UIView {
         let tituloLabel = MPLabel(frame: CGRect(x: margin, y: 20, width: (frame.size.width - 2 * margin), height: 20) )
         tituloLabel.textAlignment = .center
          let result = NSMutableAttributedString()
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: UIColor.px_grayDark()]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: UIColor.px_grayDark()]
         let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
         result.append(total)
         result.append(Utils.getAttributedAmount( amount, currency: currency, color : UIColor.px_grayDark(), fontSize: 16, baselineOffset:4))
@@ -90,7 +90,7 @@ class DiscountBodyCell: UIView {
         let tituloLabel = MPLabel(frame: CGRect(x: margin, y: topMargin, width: (frame.size.width - 2 * margin), height: 20) )
         tituloLabel.textAlignment = .center
         let result = NSMutableAttributedString()
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: UIColor.px_grayDark()]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: UIColor.px_grayDark()]
         let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
         let space = NSMutableAttributedString(string: " ".localized, attributes: normalAttributes)
         let oldAmount = Utils.getAttributedAmount( amount, currency: currency, color : UIColor.px_grayDark(), fontSize: 16, baselineOffset:4)

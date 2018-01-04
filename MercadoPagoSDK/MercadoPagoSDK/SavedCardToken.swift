@@ -50,8 +50,8 @@ open class SavedCardToken: CardToken {
         return true
     }
 
-    open override func toJSON() -> [String:Any] {
-        let obj: [String:Any] = [
+    open override func toJSON() -> [String: Any] {
+        let obj: [String: Any] = [
             "card_id": String.isNullOrEmpty(self.cardId) ? JSONHandler.null : self.cardId,
             "security_code": String.isNullOrEmpty(self.securityCode!) ? "" : self.securityCode!,
             "device": self.device == nil ? JSONHandler.null : self.device!.toJSON(),

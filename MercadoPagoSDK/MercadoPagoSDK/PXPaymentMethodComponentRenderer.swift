@@ -29,8 +29,6 @@ class PXPaymentMethodComponentRenderer: NSObject {
         PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
         PXLayout.setWidth(owner: pmBodyView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
         PXLayout.pinTop(view: pmBodyView.paymentMethodIcon!, withMargin: PXLayout.L_MARGIN).isActive = true
-        
-        
 
         // Title
         let title = UILabel()

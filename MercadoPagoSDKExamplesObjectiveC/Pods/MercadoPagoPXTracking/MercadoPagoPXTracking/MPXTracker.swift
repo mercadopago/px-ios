@@ -11,7 +11,7 @@ import UIKit
 @objc
 public protocol MPTrackListener {
     func trackScreen(screenName: String)
-    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String:String]?)
+    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String: String]?)
 }
 
 public class MPXTracker: NSObject {
@@ -45,7 +45,7 @@ public class MPXTracker: NSObject {
         return "native/ios"
     }
 
-    open static func trackScreen(screenId: String, screenName: String, metadata: [String : String?] = [:]) {
+    open static func trackScreen(screenId: String, screenName: String, metadata: [String: String?] = [:]) {
         if let trackListener = sharedInstance.trackListener {
             trackListener.trackScreen(screenName: screenName)
         }
@@ -71,32 +71,32 @@ public class MPXTracker: NSObject {
         }
     }
 
-    static func generateJSONDefault() -> [String:Any] {
+    static func generateJSONDefault() -> [String: Any] {
         let clientId = UIDevice.current.identifierForVendor!.uuidString
         let deviceJSON = MPTDevice().toJSON()
         let applicationJSON = MPTApplication(publicKey: MPXTracker.sharedInstance.getPublicKey(), checkoutVersion: MPXTracker.sharedInstance.getSdkVersion(), platform: MPXTracker.sharedInstance.getPlatformType()).toJSON()
-        let obj: [String:Any] = [
+        let obj: [String: Any] = [
             "client_id": clientId,
             "application": applicationJSON,
-            "device": deviceJSON,
+            "device": deviceJSON
             ]
         return obj
     }
-    static func generateJSONScreen(screenId: String, screenName: String, metadata: [String:Any]) -> [String:Any] {
+    static func generateJSONScreen(screenId: String, screenName: String, metadata: [String: Any]) -> [String: Any] {
         var obj = generateJSONDefault()
         let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName, metadata:metadata)
         obj["events"] = [screenJSON]
         return obj
     }
-    static func generateJSONEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
+    static func generateJSONEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String: Any] {
         var obj = generateJSONDefault()
         let eventJSON = MPXTracker.eventJSON(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)
         obj["events"] = [eventJSON]
         return obj
     }
-    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
+    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String: Any] {
         let timestamp = Date().getCurrentMillis()
-        let obj: [String:Any] = [
+        let obj: [String: Any] = [
             "timestamp": timestamp,
             "type": "action",
             "screen_id": screenId,
@@ -108,9 +108,9 @@ public class MPXTracker: NSObject {
         ]
         return obj
     }
-    static func screenJSON(screenId: String, screenName: String, metadata: [String:Any]) -> [String:Any] {
+    static func screenJSON(screenId: String, screenName: String, metadata: [String: Any]) -> [String: Any] {
         let timestamp = Date().getCurrentMillis()
-        let obj: [String:Any] = [
+        let obj: [String: Any] = [
             "timestamp": timestamp,
             "type": "screenview",
             "screen_id": screenId,
@@ -121,7 +121,7 @@ public class MPXTracker: NSObject {
     }
 
     static func isEnabled() -> Bool {
-        guard let trackiSettings: [String:Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
+        guard let trackiSettings: [String: Any] = Utils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
             return false
         }
         guard let trackingEnabled = trackiSettings[MPXTracker.kTrackingEnabled] as? Bool else {

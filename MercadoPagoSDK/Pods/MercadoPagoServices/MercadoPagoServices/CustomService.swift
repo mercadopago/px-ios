@@ -28,7 +28,7 @@ open class CustomService: MercadoPagoService {
                 if custDic["error"] != nil {
                     if failure != nil {
                         let apiException = try! PXApiException.fromJSON(data: data)
-                        failure!(PXError(domain: "mercadopago.sdk.customServer.getCustomer", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: custDic as! [String : Any], apiException: apiException))
+                        failure!(PXError(domain: "mercadopago.sdk.customServer.getCustomer", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: custDic as! [String: Any], apiException: apiException))
                     }
                 } else {
                     let customer: PXCustomer = try! PXCustomer.fromJSONToPXCustomer(data: data)
@@ -44,7 +44,7 @@ open class CustomService: MercadoPagoService {
         })
     }
 
-    open func createPayment(_ method: String = "POST", headers: [String:String]? = nil, body: String, params: String?, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    open func createPayment(_ method: String = "POST", headers: [String: String]? = nil, body: String, params: String?, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: PXError) -> Void)?) {
 
         self.request(uri: self.URI, params: params, body: body, method: method, headers : headers, cache: false, success: { (data: Data) -> Void in
                             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
@@ -57,7 +57,7 @@ open class CustomService: MercadoPagoService {
                         success(inProcessPayment)
                     } else if failure != nil {
                         let apiException = try! PXApiException.fromJSON(data: data)
-                        failure!(PXError(domain: "mercadopago.sdk.customServer.createPayment", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: paymentDic as! [String : Any], apiException: apiException))
+                        failure!(PXError(domain: "mercadopago.sdk.customServer.createPayment", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: paymentDic as! [String: Any], apiException: apiException))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {

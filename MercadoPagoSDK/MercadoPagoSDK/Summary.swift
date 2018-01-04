@@ -9,12 +9,12 @@
 import UIKit
 
 class Summary: NSObject {
-    var details: [SummaryType:SummaryDetail]
+    var details: [SummaryType: SummaryDetail]
     var disclaimer: String?
     var disclaimerColor: UIColor = UIColor.mpGreenishTeal()
     var showSubitle: Bool = false
 
-    init(details: [SummaryType:SummaryDetail]) {
+    init(details: [SummaryType: SummaryDetail]) {
         self.details = details
     }
 

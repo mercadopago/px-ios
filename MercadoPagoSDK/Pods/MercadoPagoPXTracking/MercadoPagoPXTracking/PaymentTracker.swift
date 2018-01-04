@@ -12,7 +12,7 @@ extension MPXTracker {
 
     public static func trackToken(token: String) {
 
-        let obj: [String:Any] = ["public_key": MPXTracker.sharedInstance.getPublicKey(), "token": token, "sdk_flavor": "3", "sdk_platform": "iOS", "sdk_type": MPXTracker.sharedInstance.getPlatformType(), "sdk_version": MPXTracker.sharedInstance.getSdkVersion(), "sdk_framework": ""]
+        let obj: [String: Any] = ["public_key": MPXTracker.sharedInstance.getPublicKey(), "token": token, "sdk_flavor": "3", "sdk_platform": "iOS", "sdk_type": MPXTracker.sharedInstance.getPlatformType(), "sdk_version": MPXTracker.sharedInstance.getSdkVersion(), "sdk_framework": ""]
 
             TrackingServices.request(url: "https://api.mercadopago.com/v1/checkout/tracking", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (_) -> Void in
 
@@ -24,7 +24,7 @@ extension MPXTracker {
 
     public static func trackPaymentOff(paymentId: String) {
 
-        let obj: [String:Any] = ["public_key": MPXTracker.sharedInstance.getPublicKey(), "payment_id": paymentId, "sdk_flavor": "3", "sdk_platform": "iOS", "sdk_type": MPXTracker.sharedInstance.getPlatformType(), "sdk_version": MPXTracker.sharedInstance.getSdkVersion(), "sdk_framework": ""]
+        let obj: [String: Any] = ["public_key": MPXTracker.sharedInstance.getPublicKey(), "payment_id": paymentId, "sdk_flavor": "3", "sdk_platform": "iOS", "sdk_type": MPXTracker.sharedInstance.getPlatformType(), "sdk_version": MPXTracker.sharedInstance.getSdkVersion(), "sdk_framework": ""]
 
         TrackingServices.request(url: "https://api.mercadopago.com/v1/checkout/tracking/off", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (_) -> Void in
 

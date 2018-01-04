@@ -9,19 +9,19 @@
 import Foundation
 
 extension Int {
-    public var stringValue:String {
+    public var stringValue: String {
         return "\(self)"
     }
 }
 
 extension Int64 {
-    public var stringValue:String {
+    public var stringValue: String {
         return "\(self)"
     }
 }
 
 extension Double {
-    public var stringValue:String {
+    public var stringValue: String {
         return "\(self)"
     }
 }

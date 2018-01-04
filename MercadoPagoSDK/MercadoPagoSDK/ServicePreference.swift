@@ -12,7 +12,7 @@ open class ServicePreference: NSObject {
 
     var customerURL: String?
     var customerURI = ""
-    var customerAdditionalInfo: [String:String]?
+    var customerAdditionalInfo: [String: String]?
     var checkoutPreferenceURL: String?
     var checkoutPreferenceURI = ""
     var checkoutAdditionalInfo: NSDictionary?
@@ -21,7 +21,7 @@ open class ServicePreference: NSObject {
     var paymentAdditionalInfo: NSDictionary?
     var discountURL: String = URLConfigs.MP_API_BASE_URL
     var discountURI: String = URLConfigs.MP_DISCOUNT_URI
-    var discountAdditionalInfo: [String:String]?
+    var discountAdditionalInfo: [String: String]?
     var processingMode: ProcessingMode = ProcessingMode.aggregator
 
     private static let kServiceSettings = "services_settings"
@@ -41,7 +41,7 @@ open class ServicePreference: NSObject {
         super.init()
     }
 
-    public func setGetCustomer(baseURL: String, URI: String, additionalInfo: [String:String] = [:]) {
+    public func setGetCustomer(baseURL: String, URI: String, additionalInfo: [String: String] = [:]) {
         customerURL = baseURL
         customerURI = URI
         customerAdditionalInfo = additionalInfo
@@ -54,7 +54,7 @@ open class ServicePreference: NSObject {
         self.useDefaultPaymentSettings = false
     }
 
-    public func setDiscount(baseURL: String, URI: String, additionalInfo: [String:String] = [:]) {
+    public func setDiscount(baseURL: String, URI: String, additionalInfo: [String: String] = [:]) {
         discountURL = baseURL
         discountURI = URI
         discountAdditionalInfo = additionalInfo

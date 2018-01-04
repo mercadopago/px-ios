@@ -37,10 +37,10 @@ open class IdentificationType: NSObject {
 
     open func toJSONString() -> String {
 
-        let _id : Any = self._id != nil ? JSONHandler.null : self._id!
-        let name : Any = self.name == nil ? JSONHandler.null : self.name!
-        let type : Any = self.type == nil ? JSONHandler.null : self.type!
-        let obj: [String:Any] = [
+        let _id: Any = self._id != nil ? JSONHandler.null : self._id!
+        let name: Any = self.name == nil ? JSONHandler.null : self.name!
+        let type: Any = self.type == nil ? JSONHandler.null : self.type!
+        let obj: [String: Any] = [
             "id": _id,
             "name": name,
             "type": type,

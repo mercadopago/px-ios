@@ -59,11 +59,11 @@ open class BankDeal: NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let issuer : Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
-        let url : Any = (self.url != nil) ? self.url! : ""
+    open func toJSON() -> [String: Any] {
+        let issuer: Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
+        let url: Any = (self.url != nil) ? self.url! : ""
 
-        var obj: [String:Any] = [
+        var obj: [String: Any] = [
             "promoId": self.promoId ,
             "issuer": issuer,
             "recommendedMessage": self.recommendedMessage ?? "",

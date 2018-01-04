@@ -18,14 +18,14 @@ class RealTimeStrategy: TrackingStrategy { // V1
     }
     private func send(trackList: Array<ScreenTrackInfo>) {
         var jsonBody = MPXTracker.generateJSONDefault()
-        var arrayEvents = Array<[String:Any]>()
+        var arrayEvents = Array<[String: Any]>()
         for elementToTrack in trackList {
             arrayEvents.append(elementToTrack.toJSON())
         }
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)
 
-        let header : [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
+        let header: [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
 
         TrackingServices.request(url: PXTrackingURLConfigs.TRACKING_URL, params: nil, body: body, method: "POST", headers: header, success: { (result) -> Void in
         }) { (error) -> Void in
@@ -59,14 +59,14 @@ class BatchStrategy: TrackingStrategy { // V2
     }
     private func send(trackList: Array<ScreenTrackInfo>) {
         var jsonBody = MPXTracker.generateJSONDefault()
-        var arrayEvents = Array<[String:Any]>()
+        var arrayEvents = Array<[String: Any]>()
         for elementToTrack in trackList {
             arrayEvents.append(elementToTrack.toJSON())
         }
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)
 
-        let header : [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
+        let header: [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
         TrackingServices.request(url: PXTrackingURLConfigs.TRACKING_URL, params: nil, body: body, method: "POST", headers: header, success: { (result) -> Void in
         }) { (error) -> Void in
             TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
@@ -109,7 +109,7 @@ class ForceTrackStrategy: TrackingStrategy { // V2
         jsonBody["events"] = arrayEvents
         let body = JSONHandler.jsonCoding(jsonBody)
 
-        let header : [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
+        let header: [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
 
         TrackingServices.request(url: PXTrackingURLConfigs.TRACKING_URL, params: nil, body: body, method: "POST", headers: header, success: { (result) -> Void in
         }) { (error) -> Void in

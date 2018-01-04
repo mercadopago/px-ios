@@ -71,7 +71,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         super.viewDidLoad()
         self.errorTitle.text = error.message
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
 
         self.errorSubtitle.attributedText = NSAttributedString(string :error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)

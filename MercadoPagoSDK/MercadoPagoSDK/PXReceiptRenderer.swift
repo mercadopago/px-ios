@@ -9,9 +9,9 @@
 import UIKit
 
 class PXReceiptRenderer: NSObject {
-    let FONT_SIZE : CGFloat = 14.0
+    let FONT_SIZE: CGFloat = 14.0
     let LABEL_SIZE: CGFloat = 18.0
-    
+
     func render(_ component: PXReceiptComponent) -> PXReceiptView {
         let receiptView = PXReceiptView()
         receiptView.translatesAutoresizingMaskIntoConstraints = false

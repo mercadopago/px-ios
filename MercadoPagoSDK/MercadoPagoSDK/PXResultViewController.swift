@@ -49,13 +49,13 @@ class PXResultViewController: PXComponentContainerViewController {
         receiptView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
         PXLayout.matchWidth(ofView: receiptView).isActive = true
-        
+
         //Add Top Custom Component
         topCustomView = buildTopCustomView()
         contentView.addSubview(topCustomView)
         PXLayout.put(view: topCustomView, onBottomOf: receiptView).isActive = true
         PXLayout.matchWidth(ofView: topCustomView).isActive = true
-        
+
         //Add Footer
         footerView = self.buildFooterView()
         contentView.addSubview(footerView)
@@ -80,7 +80,7 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.put(view: bottomCustomView, onBottomOf: bodyView).isActive = true
         PXLayout.put(view: bottomCustomView, aboveOf: footerView).isActive = true
         PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
-       
+
         if isEmptySpaceOnScreen() {
             if shouldExpandHeader() {
                 expandHeader()
@@ -95,13 +95,13 @@ class PXResultViewController: PXComponentContainerViewController {
         self.view.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
     }
-    
+
     func expandHeader() {
         PXLayout.matchHeight(ofView: self.contentView, toView: self.scrollView).isActive = true
         PXLayout.setHeight(owner: self.bodyView, height: 0.0).isActive = true
         PXLayout.setHeight(owner: self.receiptView, height: 0.0).isActive = true
     }
-    
+
     func expandBody() {
         self.view.layoutIfNeeded()
         self.scrollView.layoutIfNeeded()
@@ -118,12 +118,11 @@ class PXResultViewController: PXComponentContainerViewController {
         self.view.layoutIfNeeded()
         return self.contentView.frame.height < totalContentViewHeigth()
     }
-    
+
     func shouldExpandHeader() -> Bool {
         self.view.layoutIfNeeded()
         return bodyView.frame.height == 0
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,19 +152,19 @@ extension PXResultViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
-    
+
     func buildReceiptView() -> UIView {
         let receiptProps = self.viewModel.getReceiptComponentProps()
         let receiptComponent = PXReceiptComponent(props: receiptProps)
         return receiptComponent.render()
     }
-    
+
     func buildBodyView() -> UIView {
         let bodyProps = self.viewModel.getBodyComponentProps()
         let bodyComponent = PXBodyComponent(props: bodyProps)
         return bodyComponent.render()
     }
-    
+
     func buildTopCustomView() -> UIView {
         if let component = self.viewModel.getTopCustomComponent() {
             return component.render()
@@ -174,7 +173,7 @@ extension PXResultViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-    
+
     func buildBottomCustomView() -> UIView {
         if let component = self.viewModel.getBottomCustomComponent() {
             return component.render()

@@ -27,7 +27,7 @@ open class SavedESCCardToken: SavedCardToken {
         self.device = Device()
     }
 
-    open override func toJSON() -> [String:Any] {
+    open override func toJSON() -> [String: Any] {
         var obj = super.toJSON()
         obj["require_esc"] = MercadoPagoCheckoutViewModel.flowPreference.saveESC
         obj["esc"] = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc!

@@ -230,9 +230,9 @@ open class CheckoutPreference: NSObject {
 
     open func toJSONString() -> String {
 
-        let _id : Any = self._id == nil ? JSONHandler.null : (self._id)!
-        let player : Any = self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
-        var obj: [String:Any] = [
+        let _id: Any = self._id == nil ? JSONHandler.null : (self._id)!
+        let player: Any = self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
+        var obj: [String: Any] = [
             "id": _id,
             "payer": player
         ]

@@ -160,8 +160,8 @@ public class PaymentData: NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    func toJSON() -> [String:Any] {
-       var obj: [String:Any] = [
+    func toJSON() -> [String: Any] {
+       var obj: [String: Any] = [
             "payer": payer.toJSON()
        ]
         if let paymentMethod = self.paymentMethod {

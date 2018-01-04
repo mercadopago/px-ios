@@ -21,11 +21,11 @@ extension PXResultViewModel {
         }
         return instructionsInfo.getInstruction()
     }
-    
+
     func getBodyAction() -> (() -> Void) {
         return { self.executeBodyCallback() }
     }
-    
+
     open func getTopCustomComponent() -> PXComponentizable? {
         if let customComponent = preference.getApprovedTopCustomComponent(), self.paymentResult.isApproved() {
             return PXCustomComponentContainer(withComponent: customComponent)
@@ -33,7 +33,7 @@ extension PXResultViewModel {
             return nil
         }
     }
-    
+
     open func getBottomCustomComponent() -> PXComponentizable? {
         if let customComponent = preference.getApprovedBottomCustomComponent(), self.paymentResult.isApproved() {
             return PXCustomComponentContainer(withComponent: customComponent)
@@ -41,7 +41,7 @@ extension PXResultViewModel {
             return nil
         }
     }
-    
+
     func executeBodyCallback() {
         self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
     }

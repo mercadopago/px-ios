@@ -39,7 +39,7 @@ extension NSDictionary {
         }
     }
 
-    func parseToLiteral() -> [String:Any] {
+    func parseToLiteral() -> [String: Any] {
 
         var anyDict = [String: Any]()
 

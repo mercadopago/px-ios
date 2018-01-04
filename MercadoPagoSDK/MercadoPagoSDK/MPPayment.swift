@@ -59,8 +59,8 @@ open class MPPayment: NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        var obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        var obj: [String: Any] = [
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,
             "pref_id": self.preferenceId,
@@ -98,9 +98,9 @@ open class CustomerPayment: MPPayment {
         self.customerId = customerId
     }
 
-    open override func toJSON() -> [String:Any] {
+    open override func toJSON() -> [String: Any] {
         self.payer?._id = customerId
-        let customerPaymentObj: [String:Any] = super.toJSON()
+        let customerPaymentObj: [String: Any] = super.toJSON()
         return customerPaymentObj
     }
 
@@ -108,14 +108,14 @@ open class CustomerPayment: MPPayment {
 
 open class BlacklabelPayment: MPPayment {
 
-    open override func toJSON() -> [String:Any] {
+    open override func toJSON() -> [String: Any] {
         // Override payer object with groupsPayer (which includes AT in its body)
         guard let payer = self.payer, let email = self.payer?.email else {
             return [:]
         }
 
         self.payer = GroupsPayer(_id: payer._id, email: email, identification: payer.identification, entityType: payer.entityType)
-        let blacklabelPaymentObj: [String:Any] = super.toJSON()
+        let blacklabelPaymentObj: [String: Any] = super.toJSON()
         return blacklabelPaymentObj
     }
 }

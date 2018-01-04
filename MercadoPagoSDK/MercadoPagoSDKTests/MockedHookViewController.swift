@@ -25,17 +25,17 @@ open class MockedHookViewController: UIViewController {
     }
 }
 
-//MARK: - Hooks implementation delegates.
+// MARK: - Hooks implementation delegates.
 extension MockedHookViewController: PXHookComponent {
-    
+
     public func hookForStep() -> PXHookStep {
         return hookStep!
     }
-    
+
     public func render() -> UIView {
         return self.view
     }
-    
+
     public func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool {
         return shouldSkipHook
     }

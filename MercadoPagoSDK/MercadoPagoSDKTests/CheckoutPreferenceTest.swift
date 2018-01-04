@@ -23,7 +23,7 @@ class CheckoutPreferenceTest: XCTestCase {
 
     func testFromJSON() {
 
-        let obj: [String:AnyObject] = [
+        let obj: [String: AnyObject] = [
             "id": "id" as AnyObject,
             ]
 

@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class PXHookDataTest : BaseTest {
+class PXHookDataTest: BaseTest {
 
     func test_addData() {
         PXCheckoutStore.sharedInstance.addData(forKey: "key", value: "value")

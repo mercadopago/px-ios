@@ -37,12 +37,12 @@ open class Address: NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
+    open func toJSON() -> [String: Any] {
         let streetName: Any = self.streetName == nil ? JSONHandler.null : self.streetName!
         let streetNumber: Any = self.streetNumber == nil ? JSONHandler.null : self.streetNumber!
         let zipCode: Any = self.zipCode == nil ? JSONHandler.null : self.zipCode!
 
-        let obj: [String:Any] = [
+        let obj: [String: Any] = [
             "street_name": streetName,
             "street_number": streetNumber,
             "zip_code": zipCode

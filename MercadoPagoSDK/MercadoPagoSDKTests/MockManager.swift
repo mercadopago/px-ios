@@ -42,9 +42,9 @@ class MockManager: NSObject {
 
     }
 
-    internal class func convertStringToDictionary(_ text: String) throws -> [String:AnyObject]? {
+    internal class func convertStringToDictionary(_ text: String) throws -> [String: AnyObject]? {
         if let data = text.data(using: String.Encoding.utf8) {
-            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
+            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject]
             return json
         }
         return nil

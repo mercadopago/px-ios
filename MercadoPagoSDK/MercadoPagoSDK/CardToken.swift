@@ -74,7 +74,7 @@ open class CardToken: NSObject, CardInformationForm {
     }
 
     open func validateCardNumber(_ paymentMethod: PaymentMethod) -> String? {
-        var userInfo: [String : String]?
+        var userInfo: [String: String]?
         cardNumber = cardNumber?.replacingOccurrences(of: "•", with: "")
         let validCardNumber = self.validateCardNumber()
         if validCardNumber != nil {
@@ -306,13 +306,13 @@ open class CardToken: NSObject, CardInformationForm {
         return bin
     }
 
-    open func toJSON() -> [String:Any] {
+    open func toJSON() -> [String: Any] {
 
-        let card_number : Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
-        let cardholder : Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
-        let security_code : Any = String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!
-        let device : Any = self.device == nil ? JSONHandler.null : self.device!.toJSON()
-        let obj: [String:Any] = [
+        let card_number: Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
+        let cardholder: Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
+        let security_code: Any = String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!
+        let device: Any = self.device == nil ? JSONHandler.null : self.device!.toJSON()
+        let obj: [String: Any] = [
             "card_number": card_number,
             "cardholder": cardholder,
             "security_code": security_code,

@@ -9,8 +9,8 @@
 import UIKit
 
 class PXCustomComponentContainer: PXComponentizable {
-    let customComponent : PXComponentizable
-    
+    let customComponent: PXComponentizable
+
     init(withComponent customComponent: PXComponentizable) {
         self.customComponent = customComponent
     }

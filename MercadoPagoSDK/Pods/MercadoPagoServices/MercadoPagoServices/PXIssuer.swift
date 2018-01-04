@@ -20,7 +20,7 @@ open class PXIssuer: NSObject, Codable {
         case id
         case name
     }
-    
+
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXIssuerKeys.self)
         let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
@@ -32,10 +32,10 @@ open class PXIssuer: NSObject, Codable {
             let stringId = try container.decodeIfPresent(String.self, forKey: .id)
             id = stringId!
         }
-        
+
         self.init(id: id, name: name)
     }
-    
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

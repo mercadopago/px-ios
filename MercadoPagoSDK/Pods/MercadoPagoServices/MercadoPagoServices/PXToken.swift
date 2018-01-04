@@ -86,7 +86,7 @@ open class PXToken: NSObject, Codable {
         let lastFourDigits: String? = try container.decodeIfPresent(String.self, forKey: .lastFourDigits)
         let cardholder: PXCardHolder? = try container.decodeIfPresent(PXCardHolder.self, forKey: .cardholder)
         let esc: String? = try container.decodeIfPresent(String.self, forKey: .esc)
-        
+
         let usedDate = String.getDate(usedDateString)
         let dateCreated = String.getDate(dateCreatedString)
         let dateLastUpdated = String.getDate(dateLastUpdatedString)

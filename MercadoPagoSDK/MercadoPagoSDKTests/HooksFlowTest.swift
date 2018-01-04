@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class HooksFlowTest : BaseTest {
+class HooksFlowTest: BaseTest {
 
     var mpCheckout: MercadoPagoCheckout!
     let flowPreference = FlowPreference()
@@ -761,7 +761,7 @@ class HooksFlowTest : BaseTest {
 
     // MARK: Test Account Money with Hooks with Hook Store
     func testNextStep_withCheckoutPreference_accountMoneyWithHooks_andHookStore() {
-        
+
         // Set access_token
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         XCTAssertNotNil(mpCheckout.viewModel)

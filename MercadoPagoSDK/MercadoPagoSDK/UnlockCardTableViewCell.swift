@@ -47,7 +47,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
     private static func getUnlockCardText() -> NSMutableAttributedString {
 
         let unlockCardText = "Recuerda desbloquear tu tarjeta antes de confirmar el pago.".localized
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14), NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0xA1924C)]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14), NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0xA1924C)]
 
         let mutableAttributedString = NSMutableAttributedString(string: unlockCardText, attributes: normalAttributes)
         let unlockCardLinkRange = (unlockCardText as NSString).range(of: "desbloquear tu tarjeta".localized)

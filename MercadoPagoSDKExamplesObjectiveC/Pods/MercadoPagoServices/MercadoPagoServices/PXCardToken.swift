@@ -59,7 +59,7 @@ open class PXCardToken: NSObject, Codable {
 extension PXCardToken {
 
     open func validateCardNumber(_ paymentMethod: PXPaymentMethod) -> Bool {
-        var userInfo: [String : String]?
+        var userInfo: [String: String]?
         cardNumber = cardNumber?.replacingOccurrences(of: "•", with: "")
         if !self.validateCardNumber() {
             return false
@@ -223,7 +223,7 @@ extension PXCardToken {
     internal func hasMonthPassed(_ month: Int) -> Bool {
         return month < (now.month!)
     }
-    
+
     internal func hasDatePassed(year: Int?, month: Int?) -> Bool {
         guard let year = year, let month = month else {
             return true

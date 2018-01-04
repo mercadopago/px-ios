@@ -124,7 +124,6 @@ open class PXPaymentMethod: NSObject, Codable {
         }
         return false
     }
-    
 
     open var isIssuerRequired: Bool {
         return isAdditionalInfoNeeded("issuer_id")

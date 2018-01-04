@@ -25,7 +25,7 @@ open class PXPluginNavigationHandler: NSObject {
         if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
             paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
         }
-        
+
         // By definition of MVP1, we support only approved or rejected.
         var paymentStatusStrDefault = PaymentStatus.REJECTED
         var paymentStatusDetailStrDefault = RejectedStatusDetail.REJECTED_PLUGIN_PM

@@ -109,4 +109,3 @@ open class PXCard: NSObject, Codable {
     }
 
 }
-

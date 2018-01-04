@@ -58,7 +58,7 @@ open class PaymentResult: NSObject {
     func isInProcess() -> Bool {
         return self.status == PaymentStatus.IN_PROCESS
     }
-    
+
     func isRejected() -> Bool {
         return self.status == PaymentStatus.REJECTED
     }
@@ -66,11 +66,11 @@ open class PaymentResult: NSObject {
     func isInvalidESC() -> Bool {
         return self.statusDetail == RejectedStatusDetail.INVALID_ESC
     }
-    
+
     func isReviewManual() -> Bool {
         return self.statusDetail == PendingStatusDetail.REVIEW_MANUAL
     }
-    
+
     func isWaitingForPayment() -> Bool {
         return self.statusDetail == PendingStatusDetail.WAITING_PAYMENT
     }

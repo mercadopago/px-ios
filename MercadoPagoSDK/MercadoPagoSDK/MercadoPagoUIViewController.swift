@@ -117,7 +117,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: fontChosed]
 
             if titleDict.count > 0 {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
             }
             self.navigationItem.hidesBackButton = true
             self.navigationController!.interactivePopGestureRecognizer?.delegate = self
@@ -296,7 +296,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
             let font: UIFont = Utils.getFont(size: navBarFontSize)
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
-            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
         }
 
     }

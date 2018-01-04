@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 public class PXResultViewModel: NSObject {
 
     open var paymentResult: PaymentResult

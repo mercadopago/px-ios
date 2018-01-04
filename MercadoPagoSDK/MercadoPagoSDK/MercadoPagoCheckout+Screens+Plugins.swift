@@ -25,7 +25,7 @@ extension MercadoPagoCheckout {
         if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
             paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
-        
+
         // Create navigation handler.
         paymentPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
 
@@ -65,7 +65,7 @@ extension MercadoPagoCheckout {
         if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
             paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
-        
+
         // Create navigation handler.
         paymentMethodConfigPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
 

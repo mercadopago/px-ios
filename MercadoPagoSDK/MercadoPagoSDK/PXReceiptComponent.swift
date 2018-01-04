@@ -8,9 +8,8 @@
 
 import UIKit
 
-
 class PXReceiptComponent: PXComponentizable {
-    var props : PXReceiptProps
+    var props: PXReceiptProps
 
     init(props: PXReceiptProps) {
         self.props = props

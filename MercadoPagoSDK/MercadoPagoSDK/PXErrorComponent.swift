@@ -11,18 +11,18 @@ import MercadoPagoServices
 
 public class PXErrorComponent: NSObject, PXComponentizable {
     var props: PXErrorProps
-    
+
     init(props: PXErrorProps) {
         self.props = props
     }
     public func render() -> UIView {
         return PXErrorRenderer().render(component: self)
     }
-    
+
     public func getTitle() -> String {
         return PXResourceProvider.getTitleForErrorBody()
     }
-    
+
     public func getDescription() -> String {
         if self.props.status.elementsEqual(PXPayment.Status.PENDING) || self.props.status.elementsEqual(PXPayment.Status.IN_PROCESS) {
             if self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_CONTINGENCY) {
@@ -53,27 +53,27 @@ public class PXErrorComponent: NSObject, PXComponentizable {
         }
         return ""
     }
-    
+
     public func getActionText() -> String {
         return PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(self.props.paymentMethodName)
     }
-    
+
     public func getSecondaryTitleForCallForAuth() -> String {
         return PXResourceProvider.getSecondaryTitleForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE()
     }
-    
+
     public func isCallForAuthorize() -> Bool {
         return props.status.elementsEqual(PXPayment.Status.REJECTED) && props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
     }
-    
+
     public func hasTitle() -> Bool {
         return !self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT)
     }
-    
+
     public func hasActionForCallForAuth() -> Bool {
         return isCallForAuthorize() && !String.isNullOrEmpty(props.paymentMethodName)
     }
-    
+
     public func recoverPayment() {
         self.props.action()
     }
@@ -84,7 +84,7 @@ class PXErrorProps: NSObject {
     var statusDetail: String
     var paymentMethodName: String?
     var action : (() -> Void)
-    
+
     init(status: String, statusDetail: String, paymentMethodName: String?, action:  @escaping (() -> Void)) {
         self.status = status
         self.statusDetail = statusDetail

@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoSDK
 
 @objc public class TestComponent: NSObject, PXComponentizable {
-    
+
     static public func getPreference() -> PaymentResultScreenPreference {
         let top = TestComponent()
         let bottom = TestComponent()
@@ -20,7 +20,7 @@ import MercadoPagoSDK
         //        preference.setApprovedBottomCustomComponent(bottom)
         return preference
     }
-    
+
     public func render() -> UIView {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 100))
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -28,4 +28,3 @@ import MercadoPagoSDK
         return view
     }
 }
-

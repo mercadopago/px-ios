@@ -18,7 +18,7 @@ open class MercadoPagoService: NSObject {
         self.baseURL = baseURL
     }
 
-    public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
+    public func request(uri: String, params: String?, body: String?, method: String, headers: [String: String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
                         failure: ((_ error: NSError) -> Void)?) {
         var url = baseURL + uri
         var requesturl = url

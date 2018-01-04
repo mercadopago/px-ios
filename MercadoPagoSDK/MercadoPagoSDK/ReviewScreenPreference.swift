@@ -14,11 +14,11 @@ open class ReviewScreenPreference: NSObject {
     private var confirmButtonText = "Confirmar".localized
     private var cancelButtonText = "Cancelar Pago".localized
 	private var shouldDisplayChangeMethodOption = true
-    var details: [SummaryType:SummaryDetail] = [SummaryType: SummaryDetail]()
+    var details: [SummaryType: SummaryDetail] = [SummaryType: SummaryDetail]()
     var disclaimer: String?
     var disclaimerColor: UIColor = UIColor.mpGreenishTeal()
     var showSubitle: Bool = false
-    let summaryTitles: [SummaryType:String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
+    let summaryTitles: [SummaryType: String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
                                                             SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envío".localized]
     private var itemsReview: ItemsReview = ItemsReview()
 
