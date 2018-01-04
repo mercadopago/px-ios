@@ -35,6 +35,7 @@
       "name": "Default",
       "resources": [
         "MercadoPagoSDK/MercadoPagoSDK/*.xcassets",
+        "MercadoPagoSDK/MercadoPagoSDK/*/*.xcassets",
         "MercadoPagoSDK/MercadoPagoSDK/*.ttf",
         "MercadoPagoSDK/*.plist",
         "MercadoPagoSDK/MercadoPagoSDK/*.lproj"
