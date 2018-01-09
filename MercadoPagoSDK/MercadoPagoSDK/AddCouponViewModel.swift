@@ -45,7 +45,7 @@ class AddCouponViewModel: NSObject {
             } else if error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_EXPIRED {
                 failure("La campaña expiró".localized)
             } else {
-                failure("Algo salió mal… ".localized)
+                failure("Algo salió mal...".localized)
             }
 
         }

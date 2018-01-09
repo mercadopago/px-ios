@@ -141,7 +141,7 @@ class PayerInfoViewModel: NSObject {
         if completeEmptySpaces {
             let maskComplete = TextMaskFormater(mask: mask.mask, completeEmptySpaces: true, leftToRight: true, completeEmptySpacesWith: "*")
             return maskComplete.textMasked(self.identificationNumber, remasked: true)
-        }else {
+        } else {
             return mask.textMasked(self.identificationNumber, remasked: true)
         }
     }

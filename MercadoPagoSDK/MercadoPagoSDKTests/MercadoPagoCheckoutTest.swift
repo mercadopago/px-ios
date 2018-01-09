@@ -95,6 +95,7 @@ class MercadoPagoCheckoutTest: BaseTest {
 
         let navControllerInstance = UINavigationController()
         let paymentResult = MockBuilder.buildPaymentResult(paymentMethodId: "visa")
+        paymentResult.paymentData = paymentData
 
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "lala", checkoutPreference: checkoutPreference, paymentData : paymentData, paymentResult : paymentResult, navigationController: navControllerInstance)
 
@@ -124,27 +125,6 @@ class MercadoPagoCheckoutTest: BaseTest {
 
     }
 
-    /*
-    func testCollectPaymentMethodSearch() {
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckoutMock(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
-
-        XCTAssertNil(self.mpCheckout?.viewModel.rootPaymentMethodOptions)
-        XCTAssertNil(self.mpCheckout?.viewModel.search)
-        XCTAssertNil(self.mpCheckout?.viewModel.availablePaymentMethods)
-        XCTAssertNil(self.mpCheckout?.viewModel.paymentMethodOptions)
-
-        self.mpCheckout!.getPaymentMethodSearch()
-
-        XCTAssertNotNil(self.mpCheckout?.viewModel.rootPaymentMethodOptions)
-        XCTAssertNotNil(self.mpCheckout?.viewModel.search)
-        XCTAssertNotNil(self.mpCheckout?.viewModel.availablePaymentMethods)
-        XCTAssertEqual(self.mpCheckout?.viewModel.availablePaymentMethods!.count, 12)
-        XCTAssertNotNil(self.mpCheckout?.viewModel.paymentMethodOptions)
-        XCTAssertEqual(self.mpCheckout?.viewModel.paymentMethodOptions!.count, 1)
-    }
-*/
     func testCollectPaymentMethods() {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()

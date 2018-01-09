@@ -90,7 +90,7 @@ class PXHeaderRenderer: NSObject {
             PXLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
             statusLabel.attributedText = text
             PXLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
-        }else {
+        } else {
             PXLayout.put(view: statusLabel, onBottomOf:upperView).isActive = true
             PXLayout.setHeight(owner: statusLabel, height: 0).isActive = true
         }

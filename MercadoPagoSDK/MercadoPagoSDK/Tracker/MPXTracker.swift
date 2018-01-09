@@ -57,7 +57,7 @@ public class MPXTracker: NSObject {
         let obj: [String: Any] = [
             "client_id": clientId,
             "application": applicationJSON,
-            "device": deviceJSON,
+            "device": deviceJSON
             ]
         return obj
     }

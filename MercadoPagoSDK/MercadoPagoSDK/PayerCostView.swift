@@ -40,7 +40,7 @@ class PayerCostView: UIView, PXComponent {
             self.noRateLabel.textAlignment = .right
             self.requiredHeight = self.requiredHeight + self.noRateLabel.requiredHeight()
             self.addSubview(noRateLabel)
-        }else {
+        } else {
              self.purchaseDetailAmount = MPLabel(frame: CGRect(x: (HORIZONTAL_MARGIN * 2) +  self.purchaseDetailTitle.frame.size.width, y: VERTICAL_MARGIN, width: (self.getWeight() - 3 * HORIZONTAL_MARGIN)/2, height: 0 ))
 
         }

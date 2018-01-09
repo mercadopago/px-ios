@@ -247,7 +247,7 @@ open class CheckoutViewModel: NSObject {
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 summary.addAmountDetail(detail: SummaryItemDetail(amount: choPref.getAmount()), type: SummaryType.PRODUCT)
             }
-        }else {
+        } else {
             summary = defaultSummary()
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 if let title = self.reviewScreenPreference.details[SummaryType.PRODUCT]?.title {
@@ -262,7 +262,7 @@ open class CheckoutViewModel: NSObject {
             amountPref = discount.newAmount()
             if summary.details[SummaryType.DISCOUNT] != nil {
                  summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)
-            }else {
+            } else {
                 let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
                 summary.addSummaryDetail(summaryDetail:discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
@@ -275,7 +275,7 @@ open class CheckoutViewModel: NSObject {
                 let interestAmountDetail = SummaryItemDetail(amount: interest)
                 if summary.details[SummaryType.CHARGE] != nil {
                     summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.CHARGE)
-                }else {
+                } else {
                     let interestSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: interestAmountDetail)
                     summary.addSummaryDetail(summaryDetail:interestSummaryDetail, type: SummaryType.CHARGE)
                 }

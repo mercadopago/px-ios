@@ -68,7 +68,7 @@
 "cc_rejected_bad_filled_date_title"="The expiration date is not correct.";
 "cc_rejected_call_for_authorize_title" = "Could not authorize it?";
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
-"Algo salió mal… " = "Something went wrong…";
+"Algo salió mal..." = "Something went wrong...";
 "El número de identificación es inválido" = "Invalid identification number";
 "cc_rejected_plugin_pm_title" = "%0 did not process the payment";
 

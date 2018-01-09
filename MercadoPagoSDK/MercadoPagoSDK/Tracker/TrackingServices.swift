@@ -42,11 +42,11 @@ class TrackingServices: NSObject {
                                                                                     options:JSONSerialization.ReadingOptions.allowFragments)
                                 success(responseJson as Any)
 
-                            }else {
+                            } else {
                                 success("")
                             }
 
-                        }else {
+                        } else {
                             let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
                             failure?(e)
                         }

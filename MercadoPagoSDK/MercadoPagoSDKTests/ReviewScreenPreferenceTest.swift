@@ -16,6 +16,7 @@ class ReviewScreenPreferenceTest: BaseTest {
     override func setUp() {
         super.setUp()
         self.createCheckout()
+        MercadoPagoContext.setLanguage(language: Languages._ENGLISH)
     }
 
     func createCheckout() {
@@ -58,11 +59,9 @@ class ReviewScreenPreferenceTest: BaseTest {
         XCTAssert(reviewScreenPreference.isChangeMethodOptionEnabled())
 
         reviewScreenPreference.disableChangeMethodOption()
-
         XCTAssertFalse(reviewScreenPreference.isChangeMethodOptionEnabled())
 
         reviewScreenPreference.enableChangeMethodOption()
-
         XCTAssert(reviewScreenPreference.isChangeMethodOptionEnabled())
     }
 }

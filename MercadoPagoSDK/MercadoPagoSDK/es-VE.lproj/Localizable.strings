@@ -73,7 +73,7 @@
 "cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Cancelar pago" = "Cancelar pago";
-"Algo salió mal… " = "Algo salió mal… ";
+"Algo salió mal..." = "Algo salió mal...";
 "El número de identificación es inválido" = "El número de identificación es inválido";
 
 
@@ -103,7 +103,7 @@
 "cc_rejected_call_for_authorize_subtitle_debit_card" = "";
 
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
-"Algo salió mal… " = "Algo salió mal… ";
+"Algo salió mal..." = "Algo salió mal...";
 
 
 

@@ -44,7 +44,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = otherView
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: margin))
@@ -54,7 +54,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = otherView
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: -margin))
@@ -64,7 +64,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = otherView
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: margin))
@@ -74,7 +74,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = otherView
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: -margin))
@@ -139,7 +139,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if container == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = container
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0))
@@ -150,7 +150,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if container == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = container
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))
@@ -160,7 +160,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = otherView
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0))
@@ -170,7 +170,7 @@ class PXLayout: NSObject {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
-        }else {
+        } else {
             superView = otherView
         }
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0))

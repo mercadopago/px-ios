@@ -36,7 +36,7 @@ open class FinancialInstitution: NSObject, Cellable {
         let description: Any = self._description == nil ? JSONHandler.null : self._description!
         let obj: [String: Any] = [
             "id": id,
-            "description": description,
+            "description": description
             ]
         return obj
     }

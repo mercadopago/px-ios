@@ -37,7 +37,7 @@ extension ReviewScreenPreference {
     func updateTitle(type: SummaryType, title: String) {
         if self.details[type] != nil {
             self.details[type]?.title = title
-        }else {
+        } else {
             self.details[type] = SummaryDetail(title: title, detail: nil)
         }
         if type == SummaryType.DISCOUNT {
@@ -51,7 +51,7 @@ extension ReviewScreenPreference {
         }
         if let firstWord = oneWordDescription.components(separatedBy: " ").first {
             return firstWord
-        }else {
+        } else {
             return oneWordDescription
         }
 
@@ -60,7 +60,7 @@ extension ReviewScreenPreference {
     func addDetail(detail: SummaryItemDetail, type: SummaryType) {
         if self.details[type] != nil {
             self.details[type]?.details.append(detail)
-        }else {
+        } else {
             guard let title = self.summaryTitles[type] else {
                 self.details[type] = SummaryDetail(title: "", detail: detail)
                 return
@@ -85,7 +85,7 @@ extension ReviewScreenPreference {
             if let detailAmount = details[summaryType]?.getTotalAmount() {
                 if summaryType == SummaryType.DISCOUNT {
                     totalAmount = totalAmount - detailAmount
-                }else {
+                } else {
                     totalAmount = totalAmount + detailAmount
                 }
             }

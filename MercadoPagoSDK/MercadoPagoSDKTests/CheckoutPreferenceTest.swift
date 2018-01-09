@@ -24,7 +24,7 @@ class CheckoutPreferenceTest: XCTestCase {
     func testFromJSON() {
 
         let obj: [String: AnyObject] = [
-            "id": "id" as AnyObject,
+            "id": "id" as AnyObject
             ]
 
         let preferenceResult = CheckoutPreference.fromJSON(NSDictionary(dictionary: obj))

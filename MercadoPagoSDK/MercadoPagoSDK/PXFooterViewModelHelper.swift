@@ -14,6 +14,15 @@ extension PXResultViewModel {
         return PXFooterProps(buttonAction: getActionButton(), linkAction: getActionLink())
     }
 
+    func buildFooterComponent() -> PXFooterComponent {
+        let footerProps = getFooterComponentProps()
+        return PXFooterComponent(props: footerProps)
+    }
+}
+
+// MARK: Build Helpers
+extension PXResultViewModel {
+
     func getActionButton() -> PXFooterAction? {
          var actionButton: PXFooterAction?
         if let label = self.getButtonLabel(), let action = self.getButtonAction() {
@@ -21,6 +30,7 @@ extension PXResultViewModel {
         }
         return actionButton
     }
+
     func getActionLink() -> PXFooterAction? {
         var actionLink: PXFooterAction?
 
@@ -36,60 +46,62 @@ extension PXResultViewModel {
                 if preference.getPendingSecondaryButtonText() != nil {
                     return preference.getPendingSecondaryButtonText()!
                 } else {
-                    return nil
+                    return PXFooterResultConstants.DEFAULT_BUTTON_TEXT
                 }
-            }else if preference.getApprovedSecondaryButtonText() != nil {
+            } else if preference.getApprovedSecondaryButtonText() != nil {
                 return preference.getApprovedSecondaryButtonText()
-            }else {
-                return nil
+            } else {
+                return PXFooterResultConstants.DEFAULT_BUTTON_TEXT
             }
         } else if self.isError() {
             if let labelError = preference.getRejectedSecondaryButtonText() {
                 return labelError
-            }else {
-                return "Pagar con otro medio".localized
+            } else {
+                return PXFooterResultConstants.ERROR_BUTTON_TEXT.localized
             }
         } else if self.isWarning() {
             if let labelWarning = preference.getPendingSecondaryButtonText() {
                 return labelWarning
-            }else if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
-                return "Pagar con otro medio".localized
-            }else if self.paymentResult.statusDetail == RejectedStatusDetail.CARD_DISABLE {
-                return "Ya habilité mi tarjeta".localized
+            } else if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
+                return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
+            } else if self.paymentResult.statusDetail == RejectedStatusDetail.CARD_DISABLE {
+                return PXFooterResultConstants.CARD_DISABLE_BUTTON_TEXT.localized
             } else {
-                return "Revisar los datos de tarjeta".localized
+                return PXFooterResultConstants.WARNING_BUTTON_TEXT.localized
             }
         }
-        return nil
+        return PXFooterResultConstants.DEFAULT_BUTTON_TEXT
     }
+
     func getLinkLabel() -> String? {
         if let label = preference.getExitButtonTitle() {
             return label
         }
         if self.isAccepted() {
-           return "Seguir comprando".localized
+           return PXFooterResultConstants.APPROVED_LINK_TEXT.localized
         } else if self.isError() {
-            return "Cancelar pago".localized
+            return PXFooterResultConstants.ERROR_LINK_TEXT.localized
         } else if self.isWarning() {
             if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
-                return "Cancelar pago".localized
+                return PXFooterResultConstants.ERROR_LINK_TEXT.localized
             } else {
-                return "Pagar con otro medio".localized
+                return PXFooterResultConstants.WARNING_LINK_TEXT.localized
             }
         }
-        return "Seguir comprando".localized
+        return PXFooterResultConstants.DEFAULT_LINK_TEXT.localized
     }
+
     func getButtonAction() -> (() -> Void)? {
         if self.isAccepted() {
             if self.paymentResult.isWaitingForPayment() {
                 if preference.getPendingSecondaryButtonCallback() != nil {
                     return { self.preference.getPendingSecondaryButtonCallback()!(self.paymentResult) }
-                }else {
+                } else {
                     return nil
                 }
-            }else if preference.getApprovedSecondaryButtonCallback() != nil {
+            } else if preference.getApprovedSecondaryButtonCallback() != nil {
                 return { self.preference.getApprovedSecondaryButtonCallback()!(self.paymentResult) }
-            }else {
+            } else {
                 return nil
             }
         }
@@ -99,12 +111,10 @@ extension PXResultViewModel {
         return { self.pressButton() }
     }
     func getLinkAction() -> (() -> Void)? {
-
         return { self.pressLink() }
     }
 
     func pressButton() {
-
         if self.isAccepted() {
              self.callback(PaymentResult.CongratsState.ok)
         } else if self.isError() {
@@ -112,14 +122,13 @@ extension PXResultViewModel {
         } else if self.isWarning() {
             if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
                 self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
-            }else {
+            } else {
                 self.callback(PaymentResult.CongratsState.cancel_RETRY)
             }
         }
     }
 
     func pressLink() {
-
         if self.isAccepted() {
             self.callback(PaymentResult.CongratsState.ok)
         } else if self.isError() {
@@ -127,10 +136,9 @@ extension PXResultViewModel {
         } else if self.isWarning() {
             if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
                 self.callback(PaymentResult.CongratsState.ok)
-            }else {
+            } else {
                 self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
             }
         }
     }
-
 }

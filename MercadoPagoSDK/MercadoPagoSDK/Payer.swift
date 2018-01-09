@@ -70,7 +70,7 @@ open class Payer: NSObject {
     open func toJSON() -> [String: Any] {
         let email: Any = self.email == nil ? JSONHandler.null : (self.email!)
         var obj: [String: Any] = [
-            "email": email,
+            "email": email
         ]
 
         if self._id != nil {

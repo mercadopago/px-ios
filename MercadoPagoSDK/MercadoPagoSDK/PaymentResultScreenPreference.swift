@@ -10,6 +10,9 @@ import Foundation
 
 open class PaymentResultScreenPreference: NSObject {
 
+    static let PENDING_CONTENT_TITLE = "¿Qué puedo hacer?"
+    static let REJECTED_CONTENT_TITLE = "¿Qué puedo hacer?"
+
     public enum ApprovedBadge {
         case pending
         case check
@@ -31,7 +34,7 @@ open class PaymentResultScreenPreference: NSObject {
         return self.bottomCustomComponent
     }
 
-    //FOOTER
+    // MARK: FOOTER
     var approvedSecondaryExitButtonText = ""
     var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
@@ -46,19 +49,19 @@ open class PaymentResultScreenPreference: NSObject {
     var exitButtonTitle: String?
 
     //HEADER
-    //Approved
+    // MARK: Approved
     var approvedBadge: ApprovedBadge? = ApprovedBadge.check
-    var approvedTitle = "¡Listo! Se acreditó tu pago".localized
+    var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized
     var approvedSubtitle = ""
     private var _approvedLabelText = ""
     private var _disableApprovedLabelText = true
     var approvedIconName = "default_item_icon"
     var approvedIconBundle = MercadoPago.getBundle()!
 
-    //Pending
-    var pendingTitle = "Estamos procesando el pago".localized
+    // MARK: Pending
+    var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized
     var pendingSubtitle = ""
-    var pendingContentTitle = "¿Qué puedo hacer?".localized
+    var pendingContentTitle = PaymentResultScreenPreference.PENDING_CONTENT_TITLE.localized
     var pendingContentText = ""
     private var _pendingLabelText = ""
     private var _disablePendingLabelText = true
@@ -67,23 +70,23 @@ open class PaymentResultScreenPreference: NSObject {
     var hidePendingContentText = false
     var hidePendingContentTitle = false
 
-    //Rejected
-    var rejectedTitle = "Uy, no pudimos procesar el pago".localized
+    // MARK: Rejected
+    var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
     var rejectedSubtitle = ""
     var rejectedTitleSetted = false
     private var disableRejectedLabelText = false
-    var rejectedIconSubtext = "Algo salió mal… ".localized
+    var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
     var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
     var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedDefaultIconName: String?
     var rejectedIconName: String?
-    var rejectedContentTitle = "¿Qué puedo hacer?".localized
+    var rejectedContentTitle = PaymentResultScreenPreference.REJECTED_CONTENT_TITLE.localized
     var rejectedContentText = ""
     var hideRejectedContentText = false
     var hideRejectedContentTitle = false
 
-    //Commons
+    // MARK: Commons
     var _showBadgeImage = true
     var _showLabelText = true
     open func showBadgeImage() {
@@ -113,14 +116,14 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedAdditionalInfoCells = [MPCustomCell]()
     var approvedSubHeaderCells = [MPCustomCell]()
 
-    // Sets de Approved
+    // MARK: Sets de Approved
     open func getApprovedBadgeImage() -> UIImage? {
         guard let badge = approvedBadge else {
             return nil
         }
         if badge == ApprovedBadge.check {
             return MercadoPago.getImage("ok_badge")
-        }else if badge == ApprovedBadge.pending {
+        } else if badge == ApprovedBadge.pending {
             return MercadoPago.getImage("pending_badge")
         }
         return nil
@@ -136,7 +139,7 @@ open class PaymentResultScreenPreference: NSObject {
     open func getApprovedLabelText() -> String? {
         if self._disableApprovedLabelText {
             return nil
-        }else {
+        } else {
             return self._approvedLabelText
         }
     }
@@ -163,7 +166,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedIconBundle = bundle
     }
 
-    // Sets de Pending
+    // MARK: Sets de Pending
 
     open func disablePendingLabelText() {
         self._disablePendingLabelText = true
@@ -176,7 +179,7 @@ open class PaymentResultScreenPreference: NSObject {
     open func getPendingLabelText() -> String? {
         if self._disablePendingLabelText {
             return nil
-        }else {
+        } else {
             return self._pendingLabelText
         }
     }
@@ -219,7 +222,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.pendingSecondaryExitButtonCallback = callback
     }
 
-    // Sets de rejected
+    // MARK: Sets de rejected
 
     open func setRejected(title: String) {
         self.rejectedTitle = title
@@ -277,7 +280,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.exitButtonTitle = title
     }
 
-    // Sets cross status
+    // MARK: Sets cross status
 
     open func setStatusBackgroundColor(color: UIColor) {
         self.statusBackgroundColor = color
@@ -287,7 +290,7 @@ open class PaymentResultScreenPreference: NSObject {
         return statusBackgroundColor
     }
 
-    // Disables
+    // MARK: Disables
 
     open func disableContentCell() {
         self.hideContentCell = true
@@ -337,7 +340,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePaymentMethod = false
     }
 
-    //Custom Rows
+    // MARK: Custom Rows
 
     open func setCustomPendingCells(customCells: [MPCustomCell]) {
         self.pendingAdditionalInfoCells = customCells
@@ -351,7 +354,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedSubHeaderCells = customCells
     }
 
-    //Approved
+    // MARK: Approved
 
     open func getApprovedTitle() -> String {
         return approvedTitle
@@ -372,7 +375,7 @@ open class PaymentResultScreenPreference: NSObject {
         return MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle)
     }
 
-    //Pending
+    // MARK: Pending
 
     open func getPendingTitle() -> String {
         return pendingTitle
@@ -414,7 +417,7 @@ open class PaymentResultScreenPreference: NSObject {
         return hidePendingContentTitle
     }
 
-    // Rejected
+    // MARK: Rejected
 
     open func getRejectedTitle() -> String {
         return rejectedTitle

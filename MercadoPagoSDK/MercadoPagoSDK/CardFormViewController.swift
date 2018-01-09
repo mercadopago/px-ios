@@ -554,7 +554,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
         if viewModel.shoudShowOnlyOneCardMessage() {
                 setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.mpRedPinkErrorMessage(), isError: true)
-        }else {
+        } else {
             let cardNotAvailableError = CardNotAvailableErrorView(frame: (toolbar?.frame)!, paymentMethods: paymentMethods, showAvaibleCardsCallback: {
                 self.editingLabel?.text = ""
                 self.textBox.text = ""

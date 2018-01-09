@@ -15,34 +15,26 @@ extension PXResultViewModel {
         return props
     }
 
+    func buildBodyComponent() -> PXBodyComponent {
+        let bodyProps = getBodyComponentProps()
+        return PXBodyComponent(props: bodyProps)
+    }
+}
+
+// MARK: Build Helpers
+extension PXResultViewModel {
+    func getBodyAction() -> (() -> Void) {
+        return { self.executeBodyCallback() }
+    }
+
+    func executeBodyCallback() {
+        self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
+    }
+
     open func getInstrucion() -> Instruction? {
         guard let instructionsInfo = self.instructionsInfo else {
             return nil
         }
         return instructionsInfo.getInstruction()
-    }
-
-    func getBodyAction() -> (() -> Void) {
-        return { self.executeBodyCallback() }
-    }
-
-    open func getTopCustomComponent() -> PXComponentizable? {
-        if let customComponent = preference.getApprovedTopCustomComponent(), self.paymentResult.isApproved() {
-            return PXCustomComponentContainer(withComponent: customComponent)
-        }else {
-            return nil
-        }
-    }
-
-    open func getBottomCustomComponent() -> PXComponentizable? {
-        if let customComponent = preference.getApprovedBottomCustomComponent(), self.paymentResult.isApproved() {
-            return PXCustomComponentContainer(withComponent: customComponent)
-        }else {
-            return nil
-        }
-    }
-
-    func executeBodyCallback() {
-        self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
     }
 }

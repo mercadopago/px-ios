@@ -266,8 +266,7 @@ open class CardFormViewModel: NSObject {
         }
         if !String.isNullOrEmpty(paymentMethods[0].name) {
             return "Solo puedes pagar con ".localized + paymentMethods[0].name
-        }
-        else {
+        } else {
             return defaultMessage
         }
     }

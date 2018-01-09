@@ -55,7 +55,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
 
         if quantityHidden {
              self.itemQuantity.text = ""
-        }else {
+        } else {
             self.itemQuantity.text = quantityTitle + String(item.quantity)
             self.itemQuantity.font = Utils.getFont(size: itemQuantity.font.pointSize)
         }
@@ -63,7 +63,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         var unitPriceTitle: NSMutableAttributedString
         if amountTittleHidden {
            unitPriceTitle = NSMutableAttributedString(string: "", attributes: [NSFontAttributeName: Utils.getFont(size: self.itemQuantity.font.pointSize)])
-        }else {
+        } else {
             unitPriceTitle = NSMutableAttributedString(string: amountTitle, attributes: [NSFontAttributeName: Utils.getFont(size: self.itemQuantity.font.pointSize)])
         }
         unitPriceTitle.append(unitPrice)

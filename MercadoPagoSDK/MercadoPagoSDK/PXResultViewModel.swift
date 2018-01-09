@@ -15,6 +15,9 @@ public class PXResultViewModel: NSObject {
     open var preference: PaymentResultScreenPreference
     var callback: ((PaymentResult.CongratsState) -> Void)!
     let  amount: Double
+
+    let warningStatusDetails = [RejectedStatusDetail.INVALID_ESC, RejectedStatusDetail.CALL_FOR_AUTH, RejectedStatusDetail.BAD_FILLED_CARD_NUMBER, RejectedStatusDetail.CARD_DISABLE, RejectedStatusDetail.INSUFFICIENT_AMOUNT, RejectedStatusDetail.BAD_FILLED_DATE, RejectedStatusDetail.BAD_FILLED_SECURITY_CODE, RejectedStatusDetail.BAD_FILLED_OTHER]
+
     init(paymentResult: PaymentResult, amount: Double, instructionsInfo: InstructionsInfo? = nil, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
@@ -38,7 +41,7 @@ public class PXResultViewModel: NSObject {
     func isAccepted() -> Bool {
         if self.paymentResult.isApproved() || self.paymentResult.isInProcess() || self.paymentResult.isPending() {
             return true
-        }else {
+        } else {
             return false
         }
     }
@@ -47,7 +50,7 @@ public class PXResultViewModel: NSObject {
         if !self.paymentResult.isRejected() {
             return false
         }
-        if self.paymentResult.statusDetail == RejectedStatusDetail.INVALID_ESC || self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_CARD_NUMBER || self.paymentResult.statusDetail == RejectedStatusDetail.CARD_DISABLE || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_DATE || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_SECURITY_CODE || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_OTHER {
+        if warningStatusDetails.contains(self.paymentResult.statusDetail) {
             return true
         }
 
@@ -59,5 +62,4 @@ public class PXResultViewModel: NSObject {
         }
         return !isWarning()
     }
-
 }

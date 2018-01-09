@@ -186,7 +186,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(8, 8, 8, 8)
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 
     }
 

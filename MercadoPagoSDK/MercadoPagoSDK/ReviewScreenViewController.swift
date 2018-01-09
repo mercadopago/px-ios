@@ -23,7 +23,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     var bundle: Bundle? = MercadoPago.getBundle()
     var callbackPaymentData: ((PaymentData) -> Void)!
     var callbackConfirm: ((PaymentData) -> Void)!
-    var callbackExit: ((Void) -> Void)!
+    var callbackExit: (() -> Void)!
     var viewModel: CheckoutViewModel!
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }

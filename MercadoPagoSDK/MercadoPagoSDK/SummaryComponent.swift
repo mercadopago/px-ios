@@ -36,7 +36,7 @@ class SummaryComponent: UIView, PXComponent {
             self.addLine()
             self.addMediumMargin()
             self.addTotalView(totalAmount: (payerCost?.totalAmount)!)
-        }else {
+        } else {
             var amount = totalAmount
             if let discount = paymentData.discount {
                 amount = discount.newAmount()

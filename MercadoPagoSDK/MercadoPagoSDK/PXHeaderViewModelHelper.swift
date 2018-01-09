@@ -10,52 +10,35 @@ import UIKit
 
 extension PXResultViewModel {
 
-    open func getReceiptComponentProps() -> PXReceiptProps {
-        if hasReceiptComponent() {
-            let date = Date()
-            return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + self.paymentResult._id!)
-        } else {
-            return PXReceiptProps()
-        }
-    }
-
-    open func hasReceiptComponent() -> Bool {
-        if paymentResult.isApproved() {
-            let isPaymentMethodPlugin = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-
-            if isPaymentMethodPlugin {
-                let hasReceiptId = !String.isNullOrEmpty(self.paymentResult._id)
-                if hasReceiptId {
-                    return true
-                }
-            } else if !self.preference.isPaymentIdDisable() {
-                return true
-            }
-        }
-        return false
-    }
-
-    open func getHeaderComponentProps() -> PXHeaderProps {
+    func getHeaderComponentProps() -> PXHeaderProps {
         let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return props
     }
 
-    open func iconImageHeader() -> UIImage? {
+    func buildHeaderComponent() -> PXHeaderComponent {
+        let headerProps = getHeaderComponentProps()
+        return PXHeaderComponent(props: headerProps)
+    }
+}
+
+// MARK: Build Helpers
+extension PXResultViewModel {
+    func iconImageHeader() -> UIImage? {
         if isAccepted() {
             if self.paymentResult.isApproved() {
                 return preference.getHeaderApprovedIcon() // * **
-            }else if self.paymentResult.isWaitingForPayment() {
+            } else if self.paymentResult.isWaitingForPayment() {
                 return preference.getHeaderPendingIcon()
             } else {
                 return preference.getHeaderImageFor(self.paymentResult.paymentData?.paymentMethod)
             }
-        }else {
+        } else {
             return preference.getHeaderRejectedIcon(paymentResult.paymentData?.paymentMethod)
         }
 
     }
 
-    open func badgeImage() -> UIImage? {
+    func badgeImage() -> UIImage? {
         if !preference._showBadgeImage {
             return nil
         }
@@ -77,7 +60,7 @@ extension PXResultViewModel {
         return nil
     }
 
-    open func labelTextHeader() -> NSAttributedString? {
+    func labelTextHeader() -> NSAttributedString? {
         if isAccepted() {
             if self.paymentResult.isWaitingForPayment() {
                 return "¡Apúrate a pagar!".localized.toAttributedString(attributes:[NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
@@ -101,7 +84,7 @@ extension PXResultViewModel {
         }
 
     }
-    open func titleHeader() -> NSAttributedString {
+    func titleHeader() -> NSAttributedString {
         if let _ = self.instructionsInfo {
             return titleForInstructions()
         }
@@ -118,7 +101,7 @@ extension PXResultViewModel {
         return titleForStatusDetail(statusDetail: self.paymentResult.statusDetail, paymentMethod: self.paymentResult.paymentData?.paymentMethod)
     }
 
-    open func titleForStatusDetail(statusDetail: String, paymentMethod: PaymentMethod?) -> NSAttributedString {
+    func titleForStatusDetail(statusDetail: String, paymentMethod: PaymentMethod?) -> NSAttributedString {
         guard let paymentMethod = paymentMethod else {
             return "".toAttributedString()
         }
@@ -136,7 +119,7 @@ extension PXResultViewModel {
         }
     }
 
-    open func titleForInstructions() -> NSMutableAttributedString {
+    func titleForInstructions() -> NSMutableAttributedString {
         guard let instructionsInfo = self.instructionsInfo else {
             return "".toAttributedString()
         }
@@ -164,7 +147,7 @@ extension PXResultViewModel {
         }
     }
 
-    fileprivate func getTitleForCallForAuth(_ paymentMethod: PaymentMethod) -> NSAttributedString {
+    func getTitleForCallForAuth(_ paymentMethod: PaymentMethod) -> NSAttributedString {
         if let paymentMethodName = paymentMethod.name {
             let currency = MercadoPagoContext.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
@@ -181,7 +164,7 @@ extension PXResultViewModel {
         }
     }
 
-    fileprivate func getTitleForRejected(_ paymentMethod: PaymentMethod, _ title: String) -> NSAttributedString {
+    func getTitleForRejected(_ paymentMethod: PaymentMethod, _ title: String) -> NSAttributedString {
         if let paymentMethodName = paymentMethod.name {
             return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
         } else {
@@ -189,7 +172,7 @@ extension PXResultViewModel {
         }
     }
 
-    fileprivate func getDefaultRejectedTitle() -> NSAttributedString {
+    func getDefaultRejectedTitle() -> NSAttributedString {
         return NSMutableAttributedString(string: "Uy, no pudimos procesar el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
     }
 }

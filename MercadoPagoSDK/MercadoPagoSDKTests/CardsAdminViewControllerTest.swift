@@ -66,8 +66,8 @@ class CardsAdminViewControllerTest: BaseTest {
     }
 
     func testInsetForSection() {
-        XCTAssertEqual(cardsAdminViewController.collectionView(cardsAdminViewController.collectionSearch, layout: cardsAdminViewController.collectionSearch.collectionViewLayout, insetForSectionAt: HEADER_SECTION_NUMBER), UIEdgeInsetsMake(8, 8, 8, 8))
-        XCTAssertEqual(cardsAdminViewController.collectionView(cardsAdminViewController.collectionSearch, layout: cardsAdminViewController.collectionSearch.collectionViewLayout, insetForSectionAt: CARDS_SECTION_NUMBER), UIEdgeInsetsMake(8, 8, 8, 8))
+        XCTAssertEqual(cardsAdminViewController.collectionView(cardsAdminViewController.collectionSearch, layout: cardsAdminViewController.collectionSearch.collectionViewLayout, insetForSectionAt: HEADER_SECTION_NUMBER), UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        XCTAssertEqual(cardsAdminViewController.collectionView(cardsAdminViewController.collectionSearch, layout: cardsAdminViewController.collectionSearch.collectionViewLayout, insetForSectionAt: CARDS_SECTION_NUMBER), UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
     }
 
     func testMinimumLineSpacingForSectionAt() {

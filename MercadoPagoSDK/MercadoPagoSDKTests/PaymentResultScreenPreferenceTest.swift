@@ -83,7 +83,7 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
 
     func testSetIconSubtext() {
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedIconSubtext(), "Algo salió mal… ".localized)
+        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedIconSubtext(), "Algo salió mal...".localized)
 
         paymentResultScreenPreference.setRejectedIconSubtext(text: "lala")
 

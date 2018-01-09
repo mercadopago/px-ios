@@ -201,7 +201,7 @@ open class PaymentPreference: NSObject {
 
             "default_installments": default_installments,
             "default_payment_method_id": default_payment_method_id,
-            "installments": installments,
+            "installments": installments
         ]
 
         var excludedPaymentMethodIdsJson = [NSDictionary]()

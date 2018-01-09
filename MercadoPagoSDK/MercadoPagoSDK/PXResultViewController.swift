@@ -140,33 +140,30 @@ class PXResultViewController: PXComponentContainerViewController {
     }
 }
 
-// Components 
+// Components
 extension PXResultViewController {
     func buildHeaderView() -> UIView {
-        let headerProps = self.viewModel.getHeaderComponentProps()
-        let headerComponent = PXHeaderComponent(props: headerProps)
+        let headerComponent = viewModel.buildHeaderComponent()
         return headerComponent.render()
     }
+
     func buildFooterView() -> UIView {
-        let footerProps = self.viewModel.getFooterComponentProps()
-        let footerComponent = PXFooterComponent(props: footerProps)
+        let footerComponent = viewModel.buildFooterComponent()
         return footerComponent.render()
     }
 
     func buildReceiptView() -> UIView {
-        let receiptProps = self.viewModel.getReceiptComponentProps()
-        let receiptComponent = PXReceiptComponent(props: receiptProps)
+        let receiptComponent = viewModel.buildReceiptComponent()
         return receiptComponent.render()
     }
 
     func buildBodyView() -> UIView {
-        let bodyProps = self.viewModel.getBodyComponentProps()
-        let bodyComponent = PXBodyComponent(props: bodyProps)
+        let bodyComponent = viewModel.buildBodyComponent()
         return bodyComponent.render()
     }
 
     func buildTopCustomView() -> UIView {
-        if let component = self.viewModel.getTopCustomComponent() {
+        if let component = self.viewModel.buildTopCustomComponent() {
             return component.render()
         }
         let view = UIView()
@@ -175,7 +172,7 @@ extension PXResultViewController {
     }
 
     func buildBottomCustomView() -> UIView {
-        if let component = self.viewModel.getBottomCustomComponent() {
+        if let component = self.viewModel.buildBottomCustomComponent() {
             return component.render()
         }
         let view = UIView()

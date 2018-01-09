@@ -366,6 +366,9 @@ open class MockBuilder: NSObject {
     class func buildPaymentData(paymentMethod: PaymentMethod) -> PaymentData {
         let paymentData = PaymentData()
         paymentData.paymentMethod = paymentMethod
+        paymentData.token = MockBuilder.buildToken()
+        paymentData.issuer = MockBuilder.buildIssuer()
+        paymentData.payerCost = MockBuilder.buildPayerCost()
         return paymentData
     }
 
@@ -406,11 +409,10 @@ open class MockBuilder: NSObject {
         return payment
     }
 
-    class func buildPaymentResult(_ status: String? = "status", paymentMethodId: String) -> PaymentResult {
-        let pm = MockBuilder.buildPaymentMethod(paymentMethodId)
-        pm.name = paymentMethodId
+    class func buildPaymentResult(_ status: String? = "status", statusDetail: String = "detail", paymentMethodId: String, paymentTypeId: String = "credit_card") -> PaymentResult {
+        let pm = MockBuilder.buildPaymentMethod(paymentMethodId, name: paymentMethodId, paymentTypeId: paymentTypeId)
         let paymentData = MockBuilder.buildPaymentData(paymentMethod: pm)
-        let paymentResult = PaymentResult(status: status!, statusDetail: "detail", paymentData: paymentData, payerEmail: "email", id: "id", statementDescription: "description")
+        let paymentResult = PaymentResult(status: status!, statusDetail: statusDetail, paymentData: paymentData, payerEmail: "email", id: "id", statementDescription: "description")
         return paymentResult
     }
 
