@@ -668,15 +668,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     }
 
-    func testCardFormManager() {
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
-
-        let cardFormManager = mpCheckout.viewModel.cardFormManager()
-        XCTAssertTrue(cardFormManager.isKind(of: CardFormViewModel.self))
-        XCTAssertEqual(cardFormManager.amount, checkoutPreference.getAmount())
-    }
-
     func testPaymentVaultViewModel() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
