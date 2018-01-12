@@ -25,11 +25,11 @@ open class PXPaymentMethodPlugin: NSObject {
     var name: String
     var _description: String?
     var image: UIImage
-    var paymentPlugin: PXPaymentPluginComponent
-    var paymentMethodConfigPlugin: PXConfigPluginComponent?
+    var paymentPlugin: PXPluginComponent
+    var paymentMethodConfigPlugin: PXPluginComponent?
     var displayOrder = DisplayOrder.TOP
 
-    public init (id: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPaymentPluginComponent) {
+    public init (id: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPluginComponent) {
         self.id = id
         self.name = name
         self.image = image
@@ -37,7 +37,7 @@ open class PXPaymentMethodPlugin: NSObject {
         self.paymentPlugin = paymentPlugin
     }
 
-    open func setPaymentMethodConfig(plugin: PXConfigPluginComponent) {
+    open func setPaymentMethodConfig(plugin: PXPluginComponent) {
         self.paymentMethodConfigPlugin = plugin
     }
 

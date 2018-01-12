@@ -15,32 +15,26 @@ open class PXPluginNavigationHandler: NSObject {
         self.checkout = withCheckout
     }
 
-    open func didFinishPayment(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, statusDetails: String = "", receiptId: String? = nil) {
+    open func didFinishPayment(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, receiptId: String? = nil) {
 
         guard let paymentData = self.checkout?.viewModel.paymentData else {
             return
-        }
-        var statusDetailsStr = statusDetails
-
-        // By definition of MVP1, we support only approved or rejected.
-        var paymentStatusStrDefault = PaymentStatus.REJECTED
-        if paymentStatus == .APPROVED {
-            paymentStatusStrDefault = PaymentStatus.APPROVED
         }
 
         // Set paymentPlugin image into payment method.
         if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
             paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
-
-            // Defaults status details for paymentMethod plugin
-            if paymentStatus == .APPROVED {
-                statusDetailsStr = ""
-            } else {
-                statusDetailsStr = RejectedStatusDetail.REJECTED_PLUGIN_PM
-            }
         }
 
-        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: statusDetailsStr, paymentData: paymentData, payerEmail: nil, id: receiptId, statementDescription: nil)
+        // By definition of MVP1, we support only approved or rejected.
+        var paymentStatusStrDefault = PaymentStatus.REJECTED
+        var paymentStatusDetailStrDefault = RejectedStatusDetail.REJECTED_PLUGIN_PM
+        if paymentStatus == .APPROVED {
+            paymentStatusStrDefault = PaymentStatus.APPROVED
+            paymentStatusDetailStrDefault = ""
+        }
+
+        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: paymentStatusDetailStrDefault, paymentData: paymentData, payerEmail: nil, id: receiptId, statementDescription: nil)
 
         checkout?.setPaymentResult(paymentResult: paymentResult)
         checkout?.executeNextStep()

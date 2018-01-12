@@ -11,8 +11,11 @@ import UIKit
 
 open class MockPaymentPluginViewController: UIViewController {
 
-    init() {
+    var shouldSkip = false
+
+    init(shouldSkip: Bool = false) {
         super.init(nibName: nil, bundle: nil)
+        self.shouldSkip = shouldSkip
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -21,9 +24,13 @@ open class MockPaymentPluginViewController: UIViewController {
 }
 
 // MARK: - Plugin implementation delegates.
-extension MockPaymentPluginViewController: PXPaymentPluginComponent {
+extension MockPaymentPluginViewController: PXPluginComponent {
 
     public func render() -> UIView {
         return self.view
+    }
+
+    public func shouldSkip(pluginStore: PXCheckoutStore) -> Bool {
+        return shouldSkip
     }
 }
