@@ -10,10 +10,45 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodPluginPaymentScreen() {
+
         guard let paymentMethodPlugin = self.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin else {
             return
         }
-        showPaymentPluginComponent(paymentPluginComponent: paymentMethodPlugin.paymentPlugin)
+
+        let containerVC = MercadoPagoUIViewController()
+
+        // By feature definition. Back is not available in make payment plugin.
+        containerVC.shouldShowBackArrow = false
+
+        let paymentPluginComponent = paymentMethodPlugin.paymentPlugin
+
+        if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
+            paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        }
+
+        // Create navigation handler.
+        paymentPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
+
+        if let navTitle = paymentPluginComponent.titleForNavigationBar?() {
+            containerVC.title = navTitle
+        }
+
+        if let navBarColor = paymentPluginComponent.colorForNavigationBar?() {
+            containerVC.setNavBarBackgroundColor(color: navBarColor)
+        }
+
+        if let shouldShowNavigationBar = paymentPluginComponent.shouldShowNavigationBar?() {
+            containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
+        }
+
+        let paymentPluginComponentView = paymentPluginComponent.render()
+        paymentPluginComponentView.removeFromSuperview()
+        paymentPluginComponentView.frame = containerVC.view.frame
+        containerVC.view.addSubview(paymentPluginComponentView)
+
+        paymentPluginComponent.renderDidFinish?()
+
+        self.navigationController.pushViewController(containerVC, animated: true)
     }
 
     func showPaymentMethodPluginConfigScreen() {
@@ -60,50 +95,5 @@ extension MercadoPagoCheckout {
         paymentMethodConfigPluginComponent.renderDidFinish?()
 
         self.navigationController.pushViewController(containerVC, animated: true)
-    }
-
-    fileprivate func showPaymentPluginComponent(paymentPluginComponent: PXPluginComponent) {
-        let containerVC = MercadoPagoUIViewController()
-
-        // By feature definition. Back is not available in make payment plugin.
-        containerVC.shouldShowBackArrow = false
-
-        if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
-            paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
-        }
-
-        // Create navigation handler.
-        paymentPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
-
-        if let navTitle = paymentPluginComponent.titleForNavigationBar?() {
-            containerVC.title = navTitle
-        }
-
-        if let navBarColor = paymentPluginComponent.colorForNavigationBar?() {
-            containerVC.setNavBarBackgroundColor(color: navBarColor)
-        }
-
-        if let shouldShowNavigationBar = paymentPluginComponent.shouldShowNavigationBar?() {
-            containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
-        }
-
-        let paymentPluginComponentView = paymentPluginComponent.render()
-        paymentPluginComponentView.removeFromSuperview()
-        paymentPluginComponentView.frame = containerVC.view.frame
-        containerVC.view.addSubview(paymentPluginComponentView)
-
-        paymentPluginComponent.renderDidFinish?()
-
-        self.navigationController.pushViewController(containerVC, animated: true)
-    }
-}
-
-// MARK: Payment Plugin
-extension MercadoPagoCheckout {
-    func showPaymentPluginScreen() {
-        guard let paymentPluginComponent = self.viewModel.paymentPlugin else {
-            return
-        }
-        showPaymentPluginComponent(paymentPluginComponent: paymentPluginComponent)
     }
 }

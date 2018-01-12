@@ -91,13 +91,14 @@
     //
     self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
+   // self.pref._id = @"245099733-db5f6239-aa8e-491b-8bd7-7058c7aff45d";
+   // self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-f3f035a2-d343-4a6f-bd3b-fc3c3cb72416"
     accessToken:nil
     checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
    // [self setHooks];
-    [self setPaymentMethodPlugins];
 
-    [self setPaymentPlugin];
+    [self setPaymentMethodPlugins];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -147,16 +148,6 @@
     [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
 
     [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
-}
-
--(void)setPaymentPlugin {
-
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
-
-    PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {

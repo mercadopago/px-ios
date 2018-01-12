@@ -230,8 +230,8 @@ open class MockBuilder: NSObject {
         return paymentMethodSearchItem
     }
 
-    class func buildPaymentMethodPlugin(id: String, name: String, displayOrder: PXPaymentMethodPlugin.DisplayOrder = .TOP, shouldSkipPaymentPlugin: Bool = false, configPaymentMethodPlugin: MockConfigPaymentMethodPlugin?) -> PXPaymentMethodPlugin {
-        let paymentPlugin = MockPaymentPluginViewController()
+    class func buildPaymentMethodPlugin(id: String, name: String, displayOrder: PXPaymentMethodPlugin.DisplayOrder = .TOP, shouldSkipPaymentPlugin: Bool = false, configPaymentMethodPlugin: MockPaymentPluginViewController?) -> PXPaymentMethodPlugin {
+        let paymentPlugin = MockPaymentPluginViewController(shouldSkip: shouldSkipPaymentPlugin)
 
         let plugin = PXPaymentMethodPlugin(id: id, name: name, image: UIImage(), description: nil, paymentPlugin: paymentPlugin)
 
@@ -242,10 +242,6 @@ open class MockBuilder: NSObject {
         plugin.setDisplayOrder(order: displayOrder)
 
         return plugin
-    }
-
-    class func buildPaymentPlugin() -> PXPaymentPluginComponent {
-        return MockPaymentPluginViewController()
     }
 
     class func buildPaymentMethodSearch(groups: [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, customOptions: [CardInformation]? = nil) -> PaymentMethodSearch {

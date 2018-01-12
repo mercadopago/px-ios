@@ -32,8 +32,8 @@ class PaymentMethodPluginFlowTest: BaseTest {
 
         MercadoPagoCheckout.setFlowPreference(flowPreference)
 
-        let paymentMethodConfigPlugin = MockConfigPaymentMethodPlugin(shouldSkip: false)
-        let paymentMethodConfigPlugin2 = MockConfigPaymentMethodPlugin(shouldSkip: true)
+        let paymentMethodConfigPlugin = MockPaymentPluginViewController(shouldSkip: false)
+        let paymentMethodConfigPlugin2 = MockPaymentPluginViewController(shouldSkip: true)
 
         mockPaymentMethodPlugin1 = MockBuilder.buildPaymentMethodPlugin(id: "plugin1", name: "Plugin 1", configPaymentMethodPlugin: nil)
         mockPaymentMethodPlugin2 = MockBuilder.buildPaymentMethodPlugin(id: "plugin2", name: "Plugin 2", configPaymentMethodPlugin: paymentMethodConfigPlugin)

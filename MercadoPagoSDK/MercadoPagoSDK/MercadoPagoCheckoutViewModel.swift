@@ -39,7 +39,6 @@ public enum CheckoutStep: String {
     case SCREEN_HOOK_BEFORE_PAYMENT
     case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
     case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
-    case SCREEN_PAYMENT_PLUGIN_PAYMENT
 }
 
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
@@ -104,9 +103,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
-
-    // Payment plguin
-    var paymentPlugin: PXPaymentPluginComponent?
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
         super.init()
@@ -403,12 +399,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SCREEN_HOOK_BEFORE_PAYMENT
         }
 
-        if needToCreatePaymentForPaymentPlugin() {
-            readyToPay = false
-            return .SCREEN_PAYMENT_PLUGIN_PAYMENT
-        }
-
-        if needToCreatePaymentForPaymentMethodPlugin() {
+        if needToCreatePaymentForPlugin() {
             readyToPay = false
             return .SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
         }
