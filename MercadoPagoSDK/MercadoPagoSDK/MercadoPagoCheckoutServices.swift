@@ -89,9 +89,9 @@ extension MercadoPagoCheckout {
                 return
             }
 
+            strongSelf.getPMInit()
             strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
            
-            strongSelf.getPMInit()
 
         }) { [weak self] (error) in
 
