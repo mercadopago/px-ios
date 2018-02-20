@@ -29,6 +29,18 @@ open class MercadoPagoServicesAdapter: NSObject {
         mercadoPagoServices.setGatewayBaseURL(servicePreference.getGatewayURL())
     }
 
+    open func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        mercadoPagoServices.createCheckoutPreference(url: url, uri: uri, bodyInfo: bodyInfo, callback: { [weak self] (pxCheckoutPreference) in
+            guard let strongSelf = self else {
+                return
+            }
+            MercadoPagoContext.setSiteID(pxCheckoutPreference.siteId ?? "MLA")
+            let checkoutPreference = strongSelf.getCheckoutPreferenceFromPXCheckoutPreference(pxCheckoutPreference)
+            callback(checkoutPreference)
+        }, failure: failure)
+    }
+    
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { [weak self] (pxCheckoutPreference) in
