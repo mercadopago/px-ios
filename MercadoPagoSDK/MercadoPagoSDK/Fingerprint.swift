@@ -75,7 +75,7 @@ open class Fingerprint: NSObject {
             moreData["can_make_phone_calls"] = 1 as AnyObject?
 
         if Locale.preferredLanguages.count > 0 {
-            moreData["device_languaje"] = Locale.preferredLanguages[0] as AnyObject?
+            moreData["device_language"] = Locale.preferredLanguages[0] as AnyObject?
         }
 
         if !String.isNullOrEmpty(device.model) {
