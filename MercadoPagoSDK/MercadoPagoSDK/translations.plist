@@ -1,9 +1,298 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0"><dict><key>error_body_title_</key><dict><key>comment</key><string></string><key>es</key><string>¿Qué puedo hacer?</string><key>en</key><string>What can I do?</string><key>pt</key><string>O que posso fazer?</string></dict><key>error_body_description_</key><dict><key>comment</key><string></string><key>es</key><string>Por favor, intente pagar de otra forma.</string><key>en</key><string>Please try to pay with other payment method.</string><key>pt</key><string>Por favor, tente pagar de outra forma.</string></dict><key>error_body_description_pending_contingency</key><dict><key>comment</key><string></string><key>es</key><string>En unas horas te avisaremos por e-mail si se acreditó.</string><key>en</key><string>In a few hours we will notify you via e-mail if it is accredited.</string><key>pt</key><string>Em algumas horas te avisaremos por e-mail se foi aprovado.</string></dict><key>error_body_description_pending_review_manual</key><dict><key>comment</key><string></string><key>es</key><string>Dentro de las próximas 24 horas te avisaremos por e-mail si se acreditó.</string><key>en</key><string>Within the next 24 hours we will notify you via e-mail if it was accredited.</string><key>pt</key><string>Dentro das próximas 24 horas te avisaremos por e-mail se foi aprovado.</string></dict><key>error_body_description_cc_rejected_call_for_authorize</key><dict><key>comment</key><string></string><key>es</key><string>El teléfono está al dorso de tu tarjeta.</string><key>en</key><string>The phone number is on the back of your card.</string><key>pt</key><string>O telefone do banco está no verso do seu cartão.</string></dict><key>error_body_description_cc_rejected_card_disabled</key><dict><key>comment</key><string></string><key>es</key><string>Usa otro medio de pago o llama a %1$s para activar tu tarjeta.</string><key>en</key><string>Use another payment method or call %1$s to activate your card.</string><key>pt</key><string>Use outro meio de pagamento ou ligue para %1$s e desbloqueie o cartão.</string></dict><key>error_body_description_cc_rejected_insufficient_amount</key><dict><key>comment</key><string></string><key>es</key><string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. 
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>error_body_title_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>¿Qué puedo hacer?</string>
+		<key>en</key>
+		<string>What can I do?</string>
+		<key>pt</key>
+		<string>O que posso fazer?</string>
+	</dict>
+	<key>error_body_description_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Por favor, intente pagar de otra forma.</string>
+		<key>en</key>
+		<string>Please try to pay with other payment method.</string>
+		<key>pt</key>
+		<string>Por favor, tente pagar de outra forma.</string>
+	</dict>
+	<key>error_body_description_pending_contingency</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>En unas horas te avisaremos por e-mail si se acreditó.</string>
+		<key>en</key>
+		<string>In a few hours we will notify you via e-mail if it is accredited.</string>
+		<key>pt</key>
+		<string>Em algumas horas te avisaremos por e-mail se foi aprovado.</string>
+	</dict>
+	<key>error_body_description_pending_review_manual</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Dentro de las próximas 24 horas te avisaremos por e-mail si se acreditó.</string>
+		<key>en</key>
+		<string>Within the next 24 hours we will notify you via e-mail if it was accredited.</string>
+		<key>pt</key>
+		<string>Dentro das próximas 24 horas te avisaremos por e-mail se foi aprovado.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_call_for_authorize</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>El teléfono está al dorso de tu tarjeta.</string>
+		<key>en</key>
+		<string>The phone number is on the back of your card.</string>
+		<key>pt</key>
+		<string>O telefone do banco está no verso do seu cartão.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_card_disabled</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Usa otro medio de pago o llama a %1$s para activar tu tarjeta.</string>
+		<key>en</key>
+		<string>Use another payment method or call %1$s to activate your card.</string>
+		<key>pt</key>
+		<string>Use outro meio de pagamento ou ligue para %1$s e desbloqueie o cartão.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_insufficient_amount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. 
 
-O si prefieres, puedes elegir otro medio de pago.</string><key>en</key><string>Do not be discouraged! Recharge it in any bank or from your internet banking and try again.
+O si prefieres, puedes elegir otro medio de pago.</string>
+		<key>en</key>
+		<string>Do not be discouraged! Recharge it in any bank or from your internet banking and try again.
 
-Or if you prefer, you can choose another payment method.</string><key>pt</key><string>Não se preocupe! Recarregue-o em qualquer banco ou pelo Internet Banking e tente novamente.
+Or if you prefer, you can choose another payment method.</string>
+		<key>pt</key>
+		<string>Não se preocupe! Recarregue-o em qualquer banco ou pelo Internet Banking e tente novamente.
 
-Se preferir, você pode escolher outro meio de pagamento.</string></dict><key>error_body_description_cc_rejected_other_reason</key><dict><key>comment</key><string></string><key>es</key><string>Usa otra tarjeta u otro medio de pago.</string><key>en</key><string>Use another card or other payment method.</string><key>pt</key><string>Use outro cartão ou outro meio de pagamento.</string></dict><key>error_body_description_rejected_by_bank</key><dict><key>comment</key><string></string><key>es</key><string>Por favor, intente pagar de otra forma.</string><key>en</key><string>Please try to pay with other payment method.</string><key>pt</key><string>Por favor, tente pagar de outra forma.</string></dict><key>error_body_description_rejected_insufficient_data</key><dict><key>comment</key><string></string><key>es</key><string>Por favor, intente pagar de otra forma.</string><key>en</key><string>Please try to pay with other payment method.</string><key>pt</key><string>Por favor, tente pagar de outra forma.</string></dict><key>error_body_description_cc_rejected_duplicated_payment</key><dict><key>comment</key><string></string><key>es</key><string>Igual no te preocupes que tu pago anterior se efectuó con éxito.</string><key>en</key><string>Don't worry, your previous payment was approved.</string><key>pt</key><string>Não se preocupe! O seu pagamento foi efetuado com sucesso.</string></dict><key>error_body_description_cc_rejected_max_attempts</key><dict><key>comment</key><string></string><key>es</key><string>Como llegaste al límite de intentos con esta tarjeta, usa otro medio de pago.</string><key>en</key><string>As you reached the limit of attempts with this card, use another payment method.</string><key>pt</key><string>Como você chegou no limite de tentativas com este cartão, use outro meio de pagamento.</string></dict><key>error_body_description_rejected_high_risk</key><dict><key>comment</key><string></string><key>es</key><string>Usa un medio de pago distinto de tarjeta.</string><key>en</key><string>Use a payment method other than a card.</string><key>pt</key><string>Use um meio de pagamento diferente de cartão.</string></dict><key>error_body_action_text_</key><dict><key>comment</key><string></string><key>es</key><string>Ya hablé y me autorizó</string><key>en</key><string>Already talked and I am authorized.</string><key>pt</key><string>Já falei e autorizei</string></dict><key>error_body_action_text_cc_rejected_call_for_authorize</key><dict><key>comment</key><string></string><key>es</key><string>Ya hablé con %1$s y me autorizó</string><key>en</key><string>Already talked with %1$s and I am authorized.</string><key>pt</key><string>Já falei com %1$s e autorizei</string></dict><key>error_body_secondary_title_</key><dict><key>comment</key><string></string><key>es</key><string>¿No pudiste autorizarlo?</string><key>en</key><string>Could not authorize it?</string><key>pt</key><string>Não conseguiu autorizá-lo?</string></dict><key>discount_coupon_detail_default_concept</key><dict><key>comment</key><string>Concepto Default en el modal de Discount Coupon</string><key>es</key><string>Descuento</string><key>en</key><string>Discount</string><key>pt</key><string>Desconto</string></dict><key>discount_coupon_detail_description</key><dict><key>comment</key><string>Descripción del descuento</string><key>es</key><string> de descuento</string><key>en</key><string> of discount</string><key>pt</key><string> de desconto</string></dict><key>payment_result_screen_congrats_finish_button</key><dict><key>comment</key><string>Acción para terminar el flujo en una pantalla de congrats</string><key>es</key><string>Continuar</string><key>en</key><string>Continue</string><key>pt</key><string>Pronto!</string></dict><key>card_form_next_button</key><dict><key>comment</key><string>Acción para pasar a la siguiente pantalla</string><key>es</key><string>Continuar</string><key>en</key><string>Continue</string><key>pt</key><string>Continuar</string></dict><key>card_form_previous_button</key><dict><key>comment</key><string>Acción para volver a la pantalla anterior</string><key>es</key><string>Anterior</string><key>en</key><string>Previous</string><key>pt</key><string>Anterior</string></dict><key>payer_info_name</key><dict><key>comment</key><string></string><key>es</key><string>Nombre</string><key>en</key><string>Name</string><key>pt</key><string>Nome</string></dict><key>payer_info_surname</key><dict><key>comment</key><string></string><key>es</key><string>Apellido</string><key>en</key><string>Surname</string><key>pt</key><string>Sobrenome</string></dict><key>payer_info_number</key><dict><key>comment</key><string></string><key>es</key><string>Número</string><key>en</key><string>Number</string><key>pt</key><string>Número</string></dict><key>payer_info_type</key><dict><key>comment</key><string></string><key>es</key><string>Tipo</string><key>en</key><string>Type</string><key>pt</key><string>Tipo</string></dict></dict></plist>
+Se preferir, você pode escolher outro meio de pagamento.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_other_reason</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Usa otra tarjeta u otro medio de pago.</string>
+		<key>en</key>
+		<string>Use another card or other payment method.</string>
+		<key>pt</key>
+		<string>Use outro cartão ou outro meio de pagamento.</string>
+	</dict>
+	<key>error_body_description_rejected_by_bank</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Por favor, intente pagar de otra forma.</string>
+		<key>en</key>
+		<string>Please try to pay with other payment method.</string>
+		<key>pt</key>
+		<string>Por favor, tente pagar de outra forma.</string>
+	</dict>
+	<key>error_body_description_rejected_insufficient_data</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Por favor, intente pagar de otra forma.</string>
+		<key>en</key>
+		<string>Please try to pay with other payment method.</string>
+		<key>pt</key>
+		<string>Por favor, tente pagar de outra forma.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_duplicated_payment</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Igual no te preocupes que tu pago anterior se efectuó con éxito.</string>
+		<key>en</key>
+		<string>Don&apos;t worry, your previous payment was approved.</string>
+		<key>pt</key>
+		<string>Não se preocupe! O seu pagamento foi efetuado com sucesso.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_max_attempts</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Como llegaste al límite de intentos con esta tarjeta, usa otro medio de pago.</string>
+		<key>en</key>
+		<string>As you reached the limit of attempts with this card, use another payment method.</string>
+		<key>pt</key>
+		<string>Como você chegou no limite de tentativas com este cartão, use outro meio de pagamento.</string>
+	</dict>
+	<key>error_body_description_rejected_high_risk</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Usa un medio de pago distinto de tarjeta.</string>
+		<key>en</key>
+		<string>Use a payment method other than a card.</string>
+		<key>pt</key>
+		<string>Use um meio de pagamento diferente de cartão.</string>
+	</dict>
+	<key>error_body_action_text_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Ya hablé y me autorizó</string>
+		<key>en</key>
+		<string>Already talked and I am authorized.</string>
+		<key>pt</key>
+		<string>Já falei e autorizei</string>
+	</dict>
+	<key>error_body_action_text_cc_rejected_call_for_authorize</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Ya hablé con %1$s y me autorizó</string>
+		<key>en</key>
+		<string>Already talked with %1$s and I am authorized.</string>
+		<key>pt</key>
+		<string>Já falei com %1$s e autorizei</string>
+	</dict>
+	<key>error_body_secondary_title_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>¿No pudiste autorizarlo?</string>
+		<key>en</key>
+		<string>Could not authorize it?</string>
+		<key>pt</key>
+		<string>Não conseguiu autorizá-lo?</string>
+	</dict>
+	<key>discount_coupon_detail_default_concept</key>
+	<dict>
+		<key>comment</key>
+		<string>Concepto Default en el modal de Discount Coupon</string>
+		<key>es</key>
+		<string>Descuento</string>
+		<key>en</key>
+		<string>Discount</string>
+		<key>pt</key>
+		<string>Desconto</string>
+	</dict>
+	<key>discount_coupon_detail_description</key>
+	<dict>
+		<key>comment</key>
+		<string>Descripción del descuento</string>
+		<key>es</key>
+		<string> de descuento</string>
+		<key>en</key>
+		<string> of discount</string>
+		<key>pt</key>
+		<string> de desconto</string>
+	</dict>
+	<key>payment_result_screen_congrats_finish_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Acción para terminar el flujo en una pantalla de congrats</string>
+		<key>es</key>
+		<string>Continuar</string>
+		<key>en</key>
+		<string>Continue</string>
+		<key>pt</key>
+		<string>Pronto!</string>
+	</dict>
+	<key>card_form_next_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Acción para pasar a la siguiente pantalla</string>
+		<key>es</key>
+		<string>Continuar</string>
+		<key>en</key>
+		<string>Continue</string>
+		<key>pt</key>
+		<string>Continuar</string>
+	</dict>
+	<key>card_form_previous_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Acción para volver a la pantalla anterior</string>
+		<key>es</key>
+		<string>Anterior</string>
+		<key>en</key>
+		<string>Previous</string>
+		<key>pt</key>
+		<string>Anterior</string>
+	</dict>
+	<key>payer_info_name</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Nombre</string>
+		<key>en</key>
+		<string>Name</string>
+		<key>pt</key>
+		<string>Nome</string>
+	</dict>
+	<key>payer_info_surname</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Apellido</string>
+		<key>en</key>
+		<string>Surname</string>
+		<key>pt</key>
+		<string>Sobrenome</string>
+	</dict>
+	<key>payer_info_number</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Número</string>
+		<key>en</key>
+		<string>Number</string>
+		<key>pt</key>
+		<string>Número</string>
+	</dict>
+	<key>payer_info_type</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Tipo</string>
+		<key>en</key>
+		<string>Type</string>
+		<key>pt</key>
+		<string>Tipo</string>
+	</dict>
+	<key>review_change_payment_method_action</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>es</key>
+		<string>Cambiar medio de pago</string>
+		<key>en</key>
+		<string>Change payment method</string>
+		<key>pt</key>
+		<string>Alterar meio de pagamento</string>
+	</dict>
+</dict>
+</plist>
