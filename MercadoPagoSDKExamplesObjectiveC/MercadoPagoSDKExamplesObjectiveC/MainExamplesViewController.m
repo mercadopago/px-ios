@@ -111,7 +111,8 @@
     //Setear ReviewScreenPrefernce
     [self setReviewScreenPreference];
 
-    [self.mpCheckout start];
+//    [self.mpCheckout start];
+    [self.mpCheckout startExpressFrom:self];
 
 }
 

@@ -67,6 +67,14 @@ open class MercadoPagoCheckout: NSObject {
         self.viewModel.binaryMode = binaryMode
     }
 
+    public func startExpress(from viewController:UIViewController) {
+        let vc = ExpressViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        viewController.present(vc, animated: false, completion: {
+            print("Done")
+        })
+    }
+    
     public func start() {
         presentInitLoading()
         MercadoPagoCheckout.currentCheckout = self
@@ -182,7 +190,7 @@ open class MercadoPagoCheckout: NSObject {
         default: break
         }
     }
-
+    
     func validatePreference() {
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {

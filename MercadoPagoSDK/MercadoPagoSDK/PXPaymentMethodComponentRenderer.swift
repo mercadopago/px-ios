@@ -20,6 +20,10 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let SUBTITLE_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let DESCRIPTION_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
+    
+    func expressRender(component: PXPaymentMethodComponent) -> PXExpressPaymentMethodView {
+        return PXExpressPaymentMethodView()
+    }
 
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()
@@ -128,6 +132,17 @@ class PXPaymentMethodComponentRenderer: NSObject {
         return pmBodyView
     }
 }
+
+class PXExpressPaymentMethodView: PXBodyView {
+    var paymentMethodIcon: UIView?
+    var amountTitle: UILabel?
+    var amountDetail: UILabel?
+    var paymentMethodDescription: UILabel?
+    var paymentMethodDetail: UILabel?
+    var disclaimerLabel: UILabel?
+    var actionButton: PXSecondaryButton?
+}
+
 
 class PXPaymentMethodView: PXBodyView {
     var paymentMethodIcon: UIView?

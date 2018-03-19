@@ -762,6 +762,10 @@
 		FCBF13541E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */; };
 		FCBF13551E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */; };
 		FCCC11F71FCF2D5A0001A591 /* PXResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC11F61FCF2D590001A591 /* PXResultViewModelTest.swift */; };
+		FCCC56AE20601B0B001729AB /* ExpressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC56AC20601B0B001729AB /* ExpressViewController.swift */; };
+		FCCC56AF20601B0B001729AB /* ExpressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCCC56AD20601B0B001729AB /* ExpressViewController.xib */; };
+		FCCC56B32060205E001729AB /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC56B12060205E001729AB /* PopUpViewController.swift */; };
+		FCCC56B42060205E001729AB /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCCC56B22060205E001729AB /* PopUpViewController.xib */; };
 		FCD089081F7E8F45002F3F22 /* SecondaryInfoTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = FCD089061F7E8F44002F3F22 /* SecondaryInfoTableViewCell.xib */; };
 		FCD089091F7E8F45002F3F22 /* SecondaryInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD089071F7E8F44002F3F22 /* SecondaryInfoTableViewCell.swift */; };
 		FCD0890A1F7E8FB0002F3F22 /* SecondaryInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD089071F7E8F44002F3F22 /* SecondaryInfoTableViewCell.swift */; };
@@ -1263,6 +1267,10 @@
 		FCBF13501E720A6E0092B756 /* EntityTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityTypeTableViewCell.swift; sourceTree = "<group>"; };
 		FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntityTypeTableViewCell.xib; sourceTree = "<group>"; };
 		FCCC11F61FCF2D590001A591 /* PXResultViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXResultViewModelTest.swift; sourceTree = "<group>"; };
+		FCCC56AC20601B0B001729AB /* ExpressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressViewController.swift; sourceTree = "<group>"; };
+		FCCC56AD20601B0B001729AB /* ExpressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpressViewController.xib; sourceTree = "<group>"; };
+		FCCC56B12060205E001729AB /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		FCCC56B22060205E001729AB /* PopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopUpViewController.xib; sourceTree = "<group>"; };
 		FCD089061F7E8F44002F3F22 /* SecondaryInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SecondaryInfoTableViewCell.xib; path = MercadoPagoSDK/SecondaryInfoTableViewCell.xib; sourceTree = "<group>"; };
 		FCD089071F7E8F44002F3F22 /* SecondaryInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SecondaryInfoTableViewCell.swift; path = MercadoPagoSDK/SecondaryInfoTableViewCell.swift; sourceTree = "<group>"; };
 		FCE865661F9E61A6000EF023 /* MercadoPagoServicesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercadoPagoServicesAdapter.swift; sourceTree = "<group>"; };
@@ -1344,6 +1352,7 @@
 				0F98830F1AD2A97A00F750F0 /* MercadoPagoSDK.h */,
 				0F98830D1AD2A97A00F750F0 /* Supporting Files */,
 				FC9CC17E204DBC8F002BBF9D /* PXImageService.swift */,
+				FCCC56B020601B10001729AB /* Express */,
 			);
 			path = MercadoPagoSDK;
 			sourceTree = "<group>";
@@ -2640,6 +2649,17 @@
 			name = Body;
 			sourceTree = "<group>";
 		};
+		FCCC56B020601B10001729AB /* Express */ = {
+			isa = PBXGroup;
+			children = (
+				FCCC56AC20601B0B001729AB /* ExpressViewController.swift */,
+				FCCC56AD20601B0B001729AB /* ExpressViewController.xib */,
+				FCCC56B12060205E001729AB /* PopUpViewController.swift */,
+				FCCC56B22060205E001729AB /* PopUpViewController.xib */,
+			);
+			name = Express;
+			sourceTree = "<group>";
+		};
 		FCF0722A201783A700A6E2D6 /* Contained Label */ = {
 			isa = PBXGroup;
 			children = (
@@ -2824,6 +2844,7 @@
 				FC73AB46202B87AD00537C9F /* Localizable_pt.plist in Resources */,
 				4BFD45201E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib in Resources */,
 				155954ED1F87CD200086854B /* PreferenceDescriptionTableViewCell.xib in Resources */,
+				FCCC56AF20601B0B001729AB /* ExpressViewController.xib in Resources */,
 				76B085061CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
 				FCEB90831EB8F3FA0096B1A2 /* mpsdk_settings.plist in Resources */,
 				FCEB90851EB8F3FA0096B1A2 /* UnlockCardLinks.plist in Resources */,
@@ -2833,6 +2854,7 @@
 				FC8A9BF4202CA38700FD7D7C /* Localizable_en.plist in Resources */,
 				534D84241F5480F800C2C6F9 /* AvailableCardsViewController.xib in Resources */,
 				76062BD91C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
+				FCCC56B42060205E001729AB /* PopUpViewController.xib in Resources */,
 				4BAA55FC1DB0241700501061 /* AdditionalStepTitleTableViewCell.xib in Resources */,
 				CCDD005D1DC52E4200858CF8 /* PaymentMethodSearch.plist in Resources */,
 				151A941A1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
@@ -3266,6 +3288,7 @@
 				23E2158720062F9000B968F6 /* ThemeManager.swift in Sources */,
 				FC3FC84C1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift in Sources */,
 				812BA9C31FC8B31800FF32C2 /* PXPaymentMethodComponentRenderer.swift in Sources */,
+				FCCC56B32060205E001729AB /* PopUpViewController.swift in Sources */,
 				0F9883BA1AD2AD1600F750F0 /* String+Additions.swift in Sources */,
 				4BEF9B601FE2F01E002ADAFF /* MercadoPagoCheckout+Screens+Hooks.swift in Sources */,
 				231AE27220472C3000CB87CF /* PXSummaryComponentRenderer.swift in Sources */,
@@ -3276,6 +3299,7 @@
 				FC3FC8841FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift in Sources */,
 				23E2157E2005360600B968F6 /* PXTheme.swift in Sources */,
 				766012EF1CF284A600897F9D /* WebViewController.swift in Sources */,
+				FCCC56AE20601B0B001729AB /* ExpressViewController.swift in Sources */,
 				4B53C5EB1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */,
 				FC3FC8731FBE122000CF29E1 /* PXInstructionsTertiaryInfoComponent.swift in Sources */,
 				767D8DCF1E5554460004FCA9 /* MPXLoadingViewController.swift in Sources */,
@@ -3774,7 +3798,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -3824,7 +3848,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
