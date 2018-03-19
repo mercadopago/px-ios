@@ -63,6 +63,20 @@ class ExpressViewController: UIViewController {
         PXLayout.setWidth(owner: imageView, width: 100).isActive = true
         PXLayout.setHeight(owner: imageView, height: 40).isActive = true
         
+            //Cancel button
+        let button = PXSecondaryButton()
+        button.setTitle("Cancelar", for: .normal)
+        button.add(for: .touchUpInside, {
+            self.animatePopUpView(isDeployed: true)
+            self.dismiss(animated: true, completion: nil)
+        })
+        titleView.addSubview(button)
+        PXLayout.pinRight(view: button, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.centerVertically(view: button).isActive = true
+        PXLayout.setWidth(owner: button, width: 80).isActive = true
+        PXLayout.setHeight(owner: button, height: 40).isActive = true
+        
+        
         //Item
         let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga 39,05 Lts SUPER", quantity: 1, unitAmount: 1, backgroundColor: .white, boldLabelColor: .black, lightLabelColor: .gray)
         let itemComponent = PXItemComponent(props: itemProps)
@@ -89,8 +103,6 @@ class ExpressViewController: UIViewController {
         //Footer
         let mainAction = PXComponentAction(label: "Pagar", action: {
             print("pagar")
-            self.animatePopUpView(isDeployed: true)
-            self.dismiss(animated: true, completion: nil)
         })
         let footerProps = PXFooterProps(buttonAction: mainAction)
         let footerComponent = PXFooterComponent(props: footerProps)
