@@ -48,7 +48,7 @@ class ExpressViewController: UIViewController {
         PXLayout.matchWidth(ofView: titleView).isActive = true
         PXLayout.centerHorizontally(view: titleView).isActive = true
         PXLayout.pinTop(view: titleView).isActive = true
-        PXLayout.setHeight(owner: titleView, height: 60).isActive = true
+        PXLayout.setHeight(owner: titleView, height: 45).isActive = true
         
         let image = MercadoPago.getImage("mercadopago")
         let imageView = UIImageView(image: image)
