@@ -24,7 +24,7 @@ class ExpressViewController: UIViewController {
                 // Fallback on earlier versions
             }
         }) { (true) in
-            self.popupViewTapped()
+            self.animatePopUpView(isDeployed: false)
         }
     }
     
@@ -76,7 +76,7 @@ class ExpressViewController: UIViewController {
         
         //Payment Method
         let pmImage = MercadoPago.getImage("mediosIconoMaster")
-        let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard 1234".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: "3 cuotas de $405".toAttributedString(), descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: .black)
+        let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard terminada en 4251".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: "3 cuotas de $405".toAttributedString(), descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: .black)
         
         let pmComponent = PXPaymentMethodComponent(props: pmProps)
         let pmView = pmComponent.expressRender()
@@ -89,6 +89,8 @@ class ExpressViewController: UIViewController {
         //Footer
         let mainAction = PXComponentAction(label: "Pagar", action: {
             print("pagar")
+            self.animatePopUpView(isDeployed: true)
+            self.dismiss(animated: true, completion: nil)
         })
         let footerProps = PXFooterProps(buttonAction: mainAction)
         let footerComponent = PXFooterComponent(props: footerProps)
@@ -119,36 +121,24 @@ class ExpressViewController: UIViewController {
         PXLayout.setHeight(owner: popupView, height: popUpViewHeight).isActive = true
         PXLayout.pinLeft(view: popupView, withMargin: borderMargin).isActive = true
         PXLayout.pinRight(view: popupView, withMargin: borderMargin).isActive = true
-//        popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottomConstraint = popupView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: popUpViewHeight + borderMargin)
         bottomConstraint.isActive = true
-//        popupView.heightAnchor.constraint(equalToConstant: popUpViewHeight).isActive = true
     }
     
     
-    @objc private func popupViewTapped() {
+    private func animatePopUpView(isDeployed: Bool) {
         if #available(iOS 10.0, *) {
+            var bottomContraint = 0 - self.borderMargin
+            if isDeployed {
+                bottomContraint = self.borderMargin + popUpViewHeight
+            }
             let transitionAnimator = UIViewPropertyAnimator(duration: 0.75, dampingRatio: 1, animations: {
-                self.bottomConstraint.constant = 0 - self.borderMargin
+                self.bottomConstraint.constant = bottomContraint
                 self.view.layoutIfNeeded()
             })
             
             transitionAnimator.addCompletion { position in
-//                switch position {
-//                case .start:
-//                    self.currentState = state.opposite
-//                case .end:
-//                    self.currentState = state
-//                case .current:
-//                    ()
-//                }
-//                switch self.currentState {
-//                case .open:
-//                    self.bottomConstraint.constant = 0
-//                case .closed:
-//                    self.bottomConstraint.constant = 440
-//                }
+                
             }
             transitionAnimator.startAnimation()
             
@@ -156,5 +146,4 @@ class ExpressViewController: UIViewController {
             // Fallback on earlier versions
         }
     }
-    
 }
