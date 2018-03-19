@@ -25,8 +25,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
     
     func expressRender(component: PXPaymentMethodComponent) -> PXExpressPaymentMethodView {
         let pmBodyView = PXExpressPaymentMethodView()
-        pmBodyView.backgroundColor = .clear
-//        pmBodyView.backgroundColor = .black
+        pmBodyView.backgroundColor = component.props.backgroundColor
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false
         let paymentMethodIcon = component.getPaymentMethodIconComponent()
         pmBodyView.paymentMethodIcon = paymentMethodIcon.render()

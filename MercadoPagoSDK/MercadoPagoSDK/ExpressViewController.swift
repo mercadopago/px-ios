@@ -11,7 +11,7 @@ import UIKit
 class ExpressViewController: UIViewController {
     
     let popUpViewHeight: CGFloat = 500
-    let borderMargin = PXLayout.XXS_MARGIN
+    let borderMargin = PXLayout.XXXS_MARGIN
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -32,18 +32,40 @@ class ExpressViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = .white
         view.alpha = 1
-        view.layer.cornerRadius = 35
         
+        if PXLayout.getSafeAreaTopInset() > 0 {
+            view.layer.cornerRadius = 35
+        } else {
+            view.layer.cornerRadius = 15
+        }
+        
+        view.clipsToBounds = true
+        
+        
+        // Payment Method
         let image = MercadoPago.getImage("mediosIconoMaster")
-        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: "Mastercard 1234".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: .black)
+        let pmProps = PXPaymentMethodProps(paymentMethodIcon: image, title: "Mastercard 1234".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .red, lightLabelColor: .gray, boldLabelColor: .black)
         
-        let compo = PXPaymentMethodComponent(props: props)
-        let pmView = compo.expressRender()
+        let pmComponent = PXPaymentMethodComponent(props: pmProps)
+        let pmView = pmComponent.expressRender()
         pmView.addSeparatorLineToBottom(height: 1)
         view.addSubview(pmView)
         PXLayout.matchWidth(ofView: pmView).isActive = true
         PXLayout.centerHorizontally(view: pmView).isActive = true
         PXLayout.pinTop(view: pmView).isActive = true
+        
+        //Footer
+        let mainAction = PXComponentAction(label: "Pagar", action: {
+            print("pagar")
+        })
+        let footerProps = PXFooterProps(buttonAction: mainAction)
+        let footerComponent = PXFooterComponent(props: footerProps)
+        let footerView = footerComponent.render()
+        view.addSubview(footerView)
+        footerView.addSeparatorLineToTop(height: 1)
+        PXLayout.matchWidth(ofView: footerView).isActive = true
+        PXLayout.pinBottom(view: footerView).isActive = true
+        PXLayout.centerHorizontally(view: footerView).isActive = true
     
         
         
