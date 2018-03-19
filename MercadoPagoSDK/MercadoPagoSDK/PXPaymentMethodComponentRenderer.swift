@@ -13,6 +13,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
+    let margin = PXLayout.S_MARGIN
+    
     //Action Button
     let BUTTON_HEIGHT: CGFloat = 34.0
     
@@ -22,7 +24,114 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
     
     func expressRender(component: PXPaymentMethodComponent) -> PXExpressPaymentMethodView {
-        return PXExpressPaymentMethodView()
+        let pmBodyView = PXExpressPaymentMethodView()
+        pmBodyView.backgroundColor = .clear
+//        pmBodyView.backgroundColor = .black
+        pmBodyView.translatesAutoresizingMaskIntoConstraints = false
+        let paymentMethodIcon = component.getPaymentMethodIconComponent()
+        pmBodyView.paymentMethodIcon = paymentMethodIcon.render()
+        pmBodyView.paymentMethodIcon!.layer.cornerRadius = IMAGE_WIDTH/2
+        pmBodyView.addSubview(pmBodyView.paymentMethodIcon!)
+        PXLayout.pinLeft(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
+        PXLayout.setWidth(owner: pmBodyView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
+        PXLayout.pinTop(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.pinBottom(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        
+        // Title
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        pmBodyView.amountTitle = title
+        pmBodyView.addSubview(title)
+        title.attributedText = component.props.title
+        title.font = Utils.getFont(size: PXLayout.XS_FONT)
+        title.textColor = component.props.boldLabelColor
+        title.textAlignment = .left
+        title.numberOfLines = 0
+        
+        PXLayout.pinTop(view: pmBodyView.amountTitle!, withMargin: margin).isActive = true
+        PXLayout.put(view: pmBodyView.amountTitle!, rightOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.pinRight(view: pmBodyView.amountTitle!, withMargin: margin).isActive = true
+        PXLayout.setHeight(owner: pmBodyView.amountTitle!, height: 20).isActive = true
+        
+        if let detailText = component.props.subtitle {
+            let detailLabel = UILabel()
+            detailLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.addSubview(detailLabel)
+            pmBodyView.amountDetail = detailLabel
+            detailLabel.attributedText = detailText
+            detailLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
+            detailLabel.textColor = component.props.lightLabelColor
+            detailLabel.textAlignment = .left
+            PXLayout.setHeight(owner: detailLabel, height: 20).isActive = true
+            PXLayout.pinLeft(view: pmBodyView.amountDetail!, to: pmBodyView.amountTitle!).isActive = true
+            PXLayout.pinRight(view: pmBodyView.amountDetail!, to: pmBodyView.amountTitle!).isActive = true
+            PXLayout.pinBottom(view: pmBodyView.amountDetail!, to: pmBodyView.paymentMethodIcon!).isActive = true
+        }
+//
+//        if let paymentMethodDescription = component.props.descriptionTitle {
+//            let descriptionLabel = UILabel()
+//            descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+//            pmBodyView.addSubview(descriptionLabel)
+//            pmBodyView.paymentMethodDescription = descriptionLabel
+//            descriptionLabel.attributedText = paymentMethodDescription
+//            descriptionLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
+//            descriptionLabel.textColor = component.props.lightLabelColor
+//            descriptionLabel.textAlignment = .center
+//            descriptionLabel.numberOfLines = 2
+//            pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
+//            PXLayout.pinLeft(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
+//            PXLayout.pinRight(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
+//        }
+//
+//        if let pmDetailText = component.props.descriptionDetail {
+//            let pmDetailLabel = UILabel()
+//            pmDetailLabel.translatesAutoresizingMaskIntoConstraints = false
+//            pmBodyView.paymentMethodDetail = pmDetailLabel
+//            pmBodyView.addSubview(pmDetailLabel)
+//            pmDetailLabel.attributedText = pmDetailText
+//            pmDetailLabel.font = Utils.getFont(size: DESCRIPTION_DETAIL_FONT_SIZE)
+//            pmDetailLabel.textColor = component.props.lightLabelColor
+//            pmDetailLabel.textAlignment = .center
+//            pmBodyView.putOnBottomOfLastView(view: pmDetailLabel, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
+//            PXLayout.pinLeft(view: pmDetailLabel, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+//            PXLayout.pinRight(view: pmDetailLabel, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+//        }
+//
+//        if let disclaimer = component.props.disclaimer {
+//            let disclaimerLabel = UILabel()
+//            disclaimerLabel.translatesAutoresizingMaskIntoConstraints = false
+//            pmBodyView.disclaimerLabel = disclaimerLabel
+//            pmBodyView.addSubview(disclaimerLabel)
+//            disclaimerLabel.attributedText = disclaimer
+//            disclaimerLabel.numberOfLines = 2
+//            disclaimerLabel.font = Utils.getFont(size: DISCLAIMER_FONT_SIZE)
+//            disclaimerLabel.textColor = component.props.lightLabelColor
+//            disclaimerLabel.textAlignment = .center
+//            pmBodyView.putOnBottomOfLastView(view: disclaimerLabel, withMargin: PXLayout.M_MARGIN)?.isActive = true
+//            PXLayout.pinLeft(view: disclaimerLabel, withMargin:  PXLayout.XS_MARGIN).isActive = true
+//            PXLayout.pinRight(view: disclaimerLabel, withMargin:  PXLayout.XS_MARGIN).isActive = true
+//        }
+//
+//        if let action = component.props.action {
+//            let actionButton = PXSecondaryButton()
+//            actionButton.translatesAutoresizingMaskIntoConstraints = false
+//            actionButton.setTitle(action.label, for: .normal)
+//            actionButton.add(for: .touchUpInside, action.action)
+//            pmBodyView.actionButton = actionButton
+//            pmBodyView.addSubview(actionButton)
+//            actionButton.backgroundColor = .clear
+//
+//            pmBodyView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.S_MARGIN)?.isActive = true
+//
+//            PXLayout.pinLeft(view: actionButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+//            PXLayout.pinRight(view: actionButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+//            PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
+//        }
+        
+//        pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
+        
+        return pmBodyView
     }
 
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {

@@ -34,6 +34,17 @@ class ExpressViewController: UIViewController {
         view.alpha = 1
         view.layer.cornerRadius = 35
         
+        let image = MercadoPago.getImage("mediosIconoMaster")
+        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: "Mastercard 1234".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: .black)
+        
+        let compo = PXPaymentMethodComponent(props: props)
+        let pmView = compo.expressRender()
+        pmView.addSeparatorLineToBottom(height: 1)
+        view.addSubview(pmView)
+        PXLayout.matchWidth(ofView: pmView).isActive = true
+        PXLayout.centerHorizontally(view: pmView).isActive = true
+        PXLayout.pinTop(view: pmView).isActive = true
+    
         
         
         return view
@@ -64,7 +75,7 @@ class ExpressViewController: UIViewController {
     
     @objc private func popupViewTapped() {
         if #available(iOS 10.0, *) {
-            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+            let transitionAnimator = UIViewPropertyAnimator(duration: 0.75, dampingRatio: 1, animations: {
                 self.bottomConstraint.constant = 0 - self.borderMargin
                 self.view.layoutIfNeeded()
             })
