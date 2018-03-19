@@ -41,10 +41,42 @@ class ExpressViewController: UIViewController {
         
         view.clipsToBounds = true
         
+        //Title
+        let titleView = UIView()
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(titleView)
+        PXLayout.matchWidth(ofView: titleView).isActive = true
+        PXLayout.centerHorizontally(view: titleView).isActive = true
+        PXLayout.pinTop(view: titleView).isActive = true
+        PXLayout.setHeight(owner: titleView, height: 60).isActive = true
         
-        // Payment Method
-        let image = MercadoPago.getImage("mediosIconoMaster")
-        let pmProps = PXPaymentMethodProps(paymentMethodIcon: image, title: "Mastercard 1234".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .red, lightLabelColor: .gray, boldLabelColor: .black)
+        let image = MercadoPago.getImage("mercadopago")
+        let imageView = UIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        titleView.addSeparatorLineToBottom(height: 1)
+        
+        titleView.addSubview(imageView)
+        PXLayout.pinLeft(view: imageView, withMargin: PXLayout.S_MARGIN
+            ).isActive = true
+        PXLayout.centerVertically(view: imageView).isActive = true
+        PXLayout.setWidth(owner: imageView, width: 100).isActive = true
+        PXLayout.setHeight(owner: imageView, height: 40).isActive = true
+        
+        //Item
+        let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga 39,05 Lts SUPER", quantity: 1, unitAmount: 1, backgroundColor: .white, boldLabelColor: .black, lightLabelColor: .gray)
+        let itemComponent = PXItemComponent(props: itemProps)
+        let itemView = itemComponent.expressRender()
+        itemView.addSeparatorLineToBottom(height: 1)
+        view.addSubview(itemView)
+        PXLayout.matchWidth(ofView: itemView).isActive = true
+        PXLayout.centerHorizontally(view: itemView).isActive = true
+        PXLayout.put(view: itemView, onBottomOf: titleView).isActive = true
+        
+        
+        //Payment Method
+        let pmImage = MercadoPago.getImage("mediosIconoMaster")
+        let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard 1234".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: "3 cuotas de $405".toAttributedString(), descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: .black)
         
         let pmComponent = PXPaymentMethodComponent(props: pmProps)
         let pmView = pmComponent.expressRender()
@@ -52,7 +84,7 @@ class ExpressViewController: UIViewController {
         view.addSubview(pmView)
         PXLayout.matchWidth(ofView: pmView).isActive = true
         PXLayout.centerHorizontally(view: pmView).isActive = true
-        PXLayout.pinTop(view: pmView).isActive = true
+        PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
         
         //Footer
         let mainAction = PXComponentAction(label: "Pagar", action: {

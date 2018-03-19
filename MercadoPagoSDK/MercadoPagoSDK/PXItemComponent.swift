@@ -13,6 +13,10 @@ class PXItemComponent: PXComponentizable {
     public func render() -> UIView {
         return PXItemRenderer().render(self)
     }
+    
+    public func expressRender() -> UIView {
+        return PXItemRenderer().expressRender(self)
+    }
 
     var props: PXItemComponentProps
 

@@ -21,6 +21,13 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
         let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: paymentMethodIconProps)
         return paymentMethodIconComponent
     }
+    
+    func getInstallmentsIconComponent() -> PXPaymentMethodIconComponent {
+        let image = MercadoPago.getImage("mercadopago")
+        let paymentMethodIconProps = PXPaymentMethodIconProps(paymentMethodIcon: image)
+        let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: paymentMethodIconProps)
+        return paymentMethodIconComponent
+    }
 
     public func render() -> UIView {
         return PXPaymentMethodComponentRenderer().render(component: self)

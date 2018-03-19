@@ -15,3 +15,11 @@ class PXItemContainerView: PXComponentView {
     var itemQuantity: UILabel?
     var itemAmount: UILabel?
 }
+
+class PXExpressItemContainerView: PXComponentView {
+    var itemImage: UIImageView?
+    var itemTitle: UILabel?
+    var itemDescription: UILabel?
+    var itemQuantity: UILabel?
+    var itemAmount: UILabel?
+}

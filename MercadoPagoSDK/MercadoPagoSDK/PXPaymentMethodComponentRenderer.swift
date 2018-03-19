@@ -27,6 +27,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
         let pmBodyView = PXExpressPaymentMethodView()
         pmBodyView.backgroundColor = component.props.backgroundColor
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false
+        
+        //Icon
         let paymentMethodIcon = component.getPaymentMethodIconComponent()
         pmBodyView.paymentMethodIcon = paymentMethodIcon.render()
         pmBodyView.paymentMethodIcon!.layer.cornerRadius = IMAGE_WIDTH/2
@@ -35,9 +37,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
         PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
         PXLayout.setWidth(owner: pmBodyView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
         PXLayout.pinTop(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
-        PXLayout.pinBottom(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
         
-        // Title
+        //Title
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         pmBodyView.amountTitle = title
@@ -47,7 +48,6 @@ class PXPaymentMethodComponentRenderer: NSObject {
         title.textColor = component.props.boldLabelColor
         title.textAlignment = .left
         title.numberOfLines = 0
-        
         PXLayout.pinTop(view: pmBodyView.amountTitle!, withMargin: margin).isActive = true
         PXLayout.put(view: pmBodyView.amountTitle!, rightOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
         PXLayout.pinRight(view: pmBodyView.amountTitle!, withMargin: margin).isActive = true
@@ -67,21 +67,45 @@ class PXPaymentMethodComponentRenderer: NSObject {
             PXLayout.pinRight(view: pmBodyView.amountDetail!, to: pmBodyView.amountTitle!).isActive = true
             PXLayout.pinBottom(view: pmBodyView.amountDetail!, to: pmBodyView.paymentMethodIcon!).isActive = true
         }
-//
-//        if let paymentMethodDescription = component.props.descriptionTitle {
-//            let descriptionLabel = UILabel()
-//            descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-//            pmBodyView.addSubview(descriptionLabel)
-//            pmBodyView.paymentMethodDescription = descriptionLabel
-//            descriptionLabel.attributedText = paymentMethodDescription
-//            descriptionLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
-//            descriptionLabel.textColor = component.props.lightLabelColor
-//            descriptionLabel.textAlignment = .center
-//            descriptionLabel.numberOfLines = 2
-//            pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
-//            PXLayout.pinLeft(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
-//            PXLayout.pinRight(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
-//        }
+
+        //Divider
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.backgroundColor = .pxMediumLightGray
+        pmBodyView.addSubview(divider)
+        PXLayout.setHeight(owner: divider, height: 1).isActive = true
+        PXLayout.matchWidth(ofView: divider, toView: pmBodyView).isActive = true
+        PXLayout.centerHorizontally(view: divider).isActive = true
+        PXLayout.put(view: divider, onBottomOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        
+        
+        //Installments
+        
+        //Installments Image
+        let installmentsIcon = component.getInstallmentsIconComponent()
+        pmBodyView.installmentsIcon = installmentsIcon.render()
+        pmBodyView.installmentsIcon!.layer.cornerRadius = IMAGE_WIDTH/2
+        pmBodyView.addSubview(pmBodyView.installmentsIcon!)
+        PXLayout.put(view: pmBodyView.installmentsIcon!, onBottomOf: pmBodyView.paymentMethodIcon!, withMargin: margin*2).isActive = true
+        PXLayout.pinLeft(view: pmBodyView.installmentsIcon!, withMargin: margin).isActive = true
+        PXLayout.setHeight(owner: pmBodyView.installmentsIcon!, height: IMAGE_HEIGHT).isActive = true
+        PXLayout.setWidth(owner: pmBodyView.installmentsIcon!, width: IMAGE_WIDTH).isActive = true
+        PXLayout.pinBottom(view: pmBodyView.installmentsIcon!, withMargin: margin).isActive = true
+        
+        if let paymentMethodDescription = component.props.descriptionTitle {
+            let descriptionLabel = UILabel()
+            descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.addSubview(descriptionLabel)
+            pmBodyView.paymentMethodDescription = descriptionLabel
+            descriptionLabel.attributedText = paymentMethodDescription
+            descriptionLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
+            descriptionLabel.textColor = component.props.boldLabelColor
+            descriptionLabel.textAlignment = .left
+            PXLayout.centerVertically(view: pmBodyView.paymentMethodDescription!, to: pmBodyView.installmentsIcon!).isActive = true
+            PXLayout.put(view: pmBodyView.paymentMethodDescription!, rightOf: pmBodyView.installmentsIcon!, withMargin: margin).isActive = true
+            PXLayout.pinRight(view: pmBodyView.paymentMethodDescription!, withMargin: margin).isActive = true
+            PXLayout.setHeight(owner: pmBodyView.paymentMethodDescription!, height: 20).isActive = true
+        }
 //
 //        if let pmDetailText = component.props.descriptionDetail {
 //            let pmDetailLabel = UILabel()
@@ -245,6 +269,7 @@ class PXExpressPaymentMethodView: PXBodyView {
     var paymentMethodIcon: UIView?
     var amountTitle: UILabel?
     var amountDetail: UILabel?
+    var installmentsIcon: UIView?
     var paymentMethodDescription: UILabel?
     var paymentMethodDetail: UILabel?
     var disclaimerLabel: UILabel?
