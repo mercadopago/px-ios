@@ -36,6 +36,10 @@ class ExpressViewController: UIViewController {
     fileprivate lazy var popupView: UIView = {
         
         let view = UIView()
+        
+        let modalTitle: String = "Confirma tu compra"
+        let closeButtonImage = MercadoPago.getImage("white_close")?.withRenderingMode(.alwaysTemplate)
+        
         let RADIUS_WITH_SAFE_AREA: CGFloat = 35
         let RADIUS_WITHOUT_SAFE_AREA: CGFloat = 15
         let TITLE_VIEW_HEIGHT: CGFloat = 58
@@ -63,12 +67,12 @@ class ExpressViewController: UIViewController {
         
         let titleLabel = UILabel()
         titleView.addSubview(titleLabel)
-        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN
+        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN - 4
             ).isActive = true
         PXLayout.matchWidth(ofView: titleLabel).isActive = true
         PXLayout.centerVertically(view: titleLabel).isActive = true
         PXLayout.setHeight(owner: titleLabel, height: TITLE_VIEW_HEIGHT).isActive = true
-        titleLabel.text = PXReviewTitleComponentProps.DEFAULT_TITLE.localized
+        titleLabel.text = modalTitle.localized
         titleLabel.font = Utils.getFont(size: PXLayout.M_FONT)
         
         //Cancel button
@@ -77,14 +81,13 @@ class ExpressViewController: UIViewController {
         button.add(for: .touchUpInside, {
             self.animatePopUpView(isDeployed: true)
         })
-        
-        button.setImage(MercadoPago.getImage("iconClose"), for: UIControlState.normal)
-        
+        button.setImage(closeButtonImage, for: .normal)
+        button.tintColor = ThemeManager.shared.getTheme().boldLabelTintColor()
         titleView.addSubview(button)
-        PXLayout.pinRight(view: button, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.pinRight(view: button, withMargin: PXLayout.XXXS_MARGIN - 2).isActive = true
         PXLayout.centerVertically(view: button).isActive = true
-        PXLayout.setWidth(owner: button, width: 80).isActive = true
-        PXLayout.setHeight(owner: button, height: 40).isActive = true
+        PXLayout.setWidth(owner: button, width: 50).isActive = true
+        PXLayout.setHeight(owner: button, height: 30).isActive = true
         
         //Item
         let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga 39,05 Lts SUPER", quantity: 1, unitAmount: 1, backgroundColor: .white, boldLabelColor: .black, lightLabelColor: .gray)
