@@ -764,8 +764,6 @@
 		FCCC11F71FCF2D5A0001A591 /* PXResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC11F61FCF2D590001A591 /* PXResultViewModelTest.swift */; };
 		FCCC56AE20601B0B001729AB /* ExpressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC56AC20601B0B001729AB /* ExpressViewController.swift */; };
 		FCCC56AF20601B0B001729AB /* ExpressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCCC56AD20601B0B001729AB /* ExpressViewController.xib */; };
-		FCCC56B32060205E001729AB /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC56B12060205E001729AB /* PopUpViewController.swift */; };
-		FCCC56B42060205E001729AB /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCCC56B22060205E001729AB /* PopUpViewController.xib */; };
 		FCD089081F7E8F45002F3F22 /* SecondaryInfoTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = FCD089061F7E8F44002F3F22 /* SecondaryInfoTableViewCell.xib */; };
 		FCD089091F7E8F45002F3F22 /* SecondaryInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD089071F7E8F44002F3F22 /* SecondaryInfoTableViewCell.swift */; };
 		FCD0890A1F7E8FB0002F3F22 /* SecondaryInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD089071F7E8F44002F3F22 /* SecondaryInfoTableViewCell.swift */; };
@@ -1269,8 +1267,6 @@
 		FCCC11F61FCF2D590001A591 /* PXResultViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXResultViewModelTest.swift; sourceTree = "<group>"; };
 		FCCC56AC20601B0B001729AB /* ExpressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressViewController.swift; sourceTree = "<group>"; };
 		FCCC56AD20601B0B001729AB /* ExpressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpressViewController.xib; sourceTree = "<group>"; };
-		FCCC56B12060205E001729AB /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
-		FCCC56B22060205E001729AB /* PopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopUpViewController.xib; sourceTree = "<group>"; };
 		FCD089061F7E8F44002F3F22 /* SecondaryInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SecondaryInfoTableViewCell.xib; path = MercadoPagoSDK/SecondaryInfoTableViewCell.xib; sourceTree = "<group>"; };
 		FCD089071F7E8F44002F3F22 /* SecondaryInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SecondaryInfoTableViewCell.swift; path = MercadoPagoSDK/SecondaryInfoTableViewCell.swift; sourceTree = "<group>"; };
 		FCE865661F9E61A6000EF023 /* MercadoPagoServicesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercadoPagoServicesAdapter.swift; sourceTree = "<group>"; };
@@ -2654,8 +2650,6 @@
 			children = (
 				FCCC56AC20601B0B001729AB /* ExpressViewController.swift */,
 				FCCC56AD20601B0B001729AB /* ExpressViewController.xib */,
-				FCCC56B12060205E001729AB /* PopUpViewController.swift */,
-				FCCC56B22060205E001729AB /* PopUpViewController.xib */,
 			);
 			name = Express;
 			sourceTree = "<group>";
@@ -2854,7 +2848,6 @@
 				FC8A9BF4202CA38700FD7D7C /* Localizable_en.plist in Resources */,
 				534D84241F5480F800C2C6F9 /* AvailableCardsViewController.xib in Resources */,
 				76062BD91C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
-				FCCC56B42060205E001729AB /* PopUpViewController.xib in Resources */,
 				4BAA55FC1DB0241700501061 /* AdditionalStepTitleTableViewCell.xib in Resources */,
 				CCDD005D1DC52E4200858CF8 /* PaymentMethodSearch.plist in Resources */,
 				151A941A1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
@@ -3288,7 +3281,6 @@
 				23E2158720062F9000B968F6 /* ThemeManager.swift in Sources */,
 				FC3FC84C1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift in Sources */,
 				812BA9C31FC8B31800FF32C2 /* PXPaymentMethodComponentRenderer.swift in Sources */,
-				FCCC56B32060205E001729AB /* PopUpViewController.swift in Sources */,
 				0F9883BA1AD2AD1600F750F0 /* String+Additions.swift in Sources */,
 				4BEF9B601FE2F01E002ADAFF /* MercadoPagoCheckout+Screens+Hooks.swift in Sources */,
 				231AE27220472C3000CB87CF /* PXSummaryComponentRenderer.swift in Sources */,
