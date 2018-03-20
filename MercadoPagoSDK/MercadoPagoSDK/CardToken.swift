@@ -63,11 +63,11 @@ open class CardToken: NSObject, CardInformationForm {
 
     open func validateCardNumber() -> String? {
         if String.isNullOrEmpty(cardNumber) {
-            return "Ingresa el número de la tarjeta de crédito".localized
-          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "Ingresa el número de la tarjeta de crédito".localized])
+            return "Ingresa el número de la tarjeta de crédito".localized_temp
+          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "Ingresa el número de la tarjeta de crédito".localized_temp])
         } else if self.cardNumber!.count < MIN_LENGTH_NUMBER || self.cardNumber!.count > MAX_LENGTH_NUMBER {
-            return "invalid_field".localized
-          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "invalid_field".localized_temp])
         } else {
             return nil
         }
@@ -87,7 +87,7 @@ open class CardToken: NSObject, CardInformationForm {
                 if userInfo == nil {
                     userInfo = [String: String]()
                 }
-                return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
+                return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized_temp
             }
 
                 // Validate card length
@@ -99,9 +99,9 @@ open class CardToken: NSObject, CardInformationForm {
                         userInfo = [String: String]()
                     }
                     if cardSettings.count>1 {
-                        return "invalid_card_length_general".localized
+                        return "invalid_card_length_general".localized_temp
                     } else {
-                        return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardSettings[0].cardNumber.length)")
+                        return ("invalid_card_length".localized_temp as NSString).replacingOccurrences(of: "%1$s", with: "\(cardSettings[0].cardNumber.length)")
                     }
                 }
                 // Validate luhn
@@ -109,15 +109,15 @@ open class CardToken: NSObject, CardInformationForm {
                     if userInfo == nil {
                         userInfo = [String: String]()
                     }
-                    return "El número de tarjeta que ingresaste es incorrecto".localized
-                 //   userInfo?.updateValue("El número de tarjeta que ingresaste es incorrecto".localized, forKey: "cardNumber")
+                    return "El número de tarjeta que ingresaste es incorrecto".localized_temp
+                 //   userInfo?.updateValue("El número de tarjeta que ingresaste es incorrecto".localized_temp, forKey: "cardNumber")
                 }
         }
 
         if userInfo == nil {
             return nil
         } else {
-            return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
+            return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized_temp
          //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: userInfo)
         }
     }
@@ -128,8 +128,8 @@ open class CardToken: NSObject, CardInformationForm {
 
     open func validateSecurityCode(_ securityCode: String?) -> String? {
         if String.isNullOrEmpty(self.securityCode) || self.securityCode!.count < 3 || self.securityCode!.count > 4 {
-            return "invalid_field".localized
-          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : "invalid_field".localized_temp])
         } else {
             return nil
         }
@@ -157,8 +157,8 @@ open class CardToken: NSObject, CardInformationForm {
         if let settings = setting {
                 let cvvLength = settings[0].securityCode.length
                 if (cvvLength != 0) && (securityCode.count != cvvLength) {
-                    return ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
-                    // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")])
+                    return ("invalid_cvv_length".localized_temp as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
+                    // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized_temp as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")])
                 } else {
                     return nil
                 }
@@ -172,17 +172,17 @@ open class CardToken: NSObject, CardInformationForm {
 
     open func validateExpiryDate(_ month: Int, year: Int) -> String? {
         if !validateExpMonth(month) {
-            return "invalid_field".localized
-			//return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+			//return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized_temp])
         }
         if !validateExpYear(year) {
-            return "invalid_field".localized
-           // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+           // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized_temp])
         }
 
         if hasMonthPassed(self.expirationYear, month: self.expirationMonth) {
-            return "invalid_field".localized
-         //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+         //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized_temp])
         }
 
         return nil
@@ -213,8 +213,8 @@ open class CardToken: NSObject, CardInformationForm {
     open func validateIdentificationType() -> String? {
 
         if String.isNullOrEmpty(cardholder!.identification!.type) {
-            return "invalid_field".localized
-         //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+         //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized_temp])
         } else {
             return nil
         }
@@ -223,8 +223,8 @@ open class CardToken: NSObject, CardInformationForm {
     open func validateIdentificationNumber() -> String? {
 
         if String.isNullOrEmpty(cardholder!.identification!.number) {
-            return "invalid_field".localized
-            //return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+            //return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized_temp])
         } else {
             return nil
         }
@@ -238,8 +238,8 @@ open class CardToken: NSObject, CardInformationForm {
                 let max = identificationType!.maxLength
                 if min != 0 && max != 0 {
                     if len > max || len < min {
-                        return "invalid_field".localized
-                  //      return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
+                        return "invalid_field".localized_temp
+                  //      return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized_temp])
                     } else {
                         return nil
                     }
@@ -247,8 +247,8 @@ open class CardToken: NSObject, CardInformationForm {
                     return validateIdentificationNumber()
                 }
             } else {
-                return "invalid_field".localized
-                //return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
+                return "invalid_field".localized_temp
+                //return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized_temp])
             }
         } else {
             return validateIdentificationNumber()
@@ -257,8 +257,8 @@ open class CardToken: NSObject, CardInformationForm {
 
     open func validateCardholderName() -> String? {
         if String.isNullOrEmpty(self.cardholder?.name) {
-            return "invalid_field".localized
-           // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardholder" : "invalid_field".localized])
+            return "invalid_field".localized_temp
+           // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardholder" : "invalid_field".localized_temp])
         } else {
             return nil
         }

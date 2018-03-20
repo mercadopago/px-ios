@@ -43,11 +43,11 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
     private static func getTyCText() -> NSMutableAttributedString {
 
-        let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
+        let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized_temp
         let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 12), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
-        let tycLinkRange = (termsAndConditionsText as NSString).range(of: "Términos y Condiciones".localized)
+        let tycLinkRange = (termsAndConditionsText as NSString).range(of: "Términos y Condiciones".localized_temp)
 
         mutableAttributedString.addAttribute(NSLinkAttributeName, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
 
@@ -60,7 +60,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     }
 
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        self.delegate?.openTermsAndConditions("Términos y Condiciones".localized, url : URL)
+        self.delegate?.openTermsAndConditions("Términos y Condiciones".localized_temp, url : URL)
         return false
     }
 

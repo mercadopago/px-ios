@@ -45,7 +45,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
          self.hideNavBar()
         loadMPStyles()
-        self.securityCodeTextField.placeholder = "security_code".localized
+        self.securityCodeTextField.placeholder = "security_code".localized_temp
         setupInputAccessoryView()
         self.view.backgroundColor = ThemeManager.shared.getMainColor()
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
@@ -114,7 +114,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     func continueAction() {
         securityCodeTextField.resignFirstResponder()
         guard securityCodeTextField.text?.count == viewModel.secCodeLenght() else {
-            let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
+            let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized_temp as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
             showErrorMessage(errorMessage)
             return
         }

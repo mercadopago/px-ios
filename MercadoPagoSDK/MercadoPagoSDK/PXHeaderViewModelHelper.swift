@@ -63,7 +63,7 @@ extension PXResultViewModel {
     func labelTextHeader() -> NSAttributedString? {
         if isAccepted() {
             if self.paymentResult.isWaitingForPayment() {
-                return "¡Apúrate a pagar!".localized.toAttributedString(attributes:[NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
+                return "¡Apúrate a pagar!".localized_temp.toAttributedString(attributes:[NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
             } else {
                 var labelText: String?
                 if self.paymentResult.isApproved() {
@@ -80,7 +80,7 @@ extension PXResultViewModel {
         if !preference._showLabelText {
             return nil
         } else {
-            return NSMutableAttributedString(string: "Algo salió mal...".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
+            return NSMutableAttributedString(string: "Algo salió mal...".localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
         }
 
     }
@@ -92,7 +92,7 @@ extension PXResultViewModel {
             if self.paymentResult.isApproved() {
                 return NSMutableAttributedString(string: preference.getApprovedTitle(), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
             } else {
-                return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+                return NSMutableAttributedString(string: "Estamos procesando el pago".localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
             }
         }
         if preference.rejectedTitleSetted {
@@ -154,10 +154,10 @@ extension PXResultViewModel {
             let thousandSeparator = currency.getThousandsSeparatorOrDefault()
             let decimalSeparator = currency.getDecimalSeparatorOrDefault()
             let amountStr = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize:PXHeaderRenderer.TITLE_FONT_SIZE/2, smallSymbol: true)
-            let string = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
+            let string = "Debes autorizar ante %1$s el pago de ".localized_temp.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
             let result: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
             result.append(amountStr)
-            result.append(NSMutableAttributedString(string: " a Mercado Pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]))
+            result.append(NSMutableAttributedString(string: " a Mercado Pago".localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]))
             return result
         } else {
             return "".toAttributedString()
@@ -170,10 +170,10 @@ extension PXResultViewModel {
             return getDefaultRejectedTitle()
         }
         
-        return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+        return NSMutableAttributedString(string: (title.localized_temp as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
     }
 
     func getDefaultRejectedTitle() -> NSAttributedString {
-        return NSMutableAttributedString(string: "Uy, no pudimos procesar el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+        return NSMutableAttributedString(string: "Uy, no pudimos procesar el pago".localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
     }
 }

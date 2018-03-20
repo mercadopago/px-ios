@@ -31,7 +31,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     internal func fillCell(_ title: String, amount: Double, currency: Currency, payerCost: PayerCost? = nil) {
 
         //Deafult values for cells
-        self.purchaseDetailTitle.text = title.localized
+        self.purchaseDetailTitle.text = title.localized_temp
         self.purchaseDetailTitle.font = Utils.getFont(size: purchaseDetailTitle.font.pointSize)
         self.purchaseDetailTitle.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
         self.purchaseDetailAmount.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
@@ -48,7 +48,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
             }
             if !payerCost!.hasInstallmentsRate() {
                 separatorLineHeight = MercadoPagoCheckout.showPayerCostDescription() ? separatorLineHeight + 26 : separatorLineHeight
-                self.noRateLabel.attributedText = NSAttributedString(string : MercadoPagoCheckout.showPayerCostDescription() ? "Sin interés".localized : "")
+                self.noRateLabel.attributedText = NSAttributedString(string : MercadoPagoCheckout.showPayerCostDescription() ? "Sin interés".localized_temp : "")
             }
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)

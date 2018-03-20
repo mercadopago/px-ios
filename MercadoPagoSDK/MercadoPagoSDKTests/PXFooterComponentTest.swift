@@ -46,8 +46,8 @@ class PXFooterComponentTest: BaseTest {
         let footerView = ResultMockComponentHelper.buildFooterView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(footerView.principalButton?.title(for: .normal), PXFooterResultConstants.ERROR_BUTTON_TEXT.localized)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.ERROR_LINK_TEXT.localized)
+        XCTAssertEqual(footerView.principalButton?.title(for: .normal), PXFooterResultConstants.ERROR_BUTTON_TEXT.localized_temp)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.ERROR_LINK_TEXT.localized_temp)
     }
 
     func testFooterView_rejectedC4AuthCardPayment_render() {
@@ -58,8 +58,8 @@ class PXFooterComponentTest: BaseTest {
         let footerView = ResultMockComponentHelper.buildFooterView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(footerView.principalButton?.title(for: .normal), PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.C4AUTH_LINK_TEXT.localized)
+        XCTAssertEqual(footerView.principalButton?.title(for: .normal), PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized_temp)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.C4AUTH_LINK_TEXT.localized_temp)
     }
 
     // MARK: PENDING - CARD

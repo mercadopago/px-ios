@@ -48,11 +48,11 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
 
     private static func getUnlockCardText() -> NSMutableAttributedString {
 
-        let unlockCardText = "Recuerda desbloquear tu tarjeta antes de confirmar el pago.".localized
+        let unlockCardText = "Recuerda desbloquear tu tarjeta antes de confirmar el pago.".localized_temp
         let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14), NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0xA1924C)]
 
         let mutableAttributedString = NSMutableAttributedString(string: unlockCardText, attributes: normalAttributes)
-        let unlockCardLinkRange = (unlockCardText as NSString).range(of: "desbloquear tu tarjeta".localized)
+        let unlockCardLinkRange = (unlockCardText as NSString).range(of: "desbloquear tu tarjeta".localized_temp)
 
         mutableAttributedString.addAttribute(NSLinkAttributeName, value: self.unlockCardLink!, range: unlockCardLinkRange)
 
@@ -65,7 +65,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
     }
 
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        self.delegate?.openUnlockCard("Desbloqueo de Tarjeta".localized, url : URL)
+        self.delegate?.openUnlockCard("Desbloqueo de Tarjeta".localized_temp, url : URL)
         return false
     }
 

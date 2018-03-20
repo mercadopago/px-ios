@@ -25,8 +25,8 @@ class CardNotAvailableErrorView: UIView {
         self.backgroundColor = ThemeManager.shared.getTheme().rejectedColor()
         self.paymentMethods = paymentMethods
         self.showAvaibleCardsCallback = showAvaibleCardsCallback
-        errorMessage = "No puedes pagar con esta tarjeta".localized
-        moreInfoMessage = "MAS INFO".localized
+        errorMessage = "No puedes pagar con esta tarjeta".localized_temp
+        moreInfoMessage = "MAS INFO".localized_temp
         setErrorMessage()
         setMoreInfoButton()
 

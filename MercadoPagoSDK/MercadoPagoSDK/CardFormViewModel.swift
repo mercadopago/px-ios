@@ -257,12 +257,12 @@ open class CardFormViewModel: NSObject {
     }
 
     func getOnlyOneCardAvailableMessage() -> String {
-        let defaultMessage = "Método de pago no soportado".localized
+        let defaultMessage = "Método de pago no soportado".localized_temp
         if Array.isNullOrEmpty(paymentMethods) {
             return defaultMessage
         }
         if !String.isNullOrEmpty(paymentMethods[0].name) {
-            return "Solo puedes pagar con ".localized + paymentMethods[0].name
+            return "Solo puedes pagar con ".localized_temp + paymentMethods[0].name
         } else {
             return defaultMessage
         }

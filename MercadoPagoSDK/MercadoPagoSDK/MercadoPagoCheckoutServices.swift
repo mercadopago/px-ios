@@ -192,7 +192,7 @@ extension MercadoPagoCheckout {
 
             if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
                 if let identificationViewController = strongSelf.navigationController.viewControllers.last as? IdentificationViewController {
-                    identificationViewController.showErrorMessage("Revisa este dato".localized)
+                    identificationViewController.showErrorMessage("Revisa este dato".localized_temp)
                 }
             } else {
                 strongSelf.dismissLoading()
@@ -380,7 +380,7 @@ extension MercadoPagoCheckout {
                 strongSelf.viewModel.prepareForInvalidPaymentWithESC()
             } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
                 self?.viewModel.paymentData.clearCollectedData()
-                let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal...".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
+                let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal...".localized_temp, errorDetail: "El número de identificación es inválido".localized_temp, retry: true)
                 strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] (_) in
                     self?.viewModel.prepareForNewSelection()
                     self?.executeNextStep()

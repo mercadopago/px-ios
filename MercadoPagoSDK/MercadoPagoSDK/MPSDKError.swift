@@ -34,7 +34,7 @@ open class MPSDKError: NSObject {
 
         if currentError.userInfo.count > 0 {
             let errorMessage = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
-            mpError.message = errorMessage.localized
+            mpError.message = errorMessage.localized_temp
             mpError.apiException = ApiException.fromJSON(currentError.userInfo as NSDictionary)
             if let apiException = mpError.apiException {
                 if apiException.error == nil {

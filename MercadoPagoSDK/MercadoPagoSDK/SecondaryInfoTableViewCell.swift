@@ -21,7 +21,7 @@ class SecondaryInfoTableViewCell: UITableViewCell {
     }
     func fillCell(paymentResult: PaymentResult?) {
         if paymentResult?.status == "approved" {
-            label.text = ("Te enviaremos este comprobante a %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentResult!.payerEmail!)")
+            label.text = ("Te enviaremos este comprobante a %0".localized_temp as NSString).replacingOccurrences(of: "%0", with: "\(paymentResult!.payerEmail!)")
         }
     }
 

@@ -41,7 +41,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
     override open func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Promociones".localized
+        self.title = "Promociones".localized_temp
 
 		self.tableView.register(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
 		self.tableView.register(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")

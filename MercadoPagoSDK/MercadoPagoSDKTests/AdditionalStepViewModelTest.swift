@@ -21,7 +21,7 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
     }
 
     func testTitle() {
-        XCTAssertEqual(self.instance!.getTitle(), "¿En cuántas cuotas?".localized)
+        XCTAssertEqual(self.instance!.getTitle(), "¿En cuántas cuotas?".localized_temp)
         XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
 
@@ -212,7 +212,7 @@ class IssuerAdditionalStepViewModelTest: BaseTest {
     }
 
     func testTitle() {
-        XCTAssertEqual(self.instance!.getTitle(), "¿Quién emitió tu tarjeta?".localized)
+        XCTAssertEqual(self.instance!.getTitle(), "¿Quién emitió tu tarjeta?".localized_temp)
         XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
 
@@ -294,7 +294,7 @@ class CardTypeAdditionalStepViewModelTest: BaseTest {
     }
 
     func testTitle() {
-        XCTAssertEqual(self.instance!.getTitle(), "¿Qué tipo de tarjeta es?".localized)
+        XCTAssertEqual(self.instance!.getTitle(), "¿Qué tipo de tarjeta es?".localized_temp)
         XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
 
@@ -372,7 +372,7 @@ class FinancialInstitutionAdditionalStepViewModelTest: BaseTest {
     }
 
     func testTitle() {
-        XCTAssertEqual(self.instance!.getTitle(), "¿Cuál es tu banco?".localized)
+        XCTAssertEqual(self.instance!.getTitle(), "¿Cuál es tu banco?".localized_temp)
         XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
 
@@ -452,7 +452,7 @@ class EntityTypeAdditionalStepViewModelTest: BaseTest {
     }
 
     func testTitle() {
-        XCTAssertEqual(self.instance!.getTitle(), "¿Cuál es el tipo de persona?".localized)
+        XCTAssertEqual(self.instance!.getTitle(), "¿Cuál es el tipo de persona?".localized_temp)
         XCTAssertEqual(self.instance!.maxFontSize, 21)
     }
 

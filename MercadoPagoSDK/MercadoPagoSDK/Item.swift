@@ -27,10 +27,10 @@ open class Item: NSObject {
 
     open func validate() -> String? {
         if currencyId.isEmpty {
-            return "La currency del item esta vacia".localized
+            return "La currency del item esta vacia".localized_temp
         }
         if quantity <= 0 {
-            return "La cantidad de items no es valida".localized
+            return "La cantidad de items no es valida".localized_temp
         }
 
         return nil

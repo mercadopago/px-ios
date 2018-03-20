@@ -90,7 +90,7 @@ class AvailableCardsViewModel: NSObject {
     }
 
     func getEnterCardMessage() -> String {
-        return "Ingresar tarjeta".localized
+        return "Ingresar tarjeta".localized_temp
     }
 
     func getAvailableCardsViewTotalHeight(headerHeight: CGFloat, paymentMethodsHeight: CGFloat, paymentMethodsCount: CGFloat) -> CGFloat {

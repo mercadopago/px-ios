@@ -233,8 +233,8 @@ class CardViewModelManagerTest: BaseTest {
     }
 
     func testGetNotAvailableCardMessage() {
-        let defaultMessage = "Método de pago no soportado".localized
-        let message = "Solo puedes pagar con ".localized
+        let defaultMessage = "Método de pago no soportado".localized_temp
+        let message = "Solo puedes pagar con ".localized_temp
         let paymentMethods = MockBuilder.getMockPaymentMethods()
         paymentMethods[0].name = "Visa"
         cardFormManager?.paymentMethods = paymentMethods

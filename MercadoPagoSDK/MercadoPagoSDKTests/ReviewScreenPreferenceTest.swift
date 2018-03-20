@@ -27,7 +27,7 @@ class ReviewScreenPreferenceTest: BaseTest {
 
     func testSetTitle() {
 
-        XCTAssertEqual(reviewScreenPreference.getTitle(), "Revisa si está todo bien".localized)
+        XCTAssertEqual(reviewScreenPreference.getTitle(), "Revisa si está todo bien".localized_temp)
 
         reviewScreenPreference.setTitle(title: "1")
         self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)
@@ -37,7 +37,7 @@ class ReviewScreenPreferenceTest: BaseTest {
 
     func testSetConfirmButtonText() {
 
-        XCTAssertEqual(reviewScreenPreference.getConfirmButtonText(), "Pagar".localized)
+        XCTAssertEqual(reviewScreenPreference.getConfirmButtonText(), "Pagar".localized_temp)
 
         reviewScreenPreference.setConfirmButtonText(confirmButtonText: "1")
         self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)
@@ -47,7 +47,7 @@ class ReviewScreenPreferenceTest: BaseTest {
 
     func testSetCancelButtonText() {
 
-        XCTAssertEqual(reviewScreenPreference.getCancelButtonTitle(), "Cancelar Pago".localized)
+        XCTAssertEqual(reviewScreenPreference.getCancelButtonTitle(), "Cancelar Pago".localized_temp)
 
         reviewScreenPreference.setCancelButtonText(cancelButtonText: "1")
         self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)

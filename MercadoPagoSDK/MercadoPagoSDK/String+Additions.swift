@@ -23,7 +23,7 @@ extension String {
 	}
 
     public func existsLocalized() -> Bool {
-        let localizedString = self.localized
+        let localizedString = self.localized_temp
         return localizedString != self
     }
 

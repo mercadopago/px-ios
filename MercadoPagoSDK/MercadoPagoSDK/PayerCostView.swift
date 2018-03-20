@@ -16,8 +16,8 @@ class PayerCostView: UIView, PXComponent {
     private let VALUE_WIDTH_PERCENT: CGFloat = 0.5
     static private let TITLE_FONT_SIZE: CGFloat = PXLayout.S_FONT
     static private let VALUE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
-    static private let NO_INTEREST_TEXT =  "Sin interés".localized
-    static private let PAY_TEXT =  "Pagas".localized
+    static private let NO_INTEREST_TEXT =  "Sin interés".localized_temp
+    static private let PAY_TEXT =  "Pagas".localized_temp
 
     var noRateLabel: UILabel!
     var purchaseDetailTitle: UILabel!

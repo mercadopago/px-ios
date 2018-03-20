@@ -244,7 +244,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             let currentStep = self.viewModel.getNextStep()
             executeStep(currentStep)
         } else {
-            showToolbarError(message: "invalid_field".localized)
+            showToolbarError(message: "invalid_field".localized_temp)
         }
     }
 

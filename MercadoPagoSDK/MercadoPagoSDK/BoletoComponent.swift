@@ -37,7 +37,7 @@ class BoletoComponent: UIView, PXComponent {
         self.boletoView = UIView(frame: CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
         self.boletoView.addSubview(boletoImageView)
         let titleLabel = UILabel(frame: CGRect(x: 5, y: 15, width:BoletoComponent.IMAGE_WIDTH - 2 * 5, height: 14))
-        titleLabel.text = "DADOS PARA VALIDAR O SEU PAGAMENTO".localized
+        titleLabel.text = "DADOS PARA VALIDAR O SEU PAGAMENTO".localized_temp
         titleLabel.textAlignment = .center
         titleLabel.font = Utils.getFont(size: 10.0)
         titleLabel.textColor = UIColor.px_grayDark()
@@ -58,7 +58,7 @@ class BoletoComponent: UIView, PXComponent {
         self.nameTF.textAlignment = .left
         self.nameTF.font = Utils.getFont(size: 13.0)
         self.nameTF.textColor = UIColor.px_grayDark()
-        self.nameTF.placeholder = "SOBRENOME E NOME".localized
+        self.nameTF.placeholder = "SOBRENOME E NOME".localized_temp
         self.nameTF.isEnabled = false
 
         self.boletoView.addSubview(titleLabel)

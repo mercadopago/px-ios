@@ -155,7 +155,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     func getToolBar() -> PXToolbar {
         let toolBar = PXToolbar()
         toolBar.barStyle = UIBarStyle.default
-        let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(CompositeInputComponent.donePicker))
+        let doneButton = UIBarButtonItem(title: "OK".localized_temp, style: .plain, target: self, action: #selector(CompositeInputComponent.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let font = Utils.getFont(size: 14)
         doneButton.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())

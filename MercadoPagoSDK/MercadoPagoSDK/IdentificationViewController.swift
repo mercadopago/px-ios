@@ -70,7 +70,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         toolBar.barStyle = UIBarStyle.default
         toolBar.sizeToFit()
 
-        let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(IdentificationViewController.donePicker))
+        let doneButton = UIBarButtonItem(title: "OK".localized_temp, style: .plain, target: self, action: #selector(IdentificationViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 
         let font = Utils.getFont(size: 14)
@@ -157,12 +157,12 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         tipoDeDocumentoLabel = identificationCard?.tipoDeDocumentoLabel
         numberDocLabel = identificationCard?.numberDocLabel
 
-        self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
+        self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized_temp
         self.tipoDeDocumentoLabel.font = Utils.getIdentificationFont(size: 10)
-        self.numberTextField.placeholder = "Número".localized
+        self.numberTextField.placeholder = "Número".localized_temp
         self.numberTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.numberTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.textField.placeholder = "Tipo".localized
+        self.textField.placeholder = "Tipo".localized_temp
         self.textField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.textField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.view.backgroundColor = ThemeManager.shared.getMainColor()

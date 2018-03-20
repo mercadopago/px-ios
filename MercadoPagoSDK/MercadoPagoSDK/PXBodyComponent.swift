@@ -64,7 +64,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         if pm.isCard {
             issuerName = self.props.paymentResult.paymentData?.issuer?.name
             if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
-                pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+                pmDescription = paymentMethodName + " " + "terminada en ".localized_temp + lastFourDigits
             }
         } else {
             pmDescription = paymentMethodName
@@ -72,7 +72,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
 
         var disclaimerText: String? = nil
         if let statementDescription = self.props.paymentResult.statementDescription {
-            disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
+            disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized_temp as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
         // Issuer name is nil temporally

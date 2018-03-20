@@ -41,7 +41,7 @@ open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewData
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-		self.title = "Promociones".localized
+		self.title = "Promociones".localized_temp
 
 		self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
 

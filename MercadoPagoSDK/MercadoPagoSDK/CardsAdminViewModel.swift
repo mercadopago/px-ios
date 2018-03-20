@@ -14,7 +14,7 @@ open class CardsAdminViewModel: NSObject {
     var customerId: String?
     var extraOptionTitle: String?
     var confirmPromptText: String?
-    var titleScreen = "¿Con qué tarjeta?".localized
+    var titleScreen = "¿Con qué tarjeta?".localized_temp
 
     // View Constants
     let screenWidth: CGFloat = UIScreen.main.bounds.width

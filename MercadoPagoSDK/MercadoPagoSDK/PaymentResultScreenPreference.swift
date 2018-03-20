@@ -51,7 +51,7 @@ open class PaymentResultScreenPreference: NSObject {
     //HEADER
     // MARK: Approved
     var approvedBadge: ApprovedBadge? = ApprovedBadge.check
-    var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized
+    var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized_temp
     var approvedSubtitle = ""
     private var _approvedLabelText = ""
     private var _disableApprovedLabelText = true
@@ -60,9 +60,9 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedIconBundle = MercadoPago.getBundle()!
 
     // MARK: Pending
-    var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized
+    var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized_temp
     var pendingSubtitle = ""
-    var pendingContentTitle = PaymentResultScreenPreference.PENDING_CONTENT_TITLE.localized
+    var pendingContentTitle = PaymentResultScreenPreference.PENDING_CONTENT_TITLE.localized_temp
     var pendingContentText = ""
     private var _pendingLabelText = ""
     private var _disablePendingLabelText = true
@@ -73,18 +73,18 @@ open class PaymentResultScreenPreference: NSObject {
     var hidePendingContentTitle = false
 
     // MARK: Rejected
-    var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
+    var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized_temp
     var rejectedSubtitle = ""
     var rejectedTitleSetted = false
     private var disableRejectedLabelText = false
-    var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
+    var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized_temp
     var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
     var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedDefaultIconName: String?
     var rejectedURLImage : String? = nil
     var rejectedIconName: String?
-    var rejectedContentTitle = PaymentResultScreenPreference.REJECTED_CONTENT_TITLE.localized
+    var rejectedContentTitle = PaymentResultScreenPreference.REJECTED_CONTENT_TITLE.localized_temp
     var rejectedContentText = ""
     var hideRejectedContentText = false
     var hideRejectedContentTitle = false
@@ -518,7 +518,7 @@ open class PaymentResultScreenPreference: NSObject {
 
     open func getExitButtonTitle() -> String? {
         if let title = exitButtonTitle {
-            return title.localized
+            return title.localized_temp
         }
         return nil
     }

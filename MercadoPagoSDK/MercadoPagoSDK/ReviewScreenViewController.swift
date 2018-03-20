@@ -374,14 +374,14 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 	}
 
     internal func openTermsAndConditions(_ title: String, url: URL) {
-        let webVC = WebViewController(url: url, screenName: "TERMS_AND_CONDITIONS", navigationBarTitle: "Términos y Condiciones".localized)
+        let webVC = WebViewController(url: url, screenName: "TERMS_AND_CONDITIONS", navigationBarTitle: "Términos y Condiciones".localized_temp)
         webVC.title = title
         self.navigationController!.pushViewController(webVC, animated: true)
 
     }
 
     internal func openUnlockCard(_ title: String, url: URL) {
-        let webVC = WebViewController(url: url, screenName: "UNLOCK_CARD", navigationBarTitle: "Desbloqueo de Tarjeta".localized)
+        let webVC = WebViewController(url: url, screenName: "UNLOCK_CARD", navigationBarTitle: "Desbloqueo de Tarjeta".localized_temp)
         webVC.title = title
         self.navigationController!.pushViewController(webVC, animated: true)
 

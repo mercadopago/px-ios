@@ -537,7 +537,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let totalPaymentMethodsToShow =  totalPaymentMethodSearchCount + paymentMethodPluginsToShow.count
         
         if totalPaymentMethodsToShow == 0 {
-            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
+            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized_temp, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized_temp, retry: false), errorCallback: { (_) in
             })
         } else if totalPaymentMethodsToShow == 1 {
             autoselectOnlyPaymentMethod()
@@ -680,7 +680,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             for ET in entityTypesKeys {
                 let entityType = EntityType()
                 entityType._id = ET as! String
-                entityType.name = (siteETsDictionary.value(forKey: ET as! String) as! String!).localized
+                entityType.name = (siteETsDictionary.value(forKey: ET as! String) as! String!).localized_temp
 
                 entityTypes.append(entityType)
             }

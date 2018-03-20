@@ -105,7 +105,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         collectionSearch.addSubview(upperView)
 
         if self.title == nil || self.title!.isEmpty {
-            self.title = "¿Cómo quieres pagar?".localized
+            self.title = "¿Cómo quieres pagar?".localized_temp
         }
 
         self.registerAllCells()
@@ -219,7 +219,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if let cellRef = self.titleSectionReference {
             cellRef.title.text = ""
         }
-        return "¿Cómo quieres pagar?".localized
+        return "¿Cómo quieres pagar?".localized_temp
     }
 
     open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -342,7 +342,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = currency.getThousandsSeparatorOrDefault()
             let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-            let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+            let attributedTitle = NSMutableAttributedString(string: "Total: ".localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
             
             let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
             attributedTitle.append(attributedAmount)

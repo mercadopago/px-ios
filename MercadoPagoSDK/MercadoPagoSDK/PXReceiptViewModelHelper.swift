@@ -12,7 +12,7 @@ extension PXResultViewModel {
     open func getReceiptComponentProps() -> PXReceiptProps {
         if hasReceiptComponent() {
             let date = Date()
-            return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + self.paymentResult._id!)
+            return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized_temp + self.paymentResult._id!)
         } else {
             return PXReceiptProps()
         }

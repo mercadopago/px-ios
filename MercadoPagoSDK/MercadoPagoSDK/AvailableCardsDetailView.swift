@@ -56,7 +56,7 @@ class AvailableCardsDetailView: UIView {
         titleLable = MPCardFormToolbarLabel()
         titleLable.frame = getTitleLabelFrame()
         titleLable.textColor = ThemeManager.shared.getTheme().modalComponent().tintColor
-        titleLable.text = "No te preocupes, aún puedes terminar tu pago con:".localized
+        titleLable.text = "No te preocupes, aún puedes terminar tu pago con:".localized_temp
         titleLable.font = Utils.getFont(size: 22.0)
         titleLable.numberOfLines = 2
         titleLable.textAlignment = .center

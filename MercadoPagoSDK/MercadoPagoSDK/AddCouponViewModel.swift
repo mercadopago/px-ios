@@ -37,15 +37,15 @@ class AddCouponViewModel: NSObject {
         }) { (error) in
 
             if error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_DOESNT_MATCH {
-                failure("Vendedor sin descuento disponible".localized)
+                failure("Vendedor sin descuento disponible".localized_temp)
             } else if error.localizedDescription == self.DISCOUNT_ERROR_RUN_OUT_OF_USES {
-                failure("Se agotó la cantidad de usos".localized)
+                failure("Se agotó la cantidad de usos".localized_temp)
             } else if error.localizedDescription == self.DISCOUNT_ERROR_AMOUNT_DOESNT_MATCH {
-                failure("Importe fuera del alcance".localized)
+                failure("Importe fuera del alcance".localized_temp)
             } else if error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_EXPIRED {
-                failure("La campaña expiró".localized)
+                failure("La campaña expiró".localized_temp)
             } else {
-                failure("Algo salió mal...".localized)
+                failure("Algo salió mal...".localized_temp)
             }
 
         }

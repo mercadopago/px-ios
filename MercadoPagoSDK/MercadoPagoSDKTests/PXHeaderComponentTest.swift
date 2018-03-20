@@ -23,7 +23,7 @@ class PXHeaderComponentTest: BaseTest {
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
-        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized)
+        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized_temp)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
     }
 
@@ -54,7 +54,7 @@ class PXHeaderComponentTest: BaseTest {
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
-        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized)
+        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized_temp)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
     }
 
@@ -70,7 +70,7 @@ class PXHeaderComponentTest: BaseTest {
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxRedMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("error_badge"))
-        XCTAssertEqual(headerView.statusLabel?.attributedText?.string, PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized)
+        XCTAssertEqual(headerView.statusLabel?.attributedText?.string, PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized_temp)
     }
 
     func testHeaderView_rejectedCardPaymentPreference_render() {
@@ -84,7 +84,7 @@ class PXHeaderComponentTest: BaseTest {
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxRedMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("error_badge"))
-        XCTAssertEqual(headerView.statusLabel?.attributedText?.string, PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized)
+        XCTAssertEqual(headerView.statusLabel?.attributedText?.string, PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized_temp)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, ResultMockComponentHelper.rejectedTitleDummy)
     }
 
@@ -115,7 +115,7 @@ class PXHeaderComponentTest: BaseTest {
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("pending_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
-        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized.localized)
+        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized.localized_temp)
     }
 
     func testHeaderView_pendingCardPaymentPreference_render() {
@@ -130,7 +130,7 @@ class PXHeaderComponentTest: BaseTest {
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("pending_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
-        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized.localized)
+        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized.localized_temp)
     }
 
     // MARK: Instructions

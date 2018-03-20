@@ -17,7 +17,7 @@ class ExitButtonTableViewCell: CallbackCancelTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.exitButton.addTarget(self, action: #selector(invokeDefaultCallback), for: .touchUpInside)
-        self.exitButton.setTitle("Cancelar Pago".localized, for:UIControlState())
+        self.exitButton.setTitle("Cancelar Pago".localized_temp, for:UIControlState())
         self.exitButton.titleLabel?.font = Utils.getFont(size: 16)
     }
 

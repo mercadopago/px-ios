@@ -59,9 +59,9 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
 
     func fillPaymentMethodDescription(paymentData: PaymentData) {
-        let paymentMethodDescription = NSMutableAttributedString(string: paymentData.getPaymentMethod()!.name.localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
+        let paymentMethodDescription = NSMutableAttributedString(string: paymentData.getPaymentMethod()!.name.localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
         if !String.isNullOrEmpty(paymentData.getToken()?.lastFourDigits) {
-            paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized + (paymentData.getToken()?.lastFourDigits)!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
+            paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized_temp + (paymentData.getToken()?.lastFourDigits)!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
         }
         self.paymentMethodDescription.attributedText = paymentMethodDescription
     }
@@ -87,13 +87,13 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.noRateLabel.attributedText = NSAttributedString(string : "")
 
         if showBankInterestWarning(paymentData: paymentData) {
-            self.noRateLabel.attributedText = NSAttributedString(string : "No incluye intereses bancarios".localized)
+            self.noRateLabel.attributedText = NSAttributedString(string : "No incluye intereses bancarios".localized_temp)
             self.noRateLabel.textColor = self.totalAmountLabel.textColor
             self.noRateLabel.font = Utils.getFont(size: self.totalAmountLabel.font.pointSize)
         }
 
         if showPayerCostDescription(paymentData: paymentData) {
-            self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
+            self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized_temp)
         }
     }
 
@@ -108,7 +108,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     func fillChangePaymentMethodButton(reviewScreenPreference: ReviewScreenPreference) {
         if reviewScreenPreference.isChangeMethodOptionEnabled() {
             self.selectOtherPaymentMethodButton.backgroundColor = .clear
-            self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
+            self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized_temp, for: .normal)
             self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
         } else {
             self.selectOtherPaymentMethodButton.isHidden = true

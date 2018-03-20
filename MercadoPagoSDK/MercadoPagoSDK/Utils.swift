@@ -424,7 +424,7 @@ class Utils {
             dayString.removeFirst()
         }
         
-        return dayString + " de ".localized + formatterMonth.string(from:date).localized.lowercased() + " de ".localized + formatterYear.string(from:date)
+        return dayString + " de ".localized_temp + formatterMonth.string(from:date).localized_temp.lowercased() + " de ".localized_temp + formatterYear.string(from:date)
     }
     
     

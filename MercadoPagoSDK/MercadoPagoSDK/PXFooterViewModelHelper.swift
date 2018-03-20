@@ -57,17 +57,17 @@ extension PXResultViewModel {
             if let labelError = preference.getRejectedSecondaryButtonText() {
                 return labelError
             } else {
-                return PXFooterResultConstants.ERROR_BUTTON_TEXT.localized
+                return PXFooterResultConstants.ERROR_BUTTON_TEXT.localized_temp
             }
         } else if self.isWarning() {
             if let labelWarning = preference.getPendingSecondaryButtonText() {
                 return labelWarning
             } else if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
-                return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
+                return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized_temp
             } else if self.paymentResult.statusDetail == RejectedStatusDetail.CARD_DISABLE {
-                return PXFooterResultConstants.CARD_DISABLE_BUTTON_TEXT.localized
+                return PXFooterResultConstants.CARD_DISABLE_BUTTON_TEXT.localized_temp
             } else {
-                return PXFooterResultConstants.WARNING_BUTTON_TEXT.localized
+                return PXFooterResultConstants.WARNING_BUTTON_TEXT.localized_temp
             }
         }
         return PXFooterResultConstants.DEFAULT_BUTTON_TEXT
@@ -80,15 +80,15 @@ extension PXResultViewModel {
         if self.isAccepted() {
            return PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta
         } else if self.isError() {
-            return PXFooterResultConstants.ERROR_LINK_TEXT.localized
+            return PXFooterResultConstants.ERROR_LINK_TEXT.localized_temp
         } else if self.isWarning() {
             if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
-                return PXFooterResultConstants.ERROR_LINK_TEXT.localized
+                return PXFooterResultConstants.ERROR_LINK_TEXT.localized_temp
             } else {
-                return PXFooterResultConstants.WARNING_LINK_TEXT.localized
+                return PXFooterResultConstants.WARNING_LINK_TEXT.localized_temp
             }
         }
-        return PXFooterResultConstants.DEFAULT_LINK_TEXT.localized
+        return PXFooterResultConstants.DEFAULT_LINK_TEXT.localized_temp
     }
 
     func getButtonAction() -> (() -> Void)? {

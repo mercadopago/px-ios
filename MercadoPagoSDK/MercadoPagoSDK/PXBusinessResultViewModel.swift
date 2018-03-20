@@ -89,7 +89,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             return nil
         }
         let date = Date()
-        let recieptProps = PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + recieptId)
+        let recieptProps = PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized_temp + recieptId)
         return PXReceiptComponent(props: recieptProps)
     }
     

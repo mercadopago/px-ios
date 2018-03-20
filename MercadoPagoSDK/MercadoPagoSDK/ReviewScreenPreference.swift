@@ -18,8 +18,8 @@ open class ReviewScreenPreference: NSObject {
     var disclaimer: String?
     var disclaimerColor: UIColor = ThemeManager.shared.getTheme().highlightedLabelTintColor()
     var showSubitle: Bool = false
-    let summaryTitles: [SummaryType: String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
-                                                            SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envío".localized]
+    let summaryTitles: [SummaryType: String] = [SummaryType.PRODUCT: "Producto".localized_temp, SummaryType.ARREARS: "Mora".localized_temp, SummaryType.CHARGE: "Cargos".localized_temp,
+                                                            SummaryType.DISCOUNT: "Descuentos".localized_temp, SummaryType.TAXES: "Impuestos".localized_temp, SummaryType.SHIPPING: "Envío".localized_temp]
     private var itemsReview: ItemsReview = ItemsReview()
 
     var additionalInfoCells = [MPCustomCell]()
@@ -30,7 +30,7 @@ open class ReviewScreenPreference: NSObject {
     }
 
     open func getTitle() -> String {
-        return title.localized
+        return title.localized_temp
     }
 
     open func setConfirmButtonText(confirmButtonText: String) {
@@ -38,7 +38,7 @@ open class ReviewScreenPreference: NSObject {
     }
 
     open func getConfirmButtonText() -> String {
-        return confirmButtonText.localized
+        return confirmButtonText.localized_temp
     }
 
     open func setCancelButtonText(cancelButtonText: String) {
@@ -46,7 +46,7 @@ open class ReviewScreenPreference: NSObject {
     }
 
     open func getCancelButtonTitle() -> String {
-        return cancelButtonText.localized
+        return cancelButtonText.localized_temp
     }
 
 	open func isChangeMethodOptionEnabled() -> Bool {
@@ -69,8 +69,8 @@ open class ReviewScreenPreference: NSObject {
         self.additionalInfoCells = customCells
     }
 
-    static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
-    static let  DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized
+    static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized_temp
+    static let  DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized_temp
     var shouldShowQuantityRow: Bool = true
     open func hideQuantityRow() {
         self.shouldShowQuantityRow = false

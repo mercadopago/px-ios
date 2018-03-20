@@ -45,7 +45,7 @@ open class PromoTableViewCell: UITableViewCell {
 				for pm in promo.paymentMethods {
 					s = s + pm.name
 					if i == promo.paymentMethods.count - 2 {
-						s = s + " y ".localized
+						s = s + " y ".localized_temp
 					} else if i < promo.paymentMethods.count - 1 {
 						s = s + ", "
 					}
