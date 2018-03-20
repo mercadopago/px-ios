@@ -12,6 +12,7 @@ class ExpressViewController: UIViewController {
     
     let popUpViewHeight: CGFloat = 500
     let borderMargin = PXLayout.XXXS_MARGIN
+    var blurView: UIVisualEffectView!
     
     fileprivate var bottomConstraint = NSLayoutConstraint()
     
@@ -23,6 +24,12 @@ class ExpressViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.alpha = 0
+        self.view.addSubview(blurView)
         setupUI()
     }
     
@@ -134,11 +141,7 @@ extension ExpressViewController {
     fileprivate func presentSheet() {
         UIView.animate(withDuration: 0.5, animations: {
             self.view.alpha = 1
-            if #available(iOS 10.0, *) {
-                self.view.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.7)
-            } else {
-                // TODO: Fallback on earlier versions
-            }
+            self.blurView.alpha = 1
         }) { (true) in
             self.animatePopUpView(isDeployed: false)
         }
@@ -158,7 +161,7 @@ extension ExpressViewController {
             transitionAnimator.addCompletion { position in
                 if isDeployed {
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.view.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.0)
+                        self.blurView.alpha = 0
                     }, completion: { finish in
                         self.dismiss(animated: false, completion: nil)
                     })
