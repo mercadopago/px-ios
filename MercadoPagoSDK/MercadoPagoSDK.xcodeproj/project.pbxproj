@@ -761,6 +761,7 @@
 		FCBF13531E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF13501E720A6E0092B756 /* EntityTypeTableViewCell.swift */; };
 		FCBF13541E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */; };
 		FCBF13551E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */; };
+		FCC0610120614BBF00DB06F1 /* QRReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC0610020614BBF00DB06F1 /* QRReaderViewController.swift */; };
 		FCCC11F71FCF2D5A0001A591 /* PXResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC11F61FCF2D590001A591 /* PXResultViewModelTest.swift */; };
 		FCCC56AE20601B0B001729AB /* ExpressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCC56AC20601B0B001729AB /* ExpressViewController.swift */; };
 		FCCC56AF20601B0B001729AB /* ExpressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCCC56AD20601B0B001729AB /* ExpressViewController.xib */; };
@@ -1264,6 +1265,7 @@
 		FCBF134D1E7208900092B756 /* EntityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityType.swift; sourceTree = "<group>"; };
 		FCBF13501E720A6E0092B756 /* EntityTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityTypeTableViewCell.swift; sourceTree = "<group>"; };
 		FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntityTypeTableViewCell.xib; sourceTree = "<group>"; };
+		FCC0610020614BBF00DB06F1 /* QRReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReaderViewController.swift; sourceTree = "<group>"; };
 		FCCC11F61FCF2D590001A591 /* PXResultViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXResultViewModelTest.swift; sourceTree = "<group>"; };
 		FCCC56AC20601B0B001729AB /* ExpressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressViewController.swift; sourceTree = "<group>"; };
 		FCCC56AD20601B0B001729AB /* ExpressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpressViewController.xib; sourceTree = "<group>"; };
@@ -2650,6 +2652,7 @@
 			children = (
 				FCCC56AC20601B0B001729AB /* ExpressViewController.swift */,
 				FCCC56AD20601B0B001729AB /* ExpressViewController.xib */,
+				FCC0610020614BBF00DB06F1 /* QRReaderViewController.swift */,
 			);
 			name = Express;
 			sourceTree = "<group>";
@@ -3198,6 +3201,7 @@
 				4BEF9B5D1FE2EFF1002ADAFF /* MercadoPagoCheckout+Screens+Plugins.swift in Sources */,
 				0FC4FC391B0FB53500CF7148 /* PromoViewController.swift in Sources */,
 				FC3FC85A1FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift in Sources */,
+				FCC0610120614BBF00DB06F1 /* QRReaderViewController.swift in Sources */,
 				FC3FC8611FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift in Sources */,
 				150786A31CD7CD1E0034C5B1 /* IdentificationCardView.swift in Sources */,
 				4B811DD71FCDCDF6000611AD /* PXHookComponent.swift in Sources */,
