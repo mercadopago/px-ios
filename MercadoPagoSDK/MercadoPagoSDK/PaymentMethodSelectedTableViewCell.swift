@@ -59,7 +59,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
 
     func fillPaymentMethodDescription(paymentData: PaymentData) {
-        let paymentMethodDescription = NSMutableAttributedString(string: paymentData.getPaymentMethod()!.name.localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
+        let paymentMethodDescription = NSMutableAttributedString(string: paymentData.getPaymentMethod()!.name, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
         if !String.isNullOrEmpty(paymentData.getToken()?.lastFourDigits) {
             paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized_temp + (paymentData.getToken()?.lastFourDigits)!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
         }

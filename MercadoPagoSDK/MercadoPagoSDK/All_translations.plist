@@ -129,7 +129,7 @@
 		<key>pt</key>
 		<string>Ocorreu um erro</string>
 	</dict>
-	<key>Cancelar pago</key>
+	<key>--Cancelar pago</key>
 	<dict>
 		<key>es</key>
 		<string>Cancelar pago</string>
@@ -1521,6 +1521,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key> terminada en </key>
 	<dict>
+		<key>es</key>
+		<string> terminada en </string>
 		<key>en</key>
 		<string> ending in </string>
 		<key>pt</key>
@@ -1535,6 +1537,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Revisa si está todo bien</key>
 	<dict>
+		<key>es</key>
+		<string>Revisa si está todo bien</string>
 		<key>en</key>
 		<string>Check your payment</string>
 		<key>pt</key>
@@ -1542,6 +1546,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Cantidad: </key>
 	<dict>
+		<key>es</key>
+		<string>Cantidad: </string>
 		<key>en</key>
 		<string>Quantity: </string>
 		<key>pt</key>
@@ -1549,6 +1555,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Precio Unitario: </key>
 	<dict>
+		<key>es</key>
+		<string>Precio Unitario: </string>
 		<key>en</key>
 		<string>Unit price: </string>
 		<key>pt</key>
@@ -1563,6 +1571,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Cambiar medio de pago</key>
 	<dict>
+		<key>es</key>
+		<string>Cambiar medio de pago</string>
 		<key>en</key>
 		<string>Change payment method</string>
 		<key>pt</key>
@@ -1575,6 +1585,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Productos</key>
 	<dict>
+		<key>es</key>
+		<string>Productos</string>
 		<key>en</key>
 		<string>Products</string>
 		<key>pt</key>
@@ -1587,18 +1599,24 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Pagar</key>
 	<dict>
+		<key>es</key>
+		<string>Pagar</string>
 		<key>en</key>
 		<string>Pay</string>
 	</dict>
 	<key>Cancelar Pago</key>
 	<dict>
+		<key>es</key>
+		<string>Cancelar Pago</string>
 		<key>en</key>
 		<string>Cancel Payment</string>
 		<key>pt</key>
 		<string>Cancelar pagamento</string>
 	</dict>
-	<key>Pagáras </key>
+	<key>Pagarás </key>
 	<dict>
+		<key>es</key>
+		<string>Pagarás </string>
 		<key>en</key>
 		<string>You will pay </string>
 		<key>pt</key>

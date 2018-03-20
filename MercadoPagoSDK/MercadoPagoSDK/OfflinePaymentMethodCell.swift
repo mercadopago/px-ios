@@ -86,7 +86,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
     internal func fillCell(_ paymentMethodOption: PaymentMethodOption, amount: Double, paymentMethod: PaymentMethod, currency: Currency, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
 
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.black)
-        var attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
+        var attributedTitle = NSMutableAttributedString(string : "Pagarás ".localized_temp, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
         attributedTitle.append(attributedAmount)
 
         if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
