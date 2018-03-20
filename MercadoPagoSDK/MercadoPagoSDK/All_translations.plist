@@ -81,27 +81,6 @@
 		<key>en</key>
 		<string>Payment methods could not be obtained with this preference</string>
 	</dict>
-	<key>--visa</key>
-	<dict>
-		<key>es</key>
-		<string>Visa</string>
-		<key>en</key>
-		<string>Visa</string>
-	</dict>
-	<key>--master</key>
-	<dict>
-		<key>es</key>
-		<string>Mastercard</string>
-		<key>en</key>
-		<string>Mastercard</string>
-	</dict>
-	<key>--amex</key>
-	<dict>
-		<key>es</key>
-		<string>Amex</string>
-		<key>en</key>
-		<string>Amex</string>
-	</dict>
 	<key>Salir</key>
 	<dict>
 		<key>es</key>
@@ -129,15 +108,6 @@
 		<key>pt</key>
 		<string>Ocorreu um erro</string>
 	</dict>
-	<key>--Cancelar pago</key>
-	<dict>
-		<key>es</key>
-		<string>Cancelar pago</string>
-		<key>en</key>
-		<string>Cancel payment</string>
-		<key>pt</key>
-		<string>Cancelar pagamento</string>
-	</dict>
 	<key>¿Qué puedo hacer?</key>
 	<dict>
 		<key>es</key>
@@ -146,15 +116,6 @@
 		<string>What can I do?</string>
 		<key>pt</key>
 		<string>Que posso fazer?</string>
-	</dict>
-	<key>--El teléfono está al dorso de tu tarjeta.</key>
-	<dict>
-		<key>es</key>
-		<string>El teléfono está al dorso de tu tarjeta.</string>
-		<key>en</key>
-		<string>The phone number is on the back of your card.</string>
-		<key>pt</key>
-		<string>O telefone do banco está no verso do seu cartão.</string>
 	</dict>
 	<key>Pagar con otro medio</key>
 	<dict>
@@ -174,13 +135,6 @@
 		<key>pt</key>
 		<string>Pronto! O seu pagamento foi aprovado</string>
 	</dict>
-	<key>--También enviamos el código a tu email</key>
-	<dict>
-		<key>es</key>
-		<string>También enviamos el código a tu email</string>
-		<key>en</key>
-		<string>También enviamos el código a tu email</string>
-	</dict>
 	<key>Te enviaremos este comprobante a %0</key>
 	<dict>
 		<key>es</key>
@@ -189,22 +143,6 @@
 		<string>We will send you the data to %0</string>
 		<key>pt</key>
 		<string>Enviaremos os dados para %0</string>
-	</dict>
-	<key>--Dinero en cuenta de MercadoPago</key>
-	<dict>
-		<key>es</key>
-		<string>Dinero en cuenta de MercadoPago</string>
-		<key>en</key>
-		<string>Account Money of MercadoPago</string>
-	</dict>
-	<key>--Terminada en </key>
-	<dict>
-		<key>es</key>
-		<string>Terminada en </string>
-		<key>en</key>
-		<string>Ending in </string>
-		<key>pt</key>
-		<string>Terminado em </string>
 	</dict>
 	<key>En tu estado de cuenta verás el cargo como %0</key>
 	<dict>
@@ -215,146 +153,6 @@
 		<key>pt</key>
 		<string>Você verá o pagamento na fatura do seu cartão de crédito como %0</string>
 	</dict>
-	<key>--Comprobante</key>
-	<dict>
-		<key>es</key>
-		<string>Comprobante</string>
-		<key>en</key>
-		<string>Ticket</string>
-		<key>pt</key>
-		<string>Comprovante</string>
-	</dict>
-	<key>--En menos de 1 hora te enviaremos por e-mail el resultado.</key>
-	<dict>
-		<key>es</key>
-		<string>En menos de 1 hora te enviaremos por e-mail el resultado.</string>
-		<key>en</key>
-		<string>In less than an hour we will send you the result by e-mail.</string>
-		<key>pt</key>
-		<string>Em menos de 1 hora, nós enviaremos o resultado por e-mail.</string>
-	</dict>
-	<key>--En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.</key>
-	<dict>
-		<key>es</key>
-		<string>En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.</string>
-	</dict>
-	<key>--Por favor, intenta pagar con otro medio.</key>
-	<dict>
-		<key>es</key>
-		<string>Por favor, intenta pagar con otro medio.</string>
-		<key>en</key>
-		<string>Please try to pay by other means.</string>
-		<key>pt</key>
-		<string>Por favor, tente pagar de outra forma.</string>
-	</dict>
-	<key>--rejected_high_risk_title</key>
-	<dict>
-		<key>es</key>
-		<string>Por seguridad, tuvimos que rechazar tu pago</string>
-		<key>en</key>
-		<string>For security reasons, we had to reject your payment</string>
-		<key>pt</key>
-		<string>Por segurança, foi necessário recusar o seu pagamento</string>
-	</dict>
-	<key>--cc_rejected_insufficient_amount_title</key>
-	<dict>
-		<key>es</key>
-		<string>Tu %0 no tiene fondos suficientes</string>
-		<key>en</key>
-		<string>Yours %0 has insufficient funds</string>
-		<key>pt</key>
-		<string>O seu %0 não possui saldo suficiente</string>
-	</dict>
-	<key>--cc_rejected_other_reason_title</key>
-	<dict>
-		<key>es</key>
-		<string>%0 no procesó el pago</string>
-		<key>en</key>
-		<string>%0 did not process the payment</string>
-		<key>pt</key>
-		<string>%0 não processou o pagamento</string>
-	</dict>
-	<key>--cc_rejected_max_attempts_title</key>
-	<dict>
-		<key>es</key>
-		<string>Llegaste al límite de intentos permitidos</string>
-		<key>en</key>
-		<string>You reached the limit of attempts allowed</string>
-		<key>pt</key>
-		<string>Você chegou ao limite de tentativas permitidas com este cartão</string>
-	</dict>
-	<key>--cc_rejected_duplicated_payment_title</key>
-	<dict>
-		<key>es</key>
-		<string>%0 no procesó el pago</string>
-		<key>en</key>
-		<string>%0 did not process the payment</string>
-		<key>pt</key>
-		<string>%0 não processou o pagamento</string>
-	</dict>
-	<key>--cc_rejected_card_disabled_title</key>
-	<dict>
-		<key>es</key>
-		<string>Llama a %0 para que active tu tarjeta</string>
-		<key>en</key>
-		<string>Calls to %1$s for activate your card</string>
-		<key>pt</key>
-		<string>Ligue para %0 e desbloqueie o seu cartão</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_other_title</key>
-	<dict>
-		<key>es</key>
-		<string>Algún dato de tu %0 es incorrecto</string>
-		<key>en</key>
-		<string>Some data of your %1$s is incorect</string>
-		<key>pt</key>
-		<string>Qualquer dado de seu %0 é incorreto</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_card_number_title</key>
-	<dict>
-		<key>es</key>
-		<string>Algún dato de tu %0 es incorrecto</string>
-		<key>en</key>
-		<string>Algún dato de tu %0 es incorrecto</string>
-		<key>pt</key>
-		<string>Qualquer dado de seu %0 é incorreto</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_security_code_title</key>
-	<dict>
-		<key>es</key>
-		<string>Algún dato de tu %0 es incorrecto</string>
-		<key>en</key>
-		<string>Algún dato de tu %0 es incorrecto</string>
-		<key>pt</key>
-		<string>Qualquer dado de seu %0 é incorreto</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_date_title</key>
-	<dict>
-		<key>es</key>
-		<string>Algún dato de tu %0 es incorrecto</string>
-		<key>en</key>
-		<string>The expiration date is not correct.</string>
-		<key>pt</key>
-		<string>Qualquer dado de seu %0 é incorreto</string>
-	</dict>
-	<key>--cc_rejected_call_for_authorize_title</key>
-	<dict>
-		<key>es</key>
-		<string>¿No pudiste autorizarlo?</string>
-		<key>en</key>
-		<string>Could not authorize it?</string>
-		<key>pt</key>
-		<string>Não conseguiu autorizá-lo?</string>
-	</dict>
-	<key>--cc_rejected_plugin_pm_title</key>
-	<dict>
-		<key>es</key>
-		<string>%0 no procesó el pago</string>
-		<key>en</key>
-		<string>%0 did not process the payment</string>
-		<key>pt</key>
-		<string>%0 não processou o pagamento</string>
-	</dict>
 	<key>El número de identificación es inválido</key>
 	<dict>
 		<key>es</key>
@@ -363,191 +161,6 @@
 		<string>Invalid identification number</string>
 		<key>pt</key>
 		<string>O número de identificação é inválido</string>
-	</dict>
-	<key>--rejected_insufficient_data_title</key>
-	<dict>
-		<key>es</key>
-		<string>No fue posible procesar su pago</string>
-		<key>en</key>
-		<string>Payment could not be processed</string>
-		<key>pt</key>
-		<string>Não foi possível processar o seu pagamento, desculpe-nos</string>
-	</dict>
-	<key>--rejected_by_bank_title</key>
-	<dict>
-		<key>es</key>
-		<string>No fue posible procesar su pago</string>
-		<key>en</key>
-		<string>Payment could not be processed</string>
-		<key>pt</key>
-		<string>Não foi possível processar o seu pagamento, desculpe-nos</string>
-	</dict>
-	<key>--rejected_high_risk_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago.
-
-O si prefieres, puedes elegir otro medio de pago.</string>
-		<key>en</key>
-		<string>If you want to pay with the money from your account, contact Mercado Pago customer service.
-
- Or if you prefer, you can choose other payment method.</string>
-		<key>pt</key>
-		<string>SSe você quiser pagar com o dinheiro da sua conta, entre em contato com Atenção ao Cliente do Mercado Pago.
-
-Ou, se preferir, escolha outro meio de pagamento.</string>
-	</dict>
-	<key>--cc_rejected_insufficient_amount_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>¡No te desanimes! Puedes elegir otro medio de pago.</string>
-		<key>en</key>
-		<string>Don&apos;t worry! You can choose another payment method.</string>
-		<key>pt</key>
-		<string>Não se preocupe! Você pode escolher outros meios de pagamento.</string>
-	</dict>
-	<key>--cc_rejected_other_reason_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Usa otra tarjeta u otro medio de pago.</string>
-		<key>en</key>
-		<string>Use another card or another payment method</string>
-		<key>pt</key>
-		<string>Use outro cartão ou outro meio de pagamento</string>
-	</dict>
-	<key>--cc_rejected_max_attempts_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Elige otra tarjeta u otro medio de pago.</string>
-		<key>en</key>
-		<string>Choose another card or another payment method</string>
-		<key>pt</key>
-		<string>Use outro cartão ou outro meio de pagamento.</string>
-	</dict>
-	<key>--cc_rejected_duplicated_payment_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.</string>
-		<key>en</key>
-		<string>If you need to repay, use another card or other payment method.</string>
-		<key>pt</key>
-		<string>Se você precisar pagar novamente, use outro cartão ou outro meio de pagamento.</string>
-	</dict>
-	<key>--cc_rejected_card_disabled_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>El teléfono está al dorso de tu tarjeta.</string>
-		<key>en</key>
-		<string>The phone number is on the back of your card.</string>
-		<key>pt</key>
-		<string>O telefone do banco está no verso do seu cartão.</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_card_number_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>El número de tu %0 es incorrecto.</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_security_code_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>El código de seguridad no es el correcto.</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_date_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string>La fecha de vencimiento no es la correcta.</string>
-	</dict>
-	<key>--cc_rejected_call_for_authorize_subtitle_credit_card</key>
-	<dict>
-		<key>es</key>
-		<string></string>
-		<key>en</key>
-		<string></string>
-		<key>pt</key>
-		<string></string>
-	</dict>
-	<key>--rejected_high_risk_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.</string>
-		<key>en</key>
-		<string>&gt;If you want to pay with the money from your account, contact Mercado Pago customer service.
-
- Or if you prefer, you can choose other payment method.</string>
-	</dict>
-	<key>--cc_rejected_insufficient_amount_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. O si prefieres, puedes elegir otro medio de pago.</string>
-		<key>en</key>
-		<string>Don&apos;t worry! Recharge at any bank or from your electronic banking and try again. Or if you prefer, you can choose another payment method.</string>
-	</dict>
-	<key>--cc_rejected_other_reason_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Usa otra tarjeta u otro medio de pago.</string>
-		<key>en</key>
-		<string>Use another card or another payment method</string>
-	</dict>
-	<key>--cc_rejected_max_attempts_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Elige otra tarjeta u otro medio de pago.</string>
-		<key>en</key>
-		<string>Choose another card or another payment method.</string>
-	</dict>
-	<key>--cc_rejected_duplicated_payment_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.</string>
-		<key>en</key>
-		<string>If you need to repay, use another card or other payment method.</string>
-	</dict>
-	<key>--cc_rejected_card_disabled_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>El teléfono está al dorso de tu tarjeta.</string>
-		<key>en</key>
-		<string>The phone number is on the back of your card.</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_card_number_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>El número de tu %0 es incorrecto.</string>
-		<key>en</key>
-		<string>The number of your %0 is incorrect.</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_security_code_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>El código de seguridad no es el correcto.</string>
-		<key>en</key>
-		<string>The security code is not correct</string>
-	</dict>
-	<key>--cc_rejected_bad_filled_date_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string>La fecha de vencimiento no es la correcta.</string>
-		<key>en</key>
-		<string>The expiration date is not correct.</string>
-	</dict>
-	<key>--cc_rejected_call_for_authorize_subtitle_debit_card</key>
-	<dict>
-		<key>es</key>
-		<string></string>
-		<key>en</key>
-		<string></string>
-		<key>pt</key>
-		<string></string>
-	</dict>
-	<key>--Ingresalo nuevamente</key>
-	<dict>
-		<key>es</key>
-		<string>Ingresalo nuevamente</string>
-		<key>en</key>
-		<string>Enter again</string>
-		<key>pt</key>
-		<string>Digite novamente</string>
 	</dict>
 	<key>Ver promociones</key>
 	<dict>
@@ -611,24 +224,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>Continue</string>
 		<key>pt</key>
 		<string>Continuar</string>
-	</dict>
-	<key>--Anterior</key>
-	<dict>
-		<key>es</key>
-		<string>Anterior</string>
-		<key>en</key>
-		<string>Previous</string>
-		<key>pt</key>
-		<string>Anterior</string>
-	</dict>
-	<key>--Siguiente</key>
-	<dict>
-		<key>es</key>
-		<string>Siguiente</string>
-		<key>en</key>
-		<string>Next</string>
-		<key>pt</key>
-		<string>Seguinte</string>
 	</dict>
 	<key>Ingresa el número de la tarjeta de crédito</key>
 	<dict>
@@ -837,24 +432,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>Qual é o tipo de pessoa?</string>
 	</dict>
-	<key>--Natural</key>
-	<dict>
-		<key>es</key>
-		<string>Natural</string>
-		<key>en</key>
-		<string>Individual</string>
-		<key>pt</key>
-		<string>Física</string>
-	</dict>
-	<key>--Jurídica</key>
-	<dict>
-		<key>es</key>
-		<string>Jurídica</string>
-		<key>en</key>
-		<string>Association</string>
-		<key>pt</key>
-		<string>Jurídica</string>
-	</dict>
 	<key>¿Cuál es tu banco?</key>
 	<dict>
 		<key>es</key>
@@ -864,24 +441,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>Qual é o seu banco?</string>
 	</dict>
-	<key>--¡Felicitaciones!</key>
-	<dict>
-		<key>es</key>
-		<string>¡Felicitaciones!</string>
-		<key>en</key>
-		<string>¡Congratulations!</string>
-		<key>pt</key>
-		<string>Parabéns!</string>
-	</dict>
-	<key>--Se aprobó tu pago.</key>
-	<dict>
-		<key>es</key>
-		<string>Se aprobó tu pago.</string>
-		<key>en</key>
-		<string>Se aprobó tu pago.</string>
-		<key>pt</key>
-		<string>O seu pagamento foi aprovado</string>
-	</dict>
 	<key>Estamos procesando el pago</key>
 	<dict>
 		<key>es</key>
@@ -890,33 +449,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>We are processing the payment</string>
 		<key>pt</key>
 		<string>Estamos processando o pagamento</string>
-	</dict>
-	<key>--¡Ups! Ocurrió un problema</key>
-	<dict>
-		<key>es</key>
-		<string>¡Ups! Ocurrió un problema</string>
-		<key>en</key>
-		<string>¡Ups! Ocurrió un problema</string>
-		<key>pt</key>
-		<string>Ops!, algo deu errado</string>
-	</dict>
-	<key>--Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.</key>
-	<dict>
-		<key>es</key>
-		<string>Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.</string>
-		<key>en</key>
-		<string>Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.</string>
-		<key>pt</key>
-		<string>Imprima o boleto e realize o pagamento - Será aprovado no prazo de 1 a 3 dias úteis</string>
-	</dict>
-	<key>--En unos minutos te enviaremos por e-mail el resultado.</key>
-	<dict>
-		<key>es</key>
-		<string>En unos minutos te enviaremos por e-mail el resultado.</string>
-		<key>en</key>
-		<string>En unos minutos te enviaremos por e-mail el resultado.</string>
-		<key>pt</key>
-		<string>Em poucos minutos enviaremos por e-mail o resultado</string>
 	</dict>
 	<key>terminada en </key>
 	<dict>
@@ -945,33 +477,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>Ops, não foi possível processar o seu pagamento</string>
 	</dict>
-	<key>--Algún dato de tu %1$s es incorrecto.</key>
-	<dict>
-		<key>es</key>
-		<string>Algún dato de tu %1$s es incorrecto.</string>
-		<key>en</key>
-		<string>Some data of your %1$s is incorect.</string>
-		<key>pt</key>
-		<string>Algún dato de tu %1$s es incorrecto.</string>
-	</dict>
-	<key>--El teléfono está al dorso de tu tarjeta</key>
-	<dict>
-		<key>es</key>
-		<string>El teléfono está al dorso de tu tarjeta</string>
-		<key>en</key>
-		<string>The phone number is on the back of your card</string>
-		<key>pt</key>
-		<string>O telefone do banco está no verso do seu cartão.</string>
-	</dict>
-	<key>--Debes autorizar el pago ante tu tarjeta</key>
-	<dict>
-		<key>es</key>
-		<string>Debes autorizar el pago ante tu tarjeta</string>
-		<key>en</key>
-		<string>You must authorize the payment with your card</string>
-		<key>pt</key>
-		<string>Você deve autorizar o pagamento de seu cartão</string>
-	</dict>
 	<key>Debes autorizar ante %1$s el pago de </key>
 	<dict>
 		<key>es</key>
@@ -981,33 +486,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>Você deve autorizar junto ao %1$s o pagamento do </string>
 	</dict>
-	<key>-- a Mercado Pago</key>
-	<dict>
-		<key>es</key>
-		<string> a Mercado Pago</string>
-		<key>en</key>
-		<string> to Mercado Pago</string>
-		<key>pt</key>
-		<string> o Mercado Pago</string>
-	</dict>
-	<key>--Ya hablé con %1$s y me autorizó</key>
-	<dict>
-		<key>es</key>
-		<string>Ya hablé con %1$s y me autorizó</string>
-		<key>en</key>
-		<string>Already talked with %0 and I am authorized</string>
-		<key>pt</key>
-		<string>Já falei com %1$s e me autoriza</string>
-	</dict>
-	<key>--En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.</key>
-	<dict>
-		<key>es</key>
-		<string>En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.</string>
-		<key>en</key>
-		<string>In a few hours we will tell you by e-mail if it is accredited or if we need more information.</string>
-		<key>pt</key>
-		<string>Em menos de 1 hora, nós enviaremos o resultado por e-mail.</string>
-	</dict>
 	<key>Total</key>
 	<dict>
 		<key>es</key>
@@ -1016,24 +494,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>Total</string>
 		<key>pt</key>
 		<string>Total</string>
-	</dict>
-	<key>--Medio de pago</key>
-	<dict>
-		<key>es</key>
-		<string>Medio de pago</string>
-		<key>en</key>
-		<string>Payment Method</string>
-		<key>pt</key>
-		<string>Meio de pagamento</string>
-	</dict>
-	<key>--Total a pagar </key>
-	<dict>
-		<key>es</key>
-		<string>Total a pagar </string>
-		<key>en</key>
-		<string>Total to pay </string>
-		<key>pt</key>
-		<string>Total a pagar </string>
 	</dict>
 	<key>Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago</key>
 	<dict>
@@ -1080,123 +540,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string> no </string>
 	</dict>
-	<key>--ryc_title_cargavirtual</key>
-	<dict>
-		<key>es</key>
-		<string> en </string>
-		<key>en</key>
-		<string> in </string>
-		<key>pt</key>
-		<string> no </string>
-	</dict>
-	<key>--ryc_title_redlink_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string> en tu </string>
-		<key>en</key>
-		<string> in your </string>
-		<key>pt</key>
-		<string> com </string>
-	</dict>
-	<key>--ryc_title_bancomer_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string> en tu </string>
-		<key>en</key>
-		<string> in your </string>
-		<key>pt</key>
-		<string> com </string>
-	</dict>
-	<key>--ryc_title_serfin_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string> en tu </string>
-		<key>en</key>
-		<string> in your </string>
-		<key>pt</key>
-		<string> com </string>
-	</dict>
-	<key>--ryc_title_banamex_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string> en tu </string>
-		<key>en</key>
-		<string> in your </string>
-		<key>pt</key>
-		<string> com </string>
-	</dict>
-	<key>--ryc_complementary_bancomer_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string>Home Banking de </string>
-		<key>en</key>
-		<string>Home Banking of </string>
-		<key>pt</key>
-		<string>Internet Banking de </string>
-	</dict>
-	<key>--ryc_complementary_serfin_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string>Home Banking de </string>
-		<key>en</key>
-		<string>Home Banking of </string>
-		<key>pt</key>
-		<string>Internet Banking de </string>
-	</dict>
-	<key>--ryc_complementary_redlink_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string>Home Banking de </string>
-		<key>en</key>
-		<string>Home Banking of </string>
-		<key>pt</key>
-		<string>Internet Banking de </string>
-	</dict>
-	<key>--ryc_complementary_banamex_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string>Home Banking de </string>
-		<key>en</key>
-		<string>Home Banking of </string>
-		<key>pt</key>
-		<string>Internet Banking de </string>
-	</dict>
-	<key>--ryc_complementary_banamex_atm</key>
-	<dict>
-		<key>es</key>
-		<string>cajero automático de </string>
-		<key>en</key>
-		<string>ATM of </string>
-		<key>pt</key>
-		<string>caixa eletrônico de </string>
-	</dict>
-	<key>--ryc_complementary_redlink_atm</key>
-	<dict>
-		<key>es</key>
-		<string>cajero automático de </string>
-		<key>en</key>
-		<string>ATM of </string>
-		<key>pt</key>
-		<string>caixa eletrônico de </string>
-	</dict>
-	<key>--ryc_payment_method_redlink_atm</key>
-	<dict>
-		<key>es</key>
-		<string>Red Link</string>
-		<key>en</key>
-		<string>Red Link</string>
-		<key>pt</key>
-		<string>Red Link</string>
-	</dict>
-	<key>--ryc_payment_method_redlink_bank_transfer</key>
-	<dict>
-		<key>es</key>
-		<string>Red Link</string>
-		<key>en</key>
-		<string>Red Link</string>
-		<key>pt</key>
-		<string>Red Link</string>
-	</dict>
 	<key>Código de descuento</key>
 	<dict>
 		<key>es</key>
@@ -1214,24 +557,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>Exchange</string>
 		<key>pt</key>
 		<string>Aplicar</string>
-	</dict>
-	<key>--Código inválido</key>
-	<dict>
-		<key>es</key>
-		<string>Código inválido</string>
-		<key>en</key>
-		<string>Invalid code</string>
-		<key>pt</key>
-		<string>Código inválido</string>
-	</dict>
-	<key>--de descuento</key>
-	<dict>
-		<key>es</key>
-		<string>de descuento</string>
-		<key>en</key>
-		<string>of discount</string>
-		<key>pt</key>
-		<string>de desconto</string>
 	</dict>
 	<key>Tengo un descuento</key>
 	<dict>
@@ -1530,13 +855,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string> terminado em </string>
 	</dict>
-	<key>--Revisa tu pago</key>
-	<dict>
-		<key>en</key>
-		<string>Check your payment</string>
-		<key>pt</key>
-		<string>Rever o seu pagamento</string>
-	</dict>
 	<key>Revisa si está todo bien</key>
 	<dict>
 		<key>es</key>
@@ -1582,11 +900,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>Alterar meio de pagamento</string>
 	</dict>
-	<key>--Cambiar pago</key>
-	<dict>
-		<key>en</key>
-		<string>Change payment</string>
-	</dict>
 	<key>Productos</key>
 	<dict>
 		<key>es</key>
@@ -1595,11 +908,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>Products</string>
 		<key>pt</key>
 		<string>Produtos</string>
-	</dict>
-	<key>--Confirmar</key>
-	<dict>
-		<key>en</key>
-		<string>Confirm</string>
 	</dict>
 	<key>Pagar</key>
 	<dict>
@@ -1628,21 +936,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>Você pagará </string>
 	</dict>
-	<key>--Selecciona un medio de pago...</key>
-	<dict>
-		<key>pt</key>
-		<string>Escolha o meio de pagamento ...</string>
-	</dict>
-	<key>--Medios de pago</key>
-	<dict>
-		<key>pt</key>
-		<string>Meios de pagamento</string>
-	</dict>
-	<key>--terminada en</key>
-	<dict>
-		<key>pt</key>
-		<string>terminado em</string>
-	</dict>
 	<key> y </key>
 	<dict>
 		<key>es</key>
@@ -1652,45 +945,10 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string> e </string>
 	</dict>
-	<key>--Términos y condiciones</key>
-	<dict>
-		<key>pt</key>
-		<string>Termos e condições</string>
-	</dict>
-	<key>--Datos de tu tarjeta</key>
-	<dict>
-		<key>pt</key>
-		<string>Dados do seu cartão</string>
-	</dict>
 	<key>Atrás</key>
 	<dict>
 		<key>pt</key>
 		<string>Voltar</string>
-	</dict>
-	<key>--Válida hasta</key>
-	<dict>
-		<key>pt</key>
-		<string>Válido até</string>
-	</dict>
-	<key>--Mes / Año</key>
-	<dict>
-		<key>pt</key>
-		<string>Mês / Ano</string>
-	</dict>
-	<key>--Nombre y apellido impreso en la tarjeta</key>
-	<dict>
-		<key>pt</key>
-		<string>Nome e sobrenome impresso no cartão de crédito</string>
-	</dict>
-	<key>--Otro banco</key>
-	<dict>
-		<key>pt</key>
-		<string>Outro banco</string>
-	</dict>
-	<key>--Imprimir cupón</key>
-	<dict>
-		<key>pt</key>
-		<string>Imprima o boleto</string>
 	</dict>
 	<key>El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta</key>
 	<dict>
@@ -1709,30 +967,15 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>Promoções</string>
 	</dict>
-	<key>--Promociones vigentes</key>
-	<dict>
-		<key>pt</key>
-		<string>Promoções atuais</string>
-	</dict>
 	<key>Verifique su conexión a internet e intente nuevamente</key>
 	<dict>
 		<key>pt</key>
 		<string>Sem conexão</string>
 	</dict>
-	<key>--El título del item esta vacio</key>
-	<dict>
-		<key>pt</key>
-		<string>O título do artigo é vazia</string>
-	</dict>
 	<key>La currency del item esta vacia</key>
 	<dict>
 		<key>pt</key>
 		<string>A moeda do item está vazia</string>
-	</dict>
-	<key>--La preferencia no esta activa</key>
-	<dict>
-		<key>pt</key>
-		<string>A preferência não ativa</string>
 	</dict>
 	<key>La preferencia esta expirada</key>
 	<dict>
