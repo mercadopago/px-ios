@@ -13,30 +13,33 @@ class ExpressViewController: UIViewController {
     let popUpViewHeight: CGFloat = 500
     let borderMargin = PXLayout.XXXS_MARGIN
     
+    fileprivate var bottomConstraint = NSLayoutConstraint()
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.alpha = 1
-            if #available(iOS 10.0, *) {
-                self.view.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.7)
-            } else {
-                // Fallback on earlier versions
-            }
-        }) { (true) in
-            self.animatePopUpView(isDeployed: false)
-        }
+        presentSheet()
     }
     
-    private lazy var popupView: UIView = {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .clear
+        setupUI()
+    }
+    
+    fileprivate lazy var popupView: UIView = {
+        
         let view = UIView()
+        let RADIUS_WITH_SAFE_AREA: CGFloat = 35
+        let RADIUS_WITHOUT_SAFE_AREA: CGFloat = 15
+        let TITLE_VIEW_HEIGHT: CGFloat = 58
+        
         view.backgroundColor = .white
         view.alpha = 1
         
         if PXLayout.getSafeAreaTopInset() > 0 {
-            view.layer.cornerRadius = 35
+            view.layer.cornerRadius = RADIUS_WITH_SAFE_AREA
         } else {
-            view.layer.cornerRadius = 15
+            view.layer.cornerRadius = RADIUS_WITHOUT_SAFE_AREA
         }
         
         view.clipsToBounds = true
@@ -48,34 +51,33 @@ class ExpressViewController: UIViewController {
         PXLayout.matchWidth(ofView: titleView).isActive = true
         PXLayout.centerHorizontally(view: titleView).isActive = true
         PXLayout.pinTop(view: titleView).isActive = true
-        PXLayout.setHeight(owner: titleView, height: 45).isActive = true
-        
-        let image = MercadoPago.getImage("mercadopago")
-        let imageView = UIImageView(image: image)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        PXLayout.setHeight(owner: titleView, height: TITLE_VIEW_HEIGHT).isActive = true
         titleView.addSeparatorLineToBottom(height: 1)
         
-        titleView.addSubview(imageView)
-        PXLayout.pinLeft(view: imageView, withMargin: PXLayout.S_MARGIN
+        let titleLabel = UILabel()
+        titleView.addSubview(titleLabel)
+        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN
             ).isActive = true
-        PXLayout.centerVertically(view: imageView).isActive = true
-        PXLayout.setWidth(owner: imageView, width: 100).isActive = true
-        PXLayout.setHeight(owner: imageView, height: 40).isActive = true
+        PXLayout.matchWidth(ofView: titleLabel).isActive = true
+        PXLayout.centerVertically(view: titleLabel).isActive = true
+        PXLayout.setHeight(owner: titleLabel, height: TITLE_VIEW_HEIGHT).isActive = true
+        titleLabel.text = PXReviewTitleComponentProps.DEFAULT_TITLE.localized
+        titleLabel.font = Utils.getFont(size: PXLayout.M_FONT)
         
-            //Cancel button
+        //Cancel button
         let button = PXSecondaryButton()
-        button.setTitle("Cancelar", for: .normal)
+        button.setTitle("", for: .normal)
         button.add(for: .touchUpInside, {
             self.animatePopUpView(isDeployed: true)
-            self.dismiss(animated: true, completion: nil)
         })
+        
+        button.setImage(MercadoPago.getImage("iconClose"), for: UIControlState.normal)
+        
         titleView.addSubview(button)
         PXLayout.pinRight(view: button, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.centerVertically(view: button).isActive = true
         PXLayout.setWidth(owner: button, width: 80).isActive = true
         PXLayout.setHeight(owner: button, height: 40).isActive = true
-        
         
         //Item
         let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga 39,05 Lts SUPER", quantity: 1, unitAmount: 1, backgroundColor: .white, boldLabelColor: .black, lightLabelColor: .gray)
@@ -86,7 +88,6 @@ class ExpressViewController: UIViewController {
         PXLayout.matchWidth(ofView: itemView).isActive = true
         PXLayout.centerHorizontally(view: itemView).isActive = true
         PXLayout.put(view: itemView, onBottomOf: titleView).isActive = true
-        
         
         //Payment Method
         let pmImage = MercadoPago.getImage("mediosIconoMaster")
@@ -112,21 +113,14 @@ class ExpressViewController: UIViewController {
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.pinBottom(view: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
-    
-        
         
         return view
     }()
+}
+
+extension ExpressViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = .clear
-        layout()
-    }
-    
-    private var bottomConstraint = NSLayoutConstraint()
-    
-    private func layout() {
+    fileprivate func setupUI() {
         popupView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(popupView)
         PXLayout.centerHorizontally(view: popupView).isActive = true
@@ -137,8 +131,20 @@ class ExpressViewController: UIViewController {
         bottomConstraint.isActive = true
     }
     
+    fileprivate func presentSheet() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.alpha = 1
+            if #available(iOS 10.0, *) {
+                self.view.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.7)
+            } else {
+                // TODO: Fallback on earlier versions
+            }
+        }) { (true) in
+            self.animatePopUpView(isDeployed: false)
+        }
+    }
     
-    private func animatePopUpView(isDeployed: Bool) {
+    fileprivate func animatePopUpView(isDeployed: Bool) {
         if #available(iOS 10.0, *) {
             var bottomContraint = 0 - self.borderMargin
             if isDeployed {
@@ -150,12 +156,19 @@ class ExpressViewController: UIViewController {
             })
             
             transitionAnimator.addCompletion { position in
-                
+                if isDeployed {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.view.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.0)
+                    }, completion: { finish in
+                        self.dismiss(animated: false, completion: nil)
+                    })
+                }
             }
+            
             transitionAnimator.startAnimation()
             
         } else {
-            // Fallback on earlier versions
+            // TODO: Fallback on earlier versions
         }
     }
 }
