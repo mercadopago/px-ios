@@ -9,24 +9,28 @@
 import UIKit
 import AVFoundation
 
-class QRReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class QRReaderViewController: UIViewController {
     
-    var video = AVCaptureVideoPreviewLayer()
+    lazy var video = AVCaptureVideoPreviewLayer()
     var shouldShow = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Scan QR Code"
-//        setupQRCodeReader()
+        // setupQRCodeReader()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         shouldShow = true
-        setupQRCodeReader()
+        if TARGET_OS_SIMULATOR != 0 {
+            QRCodeFound("")
+        } else {
+            setupQRCodeReader()
+        }
     }
     
-    func setupQRCodeReader() {
+    fileprivate func setupQRCodeReader() {
         //Creating session
         let session = AVCaptureSession()
         
@@ -50,6 +54,32 @@ class QRReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         session.startRunning()
     }
     
+    fileprivate func QRCodeFound(_ data: String) {
+        playFoundSound()
+        hapticFeedback()
+        let vc = ExpressViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false, completion: {
+            print("Done")
+        })
+    }
+    
+    fileprivate func hapticFeedback() {
+        if #available(iOS 10.0, *) {
+            let notification = UINotificationFeedbackGenerator()
+            notification.notificationOccurred(.warning)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    fileprivate func playFoundSound() {
+        let systemSoundID: SystemSoundID = 1109
+        AudioServicesPlaySystemSound (systemSoundID)
+    }
+}
+
+extension QRReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         if metadataObjects != nil && metadataObjects.count != 0 {
             if let object = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
@@ -62,35 +92,4 @@ class QRReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
             }
         }
     }
-    
-    func QRCodeFound(_ data: String) {
-        playFoundSound()
-        hapticFeedback()
-        
-        let vc = ExpressViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false, completion: {
-            print("Done")
-        })
-    }
-    
-    func hapticFeedback() {
-        if #available(iOS 10.0, *) {
-            let notification = UINotificationFeedbackGenerator()
-            notification.notificationOccurred(.error)
-        } else {
-            // Fallback on earlier versions
-        }
-    }
-    
-    func playFoundSound() {
-        let systemSoundID: SystemSoundID = 1109
-        AudioServicesPlaySystemSound (systemSoundID)
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 }
-
