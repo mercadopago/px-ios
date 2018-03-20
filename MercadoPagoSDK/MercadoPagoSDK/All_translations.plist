@@ -1639,10 +1639,12 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key> y </key>
 	<dict>
+		<key>es</key>
+		<string> y </string>
 		<key>pt</key>
 		<string> e </string>
 	</dict>
-	<key>Términos y condiciones</key>
+	<key>--Términos y condiciones</key>
 	<dict>
 		<key>pt</key>
 		<string>Termos e condições</string>
@@ -1694,6 +1696,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Promociones</key>
 	<dict>
+		<key>es</key>
+		<string>Promociones</string>
 		<key>pt</key>
 		<string>Promoções</string>
 	</dict>
