@@ -22,49 +22,48 @@ class PXErrorRenderer: NSObject {
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
 
         //Title Label
-        if component.hasTitle() {
-            errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: errorBodyView)
+        if let title = component.props.title, title.string.isNotEmpty {
+            errorBodyView.titleLabel = buildTitleLabel(with: title, in: errorBodyView)
         }
-
-        //Description Label
-        errorBodyView.descriptionLabel = buildDescriptionLabel(with: component.getDescription(), in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
-
+        
+        //Message Label
+        if let message = component.props.message, message.string.isNotEmpty {
+            errorBodyView.descriptionLabel = buildDescriptionLabel(with: message, in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
+        }
+        
         //Action Button
-        if component.hasActionForCallForAuth() {
-            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel, component: component)
-
-            //Middle Divider
+        if let action = component.props.action {
+            errorBodyView.actionButton = buildActionButton(with: action, in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel)
+        }
+        
+        //Secondary Title
+        if let secondaryTitle = component.props.secondaryTitle {
             errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
-
-            //Secondary Title Label
-            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: component.getSecondaryTitleForCallForAuth(), in: errorBodyView, onBottomOf: errorBodyView.middleDivider)
-
-            //Bottom Divider
+            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: secondaryTitle, in: errorBodyView, onBottomOf: errorBodyView.middleDivider)
             errorBodyView.bottomDivider = buildBottomDivider(in: errorBodyView, onBottomOf: errorBodyView.secondaryTitleLabel)
             errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
         } else {
             errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
         }
-
+        
         return errorBodyView
     }
-
-    func buildTitleLabel(with text: String, in superView: UIView) -> UILabel {
+    
+    func buildTitleLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
         let label = UILabel()
+        let font = Utils.getFont(size: TITLE_FONT_SIZE)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .pxBlack
         label.numberOfLines = 0
-
-        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_FONT_SIZE) ]
-        let attributedString = NSAttributedString(string: text, attributes: attributes)
-        label.attributedText = attributedString
+        label.attributedText = text
+        label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
-
+        
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-
-        let height = UILabel.requiredHeight(forAttributedText: attributedString, withFont: Utils.getFont(size: TITLE_FONT_SIZE), inWidth: screenWidth)
+        
+        let height = UILabel.requiredHeight(forAttributedText: text, withFont: font, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true
@@ -72,23 +71,21 @@ class PXErrorRenderer: NSObject {
         return label
     }
 
-    func buildDescriptionLabel(with text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
+    func buildDescriptionLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let label = UILabel()
+        let font = Utils.getFont(size: DESCRIPTION_FONT_SIZE)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .pxBrownishGray
         label.numberOfLines = 0
-
-        let attributes = [ NSFontAttributeName: Utils.getFont(size: DESCRIPTION_FONT_SIZE) ]
-        let attributedString = NSAttributedString(string: text, attributes: attributes)
-        label.attributedText = attributedString
-
+        label.attributedText = text
+        label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
-
+        
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-
-        let height = UILabel.requiredHeight(forAttributedText: attributedString, withFont: Utils.getFont(size: DESCRIPTION_FONT_SIZE), inWidth: screenWidth)
+        
+        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: DESCRIPTION_FONT_SIZE), inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true
@@ -99,50 +96,49 @@ class PXErrorRenderer: NSObject {
         }
         return label
     }
-
-    func buildActionButton(withTitle text: String, in superView: UIView, onBottomOf upperView: UIView?, component: PXErrorComponent) -> UIButton {
+    
+    func buildActionButton(with action: PXAction, in superView: UIView, onBottomOf upperView: UIView?) -> UIButton {
+        let title = action.label
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(text, for: .normal)
+        button.setTitle(title, for: .normal)
         button.titleLabel?.font = Utils.getFont(size: ACTION_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.textAlignment = .center
         button.add(for: .touchUpInside) {
-            component.recoverPayment()
+            action.action()
         }
         superView.addSubview(button)
-
+        
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-
-        let height = UILabel.requiredHeight(forText: text, withFont: Utils.getFont(size: ACTION_FONT_SIZE), inNumberOfLines: 0, inWidth: screenWidth)
+        
+        let height = UILabel.requiredHeight(forText: title, withFont: Utils.getFont(size: ACTION_FONT_SIZE), inNumberOfLines: 0, inWidth: screenWidth)
         PXLayout.setHeight(owner: button, height: height).isActive = true
         PXLayout.matchWidth(ofView: button, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: button, to: superView).isActive = true
-
+        
         if let upperView = upperView {
             PXLayout.put(view: button, onBottomOf: upperView, withMargin: PXLayout.M_MARGIN).isActive = true
         }
         return button
     }
 
-    func buildSecondaryTitleLabel(with text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
+    func buildSecondaryTitleLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let label = UILabel()
+        let font = Utils.getFont(size: TITLE_FONT_SIZE)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .pxBlack
         label.numberOfLines = 0
-
-        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_FONT_SIZE) ]
-        let attributedString = NSAttributedString(string: text, attributes: attributes)
-        label.attributedText = attributedString
-
+        label.attributedText = text
+        label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
-
+        
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-
-        let height = UILabel.requiredHeight(forAttributedText: attributedString, withFont: Utils.getFont(size: TITLE_FONT_SIZE), inWidth: screenWidth)
+        
+        let height = UILabel.requiredHeight(forAttributedText: text, withFont: font, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true

@@ -66,6 +66,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             descriptionLabel.text = paymentMethodDescription
             descriptionLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
             descriptionLabel.textColor = .pxBrownishGray
+            descriptionLabel.numberOfLines = 2
             descriptionLabel.textAlignment = .center
             pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true

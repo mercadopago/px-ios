@@ -34,7 +34,7 @@ extension PXResultViewModel {
         return false
     }
 
-    func buildReceiptComponent() -> PXReceiptComponent {
+    func buildReceiptComponent() -> PXReceiptComponent? {
         let receiptProps = getReceiptComponentProps()
         return PXReceiptComponent(props: receiptProps)
     }

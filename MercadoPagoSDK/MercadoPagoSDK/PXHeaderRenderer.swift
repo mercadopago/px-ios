@@ -68,6 +68,7 @@ class PXHeaderRenderer: NSObject {
         circleImage.translatesAutoresizingMaskIntoConstraints = false
         circleImage.image = image
         circleImage.contentMode = .scaleAspectFill
+        circleImage.backgroundColor = .clear
         PXLayout.setHeight(owner: circleImage, height: IMAGE_WIDTH).isActive = true
         PXLayout.setWidth(owner: circleImage, width: IMAGE_HEIGHT).isActive = true
         return circleImage
@@ -83,9 +84,11 @@ class PXHeaderRenderer: NSObject {
     }
     func buildStatusLabel(with text: NSAttributedString?, in superView: UIView, onBottomOf upperView: UIView) -> UILabel {
         let statusLabel = UILabel()
+        let font = Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.textAlignment = .center
         statusLabel.textColor = .white
+        statusLabel.font = font
         superView.addSubview(statusLabel)
         if text != nil {
             PXLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
@@ -100,14 +103,16 @@ class PXHeaderRenderer: NSObject {
 
     func buildMessageLabel(with text: NSAttributedString) -> UILabel {
         let messageLabel = UILabel()
+        let font = Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)
         messageLabel.textAlignment = .center
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.attributedText = text
         messageLabel.textColor = .white
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
+        messageLabel.font = font
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE), inWidth: screenWidth)
+        let height = UILabel.requiredHeight(forAttributedText: text, withFont: font, inWidth: screenWidth)
         PXLayout.setHeight(owner: messageLabel, height: height).isActive = true
         return messageLabel
     }

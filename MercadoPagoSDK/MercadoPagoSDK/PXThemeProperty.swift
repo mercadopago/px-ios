@@ -15,4 +15,12 @@ open class PXThemeProperty: NSObject {
         self.backgroundColor = backgroundColor
         self.tintColor = tintColor
     }
+
+    open func getBackgroundColor() -> UIColor {
+        return backgroundColor
+    }
+
+    open func getTintColor() -> UIColor {
+        return tintColor
+    }
 }

@@ -49,7 +49,7 @@ class PXFooterRenderer: NSObject {
         }
         return fooView
     }
-    func buildPrincipalButton(with footerAction: PXFooterAction, color: UIColor? = .pxBlueMp) -> UIButton {
+    func buildPrincipalButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 3
@@ -57,7 +57,7 @@ class PXFooterRenderer: NSObject {
         button.add(for: .touchUpInside, footerAction.action)
         return button
     }
-    func buildLinkButton(with footerAction: PXFooterAction, color: UIColor? = .pxBlueMp) -> UIButton {
+    func buildLinkButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let linkButton = PXSecondaryButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false
         linkButton.setTitle(footerAction.label, for: .normal)

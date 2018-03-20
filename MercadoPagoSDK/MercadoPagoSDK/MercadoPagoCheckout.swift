@@ -177,8 +177,10 @@ open class MercadoPagoCheckout: NSObject {
             self.showPaymentMethodPluginPaymentScreen()
         case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
             self.showPaymentMethodPluginConfigScreen()
-        case .SCREEN_PAYMENT_PLUGIN_PAYMENT:
+        case .SCREEN_PAYMENT_PLUGIN_PAYMENT: //PROCESADORA
             self.showPaymentPluginScreen()
+        case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
+            self.initPaymentMethodPlugins()
         default: break
         }
     }
