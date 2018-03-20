@@ -816,6 +816,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>Crédito</string>
 		<key>en</key>
 		<string>Credit</string>
+		<key>pt</key>
+		<string>Crédito</string>
 	</dict>
 	<key>Débito</key>
 	<dict>
@@ -823,6 +825,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>Débito</string>
 		<key>en</key>
 		<string>Debit</string>
+		<key>pt</key>
+		<string>Débito</string>
 	</dict>
 	<key>¿Cuál es el tipo de persona?</key>
 	<dict>
@@ -878,8 +882,6 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<key>pt</key>
 		<string>O seu pagamento foi aprovado</string>
 	</dict>
-	<key>New item</key>
-	<string></string>
 	<key>Estamos procesando el pago</key>
 	<dict>
 		<key>es</key>
@@ -1564,6 +1566,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	</dict>
 	<key>Pagas</key>
 	<dict>
+		<key>es</key>
+		<string>Pagas</string>
 		<key>en</key>
 		<string>You will pay</string>
 		<key>pt</key>
@@ -1603,6 +1607,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 		<string>Pagar</string>
 		<key>en</key>
 		<string>Pay</string>
+		<key>pt</key>
+		<string>Pagar</string>
 	</dict>
 	<key>Cancelar Pago</key>
 	<dict>
@@ -1641,6 +1647,8 @@ Ou, se preferir, escolha outro meio de pagamento.</string>
 	<dict>
 		<key>es</key>
 		<string> y </string>
+		<key>en</key>
+		<string> and </string>
 		<key>pt</key>
 		<string> e </string>
 	</dict>
