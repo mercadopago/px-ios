@@ -112,10 +112,9 @@ class PXFooterView: UIView {
                         self.principalButton?.isUserInteractionEnabled = false
                         self.principalButton?.setTitle("", for: .normal)
                         self.principalButton?.frame = newFrame
-                        self.principalButton!.layer.cornerRadius = self.principalButton!.frame.height/2
+                        self.principalButton?.layer.cornerRadius = self.principalButton!.frame.height/2
         },
                        completion: { _ in
-                        
                         
                         UIView.animate(withDuration: 0.3, animations: {
                             self.principalButton!.backgroundColor = successColor
@@ -143,16 +142,16 @@ class PXFooterView: UIView {
                             
                             UIView.animate(withDuration: 0.6, animations: {
                                 successImage.alpha = 1
-                                successImage.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                                successImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                             }) { _ in
                                 
-                                UIView.animate(withDuration: 0.3, animations: {
+                                UIView.animate(withDuration: 0.4, animations: {
                                     successImage.alpha = 0
                                 }, completion: { _ in
                                     
+                                    self.layer.masksToBounds = true
                                     UIView.animate(withDuration: 0.6, animations: {
-                                        self.principalButton?.frame = initialFrame
-                                        self.principalButton?.layer.cornerRadius = 10
+                                        self.principalButton?.transform = CGAffineTransform(scaleX: 50, y: 50)
                                     }, completion: { _ in
                                         
                                         let successLabel: UILabel = UILabel()
@@ -163,17 +162,13 @@ class PXFooterView: UIView {
                                         successLabel.textColor = .white
                                         successLabel.textAlignment = .center
                                         successLabel.backgroundColor = .clear
-                                        successLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
-                                        self.principalButton?.addSubview(successLabel)
+                                        successLabel.font = Utils.getFont(size: PXLayout.S_FONT)
+                                        self.addSubview(successLabel)
                                         
-                                        PXLayout.matchHeight(ofView: successLabel).isActive = true
-                                        PXLayout.pinTop(view: successLabel).isActive = true
-                                        PXLayout.pinLeft(view: successLabel, withMargin: 5).isActive = true
-                                        PXLayout.pinRight(view: successLabel, withMargin: 5).isActive = true
-
-                                        UIView.animate(withDuration: 0.5, animations: {
-                                            self.backgroundColor = successColor
-                                        })
+                                        PXLayout.setHeight(owner: successLabel, height: 50).isActive = true
+                                        PXLayout.centerVertically(view: successLabel).isActive = true
+                                        PXLayout.pinLeft(view: successLabel, withMargin: 18).isActive = true
+                                        PXLayout.pinRight(view: successLabel, withMargin: 18).isActive = true
                                         
                                          UIView.animate(withDuration: 0.2, animations: {
                                             successLabel.alpha = 1
