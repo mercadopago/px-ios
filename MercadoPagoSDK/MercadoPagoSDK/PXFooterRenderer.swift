@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class PXFooterRenderer: NSObject {
 
@@ -49,6 +50,30 @@ class PXFooterRenderer: NSObject {
         }
         return fooView
     }
+    
+    func expressRender(_ footer: PXFooterComponent) -> PXFooterView {
+        let fooView = PXFooterView()
+        var topView: UIView = fooView
+        fooView.translatesAutoresizingMaskIntoConstraints = false
+        fooView.backgroundColor = .pxWhite
+        if let principalAction = footer.props.buttonAction {
+            let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
+            fooView.principalButton = principalButton
+            fooView.addSubview(principalButton)
+            PXLayout.pinTop(view: principalButton, to: topView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.pinLeft(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.pinRight(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
+            topView = principalButton
+        }
+        
+        if topView != fooView {
+            PXLayout.pinBottom(view: topView, to: fooView, withMargin: PXLayout.M_MARGIN).isActive = true
+        }
+        
+        return fooView
+    }
+    
     func buildPrincipalButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +91,100 @@ class PXFooterRenderer: NSObject {
     }
 }
 
+protocol PXButtonAnimationDelegate: NSObjectProtocol {
+    func didFinishAnimation()
+}
+
 class PXFooterView: UIView {
+    
     public var principalButton: UIButton?
     public var linkButton: UIButton?
+    weak var animationDelegate: PXButtonAnimationDelegate?
+    
+    func startLoading() {
+        
+        let successColor = ThemeManager.shared.getTheme().successColor()
+        let initialFrame = self.principalButton!.frame
+        let newFrame = CGRect(x: self.principalButton!.frame.midX-self.principalButton!.frame.height/2, y: self.principalButton!.frame.midY-self.principalButton!.frame.height/2, width: self.principalButton!.frame.height , height: self.principalButton!.frame.height)
+        
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+                        self.principalButton?.isUserInteractionEnabled = false
+                        self.principalButton?.setTitle("", for: .normal)
+                        self.principalButton?.frame = newFrame
+                        self.principalButton!.layer.cornerRadius = self.principalButton!.frame.height/2
+        },
+                       completion: { _ in
+                        
+                        
+                        UIView.animate(withDuration: 0.3, animations: {
+                            self.principalButton!.backgroundColor = successColor
+                        }, completion: { _ in
+                            
+                            let scaleFactor: CGFloat = 0.40
+                            
+                            let successImage = UIImageView(frame: CGRect(x: newFrame.width/2 - (newFrame.width*scaleFactor)/2, y: newFrame.width/2 - (newFrame.width*scaleFactor)/2, width: newFrame.width*scaleFactor, height:newFrame.height*scaleFactor))
+                            
+                            successImage.image = MercadoPago.getImage("success_image")
+                            successImage.contentMode = .scaleAspectFit
+                            successImage.alpha = 0
+                            
+                            self.principalButton?.addSubview(successImage)
+                            
+                            let systemSoundID: SystemSoundID = 1109
+                            AudioServicesPlaySystemSound(systemSoundID)
+                            
+                            if #available(iOS 10.0, *) {
+                                let notification = UINotificationFeedbackGenerator()
+                                notification.notificationOccurred(.success)
+                            } else {
+                                // Fallback on earlier versions
+                            }
+                            
+                            UIView.animate(withDuration: 0.6, animations: {
+                                successImage.alpha = 1
+                                successImage.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                            }) { _ in
+                                
+                                UIView.animate(withDuration: 0.3, animations: {
+                                    successImage.alpha = 0
+                                }, completion: { _ in
+                                    
+                                    UIView.animate(withDuration: 0.6, animations: {
+                                        self.principalButton?.frame = initialFrame
+                                        self.principalButton?.layer.cornerRadius = 10
+                                    }, completion: { _ in
+                                        
+                                        let successLabel: UILabel = UILabel()
+                                        successLabel.translatesAutoresizingMaskIntoConstraints = false
+                                        successLabel.alpha = 0
+                                        successLabel.text = "Guardamos el recibo en tu galeria."
+                                        successLabel.numberOfLines = 2
+                                        successLabel.textColor = .white
+                                        successLabel.textAlignment = .center
+                                        successLabel.backgroundColor = .clear
+                                        successLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
+                                        self.principalButton?.addSubview(successLabel)
+                                        
+                                        PXLayout.matchHeight(ofView: successLabel).isActive = true
+                                        PXLayout.pinTop(view: successLabel).isActive = true
+                                        PXLayout.pinLeft(view: successLabel, withMargin: 5).isActive = true
+                                        PXLayout.pinRight(view: successLabel, withMargin: 5).isActive = true
+
+                                        UIView.animate(withDuration: 0.5, animations: {
+                                            self.backgroundColor = successColor
+                                        })
+                                        
+                                         UIView.animate(withDuration: 0.2, animations: {
+                                            successLabel.alpha = 1
+                                         }) { _ in
+                                            self.animationDelegate?.didFinishAnimation()
+                                        }
+                                        
+                                    })
+                                })
+                            }
+                        })
+        })
+    }
 }

@@ -37,6 +37,8 @@ class ExpressViewController: UIViewController {
         
         let view = UIView()
         
+        let boldColor: UIColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        
         let modalTitle: String = "Confirma tu compra"
         let closeButtonImage = MercadoPago.getImage("white_close")?.withRenderingMode(.alwaysTemplate)
         
@@ -74,15 +76,16 @@ class ExpressViewController: UIViewController {
         PXLayout.setHeight(owner: titleLabel, height: TITLE_VIEW_HEIGHT).isActive = true
         titleLabel.text = modalTitle.localized
         titleLabel.font = Utils.getFont(size: PXLayout.M_FONT)
+        titleLabel.textColor = boldColor
         
         //Cancel button
-        let button = PXSecondaryButton()
+        let button = UIButton()
         button.setTitle("", for: .normal)
         button.add(for: .touchUpInside, {
-            self.animatePopUpView(isDeployed: true)
+            self.hideSheet()
         })
         button.setImage(closeButtonImage, for: .normal)
-        button.tintColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        button.tintColor = boldColor
         titleView.addSubview(button)
         PXLayout.pinRight(view: button, withMargin: PXLayout.XXXS_MARGIN - 2).isActive = true
         PXLayout.centerVertically(view: button).isActive = true
@@ -90,7 +93,7 @@ class ExpressViewController: UIViewController {
         PXLayout.setHeight(owner: button, height: 30).isActive = true
         
         //Item
-        let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga 39,05 Lts SUPER", quantity: 1, unitAmount: 1, backgroundColor: .white, boldLabelColor: .black, lightLabelColor: .gray)
+        let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, backgroundColor: .white, boldLabelColor: boldColor, lightLabelColor: .gray)
         let itemComponent = PXItemComponent(props: itemProps)
         let itemView = itemComponent.expressRender()
         itemView.addSeparatorLineToBottom(height: 1)
@@ -101,7 +104,7 @@ class ExpressViewController: UIViewController {
         
         //Payment Method
         let pmImage = MercadoPago.getImage("mediosIconoMaster")
-        let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard terminada en 4251".toAttributedString(), subtitle: "HSBC".toAttributedString(), descriptionTitle: "3 cuotas de $405".toAttributedString(), descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: .black)
+        let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard .... 4251".toAttributedString(), subtitle: "HSBC | Pagás 1 X $405".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: boldColor)
         
         let pmComponent = PXPaymentMethodComponent(props: pmProps)
         let pmView = pmComponent.expressRender()
@@ -112,12 +115,16 @@ class ExpressViewController: UIViewController {
         PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
         
         //Footer
+        var footerView: PXFooterView = PXFooterView()
         let mainAction = PXComponentAction(label: "Pagar", action: {
             print("pagar")
+            footerView.startLoading()
         })
+        
         let footerProps = PXFooterProps(buttonAction: mainAction)
         let footerComponent = PXFooterComponent(props: footerProps)
-        let footerView = footerComponent.render()
+        footerView = footerComponent.expressRender()
+        footerView.animationDelegate = self
         view.addSubview(footerView)
         footerView.addSeparatorLineToTop(height: 1)
         PXLayout.matchWidth(ofView: footerView).isActive = true
@@ -142,12 +149,16 @@ extension ExpressViewController {
     }
     
     fileprivate func presentSheet() {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             self.view.alpha = 1
             self.blurView.alpha = 1
         }) { (true) in
             self.animatePopUpView(isDeployed: false)
         }
+    }
+    
+    @objc func hideSheet() {
+        animatePopUpView(isDeployed: true)
     }
     
     fileprivate func animatePopUpView(isDeployed: Bool) {
@@ -156,7 +167,7 @@ extension ExpressViewController {
             if isDeployed {
                 bottomContraint = self.borderMargin + popUpViewHeight
             }
-            let transitionAnimator = UIViewPropertyAnimator(duration: 0.75, dampingRatio: 1, animations: {
+            let transitionAnimator = UIViewPropertyAnimator(duration: 0.65, dampingRatio: 1, animations: {
                 self.bottomConstraint.constant = bottomContraint
                 self.view.layoutIfNeeded()
             })
@@ -176,5 +187,11 @@ extension ExpressViewController {
         } else {
             // TODO: Fallback on earlier versions
         }
+    }
+}
+
+extension ExpressViewController: PXButtonAnimationDelegate {
+    func didFinishAnimation() {
+        self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.0)
     }
 }

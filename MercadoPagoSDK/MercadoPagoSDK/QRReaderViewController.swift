@@ -67,14 +67,14 @@ class QRReaderViewController: UIViewController {
     fileprivate func hapticFeedback() {
         if #available(iOS 10.0, *) {
             let notification = UINotificationFeedbackGenerator()
-            notification.notificationOccurred(.warning)
+            notification.notificationOccurred(.error)
         } else {
             // Fallback on earlier versions
         }
     }
     
     fileprivate func playFoundSound() {
-        let systemSoundID: SystemSoundID = 1109
+        let systemSoundID: SystemSoundID = 1057
         AudioServicesPlaySystemSound (systemSoundID)
     }
 }
