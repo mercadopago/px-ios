@@ -42,7 +42,7 @@ class ExpressViewController: UIViewController {
         let modalTitle: String = "Confirma tu compra"
         let closeButtonImage = MercadoPago.getImage("white_close")?.withRenderingMode(.alwaysTemplate)
         
-        let RADIUS_WITH_SAFE_AREA: CGFloat = 35
+        let RADIUS_WITH_SAFE_AREA: CGFloat = 32
         let RADIUS_WITHOUT_SAFE_AREA: CGFloat = 15
         let TITLE_VIEW_HEIGHT: CGFloat = 58
         
@@ -120,7 +120,6 @@ class ExpressViewController: UIViewController {
             print("pagar")
             footerView.startLoading()
         })
-        
         let footerProps = PXFooterProps(buttonAction: mainAction)
         let footerComponent = PXFooterComponent(props: footerProps)
         footerView = footerComponent.expressRender()
@@ -192,6 +191,6 @@ extension ExpressViewController {
 
 extension ExpressViewController: PXButtonAnimationDelegate {
     func didFinishAnimation() {
-        self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.5)
+        self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.0)
     }
 }
