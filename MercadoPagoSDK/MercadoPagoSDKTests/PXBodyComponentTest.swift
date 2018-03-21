@@ -69,9 +69,9 @@ class PXBodyComponentTest: BaseTest {
 
         // Then:
         XCTAssertNotNil(errorView.titleLabel)
-        XCTAssertEqual(errorView.titleLabel?.text, "error_body_title_".localized_beta)
+        XCTAssertEqual(errorView.titleLabel?.text, PXStrings.error_body_title_.localized_beta)
         XCTAssertNotNil(errorView.descriptionLabel)
-        XCTAssertEqual(errorView.descriptionLabel?.text, "error_body_description_cc_rejected_call_for_authorize".localized_beta)
+        XCTAssertEqual(errorView.descriptionLabel?.text, PXStrings.error_body_description_cc_rejected_call_for_authorize.localized_beta)
         XCTAssertNotNil(errorView.actionButton)
         XCTAssertEqual(errorView.actionButton?.titleLabel?.text, PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE("visa"))
         XCTAssertNotNil(errorView.middleDivider)

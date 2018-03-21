@@ -635,6 +635,8 @@
 		FC2A09551FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */; };
 		FC2A09571FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
 		FC2A09581FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
+		FC2D676F2062A47D00D93C59 /* PXStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2D676E2062A47D00D93C59 /* PXStrings.swift */; };
+		FC2D67702062A5C000D93C59 /* PXStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2D676E2062A47D00D93C59 /* PXStrings.swift */; };
 		FC3FC8421FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8431FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8451FBCC1B800CF29E1 /* PXInstructionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */; };
@@ -1146,6 +1148,7 @@
 		FC20C9D11F05580E003A018C /* ArrayExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTest.swift; sourceTree = "<group>"; };
 		FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconComponent.swift; sourceTree = "<group>"; };
 		FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconRenderer.swift; sourceTree = "<group>"; };
+		FC2D676E2062A47D00D93C59 /* PXStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXStrings.swift; sourceTree = "<group>"; };
 		FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSubtitleComponent.swift; sourceTree = "<group>"; };
@@ -2454,6 +2457,7 @@
 				FCCACD7A20448F4A0008CF32 /* All_translations.plist */,
 				FC756B1E203F39BA009F436D /* translations.plist */,
 				FC756B1C203F2C17009F436D /* Localizator.swift */,
+				FC2D676E2062A47D00D93C59 /* PXStrings.swift */,
 			);
 			name = Translations;
 			sourceTree = "<group>";
@@ -3032,6 +3036,7 @@
 				155F3D351E4533D8003F6DD6 /* NextStepHelper.swift in Sources */,
 				4B4E232920006441007E8FDD /* PXCustomComponentsHelper.swift in Sources */,
 				76FD24811C5BFEA1008C5DC0 /* CardFrontView.swift in Sources */,
+				FC2D676F2062A47D00D93C59 /* PXStrings.swift in Sources */,
 				FC2A09541FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */,
 				76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,
 				15AE1DBE1F672FAE00B0DAF8 /* DisclaimerView.swift in Sources */,
@@ -3150,6 +3155,7 @@
 				7672545B1C7CB0EC00EB5EBA /* BaseTest.swift in Sources */,
 				FC7E149B1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift in Sources */,
 				15AE1D981F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
+				FC2D67702062A5C000D93C59 /* PXStrings.swift in Sources */,
 				76EC47EC1C8614CA0086FA53 /* PaymentMethodTest.swift in Sources */,
 				76EC47E21C85ED9B0086FA53 /* MerchantPaymentTest.swift in Sources */,
 				76EC48021C862ABC0086FA53 /* PaymentMethodSearchTest.swift in Sources */,

@@ -14,12 +14,12 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let ACCESORY_VIEW_HEIGHT: CGFloat = 44.0
     let INPUT_VIEW_HEIGHT: CGFloat = 83.0
 
-    let NAME_INPUT_TEXT = "payer_info_name"
-    let SURNAME_INPUT_TEXT = "payer_info_surname"
-    let NUMBER_INPUT_TEXT = "payer_info_number"
-    let TYPE_INPUT_TEXT = "payer_info_type"
-    let CONTINUE_INPUT_TEXT = "card_form_next_button"
-    let PREVIOUS_INPUT_TEXT = "card_form_previous_button"
+    let NAME_INPUT_TEXT = PXStrings.payer_info_name
+    let SURNAME_INPUT_TEXT = PXStrings.payer_info_surname
+    let NUMBER_INPUT_TEXT = PXStrings.payer_info_number
+    let TYPE_INPUT_TEXT = PXStrings.payer_info_type
+    let CONTINUE_INPUT_TEXT = PXStrings.card_form_next_button
+    let PREVIOUS_INPUT_TEXT = PXStrings.card_form_previous_button
 
     var currentInput: UIView!
     var toolbar: PXToolbar?
