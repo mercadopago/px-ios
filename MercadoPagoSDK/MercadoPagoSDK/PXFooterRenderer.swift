@@ -60,10 +60,18 @@ class PXFooterRenderer: NSObject {
             let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
             fooView.principalButton = principalButton
             fooView.addSubview(principalButton)
-            PXLayout.pinTop(view: principalButton, to: topView, withMargin: PXLayout.S_MARGIN).isActive = true
+            
             PXLayout.pinLeft(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
             PXLayout.pinRight(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
+            
+            if PXLayout.getSafeAreaTopInset() > 0 {
+                PXLayout.pinTop(view: principalButton, to: topView, withMargin: PXLayout.S_MARGIN).isActive = true
+                PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT + 5).isActive = true
+            } else {
+                PXLayout.centerVertically(view: principalButton).isActive = true
+                PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
+            }
+            
             topView = principalButton
         }
         
