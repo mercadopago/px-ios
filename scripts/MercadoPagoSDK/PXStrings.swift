@@ -20,7 +20,6 @@ enum PXStr {
     static let card_form_previous_button = "card_form_previous_button"
     static let error_body_description_cc_rejected_call_for_authorize = "error_body_description_cc_rejected_call_for_authorize"
     static let error_body_description_cc_rejected_other_reason = "error_body_description_cc_rejected_other_reason"
-    static let gasdasdas = "gasdasdas"
     static let discount_coupon_detail_default_concept = "discount_coupon_detail_default_concept"
     static let error_body_description_rejected_high_risk = "error_body_description_rejected_high_risk"
     static let error_body_secondary_title_ = "error_body_secondary_title_"
