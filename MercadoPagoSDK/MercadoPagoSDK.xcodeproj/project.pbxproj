@@ -2860,7 +2860,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash -e\n\npwd\n\nvalue=$(<./MercadoPagoSDK/translations.plist)\necho \"$value\"\n\necho \"Clearing PXStrings Content\"\ncat /dev/null >| ./MercadoPagoSDK/PXStrin.swift\n\ncat <<EOT >> ./MercadoPagoSDK/PXStrin.swift\n//\n//  PXStrings.swift\n//  MercadoPagoSDK\n//\n//\n//  Copyright © 2018 MercadoPago. All rights reserved.\n//\n\nimport Foundation\n\nEOT\n\nfor number in {1..14}\ndo\necho \"    static let numero_$number =  \"$number\"\" >> ./MercadoPagoSDK/PXStrin.swift\ndone\n\necho \"}\" >> ./MercadoPagoSDK/PXStrin.swift\n\nexit 0\n";
+			shellScript = "#!/bin/bash -e\n\npwd\n\nvalue=$(<./MercadoPagoSDK/translations.plist)\necho \"$value\"\n\necho \"Clearing PXStrings Content\"\ncat /dev/null >| ./MercadoPagoSDK/PXStrin.swift\n\ncat <<EOT >> ./MercadoPagoSDK/PXStrin.swift\n//\n//  PXStrings.swift\n//  MercadoPagoSDK\n//\n//\n//  Copyright © 2018 MercadoPago. All rights reserved.\n//\n\nimport Foundation\n\nenum PXStr {\nEOT\n    \nfor number in {1..14}\ndo\necho \"    static let numero_$number =  \"$number\"\" >> ./MercadoPagoSDK/PXStrin.swift\ndone\n    \necho \"}\" >> ./MercadoPagoSDK/PXStrin.swift\n    \nexit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

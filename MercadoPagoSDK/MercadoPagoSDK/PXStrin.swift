@@ -8,6 +8,7 @@
 
 import Foundation
 
+enum PXStr {
     static let numero_1 =  1
     static let numero_2 =  2
     static let numero_3 =  3
