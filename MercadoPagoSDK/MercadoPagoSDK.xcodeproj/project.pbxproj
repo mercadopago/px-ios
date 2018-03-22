@@ -700,7 +700,6 @@
 		FC7BD8AE1FD5899000D5B2C7 /* PXErrorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */; };
 		FC7BD8B31FD6B8AF00D5B2C7 /* PXResourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */; };
 		FC7BD8B41FD6B8AF00D5B2C7 /* PXResourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */; };
-		FC7C237C2064033500CBB83E /* PXStrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7C237B2064033500CBB83E /* PXStrin.swift */; };
 		FC7E14981F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */; };
 		FC7E14991F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */; };
 		FC7E149B1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E149A1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift */; };
@@ -1183,7 +1182,6 @@
 		FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXErrorComponent.swift; sourceTree = "<group>"; };
 		FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXErrorRenderer.swift; sourceTree = "<group>"; };
 		FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResourceProvider.swift; sourceTree = "<group>"; };
-		FC7C237B2064033500CBB83E /* PXStrin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PXStrin.swift; path = MercadoPagoSDK/PXStrin.swift; sourceTree = "<group>"; };
 		FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewModel.swift; sourceTree = "<group>"; };
 		FC7E149A1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewModelTest.swift; sourceTree = "<group>"; };
 		FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInsterestTableViewCell.swift; sourceTree = "<group>"; };
@@ -1235,7 +1233,6 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
-				FC7C237B2064033500CBB83E /* PXStrin.swift */,
 				FCD089071F7E8F44002F3F22 /* SecondaryInfoTableViewCell.swift */,
 				FCD089061F7E8F44002F3F22 /* SecondaryInfoTableViewCell.xib */,
 				0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */,
@@ -3008,7 +3005,6 @@
 				4B1CA5951FFE94BC00F576AA /* PaymentStatus.swift in Sources */,
 				0F9883631AD2AB6000F750F0 /* CardNumber.swift in Sources */,
 				4BEF9B571FE2EB2D002ADAFF /* PXPluginComponent.swift in Sources */,
-				FC7C237C2064033500CBB83E /* PXStrin.swift in Sources */,
 				763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */,
 				0F98836D1AD2AB6000F750F0 /* Device.swift in Sources */,
 				81ACC8221F9A88F700206F7B /* PXHeaderRenderer.swift in Sources */,
