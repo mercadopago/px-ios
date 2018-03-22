@@ -2547,6 +2547,7 @@
 			buildConfigurationList = 0F9883201AD2A97A00F750F0 /* Build configuration list for PBXNativeTarget "MercadoPagoSDK" */;
 			buildPhases = (
 				531F38B15A5AD3D6E3AC8F5C /* [CP] Check Pods Manifest.lock */,
+				FC7C237A206402F500CBB83E /* PXTranslations Script */,
 				0F9883051AD2A97A00F750F0 /* Sources */,
 				0F9883061AD2A97A00F750F0 /* Frameworks */,
 				0F9883071AD2A97A00F750F0 /* Headers */,
@@ -2554,7 +2555,6 @@
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
 				4BCA62FA1EBA48D8006D8131 /* SwiftLint */,
 				2035D7520CF65D523D335755 /* [CP] Copy Pods Resources */,
-				FC7C237A206402F500CBB83E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2849,18 +2849,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FC7C237A206402F500CBB83E /* ShellScript */ = {
+		FC7C237A206402F500CBB83E /* PXTranslations Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "PXTranslations Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash -e\n\npwd\n\nvalue=$(<./MercadoPagoSDK/translations.plist)\necho \"$value\"\n\necho \"Clearing PXStrings Content\"\ncat /dev/null >| ./MercadoPagoSDK/PXStrin.swift\n\ncat <<EOT >> ./MercadoPagoSDK/PXStrin.swift\n//\n//  PXStrings.swift\n//  MercadoPagoSDK\n//\n//\n//  Copyright © 2018 MercadoPago. All rights reserved.\n//\n\nimport Foundation\n\nenum PXStr {\nEOT\n    \nfor number in {1..14}\ndo\necho \"    static let numero_$number =  \"$number\"\" >> ./MercadoPagoSDK/PXStrin.swift\ndone\n    \necho \"}\" >> ./MercadoPagoSDK/PXStrin.swift\n    \nexit 0\n";
+			shellPath = /bin/swift;
+			shellScript = "#!/usr/bin/swift\n\nimport Foundation\n\nlet translationsFile = \"translations.plist\"\nlet pxStringsFile = \"PXStrings.swift\"\nvar finalText = \"import Foundation\\n\\nenum PXStrings {\"\n\n//reading\ndo {\n    let bundle = Bundle(path: \"./MercadoPagoSDK/\")\n    if let path = bundle?.path(forResource: \"translations\", ofType: \"plist\"), let translationsDict = NSDictionary(contentsOfFile: path) {\n        let keys = translationsDict.allKeys\n        for key in keys {\n            finalText += \"\\n    static let \\(key) = \\\"\\(key)\\\"\"\n        }\n        finalText += \"\\n}\"\n        \n        do {\n            let url = URL(fileURLWithPath: \"./MercadoPagoSDK/\\(pxStringsFile)\")\n            try finalText.write(to: url, atomically: false, encoding: .utf8)\n        }\n        catch {/* error handling here */}\n    }\n}\ncatch {}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
