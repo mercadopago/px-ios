@@ -26,6 +26,7 @@ open class MercadoPagoCheckout: NSObject {
 
     var entro = false
 
+    /*POC EXPRESS CHO*/
     private var startLoadingClosure :  (() -> Void)?
     private var finishLoadingClosure :  (() -> Void)?
     
@@ -53,7 +54,7 @@ open class MercadoPagoCheckout: NSObject {
             viewControllerBase = newNavigationStack.last
         }
     }
-
+    /*POC EXPRESS CHO*/
     public func setCustom(startLoading: @escaping (() -> Void),dismissLoading: @escaping (() -> Void)){
         self.startLoadingClosure = startLoading
         self.finishLoadingClosure = dismissLoading
@@ -75,6 +76,13 @@ open class MercadoPagoCheckout: NSObject {
         self.viewModel.binaryMode = binaryMode
     }
 
+    public func startExpress() {
+        guard let viewController = self.navigationController.viewControllers.last else {
+            fatalError("Checkout express doesn't work in a empty navigation controller")
+        }
+        self.startExpress(from: viewController)
+    }
+    
     public func startExpress(from viewController:UIViewController) {
         let vc = QRReaderViewController()
         vc.modalPresentationStyle = .overCurrentContext
@@ -135,6 +143,8 @@ open class MercadoPagoCheckout: NSObject {
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {
+        case .START_EXPRESS_CHECKOUT:
+            self.startExpress()
         case .START :
             self.initialize()
         case .SERVICE_GET_PREFERENCE:
@@ -273,7 +283,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func presentLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
-        if let presentLoadingCustom = self.startLoadingClosure {
+        if let presentLoadingCustom = self.startLoadingClosure {  /*POC EXPRESS CHO*/
             presentLoadingCustom()
             return
         }
@@ -291,7 +301,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func presentInitLoading() {
-        if let presentLoadingCustom = self.startLoadingClosure {
+        if let presentLoadingCustom = self.startLoadingClosure { /*POC EXPRESS CHO*/
             presentLoadingCustom()
             return
         }
@@ -301,7 +311,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func dismissLoading(animated: Bool = true) {
-        if let dismissLoadingCustom = self.finishLoadingClosure {
+        if let dismissLoadingCustom = self.finishLoadingClosure { /*POC EXPRESS CHO*/
             dismissLoadingCustom()
             return
         }
