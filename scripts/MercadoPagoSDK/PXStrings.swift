@@ -1,6 +1,6 @@
 import Foundation
 
-enum PXStr {
+enum PXStrings {
     static let payer_info_name = "payer_info_name"
     static let error_body_description_pending_contingency = "error_body_description_pending_contingency"
     static let payer_info_surname = "payer_info_surname"

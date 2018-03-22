@@ -4,7 +4,7 @@ import Foundation
 
 let translationsFile = "translations.plist"
 let pxStringsFile = "PXStrings.swift"
-var finalText = "import Foundation\n\nenum PXStr {"
+var finalText = "import Foundation\n\nenum PXStrings {"
 
 //reading
 do {
