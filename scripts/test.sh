@@ -12,10 +12,6 @@ cat <<EOT >> ./MercadoPagoSDK/PXStrin.swift
 //
 //  PXStrings.swift
 //  MercadoPagoSDK
-//
-//
-//  Copyright © 2018 MercadoPago. All rights reserved.
-//
 
 import Foundation
 
