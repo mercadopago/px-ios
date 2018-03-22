@@ -189,7 +189,7 @@ extension ExpressViewController {
     }
 }
 
-extension ExpressViewController: PXButtonAnimationDelegate {
+extension ExpressViewController: PXAnimatedButtonDelegate {
     func didFinishAnimation() {
         self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.0)
     }

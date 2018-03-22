@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class PXFooterRenderer: NSObject {
 
@@ -90,6 +89,7 @@ class PXFooterRenderer: NSObject {
         button.add(for: .touchUpInside, footerAction.action)
         return button
     }
+    
     func buildLinkButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let linkButton = PXSecondaryButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false
@@ -99,20 +99,14 @@ class PXFooterRenderer: NSObject {
     }
 }
 
-protocol PXButtonAnimationDelegate: NSObjectProtocol {
-    func didFinishAnimation()
-}
-
 class PXFooterView: UIView {
     
     public var principalButton: UIButton?
     public var linkButton: UIButton?
-    weak var animationDelegate: PXButtonAnimationDelegate?
     
     func startLoading() {
         
         let successColor = ThemeManager.shared.getTheme().successColor()
-        let initialFrame = self.principalButton!.frame
         let newFrame = CGRect(x: self.principalButton!.frame.midX-self.principalButton!.frame.height/2, y: self.principalButton!.frame.midY-self.principalButton!.frame.height/2, width: self.principalButton!.frame.height , height: self.principalButton!.frame.height)
         
         UIView.animate(withDuration: 0.5,

@@ -24,6 +24,7 @@ class PXFooterComponent: NSObject, PXComponentizable {
         return PXFooterRenderer().expressRender(self)
     }
 }
+
 class PXFooterProps: NSObject {
     var buttonAction: PXComponentAction?
     var linkAction: PXComponentAction?
