@@ -111,8 +111,13 @@
     //Setear ReviewScreenPrefernce
     [self setReviewScreenPreference];
 
-//    [self.mpCheckout start];
-    [self.mpCheckout startExpressFrom:self];
+    [self.mpCheckout setCustomWithStartLoading:^{
+        NSLog(@"CUSTOM LOADING Init");
+    } dismissLoading:^{
+        NSLog(@"CUSTOM LOADING finish");
+    }];
+    [self.mpCheckout start];
+   // [self.mpCheckout startExpressFrom:self];
 
 }
 
