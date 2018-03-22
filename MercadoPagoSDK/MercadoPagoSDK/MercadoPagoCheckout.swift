@@ -84,7 +84,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     public func startExpress(from viewController:UIViewController) {
-        let vc = QRReaderViewController()
+        let vc = ExpressViewController()
         vc.modalPresentationStyle = .overCurrentContext
         viewController.present(vc, animated: false, completion: {
             print("Done")
