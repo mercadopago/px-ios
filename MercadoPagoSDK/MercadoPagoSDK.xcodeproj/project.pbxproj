@@ -2857,8 +2857,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "bin/env xcrun swift";
-			shellScript = "\n\nprint(\"hola\")\n\n";
+			shellPath = bin/bash;
+			shellScript = "\n\n#!/bin/bash -e\n\npwd\n\nvalue=$(<./MercadoPagoSDK/translations.plist)\necho \"$value\"\n\necho \"Clearing PXStrings Content\"\ncat /dev/null >| ./MercadoPagoSDK/PXStrin.swift\n\ncat <<EOT >> ./MercadoPagoSDK/PXStrin.swift\n//\n//  PXStrings.swift\n//  MercadoPagoSDK\n\nimport Foundation\n\nenum PXStr {\n    EOT\n    \n    for key in $value\n    do\n    if [[ $key = *\"<key>\"* ]]; then\n    prefix=\"<key>\"\n    suffix=\"</key>\"\n    trimmed=${key#$prefix}\n        trimmed=${trimmed%$suffix}\n        if [ $trimmed != \"es\" ] && [ $trimmed != \"pt\" ] && [ $trimmed != \"en\" ] && [ $trimmed != \"comment\" ]; then\n        echo \"$trimmed\"\n        echo \"    static let $trimmed =  \\\"$trimmed\\\"\" >> ./MercadoPagoSDK/PXStrin.swift\n        fi\n        fi\n        done\n        \n        for number in {1..14}\n        \n        do\n        echo \"    static let numero_$number =  \"$number\"\" >> ./MercadoPagoSDK/PXStrin.swift\n        done\n        \n        echo \"}\" >> ./MercadoPagoSDK/PXStrin.swift\n        \n        exit 0\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

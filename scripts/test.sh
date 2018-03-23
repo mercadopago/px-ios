@@ -18,7 +18,22 @@ import Foundation
 enum PXStr {
 EOT
 
+for key in $value
+do
+  if [[ $key = *"<key>"* ]]; then
+    prefix="<key>"
+    suffix="</key>"
+    trimmed=${key#$prefix}
+    trimmed=${trimmed%$suffix}
+    if [ $trimmed != "es" ] && [ $trimmed != "pt" ] && [ $trimmed != "en" ] && [ $trimmed != "comment" ]; then
+      echo "$trimmed"
+      echo "    static let $trimmed =  \"$trimmed\"" >> ./MercadoPagoSDK/PXStrin.swift
+    fi
+  fi
+done
+
 for number in {1..14}
+
 do
   echo "    static let numero_$number =  "$number"" >> ./MercadoPagoSDK/PXStrin.swift
 done
