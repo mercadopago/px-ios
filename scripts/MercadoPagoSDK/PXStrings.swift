@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum PXStr {
+enum PXStrings {
     static let error_body_title_ =  "error_body_title_"
     static let error_body_description_ =  "error_body_description_"
     static let error_body_description_pending_contingency =  "error_body_description_pending_contingency"
@@ -31,19 +31,4 @@ enum PXStr {
     static let payer_info_number =  "payer_info_number"
     static let payer_info_type =  "payer_info_type"
     static let review_change_payment_method_action =  "review_change_payment_method_action"
-    static let es-mx =  "es-mx"
-    static let numero_1 =  1
-    static let numero_2 =  2
-    static let numero_3 =  3
-    static let numero_4 =  4
-    static let numero_5 =  5
-    static let numero_6 =  6
-    static let numero_7 =  7
-    static let numero_8 =  8
-    static let numero_9 =  9
-    static let numero_10 =  10
-    static let numero_11 =  11
-    static let numero_12 =  12
-    static let numero_13 =  13
-    static let numero_14 =  14
 }
