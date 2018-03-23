@@ -116,14 +116,16 @@ class ExpressViewController: UIViewController {
         
         //Footer
         var footerView: PXFooterView = PXFooterView()
+        var loadingButtonComponent: PXPrimaryButton?
         let mainAction = PXComponentAction(label: "Pagar", action: {
-            print("pagar")
-            footerView.startLoading()
+            print("Debug - Pagando")
+            loadingButtonComponent?.startLoading(loadingText:"Pagando...", retryText:"Pagar")
         })
         let footerProps = PXFooterProps(buttonAction: mainAction)
         let footerComponent = PXFooterComponent(props: footerProps)
         footerView = footerComponent.expressRender()
-        footerView.animationDelegate = self
+        loadingButtonComponent = footerView.getPrincipalButton()
+        loadingButtonComponent?.animationDelegate = self
         view.addSubview(footerView)
         footerView.addSeparatorLineToTop(height: 1)
         PXLayout.matchWidth(ofView: footerView).isActive = true
@@ -191,6 +193,6 @@ extension ExpressViewController {
 
 extension ExpressViewController: PXAnimatedButtonDelegate {
     func didFinishAnimation() {
-        self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.0)
+        self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.2)
     }
 }

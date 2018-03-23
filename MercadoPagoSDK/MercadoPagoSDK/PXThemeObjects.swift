@@ -34,13 +34,33 @@ open class PXSecondaryButton: UIButton {}
 open class PXToolbar: UIToolbar {}
 open class PXPrimaryButton: UIButton {
     weak var animationDelegate: PXAnimatedButtonDelegate?
+    var progressView: JSSPogressView?
 }
 
 extension PXPrimaryButton {
     
-    func startLoading() {
+    func startLoading(loadingText:String, retryText:String) {
+        progressView = JSSPogressView(forView: self)
+        progressView?.start(timeOutBlock: {
+            // This is temporary. Only for now, without real payment.
+            /*
+                self.isEnabled = true
+                self.setTitle(retryText, for: .normal)
+                self.progressView?.doReset()
+             */
+            self.progressView?.doReset()
+            self.animateFinishSuccess()
+        })
+        setTitle(loadingText, for: .normal)
+        isEnabled = false
+    }
+    
+    func animateFinishSuccess() {
         
         let successColor = ThemeManager.shared.getTheme().successColor()
+        let successCheckImage = MercadoPago.getImage("success_image")
+        let successMessage = "Guardamos el recibo en tu galeria."
+        
         let newFrame = CGRect(x: self.frame.midX-self.frame.height/2, y: self.frame.midY-self.frame.height/2, width: self.frame.height , height: self.frame.height)
         
         UIView.animate(withDuration: 0.5,
@@ -59,7 +79,7 @@ extension PXPrimaryButton {
                             let scaleFactor: CGFloat = 0.40
                             let successImage = UIImageView(frame: CGRect(x: newFrame.width/2 - (newFrame.width*scaleFactor)/2, y: newFrame.width/2 - (newFrame.width*scaleFactor)/2, width: newFrame.width*scaleFactor, height:newFrame.height*scaleFactor))
                             
-                            successImage.image = MercadoPago.getImage("success_image")
+                            successImage.image = successCheckImage
                             successImage.contentMode = .scaleAspectFit
                             successImage.alpha = 0
                             
@@ -84,7 +104,8 @@ extension PXPrimaryButton {
                                     successImage.alpha = 0
                                 }, completion: { _ in
                                     
-                                    self.layer.masksToBounds = true
+                                    self.superview?.layer.masksToBounds = true
+                                    
                                     UIView.animate(withDuration: 0.6, animations: {
                                         self.transform = CGAffineTransform(scaleX: 50, y: 50)
                                     }, completion: { _ in
@@ -92,7 +113,7 @@ extension PXPrimaryButton {
                                         let successLabel: UILabel = UILabel()
                                         successLabel.translatesAutoresizingMaskIntoConstraints = false
                                         successLabel.alpha = 0
-                                        successLabel.text = "Guardamos el recibo en tu galeria."
+                                        successLabel.text = successMessage
                                         successLabel.numberOfLines = 2
                                         successLabel.textColor = .white
                                         successLabel.textAlignment = .center
@@ -113,20 +134,11 @@ extension PXPrimaryButton {
                                             }) { _ in
                                                 self.animationDelegate?.didFinishAnimation()
                                             }
-                                            
                                         }
                                     })
                                 })
                             }
                         })
         })
-    }
-    
-    func finishLoadingSuccess() {
-        
-    }
-    
-    func finishLoadingFailed() {
-        
     }
 }
