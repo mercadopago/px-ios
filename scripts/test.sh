@@ -22,7 +22,7 @@ do
     trimmed=${key#$prefix}
     trimmed=${trimmed%$suffix}
     if [ $trimmed != "es" ] && [ $trimmed != "pt" ] && [ $trimmed != "en" ] && [ $trimmed != "comment" ] && [[ $trimmed != es-* ]] && [[ $trimmed != en-* ]] && [[ $trimmed != pt-* ]]; then
-      echo "    static let $trimmed =  \"$trimmed\"" >> ./MercadoPagoSDK/PXStrings.swift
+      echo "    static let $trimmed = \"$trimmed\"" >> ./MercadoPagoSDK/PXStrings.swift
     fi
   fi
 done
