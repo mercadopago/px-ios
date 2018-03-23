@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class PXFooterRenderer: NSObject {
 
@@ -90,6 +89,7 @@ class PXFooterRenderer: NSObject {
         button.add(for: .touchUpInside, footerAction.action)
         return button
     }
+    
     func buildLinkButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let linkButton = PXSecondaryButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false
@@ -99,95 +99,12 @@ class PXFooterRenderer: NSObject {
     }
 }
 
-protocol PXButtonAnimationDelegate: NSObjectProtocol {
-    func didFinishAnimation()
-}
-
 class PXFooterView: UIView {
-    
     public var principalButton: UIButton?
     public var linkButton: UIButton?
-    weak var animationDelegate: PXButtonAnimationDelegate?
     
-    func startLoading() {
-        
-        let successColor = ThemeManager.shared.getTheme().successColor()
-        let initialFrame = self.principalButton!.frame
-        let newFrame = CGRect(x: self.principalButton!.frame.midX-self.principalButton!.frame.height/2, y: self.principalButton!.frame.midY-self.principalButton!.frame.height/2, width: self.principalButton!.frame.height , height: self.principalButton!.frame.height)
-        
-        UIView.animate(withDuration: 0.5,
-                       animations: {
-                        self.principalButton?.isUserInteractionEnabled = false
-                        self.principalButton?.setTitle("", for: .normal)
-                        self.principalButton?.frame = newFrame
-                        self.principalButton?.layer.cornerRadius = self.principalButton!.frame.height/2
-        },
-                       completion: { _ in
-                        
-                        UIView.animate(withDuration: 0.3, animations: {
-                            self.principalButton!.backgroundColor = successColor
-                        }, completion: { _ in
-                            
-                            let scaleFactor: CGFloat = 0.40
-                            
-                            let successImage = UIImageView(frame: CGRect(x: newFrame.width/2 - (newFrame.width*scaleFactor)/2, y: newFrame.width/2 - (newFrame.width*scaleFactor)/2, width: newFrame.width*scaleFactor, height:newFrame.height*scaleFactor))
-                            
-                            successImage.image = MercadoPago.getImage("success_image")
-                            successImage.contentMode = .scaleAspectFit
-                            successImage.alpha = 0
-                            
-                            self.principalButton?.addSubview(successImage)
-                            
-                            let systemSoundID: SystemSoundID = 1109
-                            AudioServicesPlaySystemSound(systemSoundID)
-                            
-                            if #available(iOS 10.0, *) {
-                                let notification = UINotificationFeedbackGenerator()
-                                notification.notificationOccurred(.success)
-                            } else {
-                                // Fallback on earlier versions
-                            }
-                            
-                            UIView.animate(withDuration: 0.6, animations: {
-                                successImage.alpha = 1
-                                successImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-                            }) { _ in
-                                
-                                UIView.animate(withDuration: 0.4, animations: {
-                                    successImage.alpha = 0
-                                }, completion: { _ in
-                                    
-                                    self.layer.masksToBounds = true
-                                    UIView.animate(withDuration: 0.6, animations: {
-                                        self.principalButton?.transform = CGAffineTransform(scaleX: 50, y: 50)
-                                    }, completion: { _ in
-                                        
-                                        let successLabel: UILabel = UILabel()
-                                        successLabel.translatesAutoresizingMaskIntoConstraints = false
-                                        successLabel.alpha = 0
-                                        successLabel.text = "Guardamos el recibo en tu galeria."
-                                        successLabel.numberOfLines = 2
-                                        successLabel.textColor = .white
-                                        successLabel.textAlignment = .center
-                                        successLabel.backgroundColor = .clear
-                                        successLabel.font = Utils.getFont(size: PXLayout.S_FONT)
-                                        self.addSubview(successLabel)
-                                        
-                                        PXLayout.setHeight(owner: successLabel, height: 50).isActive = true
-                                        PXLayout.centerVertically(view: successLabel).isActive = true
-                                        PXLayout.pinLeft(view: successLabel, withMargin: 18).isActive = true
-                                        PXLayout.pinRight(view: successLabel, withMargin: 18).isActive = true
-                                        
-                                         UIView.animate(withDuration: 0.2, animations: {
-                                            successLabel.alpha = 1
-                                         }) { _ in
-                                            self.animationDelegate?.didFinishAnimation()
-                                        }
-                                        
-                                    })
-                                })
-                            }
-                        })
-        })
+    func getPrincipalButton() -> PXPrimaryButton? {
+        guard let mainButton = principalButton else { return nil }
+        return mainButton as? PXPrimaryButton
     }
 }

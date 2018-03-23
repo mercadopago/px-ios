@@ -269,6 +269,8 @@
 		237A1A032050048800B0C2D2 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DBD1F672FAE00B0DAF8 /* DisclaimerView.swift */; };
 		237A1A042050048A00B0C2D2 /* PayerCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15822D521F69ABD5008353B9 /* PayerCostView.swift */; };
 		237A1A052050048E00B0C2D2 /* PXTermsAndConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235A3278204D6F92002D1F54 /* PXTermsAndConditionView.swift */; };
+		237A95D220643F5A004E7D3E /* PXProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A95D120643F5A004E7D3E /* PXProgressView.swift */; };
+		237A95D320643F5A004E7D3E /* PXProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A95D120643F5A004E7D3E /* PXProgressView.swift */; };
 		239A9C161F0FFA7100C338C7 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		23A07FCC20482FEB0074CB64 /* PXSummaryComponentProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A07FCB20482FEB0074CB64 /* PXSummaryComponentProps.swift */; };
 		23A07FCF204837AB0074CB64 /* PXSummaryFullComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A07FCE204837AB0074CB64 /* PXSummaryFullComponentView.swift */; };
@@ -949,6 +951,7 @@
 		235A326F204B42F5002D1F54 /* PXReviewTitleComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewTitleComponentView.swift; sourceTree = "<group>"; };
 		235A3278204D6F92002D1F54 /* PXTermsAndConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTermsAndConditionView.swift; sourceTree = "<group>"; };
 		236251CB1EF2D518005589AB /* PaymentResultTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultTest.swift; sourceTree = "<group>"; };
+		237A95D120643F5A004E7D3E /* PXProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXProgressView.swift; sourceTree = "<group>"; };
 		23A07FCB20482FEB0074CB64 /* PXSummaryComponentProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryComponentProps.swift; sourceTree = "<group>"; };
 		23A07FCE204837AB0074CB64 /* PXSummaryFullComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryFullComponentView.swift; sourceTree = "<group>"; };
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
@@ -1487,6 +1490,7 @@
 				15D79A091CA9B6B900623A84 /* MPButton.swift */,
 				537CA8AE1F4F22D200C10006 /* MPCardFormToolbarLabel.swift */,
 				23E2157F2005360B00B968F6 /* Theme */,
+				237A95D120643F5A004E7D3E /* PXProgressView.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -3144,6 +3148,7 @@
 				0FC4FC2D1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
 				819C88DA2045CFB8001E9216 /* PXReviewViewController.swift in Sources */,
 				4BE51C201E2CFEC6004E5F7D /* DecorationPreference.swift in Sources */,
+				237A95D220643F5A004E7D3E /* PXProgressView.swift in Sources */,
 				15DF3F831D6347BF0051C798 /* TextMaskFormater.swift in Sources */,
 				76943ED91D51405E00358442 /* InstructionsInfo.swift in Sources */,
 				0F98835B1AD2AB6000F750F0 /* Bin.swift in Sources */,
@@ -3344,6 +3349,7 @@
 				813873821FA8DEE7002095D6 /* PXBodyRenderer.swift in Sources */,
 				767C9CD41E266BF000BB4662 /* ExtensionsTest.swift in Sources */,
 				4B760D0B204ECBEC001E4976 /* ReviewMockComponentHelper.swift in Sources */,
+				237A95D320643F5A004E7D3E /* PXProgressView.swift in Sources */,
 				7672545B1C7CB0EC00EB5EBA /* BaseTest.swift in Sources */,
 				FC7E149B1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift in Sources */,
 				15AE1D981F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
