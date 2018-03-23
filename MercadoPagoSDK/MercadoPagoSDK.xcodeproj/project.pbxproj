@@ -2857,8 +2857,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/swift;
-			shellScript = "#!/usr/bin/swift\n\nimport Foundation\n\nlet translationsFile = \"translations.plist\"\nlet pxStringsFile = \"PXStrings.swift\"\nvar finalText = \"import Foundation\\n\\nenum PXStrings {\"\n\n//reading\ndo {\n    let bundle = Bundle(path: \"./MercadoPagoSDK/\")\n    if let path = bundle?.path(forResource: \"translations\", ofType: \"plist\"), let translationsDict = NSDictionary(contentsOfFile: path) {\n        let keys = translationsDict.allKeys\n        for key in keys {\n            finalText += \"\\n    static let \\(key) = \\\"\\(key)\\\"\"\n        }\n        finalText += \"\\n}\"\n        \n        do {\n            let url = URL(fileURLWithPath: \"./MercadoPagoSDK/\\(pxStringsFile)\")\n            try finalText.write(to: url, atomically: false, encoding: .utf8)\n        }\n        catch {/* error handling here */}\n    }\n}\ncatch {}\n";
+			shellPath = "bin/env xcrun swift";
+			shellScript = "\n\nprint(\"hola\")\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
