@@ -244,8 +244,8 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
             toolbar.barStyle = UIBarStyle.default
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-            let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: PXStrings.card_form_next_button.localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: PXStrings.card_form_previous_button.localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
 
             buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
             buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)

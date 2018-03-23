@@ -31,7 +31,7 @@ struct PXFooterResultConstants {
     static let DEFAULT_BUTTON_TEXT: String? = nil
 
     // Link texts
-    static let APPROVED_LINK_TEXT = "payment_result_screen_congrats_finish_button"
+    static let APPROVED_LINK_TEXT = PXStrings.payment_result_screen_congrats_finish_button
     static let ERROR_LINK_TEXT = "Cancelar pago"
     static let C4AUTH_LINK_TEXT = "Cancelar pago"
     static let WARNING_LINK_TEXT = "Pagar con otro medio"

@@ -2544,6 +2544,7 @@
 			buildConfigurationList = 0F9883201AD2A97A00F750F0 /* Build configuration list for PBXNativeTarget "MercadoPagoSDK" */;
 			buildPhases = (
 				531F38B15A5AD3D6E3AC8F5C /* [CP] Check Pods Manifest.lock */,
+				FC7C237A206402F500CBB83E /* PXTranslations Script */,
 				0F9883051AD2A97A00F750F0 /* Sources */,
 				0F9883061AD2A97A00F750F0 /* Frameworks */,
 				0F9883071AD2A97A00F750F0 /* Headers */,
@@ -2844,6 +2845,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FC7C237A206402F500CBB83E /* PXTranslations Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "PXTranslations Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash -e\n\nvalue=$(<./MercadoPagoSDK/translations.plist)\n\ncat /dev/null >| ./MercadoPagoSDK/PXStrings.swift\n\ncat <<EOT >> ./MercadoPagoSDK/PXStrings.swift\n//\n//  PXStrings.swift\n//  MercadoPagoSDK\n\nimport Foundation\n\nenum PXStrings {\nEOT\n    \n    for key in $value\n    do\n    if [[ $key = *\"<key>\"* ]]; then\n    prefix=\"<key>\"\n    suffix=\"</key>\"\n    trimmed=${key#$prefix}\n        trimmed=${trimmed%$suffix}\n        if [ $trimmed != \"es\" ] && [ $trimmed != \"pt\" ] && [ $trimmed != \"en\" ] && [ $trimmed != \"comment\" ] && [[ $trimmed != es-* ]] && [[ $trimmed != en-* ]] && [[ $trimmed != pt-* ]]; then\n        echo \"    static let $trimmed = \\\"$trimmed\\\"\" >> ./MercadoPagoSDK/PXStrings.swift\n        fi\n        fi\n        done\n        \n        echo \"}\" >> ./MercadoPagoSDK/PXStrings.swift\n        \n        exit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
