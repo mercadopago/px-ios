@@ -17,6 +17,7 @@ public enum CheckoutStep: String {
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
     case SERVICE_GET_IDENTIFICATION_TYPES
+    case START_EXPRESS_CHECKOUT /*POC EXPRESS CHO*/
     case SCREEN_PAYMENT_METHOD_SELECTION
     case SCREEN_CARD_FORM
     case SCREEN_SECURITY_CODE
@@ -384,7 +385,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if needSearch() {
             return .SERVICE_GET_PAYMENT_METHODS
         }
-
+        if isExpressChoAvaible() {
+            return .START_EXPRESS_CHECKOUT
+        }
         if !isPaymentTypeSelected() {
             return .SCREEN_PAYMENT_METHOD_SELECTION
         }

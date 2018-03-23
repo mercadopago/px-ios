@@ -318,4 +318,11 @@ extension MercadoPagoCheckoutViewModel {
     func isDiscountEnable() -> Bool {
          return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
+    
+    
+    /*POC EXPRESS CHO*/
+    
+    func isExpressChoAvaible() -> Bool {
+        return true
+    }
 }
