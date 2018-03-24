@@ -13,29 +13,24 @@ class ShoppingPreferenceTest: BaseTest {
     override func setUp() {
         super.setUp()
         reviewScreenPreference = ReviewScreenPreference()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
     func testShoppingDecorationDefaults() {
-        XCTAssertEqual(reviewScreenPreference.getAmountTitle(), ReviewScreenPreference.DEFAULT_AMOUNT_TITLE)
-        XCTAssertEqual(reviewScreenPreference.getQuantityTitle(), ReviewScreenPreference.DEFAULT_QUANTITY_TITLE)
-        XCTAssertTrue(reviewScreenPreference.shouldShowAmountTitle)
-        XCTAssertTrue(reviewScreenPreference.shouldShowQuantityRow)
+        XCTAssertTrue(reviewScreenPreference.shouldShowAmountTitle())
+        XCTAssertTrue(reviewScreenPreference.shouldShowQuantityRow())
     }
     func testShoppingDecorationHiding() {
         reviewScreenPreference.hideAmountTitle()
         reviewScreenPreference.hideQuantityRow()
-        XCTAssertFalse(reviewScreenPreference.shouldShowAmountTitle)
-        XCTAssertFalse(reviewScreenPreference.shouldShowQuantityRow)
+        XCTAssertFalse(reviewScreenPreference.shouldShowAmountTitle())
+        XCTAssertFalse(reviewScreenPreference.shouldShowQuantityRow())
     }
     func testShoppingDecorationQuantityHideWhenSetEmptyString() {
-        reviewScreenPreference.setQuantityTitle(title: "")
-        XCTAssertFalse(reviewScreenPreference.shouldShowQuantityRow)
+        reviewScreenPreference.setQuantityLabel(title: "")
+        XCTAssertFalse(reviewScreenPreference.shouldShowQuantityRow())
     }
-
 }

@@ -44,7 +44,7 @@ public enum PaymentTypeId: String {
     case BITCOIN = "digital_currency"
     case PREPAID_CARD = "prepaid_card"
     case BOLBRADESCO = "bolbradesco"
-    case PAYMENT_METHOD_PLUGIN = "paymentMethodPlugin"
+    case PAYMENT_METHOD_PLUGIN = "payment_method_plugin"
 
     public func isCard() -> Bool {
         return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD

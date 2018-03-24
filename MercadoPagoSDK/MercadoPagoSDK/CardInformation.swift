@@ -23,9 +23,11 @@ public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
     func setupPaymentMethod(_ paymentMethod: PaymentMethod)
 
-    func getPaymentMethod() -> PaymentMethod
+    func getPaymentMethod() -> PaymentMethod?
 
     func getPaymentMethodId() -> String
+
+    func getPaymentTypeId() -> String
 
     func getIssuer() -> Issuer?
 

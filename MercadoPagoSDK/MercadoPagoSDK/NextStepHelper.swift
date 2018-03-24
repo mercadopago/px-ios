@@ -251,6 +251,9 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func shouldShowCongrats() -> Bool {
+        if let _ = self.businessResult {
+            return true
+        }
         if let paymentResult = self.paymentResult {
             if  paymentResult.isInvalidESC() {
                 return false

@@ -14,6 +14,11 @@ open class PXPluginNavigationHandler: NSObject {
     public init(withCheckout: MercadoPagoCheckout) {
         self.checkout = withCheckout
     }
+    
+    open func didFinishPayment(businessResult: PXBusinessResult){
+        self.checkout?.viewModel.businessResult = businessResult
+        self.checkout?.executeNextStep()
+    }
 
     open func didFinishPayment(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, statusDetails: String = "", receiptId: String? = nil) {
 

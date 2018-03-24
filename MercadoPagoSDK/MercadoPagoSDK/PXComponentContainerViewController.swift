@@ -9,14 +9,14 @@
 import UIKit
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
-
+    
     fileprivate lazy var elasticHeader = UIView()
     fileprivate lazy var customNavigationTitle: String = ""
     fileprivate lazy var secondaryCustomNavigationTitle: String = ""
     fileprivate lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.8
     fileprivate lazy var NAVIGATION_BAR_SECONDARY_DELTA_Y: CGFloat = 0
     fileprivate lazy var navigationTitleStatusStep: Int = 0
-    
+
     var scrollView: UIScrollView!
     var contentView = PXComponentView()
     var heightComponent: NSLayoutConstraint!
@@ -31,14 +31,14 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         self.scrollView.isUserInteractionEnabled = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.addSubview(contentView)
-
+        
         PXLayout.pinTop(view: contentView, to: scrollView).isActive = true
         PXLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
         PXLayout.matchWidth(ofView: contentView, toView: scrollView).isActive = true
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
         self.view.addSubview(self.scrollView)
-
+        
         PXLayout.pinLeft(view: scrollView, to: self.view).isActive = true
         PXLayout.pinRight(view: scrollView, to: self.view).isActive = true
         PXLayout.pinTop(view: scrollView, to: self.view).isActive = true
@@ -61,7 +61,6 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
 // MARK: Elastic header.
 extension PXComponentContainerViewController: UIScrollViewDelegate {
-    
     func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle:String, textColor: UIColor, navigationSecondaryTitle: String?=nil, navigationDeltaY:CGFloat?=nil, navigationSecondaryDeltaY:CGFloat?=nil) {
         elasticHeader.removeFromSuperview()
         scrollView.delegate = self
@@ -91,8 +90,10 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         for view in contentView.getSubviews() {
             height = height + view.frame.height
         }
-        PXLayout.setHeight(owner: contentView, height: height).isActive = true
+
+        contentView.fixHeight(height: height)
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
+        self.view.layoutIfNeeded()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

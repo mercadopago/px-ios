@@ -52,7 +52,7 @@ extension MercadoPagoCheckout {
             containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
         }
 
-        if let paymentMethodConfigPluginComponentView = paymentMethodConfigPluginComponent.render(store: PXCheckoutStore()) {
+        if let paymentMethodConfigPluginComponentView = paymentMethodConfigPluginComponent.render(store: PXCheckoutStore(), theme: ThemeManager.shared.getTheme()) {
             paymentMethodConfigPluginComponentView.removeFromSuperview()
             paymentMethodConfigPluginComponentView.frame = containerVC.view.frame
             containerVC.view.addSubview(paymentMethodConfigPluginComponentView)
@@ -88,7 +88,7 @@ extension MercadoPagoCheckout {
             containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
         }
 
-        if let paymentPluginComponentView = paymentPluginComponent.render(store: PXCheckoutStore.sharedInstance) {
+        if let paymentPluginComponentView = paymentPluginComponent.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
             paymentPluginComponentView.removeFromSuperview()
             paymentPluginComponentView.frame = containerVC.view.frame
             paymentPluginComponentView.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()

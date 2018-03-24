@@ -56,9 +56,11 @@ public class ResultMockComponentHelper: NSObject {
     }
 
     // Mark: Body builders
-    static func buildBodyView(resultViewModel: PXResultViewModel) -> PXBodyView {
-        let bodyComponent = resultViewModel.buildBodyComponent()
-        return PXBodyRenderer().render(bodyComponent)
+    static func buildBodyView(resultViewModel: PXResultViewModel) -> PXBodyView? {
+        if let bodyComponentizable = resultViewModel.buildBodyComponent(), let bodyComponent = bodyComponentizable as? PXBodyComponent {
+            return PXBodyRenderer().render(bodyComponent)
+        }
+        return nil
     }
 
     // Mark: Footer builders
@@ -68,9 +70,11 @@ public class ResultMockComponentHelper: NSObject {
     }
 
     // Mark: receipt builders
-    static func buildReceiptView(resultViewModel: PXResultViewModel) -> PXReceiptView {
-        let receiptComponent = resultViewModel.buildReceiptComponent()
-        return PXReceiptRenderer().render(receiptComponent)
+    static func buildReceiptView(resultViewModel: PXResultViewModel) -> PXReceiptView? {
+        if let receiptComponent = resultViewModel.buildReceiptComponent() {
+            return PXReceiptRenderer().render(receiptComponent)
+        }
+        return nil
     }
 
     // Mark: Custom component builders

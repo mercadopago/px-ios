@@ -17,7 +17,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     var firstSixDigits: String!
 
     var securityCode: SecurityCode = SecurityCode()
-    var paymentMethod: PaymentMethod!
+    var paymentMethod: PaymentMethod?
     var card: Card?
 
     public override init() {
@@ -96,12 +96,16 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
         return self._description
     }
 
-    open func getPaymentMethod() -> PaymentMethod {
+    open func getPaymentMethod() -> PaymentMethod? {
         return paymentMethod
     }
 
     open func getPaymentMethodId() -> String {
         return self.paymentMethodId
+    }
+
+    open func getPaymentTypeId() -> String {
+        return self.paymentMethodTypeId
     }
 
     open func getCardBin() -> String? {

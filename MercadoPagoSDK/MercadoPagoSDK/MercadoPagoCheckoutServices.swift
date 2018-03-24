@@ -58,7 +58,7 @@ extension MercadoPagoCheckout {
         }
     }
 
-    func getPMInit() {
+    func initPaymentMethodPlugins() {
         if !self.viewModel.paymentMethodPlugins.isEmpty {
             initPlugin(plugins: self.viewModel.paymentMethodPlugins, index: self.viewModel.paymentMethodPlugins.count - 1)
         } else {
@@ -69,16 +69,18 @@ extension MercadoPagoCheckout {
     func initPlugin(plugins: [PXPaymentMethodPlugin], index: Int) {
         if index < 0 {
             DispatchQueue.main.async {
+                self.viewModel.needPaymentMethodPluginInit = false
                 self.executeNextStep()
             }
         } else {
             _ = self.viewModel.copyViewModelAndAssignToCheckoutStore()
             let plugin = plugins[index]
-            plugin.initPaymentMethodPlugin(PXCheckoutStore.sharedInstance,{ success in
-                self.initPlugin(plugins: plugins, index: index - 1)
+            plugin.initPaymentMethodPlugin(PXCheckoutStore.sharedInstance,{ [weak self] success in
+                self?.initPlugin(plugins: plugins, index: index - 1)
             })
         }
     }
+
 
     func getPaymentMethodSearch() {
         self.presentLoading()
@@ -90,8 +92,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
-           
-            strongSelf.getPMInit()
+            strongSelf.executeNextStep()
 
         }) { [weak self] (error) in
 

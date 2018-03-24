@@ -97,7 +97,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         // Title
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        pmBodyView.amountTitle = title
+        pmBodyView.titleLabel = title
         pmBodyView.addSubview(title)
         title.attributedText = component.props.title
         title.font = Utils.getFont(size: TITLE_FONT_SIZE)
@@ -112,7 +112,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             let detailLabel = UILabel()
             detailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(detailLabel)
-            pmBodyView.amountDetail = detailLabel
+            pmBodyView.subtitleLabel = detailLabel
             detailLabel.attributedText = detailText
             detailLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
             detailLabel.textColor = component.props.lightLabelColor
@@ -127,12 +127,12 @@ class PXPaymentMethodComponentRenderer: NSObject {
             let descriptionLabel = UILabel()
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(descriptionLabel)
-            pmBodyView.paymentMethodDescription = descriptionLabel
+            pmBodyView.descriptionTitleLabel = descriptionLabel
             descriptionLabel.attributedText = paymentMethodDescription
-            descriptionLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
+            descriptionLabel.font = Utils.getFont(size: DESCRIPTION_DETAIL_FONT_SIZE)
+            descriptionLabel.numberOfLines = 2
             descriptionLabel.textColor = component.props.lightLabelColor
             descriptionLabel.textAlignment = .center
-            descriptionLabel.numberOfLines = 2
             pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
             PXLayout.pinRight(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
@@ -141,7 +141,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         if let pmDetailText = component.props.descriptionDetail {
             let pmDetailLabel = UILabel()
             pmDetailLabel.translatesAutoresizingMaskIntoConstraints = false
-            pmBodyView.paymentMethodDetail = pmDetailLabel
+            pmBodyView.descriptionDetailLabel = pmDetailLabel
             pmBodyView.addSubview(pmDetailLabel)
             pmDetailLabel.attributedText = pmDetailText
             pmDetailLabel.font = Utils.getFont(size: DESCRIPTION_DETAIL_FONT_SIZE)
@@ -203,10 +203,10 @@ class PXExpressPaymentMethodView: PXBodyView {
 
 class PXPaymentMethodView: PXBodyView {
     var paymentMethodIcon: UIView?
-    var amountTitle: UILabel?
-    var amountDetail: UILabel?
-    var paymentMethodDescription: UILabel?
-    var paymentMethodDetail: UILabel?
+    var titleLabel: UILabel?
+    var subtitleLabel: UILabel?
+    var descriptionTitleLabel: UILabel?
+    var descriptionDetailLabel: UILabel?
     var disclaimerLabel: UILabel?
     var actionButton: PXSecondaryButton?
 }

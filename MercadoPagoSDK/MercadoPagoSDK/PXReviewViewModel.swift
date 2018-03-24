@@ -13,12 +13,11 @@ final class PXReviewViewModel: NSObject {
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
     
-    var preference: CheckoutPreference?
+    var preference: CheckoutPreference
     var paymentData: PaymentData!
     var paymentOptionSelected: PaymentMethodOption
     var discount: DiscountCoupon?
-    
-    var reviewScreenPreference: ReviewScreenPreference!
+    var reviewScreenPreference: ReviewScreenPreference
     
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
@@ -45,10 +44,6 @@ extension PXReviewViewModel {
     
     func isUserLogged() -> Bool {
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
-    }
-    
-    func isPreferenceLoaded() -> Bool {
-        return self.preference != nil
     }
     
     func shouldShowTermsAndCondition() -> Bool {
@@ -86,7 +81,7 @@ extension PXReviewViewModel {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
             return discount.newAmount()
         }
-        return self.preference!.getAmount()
+        return self.preference.getAmount()
     }
     
     func getUnlockLink() -> URL? {
@@ -119,15 +114,11 @@ extension PXReviewViewModel {
         
         var summary: Summary
         
-        guard let choPref = self.preference else {
-            return Summary(details: [:])
-        }
-        
         // TODO: Check Double type precision.
         if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= PXReviewViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
-                summary.addAmountDetail(detail: SummaryItemDetail(amount: choPref.getAmount()), type: SummaryType.PRODUCT)
+                summary.addAmountDetail(detail: SummaryItemDetail(amount: preference.getAmount()), type: SummaryType.PRODUCT)
             }
         } else {
             summary = getDefaultSummary()
@@ -162,21 +153,15 @@ extension PXReviewViewModel {
                 }
             }
         }
-        if let disclaimer = self.reviewScreenPreference.disclaimer {
+        if let disclaimer = self.reviewScreenPreference.getDisclaimerText() {
             summary.disclaimer = disclaimer
-            summary.disclaimerColor = self.reviewScreenPreference.disclaimerColor
+            summary.disclaimerColor = self.reviewScreenPreference.getDisclaimerTextColor()
         }
         return summary
     }
     
     func getDefaultSummary() -> Summary {
-        
-        guard let choPref = self.preference else {
-            return Summary(details: [:])
-        }
-        
-        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: choPref.getAmount()))
-        
+        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: preference.getAmount()))
         return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
     }
 }
@@ -231,15 +216,15 @@ extension PXReviewViewModel {
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
 
         var customTitle = "Productos".localized
-        var totalAmount: Double = 0
+        var totalAmount: Double = self.preference.getAmount()
 
-        if let tAmount = self.preference?.getAmount() {
-            totalAmount = tAmount
-        }
-
-        if let pref = preference, pref.items.count == 1 {
-            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
-                customTitle = itemTitle
+        if let prefDetail = reviewScreenPreference.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
+            customTitle = prefDetail.title
+        } else {
+            if preference.items.count == 1 {
+                if let itemTitle = preference.items.first?.title, itemTitle.count > 0 {
+                    customTitle = itemTitle
+                }
             }
         }
 
@@ -260,7 +245,7 @@ extension PXReviewViewModel {
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
         if reviewScreenPreference.isItemsEnable() { // Items can be disable
-            for item in self.preference!.items {
+            for item in self.preference.items {
                 if let itemComponent = buildItemComponent(item: item) {
                     pxItemComponents.append(itemComponent)
                 }
@@ -274,11 +259,16 @@ extension PXReviewViewModel {
     }
 
     fileprivate func shouldShowPrice(item: Item) -> Bool {
-        return preference!.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
+        return preference.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
+    }
+
+    fileprivate func shouldShowCollectorIcon() -> Bool {
+        return !preference.hasMultipleItems() && reviewScreenPreference.getCollectorIcon() != nil
     }
 
     fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
-        if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
+        
+        if item.quantity == 1 && String.isNullOrEmpty(item._description) && !preference.hasMultipleItems() { // Item must not be shown if it has no description and it's one
             return nil
         }
 
@@ -286,8 +276,13 @@ extension PXReviewViewModel {
         let itemPrice = getItemPrice(item: item)
         let itemTitle = getItemTitle(item: item)
         let itemDescription = getItemDescription(item: item)
+        let collectorIcon = getCollectorIcon()
+        let amountTitle = reviewScreenPreference.getAmountTitle()
+        let quantityTile = reviewScreenPreference.getQuantityLabel()
 
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: collectorIcon, itemTheme: itemTheme)
         return PXItemComponent(props: itemProps)
     }
 }
@@ -295,14 +290,14 @@ extension PXReviewViewModel {
 // MARK: Item getters
 extension PXReviewViewModel {
     fileprivate func getItemTitle(item: Item) -> String? { // Return item real title if it has multiple items, if not return description
-        if preference!.hasMultipleItems() {
+        if preference.hasMultipleItems() {
             return item.title
         }
         return item._description
     }
 
     fileprivate func getItemDescription(item: Item) -> String? { // Returns only if it has multiple items
-        if preference!.hasMultipleItems() {
+        if preference.hasMultipleItems() {
             return item._description
         }
         return nil
@@ -321,20 +316,27 @@ extension PXReviewViewModel {
         }
         return item.unitPrice
     }
+
+    fileprivate func getCollectorIcon() -> UIImage? {
+        if !shouldShowCollectorIcon() {
+            return nil
+        }
+        return reviewScreenPreference.getCollectorIcon()
+    }
 }
 
 // MARK: Custom Components
 extension PXReviewViewModel {
 
     func buildTopCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getPaymentMethodTopCustomComponent() {
+        if let customComponent = reviewScreenPreference.getTopComponent() {
             return PXCustomComponentContainer(withComponent: customComponent)
         }
         return nil
     }
     
     func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getPaymentMethodBottomCustomComponent() {
+        if let customComponent = reviewScreenPreference.getBottomComponent() {
             return PXCustomComponentContainer(withComponent: customComponent)
         }
         return nil

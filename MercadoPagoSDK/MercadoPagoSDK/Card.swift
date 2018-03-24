@@ -128,6 +128,10 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
         return (self.paymentMethod?._id)!
     }
 
+    open func getPaymentTypeId() -> String {
+        return self.paymentMethod?.paymentTypeId ?? ""
+    }
+
     open func getCardSecurityCode() -> SecurityCode {
         return self.securityCode!
     }

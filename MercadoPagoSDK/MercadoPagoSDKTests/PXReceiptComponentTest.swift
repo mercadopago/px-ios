@@ -20,8 +20,8 @@ class PXReceiptComponentTest: BaseTest {
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertNotNil(receiptView.dateLabel)
-        XCTAssertNotNil(receiptView.detailLabel)
+        XCTAssertNotNil(receiptView?.dateLabel)
+        XCTAssertNotNil(receiptView?.detailLabel)
     }
 
     func testReceiptView_approvedCardPaymentPreference_render() {
@@ -32,8 +32,8 @@ class PXReceiptComponentTest: BaseTest {
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertNil(receiptView.dateLabel)
-        XCTAssertNil(receiptView.detailLabel)
+        XCTAssertNil(receiptView?.dateLabel)
+        XCTAssertNil(receiptView?.detailLabel)
     }
 
     // MARK: APPROVED - ACCOUNT MONEY
@@ -45,8 +45,8 @@ class PXReceiptComponentTest: BaseTest {
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertNotNil(receiptView.dateLabel)
-        XCTAssertNotNil(receiptView.detailLabel)
+        XCTAssertNotNil(receiptView?.dateLabel)
+        XCTAssertNotNil(receiptView?.detailLabel)
     }
 
     // MARK: REJECTED - CARD
@@ -58,8 +58,8 @@ class PXReceiptComponentTest: BaseTest {
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertNil(receiptView.dateLabel)
-        XCTAssertNil(receiptView.detailLabel)
+        XCTAssertNil(receiptView?.dateLabel)
+        XCTAssertNil(receiptView?.detailLabel)
     }
 
     func testReceiptView_rejectedC4AuthCardPayment_render() {
@@ -70,8 +70,8 @@ class PXReceiptComponentTest: BaseTest {
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertNil(receiptView.dateLabel)
-        XCTAssertNil(receiptView.detailLabel)
+        XCTAssertNil(receiptView?.dateLabel)
+        XCTAssertNil(receiptView?.detailLabel)
     }
 
     // MARK: PENDING - CARD
@@ -83,8 +83,8 @@ class PXReceiptComponentTest: BaseTest {
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertNil(receiptView.dateLabel)
-        XCTAssertNil(receiptView.detailLabel)
+        XCTAssertNil(receiptView?.dateLabel)
+        XCTAssertNil(receiptView?.detailLabel)
     }
 
     // MARK: Instructions
@@ -96,7 +96,7 @@ class PXReceiptComponentTest: BaseTest {
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertNil(receiptView.dateLabel)
-        XCTAssertNil(receiptView.detailLabel)
+        XCTAssertNil(receiptView?.dateLabel)
+        XCTAssertNil(receiptView?.detailLabel)
     }
 }

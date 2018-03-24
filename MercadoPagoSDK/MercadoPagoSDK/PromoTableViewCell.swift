@@ -31,7 +31,7 @@ open class PromoTableViewCell: UITableViewCell {
         
 		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil && !String.isNullOrEmpty(promo.url) {
 			
-            Utils().loadImageWithCache(withUrl: promo.url, targetImage: self.issuerImageView, placeHolderImage: placeholderImage)
+            Utils().loadImageWithCache(withUrl: promo.url, targetImage: self.issuerImageView, placeHolderImage: placeholderImage, fallbackImage: nil)
 		}
 
 		self.sharesSubtitle.text = promo.recommendedMessage

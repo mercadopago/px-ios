@@ -14,20 +14,26 @@ final class PXItemComponentProps : NSObject {
     var _description: String?
     var quantity: Int?
     var unitAmount: Double?
-    var reviewScreenPreference: ReviewScreenPreference
+    let amountTitle: String
+    let quantityTitle: String
+    let collectorImage: UIImage?
     let backgroundColor: UIColor
     let boldLabelColor: UIColor
     let lightLabelColor: UIColor
 
-    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), backgroundColor: UIColor, boldLabelColor: UIColor, lightLabelColor: UIColor) {
+    typealias ItemTheme = (backgroundColor: UIColor, boldLabelColor: UIColor, lightLabelColor: UIColor)
+
+    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, amountTitle: String, quantityTitle: String, collectorImage: UIImage? , itemTheme: ItemTheme) {
         self.imageURL = imageURL
         self.title = title
         self._description = description
         self.quantity = quantity
         self.unitAmount = unitAmount
-        self.reviewScreenPreference = reviewScreenPreference
-        self.backgroundColor = backgroundColor
-        self.boldLabelColor = boldLabelColor
-        self.lightLabelColor = lightLabelColor
+        self.amountTitle = amountTitle
+        self.quantityTitle = quantityTitle
+        self.collectorImage = collectorImage
+        self.backgroundColor = itemTheme.backgroundColor
+        self.boldLabelColor = itemTheme.boldLabelColor
+        self.lightLabelColor = itemTheme.lightLabelColor
     }
 }

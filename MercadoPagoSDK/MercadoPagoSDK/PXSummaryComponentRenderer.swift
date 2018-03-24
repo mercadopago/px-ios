@@ -34,9 +34,9 @@ extension PXSummaryComponentRenderer {
         compactView.backgroundColor = props.backgroundColor
         compactView.translatesAutoresizingMaskIntoConstraints = false
         
-        let amountAttributeText = Utils.getAttributedAmount(props.totalAmount, currency: MercadoPagoContext.getCurrency(), color : props.textColor, fontSize: PXLayout.XXXL_FONT, baselineOffset:BASELINE_OFFSET)
+        let amountAttributeText = Utils.getAttributedAmount(props.totalAmount, currency: MercadoPagoContext.getCurrency(), color : props.textColor, fontSize: PXSummaryCompactComponentView.TITLE_FONT_SIZE, baselineOffset:BASELINE_OFFSET)
         
-        let customTitleAttributeText = NSAttributedString(string: props.customTitle, attributes: [NSFontAttributeName: Utils.getFont(size: PXLayout.XS_FONT)])
+        let customTitleAttributeText = NSAttributedString(string: props.customTitle, attributes: [NSFontAttributeName: Utils.getFont(size: PXSummaryCompactComponentView.CUSTOM_TITLE_FONT_SIZE)])
 
         let viewHeight = compactView.buildView(amountAttributeText: amountAttributeText, bottomCustomTitle: customTitleAttributeText, textColor: props.textColor, backgroundColor: props.backgroundColor)
         

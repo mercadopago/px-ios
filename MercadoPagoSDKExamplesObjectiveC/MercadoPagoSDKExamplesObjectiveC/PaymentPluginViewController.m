@@ -21,7 +21,7 @@
 }
 
 #pragma mark - Plugin implementation.
-- (UIView * _Nullable)renderWithStore:(PXCheckoutStore * _Nonnull)store {
+- (UIView * _Nullable)renderWithStore:(PXCheckoutStore * _Nonnull)store theme:(id<PXTheme> _Nonnull)theme {
     return self.view;
 }
 
@@ -31,9 +31,21 @@
     
     double delay = 3.0;
     dispatch_time_t tm = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
-    dispatch_after(tm, dispatch_get_main_queue(), ^(void){
+    dispatch_after(tm, dispatch_get_main_queue(), ^(void) {
+        
         [self.pluginNavigationHandler hideLoading];
-        [self.pluginNavigationHandler didFinishPaymentWithPaymentStatus:RemotePaymentStatusAPPROVED statusDetails:@"" receiptId:nil];
+        
+        PXComponentAction* popeame = [[PXComponentAction alloc] initWithLabel:@"Cancelar" action:^{
+            [self.pluginNavigationHandler cancel];
+       }];
+        PXComponentAction* printeaEnConsola = [[PXComponentAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
+            NSLog(@"print !!! action!!");
+        }];
+        
+        PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"12345" status:PXBusinessResultStatusREJECTED title:@"Claro no pudo procesar tu recarga" subtitle:@"Falló la recarga" icon:[UIImage imageNamed:@"claro_logo"] mainAction:printeaEnConsola secondaryAction:popeame helpMessage:@"Intenta mas tarde"];
+        [self.pluginNavigationHandler didFinishPaymentWithBusinessResult:businessResult];
+
+       // [self.pluginNavigationHandler didFinishPaymentWithPaymentStatus:RemotePaymentStatusAPPROVED statusDetails:@"" receiptId:nil];
     });
 }
 

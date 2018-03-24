@@ -43,6 +43,10 @@ class PaymentMethodPluginFlowTest: BaseTest {
         mpCheckout.setPaymentMethodPlugins(plugins: pluginPaymentMethods)
     }
 
+    func initPaymentMethodsPlugins() {
+        self.mpCheckout.viewModel.needPaymentMethodPluginInit = false
+    }
+
     // MARK: Test that HOOKS works with Payment Methods plugin sets
     func testNextStep_withCheckoutPreference_accountMoneyWithHooks() {
         // Set access_token
@@ -62,6 +66,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
@@ -133,6 +142,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
@@ -265,6 +279,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
 
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
+
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
@@ -370,6 +389,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
 
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
+
         // 3. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
@@ -440,6 +464,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
@@ -562,6 +591,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
 
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
+
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
@@ -642,6 +676,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
@@ -763,6 +802,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
 
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
+
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
@@ -839,6 +883,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
 
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
+
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
@@ -910,6 +959,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
@@ -987,6 +1041,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
 
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
+
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
@@ -1062,6 +1121,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
 
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
+
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYMENT_METHODS, step)
@@ -1121,6 +1185,11 @@ class PaymentMethodPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
