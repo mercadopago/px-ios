@@ -116,8 +116,8 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
 
-    open func getPaymentMethod() -> PaymentMethod {
-        return self.paymentMethod!
+    open func getPaymentMethod() -> PaymentMethod? {
+        return self.paymentMethod
     }
 
     open func getCardId() -> String {

@@ -69,14 +69,14 @@ class PXPaymentMethodComponentRenderer: NSObject {
         }
 
         //Divider
-        let divider = UIView()
+        /*let divider = UIView()
         divider.translatesAutoresizingMaskIntoConstraints = false
         divider.backgroundColor = .pxMediumLightGray
         pmBodyView.addSubview(divider)
         PXLayout.setHeight(owner: divider, height: 1).isActive = true
         PXLayout.matchWidth(ofView: divider, toView: pmBodyView).isActive = true
         PXLayout.centerHorizontally(view: divider).isActive = true
-        PXLayout.put(view: divider, onBottomOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.put(view: divider, onBottomOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true */
         
         return pmBodyView
     }

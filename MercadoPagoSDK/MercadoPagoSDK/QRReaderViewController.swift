@@ -57,11 +57,11 @@ class QRReaderViewController: UIViewController {
     fileprivate func QRCodeFound(_ data: String) {
         playFoundSound()
         hapticFeedback()
-        let vc = ExpressViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false, completion: {
-            print("Done")
-        })
+        //let vc = ExpressViewController(viewModel: )
+        //vc.modalPresentationStyle = .overCurrentContext
+        //self.present(vc, animated: false, completion: {
+            //print("Done")
+        //})
     }
     
     fileprivate func hapticFeedback() {

@@ -10,12 +10,14 @@ import UIKit
 
 class ExpressViewController: UIViewController {
     
-    let popUpViewHeight: CGFloat = 500
+    let popUpViewHeight: CGFloat = 480
     let borderMargin = PXLayout.XXXS_MARGIN
     var blurView: UIVisualEffectView!
     
+    fileprivate var viewModel: PXReviewViewModel?
     fileprivate var bottomConstraint = NSLayoutConstraint()
     
+    // MARK: Lifecycle - Publics
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presentSheet()
@@ -33,12 +35,14 @@ class ExpressViewController: UIViewController {
         setupUI()
     }
     
+    func setViewModel(viewModel: PXReviewViewModel) {
+        self.viewModel = viewModel
+    }
+    
     fileprivate lazy var popupView: UIView = {
         
         let view = UIView()
-        
         let boldColor: UIColor = ThemeManager.shared.getTheme().boldLabelTintColor()
-        
         let modalTitle: String = "Confirma tu compra"
         let closeButtonImage = MercadoPago.getImage("white_close")?.withRenderingMode(.alwaysTemplate)
         
@@ -46,7 +50,6 @@ class ExpressViewController: UIViewController {
         let RADIUS_WITHOUT_SAFE_AREA: CGFloat = 15
         let TITLE_VIEW_HEIGHT: CGFloat = 58
         
-        view.backgroundColor = .white
         view.alpha = 1
         
         if PXLayout.getSafeAreaTopInset() > 0 {
@@ -65,7 +68,16 @@ class ExpressViewController: UIViewController {
         PXLayout.centerHorizontally(view: titleView).isActive = true
         PXLayout.pinTop(view: titleView).isActive = true
         PXLayout.setHeight(owner: titleView, height: TITLE_VIEW_HEIGHT).isActive = true
-        titleView.addSeparatorLineToBottom(height: 1)
+        let line = UIView()
+        line.alpha = 0.6
+        line.translatesAutoresizingMaskIntoConstraints = false
+        line.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.4)
+        titleView.addSubview(line)
+        PXLayout.pinBottom(view: line).isActive = true
+        PXLayout.matchWidth(ofView: line).isActive = true
+        PXLayout.centerHorizontally(view: line).isActive = true
+        PXLayout.setHeight(owner: line, height: 1).isActive = true
+        
         
         let titleLabel = UILabel()
         titleView.addSubview(titleLabel)
@@ -92,49 +104,62 @@ class ExpressViewController: UIViewController {
         PXLayout.setWidth(owner: button, width: 50).isActive = true
         PXLayout.setHeight(owner: button, height: 30).isActive = true
         
-        //Item Theme
-        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
-
-        // Item
-        let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
-        let itemComponent = PXItemComponent(props: itemProps)
-        let itemView = itemComponent.expressRender()
-        itemView.addSeparatorLineToBottom(height: 1)
-        view.addSubview(itemView)
-        PXLayout.matchWidth(ofView: itemView).isActive = true
-        PXLayout.centerHorizontally(view: itemView).isActive = true
-        PXLayout.put(view: itemView, onBottomOf: titleView).isActive = true
         
-        //Payment Method
-        let pmImage = MercadoPago.getImage("mediosIconoMaster")
-        let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard .... 4251".toAttributedString(), subtitle: "HSBC | Pagás 1 X $405".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: boldColor)
+        // Summary component
+        let summaryComponent = self.viewModel?.buildSummaryComponent(width: PXLayout.getScreenWidth())
+        let summaryView = summaryComponent?.render()
+        if let sView = summaryView {
+            
+            view.addSubview(sView)
+            PXLayout.matchWidth(ofView: sView).isActive = true
+            PXLayout.centerHorizontally(view: sView).isActive = true
+            PXLayout.put(view: sView, onBottomOf: titleView).isActive = true
+            sView.addSeparatorLineToBottom(height: 1)
+            
+            //Item Theme
+            let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+            // Item
+            let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
+            let itemComponent = PXItemComponent(props: itemProps)
+            let itemView = itemComponent.expressRender()
+            itemView.addSeparatorLineToBottom(height: 1)
+            view.addSubview(itemView)
+            PXLayout.matchWidth(ofView: itemView).isActive = true
+            PXLayout.centerHorizontally(view: itemView).isActive = true
+            PXLayout.put(view: itemView, onBottomOf: sView).isActive = true
+            
+            //Payment Method
+            let pmImage = MercadoPago.getImage("mediosIconoMaster")
+            let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard .... 4251".toAttributedString(), subtitle: "HSBC | Pagás 1 X $405".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: boldColor)
+            
+            let pmComponent = PXPaymentMethodComponent(props: pmProps)
+            let pmView = pmComponent.expressRender()
+            //pmView.addSeparatorLineToBottom(height: 1)
+            view.addSubview(pmView)
+            PXLayout.matchWidth(ofView: pmView).isActive = true
+            PXLayout.centerHorizontally(view: pmView).isActive = true
+            PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
+            
+            //Footer
+            var footerView: PXFooterView = PXFooterView()
+            var loadingButtonComponent: PXPrimaryButton?
+            let mainAction = PXComponentAction(label: "Pagar", action: {
+                print("Debug - Pagando")
+                loadingButtonComponent?.startLoading(loadingText:"Pagando...", retryText:"Pagar")
+            })
+            let footerProps = PXFooterProps(buttonAction: mainAction)
+            let footerComponent = PXFooterComponent(props: footerProps)
+            footerView = footerComponent.expressRender()
+            loadingButtonComponent = footerView.getPrincipalButton()
+            loadingButtonComponent?.animationDelegate = self
+            view.addSubview(footerView)
+            footerView.addSeparatorLineToTop(height: 1)
+            PXLayout.matchWidth(ofView: footerView).isActive = true
+            PXLayout.pinBottom(view: footerView).isActive = true
+            PXLayout.centerHorizontally(view: footerView).isActive = true
+        }
         
-        let pmComponent = PXPaymentMethodComponent(props: pmProps)
-        let pmView = pmComponent.expressRender()
-        pmView.addSeparatorLineToBottom(height: 1)
-        view.addSubview(pmView)
-        PXLayout.matchWidth(ofView: pmView).isActive = true
-        PXLayout.centerHorizontally(view: pmView).isActive = true
-        PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
-        
-        //Footer
-        var footerView: PXFooterView = PXFooterView()
-        var loadingButtonComponent: PXPrimaryButton?
-        let mainAction = PXComponentAction(label: "Pagar", action: {
-            print("Debug - Pagando")
-            loadingButtonComponent?.startLoading(loadingText:"Pagando...", retryText:"Pagar")
-        })
-        let footerProps = PXFooterProps(buttonAction: mainAction)
-        let footerComponent = PXFooterComponent(props: footerProps)
-        footerView = footerComponent.expressRender()
-        loadingButtonComponent = footerView.getPrincipalButton()
-        loadingButtonComponent?.animationDelegate = self
-        view.addSubview(footerView)
-        footerView.addSeparatorLineToTop(height: 1)
-        PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.pinBottom(view: footerView).isActive = true
-        PXLayout.centerHorizontally(view: footerView).isActive = true
-        
+        view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         return view
     }()
 }
@@ -197,5 +222,36 @@ extension ExpressViewController {
 extension ExpressViewController: PXAnimatedButtonDelegate {
     func didFinishAnimation() {
         self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.2)
+    }
+}
+
+class MockPaymentOption: PaymentMethodOption {
+    
+    func getId() -> String {
+        return "1"
+    }
+    
+    func getDescription() -> String {
+        return "Mock Payment option description"
+    }
+    
+    func getComment() -> String {
+        return ""
+    }
+    
+    func hasChildren() -> Bool {
+        return false
+    }
+    
+    func getChildren() -> [PaymentMethodOption]? {
+        return nil
+    }
+    
+    func isCard() -> Bool {
+        return false
+    }
+    
+    func isCustomerPaymentMethod() -> Bool {
+        return false
     }
 }

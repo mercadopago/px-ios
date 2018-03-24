@@ -63,11 +63,13 @@ import MercadoPagoSDK
         
         //preference.setQuantityLabel(title: "La cantidad")
         
+        /*
         preference.addSummaryProductDetail(amount: 31)
         preference.addSummaryDiscountDetail(amount: 1)
         preference.addSummaryArrearsDetail(amount: 10)
         preference.addSummaryTaxesDetail(amount: 10)
         preference.addSummaryShippingDetail(amount: 10)
+         */
         
         return preference
     }

@@ -64,7 +64,7 @@ extension PXDefaultTheme: PXTheme {
     }
 
     public func successColor() -> UIColor {
-        return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        return #colorLiteral(red: 0.3921568627, green: 0.7725490196, blue: 0.4549019608, alpha: 1)
     }
 
     public func warningColor() -> UIColor {
