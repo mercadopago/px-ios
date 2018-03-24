@@ -17,6 +17,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 .DS_Store
+
 MercadoPagoSDK/MercadoPagoSDK.framework
 PodTester/Pods/*
 MercadoPagoSDKExamplesObjectiveC/Pods/*
@@ -29,5 +30,5 @@ MercadoPagoSDK/Pods/*
 # you should judge for yourself, the pros and cons are mentioned at:
 # http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
-MercadoPagoSDK/Podfile.lock
+
 

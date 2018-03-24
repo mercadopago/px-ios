@@ -46,7 +46,7 @@ class PXItemComponentTest: BaseTest {
         XCTAssertNotNil(itemViews[0].itemImage)
     }
 
-    func testItemView_oneItemWithNoDesciption_render() {
+    func testItemView_oneItemWithNoDesciptionAndMultipleQuantity_render() {
         // Given
         let item = MockBuilder.buildItem("id", quantity: 2, unitPrice: 1, description: "")
         let reviewViewModel = ReviewMockComponentHelper.buildResultViewModelWithPreference(items: [item])
@@ -54,6 +54,18 @@ class PXItemComponentTest: BaseTest {
         // When
         let itemViews = ReviewMockComponentHelper.buildItemComponentView(reviewViewModel: reviewViewModel)
 
+        // Then
+        XCTAssertEqual(itemViews.count, 1)
+    }
+    
+    func testItemView_oneItemWithNoDesciptionAndOneQuantity_render() {
+        // Given
+        let item = MockBuilder.buildItem("id", quantity: 1, unitPrice: 1, description: "")
+        let reviewViewModel = ReviewMockComponentHelper.buildResultViewModelWithPreference(items: [item])
+        
+        // When
+        let itemViews = ReviewMockComponentHelper.buildItemComponentView(reviewViewModel: reviewViewModel)
+        
         // Then
         XCTAssertEqual(itemViews.count, 0)
     }

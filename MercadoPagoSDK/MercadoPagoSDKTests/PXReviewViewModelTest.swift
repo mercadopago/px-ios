@@ -74,14 +74,6 @@ class PXReviewViewModelTest: BaseTest {
 
     }
 
-    func testIsPreferenceLoaded() {
-        XCTAssertTrue(self.instance!.isPreferenceLoaded())
-
-        let preference = MockBuilder.buildCheckoutPreference()
-        self.instance!.preference = preference
-        XCTAssertTrue(self.instance!.isPreferenceLoaded())
-    }
-
     func testGetTotalAmount() {
         let paymentMethodCreditCard = MockBuilder.buildPaymentMethod("master", name: "master", paymentTypeId: PaymentTypeId.CREDIT_CARD.rawValue)
         self.instance!.paymentData.paymentMethod = paymentMethodCreditCard

@@ -37,6 +37,10 @@ class PaymentPluginFlowTest: BaseTest {
         mpCheckout.setPaymentPlugin(paymentPlugin: paymentPlugin)
     }
 
+    func initPaymentMethodsPlugins() {
+        self.mpCheckout.viewModel.needPaymentMethodPluginInit = false
+    }
+
     // MARK: Tests flow with Payment Method Plugins
 
     func testNextStep_withCheckoutPreference_pluginAndPaymentPlugin() {
@@ -58,6 +62,11 @@ class PaymentPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()
@@ -113,6 +122,11 @@ class PaymentPluginFlowTest: BaseTest {
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_VALIDATE_PREFERENCE, step)
+
+        // 4. Init Payment Methods Plugins
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.SERVICE_PAYMENT_METHOD_PLUGIN_INIT, step)
+        initPaymentMethodsPlugins()
 
         // 4. Search Payment Methods
         step = mpCheckout.viewModel.nextStep()

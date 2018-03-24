@@ -64,7 +64,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         if !String.isNullOrEmpty(error.requestOrigin) {
             metadata[TrackingUtil.METADATA_ERROR_REQUEST] = error.requestOrigin
         }
-        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
     override open func viewDidLoad() {

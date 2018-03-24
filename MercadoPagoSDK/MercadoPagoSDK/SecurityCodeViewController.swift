@@ -28,7 +28,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     override func trackInfo() {
         let metadata: [String: String] = [TrackingUtil.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
 
-        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
     func keyboardWillShow(notification: Notification) {

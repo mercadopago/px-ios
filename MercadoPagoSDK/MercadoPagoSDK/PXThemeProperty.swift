@@ -21,4 +21,12 @@ open class PXThemeProperty: NSObject {
             self.selectedColor = selectedColor
         }
     }
+
+    open func getBackgroundColor() -> UIColor {
+        return backgroundColor
+    }
+
+    open func getTintColor() -> UIColor {
+        return tintColor
+    }
 }

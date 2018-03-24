@@ -33,7 +33,6 @@ extension PXResultViewModel {
 
     func getActionLink() -> PXComponentAction? {
         var actionLink: PXComponentAction?
-
         if let labelLink = self.getLinkLabel(), let actionOfLink = self.getLinkAction() {
             actionLink = PXComponentAction(label: labelLink, action: actionOfLink)
         }

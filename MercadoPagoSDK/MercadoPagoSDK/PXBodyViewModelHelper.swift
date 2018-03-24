@@ -15,7 +15,7 @@ extension PXResultViewModel {
         return props
     }
 
-    func buildBodyComponent() -> PXBodyComponent {
+    func buildBodyComponent() -> PXComponentizable? {
         let bodyProps = getBodyComponentProps()
         return PXBodyComponent(props: bodyProps)
     }

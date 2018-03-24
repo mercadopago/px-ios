@@ -14,11 +14,11 @@ class PXCustomComponentContainer: PXCustomComponentizable {
     init(withComponent customComponent: PXCustomComponentizable) {
         self.customComponent = customComponent
     }
-    func render(store: PXCheckoutStore) -> UIView? {
+    func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
         let componentView = UIView()
         componentView.translatesAutoresizingMaskIntoConstraints = false
         
-        guard let customComponentView = customComponent.render(store: store) else {
+        guard let customComponentView = customComponent.render(store: store, theme: theme) else {
             return nil
         }
         

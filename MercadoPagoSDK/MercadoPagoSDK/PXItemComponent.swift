@@ -44,32 +44,26 @@ extension PXItemComponent {
     }
 
     func shouldShowQuantity() -> Bool {
-        if !props.reviewScreenPreference.shouldShowQuantityRow {
+        guard let quantity = props.quantity else {
             return false
         }
-
-        if let quantity = props.quantity {
-            return quantity > 0
-        }
-        return false
+        return quantity > 0
     }
 
     func getQuantity() -> String? {
         guard let quantity = props.quantity?.stringValue else  {
             return nil
         }
-        return "\(props.reviewScreenPreference.getQuantityTitle()) \(quantity)"
+        return "\(props.quantityTitle) \(quantity)"
     }
 
     func shouldShowUnitAmount() -> Bool {
-        if !props.reviewScreenPreference.shouldShowAmountTitle {
-            return false
-        }
+
         return props.unitAmount != nil
     }
 
     func getUnitAmountTitle() -> String? {
-        return props.reviewScreenPreference.getAmountTitle()
+        return props.amountTitle
     }
 
     func getUnitAmountPrice() -> Double? {

@@ -17,7 +17,7 @@ import Foundation
         return preference
     }
 
-    public func render(store: PXCheckoutStore) -> UIView {
+    public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 100))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .red

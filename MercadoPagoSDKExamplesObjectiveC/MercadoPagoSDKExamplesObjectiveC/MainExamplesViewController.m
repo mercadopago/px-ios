@@ -80,10 +80,10 @@
     dc.amount_off = @"30";
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
-    dc.amountWithoutDiscount = 100;
+    dc.amountWithoutDiscount = 60;
     dc = nil;
 
-    self.pref._id = @"243962506-5cda11bd-da04-4d17-9ed4-b7bb1f52a119";
+    self.pref._id = @"243962506-a8ef5e89-927b-4e77-b937-5c88f1c21771";
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
     accessToken:nil

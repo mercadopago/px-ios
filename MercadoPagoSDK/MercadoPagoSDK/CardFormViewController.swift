@@ -72,7 +72,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         if let cardType = self.viewModel.getPaymentMethodTypeId() {
             finalId = finalId + "/" + cardType
         }
-        MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
+        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
         self.trackStatus()
     }
 
@@ -84,15 +84,15 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
 
         if editingLabel === cardNumberLabel {
-            MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_NUMBER, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_NUMBER, screenName: screenName)
         } else if editingLabel === nameLabel {
-            MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_HOLDER_NAME, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_HOLDER_NAME, screenName: screenName)
         } else if editingLabel === expirationDateLabel {
-            MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_EXPIRATION_DATE, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_EXPIRATION_DATE, screenName: screenName)
         } else if editingLabel === cvvLabel {
-            MPXTracker.trackScreen(screenId: finalId + TrackingUtil.CARD_SECURITY_CODE, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_SECURITY_CODE, screenName: screenName)
         } else if editingLabel == nil {
-            MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
         }
     }
 

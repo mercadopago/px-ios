@@ -25,26 +25,6 @@ class ReviewScreenPreferenceTest: BaseTest {
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
     }
 
-    func testSetConfirmButtonText() {
-
-        XCTAssertEqual(reviewScreenPreference.getConfirmButtonText(), "Pagar".localized)
-
-        reviewScreenPreference.setConfirmButtonText(confirmButtonText: "1")
-        self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)
-
-        XCTAssertEqual(self.mpCheckout.viewModel.reviewScreenPreference.getConfirmButtonText(), "1")
-    }
-
-    func testSetCancelButtonText() {
-
-        XCTAssertEqual(reviewScreenPreference.getCancelButtonTitle(), "Cancelar Pago".localized)
-
-        reviewScreenPreference.setCancelButtonText(cancelButtonText: "1")
-        self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)
-
-        XCTAssertEqual(self.mpCheckout.viewModel.reviewScreenPreference.getCancelButtonTitle(), "1")
-    }
-
     func testIsChangePaymentMethodDisable() {
         XCTAssert(reviewScreenPreference.isChangeMethodOptionEnabled())
 

@@ -14,5 +14,5 @@ public protocol PXComponentizable {
 
 @objc
 public protocol PXCustomComponentizable {
-    func render(store: PXCheckoutStore) -> UIView?
+    func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
 }
