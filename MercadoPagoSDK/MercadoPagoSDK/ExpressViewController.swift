@@ -92,8 +92,11 @@ class ExpressViewController: UIViewController {
         PXLayout.setWidth(owner: button, width: 50).isActive = true
         PXLayout.setHeight(owner: button, height: 30).isActive = true
         
-        //Item
-        let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, backgroundColor: .white, boldLabelColor: boldColor, lightLabelColor: .gray)
+        //Item Theme
+        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+
+        // Item
+        let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
         let itemComponent = PXItemComponent(props: itemProps)
         let itemView = itemComponent.expressRender()
         itemView.addSeparatorLineToBottom(height: 1)

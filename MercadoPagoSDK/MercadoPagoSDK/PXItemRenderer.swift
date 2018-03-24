@@ -27,7 +27,7 @@ struct PXItemRenderer {
         itemView.backgroundColor = itemComponent.props.backgroundColor
         itemView.translatesAutoresizingMaskIntoConstraints = false
         
-        let (imageUrl, imageObj) = buildItemImageUrl(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.reviewScreenPreference.getCollectorIcon())
+        let (imageUrl, imageObj) = buildItemImageUrl(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.collectorImage)
         
         itemView.itemImage = UIImageView()
         
@@ -37,7 +37,7 @@ struct PXItemRenderer {
             if let url = imageUrl  {
                 buildCircle(targetImageView: itemImage)
                 itemImage.backgroundColor = ThemeManager.shared.getPlaceHolderColor()
-                Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil)
+                Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil, fallbackImage: nil)
             } else {
                 itemImage.image = imageObj
             }
