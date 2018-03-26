@@ -131,7 +131,7 @@ class ExpressViewController: UIViewController {
             
             //Payment Method
             let pmImage = MercadoPago.getImage("mediosIconoMaster")
-            let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard .... 4251".toAttributedString(), subtitle: "HSBC | Pagás 1 X $405".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: .white, lightLabelColor: .gray, boldLabelColor: boldColor)
+            let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard .... 4251".toAttributedString(), subtitle: "HSBC | Pagás 1 X $405".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: boldColor)
             
             let pmComponent = PXPaymentMethodComponent(props: pmProps)
             let pmView = pmComponent.expressRender()
@@ -141,10 +141,7 @@ class ExpressViewController: UIViewController {
             PXLayout.centerHorizontally(view: pmView).isActive = true
             PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
             
-  
-           
-            
-            
+
             //Footer
             var footerView: PXFooterView = PXFooterView()
             var loadingButtonComponent: PXPrimaryButton?
@@ -162,9 +159,17 @@ class ExpressViewController: UIViewController {
             PXLayout.matchWidth(ofView: footerView).isActive = true
             PXLayout.pinBottom(view: footerView).isActive = true
             PXLayout.centerHorizontally(view: footerView).isActive = true
+            
+            view.layoutIfNeeded()
+            
+            let heightForRows = (self.popUpViewHeight - titleView.frame.height - sView.frame.height - footerView.frame.height)/2
+            PXLayout.setHeight(owner: pmView, height: heightForRows).isActive = true
+            PXLayout.setHeight(owner: itemView, height: heightForRows).isActive = true
+            
+            view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         }
+
         
-        view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         return view
     }()
 }
