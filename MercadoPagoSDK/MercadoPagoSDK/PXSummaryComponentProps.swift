@@ -17,8 +17,9 @@ final class PXSummaryComponentProps : NSObject {
     let customTitle: String
     let textColor: UIColor
     let backgroundColor: UIColor
+    var topMargin: CGFloat?
     
-    init(summaryViewModel: Summary, paymentData: PaymentData, total: Double, width: CGFloat, customTitle: String, textColor: UIColor, backgroundColor: UIColor) {
+    init(summaryViewModel: Summary, paymentData: PaymentData, total: Double, width: CGFloat, customTitle: String, textColor: UIColor, backgroundColor: UIColor, topMargin:CGFloat?=nil) {
         self.width = width
         self.summaryViewModel = summaryViewModel
         self.paymentData = paymentData
@@ -26,5 +27,10 @@ final class PXSummaryComponentProps : NSObject {
         self.customTitle = customTitle
         self.textColor = textColor
         self.backgroundColor = backgroundColor
+        self.topMargin = topMargin
+    }
+    
+    func setTopMargin(margin:CGFloat) {
+        self.topMargin = margin
     }
 }

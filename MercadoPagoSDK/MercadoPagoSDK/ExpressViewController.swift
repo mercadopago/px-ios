@@ -45,6 +45,7 @@ class ExpressViewController: UIViewController {
         let boldColor: UIColor = ThemeManager.shared.getTheme().boldLabelTintColor()
         let modalTitle: String = "Confirma tu compra"
         let closeButtonImage = MercadoPago.getImage("white_close")?.withRenderingMode(.alwaysTemplate)
+        let closeButtonColor: UIColor = ThemeManager.shared.getTheme().labelTintColor()
         
         let RADIUS_WITH_SAFE_AREA: CGFloat = 32
         let RADIUS_WITHOUT_SAFE_AREA: CGFloat = 15
@@ -97,9 +98,9 @@ class ExpressViewController: UIViewController {
             self.hideSheet()
         })
         button.setImage(closeButtonImage, for: .normal)
-        button.tintColor = boldColor
+        button.tintColor = closeButtonColor
         titleView.addSubview(button)
-        PXLayout.pinRight(view: button, withMargin: PXLayout.XXXS_MARGIN - 2).isActive = true
+        PXLayout.pinRight(view: button, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         PXLayout.centerVertically(view: button).isActive = true
         PXLayout.setWidth(owner: button, width: 50).isActive = true
         PXLayout.setHeight(owner: button, height: 30).isActive = true
@@ -107,7 +108,7 @@ class ExpressViewController: UIViewController {
         
         // Summary component
         let summaryComponent = self.viewModel?.buildSummaryComponent(width: PXLayout.getScreenWidth())
-        let summaryView = summaryComponent?.render()
+        let summaryView = summaryComponent?.expressRender()
         if let sView = summaryView {
             
             view.addSubview(sView)
@@ -139,6 +140,10 @@ class ExpressViewController: UIViewController {
             PXLayout.matchWidth(ofView: pmView).isActive = true
             PXLayout.centerHorizontally(view: pmView).isActive = true
             PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
+            
+  
+           
+            
             
             //Footer
             var footerView: PXFooterView = PXFooterView()
@@ -222,6 +227,13 @@ extension ExpressViewController {
 extension ExpressViewController: PXAnimatedButtonDelegate {
     func didFinishAnimation() {
         self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.2)
+    }
+}
+
+//MARK: - User Actions
+extension ExpressViewController {
+    func shouldOpenGroups() {
+        print("shouldOpenGroups")
     }
 }
 
