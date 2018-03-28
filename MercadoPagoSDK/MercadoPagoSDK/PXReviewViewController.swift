@@ -27,12 +27,13 @@ class PXReviewViewController: PXComponentContainerViewController {
     var callbackExit: (() -> Void)
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), timerService: PXTimerService?=nil) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
         super.init()
+        timerService?.changesDelegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -305,5 +306,10 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
         let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
         webVC.title = title
         self.navigationController?.pushViewController(webVC, animated: true)
+    }
+}
+
+extension PXReviewViewController: PXTimerChangesDelegate {
+    func timerValueDidChange(timerDisplayValue: String) {
     }
 }

@@ -241,6 +241,8 @@
 		231437512060A56600F08B4B /* PXBusinessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B411E2051837800B6D886 /* PXBusinessResult.swift */; };
 		231AE27020472C1400CB87CF /* PXSummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AE26F20472C1400CB87CF /* PXSummaryComponent.swift */; };
 		231AE27220472C3000CB87CF /* PXSummaryComponentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AE27120472C3000CB87CF /* PXSummaryComponentRenderer.swift */; };
+		2322C258206BB8BD00E42C2D /* PXTimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2322C257206BB8BD00E42C2D /* PXTimerService.swift */; };
+		2322C259206BB8BD00E42C2D /* PXTimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2322C257206BB8BD00E42C2D /* PXTimerService.swift */; };
 		232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		232FA92C1F06D30F002F7E39 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
@@ -903,6 +905,7 @@
 		1CBC6F9326B38C688FC679A4 /* Pods_MercadoPagoSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		231AE26F20472C1400CB87CF /* PXSummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryComponent.swift; sourceTree = "<group>"; };
 		231AE27120472C3000CB87CF /* PXSummaryComponentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryComponentRenderer.swift; sourceTree = "<group>"; };
+		2322C257206BB8BD00E42C2D /* PXTimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTimerService.swift; sourceTree = "<group>"; };
 		232FA9291F06D2E2002F7E39 /* ApiException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiException.swift; sourceTree = "<group>"; };
 		232FA92B1F06D30F002F7E39 /* Cause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cause.swift; sourceTree = "<group>"; };
 		233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXThemeObjects.swift; sourceTree = "<group>"; };
@@ -1346,6 +1349,7 @@
 				4BB3ECE11FB379AB00AAFD38 /* URLConfigs.swift */,
 				4BB3ECE51FB37B0300AAFD38 /* PXSDKSettings.swift */,
 				4BE3C55120581048005BE20C /* PXTrackingStore.swift */,
+				2322C257206BB8BD00E42C2D /* PXTimerService.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -2985,6 +2989,7 @@
 				15AE1D9D1F60763400B0DAF8 /* Summary.swift in Sources */,
 				15AE1D9A1F6073AB00B0DAF8 /* SummaryDetail.swift in Sources */,
 				0FE3E37F1AE706B600C27B97 /* Utils.swift in Sources */,
+				2322C258206BB8BD00E42C2D /* PXTimerService.swift in Sources */,
 				76B0850C1CE2669C00C157BF /* CallbackCancelDelegate.swift in Sources */,
 				4BEF9B511FE2EAAB002ADAFF /* PXPluginNavigationHandler.swift in Sources */,
 				15D79A0A1CA9B6B900623A84 /* MPButton.swift in Sources */,
@@ -3384,6 +3389,7 @@
 				815409461FD59F1E00B245BC /* PXReceiptComponent.swift in Sources */,
 				81D9F92C200FE50500490DC6 /* PXDefaultTheme.swift in Sources */,
 				81D9F928200FE3BF00490DC6 /* ThemeManager.swift in Sources */,
+				2322C259206BB8BD00E42C2D /* PXTimerService.swift in Sources */,
 				76EC48041C862AD70086FA53 /* PaymentMethodSearchitemTest.swift in Sources */,
 				766012F01CF284A600897F9D /* WebViewController.swift in Sources */,
 				76D00A081CA3397B00F52BC6 /* MercadoPagoServicesAdapter.swift in Sources */,

@@ -16,6 +16,8 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
     var countLoadings: Int = 0
+    
+    var timerService: PXTimerService?
 
     private var currentLoadingView: UIViewController?
 
@@ -48,6 +50,13 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
 
+    public func setCheckoutTimer(seconds: Int) {
+        if seconds > 0 {
+            timerService = PXTimerService(withSeconds: seconds)
+            timerService?.lifecycleDelegate = self
+        }
+    }
+    
     public func setTheme(_ theme: PXTheme) {
         ThemeManager.shared.setTheme(theme: theme)
     }
@@ -70,6 +79,7 @@ open class MercadoPagoCheckout: NSObject {
         presentInitLoading()
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
+        timerService?.startTimer()
     }
 
     public func setPaymentResult(paymentResult: PaymentResult) {
@@ -333,6 +343,13 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
 
+}
+
+//MARK: - PXTimer lifecycle.
+extension MercadoPagoCheckout: PXTimerLifecycleDelegate {
+    func didFinishTimer() {
+        finish()
+    }
 }
 
 extension MercadoPagoCheckout: UINavigationControllerDelegate {

@@ -101,6 +101,8 @@
     
     //[self setHooks];
     
+    [self.mpCheckout setCheckoutTimerWithSeconds:120];
+    
     [self setPaymentMethodPlugins];
 
 //    [self setPaymentPlugin];
@@ -115,7 +117,6 @@
     [self setReviewScreenPreference];
 
     [self.mpCheckout start];
-
 }
 
 -(void)setHooks {

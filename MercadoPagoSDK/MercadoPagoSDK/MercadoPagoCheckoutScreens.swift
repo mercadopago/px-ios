@@ -159,7 +159,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.cancel()
-        })
+        }, timerService: self.timerService)
 
         self.pushViewController(viewController: reviewVC, animated: true)
     }
