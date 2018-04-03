@@ -19,6 +19,7 @@ struct PXSummaryComponentRenderer {
     
     func expressRender(_ summaryComponent: PXSummaryComponent) -> UIView {
         summaryComponent.props.setTopMargin(margin: PXLayout.S_MARGIN)
+        summaryComponent.props.backgroundColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
         if summaryComponent.props.summaryViewModel.details.count > 1 || summaryComponent.props.paymentData.getNumberOfInstallments() > 1 {
             return buildFullSummary(props: summaryComponent.props)
         }

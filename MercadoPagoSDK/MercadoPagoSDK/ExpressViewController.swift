@@ -69,10 +69,12 @@ class ExpressViewController: UIViewController {
         PXLayout.centerHorizontally(view: titleView).isActive = true
         PXLayout.pinTop(view: titleView).isActive = true
         PXLayout.setHeight(owner: titleView, height: TITLE_VIEW_HEIGHT).isActive = true
+
+
         let line = UIView()
-        line.alpha = 0.6
+        //line.alpha = 0.6
         line.translatesAutoresizingMaskIntoConstraints = false
-        line.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.4)
+        line.backgroundColor = .UIColorFromRGB(0xEEEEEE)
         titleView.addSubview(line)
         PXLayout.pinBottom(view: line).isActive = true
         PXLayout.matchWidth(ofView: line).isActive = true
@@ -118,7 +120,7 @@ class ExpressViewController: UIViewController {
             sView.addSeparatorLineToBottom(height: 1)
             
             //Item Theme
-            let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+            let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: UIColor.white, boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
             // Item
             let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
             let itemComponent = PXItemComponent(props: itemProps)
@@ -131,7 +133,7 @@ class ExpressViewController: UIViewController {
             
             //Payment Method
             let pmImage = MercadoPago.getImage("mediosIconoMaster")
-            let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard .... 4251".toAttributedString(), subtitle: "HSBC | Pagás 1 X $405".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: boldColor)
+            let pmProps = PXPaymentMethodProps(paymentMethodIcon: pmImage, title: "Mastercard .... 4251".toAttributedString(), subtitle: "HSBC | Pagás 1 X $405".toAttributedString(), descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, backgroundColor: UIColor.white, lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: boldColor)
             
             let pmComponent = PXPaymentMethodComponent(props: pmProps)
             let pmView = pmComponent.expressRender()
@@ -166,7 +168,7 @@ class ExpressViewController: UIViewController {
             PXLayout.setHeight(owner: pmView, height: heightForRows).isActive = true
             PXLayout.setHeight(owner: itemView, height: heightForRows).isActive = true
             
-            view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+            view.backgroundColor = UIColor.white
         }
 
         
