@@ -108,7 +108,7 @@ class PXBodyComponentTest: BaseTest {
         let errorView = try require(bodyView as? PXErrorView)
 
         // Then:
-        XCTAssertNil(errorView.titleLabel)
+        XCTAssertNotNil(errorView.titleLabel)
         XCTAssertNotNil(errorView.descriptionLabel)
         XCTAssertEqual(errorView.descriptionLabel?.text, PXResourceProvider.getDescriptionForErrorBodyForREJECTED_DUPLICATED_PAYMENT())
         XCTAssertNil(errorView.actionButton)
@@ -306,7 +306,7 @@ class PXBodyComponentTest: BaseTest {
         var referenceView = referencesView.referencesComponents![0] as! PXInstructionsReferenceView
         XCTAssertNotNil(referenceView.titleLabel)
         XCTAssertNotNil(referenceView.referenceLabel)
-        XCTAssertEqual(referenceView.titleLabel?.text, "Referencia para abonar")
+        XCTAssertEqual(referenceView.titleLabel?.text, "Número")
         XCTAssertEqual(referenceView.referenceLabel?.text, "2379 1729 0000 0400 1003 3802 6025 4607 2909 0063 3330")
 
         //Reference View 1

@@ -14,7 +14,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     var name: String?
     var navBarTitle: String!
     @IBOutlet weak var webView: UIWebView!
-    
+
     init( url: URL, screenName: String, navigationBarTitle: String) {
         super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
         self.url = url
@@ -22,7 +22,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         self.navBarTitle = navigationBarTitle
 
     }
-    override internal var screenName: String { get { return name! } }
+    override internal var screenName: String { return name! }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -46,7 +46,7 @@ extension MercadoPagoCheckoutViewModel {
 
     public func paymentMethodPluginToPaymentMethod(plugin: PXPaymentMethodPlugin) {
         let paymentMethod = PaymentMethod()
-        paymentMethod._id = plugin.getId()
+        paymentMethod.paymentMethodId = plugin.getId()
         paymentMethod.name = plugin.getTitle()
         paymentMethod.paymentTypeId = PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID
         paymentMethod.setExternalPaymentMethodImage(externalImage: plugin.getImage())
@@ -57,7 +57,7 @@ extension MercadoPagoCheckoutViewModel {
 // MARK: Payment Plugin
 extension MercadoPagoCheckoutViewModel {
     func needToCreatePaymentForPaymentPlugin() -> Bool {
-        guard let _ = paymentPlugin else {
+        if paymentPlugin == nil {
             return false
         }
 

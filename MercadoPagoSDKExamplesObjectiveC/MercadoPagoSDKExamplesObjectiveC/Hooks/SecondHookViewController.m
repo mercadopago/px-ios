@@ -50,7 +50,7 @@
 }
 
 - (void)renderDidFinish {
-    self.paymentMethodLabel.text = self.paymentData.paymentMethod._id;
+    self.paymentMethodLabel.text = self.paymentData.paymentMethod.paymentMethodId;
     NSLog(@"renderDidFinish");
 }
 

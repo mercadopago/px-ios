@@ -47,14 +47,14 @@ class PayerInfoViewModel: NSObject {
     }
 
     func filterSupported(identificationTypes: [IdentificationType]) -> [IdentificationType] {
-        let supportedIdentificationTypes = identificationTypes.filter {$0._id == "CPF"}
+        let supportedIdentificationTypes = identificationTypes.filter {$0.identificationTypeId == "CPF"}
         return supportedIdentificationTypes
     }
 
     func getDropdownOptions() -> [String] {
         var options: [String] = []
         for identificationType in self.identificationTypes {
-            options.append(identificationType._id!)
+            options.append(identificationType.identificationTypeId!)
         }
         return options
     }
@@ -175,7 +175,7 @@ class PayerInfoViewModel: NSObject {
         let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
 
         if IDtype != nil {
-            if let masks = maskFinder(dictID: site+"_"+(IDtype?._id)!, forKey: "identification_mask") {
+            if let masks = maskFinder(dictID: site+"_"+(IDtype?.identificationTypeId)!, forKey: "identification_mask") {
                 return masks
             } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
                 return masks

@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoSDK
 
 @objc public class TestComponent: NSObject, PXCustomComponentizable {
-    
+
     static public func getPaymentResultPreference() -> PaymentResultScreenPreference {
         //let top = TestComponent()
         //let bottom = TestComponent()
@@ -36,14 +36,14 @@ import MercadoPagoSDK
         label.textAlignment = .center
         label.textColor = .black
         view.addSubview(label)
-        
+
         NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
-        
+
         NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
-        
+
         return view
     }
-    
+
     static public func getReviewScreenPreference() -> ReviewScreenPreference {
         let top = TestComponent()
         let bottom = TestComponent()
@@ -52,15 +52,15 @@ import MercadoPagoSDK
         preference.setBottomComponent(bottom)
         // preference.disableItems()
         // preference.disableChangeMethodOption()
-        
+
         // preference.setSummaryProductTitle(productTitle: "Product title from ReviewScreenPreference")
         // preference.setAmountTitle(title: "Amount title from RSP")
-        
+
         //preference.setDisclaimerText(text: "Disclamer text from RSP")
-        
+
         //preference.setAmountTitle(title: "Pepito")
         //preference.addSummaryProductDetail(amount: 10)
-        
+
         //preference.setQuantityLabel(title: "La cantidad")
         
         /*
@@ -70,7 +70,7 @@ import MercadoPagoSDK
         preference.addSummaryTaxesDetail(amount: 10)
         preference.addSummaryShippingDetail(amount: 10)
          */
-        
+
         return preference
     }
 }

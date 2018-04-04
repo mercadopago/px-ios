@@ -91,7 +91,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needGetEntityTypes() -> Bool {
-        guard let _ = self.paymentOptionSelected else {
+        guard self.paymentOptionSelected != nil else {
             return false
         }
         guard let pm = self.paymentData.getPaymentMethod() else {
@@ -104,7 +104,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needGetFinancialInstitutions() -> Bool {
-        guard let _ = self.paymentOptionSelected else {
+        guard self.paymentOptionSelected != nil else {
             return false
         }
         guard let pm = self.paymentData.getPaymentMethod() else {
@@ -207,7 +207,7 @@ extension MercadoPagoCheckoutViewModel {
 
     func needReviewAndConfirm() -> Bool {
 
-        guard let _ = self.paymentOptionSelected else {
+        guard self.paymentOptionSelected != nil else {
             return false
         }
 
@@ -235,7 +235,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        guard !String.isNullOrEmpty(paymentResult._id) else {
+        guard !String.isNullOrEmpty(paymentResult.paymentId) else {
             return false
         }
 
@@ -251,7 +251,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func shouldShowCongrats() -> Bool {
-        if let _ = self.businessResult {
+        if self.businessResult != nil {
             return true
         }
         if let paymentResult = self.paymentResult {
@@ -292,12 +292,12 @@ extension MercadoPagoCheckoutViewModel {
             self.paymentOptionSelected = customOption as? PaymentMethodOption
         } else if !paymentMethod.isOnlinePaymentMethod {
             // Medios off
-            if let paymentTypeId = PaymentTypeId(rawValue : paymentMethod.paymentTypeId) {
-                self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod._id, paymentTypeId: paymentTypeId)
+            if let paymentTypeId = PaymentTypeId(rawValue: paymentMethod.paymentTypeId) {
+                self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod.paymentMethodId, paymentTypeId: paymentTypeId)
             }
         } else {
             // Tarjetas, efectivo, crédito, debito
-            if let paymentTypeId = PaymentTypeId(rawValue : paymentMethod.paymentTypeId) {
+            if let paymentTypeId = PaymentTypeId(rawValue: paymentMethod.paymentTypeId) {
                 self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
             }
         }

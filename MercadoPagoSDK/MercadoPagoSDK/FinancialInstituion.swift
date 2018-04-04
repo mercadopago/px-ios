@@ -11,43 +11,20 @@ import Foundation
 open class FinancialInstitution: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.financialInstitution
-    open var _id: Int?
-    open var _description: String?
-
-    open class func fromJSON(_ json: NSDictionary) -> FinancialInstitution {
-        let financialInstitution: FinancialInstitution = FinancialInstitution()
-
-        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue, let iid = _id as? Int {
-            financialInstitution._id = iid
-        }
-        
-        if let description = JSONHandler.attemptParseToString(json["description"]) {
-            financialInstitution._description = description
-        }
-
-        return financialInstitution
-    }
+    open var financialInstitutionId: Int?
+    open var financialInstitutionDescription: String?
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
     open func toJSON() -> [String: Any] {
-        let id: Any = self._id == nil ? JSONHandler.null : self._id!
-        let description: Any = self._description == nil ? JSONHandler.null : self._description!
+        let id: Any = self.financialInstitutionId == nil ? JSONHandler.null : self.financialInstitutionId!
+        let description: Any = self.financialInstitutionDescription == nil ? JSONHandler.null : self.financialInstitutionDescription!
         let obj: [String: Any] = [
             "id": id,
             "description": description
             ]
         return obj
     }
-}
-
-public func ==(obj1: FinancialInstitution, obj2: FinancialInstitution) -> Bool {
-
-    let areEqual =
-        obj1._id == obj2._id &&
-            obj1.description == obj2.description
-
-    return areEqual
 }

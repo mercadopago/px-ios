@@ -17,8 +17,8 @@ extension String {
 		if bundle == nil {
 			bundle = Bundle.main
 		}
-        let languageBundle = Bundle(path : MercadoPagoContext.getLocalizedPath())
-        return languageBundle!.localizedString(forKey: self, value : "", table : nil)
+        let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
+        return languageBundle!.localizedString(forKey: self, value: "", table: nil)
 
 	}
 
@@ -27,8 +27,8 @@ extension String {
         return localizedString != self
     }
 
-    static public func isDigitsOnly(_ a: String) -> Bool {
-		if Regex.init("^[0-9]*$").test(a) {
+    static public func isDigitsOnly(_ number: String) -> Bool {
+		if Regex.init("^[0-9]*$").test(number) {
 			return true
 		} else {
 			return false
@@ -44,15 +44,6 @@ extension String {
             return false
         }
         return true
-    }
-
-    subscript (i: Int) -> String {
-
-        if self.count > i {
-            return String(self[self.index(self.startIndex, offsetBy: i)])
-        }
-
-        return ""
     }
 
     public func lastCharacters(number: Int) -> String {
@@ -76,7 +67,7 @@ extension String {
             if self.isEmpty {
                 self = key + "=" + value!
             } else {
-                self = self + "&" + key + "=" + value!
+                self += "&" + key + "=" + value!
             }
         }
     }

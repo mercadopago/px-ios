@@ -14,7 +14,7 @@ cp $temp_name $file_name
 lf=$'\n'
 
 
-text="  s.subspec 'ESC' do |esc|	\\$lf	esc.dependency 'MercadoPagoSDK\/Default'  \\$lf    	esc.dependency 'MLESCManager' \\$lf     esc.pod_target_xcconfig = { \\$lf       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D MPESC_ENABLE' \\$lf     } \\$lf   end"
+text="  s.subspec 'ESC' do |esc|	\\$lf	esc.dependency 'MercadoPagoSDK\/Default'  \\$lf    	esc.dependency 'MLESCManager', '1.0.1' \\$lf     esc.pod_target_xcconfig = { \\$lf       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE', \\$lf       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D MPESC_ENABLE' \\$lf     } \\$lf   end"
 
 sed -e "20s/^//p; 20s/^.*/ $text\\$lf/g" -e 's/:git.*/:git => "git@github.com:mercadopago\/px-ios.git", :tag => s.version.to_s }/' $temp_name | tee $file_name
 

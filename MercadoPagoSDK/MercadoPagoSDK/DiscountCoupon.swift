@@ -33,7 +33,7 @@ open class DiscountCoupon: NSObject {
      }
      */
 
-   open var _id: UInt
+   open var discountId: UInt
    open var name: String?
    open var percent_off: String = "0"
    open var amount_off: String = "0"
@@ -47,16 +47,16 @@ open class DiscountCoupon: NSObject {
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
-    
-    public init(_id: UInt) {
-        self._id = _id
+
+    public init(discountId: UInt) {
+        self.discountId = discountId
         super.init()
     }
 
     func toJSON() -> [String: Any] {
-        
+
         var obj: [String: Any] = [
-            "id": self._id,
+            "id": self.discountId,
             "percent_off": Int(self.percent_off) != nil ? Int(self.percent_off)! : 0,
             "amount_off": Int(self.amount_off) != nil ? Int(self.amount_off)! : 0,
             "coupon_amount": Int(self.coupon_amount) != nil ? Int(self.coupon_amount)! : 0
@@ -73,42 +73,12 @@ open class DiscountCoupon: NSObject {
         if let concept = self.concept {
             obj["concept"] = concept
         }
-        
+
         if let campaignId = self.campaignId {
             obj["campaign_id"] = campaignId
         }
 
         return obj
-    }
-
-    open class func fromJSON(_ json: NSDictionary, amountWithoutDiscount: Double) -> DiscountCoupon? {
-        guard let couponId = json["id"]  else {
-            return nil
-        }
-        let discount = DiscountCoupon(_id:couponId as! UInt)
-        if json["name"] != nil && !(json["name"]! is NSNull) {
-            discount.name = json["name"] as? String
-        }
-        if json["percent_off"] != nil && !(json["percent_off"]! is NSNull) {
-            discount.percent_off = String( describing: json["percent_off"]  as! NSNumber)
-        }
-        if json["amount_off"] != nil && !(json["amount_off"]! is NSNull) {
-            discount.amount_off = String( describing: json["amount_off"]  as! NSNumber)
-        }
-        if json["coupon_amount"] != nil && !(json["coupon_amount"]! is NSNull) {
-            discount.coupon_amount = String( describing: json["coupon_amount"]  as! NSNumber)
-        }
-        if json["currency_id"] != nil && !(json["currency_id"]! is NSNull) {
-            discount.currency_id = json["currency_id"] as? String
-        }
-        if json["concept"] != nil && !(json["concept"]! is NSNull) {
-            discount.concept = json["concept"] as? String
-        }
-        if json["campaign_id"] != nil && !(json["campaign_id"]! is NSNull) {
-            discount.campaignId = json["campaign_id"] as? String
-        }
-        discount.amountWithoutDiscount = amountWithoutDiscount
-        return discount
     }
 
     open func getDescription() -> String {

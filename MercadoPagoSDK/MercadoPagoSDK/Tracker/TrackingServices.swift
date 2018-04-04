@@ -39,7 +39,7 @@ class TrackingServices: NSObject {
                         if response.statusCode == ApiUtil.StatusCodes.OK.rawValue {
                             if let data = data {
                                 let responseJson = try JSONSerialization.jsonObject(with: data,
-                                                                                    options:JSONSerialization.ReadingOptions.allowFragments)
+                                                                                    options: JSONSerialization.ReadingOptions.allowFragments)
                                 success(responseJson as Any)
 
                             } else {

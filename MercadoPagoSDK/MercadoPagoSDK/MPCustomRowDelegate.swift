@@ -8,9 +8,9 @@
 
 import Foundation
 @objc public protocol MPCustomRowDelegate {
-    
+
     @objc optional func invokeCallbackWithPaymentData(rowCallback: ((PaymentData) -> Void))
-    
+
     @objc optional func invokeCallbackWithPaymentResult(rowCallback: ((PaymentResult) -> Void))
-    
+
 }

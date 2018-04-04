@@ -13,7 +13,7 @@ open class AvailableCardsViewController: MercadoPagoUIViewController {
     let buttonFontSize: CGFloat = 18
 
     @IBOutlet weak var retryButton: UIButton!
-    override open var screenName: String { get { return "AVAILABLE_CARDS_DETAIL" } }
+    override open var screenName: String { return "AVAILABLE_CARDS_DETAIL" }
     var availableCardsDetailView: AvailableCardsDetailView!
     var viewModel: AvailableCardsViewModel!
 
@@ -38,7 +38,7 @@ open class AvailableCardsViewController: MercadoPagoUIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = ThemeManager.shared.getTheme().modalComponent().backgroundColor
 
-        self.availableCardsDetailView = AvailableCardsDetailView(frame:self.viewModel.getDatailViewFrame(), paymentMethods: self.viewModel.paymentMethods)
+        self.availableCardsDetailView = AvailableCardsDetailView(frame: self.viewModel.getDatailViewFrame(), paymentMethods: self.viewModel.paymentMethods)
         self.availableCardsDetailView.layer.cornerRadius = 4
         self.availableCardsDetailView.layer.masksToBounds = true
         self.view.addSubview(self.availableCardsDetailView)
@@ -86,7 +86,7 @@ class AvailableCardsViewModel: NSObject {
 
         let xPos = (self.screenWidth - availableCardsViewWidth)/2
         let yPos = (self.screenHeight - availableCardsViewTotalHeight)/2
-        return CGRect(x: xPos, y: yPos, width:availableCardsViewWidth, height: availableCardsViewTotalHeight)
+        return CGRect(x: xPos, y: yPos, width: availableCardsViewWidth, height: availableCardsViewTotalHeight)
     }
 
     func getEnterCardMessage() -> String {

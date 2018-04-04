@@ -9,11 +9,11 @@
 import Foundation
 
 public class PXComponentView: UIView {
-    
+
     private var topGuideView = UIView()
     private var bottomGuideView = UIView()
     private var contentView = UIView()
-    
+
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         initComponent()
@@ -49,11 +49,11 @@ public class PXComponentView: UIView {
         }
         initComponent()
     }
-  
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override public func addSubview(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
@@ -64,19 +64,19 @@ public class PXComponentView: UIView {
         self.contentView.addSubview(view)
         putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
     }
-    
+
     override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
         self.topGuideView.addSeparatorLineToTop(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
-    
+
     override func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
         self.bottomGuideView.addSeparatorLineToBottom(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
-    
+
     override func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor) {
         super.addLine(yCoordinate: yCoordinate, height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
-    
+
     //Pin first content view subview to top
     public func pinFirstSubviewToTop(withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let firstView = self.contentView.subviews.first else {
@@ -84,7 +84,7 @@ public class PXComponentView: UIView {
         }
         return PXLayout.pinTop(view: firstView, to: self.contentView, withMargin: margin)
     }
-    
+
     //Pin last content view subview to bottom
     public func pinLastSubviewToBottom(withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let lastView = self.contentView.subviews.last else {
@@ -92,26 +92,24 @@ public class PXComponentView: UIView {
         }
         return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
     }
-    
+
     //Put view on bottom of content view last subview
     public func putOnBottomOfLastView(view: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint? {
         if !self.contentView.subviews.contains(view) {
             return nil
         }
-        for actualView in self.contentView.subviews.reversed() {
-            if actualView != view {
-                return PXLayout.put(view: view, onBottomOf: actualView, withMargin: margin)
-            }
+        for actualView in self.contentView.subviews.reversed() where actualView != view {
+            return PXLayout.put(view: view, onBottomOf: actualView, withMargin: margin)
         }
         return nil
     }
-    
+
     func getSubviews() -> [UIView] {
         return self.contentView.subviews
     }
-  
-    var heightConstraint : NSLayoutConstraint?
-    func fixHeight(height : CGFloat){
+
+    var heightConstraint: NSLayoutConstraint?
+    func fixHeight(height: CGFloat) {
         if let heightConstraint = self.heightConstraint {
             heightConstraint.constant = height
         } else {

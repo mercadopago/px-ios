@@ -22,9 +22,9 @@ CheckoutPreference *pref;
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-    Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
-    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
+    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
+    Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
+    Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
     
     NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
     
@@ -82,7 +82,7 @@ CheckoutPreference *pref;
     [CardFormViewController setShowBankDeals:NO];
     
     PaymentMethod *pm = [[PaymentMethod alloc] init];
-    pm._id = @"debvisa";
+    pm.paymentMethodId = @"debvisa";
     pm.paymentTypeId = @"debit_card";
     pm.name = @"visa";
      
@@ -90,12 +90,12 @@ CheckoutPreference *pref;
     PaymentData *pd = [[PaymentData alloc] init];
     pd.paymentMethod = pm;
      
-    pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
+    pd.token = [[Token alloc] initWithTokenId:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
     pd.token.lastFourDigits = @"7890";
     pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
      
     pd.issuer = nil;//[[Issuer alloc] init];
-    pd.issuer._id = [NSNumber numberWithInt:200];
+    pd.issuer.issuerId = [NSNumber numberWithInt:200];
     
     
     [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:pd discount:nil navigationController:self.navigationController] start];
@@ -125,7 +125,7 @@ CheckoutPreference *pref;
 - (void)showCongrats {
     
     PaymentMethod *pm = [[PaymentMethod alloc] init];
-    pm._id = @"debvisa";
+    pm.paymentMethodId = @"debvisa";
     pm.paymentTypeId = @"debit_card";
     pm.name = @"visa";
 
@@ -133,7 +133,7 @@ CheckoutPreference *pref;
     pd.paymentMethod = pm;
     pd.paymentMethod.name = @"Visa";
     
-    pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
+    pd.token = [[Token alloc] initWithTokenId:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
     pd.token.lastFourDigits = @"7890";
     pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:2 totalAmount:6];
     //pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];

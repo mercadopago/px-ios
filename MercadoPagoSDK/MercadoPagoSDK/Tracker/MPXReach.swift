@@ -23,7 +23,7 @@
 import Foundation
 import SystemConfiguration
 
-let ReachabilityStatusChangedNotification = "ReachabilityStatusChangedNotification"
+let reachabilityStatusChangedNotification = "ReachabilityStatusChangedNotification"
 
 enum ReachabilityType: CustomStringConvertible {
     case wwan

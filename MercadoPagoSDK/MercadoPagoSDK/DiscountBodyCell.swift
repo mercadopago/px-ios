@@ -46,7 +46,7 @@ class DiscountBodyCell: UIView {
 
     func loadNoCouponView() {
         let screenWidth = frame.size.width
-        
+
         let amountFontSize: CGFloat = 16
         let centsFontSize: CGFloat = 12
         let currency = MercadoPagoContext.getCurrency()
@@ -54,10 +54,10 @@ class DiscountBodyCell: UIView {
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
         let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
-        
+
         let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
         attributedTitle.append(attributedAmount)
-        
+
         let props = PXContainedLabelProps(labelText: attributedTitle)
         let component = PXContainedLabelComponent(props: props)
         let view = component.render()
@@ -66,7 +66,7 @@ class DiscountBodyCell: UIView {
         PXLayout.setHeight(owner: view, height: 20).isActive = true
         PXLayout.matchWidth(ofView: view).isActive = true
         PXLayout.centerHorizontally(view: view).isActive = true
-        
+
         let couponFlag = UIImageView()
         couponFlag.image = MercadoPago.getImage("iconDiscount")
         couponFlag.image = couponFlag.image?.withRenderingMode(.alwaysTemplate)
@@ -87,10 +87,10 @@ class DiscountBodyCell: UIView {
         var x = (screenWidth - totalViewWidth) / 2
         let frameFlag = CGRect(x: x, y: (margin * 2 + 40), width: 20, height: 20)
         couponFlag.frame = frameFlag
-        x = x + 20 + margin
+        x += 20 + margin
         let frameLabel = CGRect(x: x, y: (margin * 2 + 40), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-         x = x + widthlabelDiscount! + margin
+        x += widthlabelDiscount! + margin
         let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + 40), width: 8, height: 12)
         rightArrow.frame = frameArrow
         self.addSubview(couponFlag)
@@ -110,9 +110,9 @@ class DiscountBodyCell: UIView {
         let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: LABEL_COLOR]
         let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
         let space = NSMutableAttributedString(string: " ".localized, attributes: normalAttributes)
-        let oldAmount = Utils.getAttributedAmount( coupon.amountWithoutDiscount, currency: currency, color : LABEL_COLOR, fontSize: 16, baselineOffset:4)
+        let oldAmount = Utils.getAttributedAmount( coupon.amountWithoutDiscount, currency: currency, color: LABEL_COLOR, fontSize: 16, baselineOffset: 4)
         oldAmount.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, oldAmount.length))
-        let newAmount = Utils.getAttributedAmount( coupon.newAmount(), currency: currency, color : DISCOUNT_COLOR, fontSize: 16, baselineOffset:4)
+        let newAmount = Utils.getAttributedAmount( coupon.newAmount(), currency: currency, color: DISCOUNT_COLOR, fontSize: 16, baselineOffset: 4)
         result.append(total)
         result.append(oldAmount)
         result.append(space)
@@ -150,19 +150,19 @@ class DiscountBodyCell: UIView {
         var x = (screenWidth - totalViewWidth) / 2
         let frameLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-        x = x + widthlabelDiscount! + margin
+        x += widthlabelDiscount! + margin
         let framePic = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: 10, height: 19)
         picFlag.frame = framePic
-        x = x + 10
+        x += 10
         let frameAmountLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelAmount, height: 19)
         discountAmountLabel.frame = frameAmountLabel
-        x = x + widthlabelAmount + margin
+        x += widthlabelAmount + margin
         let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
         rightArrow.frame = frameArrow
 
-        let path = UIBezierPath(roundedRect:discountAmountLabel.bounds,
-                                byRoundingCorners:[.topRight, .bottomRight],
-                                cornerRadii: CGSize(width: 2, height:  2))
+        let path = UIBezierPath(roundedRect: discountAmountLabel.bounds,
+                                byRoundingCorners: [.topRight, .bottomRight],
+                                cornerRadii: CGSize(width: 2, height: 2))
 
         let maskLayer = CAShapeLayer()
 

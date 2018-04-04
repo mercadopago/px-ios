@@ -36,7 +36,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
 
     fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
+        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
@@ -59,7 +59,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         }
         var pmDescription: String = ""
         let paymentMethodName = pm.name ?? ""
-        
+
         let issuer = self.props.paymentResult.paymentData?.getIssuer()
         let paymentMethodIssuerName = issuer?.name ?? ""
         var descriptionDetail: NSAttributedString? = nil
@@ -93,21 +93,21 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         let status = props.paymentResult.status
         let statusDetail = props.paymentResult.statusDetail
         let paymentMethodName = props.paymentResult.paymentData?.paymentMethod?.name
-        
+
         let title = getErrorTitle()
         let message = getErrorMessage(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
         let secondaryTitle = getErrorSecondaryTitle(status: status, statusDetail: statusDetail)
         let action = getErrorAction(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
-        
+
         let errorProps = PXErrorProps(title: title.toAttributedString(), message: message?.toAttributedString(), secondaryTitle: secondaryTitle?.toAttributedString(), action: action)
         let errorComponent = PXErrorComponent(props: errorProps)
         return errorComponent
     }
-    
+
     public func getErrorTitle() -> String {
         return PXResourceProvider.getTitleForErrorBody()
     }
-    
+
     public func getErrorMessage(status: String, statusDetail: String, paymentMethodName: String?) -> String? {
         if status == PXPayment.Status.PENDING || status == PXPayment.Status.IN_PROCESS {
             switch statusDetail {
@@ -144,7 +144,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         }
         return nil
     }
-    
+
     public func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXComponentAction? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             let actionText = PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(paymentMethodName)

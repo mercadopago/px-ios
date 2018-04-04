@@ -87,7 +87,7 @@ import UIKit
     }
 
     open class func getBundle() -> Bundle? {
-       return Bundle(for:MercadoPago.self)
+       return Bundle(for: MercadoPago.self)
     }
 
     open class func getImage(_ name: String?, bundle: Bundle) -> UIImage? {
@@ -105,7 +105,7 @@ import UIKit
                 return nil
             }
         }
-        return UIImage(named:name!, in: bundle, compatibleWith:nil)
+        return UIImage(named: name!, in: bundle, compatibleWith: nil)
 
     }
 
@@ -140,8 +140,11 @@ import UIKit
             return nil
         }
 
-            return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        if let imageName = itemSelected.object(forKey: "image_name") as? String {
+            return MercadoPago.getImage(imageName)
+        }
 
+        return nil
     }
 
     open class func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
@@ -152,10 +155,10 @@ import UIKit
         let tintColorForIcons = ThemeManager.shared.getTintColorForIcons()
 
         if defaultColor {
-            description = description + "Azul"
+            description += "Azul"
         } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" || description.contains("bolbradesco") {
             if tintColorForIcons == nil {
-                description = description + "Azul"
+                description += "Azul"
             }
         }
 
@@ -163,7 +166,7 @@ import UIKit
             return nil
         }
 
-        let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as? String)
 
         if description == "credit_card" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
             if let iconsTintColor = tintColorForIcons {
@@ -186,7 +189,7 @@ import UIKit
         } else if paymentMethod.isAccountMoney {
             return MercadoPago.getImage("MPSDK_review_dineroEnCuenta")!
         }
-    
+
         return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
     }
 
@@ -198,14 +201,16 @@ import UIKit
             return nil
         }
 
-        return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
-
+        if let imageName = itemSelected.object(forKey: "image_name") as? String {
+            return MercadoPago.getImage(imageName)
+        }
+        return nil
     }
 
     open class func getImageFor(_ paymentMethod: PaymentMethod, forCell: Bool? = false) -> UIImage? {
         if forCell == true {
-            return MercadoPago.getImage(paymentMethod._id.lowercased())
-        } else if let pmImage = MercadoPago.getImage("icoTc_"+paymentMethod._id.lowercased()) {
+            return MercadoPago.getImage(paymentMethod.paymentMethodId.lowercased())
+        } else if let pmImage = MercadoPago.getImage("icoTc_"+paymentMethod.paymentMethodId.lowercased()) {
             return pmImage
         } else {
             return MercadoPago.getCardDefaultLogo()
@@ -220,14 +225,14 @@ import UIKit
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
             if let stringColor = pmConfig.value(forKey: "first_color") as? String {
                 return UIColor.fromHex(stringColor)
             } else {
                 return UIColor.cardDefaultColor()
             }
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 if let stringColor = pmConfig.value(forKey: "first_color") as? String {
                     return UIColor.fromHex(stringColor)
                 } else {
@@ -245,11 +250,11 @@ import UIKit
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
             let etMask = pmConfig.value(forKey: "label_mask") as? String
             return etMask ?? defaultMask
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 let etMask = pmConfig.value(forKey: "label_mask") as? String
                 return etMask ?? defaultMask
             }
@@ -263,11 +268,11 @@ import UIKit
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
             let etMask = pmConfig.value(forKey: "editText_mask") as? String
             return etMask ?? defaultMask
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 let etMask = pmConfig.value(forKey: "editText_mask") as? String
                 return etMask ?? defaultMask
             }
@@ -280,14 +285,14 @@ import UIKit
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.defaultColorText
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
             if let stringColor = pmConfig.value(forKey: "font_color") as? String {
                 return UIColor.fromHex(stringColor)
             } else {
                 return defaultColor
             }
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 if let stringColor = pmConfig.value(forKey: "font_color") as? String {
                     return UIColor.fromHex(stringColor)
                 } else {
@@ -303,14 +308,14 @@ import UIKit
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.highlightedColorText
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
             if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String {
                 return UIColor.fromHex(stringColor)
             } else {
                 return defaultColor
             }
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String {
                     return UIColor.fromHex(stringColor)
                 } else {

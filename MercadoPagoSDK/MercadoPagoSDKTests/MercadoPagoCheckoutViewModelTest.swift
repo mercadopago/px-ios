@@ -123,16 +123,16 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let pmsForSelectionCards = mpCheckout.viewModel.getPaymentMethodsForSelection()
         XCTAssertEqual(pmsForSelectionCards[0].paymentTypeId, "credit_card")
         XCTAssertEqual(pmsForSelectionCards[1].paymentTypeId, "credit_card")
-        XCTAssertEqual(pmsForSelectionCards[0]._id, "visa")
-        XCTAssertEqual(pmsForSelectionCards[1]._id, "master")
+        XCTAssertEqual(pmsForSelectionCards[0].paymentMethodId, "visa")
+        XCTAssertEqual(pmsForSelectionCards[1].paymentMethodId, "master")
         XCTAssertEqual(pmsForSelectionCards.count, 2)
 
         mpCheckout.viewModel.paymentOptionSelected = mpCheckout.viewModel.search?.groups[1]
         let pmsForSelectionOff = mpCheckout.viewModel.getPaymentMethodsForSelection()
         XCTAssertEqual(pmsForSelectionOff[0].paymentTypeId, "off")
         XCTAssertEqual(pmsForSelectionOff[1].paymentTypeId, "off")
-        XCTAssertEqual(pmsForSelectionOff[0]._id, "ticket")
-        XCTAssertEqual(pmsForSelectionOff[1]._id, "ticket 2")
+        XCTAssertEqual(pmsForSelectionOff[0].paymentMethodId, "ticket")
+        XCTAssertEqual(pmsForSelectionOff[1].paymentMethodId, "ticket 2")
         XCTAssertEqual(pmsForSelectionOff.count, 2)
     }
     func testPayerCostWithDiscount() {
@@ -275,7 +275,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // Setear paymentDataCallback
         let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
         MercadoPagoCheckout.setPaymentDataCallback { (paymentData: PaymentData) in
-            XCTAssertEqual(paymentData.paymentMethod!._id, "account_money")
+            XCTAssertEqual(paymentData.paymentMethod!.paymentMethodId, "account_money")
             XCTAssertNil(paymentData.issuer)
             XCTAssertNil(paymentData.payerCost)
             XCTAssertNil(paymentData.token)
@@ -314,7 +314,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : account_money => paymentDataCallback
-        MPCheckoutTestAction.selectAccountMoney(mpCheckout : mpCheckout)
+        MPCheckoutTestAction.selectAccountMoney(mpCheckout: mpCheckout)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.ACTION_FINISH, step)
 
@@ -331,10 +331,10 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let accountMoneyPaymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId : "account_money")
+        let accountMoneyPaymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
         let paymentDataAccountMoney = MockBuilder.buildPaymentData(paymentMethod: accountMoneyPaymentMethod)
 
-        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData : paymentDataAccountMoney, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData: paymentDataAccountMoney, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 0. Start
@@ -388,7 +388,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         let paymentResult = PaymentResult(status: "status", statusDetail: "statusDetail", paymentData: paymentDataVisa, payerEmail: "payerEmail", id: "id", statementDescription: "description")
 
-        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData: paymentDataVisa, paymentResult : paymentResult, navigationController: UINavigationController())
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData: paymentDataVisa, paymentResult: paymentResult, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Search Preference
@@ -447,7 +447,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let customerCardOption = MockBuilder.buildCustomerPaymentMethod("customerCardId", paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -455,7 +455,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
@@ -582,7 +582,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
 
-        let discount = DiscountCoupon(_id: 123)
+        let discount = DiscountCoupon(discountId: 123)
         discount.name = "Patito Off"
         discount.coupon_amount = "30"
         discount.amount_off = "30"
@@ -679,7 +679,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testIssuerViewModel() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
         // Simular installments
         let issuer = MockBuilder.buildIssuer()
@@ -693,7 +693,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testPayerCostViewModel() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
         let issuer = MockBuilder.buildIssuer()
         mpCheckoutViewModel.issuers = [issuer]
@@ -712,15 +712,15 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testUpdateCheckoutModel_paymentMethodSearch() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
-        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
+        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId: "account_money")
         let customerCardOption = MockBuilder.buildCustomerPaymentMethod("customerCardId", paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodAM = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
 
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa, paymentMethodAM], customOptions : [customerCardOption, accountMoneyOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa, paymentMethodAM], customOptions: [customerCardOption, accountMoneyOption])
 
         mpCheckoutViewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
@@ -734,7 +734,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testUpdateCheckoutModel_paymentMethods() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
         let paymentMethods = [MockBuilder.buildPaymentMethod("visa"), MockBuilder.buildPaymentMethod("amex")]
 
         mpCheckoutViewModel.updateCheckoutModel(paymentMethods: paymentMethods, cardToken: nil)
@@ -751,12 +751,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testUpdateCheckoutModel_paymentMethodSearchOneOption() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
 
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa])
 
         mpCheckoutViewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
@@ -773,7 +773,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testUpdateCheckoutModel_paymentMethod() {
         let paymentMethod = MockBuilder.buildPaymentMethod("paymentMethodId")
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
         mpCheckoutViewModel.updateCheckoutModel(paymentMethod: paymentMethod)
 
         XCTAssertNotNil(mpCheckoutViewModel.paymentData.paymentMethod)
@@ -782,12 +782,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testUpdateCheckoutModel_paymentMethodSearchCustomOption() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
-        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
+        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId: "account_money")
         let paymentMethodAM = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
 
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : nil, paymentMethods : [paymentMethodAM], customOptions : [accountMoneyOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: nil, paymentMethods: [paymentMethodAM], customOptions: [accountMoneyOption])
 
         mpCheckoutViewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
@@ -802,7 +802,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testUpdateCheckoutModel_paymentData() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         let paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
@@ -824,7 +824,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testHandleCustomerPaymentMethod() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckoutViewModel: mpCheckoutViewModel)
 
@@ -832,18 +832,18 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         mpCheckoutViewModel.handleCustomerPaymentMethod()
 
-        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod!._id, "account_money")
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod!.paymentMethodId, "account_money")
 
         MPCheckoutTestAction.selectCustomerCardOption(mpCheckoutViewModel: mpCheckoutViewModel)
 
         mpCheckoutViewModel.handleCustomerPaymentMethod()
 
-        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod!._id, "visa")
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod!.paymentMethodId, "visa")
     }
 
     func testResetGroupSelection() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckoutViewModel: mpCheckoutViewModel)
 
@@ -857,7 +857,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     func testResetInformation() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckoutViewModel: mpCheckoutViewModel)
 
@@ -878,7 +878,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testCleanPaymentResult() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let paymentResult = MockBuilder.buildPaymentResult("status", paymentMethodId: "paymentMethodId")
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : paymentResult, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: paymentResult, discount: nil)
 
         mpCheckoutViewModel.cleanPaymentResult()
 
@@ -892,7 +892,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let paymentResult = MockBuilder.buildPaymentResult("status", paymentMethodId: "paymentMethodId")
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : paymentResult, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: paymentResult, discount: nil)
 
         mpCheckoutViewModel.prepareForClone()
 
@@ -905,7 +905,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testPrepareForNewSelection() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let paymentResult = MockBuilder.buildPaymentResult("status", paymentMethodId: "paymentMethodId")
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : paymentResult, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: paymentResult, discount: nil)
 
         mpCheckoutViewModel.prepareForNewSelection()
 
@@ -916,7 +916,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     func testShouldDisplayPaymentResutlWithFlowPreference() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let paymentResult = MockBuilder.buildPaymentResult("status", paymentMethodId: "paymentMethodId")
-        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : paymentResult, discount : nil)
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: paymentResult, discount: nil)
 
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
 
@@ -991,7 +991,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -999,7 +999,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts

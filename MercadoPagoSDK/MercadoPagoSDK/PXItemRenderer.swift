@@ -79,14 +79,7 @@ struct PXItemRenderer {
         PXLayout.pinLeft(view: itemView.itemDescription!, to: itemView.itemTitle!).isActive = true
         PXLayout.pinRight(view: itemView.itemDescription!, to: itemView.itemTitle!).isActive = true
         PXLayout.pinBottom(view: itemView.itemDescription!, to: itemView.itemImage!).isActive = true
-        
-        
-        
-        
-        
-        
-        
-        
+
 //
 //        // Item quantity
 //        if itemComponent.shouldShowQuantity() {
@@ -112,27 +105,27 @@ struct PXItemRenderer {
 //        itemView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
         return itemView
     }
-    
+
     func render(_ itemComponent: PXItemComponent) -> PXItemContainerView {
         let itemView = PXItemContainerView()
         itemView.backgroundColor = itemComponent.props.backgroundColor
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
         let (imageUrl, imageObj) = buildItemImageUrl(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.collectorImage)
-        
+
         itemView.itemImage = UIImageView()
 
         // Item icon
         if let itemImage = itemView.itemImage {
-            
-            if let url = imageUrl  {
+
+            if let url = imageUrl {
                 buildCircle(targetImageView: itemImage)
                 itemImage.backgroundColor = ThemeManager.shared.getPlaceHolderColor()
                 Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil, fallbackImage: imageObj)
             } else {
                 itemImage.image = imageObj
             }
-            
+
             itemView.addSubview(itemImage)
             PXLayout.centerHorizontally(view: itemImage).isActive = true
             PXLayout.setHeight(owner: itemImage, height: PXItemRenderer.IMAGE_HEIGHT).isActive = true
@@ -197,7 +190,7 @@ extension PXItemRenderer {
             return (nil, MercadoPago.getImage("MPSDK_review_iconoCarrito"))
         }
     }
-    
+
     fileprivate func buildTitle(with text: String?, labelColor: UIColor) -> UILabel? {
         guard let text = text else {
             return nil
@@ -271,8 +264,8 @@ extension PXItemRenderer {
         PXLayout.setHeight(owner: label, height: height).isActive = true
         return label
     }
-    
-    fileprivate func buildCircle(targetImageView:UIImageView?) {
+
+    fileprivate func buildCircle(targetImageView: UIImageView?) {
         targetImageView?.layer.masksToBounds = false
         targetImageView?.layer.cornerRadius = PXItemRenderer.IMAGE_HEIGHT/2
         targetImageView?.clipsToBounds = true
@@ -280,4 +273,3 @@ extension PXItemRenderer {
         targetImageView?.contentMode = .scaleAspectFill
     }
 }
-

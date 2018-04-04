@@ -140,13 +140,13 @@ UILabel *identificationType;
             if (self.customerCard == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCardNumber"];
                 cardIcon = [cell viewWithTag:1];
-                cardIcon.image = [MercadoPago getImage:self.paymentMethod._id bundle: [MercadoPago getBundle]];
+                cardIcon.image = [MercadoPago getImage:self.paymentMethod.paymentMethodId bundle: [MercadoPago getBundle]];
                 cardNumber = [cell viewWithTag:2];
                 return cell;
             }
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCustomerCard"];
             cardIcon = [cell viewWithTag:1];
-            cardIcon.image = [MercadoPago getImage:self.customerCard.paymentMethod._id bundle: [MercadoPago getBundle]];
+            cardIcon.image = [MercadoPago getImage:self.customerCard.paymentMethod.paymentMethodId bundle: [MercadoPago getBundle]];
             return cell;
             }
             break;

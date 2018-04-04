@@ -46,40 +46,6 @@ class MaskElementTest: BaseTest {
         XCTAssertEqual(maskToTest.textUnmasked("1111 2222 3333 4444"), "1111222233334444")
     }
 
-    /*
-    func testCharacterSpacer(){
-        self.testMaskLeft()
-        self.changeCharacterSpaceMask("Y")
-        self.maskToTest.mask = "YYYY YYYY YYYYY YYYY"
-        
-        XCTAssertEqual(maskToTest.textMasked("2222"),"2222 •••• •••• ••••")
-        XCTAssertEqual(maskToTest.textMasked("22222"),"2222 2••• •••• ••••")
-        XCTAssertEqual(maskToTest.textMasked("11112222333344445"),"1111 2222 3333 4444")
-        XCTAssertEqual(maskToTest.textUnmasked("1111 2222 3333 4444"),"1111222233334444")
-    }
-    
- 
-    func testEmptyElement(){
-        self.changeCharacterSpaceMask("X")
-        self.maskToTest.mask = "XXXX XXXX XXXX XXXX"
-        self.changeEmptyMaskElement("*")
-        XCTAssertEqual(maskToTest.textMasked("2222"),"2222 **** **** ****")
-        XCTAssertEqual(maskToTest.textMasked("22222"),"2222 2*** **** ****")
-        XCTAssertEqual(maskToTest.textMasked("11112222333344445"),"1111 2222 3333 4444")
-        XCTAssertEqual(maskToTest.textUnmasked("1111 2222 3333 4444"),"1111222233334444")
-    }
-    
-    func testNoCompleteEmptySpaces(){
-        self.changeCharacterSpaceMask("X")
-        self.changeEmptyMaskElement("•")
-        self.noCompleteEmptySpaces()
-        XCTAssertEqual(maskToTest.textMasked("2222"),"2222")
-        XCTAssertEqual(maskToTest.textMasked("22222"),"2222 2")
-        XCTAssertEqual(maskToTest.textMasked("11112222333344445"),"1111 2222 3333 4444")
-        XCTAssertEqual(maskToTest.textUnmasked("1111 2222 3333 4444"),"1111222233334444")
-
-    }
-      */
     func changeCharacterSpaceMask(charStr: Character) {
         maskToTest.characterSpace = charStr
 

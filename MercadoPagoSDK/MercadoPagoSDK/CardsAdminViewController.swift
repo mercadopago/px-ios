@@ -12,7 +12,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    override open var screenName: String { get { return "CARDS_ADMIN" } }
+    override open var screenName: String { return "CARDS_ADMIN" }
 
     static let VIEW_CONTROLLER_NIB_NAME: String = "CardsAdminViewController"
 
@@ -168,7 +168,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
             cell.fillCell(drawablePaymentOption: self.viewModel.cards![indexPath.row])
 
         } else if self.viewModel.isExtraOptionItemFor(indexPath: indexPath) {
-            cell.fillCell(optionText:self.viewModel.extraOptionTitle!)
+            cell.fillCell(optionText: self.viewModel.extraOptionTitle!)
         }
         return cell
     }

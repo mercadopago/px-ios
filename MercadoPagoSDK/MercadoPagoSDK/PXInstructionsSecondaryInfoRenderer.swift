@@ -48,7 +48,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
         PXLayout.matchWidth(ofView: secondaryInfoLabel, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: secondaryInfoLabel).isActive = true
         if let upperView = upperView {
-            PXLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.put(view: secondaryInfoLabel, onBottomOf: upperView, withMargin: PXLayout.S_MARGIN).isActive = true
         } else {
             PXLayout.pinTop(view: secondaryInfoLabel, withMargin: PXLayout.S_MARGIN).isActive = true
         }

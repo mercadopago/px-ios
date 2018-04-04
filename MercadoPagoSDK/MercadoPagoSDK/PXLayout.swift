@@ -32,8 +32,7 @@ class PXLayout: NSObject {
     static let XL_FONT: CGFloat = 24.0
     static let XXL_FONT: CGFloat = 26.0
     static let XXXL_FONT: CGFloat = 26.0
-    
-    
+
     static let DEFAULT_CONTRAINT_ACTIVE = true
 
     static func checkContraintActivation(_ constraint: NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
@@ -126,10 +125,8 @@ class PXLayout: NSObject {
         if !view2.subviews.contains(view) {
             return nil
         }
-        for actualView in view2.subviews.reversed() {
-            if actualView != view {
-                return put(view: view, onBottomOf: actualView, withMargin: margin)
-            }
+        for actualView in view2.subviews.reversed() where actualView != view {
+            return put(view: view, onBottomOf: actualView, withMargin: margin)
         }
         return nil
     }
@@ -242,7 +239,7 @@ extension PXLayout {
         }
         return bottomDeltaMargin
     }
-    
+
     static func getSafeAreaTopInset() -> CGFloat {
         // iPhoneX or any device with safe area inset > 0
         var topDeltaMargin: CGFloat = 0

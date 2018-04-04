@@ -77,7 +77,7 @@ open class MainExamplesViewController: UIViewController, UITableViewDataSource, 
 
             let servicePreference = ServicePreference()
             servicePreference.setGetCustomer(baseURL: "sarasa.com", URI: "customer")
-            servicePreference.setCreatePayment(baseURL: "https://private-0d59c-mercadopagoexamples.apiary-mock.com", URI: "/create_payment", additionalInfo:  ["binary_mode": "true"])
+            servicePreference.setCreatePayment(baseURL: "https://private-0d59c-mercadopagoexamples.apiary-mock.com", URI: "/create_payment", additionalInfo: ["binary_mode": "true"])
             MercadoPagoCheckout.setServicePreference(servicePreference)
 
             //let nav = UINavigationController()

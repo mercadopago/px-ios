@@ -9,7 +9,7 @@
 import UIKit
 
 public class PXPaymentMethodComponent: NSObject, PXComponentizable {
-    
+
     var props: PXPaymentMethodProps
 
     init(props: PXPaymentMethodProps) {
@@ -39,7 +39,7 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
 }
 
 class PXPaymentMethodProps: NSObject {
-    
+
     let paymentMethodIcon: UIImage?
     let title: NSAttributedString
     let subtitle: NSAttributedString?

@@ -13,7 +13,7 @@ extension ThemeManager {
     func saveNavBarStyleFor(navigationController: UINavigationController) {
         self.navigationControllerMemento = NavigationControllerMemento(navigationController: navigationController)
     }
-    
+
     func applyAppNavBarStyle(navigationController: UINavigationController) {
 
         guard let navControllerMemento = self.navigationControllerMemento else {
@@ -30,7 +30,7 @@ extension ThemeManager {
     navigationController.navigationBar.setBackgroundImage(navControllerMemento.navBackgroundImage, for: UIBarMetrics.default)
         navigationController.navigationBar.shadowImage = navControllerMemento.navShadowImage
         navigationController.delegate = navControllerMemento.customDelegate
-        if let _ = navControllerMemento.navBarStyle {
+        if navControllerMemento.navBarStyle != nil {
             navigationController.navigationBar.barStyle = navControllerMemento.navBarStyle!
         }
         navigationController.interactivePopGestureRecognizer?.isEnabled = navControllerMemento.swipeBackGesture

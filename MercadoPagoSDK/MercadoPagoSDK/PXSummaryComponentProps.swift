@@ -8,8 +8,8 @@
 
 import Foundation
 
-final class PXSummaryComponentProps : NSObject {
-    
+final class PXSummaryComponentProps: NSObject {
+
     let width: CGFloat
     let summaryViewModel: Summary
     let paymentData: PaymentData
@@ -19,7 +19,7 @@ final class PXSummaryComponentProps : NSObject {
     var backgroundColor: UIColor
     var topMargin: CGFloat?
     
-    init(summaryViewModel: Summary, paymentData: PaymentData, total: Double, width: CGFloat, customTitle: String, textColor: UIColor, backgroundColor: UIColor, topMargin:CGFloat?=nil) {
+    init(summaryViewModel: Summary, paymentData: PaymentData, total: Double, width: CGFloat, customTitle: String, textColor: UIColor, backgroundColor: UIColor, topMargin: CGFloat?=nil) {
         self.width = width
         self.summaryViewModel = summaryViewModel
         self.paymentData = paymentData
@@ -30,7 +30,7 @@ final class PXSummaryComponentProps : NSObject {
         self.topMargin = topMargin
     }
     
-    func setTopMargin(margin:CGFloat) {
+    func setTopMargin(margin: CGFloat) {
         self.topMargin = margin
     }
 }

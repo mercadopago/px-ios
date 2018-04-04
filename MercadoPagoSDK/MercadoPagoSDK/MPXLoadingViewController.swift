@@ -9,7 +9,7 @@
 import UIKit
 
 class MPXLoadingViewController: MercadoPagoUIViewController {
-    
+
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         MercadoPagoCheckout.firstViewControllerPushed = false

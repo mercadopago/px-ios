@@ -209,7 +209,7 @@ open class MercadoPagoServicesAdapter: NSObject {
 
     open func getInstallments(bin: String?, amount: Double, issuer: Issuer?, paymentMethodId: String, callback: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?._id, paymentMethodId: paymentMethodId, callback: { [weak self] (pxInstallments) in
+        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.issuerId, paymentMethodId: paymentMethodId, callback: { [weak self] (pxInstallments) in
             guard let strongSelf = self else {
                 return
             }

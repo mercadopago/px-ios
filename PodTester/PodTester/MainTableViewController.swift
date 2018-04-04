@@ -83,7 +83,7 @@ class MainTableViewController: UITableViewController {
 
     var installmentsSelected: PayerCost?
 
-    var opcionesPpal: [Option] = [Option(name: "Nuestro Checkout", action:OptionAction.startCheckout), Option(name: "Wallet Checkout", action: OptionAction.startWalletCheckout), Option(name: "Componentes UI", suboptions: [Option(name: "Selección de medio de pago completa", action: OptionAction.startPaymentVault), Option(name: "Cobra con tarjeta en cuotas", action: OptionAction.startCreditCardFlow), Option(name: "Cobra con tarjeta sin cuotas", action: OptionAction.startCreditCardForm), Option(name: "Selección de medio de pago simple", action: OptionAction.startPaymentMethod), Option(name: "Selección de Banco", action: OptionAction.startIssuer), Option(name: "Selección de Cuotas", action: OptionAction.startPayerCost), Option(name: "Crear Pago", action: OptionAction.startCreatePayment)]), Option(name: "Servicios", suboptions: [Option(name: "Formulario Simple"), Option(name: "Tarjetas Guardadas"), Option(name: "Pago en Cuotas"), Option(name: "Pago con medios Offline")])]
+    var opcionesPpal: [Option] = [Option(name: "Nuestro Checkout", action: OptionAction.startCheckout), Option(name: "Wallet Checkout", action: OptionAction.startWalletCheckout), Option(name: "Componentes UI", suboptions: [Option(name: "Selección de medio de pago completa", action: OptionAction.startPaymentVault), Option(name: "Cobra con tarjeta en cuotas", action: OptionAction.startCreditCardFlow), Option(name: "Cobra con tarjeta sin cuotas", action: OptionAction.startCreditCardForm), Option(name: "Selección de medio de pago simple", action: OptionAction.startPaymentMethod), Option(name: "Selección de Banco", action: OptionAction.startIssuer), Option(name: "Selección de Cuotas", action: OptionAction.startPayerCost), Option(name: "Crear Pago", action: OptionAction.startCreatePayment)]), Option(name: "Servicios", suboptions: [Option(name: "Formulario Simple"), Option(name: "Tarjetas Guardadas"), Option(name: "Pago en Cuotas"), Option(name: "Pago con medios Offline")])]
 
     var dataSource: [Option]!
 
@@ -196,7 +196,7 @@ class MainTableViewController: UITableViewController {
         discountObj.currency_id = "ARS"
         discountObj.amount = 5000
 
-        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken:"", checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discountObj, navigationController: self.navigationController!)
+        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: "", checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount: discountObj, navigationController: self.navigationController!)
 
         // Get Payment plugin
         let paymentPlugin = PaymentMethodPluginsNavigationManager().getPaymentPlugin()

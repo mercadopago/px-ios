@@ -50,7 +50,7 @@ class JSONHandler: NSObject {
 
     class func attemptParseToString(_ anyobject: Any?, defaultReturn: String? = nil) -> String? {
 
-        guard let _ = anyobject, let string = (anyobject! as AnyObject).description else {
+        guard anyobject != nil, let string = (anyobject! as AnyObject).description else {
             return defaultReturn
         }
         if  string != "<null>" {

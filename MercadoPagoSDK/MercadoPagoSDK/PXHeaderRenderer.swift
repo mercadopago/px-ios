@@ -53,7 +53,7 @@ class PXHeaderRenderer: NSObject {
         headerView.messageLabel = buildMessageLabel(with: header.props.title)
         headerView.addSubview(headerView.messageLabel!)
         PXLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView.messageLabel!.superview!).isActive = true
-        PXLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.put(view: headerView.messageLabel!, onBottomOf: headerView.statusLabel!, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.matchWidth(ofView: headerView.messageLabel!, toView: headerView.messageLabel!.superview!, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.pinBottom(view: headerView.messageLabel!, to: headerView.messageLabel!.superview!, withMargin: PXLayout.XL_MARGIN).isActive = true
 
@@ -91,11 +91,11 @@ class PXHeaderRenderer: NSObject {
         statusLabel.font = font
         superView.addSubview(statusLabel)
         if text != nil {
-            PXLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.put(view: statusLabel, onBottomOf: upperView, withMargin: PXLayout.S_MARGIN).isActive = true
             statusLabel.attributedText = text
             PXLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
         } else {
-            PXLayout.put(view: statusLabel, onBottomOf:upperView).isActive = true
+            PXLayout.put(view: statusLabel, onBottomOf: upperView).isActive = true
             PXLayout.setHeight(owner: statusLabel, height: 0).isActive = true
         }
         return statusLabel

@@ -35,7 +35,7 @@ class CardTypeTableViewCell: UITableViewCell {
         }
     }
     func addSeparatorLineToBottom(width: Double, height: Double) {
-        let lineFrame = CGRect(origin: CGPoint(x: 0, y :Int(height)), size: CGSize(width: width, height: 0.5))
+        let lineFrame = CGRect(origin: CGPoint(x: 0, y: Int(height)), size: CGSize(width: width, height: 0.5))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.px_grayLight()

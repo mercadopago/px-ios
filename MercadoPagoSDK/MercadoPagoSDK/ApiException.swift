@@ -38,10 +38,8 @@ open class ApiException: NSObject {
     }
     func containsCause(code: String) -> Bool {
         if self.cause != nil {
-            for currentCause in self.cause! {
-                if code == currentCause.code {
-                    return true
-                }
+            for currentCause in self.cause! where code == currentCause.code {
+                return true
             }
         }
         return false

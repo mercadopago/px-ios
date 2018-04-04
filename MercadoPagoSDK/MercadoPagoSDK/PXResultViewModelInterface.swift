@@ -12,7 +12,7 @@ protocol PXResultViewModelInterface {
 
     func getPaymentData() -> PaymentData
     func primaryResultColor() -> UIColor
-    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void) -> Void
+    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void)
     func getPaymentStatus() -> String
     func getPaymentStatusDetail() -> String
     func getPaymentId() -> String?

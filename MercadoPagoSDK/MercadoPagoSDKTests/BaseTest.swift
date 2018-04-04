@@ -27,7 +27,7 @@ class BaseTest: XCTestCase {
     }
 
     func simulateViewDidLoadFor(viewController: UIViewController) -> UIViewController {
-        let nav = UINavigationController(rootViewController : viewController)
+        let nav = UINavigationController(rootViewController: viewController)
         _ = viewController.view
         viewController.viewWillAppear(false)
         viewController.viewDidAppear(false)

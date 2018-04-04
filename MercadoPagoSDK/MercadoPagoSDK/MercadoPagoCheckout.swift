@@ -9,8 +9,6 @@
 import UIKit
 import MercadoPagoPXTracking
 
-
-
 open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
@@ -40,7 +38,7 @@ open class MercadoPagoCheckout: NSObject {
 
         ThemeManager.shared.initialize()
 
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount: discount)
 
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
 
@@ -49,7 +47,7 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController = navigationController
 
         if self.navigationController.viewControllers.count > 0 {
-            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:PXReviewViewController.self)
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of: MercadoPagoUIViewController.self) || $0.isKind(of: PXReviewViewController.self)
             }
             viewControllerBase = newNavigationStack.last
         }
@@ -218,16 +216,16 @@ open class MercadoPagoCheckout: NSObject {
     func validatePreference() {
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {
-            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback : { (_) -> Void in })
+            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { (_) -> Void in })
         }
         self.executeNextStep()
     }
 
     func cleanCompletedCheckoutsFromNavigationStack() {
-        let  pxResultViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:PXResultViewController.self)}
+        let  pxResultViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of: PXResultViewController.self)}
         if let lastResultViewController = pxResultViewControllers.last {
             let index = self.navigationController.viewControllers.index(of: lastResultViewController)
-            let  validViewControllers = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
+            let  validViewControllers = self.navigationController.viewControllers.filter {!$0.isKind(of: MercadoPagoUIViewController.self) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
             self.navigationController.viewControllers = validViewControllers
         }
     }
@@ -241,7 +239,7 @@ open class MercadoPagoCheckout: NSObject {
     public func updateReviewAndConfirm() {
         let currentViewController = self.navigationController.viewControllers
         if let checkoutVC = currentViewController.last as? PXReviewViewController {
-            checkoutVC.update(viewModel:self.viewModel.reviewConfirmViewModel())
+            checkoutVC.update(viewModel: self.viewModel.reviewConfirmViewModel())
         }
     }
 
@@ -268,7 +266,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func cancel() {
-        
+
         if let callback = viewModel.callbackCancel {
             callback()
             return
@@ -305,7 +303,7 @@ open class MercadoPagoCheckout: NSObject {
             }
         }
     }
-    
+
     func presentInitLoading() {
         if let presentLoadingCustom = self.startLoadingClosure { /*POC EXPRESS CHO*/
             presentLoadingCustom()
@@ -340,7 +338,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,
-                                     animated: Bool, backToChechoutRoot:Bool = false) {
+                                     animated: Bool, backToChechoutRoot: Bool = false) {
 
         viewController.hidesBottomBarWhenPushed = true
         // let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
@@ -349,14 +347,14 @@ open class MercadoPagoCheckout: NSObject {
             self.navigationController.navigationBar.isHidden = false
             viewController.callbackCancel = { [weak self] in self?.backToCheckouitRoot() }
         }
-        
+
         self.navigationController.pushViewController(viewController, animated: animated)
         self.cleanCompletedCheckoutsFromNavigationStack()
         self.dismissLoading()
     }
 
-    func backToCheckouitRoot(){
-        let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
+    func backToCheckouitRoot() {
+        let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of: MercadoPagoUIViewController.self)}
         if !mercadoPagoViewControllers.isEmpty {
             self.navigationController.popToViewController(mercadoPagoViewControllers[0], animated: true)
         }
@@ -378,11 +376,11 @@ open class MercadoPagoCheckout: NSObject {
 }
 
 extension MercadoPagoCheckout: UINavigationControllerDelegate {
-    
+
     fileprivate func suscribeToNavigationFlow() {
         navigationController.delegate = self
     }
-    
+
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if !(viewController is MercadoPagoUIViewController) {
             ThemeManager.shared.applyAppNavBarStyle(navigationController: navigationController)

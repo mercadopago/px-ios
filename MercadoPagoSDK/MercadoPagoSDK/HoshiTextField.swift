@@ -98,7 +98,7 @@ import UIKit
             UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: .beginFromCurrentState, animations: ({
                 self.placeholderLabel.frame.origin = CGPoint(x: 10, y: self.placeholderLabel.frame.origin.y)
                 self.placeholderLabel.alpha = 0
-            }), completion:nil)
+            }), completion: nil)
         }
 
         layoutPlaceholderInTextRect()

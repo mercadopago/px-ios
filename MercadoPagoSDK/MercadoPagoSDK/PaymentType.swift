@@ -22,16 +22,6 @@ open class PaymentType: NSObject {
         super.init()
         self.paymentTypeId = paymentTypeId
     }
-
-    open class func fromJSON(_ json: NSDictionary) -> PaymentType {
-        let paymentType = PaymentType()
-
-        if let _id = JSONHandler.attemptParseToString(json["id"]) {
-            paymentType.paymentTypeId = PaymentTypeId(rawValue: _id)
-        }
-        return paymentType
-    }
-
 }
 
 public enum PaymentTypeId: String {

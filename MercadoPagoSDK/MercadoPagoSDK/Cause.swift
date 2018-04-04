@@ -10,7 +10,7 @@ import Foundation
 
 open class Cause: NSObject {
     open var code: String!
-    open var _description: String!
+    open var causeDescription: String!
 
     open class func fromJSON(_ json: NSDictionary) -> Cause {
         let cause: Cause = Cause()
@@ -20,7 +20,7 @@ open class Cause: NSObject {
         }
 
         if let description = JSONHandler.attemptParseToString(json["description"]) {
-            cause._description = description
+            cause.causeDescription = description
         }
 
         return cause

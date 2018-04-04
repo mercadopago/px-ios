@@ -80,7 +80,7 @@ open class PXResourceProvider: NSObject {
     }
 
     static open func getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(_ paymentMethodName: String?) -> String {
-        
+
         if let paymentMethodName = paymentMethodName {
             let key = error_body_action_text_base + PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE
             return key.localized_beta.replacingOccurrences(of: "%1$s", with: paymentMethodName)

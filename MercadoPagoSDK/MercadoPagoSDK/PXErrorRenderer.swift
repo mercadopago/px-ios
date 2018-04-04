@@ -25,17 +25,17 @@ class PXErrorRenderer: NSObject {
         if let title = component.props.title, title.string.isNotEmpty {
             errorBodyView.titleLabel = buildTitleLabel(with: title, in: errorBodyView)
         }
-        
+
         //Message Label
         if let message = component.props.message, message.string.isNotEmpty {
             errorBodyView.descriptionLabel = buildDescriptionLabel(with: message, in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
         }
-        
+
         //Action Button
         if let action = component.props.action {
             errorBodyView.actionButton = buildActionButton(with: action, in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel)
         }
-        
+
         //Secondary Title
         if let secondaryTitle = component.props.secondaryTitle {
             errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
@@ -45,10 +45,10 @@ class PXErrorRenderer: NSObject {
         } else {
             errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
         }
-        
+
         return errorBodyView
     }
-    
+
     func buildTitleLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
         let label = UILabel()
         let font = Utils.getFont(size: TITLE_FONT_SIZE)
@@ -60,9 +60,9 @@ class PXErrorRenderer: NSObject {
         label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
-        
+
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        
+
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: font, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
@@ -82,9 +82,9 @@ class PXErrorRenderer: NSObject {
         label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
-        
+
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        
+
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: DESCRIPTION_FONT_SIZE), inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
@@ -96,7 +96,7 @@ class PXErrorRenderer: NSObject {
         }
         return label
     }
-    
+
     func buildActionButton(with action: PXComponentAction, in superView: UIView, onBottomOf upperView: UIView?) -> UIButton {
         let title = action.label
         let button = UIButton()
@@ -110,14 +110,14 @@ class PXErrorRenderer: NSObject {
             action.action()
         }
         superView.addSubview(button)
-        
+
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        
+
         let height = UILabel.requiredHeight(forText: title, withFont: Utils.getFont(size: ACTION_FONT_SIZE), inNumberOfLines: 0, inWidth: screenWidth)
         PXLayout.setHeight(owner: button, height: height).isActive = true
         PXLayout.matchWidth(ofView: button, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: button, to: superView).isActive = true
-        
+
         if let upperView = upperView {
             PXLayout.put(view: button, onBottomOf: upperView, withMargin: PXLayout.M_MARGIN).isActive = true
         }
@@ -135,9 +135,9 @@ class PXErrorRenderer: NSObject {
         label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
-        
+
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        
+
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: font, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
@@ -158,7 +158,7 @@ class PXErrorRenderer: NSObject {
         PXLayout.centerHorizontally(view: view, to: superView).isActive = true
 
         if let upperView = upperView {
-            PXLayout.put(view: view, onBottomOf:upperView, withMargin: PXLayout.XXL_MARGIN).isActive = true
+            PXLayout.put(view: view, onBottomOf: upperView, withMargin: PXLayout.XXL_MARGIN).isActive = true
         }
         return view
     }
@@ -173,7 +173,7 @@ class PXErrorRenderer: NSObject {
         PXLayout.centerHorizontally(view: view, to: superView).isActive = true
 
         if let upperView = upperView {
-            PXLayout.put(view: view, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.put(view: view, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
         return view
     }

@@ -34,4 +34,3 @@ extension MockConfigPaymentMethodPlugin: PXConfigPluginComponent {
         return shouldSkip
     }
 }
-

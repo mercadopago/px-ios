@@ -40,7 +40,7 @@ extension PXItemComponent {
     }
 
     func getDescription() -> String? {
-        return props._description
+        return props.itemDescription
     }
 
     func shouldShowQuantity() -> Bool {
@@ -51,7 +51,7 @@ extension PXItemComponent {
     }
 
     func getQuantity() -> String? {
-        guard let quantity = props.quantity?.stringValue else  {
+        guard let quantity = props.quantity?.stringValue else {
             return nil
         }
         return "\(props.quantityTitle) \(quantity)"

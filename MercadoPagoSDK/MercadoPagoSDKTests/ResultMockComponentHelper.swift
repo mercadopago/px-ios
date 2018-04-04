@@ -16,7 +16,7 @@ public class ResultMockComponentHelper: NSObject {
 
     static func buildResultViewModel(status: String = "approved", statusDetail: String = "detail", paymentMethodId: String = "visa", paymentTypeId: String = "credit_card", preference: PaymentResultScreenPreference = PaymentResultScreenPreference(), instructionsInfo: InstructionsInfo? = nil) -> PXResultViewModel {
         let paymentResult = MockBuilder.buildPaymentResult(status, statusDetail: statusDetail, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: instructionsInfo, paymentResultScreenPreference: preference)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount: 1000.0, instructionsInfo: instructionsInfo, paymentResultScreenPreference: preference)
         return resultViewModel
     }
 

@@ -14,10 +14,10 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     var bundle: Bundle? = MercadoPago.getBundle()
     open let viewModel: AdditionalStepViewModel!
-    override var maxFontSize: CGFloat { get { return self.viewModel.maxFontSize } }
+    override var maxFontSize: CGFloat { return self.viewModel.maxFontSize}
 
-    override open var screenName: String { get { return viewModel.getScreenName()} }
-    override open var screenId: String { get { return viewModel.getScreenId() }}
+    override open var screenName: String { return viewModel.getScreenName() }
+    override open var screenId: String { return viewModel.getScreenId() }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +125,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         } else if viewModel.isDiscountCellFor(indexPath: indexPath) {
             let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
             cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : DiscountBodyCell.HEIGHT), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: DiscountBodyCell.HEIGHT), coupon: self.viewModel.discount, amount: self.viewModel.amount)
             discountBody.tag = 1
             cell.contentView.addSubview(discountBody)
             cell.selectionStyle = .none
@@ -188,16 +188,14 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.didScrollInTable(scrollView)
         let visibleIndexPaths = tableView.indexPathsForVisibleRows!
-        for index in visibleIndexPaths {
-            if index.section == 1 {
-                if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? AdditionalStepCardTableViewCell {
-                    if tableView.contentOffset.y > 0 {
-                        if 44/tableView.contentOffset.y < 0.265 && !scrollingDown {
-                            card.fadeCard()
-                        } else {
-                            if let container = card.containerView {
-                                container.alpha = 44/tableView.contentOffset.y
-                            }
+        for index in visibleIndexPaths where index.section == 1 {
+            if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? AdditionalStepCardTableViewCell {
+                if tableView.contentOffset.y > 0 {
+                    if 44 / tableView.contentOffset.y < 0.265 && !scrollingDown {
+                        card.fadeCard()
+                    } else {
+                        if let container = card.containerView {
+                            container.alpha = 44/tableView.contentOffset.y
                         }
                     }
                 }

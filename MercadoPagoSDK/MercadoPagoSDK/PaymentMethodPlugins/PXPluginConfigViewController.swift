@@ -8,9 +8,9 @@
 
 import UIKit
 
-internal class PXPluginConfigViewController : MercadoPagoUIViewController {
-    override open var screenName: String { get { return "CONFIG_PAYMENT_METHOD_" + paymentMethodId  } }
-    override open var screenId: String { get { return "CONFIG_PAYMENT_METHOD_" + paymentMethodId  } }
-    
+internal class PXPluginConfigViewController: MercadoPagoUIViewController {
+    override open var screenName: String { return "CONFIG_PAYMENT_METHOD_" + paymentMethodId }
+    override open var screenId: String { return "CONFIG_PAYMENT_METHOD_" + paymentMethodId }
+
     open var paymentMethodId: String = ""
 }

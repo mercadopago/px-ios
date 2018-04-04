@@ -43,7 +43,7 @@ class NextStepHelperTest: BaseTest {
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckoutViewModel: mpCheckoutViewModel)
 
         // Account_money
-        mpCheckoutViewModel.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId : "account_money")
+        mpCheckoutViewModel.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
         mpCheckoutViewModel.setPaymentOptionSelected()
         XCTAssertNotNil(mpCheckoutViewModel.paymentOptionSelected)
         XCTAssertEqual(mpCheckoutViewModel.paymentOptionSelected!.getId(), "account_money")

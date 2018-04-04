@@ -42,10 +42,4 @@ class PaymentMethodSearchitemTest: BaseTest {
         XCTAssertFalse(onlinePaymentType.isPaymentMethod())
 
     }
-
-    func testFromJSON() {
-        let json: NSDictionary = MockManager.getMockFor("PaymentMethodSearchItem")!
-        let paymentMethodSearchItemFromJSON = PaymentMethodSearchItem.fromJSON(json)
-        XCTAssertEqual(paymentMethodSearchItemFromJSON, paymentMethodSearchItemFromJSON)
-    }
 }

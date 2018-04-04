@@ -20,7 +20,7 @@ class PaymentVaultViewModelTest: BaseTest {
     }
 
     func createPaymentVaulViewModelInstance(paymentMethodOptions: [PaymentMethodOption], customerPaymentMethods: [CardInformation] = [], paymentMethodPlugins: [PXPaymentMethodPlugin] = []) -> PaymentVaultViewModel {
-        return  PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil, paymentMethodOptions: paymentMethodOptions, customerPaymentOptions: customerPaymentMethods, paymentMethodPlugins: paymentMethodPlugins, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+        return  PaymentVaultViewModel(amount: 1.0, paymentPrefence: nil, paymentMethodOptions: paymentMethodOptions, customerPaymentOptions: customerPaymentMethods, paymentMethodPlugins: paymentMethodPlugins, isRoot: true, email: "sarasa@hotmail.com", mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testSetMaxSavedCardsInFlowPreference() {
@@ -297,13 +297,13 @@ class PaymentVaultViewModelTest: BaseTest {
         let mockOneLastPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneLastPmId")
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem, mockOneLastPmSearchitem])
 
-        var result = instance!.getPaymentMethodOption(row : 0)
+        var result = instance!.getPaymentMethodOption(row: 0)
         XCTAssertEqual("pmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 2)
+        result = instance!.getPaymentMethodOption(row: 2)
         XCTAssertEqual("oneMorePmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 3)
+        result = instance!.getPaymentMethodOption(row: 3)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
     }
 
@@ -325,13 +325,13 @@ class PaymentVaultViewModelTest: BaseTest {
 
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: paymentMethodOptions, customerPaymentMethods: customerPaymentOptions)
 
-        var result = instance!.getPaymentMethodOption(row : 3)
+        var result = instance!.getPaymentMethodOption(row: 3)
         XCTAssertEqual("anotherPmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 1)
+        result = instance!.getPaymentMethodOption(row: 1)
         XCTAssertEqual("visa", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 5)
+        result = instance!.getPaymentMethodOption(row: 5)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
     }
 
@@ -355,45 +355,45 @@ class PaymentVaultViewModelTest: BaseTest {
         let customerPaymentMethods = [mockCard, anotherMockCard, oneMoreMockCard, oneLastMockCard, thisIsTheLastMockCardIPromise]
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: paymentMethodOptions, customerPaymentMethods: customerPaymentMethods)
 
-        var result = instance!.getPaymentMethodOption(row : 3)
+        var result = instance!.getPaymentMethodOption(row: 3)
         XCTAssertEqual("pmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 1)
+        result = instance!.getPaymentMethodOption(row: 1)
         XCTAssertEqual("visa", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 2)
+        result = instance!.getPaymentMethodOption(row: 2)
         XCTAssertEqual("master", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 6)
+        result = instance!.getPaymentMethodOption(row: 6)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
 
         //Change MaxSavedCardsToShow
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = 5
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: paymentMethodOptions, customerPaymentMethods: customerPaymentMethods)
 
-        result = instance!.getPaymentMethodOption(row : 3)
+        result = instance!.getPaymentMethodOption(row: 3)
         XCTAssertEqual("elo", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 0)
+        result = instance!.getPaymentMethodOption(row: 0)
         XCTAssertEqual("amex", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 4)
+        result = instance!.getPaymentMethodOption(row: 4)
         XCTAssertEqual("hipercard", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 5)
+        result = instance!.getPaymentMethodOption(row: 5)
         XCTAssertEqual("pmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 8)
+        result = instance!.getPaymentMethodOption(row: 8)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
 
         //Change MaxSavedCardsToShow
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = 2
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: paymentMethodOptions, customerPaymentMethods: customerPaymentMethods)
 
-        result = instance!.getPaymentMethodOption(row : 2)
+        result = instance!.getPaymentMethodOption(row: 2)
         XCTAssertEqual("pmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 1)
+        result = instance!.getPaymentMethodOption(row: 1)
         XCTAssertEqual("visa", result!.getTitle())
     }
 
@@ -418,19 +418,19 @@ class PaymentVaultViewModelTest: BaseTest {
 
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: paymentMethodOptions, customerPaymentMethods: customerPaymentOptions, paymentMethodPlugins: pluginPaymentMethod)
 
-        var result = instance!.getPaymentMethodOption(row : 0)
+        var result = instance!.getPaymentMethodOption(row: 0)
         XCTAssertEqual("Plugin 1", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 1)
+        result = instance!.getPaymentMethodOption(row: 1)
         XCTAssertEqual("Plugin 2", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 5)
+        result = instance!.getPaymentMethodOption(row: 5)
         XCTAssertEqual("anotherPmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 3)
+        result = instance!.getPaymentMethodOption(row: 3)
         XCTAssertEqual("visa", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 7)
+        result = instance!.getPaymentMethodOption(row: 7)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
 
         // Plugins at bottom
@@ -441,19 +441,19 @@ class PaymentVaultViewModelTest: BaseTest {
 
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: paymentMethodOptions, customerPaymentMethods: customerPaymentOptions, paymentMethodPlugins: pluginPaymentMethod)
 
-        result = instance!.getPaymentMethodOption(row : 3)
+        result = instance!.getPaymentMethodOption(row: 3)
         XCTAssertEqual("anotherPmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 1)
+        result = instance!.getPaymentMethodOption(row: 1)
         XCTAssertEqual("visa", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 5)
+        result = instance!.getPaymentMethodOption(row: 5)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 6)
+        result = instance!.getPaymentMethodOption(row: 6)
         XCTAssertEqual("Plugin 1", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 7)
+        result = instance!.getPaymentMethodOption(row: 7)
         XCTAssertEqual("Plugin 2", result!.getTitle())
     }
 
@@ -470,19 +470,19 @@ class PaymentVaultViewModelTest: BaseTest {
 
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem, mockOneLastPmSearchitem], paymentMethodPlugins: pluginPaymentMethods)
 
-        var result = instance!.getPaymentMethodOption(row : 0)
+        var result = instance!.getPaymentMethodOption(row: 0)
         XCTAssertEqual("Plugin 1", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 1)
+        result = instance!.getPaymentMethodOption(row: 1)
         XCTAssertEqual("Plugin 2", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 2)
+        result = instance!.getPaymentMethodOption(row: 2)
         XCTAssertEqual("pmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 4)
+        result = instance!.getPaymentMethodOption(row: 4)
         XCTAssertEqual("oneMorePmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 5)
+        result = instance!.getPaymentMethodOption(row: 5)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
 
         // Plugins at bottom
@@ -493,19 +493,19 @@ class PaymentVaultViewModelTest: BaseTest {
 
         instance = createPaymentVaulViewModelInstance(paymentMethodOptions: [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem, mockOneLastPmSearchitem], paymentMethodPlugins: pluginPaymentMethods)
 
-        result = instance!.getPaymentMethodOption(row : 0)
+        result = instance!.getPaymentMethodOption(row: 0)
         XCTAssertEqual("pmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 2)
+        result = instance!.getPaymentMethodOption(row: 2)
         XCTAssertEqual("oneMorePmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 3)
+        result = instance!.getPaymentMethodOption(row: 3)
         XCTAssertEqual("oneLastPmId", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 4)
+        result = instance!.getPaymentMethodOption(row: 4)
         XCTAssertEqual("Plugin 1", result!.getTitle())
 
-        result = instance!.getPaymentMethodOption(row : 5)
+        result = instance!.getPaymentMethodOption(row: 5)
         XCTAssertEqual("Plugin 2", result!.getTitle())
     }
 

@@ -11,29 +11,15 @@ import Foundation
 open class Issuer: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.issuer
-    open var _id: String?
+    open var issuerId: String?
     open var name: String?
-
-    open class func fromJSON(_ json: NSDictionary) -> Issuer {
-        let issuer: Issuer = Issuer()
-
-        if let id = json["id"] as? String {
-            issuer._id = JSONHandler.attemptParseToString(id)
-        }
-        
-        if let name = JSONHandler.attemptParseToString(json["name"]) {
-            issuer.name = name
-        }
-
-        return issuer
-    }
 
     open func toJSONString() -> String {
        return JSONHandler.jsonCoding(toJSON())
     }
 
     open func toJSON() -> [String: Any] {
-        let id: Any = self._id == nil ? JSONHandler.null : self._id!
+        let id: Any = self.issuerId == nil ? JSONHandler.null : self.issuerId!
         let name: Any = self.name == nil ? JSONHandler.null : self.name!
         let obj: [String: Any] = [
             "id": id,
@@ -43,10 +29,10 @@ open class Issuer: NSObject, Cellable {
     }
 }
 
-public func ==(obj1: Issuer, obj2: Issuer) -> Bool {
+public func == (obj1: Issuer, obj2: Issuer) -> Bool {
 
     let areEqual =
-        obj1._id == obj2._id &&
+        obj1.issuerId == obj2.issuerId &&
         obj1.name == obj2.name
 
     return areEqual
