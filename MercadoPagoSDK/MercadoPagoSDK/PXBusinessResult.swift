@@ -13,7 +13,7 @@ import UIKit
     case REJECTED
     case PENDING
     case IN_PROGRESS
-    
+
     func getDescription() -> String {
         switch self {
         case .APPROVED : return "APPROVED"
@@ -38,11 +38,11 @@ open class PXBusinessResult: NSObject {
     var secondaryAction: PXComponentAction // Boton secundario (link) - Obligatoria
     var helpMessage: String? // Texto
     /* De momento es inaccesible */private var showPaymentMethod: Bool = false // Si quiere que muestre la celda de PM
-    
+
     //Datos que actualmente devuelve la procesadora de pagos
-    var receiptId: String? = nil
+    var receiptId: String?
     //------
-    
+
     public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction, helpMessage: String? = nil /*, showPaymentMethod : Bool = false*/ ) { // De momento no dejamos configurar el showPaymentMethod
         self.receiptId = receiptId
         self.status = status
@@ -53,5 +53,5 @@ open class PXBusinessResult: NSObject {
         self.secondaryAction = secondaryAction
         self.helpMessage = helpMessage
         super.init()
-    }    
+    }
 }

@@ -13,79 +13,72 @@ class AdditionalStepCellFactory: NSObject {
 
     open class func buildCell(object: Cellable, width: Double, height: Double) -> UITableViewCell {
 
+        guard let bundle = MercadoPago.getBundle() else { return UITableViewCell() }
+
         if object.objectType == ObjectTypes.payerCost {
 
-            let payerCost = object as! PayerCost
-                            let bundle = MercadoPago.getBundle()
+            guard let payerCost = object as? PayerCost else { return UITableViewCell() }
 
-            if  AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: payerCost) {
-                let cell: PayerCostCFTTableViewCell = bundle!.loadNibNamed("PayerCostCFTTableViewCell", owner: nil, options: nil)?[0] as! PayerCostCFTTableViewCell
-                cell.fillCell(payerCost: payerCost)
-                cell.addSeparatorLineToBottom(width: width, height: height)
-                cell.selectionStyle = .none
-
-                return cell
-
+            if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: payerCost) {
+                if let cell = bundle.loadNibNamed("PayerCostCFTTableViewCell", owner: nil, options: nil)?[0] as? PayerCostCFTTableViewCell {
+                    cell.fillCell(payerCost: payerCost)
+                    cell.addSeparatorLineToBottom(width: width, height: height)
+                    cell.selectionStyle = .none
+                    return cell
+                }
             } else {
-                let cell: PayerCostRowTableViewCell = bundle!.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as! PayerCostRowTableViewCell
-                let showDescription = MercadoPagoCheckout.showPayerCostDescription()
-                cell.fillCell(payerCost: payerCost, showDescription: showDescription)
-                cell.addSeparatorLineToBottom(width: width, height: height)
-                cell.selectionStyle = .none
-
-                return cell
+                if let cell = bundle.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as? PayerCostRowTableViewCell {
+                    let showDescription = MercadoPagoCheckout.showPayerCostDescription()
+                    cell.fillCell(payerCost: payerCost, showDescription: showDescription)
+                    cell.addSeparatorLineToBottom(width: width, height: height)
+                    cell.selectionStyle = .none
+                    return cell
+                }
             }
         }
 
         if object.objectType == ObjectTypes.issuer {
-            let bundle = MercadoPago.getBundle()
-            let cell: IssuerRowTableViewCell = bundle!.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as! IssuerRowTableViewCell
-            cell.fillCell(issuer: object as! Issuer, bundle: bundle!)
-            cell.addSeparatorLineToBottom(width: width, height: height)
-            cell.selectionStyle = .none
-
-            return cell
+            if let cell = bundle.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as? IssuerRowTableViewCell, let issuerObj = object as? Issuer {
+                cell.fillCell(issuer: issuerObj, bundle: bundle)
+                cell.addSeparatorLineToBottom(width: width, height: height)
+                cell.selectionStyle = .none
+                return cell
+            }
         }
 
         if object.objectType == ObjectTypes.entityType {
-            let bundle = MercadoPago.getBundle()
-            let cell: EntityTypeTableViewCell = bundle!.loadNibNamed("EntityTypeTableViewCell", owner: nil, options: nil)?[0] as! EntityTypeTableViewCell
-            cell.fillCell(entityType: object as! EntityType)
-            cell.addSeparatorLineToBottom(width: width, height: height)
-            cell.selectionStyle = .none
-
-            return cell
+            if let cell = bundle.loadNibNamed("EntityTypeTableViewCell", owner: nil, options: nil)?[0] as? EntityTypeTableViewCell, let entityObj = object as? EntityType {
+                cell.fillCell(entityType: entityObj)
+                cell.addSeparatorLineToBottom(width: width, height: height)
+                cell.selectionStyle = .none
+                return cell
+            }
         }
 
         if object.objectType == ObjectTypes.financialInstitution {
-            let bundle = MercadoPago.getBundle()
-            let cell: FinancialInstitutionTableViewCell = bundle!.loadNibNamed("FinancialInstitutionTableViewCell", owner: nil, options: nil)?[0] as! FinancialInstitutionTableViewCell
-            cell.fillCell(financialInstitution: object as! FinancialInstitution, bundle: bundle!)
-            cell.addSeparatorLineToBottom(width: width, height: height)
-            cell.selectionStyle = .none
-
-            return cell
+            if let cell = bundle.loadNibNamed("FinancialInstitutionTableViewCell", owner: nil, options: nil)?[0] as? FinancialInstitutionTableViewCell, let financialObj = object as? FinancialInstitution {
+                cell.fillCell(financialInstitution: financialObj, bundle: bundle)
+                cell.addSeparatorLineToBottom(width: width, height: height)
+                cell.selectionStyle = .none
+                return cell
+            }
         }
 
         if object.objectType == ObjectTypes.paymentMethod {
-            let bundle = MercadoPago.getBundle()
-            let cell: CardTypeTableViewCell = bundle!.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as! CardTypeTableViewCell
-            cell.setPaymentMethod(paymentMethod: object as! PaymentMethod)
-            cell.addSeparatorLineToBottom(width: width, height: height)
-            cell.selectionStyle = .none
-
-            return cell
+            if let cell = bundle.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as? CardTypeTableViewCell, let pmObject = object as? PaymentMethod {
+                cell.setPaymentMethod(paymentMethod: pmObject)
+                cell.addSeparatorLineToBottom(width: width, height: height)
+                cell.selectionStyle = .none
+                return cell
+            }
         }
 
-        let defaultCell = UITableViewCell()
-
-        return defaultCell
+        return UITableViewCell()
     }
 
     open class func needsCFTPayerCostCell(payerCost: PayerCost) -> Bool {
         return payerCost.hasCFTValue() && MercadoPagoCheckoutViewModel.flowPreference.isInstallmentsReviewScreenEnable() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
     }
-
 }
 
 public enum ObjectTypes: String {

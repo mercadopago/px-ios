@@ -34,7 +34,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     //@IBOutlet var typePicker: UIPickerView! = UIPickerView()
 
-    override open var screenName: String { get { return "IDENTIFICATION_NUMBER" } }
+    override open var screenName: String { return "IDENTIFICATION_NUMBER" }
 
     public init(identificationTypes: [IdentificationType], callback : @escaping (( _ identification: Identification) -> Void), errorExitCallback: (() -> Void)?) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
@@ -262,9 +262,9 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     func rightArrowKeyTapped() {
-        let idnt = Identification(type: self.identificationType?._id, number: defaultEditTextMask.textUnmasked(numberTextField.text))
+        let idnt = Identification(type: self.identificationType?.identificationTypeId, number: defaultEditTextMask.textUnmasked(numberTextField.text))
 
-        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  defaultEditTextMask.textUnmasked(numberTextField.text))
+        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber: defaultEditTextMask.textUnmasked(numberTextField.text))
 
         if (cardToken.validateIdentificationNumber(self.identificationType)) == nil {
             self.numberTextField.resignFirstResponder()
@@ -329,7 +329,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         let site = MercadoPagoContext.getSite()
 
         if IDtype != nil {
-            if let masks = maskFinder(dictID: site+"_"+(IDtype?._id)!, forKey: "identification_mask") {
+            if let masks = maskFinder(dictID: site+"_"+(IDtype?.identificationTypeId)!, forKey: "identification_mask") {
                 return masks
             } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
                 return masks

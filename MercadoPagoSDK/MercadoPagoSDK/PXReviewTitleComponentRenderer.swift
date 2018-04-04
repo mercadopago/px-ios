@@ -9,7 +9,7 @@
 import Foundation
 
 struct PXReviewTitleComponentRenderer {
-    
+
     func render(_ titleComponent: PXReviewTitleComponent) -> UIView {
         return PXReviewTitleComponentView(withTitle: titleComponent.props.reviewTitle, titleColor: titleComponent.props.titleColor, backgroundColor: titleComponent.props.backgroundColor)
     }

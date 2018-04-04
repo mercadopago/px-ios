@@ -17,11 +17,11 @@ class PXCustomComponentContainer: PXCustomComponentizable {
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
         let componentView = UIView()
         componentView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         guard let customComponentView = customComponent.render(store: store, theme: theme) else {
             return nil
         }
-        
+
         customComponentView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.setHeight(owner: customComponentView, height: customComponentView.frame.height).isActive = true
         componentView.addSubview(customComponentView)

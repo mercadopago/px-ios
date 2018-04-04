@@ -63,7 +63,7 @@ public class MPXTracker: NSObject {
     }
     static func generateJSONScreen(screenId: String, screenName: String, metadata: [String: Any]) -> [String: Any] {
         var obj = generateJSONDefault()
-        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName, metadata:metadata)
+        let screenJSON = MPXTracker.screenJSON(screenId: screenId, screenName: screenName, metadata: metadata)
         obj["events"] = [screenJSON]
         return obj
     }

@@ -16,17 +16,6 @@ open class CardNumber: NSObject {
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> CardNumber {
-        let cardNumber: CardNumber = CardNumber()
-        if let validation = JSONHandler.attemptParseToString(json["validation"]) {
-            cardNumber.validation = validation
-        }
-        if let length = JSONHandler.attemptParseToInt(json["length"]) {
-            cardNumber.length = length
-        }
-        return cardNumber
-    }
-
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
@@ -39,13 +28,4 @@ open class CardNumber: NSObject {
             ]
         return obj
     }
-}
-
-public func ==(obj1: CardNumber, obj2: CardNumber) -> Bool {
-
-    let areEqual =
-    obj1.length == obj2.length &&
-    obj1.validation == obj2.validation
-
-    return areEqual
 }

@@ -15,9 +15,9 @@ class CauseTest: BaseTest {
         let causeFromJSON = Cause.fromJSON(json)
         let cause = Cause()
         cause.code = "324"
-        cause._description = "Invalid parameter 'cardholder.identification.number'"
+        cause.causeDescription = "Invalid parameter 'cardholder.identification.number'"
 
         XCTAssertEqual(causeFromJSON.code, cause.code)
-        XCTAssertEqual(causeFromJSON._description, cause._description)
+        XCTAssertEqual(causeFromJSON.causeDescription, cause.causeDescription)
     }
 }

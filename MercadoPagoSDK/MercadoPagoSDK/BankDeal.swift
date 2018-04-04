@@ -17,44 +17,6 @@ open class BankDeal: NSObject {
 	open var legals: String!
 	open var url: String?
 
-	open class func fromJSON(_ json: NSDictionary) -> BankDeal {
-
-		let promo: BankDeal = BankDeal()
-		promo.promoId = json["id"] as? String
-
-		if let issuerDic = json["issuer"] as? NSDictionary {
-			promo.issuer = Issuer.fromJSON(issuerDic)
-		}
-
-        if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]) {
-            promo.recommendedMessage = recommendedMessage
-        }
-        if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]) {
-            promo.recommendedMessage = recommendedMessage
-        }
-
-		if let picDic = json["picture"] as? NSDictionary {
-            if let url = JSONHandler.attemptParseToString(picDic["url"]) {
-                promo.url = url
-            }
-		}
-
-		var paymentMethods: [PaymentMethod] = [PaymentMethod]()
-		if let pmArray = json["payment_methods"] as? NSArray {
-			for i in 0..<pmArray.count {
-				if let pmDic = pmArray[i] as? NSDictionary {
-					paymentMethods.append(PaymentMethod.fromJSON(pmDic))
-				}
-			}
-		}
-
-		promo.paymentMethods = paymentMethods
-
-		promo.legals = json["legals"] as? String
-
-		return promo
-	}
-
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
@@ -90,16 +52,4 @@ open class BankDeal: NSObject {
 		var dateArr = string.split {$0 == "T"}.map(String.init)
 		return dateFormatter.date(from: dateArr[0])
 	}
-}
-
-public func ==(obj1: BankDeal, obj2: BankDeal) -> Bool {
-    let areEqual =
-    obj1.promoId == obj2.promoId &&
-    obj1.issuer == obj2.issuer &&
-    obj1.recommendedMessage == obj2.recommendedMessage &&
-    obj1.paymentMethods == obj2.paymentMethods &&
-  //  obj1.legals == obj2.legals &&
-    obj1.url == obj2.url
-
-    return areEqual
 }

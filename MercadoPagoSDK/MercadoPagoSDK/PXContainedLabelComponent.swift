@@ -9,13 +9,13 @@
 import UIKit
 
 open class PXContainedLabelComponent: PXComponentizable {
-    
+
     public func render() -> UIView {
         return PXContainedLabelRenderer().render(self)
     }
-    
+
     var props: PXContainedLabelProps
-    
+
     init(props: PXContainedLabelProps) {
         self.props = props
     }
@@ -27,5 +27,3 @@ open class PXContainedLabelProps: NSObject {
         self.labelText = labelText
     }
 }
-
-

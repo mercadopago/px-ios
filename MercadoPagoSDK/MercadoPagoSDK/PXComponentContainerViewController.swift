@@ -9,7 +9,7 @@
 import UIKit
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
-    
+
     fileprivate lazy var elasticHeader = UIView()
     fileprivate lazy var customNavigationTitle: String = ""
     fileprivate lazy var secondaryCustomNavigationTitle: String = ""
@@ -21,7 +21,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     var contentView = PXComponentView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
-    
+
     init() {
         self.scrollView = UIScrollView()
         self.scrollView.backgroundColor = .white
@@ -31,24 +31,24 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         self.scrollView.isUserInteractionEnabled = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.addSubview(contentView)
-        
+
         PXLayout.pinTop(view: contentView, to: scrollView).isActive = true
         PXLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
         PXLayout.matchWidth(ofView: contentView, toView: scrollView).isActive = true
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
         self.view.addSubview(self.scrollView)
-        
+
         PXLayout.pinLeft(view: scrollView, to: self.view).isActive = true
         PXLayout.pinRight(view: scrollView, to: self.view).isActive = true
         PXLayout.pinTop(view: scrollView, to: self.view).isActive = true
-        
+
         let bottomDeltaMargin: CGFloat = PXLayout.getSafeAreaBottomInset()
-        
+
         PXLayout.pinBottom(view: scrollView, to: self.view, withMargin: -bottomDeltaMargin).isActive = true
         scrollView.bounces = false
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         handleNavigationBarEffect(scrollView)
@@ -61,7 +61,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
 // MARK: Elastic header.
 extension PXComponentContainerViewController: UIScrollViewDelegate {
-    func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle:String, textColor: UIColor, navigationSecondaryTitle: String?=nil, navigationDeltaY:CGFloat?=nil, navigationSecondaryDeltaY:CGFloat?=nil) {
+    func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle: String, textColor: UIColor, navigationSecondaryTitle: String?=nil, navigationDeltaY: CGFloat?=nil, navigationSecondaryDeltaY: CGFloat?=nil) {
         elasticHeader.removeFromSuperview()
         scrollView.delegate = self
         customNavigationTitle = navigationCustomTitle
@@ -77,35 +77,35 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         } else {
             secondaryCustomNavigationTitle = navigationCustomTitle
         }
-        
+
         view.insertSubview(elasticHeader, aboveSubview: contentView)
         scrollView.bounces = true
-        
+
         let titleView = ViewUtils.getCustomNavigationTitleLabel(textColor: textColor, font: Utils.getFont(size: PXLayout.S_FONT), titleText: "")
         navigationItem.titleView = titleView
     }
-    
+
     func refreshContentViewSize() {
-        var height : CGFloat = 0
+        var height: CGFloat = 0
         for view in contentView.getSubviews() {
-            height = height + view.frame.height
+            height += view.frame.height
         }
 
         contentView.fixHeight(height: height)
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
         self.view.layoutIfNeeded()
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         handleNavigationBarEffect(scrollView)
         elasticHeader.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: -scrollView.contentOffset.y)
     }
-    
+
     fileprivate func handleNavigationBarEffect(_ targetScrollView: UIScrollView) {
-        
+
         let offset = targetScrollView.contentOffset.y
         let STATUS_TITLE_BREAKPOINT: Int = 2
-        
+
         if offset >= NAVIGATION_BAR_DELTA_Y {
             if navigationTitleStatusStep < STATUS_TITLE_BREAKPOINT {
                 let titleAnimation = CATransition()
@@ -116,7 +116,7 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
                 navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
                 (navigationItem.titleView as? UILabel)?.sizeToFit()
                 (navigationItem.titleView as? UILabel)?.text = customNavigationTitle
-                navigationTitleStatusStep = navigationTitleStatusStep + 1
+                navigationTitleStatusStep += 1
             }
         } else {
             if navigationTitleStatusStep >= STATUS_TITLE_BREAKPOINT {

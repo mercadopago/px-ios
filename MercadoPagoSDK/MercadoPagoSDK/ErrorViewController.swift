@@ -24,8 +24,8 @@ open class ErrorViewController: MercadoPagoUIViewController {
     var error: MPSDKError!
     var callback: (() -> Void)?
 
-    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_ERROR } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_ERROR } }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_ERROR }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_ERROR }
 
     open static var defaultErrorCancel: (() -> Void)?
 
@@ -53,7 +53,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         var metadata: [String: String] = [:]
 
         if let statusError = error.apiException?.status {
-            metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing:statusError)
+            metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing: statusError)
         }
         if let causeArray = error.apiException?.cause, causeArray.count > 0 {
             if !String.isNullOrEmpty(causeArray[0].code) {
@@ -74,7 +74,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
 
         let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
 
-        self.errorSubtitle.attributedText = NSAttributedString(string :error.errorDetail, attributes: normalAttributes)
+        self.errorSubtitle.attributedText = NSAttributedString(string: error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
         self.exitButton.setTitle("Salir".localized, for: .normal)
         self.retryButton.setTitle("Reintentar".localized, for: .normal)

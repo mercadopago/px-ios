@@ -22,14 +22,14 @@ open class PaymentResult: NSObject {
     open var status: String
     open var statusDetail: String
     open var payerEmail: String?
-    open var _id: String?
+    open var paymentId: String?
     open var statementDescription: String?
 
     public init (payment: Payment, paymentData: PaymentData) {
         self.status = payment.status
         self.statusDetail = payment.statusDetail
         self.paymentData = paymentData
-        self._id = payment._id
+        self.paymentId = payment.paymentId
         self.payerEmail = paymentData.payer?.email
         self.statementDescription = payment.statementDescriptor
     }
@@ -39,7 +39,7 @@ open class PaymentResult: NSObject {
         self.statusDetail = statusDetail
         self.paymentData = paymentData
         self.payerEmail = payerEmail
-        self._id = id
+        self.paymentId = id
         self.statementDescription = statementDescription
     }
 

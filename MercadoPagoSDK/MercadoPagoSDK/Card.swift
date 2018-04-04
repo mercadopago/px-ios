@@ -28,44 +28,6 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
         return self.issuer
     }
 
-   open class func fromJSON(_ json: NSDictionary) -> Card {
-        let card: Card = Card()
-        if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
-            card.customerId = customerId
-        }
-        if let expirationMonth = JSONHandler.attemptParseToInt(json["expiration_month"]) {
-            card.expirationMonth = expirationMonth
-        }
-        if let expirationYear = JSONHandler.attemptParseToInt(json["expiration_year"]) {
-            card.expirationYear = expirationYear
-        }
-        card.idCard = JSONHandler.attemptParseToString(json["id"], defaultReturn: "")!
-        if let lastFourDigits = JSONHandler.attemptParseToString(json["last_four_digits"]) {
-            card.lastFourDigits = lastFourDigits
-        }
-        if let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"]) {
-            card.firstSixDigits = firstSixDigits
-        }
-        if let issuerDic = json["issuer"] as? NSDictionary {
-            card.issuer = Issuer.fromJSON(issuerDic)
-        }
-        if let secDic = json["security_code"] as? NSDictionary {
-            card.securityCode = SecurityCode.fromJSON(secDic)
-        }
-        if let pmDic = json["payment_method"] as? NSDictionary {
-            card.paymentMethod = PaymentMethod.fromJSON(pmDic)
-        }
-        if let chDic = json["card_holder"] as? NSDictionary {
-            card.cardHolder = Cardholder.fromJSON(chDic)
-        }
-        if let dateLastUpdated = JSONHandler.attemptParseToString(json["date_last_updated"]) {
-            card.dateLastUpdated = Utils.getDateFromString(dateLastUpdated)
-        }
-        if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]) {
-            card.dateCreated = Utils.getDateFromString(dateCreated)
-        }
-        return card
-    }
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
@@ -125,7 +87,7 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
     }
 
     open func getPaymentMethodId() -> String {
-        return (self.paymentMethod?._id)!
+        return (self.paymentMethod?.paymentMethodId)!
     }
 
     open func getPaymentTypeId() -> String {
@@ -177,7 +139,7 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
     /** PaymentMethodOption implementation */
 
     public func getId() -> String {
-        return String(describing : self.idCard)
+        return String(describing: self.idCard)
     }
 
     public func getChildren() -> [PaymentMethodOption]? {
@@ -203,21 +165,4 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
     public func getComment() -> String {
         return ""
     }
-
-}
-
-public func ==(obj1: Card, obj2: Card) -> Bool {
-    let areEqual =
-        obj1.cardHolder == obj2.cardHolder &&
-        obj1.customerId == obj2.customerId &&
-        obj1.dateCreated == obj2.dateCreated &&
-        obj1.dateLastUpdated == obj2.dateLastUpdated &&
-        obj1.expirationMonth == obj2.expirationMonth &&
-        obj1.firstSixDigits == obj2.firstSixDigits &&
-        obj1.idCard == obj2.idCard &&
-        obj1.lastFourDigits == obj2.lastFourDigits &&
-        obj1.paymentMethod == obj2.paymentMethod &&
-        obj1.issuer == obj2.issuer &&
-        obj1.securityCode == obj2.securityCode
-    return areEqual
 }

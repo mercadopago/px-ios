@@ -15,8 +15,8 @@ open class AdditionalStepViewModel: NSObject {
     var bundle: Bundle? = MercadoPago.getBundle()
     open var discount: DiscountCoupon?
     public var screenTitle: String
-    open var screenId: String { get { return TrackingUtil.NO_SCREEN_ID } }
-    open var screenName: String { get { return TrackingUtil.NO_NAME_SCREEN } }
+    open var screenId: String { return TrackingUtil.NO_SCREEN_ID }
+    open var screenName: String { return TrackingUtil.NO_NAME_SCREEN }
 
     open var amount: Double
     open var email: String?
@@ -30,7 +30,7 @@ open class AdditionalStepViewModel: NSObject {
     open var defaultTitleCellHeight: CGFloat = 40
     open var defaultRowCellHeight: CGFloat = 80
     open var callback: ((_ result: NSObject) -> Void)!
-    open var maxFontSize: CGFloat { get { return 24 } }
+    open var maxFontSize: CGFloat { return 24 }
     open var couponCallback: ((DiscountCoupon) -> Void)?
 
     open var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
@@ -211,11 +211,11 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
         super.init(screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM_ISSUERS } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER} }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM_ISSUERS }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER }
 
     override func track() {
-        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0]._id, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethods[0].paymentTypeId]
+        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].paymentMethodId, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethods[0].paymentTypeId]
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
@@ -229,8 +229,8 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         super.init(screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, discount: discount, email: email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS } }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS }
 
     override func getDefaultRowCellHeight() -> CGFloat {
         if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PayerCost) {
@@ -249,7 +249,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override func track() {
-        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0]._id]
+        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].paymentMethodId]
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
@@ -259,17 +259,17 @@ class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
-    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_TYPES } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_TYPES } }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_TYPES }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_TYPES }
 
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
-        super.init(screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        super.init(screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 }
 
 class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
 
-    override open var screenName: String { get { return "FINANCIAL_INSTITUTION" } }
+    override open var screenName: String { return "FINANCIAL_INSTITUTION" }
 
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         super.init(screenTitle: "¿Cuál es tu banco?".localized, cardSectionVisible: false, cardSectionView: nil, totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
@@ -279,14 +279,14 @@ class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
 
 class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
 
-    override var maxFontSize: CGFloat { get { return 21 } }
+    override var maxFontSize: CGFloat { return 21 }
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
-    override open var screenName: String { get { return "ENTITY_TYPE" } }
+    override open var screenName: String { return "ENTITY_TYPE" }
 
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
-        super.init(screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView:IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        super.init(screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView: IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
 }

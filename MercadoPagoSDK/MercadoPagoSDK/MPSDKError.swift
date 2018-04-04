@@ -85,7 +85,7 @@ open class MPSDKError: NSObject {
             return nil
         }
         let cause = Cause()
-        cause._description = pxCause._description
+        cause.causeDescription = pxCause._description
         cause.code = pxCause.code
         return cause
     }

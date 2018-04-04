@@ -28,9 +28,9 @@ open class PromoTableViewCell: UITableViewCell {
 
 	open func setPromoInfo(_ promo: BankDeal!) {
 		let placeholderImage = UIImage(named: "empty_tc")
-        
-		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil && !String.isNullOrEmpty(promo.url) {
-			
+
+		if promo != nil && promo!.issuer != nil && promo!.issuer!.issuerId != nil && !String.isNullOrEmpty(promo.url) {
+
             Utils().loadImageWithCache(withUrl: promo.url, targetImage: self.issuerImageView, placeHolderImage: placeholderImage, fallbackImage: nil)
 		}
 
@@ -43,13 +43,13 @@ open class PromoTableViewCell: UITableViewCell {
 				var s = ""
 				var i = 0
 				for pm in promo.paymentMethods {
-					s = s + pm.name
+					s += pm.name
 					if i == promo.paymentMethods.count - 2 {
-						s = s + " y ".localized
+						s += " y ".localized
 					} else if i < promo.paymentMethods.count - 1 {
-						s = s + ", "
+						s += ", "
 					}
-					i = i + 1
+					i += 1
 				}
 				self.paymentMethodsSubtitle.text = s
 			}

@@ -20,10 +20,10 @@ class PXReviewViewModelTest: BaseTest {
     let mockPaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("paymentMethodId")
 
     override func setUp() {
-        
+
         let checkoutPref = CheckoutPreference()
-        
-        checkoutPref.items = [Item(_id: "12", title: "test", quantity: 1, unitPrice: 1000.0, description: "dummy", currencyId: "ARG")]
+
+        checkoutPref.items = [Item(itemId: "12", title: "test", quantity: 1, unitPrice: 1000.0, description: "dummy", currencyId: "ARG")]
 
         self.instance = PXReviewViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
 
@@ -120,16 +120,16 @@ class PXReviewViewModelTest: BaseTest {
     }
 
     func testCleanPaymentData() {
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!._id, "visa")
+        XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!.paymentMethodId, "visa")
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payerCost!.installments, 3)
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payer?.email, "thisisanem@il.com")
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!._id, 123)
+        XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!.discountId, 123)
         let newPaymentData = self.instanceWithCoupon!.getClearPaymentData()
 
         XCTAssertNil(newPaymentData.paymentMethod)
         XCTAssertNil(newPaymentData.payerCost)
         XCTAssertEqual(newPaymentData.payer?.email, "thisisanem@il.com")
-        XCTAssertEqual(newPaymentData.discount!._id, 123)
+        XCTAssertEqual(newPaymentData.discount!.discountId, 123)
     }
 
     func getInvalidSummary() -> Summary {
@@ -140,7 +140,7 @@ class PXReviewViewModelTest: BaseTest {
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
     }
-    
+
     func getValidSummary() -> Summary {
         let preference = ReviewScreenPreference()
         preference.addSummaryProductDetail(amount: 500)
@@ -149,45 +149,24 @@ class PXReviewViewModelTest: BaseTest {
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
     }
-    
+
     func getValidSummaryWithoutProductDetail() -> Summary {
         let preference = ReviewScreenPreference()
         preference.addSummaryTaxesDetail(amount: 900)
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
     }
-    
-    // TODO: Move to summary tests.
-    func testInvalidSummary() {
-        instance?.reviewScreenPreference.details = getInvalidSummary().details
-        let summary = instance?.getSummaryViewModel(amount: 1000.0)
-        let summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
-    }
-    
-    func testValidSummary() {
-        instance?.reviewScreenPreference.details = getValidSummary().details
-        let summary = instance?.getSummaryViewModel(amount: 1000.0)
-        let summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 179.0)
-    }
-    
-    func testValidSummaryWithoutProductDetail() {
-        instance?.reviewScreenPreference.details = getValidSummaryWithoutProductDetail().details
-        let summary = instance?.getSummaryViewModel(amount: 1000.0)
-        let summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
-        XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
-    }
+
 }
 
 // MARK: Terms and conditions.
 extension PXReviewViewModelTest {
-    
+
     func testShouldShowTermsAndConditions() {
         MercadoPagoContext.setPayerAccessToken("")
         XCTAssertTrue(self.instance!.shouldShowTermsAndCondition())
     }
-    
+
     func testShouldHideTermsAndConditions() {
         MercadoPagoContext.setPayerAccessToken("123")
         XCTAssertFalse(self.instance!.shouldShowTermsAndCondition())

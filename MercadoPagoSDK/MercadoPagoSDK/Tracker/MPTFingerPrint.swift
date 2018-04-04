@@ -72,10 +72,8 @@ class ScreenTrackInfo {
         self.screenName = screenName
         self.screenId = screenId
         self.metadata = metadata
-        for key in metadata.keys {
-            if metadata[key] == nil {
-                self.metadata.removeValue(forKey: key)
-            }
+        for key in metadata.keys where metadata[key] == nil {
+            self.metadata.removeValue(forKey: key)
         }
 
         let date = Date()

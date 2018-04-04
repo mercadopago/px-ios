@@ -19,7 +19,7 @@ open class PXCheckoutStore: NSObject {
     public func addData(forKey: String, value: Any) {
         self.data[forKey] = value
     }
-    
+
     public func remove(key: String) {
         data.removeValue(forKey: key)
     }
@@ -43,7 +43,7 @@ open class PXCheckoutStore: NSObject {
     public func getCheckoutPreference() -> CheckoutPreference? {
         return checkoutPreference
     }
-    
+
     func clean() {
         removeAll()
         checkoutPreference = nil

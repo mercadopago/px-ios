@@ -40,7 +40,7 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, "/checkout_off/card" + "/installments")
+        XCTAssertEqual(self.instance!.screenId, "/card" + "/installments")
     }
 
     func testNumberOfSections() {
@@ -225,7 +225,7 @@ class IssuerAdditionalStepViewModelTest: BaseTest {
     }
 
     func testScreenId() {
-        XCTAssertEqual(self.instance!.screenId, "/checkout_off/card" + "/issuer")
+        XCTAssertEqual(self.instance!.screenId, "/card" + "/issuer")
     }
 
     func testNumberOfSections() {
@@ -365,8 +365,8 @@ class FinancialInstitutionAdditionalStepViewModelTest: BaseTest {
         let cardToken = MockBuilder.buildCardToken()
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         let financialInstitution = FinancialInstitution()
-        financialInstitution._id = 1232
-        financialInstitution._description = "sarasa"
+        financialInstitution.financialInstitutionId = 1232
+        financialInstitution.financialInstitutionDescription = "sarasa"
         paymentMethod.financialInstitutions = [financialInstitution, financialInstitution]
         self.instance = FinancialInstitutionAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: paymentMethod.financialInstitutions, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
@@ -446,7 +446,7 @@ class EntityTypeAdditionalStepViewModelTest: BaseTest {
         let cardToken = MockBuilder.buildCardToken()
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         let entityType = EntityType()
-        entityType._id = "1232"
+        entityType.entityTypeId = "1232"
         entityType.name = "sarasa"
         self.instance = EntityTypeAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [entityType, entityType], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }

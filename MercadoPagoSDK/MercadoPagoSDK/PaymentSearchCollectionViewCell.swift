@@ -53,7 +53,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     }
 
     func fillCell(optionText: String) {
-        self.fillCell(image: nil, title:optionText, subtitle: nil)
+        self.fillCell(image: nil, title: optionText, subtitle: nil)
     }
 
     static func totalHeight(drawablePaymentOption: PaymentOptionDrawable) -> CGFloat {
@@ -66,10 +66,10 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         let availableWidth = screenWidth - (screenWidth * 0.3)
         let widthPerItem = availableWidth / 2
 
-        let titleLabel = UILabel(frame: CGRect(x:0, y:0, width:widthPerItem, height:0))
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: widthPerItem, height: 0))
         titleLabel.font = UIFont.systemFont(ofSize: 16)
         titleLabel.text = title
-        let subtitleLabel = UILabel(frame: CGRect(x:0, y:0, width:widthPerItem, height:0))
+        let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: widthPerItem, height: 0))
         subtitleLabel.font = UIFont.systemFont(ofSize: 15)
         subtitleLabel.text = subtitle
         let altura1 = titleLabel.requiredHeight()

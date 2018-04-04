@@ -11,7 +11,7 @@ import Foundation
 class MockManager: NSObject {
 
     internal class func getMockFor(_ name: String) -> NSDictionary? {
-        let path = Bundle(for:MockManager.self).path(forResource: "MockedData", ofType: "plist")
+        let path = Bundle(for: MockManager.self).path(forResource: "MockedData", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         do {
             let mockObj = try MockManager.convertStringToDictionary(dictPM?.value(forKey: name) as! String)!
@@ -31,7 +31,7 @@ class MockManager: NSObject {
     }
 
     internal class func getMockResponseFor(_ uri: String, method: String) throws ->AnyObject? {
-        let path = Bundle(for:MockManager.self).path(forResource: "MockedResponse", ofType: "plist")
+        let path = Bundle(for: MockManager.self).path(forResource: "MockedResponse", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let valueOfKey = dictPM?.value(forKey: method + uri) as! String
         if let data = valueOfKey.data(using: String.Encoding.utf8) {

@@ -17,20 +17,6 @@ open class BinMask: NSObject {
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> BinMask {
-        let binMask: BinMask = BinMask()
-        if let exclusionPattern = JSONHandler.attemptParseToString(json["exclusion_pattern"]) {
-            binMask.exclusionPattern = exclusionPattern
-        }
-        if let installmentsPattern = JSONHandler.attemptParseToString(json["installments_pattern"]) {
-            binMask.installmentsPattern = installmentsPattern
-        }
-        if let pattern = JSONHandler.attemptParseToString(json["pattern"]) {
-            binMask.pattern = pattern
-        }
-        return binMask
-    }
-
     open func toJSON() -> [String: Any] {
         let exclusionPattern: Any = String.isNullOrEmpty(self.exclusionPattern) ?  JSONHandler.null : self.exclusionPattern!
         let installmentsPattern: Any = self.installmentsPattern == nil ?  JSONHandler.null : self.installmentsPattern
@@ -47,22 +33,4 @@ open class BinMask: NSObject {
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
-}
-
-public func ==(obj1: BinMask, obj2: BinMask) -> Bool {
-    var areEqual: Bool
-    if (obj1.exclusionPattern == nil) || (obj2.exclusionPattern == nil) {
-        areEqual  =
-            obj1.installmentsPattern == obj2.installmentsPattern &&
-            obj1.pattern == obj2.pattern
-
-    } else {
-       areEqual =
-        obj1.exclusionPattern == obj2.exclusionPattern &&
-        obj1.installmentsPattern == obj2.installmentsPattern &&
-        obj1.pattern == obj2.pattern
-
-    }
-
-    return areEqual
 }

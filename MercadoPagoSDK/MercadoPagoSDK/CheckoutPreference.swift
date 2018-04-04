@@ -10,7 +10,7 @@ import UIKit
 
 open class CheckoutPreference: NSObject {
 
-    open var _id: String!
+    open var preferenceId: String!
     open var items: [Item]!
     open var payer: Payer!
     open var paymentPreference: PaymentPreference!
@@ -18,8 +18,8 @@ open class CheckoutPreference: NSObject {
     open var expirationDateFrom: Date?
     open var expirationDateTo: Date?
 
-    public init(_id: String) {
-        self._id = _id
+    public init(preferenceId: String) {
+        self.preferenceId = preferenceId
     }
 
     public init(items: [Item] = [], payer: Payer = Payer(), paymentMethods: PaymentPreference? = nil) {
@@ -87,12 +87,12 @@ open class CheckoutPreference: NSObject {
         self.expirationDateFrom = date
     }
 
-    public func setId(_ id: String) {
-        self._id = id
+    public func setId(_ preferenceId: String) {
+        self.preferenceId = preferenceId
     }
 
     public func getId() -> String {
-        return self._id
+        return self.preferenceId
     }
 
     public func getItems() -> [Item]? {
@@ -200,41 +200,9 @@ open class CheckoutPreference: NSObject {
         return items.count > 1
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> CheckoutPreference {
-        let preference: CheckoutPreference = CheckoutPreference()
-
-        if let _id = JSONHandler.attemptParseToString(json["id"]) {
-            preference._id = _id
-        }
-        if let siteId = JSONHandler.attemptParseToString(json["site_id"]) {
-            preference.siteId = siteId
-        }
-
-        if let payerDic = json["payer"] as? NSDictionary {
-            preference.payer = Payer.fromJSON(payerDic)
-        }
-
-        var items = [Item]()
-        if let itemsArray = json["items"] as? NSArray {
-            for i in 0..<itemsArray.count {
-                if let itemDic = itemsArray[i] as? NSDictionary {
-                    items.append(Item.fromJSON(itemDic))
-                }
-            }
-
-            preference.items = items
-        }
-
-        if let paymentPreference = json["payment_methods"] as? NSDictionary {
-            preference.paymentPreference = PaymentPreference.fromJSON(paymentPreference)
-        }
-
-        return preference
-    }
-
     open func toJSONString() -> String {
 
-        let _id: Any = self._id == nil ? JSONHandler.null : (self._id)!
+        let _id: Any = self.preferenceId == nil ? JSONHandler.null : (self.preferenceId)!
         let player: Any = self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
         var obj: [String: Any] = [
             "id": _id,
@@ -243,7 +211,7 @@ open class CheckoutPreference: NSObject {
 
         var itemsJson = ""
         for item in items {
-            itemsJson = itemsJson + item.toJSONString()
+            itemsJson += item.toJSONString()
         }
         obj["items"] = itemsJson
 
@@ -253,7 +221,7 @@ open class CheckoutPreference: NSObject {
     open func getAmount() -> Double {
         var amount = 0.0
         for item in self.items {
-            amount = amount + (Double(item.quantity) * item.unitPrice)
+            amount += (Double(item.quantity) * item.unitPrice)
         }
         return amount
     }
@@ -273,10 +241,10 @@ open class CheckoutPreference: NSObject {
     }*/
 }
 
-public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
+public func == (obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
 
     let areEqual =
-        obj1._id == obj2._id &&
+        obj1.preferenceId == obj2.preferenceId &&
             obj1.items == obj2.items &&
             obj1.payer == obj2.payer &&
             obj1.paymentPreference == obj2.paymentPreference

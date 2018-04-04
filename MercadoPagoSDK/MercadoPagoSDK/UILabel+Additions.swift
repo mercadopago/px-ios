@@ -11,14 +11,14 @@ import Foundation
 extension UILabel {
 
     open static func requiredHeight(forText text: String, withFont font: UIFont, inNumberOfLines lines: Int = 0, inWidth width: CGFloat) -> CGFloat {
-        let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width:width, height: CGFloat.greatestFiniteMagnitude))
+        let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.text = text
         label.font = font
         return label.requiredHeight(numberOfLines: lines)
     }
 
     open static func requiredHeight(forAttributedText text: NSAttributedString, withFont font: UIFont, inNumberOfLines lines: Int = 0, inWidth width: CGFloat) -> CGFloat {
-        let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width:width, height: CGFloat.greatestFiniteMagnitude))
+        let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.attributedText = text
         label.font = font
         return label.requiredAttributedHeight(numberOfLines: lines)
@@ -54,7 +54,7 @@ extension UILabel {
     }
 
     open func clearAttributedText() {
-        self.attributedText = NSAttributedString(string : "")
+        self.attributedText = NSAttributedString(string: "")
     }
 }
 

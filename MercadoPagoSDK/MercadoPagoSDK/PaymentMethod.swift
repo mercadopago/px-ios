@@ -12,8 +12,7 @@ import UIKit
 open class PaymentMethod: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.paymentMethod
-    open var _id: String!
-
+    open var paymentMethodId: String!
     open var name: String!
     open var paymentTypeId: String!
     open var settings: [Setting]!
@@ -33,8 +32,8 @@ open class PaymentMethod: NSObject, Cellable {
         super.init()
     }
 
-    public init(_id: String, name: String, paymentTypeId: String) {
-        self._id = _id
+    public init(id: String, name: String, paymentTypeId: String) {
+        self.paymentMethodId = id
         self.name = name
         self.paymentTypeId = paymentTypeId
     }
@@ -68,14 +67,14 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open var isCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCard()
         }
         return false
     }
 
     open var isCreditCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCreditCard()
         }
         return false
@@ -83,14 +82,14 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open var isPrepaidCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isPrepaidCard()
         }
         return false
     }
 
     open var isDebitCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isDebitCard()
         }
         return false
@@ -108,10 +107,8 @@ open class PaymentMethod: NSObject, Cellable {
 
     open func isAdditionalInfoNeeded(_ param: String!) -> Bool {
         if additionalInfoNeeded != nil && additionalInfoNeeded.count > 0 {
-            for info in additionalInfoNeeded {
-                if info == param {
-                    return true
-                }
+            for info in additionalInfoNeeded where info == param {
+                return true
             }
         }
         return false
@@ -122,7 +119,7 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open func toJSON() -> [String: Any] {
-        let id: Any = String.isNullOrEmpty(self._id) ?  JSONHandler.null : self._id!
+        let id: Any = String.isNullOrEmpty(self.paymentMethodId) ?  JSONHandler.null : self.paymentMethodId!
         let name: Any = self.name == nil ?  JSONHandler.null : self.name
         let payment_type_id: Any = self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId
         let status: Any = self.status == nil ? JSONHandler.null : self.status
@@ -181,92 +178,12 @@ open class PaymentMethod: NSObject, Cellable {
 
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> PaymentMethod {
-        let paymentMethod: PaymentMethod = PaymentMethod()
-        paymentMethod._id = json["id"] as? String
-        paymentMethod.name = json["name"] as? String
-
-        if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
-            paymentMethod.paymentTypeId = json["payment_type_id"] as! String
-        }
-
-        if json["status"] != nil && !(json["status"]! is NSNull) {
-            paymentMethod.status = json["status"] as! String
-        }
-
-        if json["secure_thumbnail"] != nil && !(json["secure_thumbnail"]! is NSNull) {
-            paymentMethod.secureThumbnail = json["secure_thumbnail"] as! String
-        }
-
-        if json["thumbnail"] != nil && !(json["thumbnail"]! is NSNull) {
-            paymentMethod.thumbnail = json["thumbnail"] as! String
-        }
-
-        if json["deferred_capture"] != nil && !(json["deferred_capture"]! is NSNull) {
-            paymentMethod.deferredCapture = json["deferred_capture"] as! String
-        }
-
-        if json["max_allowed_amount"] != nil && !(json["max_allowed_amount"]! is NSNull) {
-            paymentMethod.maxAllowedAmount = json["max_allowed_amount"] as! Double
-        }
-
-        if json["max_allowed_amount"] != nil && !(json["max_allowed_amount"]! is NSNull) {
-            paymentMethod.maxAllowedAmount = json["max_allowed_amount"] as! Double
-        }
-
-        if json["min_allowed_amount"] != nil && !(json["min_allowed_amount"]! is NSNull) {
-            paymentMethod.minAllowedAmount = json["min_allowed_amount"] as! Double
-        }
-
-        if json["merchant_account_id"] != nil && !(json["merchant_account_id"]! is NSNull) {
-            paymentMethod.merchantAccountId = json["merchant_account_id"] as? String
-        }
-
-        var settings: [Setting] = [Setting]()
-        if let settingsArray = json["settings"] as? NSArray {
-            for i in 0..<settingsArray.count {
-                if let settingDic = settingsArray[i] as? NSDictionary {
-                    settings.append(Setting.fromJSON(settingDic))
-                }
-            }
-        }
-        paymentMethod.settings = settings.isEmpty ? nil : settings
-
-        var additionalInfoNeeded: [String] = [String]()
-        if let additionalInfoNeededArray = json["additional_info_needed"] as? NSArray {
-            for i in 0..<additionalInfoNeededArray.count {
-                if let additionalInfoNeededStr = additionalInfoNeededArray[i] as? String {
-                    additionalInfoNeeded.append(additionalInfoNeededStr)
-                }
-            }
-        }
-        paymentMethod.additionalInfoNeeded = additionalInfoNeeded
-
-        if let accreditationTime = json["accreditation_time"] as? Int {
-            paymentMethod.accreditationTime = accreditationTime
-        }
-
-        var financialInstitutions: [FinancialInstitution] = [FinancialInstitution]()
-
-        if let financialInstitutionsArray = json["financial_institutions"] as? NSArray {
-            for i in 0..<financialInstitutionsArray.count {
-                if let financialInstitutionsDic = financialInstitutionsArray[i] as? NSDictionary {
-                    financialInstitutions.append(FinancialInstitution.fromJSON(financialInstitutionsDic))
-                }
-            }
-        }
-
-        paymentMethod.financialInstitutions = financialInstitutions.isEmpty ? nil : financialInstitutions
-
-        return paymentMethod
-    }
-
     open func conformsToBIN(_ bin: String) -> Bool {
         return (Setting.getSettingByBin(self.settings, bin: bin) != nil)
     }
     open func cloneWithBIN(_ bin: String) -> PaymentMethod? {
         let paymentMethod: PaymentMethod = PaymentMethod()
-        paymentMethod._id = self._id
+        paymentMethod.paymentMethodId = self.paymentMethodId
         paymentMethod.name = self.name
         paymentMethod.paymentTypeId = self.paymentTypeId
         paymentMethod.additionalInfoNeeded = self.additionalInfoNeeded
@@ -279,11 +196,11 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
    open var isAmex: Bool {
-        return self._id == "amex"
+        return self.paymentMethodId == "amex"
     }
 
    open var isAccountMoney: Bool {
-        return self._id == PaymentTypeId.ACCOUNT_MONEY.rawValue
+        return self.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue
     }
 
     open func secCodeMandatory() -> Bool {
@@ -342,10 +259,10 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open var isVISA: Bool {
-        return ((self._id == "visa") && (self._id == "debvisa"))
+        return ((self.paymentMethodId == "visa") && (self.paymentMethodId == "debvisa"))
     }
     open var isMASTERCARD: Bool {
-        return ((self._id == "master") && (self._id == "debmaster"))
+        return ((self.paymentMethodId == "master") && (self.paymentMethodId == "debmaster"))
     }
 
     open func conformsPaymentPreferences(_ paymentPreference: PaymentPreference?) -> Bool {
@@ -354,7 +271,7 @@ open class PaymentMethod: NSObject, Cellable {
             return true
         }
         if paymentPreference!.defaultPaymentMethodId != nil {
-            if self._id != paymentPreference!.defaultPaymentMethodId {
+            if self.paymentMethodId != paymentPreference!.defaultPaymentMethodId {
                 return false
             }
         }
@@ -368,7 +285,7 @@ open class PaymentMethod: NSObject, Cellable {
 
         if (paymentPreference?.excludedPaymentMethodIds) != nil {
             for (_, value) in (paymentPreference?.excludedPaymentMethodIds!.enumerated())! {
-                if value == self._id {
+                if value == self.paymentMethodId {
                     return false
                 }
             }
@@ -454,20 +371,6 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     var isBolbradesco: Bool {
-        return self._id.contains(PaymentTypeId.BOLBRADESCO.rawValue)
+        return self.paymentMethodId.contains(PaymentTypeId.BOLBRADESCO.rawValue)
     }
-}
-
-public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
-
-    let areEqual =
-        obj1._id == obj2._id &&
-            obj1.name == obj2.name &&
-            obj1.paymentTypeId == obj2.paymentTypeId &&
-            obj1.settings == obj2.settings &&
-            obj1.additionalInfoNeeded == obj2.additionalInfoNeeded &&
-            obj1.financialInstitutions == obj2.financialInstitutions &&
-            obj1.merchantAccountId == obj2.merchantAccountId
-
-    return areEqual
 }

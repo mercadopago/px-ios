@@ -9,16 +9,16 @@
 import UIKit
 
 final class PXReviewViewModel: NSObject {
-    
+
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
-    
+
     var preference: CheckoutPreference
     var paymentData: PaymentData!
     var paymentOptionSelected: PaymentMethodOption
     var discount: DiscountCoupon?
     var reviewScreenPreference: ReviewScreenPreference
-    
+
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
@@ -32,40 +32,40 @@ final class PXReviewViewModel: NSObject {
 
 // MARK: - Logic.
 extension PXReviewViewModel {
-    
+
     // Logic.
     func isPaymentMethodSelectedCard() -> Bool {
         return self.paymentData.hasPaymentMethod() && self.paymentData.getPaymentMethod()!.isCard
     }
-    
+
     func isPaymentMethodSelected() -> Bool {
         return paymentData.hasPaymentMethod()
     }
-    
+
     func isUserLogged() -> Bool {
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
     }
-    
+
     func shouldShowTermsAndCondition() -> Bool {
         return !isUserLogged()
     }
-    
+
     func shouldShowInstallmentSummary() -> Bool {
         return isPaymentMethodSelectedCard() && self.paymentData.getPaymentMethod()!.paymentTypeId != "debit_card" && paymentData.hasPayerCost() && paymentData.getPayerCost()!.installments != 1
     }
-    
+
     func shouldDisplayNoRate() -> Bool {
         return self.paymentData.hasPayerCost() && !self.paymentData.getPayerCost()!.hasInstallmentsRate() && self.paymentData.getPayerCost()!.installments != 1
     }
-    
+
     func hasPayerCostAddionalInfo() -> Bool {
         return self.paymentData.hasPayerCost() && self.paymentData.getPayerCost()!.getCFTValue() != nil && self.paymentData.getPayerCost()!.installments > 0
     }
-    
+
     func hasConfirmAdditionalInfo() -> Bool {
         return hasPayerCostAddionalInfo() || needUnlockCardComponent()
     }
-    
+
     func needUnlockCardComponent() -> Bool {
         return getUnlockLink() != nil
     }
@@ -73,7 +73,7 @@ extension PXReviewViewModel {
 
 // MARK: - Getters
 extension PXReviewViewModel {
-    
+
     func getTotalAmount() -> Double {
         if let payerCost = paymentData.getPayerCost() {
             return payerCost.totalAmount
@@ -83,37 +83,37 @@ extension PXReviewViewModel {
         }
         return self.preference.getAmount()
     }
-    
+
     func getUnlockLink() -> URL? {
         let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()
-        guard let issuerID = self.paymentData.getIssuer()?._id else {
+        guard let issuerID = self.paymentData.getIssuer()?.issuerId else {
             return nil
         }
         let searchString: String = site + "_" + "\(issuerID)"
-        
+
         if let link = dictionary?.value(forKey: searchString) as? String {
-            return URL(string:link)
+            return URL(string: link)
         }
-        
+
         return nil
     }
-    
+
     func getClearPaymentData() -> PaymentData {
         let newPaymentData: PaymentData = paymentData
         newPaymentData.clearCollectedData()
         return newPaymentData
     }
-    
+
     func getFloatingConfirmViewHeight() -> CGFloat {
         return 82 + PXLayout.getSafeAreaBottomInset()/2
     }
-    
+
     func getSummaryViewModel(amount: Double) -> Summary {
-        
+
         var summary: Summary
-        
+
         // TODO: Check Double type precision.
         if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= PXReviewViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
@@ -124,32 +124,39 @@ extension PXReviewViewModel {
             summary = getDefaultSummary()
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 if let title = self.reviewScreenPreference.details[SummaryType.PRODUCT]?.title {
-                    summary.updateTitle(type: SummaryType.PRODUCT, oneWordTitle:title)
+                    summary.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: title)
                 }
             }
         }
-        
+
         if let discount = self.paymentData.discount {
             let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: Double(discount.coupon_amount)!)
-            
+
             if summary.details[SummaryType.DISCOUNT] != nil {
                 summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)
             } else {
                 let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
-                summary.addSummaryDetail(summaryDetail:discountSummaryDetail, type: SummaryType.DISCOUNT)
+                summary.addSummaryDetail(summaryDetail: discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
             summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
             summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
         }
         if let payerCost = self.paymentData.payerCost {
-            let interest = payerCost.totalAmount - amount
+            var interest = 0.0
+            
+            if let discountAmount = self.paymentData.discount?.coupon_amount, let discountValue = Double(discountAmount) {
+                interest = payerCost.totalAmount - (amount - discountValue)
+            } else {
+                interest = payerCost.totalAmount - amount
+            }
+            
             if interest > 0 {
                 let interestAmountDetail = SummaryItemDetail(amount: interest)
                 if summary.details[SummaryType.CHARGE] != nil {
                     summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.CHARGE)
                 } else {
                     let interestSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: interestAmountDetail)
-                    summary.addSummaryDetail(summaryDetail:interestSummaryDetail, type: SummaryType.CHARGE)
+                    summary.addSummaryDetail(summaryDetail: interestSummaryDetail, type: SummaryType.CHARGE)
                 }
             }
         }
@@ -159,26 +166,27 @@ extension PXReviewViewModel {
         }
         return summary
     }
-    
+
     func getDefaultSummary() -> Summary {
         let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: preference.getAmount()))
-        return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
+
+        return Summary(details: [SummaryType.PRODUCT: productSummaryDetail])
     }
 }
 
 // MARK: - Components builders.
 extension PXReviewViewModel {
-    
-    func buildPaymentMethodComponent(withAction:PXComponentAction?) -> PXPaymentMethodComponent? {
-        
+
+    func buildPaymentMethodComponent(withAction: PXComponentAction?) -> PXPaymentMethodComponent? {
+
         guard let pm = paymentData.getPaymentMethod() else {
             return nil
         }
-        
+
         let issuer = paymentData.getIssuer()
         let paymentMethodName = pm.name ?? ""
         let paymentMethodIssuerName = issuer?.name ?? ""
-        
+
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = nil
@@ -187,7 +195,7 @@ extension PXReviewViewModel {
         let backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
         let lightLabelColor = ThemeManager.shared.getTheme().lightLabelTintColor()
         let boldLabelColor = ThemeManager.shared.getTheme().boldLabelTintColor()
-        
+
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
                 let text = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
@@ -199,17 +207,17 @@ extension PXReviewViewModel {
                 accreditationTime = Utils.getAccreditationTimeAttributedString(from: paymentOptionSelected.getComment())
             }
         }
-        
+
         if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
             subtitle = paymentMethodIssuerName.toAttributedString()
         }
-        
+
         if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
             action = nil
         }
-        
+
         let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor, lightLabelColor: lightLabelColor, boldLabelColor: boldLabelColor)
-        
+
         return PXPaymentMethodComponent(props: props)
     }
 
@@ -267,8 +275,7 @@ extension PXReviewViewModel {
     }
 
     fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
-        
-        if item.quantity == 1 && String.isNullOrEmpty(item._description) && !preference.hasMultipleItems() { // Item must not be shown if it has no description and it's one
+        if item.quantity == 1 && String.isNullOrEmpty(item.itemDescription) && !preference.hasMultipleItems() { // Item must not be shown if it has no description and it's one
             return nil
         }
 
@@ -293,12 +300,12 @@ extension PXReviewViewModel {
         if preference.hasMultipleItems() {
             return item.title
         }
-        return item._description
+        return item.itemDescription
     }
 
     fileprivate func getItemDescription(item: Item) -> String? { // Returns only if it has multiple items
         if preference.hasMultipleItems() {
-            return item._description
+            return item.itemDescription
         }
         return nil
     }
@@ -334,12 +341,12 @@ extension PXReviewViewModel {
         }
         return nil
     }
-    
+
     func buildBottomCustomComponent() -> PXCustomComponentizable? {
         if let customComponent = reviewScreenPreference.getBottomComponent() {
             return PXCustomComponentContainer(withComponent: customComponent)
         }
         return nil
     }
-    
+
 }

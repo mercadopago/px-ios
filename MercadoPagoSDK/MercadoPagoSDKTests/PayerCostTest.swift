@@ -26,12 +26,6 @@ class PayerCostTest: BaseTest {
         XCTAssertEqual(payerCost.totalAmount, 30.0)
     }
 
-    func testFromJSON() {
-        let json: NSDictionary = MockManager.getMockFor("PayerCost")!
-        let payerCostFromJSON = PayerCost.fromJSON(json)
-        XCTAssertEqual(payerCostFromJSON, payerCostFromJSON)
-    }
-
     func testGetCFT() {
     let payerCost = PayerCost(installments: 6, installmentRate: 1.2, labels: labels, minAllowedAmount: 5, maxAllowedAmount: 500, recommendedMessage: "message", installmentAmount: 5.0, totalAmount: 30.0)
         payerCost.labels = ["CFT_89,38%|TEA_71,14%"]

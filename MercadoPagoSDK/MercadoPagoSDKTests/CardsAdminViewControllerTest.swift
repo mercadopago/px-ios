@@ -48,7 +48,7 @@ class CardsAdminViewControllerTest: BaseTest {
     }
 
     func testSConformsToCollectionViewDelegate() {
-        XCTAssert(CardsAdminViewController.conforms(to :UICollectionViewDelegate.self))
+        XCTAssert(CardsAdminViewController.conforms(to: UICollectionViewDelegate.self))
     }
 
     func testNumberOfItems() {

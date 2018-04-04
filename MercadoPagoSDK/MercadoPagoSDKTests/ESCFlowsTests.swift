@@ -53,7 +53,7 @@ class ESCFlowsTests: BaseTest {
         let customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -61,7 +61,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
@@ -141,7 +141,7 @@ class ESCFlowsTests: BaseTest {
         let customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -149,7 +149,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
@@ -229,7 +229,7 @@ class ESCFlowsTests: BaseTest {
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -237,7 +237,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
@@ -324,7 +324,7 @@ class ESCFlowsTests: BaseTest {
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -332,7 +332,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
@@ -438,7 +438,7 @@ class ESCFlowsTests: BaseTest {
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -446,7 +446,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts
@@ -549,7 +549,7 @@ class ESCFlowsTests: BaseTest {
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
 
         // 5. Display payment methods (no exclusions)
@@ -557,7 +557,7 @@ class ESCFlowsTests: BaseTest {
         XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_SELECTION, step)
 
         // 6. Payment option selected : customer card visa => Cuotas
-        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected : customerCardOption as! PaymentMethodOption)
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: customerCardOption as! PaymentMethodOption)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PAYER_COSTS, step)
         mpCheckout.viewModel.payerCosts = MockBuilder.buildInstallment().payerCosts

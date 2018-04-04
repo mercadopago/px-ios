@@ -61,7 +61,8 @@ open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewData
 	}
 
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		return self.tyCCellAtIndexPath(indexPath)
+        guard let tycCell = self.tyCCellAtIndexPath(indexPath) else { return UITableViewCell.init() }
+        return tycCell
 	}
 
 	open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,8 +82,8 @@ open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewData
 		return size.height + 1
 	}
 
-	func tyCCellAtIndexPath(_ indexPath: IndexPath) -> PromoTyCDetailTableViewCell {
-		let cell = self.tableView.dequeueReusableCell(withIdentifier: "PromoTyCDetailTableViewCell", for: indexPath) as! PromoTyCDetailTableViewCell
+	func tyCCellAtIndexPath(_ indexPath: IndexPath) -> PromoTyCDetailTableViewCell? {
+        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: "PromoTyCDetailTableViewCell", for: indexPath) as? PromoTyCDetailTableViewCell else { return nil }
 		self.configureTyCCell(cell, atIndexPath: indexPath)
 		return cell
 	}

@@ -23,7 +23,7 @@ open class Regex {
 
     open func test(_ input: String) -> Bool {
 		if self.internalExpression != nil {
-			let matches = self.internalExpression!.matches(in: input, options: [], range:NSMakeRange(0, input.count))
+			let matches = self.internalExpression!.matches(in: input, options: [], range: NSMakeRange(0, input.count))
 			return matches.count > 0
 		} else {
 			return false

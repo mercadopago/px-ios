@@ -1,15 +1,71 @@
 excluded: # paths to ignore during linting. Takes precedence over `included`.
-  - MercadoPagoSDKTests
-  - Pods
-force_cast: warning # implicitly
-force_unwrapping: error
-control_statement: error
-todo: warning
-empty_count: warning
+  - Pods/
+  - MercadoPagoSDKTests/ #Sacar proyecto de tests por ahora
 
+opt_in_rules:
+
+# Reglas custom de MELI
+  # - empty_count
+  # - explicit_init
+  # - closure_spacing
+  # - overridden_super_call
+  # - redundant_nil_coalescing
+  # - private_outlet
+  # - nimble_operator
+  # - attributes
+  # - operator_usage_whitespace
+  # - closure_end_indentation
+  # - first_where
+  # - prohibited_super_call
+  # - force_try
+  # - extension_access_modifier
+  # - sorted_imports
+
+# Nuestras reglas custom:
+  # - override_in_extension
+  # - implicitly_unwrapped_optional
+  # - conditional_returns_on_newline
+  # - explicit_top_level_acl
+  # - explicit_type_interface
+  # - explicit_acl
+  # - discouraged_optional_boolean
+  # - fatal_error_message
+  # - file_header 
+  # - literal_expression_end_indentation
+  # - implicit_return
+  # - private_action
+  # - private_unit_test
+  # - private_over_fileprivate
+  # - sorted_first_last
+  # - switch_case_on_newline
+  # - trailing_closure
+  # - unneeded_parentheses_in_closure_argument
+
+disabled_rules:
+  # - empty_count
+  - leading_whitespace
+  - line_length
+  - todo
+# configurable rules can be customized from this configuration file
+# binary rules can set their severity level
+# TODO: pasar a error
+force_try: warning
+force_unwrapping: warning
+force_cast: warning
+
+# Terminar de definir esto
+identifier_name:
+    max_length:
+      warning: 55
+      error: 60
+    allowed_symbols:
+    - "_"
+    excluded:
+    - url
+    # - _description
 
 file_length:
-  warning: 800
+  warning: 900
   error: 1200
 type_name:
   min_length: 4 # only warning
@@ -17,12 +73,7 @@ type_name:
     warning: 40
     error: 50
   excluded: iPhone # excluded via string
-identifier_name:
-  max_length:
-    warning: 55
-    error: 60
-  excluded:
-    - url
+
 type_body_length:
    warning: 300
    error: 900
@@ -30,104 +81,5 @@ function_body_length:
    warning: 50
    error: 100
 cyclomatic_complexity:
-   warning: 10
-   error: 50
-
-function_parameter_count:
-  warning: 6
-  error: 10
-
-opt_in_rules:
-
-  - closure_spacing
-  - redundant_nil_coalescing
-  - nimble_operator
-  - operator_usage_whitespace
-  - closure_end_indentation
-  - object_literal
-  - prohibited_super_call
-  - empty_parameters
-  - conditional_returns_on_newline
-  - switch_case_on_newline
-  - empty_count
-  - private_outlet
-  - explicit_init
-  - overridden_super_call
-  # - force_unwrapping
-
-
-disabled_rules:
-  - line_length
-  - large_tuple
-  - force_cast
-  - identifier_name
-
-
-# Hay que ir agregando:
-  # - control_statement
-  # - variable_name
-  - unused_optional_binding
-  - implicit_getter
-  - type_name
-  - operator_usage_whitespace
-  - private_outlet
-  - for_where
-  - todo
-  - switch_case_on_newline
-  - empty_count
-  - cyclomatic_complexity
-  - explicit_init
-  - shorthand_operator
-  - closure_spacing
-  - operator_whitespace
-  - unused_enumerated
-  - vertical_parameter_alignment
-  - type_body_length
-  - file_length
-  - legacy_constructor
-  - trailing_comma
-  - redundant_string_enum_value
-  - closure_end_indentation
-  - function_body_length
-  - overridden_super_call
-  - class_delegate_protocol
-  - notification_center_detachment
-  - weak_delegate
-  - conditional_returns_on_newline
-  - function_parameter_count
-  - object_literal
-  - empty_parameters
-  - statement_position
-  - unused_closure_parameter
-  - force_try
-
-# disabled_rules:
-#     - trailing_newline
-#     - opening_brace
-#     - empty_count
-#     - comma
-#     - colon
-#     - force_cast
-#     - type_name
-#     - variable_name_min_length
-#     - trailing_semicolon
-#     - function_body_length
-#     - nesting
-#     - identifier_name
-#     - conditional_binding_cascade
-#     - variable_name_max_length
-#     - operator_whitespace
-#     - control_statement
-#     - legacy_constant
-#     - line_length
-#     - return_arrow_whitespace
-#     - trailing_whitespace
-#     - closing_brace
-#     - statement_position
-#     - type_body_length
-#     - todo
-#     - legacy_constructor
-#     - valid_docs
-#     - missing_docs
-#     - file_length
-#     - leading_whitespace
+   warning: 20
+   error: 35

@@ -22,8 +22,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var ccvLabelEmpty: Bool = true
     var toolbar: PXToolbar?
 
-    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_SECURITY_CODE } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_SECURITY_CODE }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW }
 
     override func trackInfo() {
         let metadata: [String: String] = [TrackingUtil.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
@@ -118,7 +118,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
             showErrorMessage(errorMessage)
             return
         }
-        self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
+        self.viewModel.executeCallback(secCode: securityCodeTextField.text)
     }
 
     func backAction() {

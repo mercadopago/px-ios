@@ -56,7 +56,7 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
         PXLayout.matchWidth(ofView: infoLabel, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: infoLabel).isActive = true
         if let upperView = upperView {
-            PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.put(view: infoLabel, onBottomOf: upperView, withMargin: PXLayout.XXS_MARGIN).isActive = true
         } else {
             PXLayout.pinTop(view: infoLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         }

@@ -28,8 +28,7 @@ open class CardToken: NSObject, CardInformationForm {
         super.init()
     }
 
-    public init (cardNumber: String?, expirationMonth: Int, expirationYear: Int,
-        securityCode: String?, cardholderName: String, docType: String, docNumber: String) {
+    public init (cardNumber: String?, expirationMonth: Int, expirationYear: Int, securityCode: String?, cardholderName: String, docType: String, docNumber: String) {
             super.init()
             self.cardholder = Cardholder()
             self.cardholder?.name = cardholderName
@@ -343,9 +342,9 @@ open class CardToken: NSObject, CardInformationForm {
         var str: String
 
         str = String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from:
-            
-            String(self.expirationYear).index(before:String(self.expirationYear).index(before: String(self.expirationYear).endIndex)
-                
+
+            String(self.expirationYear).index(before: String(self.expirationYear).index(before: String(self.expirationYear).endIndex)
+
         ))
 
         return str as NSString

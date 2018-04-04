@@ -75,14 +75,14 @@ open class MercadoPagoContext: NSObject {
     ]
 
     public enum Site: String {
-        case MLA = "MLA"
-        case MLB = "MLB"
-        case MLM = "MLM"
-        case MLV = "MLV"
-        case MLU = "MLU"
-        case MPE = "MPE"
-        case MLC = "MLC"
-        case MCO = "MCO"
+        case MLA
+        case MLB
+        case MLM
+        case MLV
+        case MLU
+        case MPE
+        case MLC
+        case MCO
     }
 
     open func siteId() -> String! {
@@ -126,35 +126,35 @@ open class MercadoPagoContext: NSObject {
     open static func getLanguage() -> String {
         return sharedInstance.language
     }
-    
+
     open static func getLocalizedID() -> String {
         let bundle = MercadoPago.getBundle() ?? Bundle.main
 
         let currentLanguage = MercadoPagoContext.getLanguage()
         let currentLanguageSeparated = currentLanguage.components(separatedBy: "-")[0]
-        if bundle.path(forResource: currentLanguage, ofType : "lproj") != nil {
+        if bundle.path(forResource: currentLanguage, ofType: "lproj") != nil {
             return currentLanguage
-        } else if (bundle.path(forResource: currentLanguageSeparated, ofType : "lproj") != nil) {
+        } else if (bundle.path(forResource: currentLanguageSeparated, ofType: "lproj") != nil) {
             return currentLanguageSeparated
         } else {
             return "es"
         }
     }
-    
+
     open static func getParentLanguageID() -> String {
         return MercadoPagoContext.getLanguage().components(separatedBy: "-")[0]
     }
-    
+
     open static func getLocalizedPath() -> String {
         let bundle = MercadoPago.getBundle() ?? Bundle.main
         let pathID = getLocalizedID()
-        return bundle.path(forResource: pathID, ofType : "lproj")!
+        return bundle.path(forResource: pathID, ofType: "lproj")!
     }
-    
+
     open static func getParentLocalizedPath() -> String {
         let bundle = MercadoPago.getBundle() ?? Bundle.main
         let pathID = getParentLanguageID()
-        return bundle.path(forResource: pathID, ofType : "lproj")!
+        return bundle.path(forResource: pathID, ofType: "lproj")!
     }
 
     open static func getTermsAndConditionsSite() -> String {

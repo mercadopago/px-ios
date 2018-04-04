@@ -27,7 +27,7 @@ open class CardFormViewModel: NSObject {
     var cardToken: CardToken?
 
     let textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
-    let textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
+    let textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
 
     var cvvEmpty: Bool = true
     var cardholderNameEmpty: Bool = true
@@ -194,7 +194,7 @@ open class CardFormViewModel: NSObject {
     }
 
     func matchedPaymentMethod (_ cardNumber: String) -> [PaymentMethod]? {
-        
+
         if self.guessedPMS != nil {
             return self.guessedPMS
         }

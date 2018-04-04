@@ -31,14 +31,14 @@ class PayerCostCFTTableViewCell: UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
 
         if !payerCost.hasInstallmentsRate() && payerCost.installments != 1 {
-            self.totalLabel.attributedText = NSAttributedString(string : "Sin interés".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 14)])
+            self.totalLabel.attributedText = NSAttributedString(string: "Sin interés".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 14)])
             self.totalLabel.textColor = UIColor.mpGreenishTeal()
 
         } else if payerCost.installments != 1 {
-            let attributedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 14, baselineOffset : 4)
-            let attributedAmountFinal = NSMutableAttributedString(string : "(")
+            let attributedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color: UIColor.px_grayBaseText(), fontSize: 14, baselineOffset: 4)
+            let attributedAmountFinal = NSMutableAttributedString(string: "(")
             attributedAmountFinal.append(attributedAmount)
-            attributedAmountFinal.append(NSAttributedString(string : ")"))
+            attributedAmountFinal.append(NSAttributedString(string: ")"))
             self.totalLabel.attributedText = attributedAmountFinal
             self.totalLabel.textColor = UIColor.px_grayLight()
         }
@@ -46,7 +46,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
 
     func fillInstallmentsLabel(payerCost: PayerCost) {
         let currency = MercadoPagoContext.getCurrency()
-        self.installmentsLabel.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), currency: currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.px_grayBaseText(), fontSize : 20, centsFontSize: 12, baselineOffset: 6)
+        self.installmentsLabel.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), currency: currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string: ""), color: UIColor.px_grayBaseText(), fontSize: 20, centsFontSize: 12, baselineOffset: 6)
     }
 
     func fillCFTLabel(payerCost: PayerCost) {
@@ -55,7 +55,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
     }
 
     func addSeparatorLineToBottom(width: Double, height: Double) {
-        let lineFrame = CGRect(origin: CGPoint(x: 0, y :Int(height)), size: CGSize(width: width, height: 0.5))
+        let lineFrame = CGRect(origin: CGPoint(x: 0, y: Int(height)), size: CGSize(width: width, height: 0.5))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.px_grayLight()

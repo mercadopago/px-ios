@@ -10,12 +10,6 @@ import XCTest
 
 class PromoTest: BaseTest {
 
-    func testFromJSON() {
-        let json: NSDictionary = MockManager.getMockFor("BankDeal")!
-        let promoTypeFromJSON = BankDeal.fromJSON(json)
-        XCTAssertEqual(promoTypeFromJSON, promoTypeFromJSON)
-    }
-
     func testToJSON() {
         let promo = MockBuilder.buildBankDeal()
         let promoJSON = promo.toJSON()

@@ -83,9 +83,9 @@ class PXInstructionsInfoRenderer: NSObject {
         PXLayout.centerHorizontally(view: infoLabel).isActive = true
         if let upperView = upperView {
             if isFirstInfo {
-                PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
+                PXLayout.put(view: infoLabel, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
             } else {
-                PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+                PXLayout.put(view: infoLabel, onBottomOf: upperView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
             }
         } else {
             PXLayout.pinTop(view: infoLabel, withMargin: PXLayout.L_MARGIN).isActive = true
@@ -105,7 +105,7 @@ class PXInstructionsInfoRenderer: NSObject {
         PXLayout.centerHorizontally(view: view).isActive = true
 
         if let upperView = upperView {
-            PXLayout.put(view: view, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.put(view: view, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return view

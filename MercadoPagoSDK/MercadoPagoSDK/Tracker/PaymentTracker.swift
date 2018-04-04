@@ -15,9 +15,7 @@ extension MPXTracker {
 
             TrackingServices.request(url: "https://api.mercadopago.com/v1/checkout/tracking", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (_) -> Void in
 
-            }) { (_) -> Void in
-
-            }
+            }, failure: nil)
 
     }
 
@@ -27,8 +25,6 @@ extension MPXTracker {
 
         TrackingServices.request(url: "https://api.mercadopago.com/v1/checkout/tracking/off", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (_) -> Void in
 
-            }) { (_) -> Void in
-
-        }
+        }, failure: nil)
     }
 }

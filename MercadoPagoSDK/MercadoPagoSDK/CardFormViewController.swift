@@ -29,36 +29,30 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     @IBOutlet weak var cardBackground: UIView!
     var cardView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
-
     var cardViewBack: UIView?
     var cardFront: CardFrontView?
     var cardBack: CardBackView?
-
     var cardNumberLabel: UILabel?
     var numberLabelEmpty: Bool = true
     var nameLabel: MPLabel?
     var expirationDateLabel: MPLabel?
     var expirationLabelEmpty: Bool = true
     var cvvLabel: UILabel?
-
     var editingLabel: UILabel?
-
     var callback : (( _ paymentMethods: [PaymentMethod], _ cardtoken: CardToken?) -> Void)?
 
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
-    var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
+    var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
 
     static public var showBankDeals = true
-
+    private var isShowingTextBoxMessage = false
     var toolbar: PXToolbar?
     var errorLabel: MPLabel?
-
     var navItem: UINavigationItem?
-
     var viewModel: CardFormViewModel!
 
-    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_CARD_FORM} }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM } }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM }
 
     public init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
@@ -70,7 +64,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     override func trackInfo() {
         var finalId = screenId
         if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId = finalId + "/" + cardType
+            finalId += "/" + cardType
         }
         MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
         self.trackStatus()
@@ -80,7 +74,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         var finalId = screenId
 
         if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId = finalId + "/" + cardType
+            finalId += "/" + cardType
         }
 
         if editingLabel === cardNumberLabel {
@@ -122,7 +116,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                     promocionesButton.tintColor = NAVIGATION_BAR_TEXT_COLOR
                     self.navigationItem.rightBarButtonItem = promocionesButton
                 }
-
                 displayBackButton()
             }
         }
@@ -143,14 +136,12 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     open override func viewWillAppear(_ animated: Bool) {
 
         super.viewWillAppear(animated)
-
         updateLabelsFontColors()
 
         if let navigation = self.navigationController {
             if navigation.viewControllers.first == self {
                 self.callbackCancel = {
                     self.dismiss(animated: true, completion: {})
-
                 }
             }
         }
@@ -158,7 +149,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             self.navigationItem.leftBarButtonItem?.target = self
             self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         }
-
         textEditMaskFormater.emptyMaskElement = nil
     }
 
@@ -173,10 +163,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                 self.navigationItem.rightBarButtonItem = promocionesButton
             }
         }
-
         self.showNavBar()
         textBox.becomeFirstResponder()
-
         self.updateCardSkin()
 
         if self.viewModel.customerCard != nil {
@@ -190,7 +178,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(viewModel.token?.firstSixDigit, remasked: false)
             self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(viewModel.token?.firstSixDigit, remasked: false)
             self.prepareCVVLabelForEdit()
-
         }
     }
 
@@ -254,11 +241,11 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         self.viewModel.mercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
             self.viewModel.promos = bankDeals
             self.updateCardSkin()
-        }) { (error) in
+        }, failure: { _ in
             // Si no se pudieron obtener promociones se ignora tal caso
             CardFormViewController.showBankDeals = false
             self.updateCardSkin()
-        }
+        })
     }
 
     func getCardWidth() -> CGFloat {
@@ -273,7 +260,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         } else {
             return 512
         }
-
     }
 
     func getCardHeight() -> CGFloat {
@@ -284,13 +270,11 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         if string.count == 0 {
             textField.text = textField.text!.trimmingCharacters(
                 in: CharacterSet.whitespacesAndNewlines
-
             )
         }
 
         let value: Bool = validateInput(textField, shouldChangeCharactersInRange: range, replacementString: string)
         updateLabelsFontColors()
-
         return value
     }
 
@@ -298,16 +282,18 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         guard let promos = self.viewModel.promos else {
             return
         }
-        self.navigationController?.pushViewController(self.startPromosStep(promos : promos), animated: true)
+        self.navigationController?.pushViewController(self.startPromosStep(promos: promos), animated: true)
     }
 
     func startPromosStep(promos: [BankDeal],
                          _ callback: (() -> Void)? = nil) -> PromoViewController {
-        return PromoViewController(promos : promos, callback : callback)
+        return PromoViewController(promos: promos, callback: callback)
     }
 
     open func editingChanged(_ textField: UITextField) {
-        hideMessage()
+        if isShowingTextBoxMessage {
+            hideMessage()
+        }
         if editingLabel == cardNumberLabel {
             showOnlyOneCardMessage()
             editingLabel?.text = textMaskFormater.textMasked(textEditMaskFormater.textUnmasked(textField.text!))
@@ -325,7 +311,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             editingLabel?.text = textField.text!
             completeCvvLabel()
         }
-
     }
 
     open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -437,10 +422,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             } else {
 
                 if (textEditMaskFormater.textUnmasked(textField.text).count) == viewModel.getGuessedPM()?.cardNumberLenght() {
-
                     return false
                 }
-
             }
             return true
 
@@ -562,6 +545,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func setTextBox(isError: Bool, inputAccessoryView: UIView) {
+        isShowingTextBoxMessage = true
         if isError {
             textBox.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
             textBox.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
@@ -583,6 +567,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func hideMessage() {
+        isShowingTextBoxMessage = false
         self.textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         setupToolbarButtons()
@@ -625,9 +610,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                     } else {
                         showMessage("Revisa este dato".localized)
                     }
-
                 }
-
                 return
             }
             prepareNameLabelForEdit()
@@ -651,7 +634,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             }
             if !self.validateExpirationDate() {
                 showMessage((viewModel.cardToken?.validateExpiryDate())!)
-
                 return
             }
             self.prepareCVVLabelForEdit()
@@ -674,7 +656,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func clearCardSkin() {
-
         if self.cardFront?.cardLogo.image != nil, self.cardFront?.cardLogo.image != MercadoPago.getCardDefaultLogo() {
             self.cardFront?.cardLogo.alpha = 0
             self.cardFront?.cardLogo.image =  MercadoPago.getCardDefaultLogo()
@@ -688,7 +669,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
 
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
-        let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
+        let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
 
         cardNumberLabel?.text = textMaskFormaterAux.textMasked(textMaskFormater.textUnmasked(cardNumberLabel!.text))
         if editingLabel == cardNumberLabel {
@@ -699,11 +680,10 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         cardFront?.cardCVV.alpha = 0
         viewModel.guessedPMS = nil
         self.updateLabelsFontColors()
-
     }
 
     func updateCardSkin() {
-        guard let _ = viewModel.getBIN(self.cardNumberLabel!.text!) else {
+        guard viewModel.getBIN(self.cardNumberLabel!.text!) != nil else {
             viewModel.guessedPMS = nil
             viewModel.cardToken = nil
             self.clearCardSkin()
@@ -711,7 +691,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
         if textEditMaskFormater.textUnmasked(textBox.text).count>=6 || viewModel.customerCard != nil ||
             viewModel.cardToken != nil {
-            hideMessage()
+            if isShowingTextBoxMessage {
+                hideMessage()
+            }
             let pmMatched = self.viewModel.matchedPaymentMethod(self.cardNumberLabel!.text!)
             viewModel.guessedPMS = pmMatched
             let bin = viewModel.getBIN(self.cardNumberLabel!.text!)
@@ -728,11 +710,10 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                     self.cardFront?.cardLogo.image =  paymentMethod.getImage()
                     self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                 }
-
                 let labelMask = paymentMethod.getLabelMask(bin: bin)
                 let editTextMask = paymentMethod.getEditTextMask(bin: bin)
                 let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
-                let textEditMaskFormaterAux = TextMaskFormater(mask:editTextMask, completeEmptySpaces :false)
+                let textEditMaskFormaterAux = TextMaskFormater(mask: editTextMask, completeEmptySpaces: false)
                 cardNumberLabel?.text = textMaskFormaterAux.textMasked(textMaskFormater.textUnmasked(cardNumberLabel!.text))
                 if editingLabel == cardNumberLabel {
                     textBox.text = textEditMaskFormaterAux.textMasked(textEditMaskFormater.textUnmasked(textBox.text))
@@ -792,7 +773,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     func updateLabelsFontColors() {
         self.delightedLabels()
         self.lightEditingLabel()
-
     }
 
     func markErrorLabel(_ label: UILabel) {
@@ -803,7 +783,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         let securityCode = self.viewModel.customerCard!.isSecurityCodeRequired() ? self.cvvLabel?.text : nil
         return  SavedCardToken(card: viewModel.customerCard!, securityCode: securityCode, securityCodeRequired: self.viewModel.customerCard!.isSecurityCodeRequired())
     }
-    
+
     fileprivate func getTextboxPlaceholder() -> String {
         if editingLabel == cardNumberLabel {
             return "Número de tarjeta".localized
@@ -818,7 +798,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func makeToken() {
-
         if viewModel.token != nil { // C4A
             let ct = CardToken()
             ct.securityCode = cvvLabel?.text
@@ -837,7 +816,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             self.callback!(viewModel.guessedPMS!, ct)
             return
         } else {
-            self.viewModel.tokenHidratate(cardNumberLabel!.text!, expirationDate: self.expirationDateLabel!.text!, cvv: self.cvvLabel!.text!, cardholderName : self.nameLabel!.text!)
+            self.viewModel.tokenHidratate(cardNumberLabel!.text!, expirationDate: self.expirationDateLabel!.text!, cvv: self.cvvLabel!.text!, cardholderName: self.nameLabel!.text!)
 
             if viewModel.guessedPMS != nil {
                 let errorMethod = viewModel.cardToken!.validateCardNumber(viewModel.getGuessedPM()!)
@@ -871,18 +850,15 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                 }
             }
         }
-
         self.callback!(viewModel.guessedPMS!, self.viewModel.cardToken!)
     }
 
     func addCvvDot() -> Bool {
-
         let label = self.cvvLabel
         //Check for max length including the spacers we added
         if label?.text?.count == viewModel.cvvLenght() {
             return false
         }
-
         label?.text?.append("•")
         return true
 
@@ -895,9 +871,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         } else {
             self.viewModel.cvvEmpty = false
         }
-
         while addCvvDot() != false {
-
         }
     }
 
@@ -921,5 +895,4 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     internal func validateExpirationDate() -> Bool {
         return self.viewModel.validateExpirationDate(self.cardNumberLabel!, expirationDateLabel: self.expirationDateLabel!, cvvLabel: self.cvvLabel!, cardholderNameLabel: self.nameLabel!)
     }
-
 }

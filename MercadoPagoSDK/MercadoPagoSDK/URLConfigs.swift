@@ -14,7 +14,7 @@ open class URLConfigs: NSObject {
     static var MP_PROD_ENV = "/v1"
     static var MP_SELECTED_ENV = MP_PROD_ENV
 
-    static var API_VERSION = "1.4.X"
+    static var API_VERSION = "1.5"
 
     static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
 

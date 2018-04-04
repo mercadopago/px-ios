@@ -11,17 +11,17 @@ import Foundation
 final class PXSummaryComponent: PXComponentizable {
 
     fileprivate var reusableView: UIView?
-    
+
     var props: PXSummaryComponentProps {
         didSet {
             redrawRender()
         }
     }
-    
+
     init(props: PXSummaryComponentProps) {
         self.props = props
     }
-    
+
     public func render() -> UIView {
         guard let dequeueReusableView = reusableView else {
             return PXSummaryComponentRenderer().render(self)

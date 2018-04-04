@@ -18,7 +18,7 @@ class PXInstructionsActionRenderer: NSObject {
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionView.backgroundColor = .pxLightGray
 
-        guard let label = instructionsAction.props.instructionActionInfo?.label, let _ = instructionsAction.props.instructionActionInfo?.tag, let url = instructionsAction.props.instructionActionInfo?.url else {
+        guard let label = instructionsAction.props.instructionActionInfo?.label, instructionsAction.props.instructionActionInfo?.tag != nil, let url = instructionsAction.props.instructionActionInfo?.url else {
             return instructionsActionView
         }
 

@@ -113,10 +113,8 @@ public class PXInstructionsContentComponent: NSObject, PXComponentizable {
 
     public func hasActions() -> Bool {
         if !Array.isNullOrEmpty(props.instruction.actions) {
-            for action in props.instruction.actions! {
-                if action.tag == ActionTag.LINK.rawValue {
-                    return true
-                }
+            for action in props.instruction.actions! where action.tag == ActionTag.LINK.rawValue {
+                return true
             }
         }
         return false

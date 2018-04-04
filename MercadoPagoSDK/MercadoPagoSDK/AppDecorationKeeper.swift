@@ -19,7 +19,7 @@ internal class NavigationControllerMemento {
     var navBackgroundImage: UIImage?
     var navShadowImage: UIImage?
     var navBarStyle: UIBarStyle?
-    var customDelegate: UINavigationControllerDelegate?
+    weak var customDelegate: UINavigationControllerDelegate?
     var swipeBackGesture: Bool = true
 
     init(navigationController: UINavigationController) {

@@ -17,20 +17,6 @@ open class SecurityCode: NSObject {
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> SecurityCode {
-        let securityCode: SecurityCode = SecurityCode()
-        if let length = JSONHandler.attemptParseToInt(json["length"]) {
-            securityCode.length = length
-        }
-        if let cardLocation = JSONHandler.attemptParseToString(json["card_location"]) {
-            securityCode.cardLocation = cardLocation
-        }
-        if let mode = JSONHandler.attemptParseToString(json["mode"]) {
-            securityCode.mode = mode
-        }
-        return securityCode
-    }
-
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
@@ -44,15 +30,4 @@ open class SecurityCode: NSObject {
 
         return obj
     }
-
-}
-
-public func ==(obj1: SecurityCode, obj2: SecurityCode) -> Bool {
-
-    let areEqual =
-    obj1.length == obj2.length &&
-    obj1.cardLocation == obj2.cardLocation &&
-    obj1.mode == obj2.mode
-
-    return areEqual
 }

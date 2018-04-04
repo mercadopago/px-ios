@@ -89,7 +89,7 @@ open class CardsAdminViewModel: NSObject {
 
     func heightOfItem(indexItem: Int) -> CGFloat {
         if isCardItemFor(indexPath: IndexPath(row: indexItem, section: 1)) {
-            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : cards![indexItem])
+            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption: cards![indexItem])
 
         } else if isExtraOptionItemFor(indexPath: IndexPath(row: indexItem, section: 1)) {
             return PaymentSearchCollectionViewCell.totalHeight(title: self.extraOptionTitle, subtitle: nil)
@@ -99,7 +99,7 @@ open class CardsAdminViewModel: NSObject {
 
     public func sizeForItemAt(indexPath: IndexPath) -> CGSize {
         if self.isHeaderSection(section: indexPath.section) {
-            return CGSize(width : screenWidth, height : titleCellHeight)
+            return CGSize(width: screenWidth, height: titleCellHeight)
 
         } else if self.isCardItemFor(indexPath: indexPath) || self.isExtraOptionItemFor(indexPath: indexPath) {
             return CGSize(width: widthPerItem, height: calculateHeight(indexPath: indexPath))

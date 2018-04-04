@@ -13,8 +13,8 @@ import MercadoPagoPXTracking
 open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 
 	var publicKey: String?
-	override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_BANK_DEALS } }
-    override open var screenId: String { get {return TrackingUtil.SCREEN_ID_BANK_DEALS }}
+	override open var screenName: String { return TrackingUtil.SCREEN_NAME_BANK_DEALS }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_BANK_DEALS }
 
 	@IBOutlet weak fileprivate var tableView: UITableView!
 

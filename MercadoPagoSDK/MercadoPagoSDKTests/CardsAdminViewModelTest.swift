@@ -109,7 +109,7 @@ class CardsAdminViewModelTest: BaseTest {
         XCTAssert(cardAdminViewModel.isHeaderSection(section: HEADER_SECTION_NUMBER))
         XCTAssertFalse(cardAdminViewModel.isHeaderSection(section: 1))
 
-        XCTAssertEqual(cardAdminViewModel.sizeForItemAt(indexPath: IndexPath(row: 0, section: HEADER_SECTION_NUMBER)), CGSize(width : cardAdminViewModel.screenWidth, height : cardAdminViewModel.titleCellHeight))
+        XCTAssertEqual(cardAdminViewModel.sizeForItemAt(indexPath: IndexPath(row: 0, section: HEADER_SECTION_NUMBER)), CGSize(width: cardAdminViewModel.screenWidth, height: cardAdminViewModel.titleCellHeight))
 
     }
 

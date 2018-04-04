@@ -15,7 +15,7 @@ class PaymentResultTest: BaseTest {
 
     func testPayerEmailObtainedFromPaymentData() {
         let payment = Payment()
-        payment._id = "1"
+        payment.paymentId = "1"
         payment.status = "approved"
         payment.statusDetail = "accredited"
         let payer = Payer()

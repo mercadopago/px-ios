@@ -103,7 +103,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         pp.excludedPaymentMethodIds = ["master"]
         pp.maxAcceptedInstallments = 3
 
-        let pv = MPFlowBuilder.startPaymentVaultViewController(5, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
+        let pv = MPFlowBuilder.startPaymentVaultViewController(5, paymentPreference: pp, callback: { (paymentMethod, token, issuer, payerCost) in
             print(paymentMethod._id)
             self.paymentMethod = paymentMethod
             self.createdToken = token
@@ -135,7 +135,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.selectedIssuer = issuer
             self.installmentsSelected = payerCost
            cf!.dismiss(animated: true, completion: {})
-            }, callbackCancel : {
+            }, callbackCancel: {
                 cf!.dismiss(animated: true, completion: {})
         })
 
@@ -160,7 +160,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.createdToken = token
             self.selectedIssuer = issuer
             cf!.dismiss(animated: true, completion: {})
-            }, callbackCancel : {
+            }, callbackCancel: {
                 cf!.dismiss(animated: true, completion: {})
         })
 

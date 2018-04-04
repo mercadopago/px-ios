@@ -9,12 +9,12 @@
 import UIKit
 
 class PXContainedLabelRenderer: NSObject {
-    
+
     func render(_ containedLabel: PXContainedLabelComponent) -> PXContainedLabelView {
         let containedLabelView = PXContainedLabelView()
         containedLabelView.translatesAutoresizingMaskIntoConstraints = false
         containedLabelView.backgroundColor = .white
-        
+
         //Label
         containedLabelView.mainLabel = buildLabel(with: containedLabel.props.labelText)
         containedLabelView.addSubview(containedLabelView.mainLabel)
@@ -24,7 +24,7 @@ class PXContainedLabelRenderer: NSObject {
         PXLayout.matchHeight(ofView: containedLabelView.mainLabel).isActive = true
         return containedLabelView
     }
-    
+
     func buildLabel(with text: NSAttributedString) -> UILabel {
         let label = UILabel()
         label.textAlignment = .center
@@ -40,5 +40,3 @@ class PXContainedLabelRenderer: NSObject {
 class PXContainedLabelView: PXComponentView {
     public var mainLabel: UILabel!
 }
-
-

@@ -40,9 +40,9 @@ open class LoadingOverlay {
         self.container.layer.cornerRadius = 10.0
         self.container.addSubview(self.activityIndicator)
 
-        self.screenContainer.frame = CGRect(x : 0, y : 0, width : view.frame.width, height : view.frame.height)
+        self.screenContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         self.screenContainer.backgroundColor = backgroundColor.withAlphaComponent(0.8)
-        
+
         self.screenContainer.addSubview(self.container)
 
         self.activityIndicator.startAnimating()
@@ -58,7 +58,7 @@ open class LoadingOverlay {
         view.bringSubview(toFront: self.loadingContainer)
         loadingOverlay = self.loadingContainer
         loadingOverlay?.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
-        
+
         return loadingOverlay!
     }
 

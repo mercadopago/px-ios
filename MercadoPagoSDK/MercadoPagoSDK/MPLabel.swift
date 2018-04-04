@@ -59,7 +59,7 @@ open class MPLabel: UILabel {
         if centered {
             paragraphStyle.alignment = .center
         }
-        attributedString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
         self.attributedText = attributedString
 
     }
