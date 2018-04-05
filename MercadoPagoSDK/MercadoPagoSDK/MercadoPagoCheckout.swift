@@ -84,6 +84,14 @@ open class MercadoPagoCheckout: NSObject {
     
     private func startExpress(from viewController:UIViewController) {
         let vc = ExpressViewController()
+
+        vc.setChangePaymentMethodAction {
+            [weak self] in
+            self?.viewModel.paymentOptionSelected = nil
+            self?.viewModel.expressChosen = false
+            self?.executeNextStep()
+        }
+
         //TODO: Replace MockPaymentOption() with InferredService payment option response.
         vc.setViewModel(viewModel: self.viewModel.reviewConfirmViewModel(externalPaymentOption: MockPaymentOption()))
         vc.modalPresentationStyle = .overCurrentContext

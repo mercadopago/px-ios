@@ -9,14 +9,15 @@
 import UIKit
 
 class ExpressViewController: UIViewController {
-    
+
     let popUpViewHeight: CGFloat = 480
     let borderMargin = PXLayout.XXXS_MARGIN
     var blurView: UIVisualEffectView!
     
     fileprivate var viewModel: PXReviewViewModel?
     fileprivate var bottomConstraint = NSLayoutConstraint()
-    
+    fileprivate var callbackChangePaymentMethod: (() -> Void)?
+
     // MARK: Lifecycle - Publics
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -25,13 +26,6 @@ class ExpressViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .clear
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = self.view.bounds
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.alpha = 0
-        self.view.addSubview(blurView)
         setupUI()
     }
     
@@ -142,7 +136,18 @@ class ExpressViewController: UIViewController {
             PXLayout.matchWidth(ofView: pmView).isActive = true
             PXLayout.centerHorizontally(view: pmView).isActive = true
             PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
-            
+
+            let changePaymentMethodBtn = UIButton()
+            pmView.addSubview(changePaymentMethodBtn)
+            PXLayout.centerVertically(view: changePaymentMethodBtn).isActive = true
+            PXLayout.centerHorizontally(view: changePaymentMethodBtn).isActive = true
+            PXLayout.matchWidth(ofView: changePaymentMethodBtn, toView: pmView, withPercentage: 100.0).isActive = true
+            PXLayout.matchHeight(ofView: changePaymentMethodBtn, toView: pmView, withPercentage: 100.0).isActive = true
+            changePaymentMethodBtn.backgroundColor = .clear
+            changePaymentMethodBtn.setTitle("", for: .normal)
+            changePaymentMethodBtn.add(for: .touchUpInside, {
+                self.shouldOpenGroups()
+            })
 
             //Footer
             var footerView: PXFooterView = PXFooterView()
@@ -171,7 +176,6 @@ class ExpressViewController: UIViewController {
             view.backgroundColor = UIColor.white
         }
 
-        
         return view
     }()
 }
@@ -179,6 +183,14 @@ class ExpressViewController: UIViewController {
 extension ExpressViewController {
     
     fileprivate func setupUI() {
+        view.backgroundColor = .clear
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.alpha = 0
+        view.addSubview(blurView)
+
         popupView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(popupView)
         PXLayout.centerHorizontally(view: popupView).isActive = true
@@ -200,6 +212,42 @@ extension ExpressViewController {
     
     @objc func hideSheet() {
         animatePopUpView(isDeployed: true)
+    }
+
+    @objc func fadeOut() {
+
+        let initialFrame = CGRect(x: 0, y: 0, width: PXLayout.getScreenWidth(), height: 0)
+        let animatedHeaderView: UIView = UIView(frame: initialFrame)
+        animatedHeaderView.backgroundColor = ThemeManager.shared.getMainColor()
+        popupView.addSubview(animatedHeaderView)
+
+        if #available(iOS 10.0, *) {
+
+            var height: CGFloat = 153
+            if PXLayout.getSafeAreaTopInset() > 0 {
+                height = 177
+            }
+            let finalFrame = CGRect(x: 0, y: 0, width: PXLayout.getScreenWidth(), height: height)
+            let transitionAnimator = UIViewPropertyAnimator(duration: 0.65, dampingRatio: 1, animations: {
+                animatedHeaderView.frame = finalFrame
+            })
+
+            transitionAnimator.addCompletion { _ in
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.view.alpha = 0
+                }) { finish in
+                    self.dismiss(animated: false, completion: nil)
+                }
+            }
+
+            transitionAnimator.startAnimation()
+        } else {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.alpha = 0
+            }) { finish in
+                self.dismiss(animated: false, completion: nil)
+            }
+        }
     }
     
     fileprivate func animatePopUpView(isDeployed: Bool) {
@@ -231,6 +279,7 @@ extension ExpressViewController {
     }
 }
 
+//MARK: - Button animation
 extension ExpressViewController: PXAnimatedButtonDelegate {
     func didFinishAnimation() {
         self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.2)
@@ -239,8 +288,41 @@ extension ExpressViewController: PXAnimatedButtonDelegate {
 
 //MARK: - User Actions
 extension ExpressViewController {
-    func shouldOpenGroups() {
-        print("shouldOpenGroups")
+
+    fileprivate func shouldOpenGroups() {
+        if #available(iOS 10.0, *) {
+            let targetFrame = view.frame
+            let transitionAnimator = UIViewPropertyAnimator(duration: 0.65, dampingRatio: 1.3, animations: {
+                self.popupView.frame = targetFrame
+                self.popupView.layer.cornerRadius = 0
+            })
+
+            transitionAnimator.addCompletion({ [weak self] _ in
+                self?.callbackChangePaymentMethod?()
+                self?.fadeOut()
+            })
+
+            transitionAnimator.startAnimation()
+
+            let overlayWhite = UIView(frame: self.view.frame)
+            overlayWhite.alpha = 0
+            overlayWhite.backgroundColor = .white
+            popupView.addSubview(overlayWhite)
+            UIView.animate(withDuration: 0.5, animations: {
+                overlayWhite.alpha = 1
+            })
+
+        } else {
+            self.callbackChangePaymentMethod?()
+            // TODO: Fallback on earlier versions
+        }
+    }
+}
+
+//MARK: Public interfase
+extension ExpressViewController  {
+    func setChangePaymentMethodAction(callbackAction: @escaping (() -> Void)) {
+        self.callbackChangePaymentMethod = callbackAction
     }
 }
 

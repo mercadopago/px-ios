@@ -324,7 +324,6 @@ extension MercadoPagoCheckoutViewModel {
     
     
     /*POC EXPRESS CHO*/
-    
     func isExpressChoAvaible() -> Bool {
         return true
     }

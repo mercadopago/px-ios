@@ -102,6 +102,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
 
+    // TODO: Review state machine for dimissed/not-chosen
+    var expressChosen = true
+
     var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
 
     // Plugins payment method.
@@ -433,7 +436,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if needSearch() {
             return .SERVICE_GET_PAYMENT_METHODS
         }
-        if isExpressChoAvaible() {
+        if isExpressChoAvaible() && expressChosen {
             return .START_EXPRESS_CHECKOUT
         }
         if !isPaymentTypeSelected() {
