@@ -36,7 +36,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         PXLayout.pinLeft(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
         PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
         PXLayout.setWidth(owner: pmBodyView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
-        PXLayout.pinTop(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.centerVertically(view: pmBodyView.paymentMethodIcon!).isActive = true
         
         //Title
         let title = UILabel()
@@ -48,7 +48,6 @@ class PXPaymentMethodComponentRenderer: NSObject {
         title.textColor = component.props.boldLabelColor
         title.textAlignment = .left
         title.numberOfLines = 0
-        PXLayout.pinTop(view: pmBodyView.amountTitle!, withMargin: margin).isActive = true
         PXLayout.put(view: pmBodyView.amountTitle!, rightOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
         PXLayout.pinRight(view: pmBodyView.amountTitle!, withMargin: margin).isActive = true
         PXLayout.setHeight(owner: pmBodyView.amountTitle!, height: 20).isActive = true
@@ -59,13 +58,20 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmBodyView.addSubview(detailLabel)
             pmBodyView.amountDetail = detailLabel
             detailLabel.attributedText = detailText
-            detailLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
+            detailLabel.font = Utils.getFont(size: PXLayout.XXS_FONT)
             detailLabel.textColor = component.props.lightLabelColor
             detailLabel.textAlignment = .left
             PXLayout.setHeight(owner: detailLabel, height: 20).isActive = true
             PXLayout.pinLeft(view: pmBodyView.amountDetail!, to: pmBodyView.amountTitle!).isActive = true
             PXLayout.pinRight(view: pmBodyView.amountDetail!, to: pmBodyView.amountTitle!).isActive = true
-            PXLayout.pinBottom(view: pmBodyView.amountDetail!, to: pmBodyView.paymentMethodIcon!).isActive = true
+        }
+        
+        if pmBodyView.amountDetail != nil {
+            PXLayout.pinTop(view: pmBodyView.amountTitle!, to: pmBodyView.paymentMethodIcon!, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: pmBodyView.amountDetail!, to: pmBodyView.paymentMethodIcon!, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        } else {
+            PXLayout.centerVertically(view: pmBodyView.amountTitle!, to: pmBodyView.paymentMethodIcon!).isActive = true
+            
         }
 
         //Divider

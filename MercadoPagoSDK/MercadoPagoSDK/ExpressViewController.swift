@@ -119,7 +119,6 @@ class ExpressViewController: UIViewController {
             let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
             let itemComponent = PXItemComponent(props: itemProps)
             let itemView = itemComponent.expressRender()
-            itemView.addSeparatorLineToBottom(height: 1)
             view.addSubview(itemView)
             PXLayout.matchWidth(ofView: itemView).isActive = true
             PXLayout.centerHorizontally(view: itemView).isActive = true
@@ -131,9 +130,13 @@ class ExpressViewController: UIViewController {
             
             let pmComponent = PXPaymentMethodComponent(props: pmProps)
             let pmView = pmComponent.expressRender()
-            //pmView.addSeparatorLineToBottom(height: 1)
+            let color: UIColor = .UIColorFromRGB(0xEEEEEE)
+            pmView.layer.borderWidth = 1
+            pmView.layer.borderColor = color.cgColor
+            pmView.layer.cornerRadius = 4
             view.addSubview(pmView)
-            PXLayout.matchWidth(ofView: pmView).isActive = true
+            PXLayout.pinLeft(view: pmView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: pmView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.centerHorizontally(view: pmView).isActive = true
             PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
 
@@ -162,7 +165,6 @@ class ExpressViewController: UIViewController {
             loadingButtonComponent = footerView.getPrincipalButton()
             loadingButtonComponent?.animationDelegate = self
             view.addSubview(footerView)
-            footerView.addSeparatorLineToTop(height: 1)
             PXLayout.matchWidth(ofView: footerView).isActive = true
             PXLayout.pinBottom(view: footerView).isActive = true
             PXLayout.centerHorizontally(view: footerView).isActive = true
