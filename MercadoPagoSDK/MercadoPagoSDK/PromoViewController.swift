@@ -63,11 +63,11 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	}
 
 	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return promos == nil ? 1 : promos.count
+		return Array.isNullOrEmpty(promos) ? 1 : promos.count
 	}
 
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if self.promos != nil && self.promos.count > 0 {
+        if !Array.isNullOrEmpty(promos) {
             let promoCell: PromoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PromoTableViewCell", for: indexPath) as! PromoTableViewCell
             promoCell.setPromoInfo(self.promos[(indexPath as NSIndexPath).row])
             return promoCell
@@ -77,12 +77,8 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	}
 
 	open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if self.promos != nil && self.promos.count > 0 {
-			if (indexPath as NSIndexPath).row == self.promos.count {
-				return 55
-			} else {
-				return 151
-			}
+		if !Array.isNullOrEmpty(promos) {
+            return 151
 		} else {
 			return 80
 		}
@@ -92,9 +88,9 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	}
 
     internal override func executeBack() {
-            if self.callback != nil {
-                self.callback!()
-            }
+        if self.callback != nil {
+            self.callback!()
+        }
     }
 
 }
