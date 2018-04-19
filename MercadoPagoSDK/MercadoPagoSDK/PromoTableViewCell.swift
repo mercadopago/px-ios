@@ -24,7 +24,6 @@ open class PromoTableViewCell: UITableViewCell {
 
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-        self.isUserInteractionEnabled = true
 	}
 
 	open func setPromoInfo(_ promo: BankDeal!) {

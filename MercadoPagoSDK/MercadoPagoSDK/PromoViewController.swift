@@ -70,6 +70,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
         if !Array.isNullOrEmpty(promos) {
             let promoCell: PromoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PromoTableViewCell", for: indexPath) as! PromoTableViewCell
             promoCell.setPromoInfo(self.promos[(indexPath as NSIndexPath).row])
+            promoCell.isUserInteractionEnabled = true
             return promoCell
 		} else {
 			return tableView.dequeueReusableCell(withIdentifier: "PromoEmptyTableViewCell", for: indexPath) as! PromoEmptyTableViewCell
