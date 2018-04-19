@@ -85,13 +85,6 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		}
 	}
 
-	open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let promoLegals = promos[indexPath.row].legals {
-            let viewController = PromoTyCViewController(legalText: promoLegals)
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-	}
-
     internal override func executeBack() {
         if self.callback != nil {
             self.callback!()
