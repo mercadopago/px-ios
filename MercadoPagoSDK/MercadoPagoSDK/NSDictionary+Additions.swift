@@ -32,7 +32,8 @@ extension NSDictionary {
                     parametersString += key + "=" + value + "&"
                 }
             }
-            parametersString = parametersString.substring(to: parametersString.index(before: parametersString.endIndex))
+            let range = parametersString.index(before: parametersString.endIndex)
+            parametersString = String(parametersString[..<range])
             return parametersString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         } else {
             return ""

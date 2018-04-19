@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Cardholder: NSObject {
+@objcMembers open class Cardholder: NSObject {
     open var name: String?
     open var identification: Identification!
 

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 open class Regex {
     let internalExpression: NSRegularExpression?
     let pattern: String

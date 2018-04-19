@@ -10,6 +10,7 @@ import UIKit
 
 import Foundation
 
+@objcMembers
 open class MPCustomCell: NSObject {
 
     weak var delegate: MPCustomRowDelegate?

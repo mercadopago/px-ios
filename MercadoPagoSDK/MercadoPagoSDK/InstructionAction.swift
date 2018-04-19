@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class InstructionAction: NSObject {
+@objcMembers open class InstructionAction: NSObject {
 
     var label: String!
     var url: String!

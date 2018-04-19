@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Token: NSObject, CardInformationForm {
+@objcMembers open class Token: NSObject, CardInformationForm {
 	open var tokenId: String!
 	open var publicKey: String?
 	open var cardId: String!
@@ -79,6 +79,7 @@ open class Token: NSObject, CardInformationForm {
                      securityCodeLength: securityCodeLength!, expirationMonth: expMonth!, expirationYear: expYear!, lastModifiedDate: lastModifiedDate,
                      dueDate: dueDate, cardHolder: cardHolder, esc: esc)
     }
+
     public convenience init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!, usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!, dueDate: Date?, cardHolder: Cardholder?) {
 
         self.init(tokenId: tokenId, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status,
@@ -91,7 +92,7 @@ open class Token: NSObject, CardInformationForm {
         var bin: String? = nil
         if firstSixDigit != nil && firstSixDigit.count > 0 {
             let range = firstSixDigit!.startIndex ..< firstSixDigit!.index(firstSixDigit!.startIndex, offsetBy: 6)
-            bin = firstSixDigit!.count >= 6 ? firstSixDigit!.substring(with: range) : nil
+            bin = firstSixDigit!.count >= 6 ? String(firstSixDigit![range]) : nil
         }
 
         return bin
@@ -153,7 +154,13 @@ open class Token: NSObject, CardInformationForm {
 
     open func getExpirationDateFormated() -> String {
         if self.expirationYear > 0 && self.expirationMonth > 0 {
-            return String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from: String(self.expirationYear).index(before: String(self.expirationYear).index(before: String(self.expirationYear).endIndex)))
+
+            let expirationMonth = self.expirationMonth.stringValue
+            let expirationYear = self.expirationYear.stringValue
+
+            let range = expirationYear.index(before: expirationYear.index(before: expirationYear.endIndex))
+
+            return expirationMonth + "/" + String(expirationYear[range...])
         }
         return ""
     }

@@ -72,7 +72,7 @@ class SimpleInputComponent: UIView, PXComponent {
     open func setInputAccessoryView(inputAccessoryView: UIView) {
         self.inputTextField.inputAccessoryView = inputAccessoryView
     }
-    open func editingChanged(textField: UITextField) {
+    @objc open func editingChanged(textField: UITextField) {
         if let delegate = self.delegate {
             delegate.textChangedIn(component: self)
         }
@@ -158,7 +158,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(CompositeInputComponent.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let font = Utils.getFont(size: 14)
-        doneButton.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: font], for: UIControlState())
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         return toolBar
@@ -183,7 +183,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.text = dropDownSelectedOptionText
         self.inputTextField.text = ""
     }
-    open func donePicker() {
+    @objc open func donePicker() {
         dropDownTextField.resignFirstResponder()
         inputTextField.becomeFirstResponder()
     }

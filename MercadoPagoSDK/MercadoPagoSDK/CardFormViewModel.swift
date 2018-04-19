@@ -18,6 +18,7 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+@objcMembers
 open class CardFormViewModel: NSObject {
 
     var paymentMethods: [PaymentMethod]
@@ -119,7 +120,8 @@ open class CardFormViewModel: NSObject {
         if trimmedNumber.count < 6 {
             return nil
         } else {
-            let bin = trimmedNumber.substring(to: (trimmedNumber.index(trimmedNumber.startIndex, offsetBy: 6)))
+            let range = (trimmedNumber.index(trimmedNumber.startIndex, offsetBy: 6))
+            let bin = String(trimmedNumber[..<range])
             return bin
         }
     }

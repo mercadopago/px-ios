@@ -237,7 +237,7 @@ open class MockBuilder: NSObject {
     class func buildPaymentMethodPlugin(id: String, name: String, displayOrder: PXPaymentMethodPlugin.DisplayOrder = .TOP, shouldSkipPaymentPlugin: Bool = false, configPaymentMethodPlugin: MockConfigPaymentMethodPlugin?) -> PXPaymentMethodPlugin {
         let paymentPlugin = MockPaymentPluginViewController()
 
-        let plugin = PXPaymentMethodPlugin(id: id, name: name, image: UIImage(), description: nil, paymentPlugin: paymentPlugin)
+        let plugin = PXPaymentMethodPlugin(paymentMethodPluginId: id, name: name, image: UIImage(), description: nil, paymentPlugin: paymentPlugin)
 
         if let configPaymentMethodPlugin = configPaymentMethodPlugin {
             plugin.setPaymentMethodConfig(plugin: configPaymentMethodPlugin)
@@ -489,7 +489,7 @@ open class MockBuilder: NSObject {
     class func buildPaymentResult(_ status: String? = "status", statusDetail: String = "detail", paymentMethodId: String, paymentTypeId: String = "credit_card") -> PaymentResult {
         let pm = MockBuilder.buildPaymentMethod(paymentMethodId, name: paymentMethodId, paymentTypeId: paymentTypeId)
         let paymentData = MockBuilder.buildPaymentData(paymentMethod: pm)
-        let paymentResult = PaymentResult(status: status!, statusDetail: statusDetail, paymentData: paymentData, payerEmail: "email", id: "id", statementDescription: "description")
+        let paymentResult = PaymentResult(status: status!, statusDetail: statusDetail, paymentData: paymentData, payerEmail: "email", paymentId: "id", statementDescription: "description")
         return paymentResult
     }
 

@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoPXTracking
 
+@objcMembers
 open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
@@ -188,7 +189,7 @@ open class MercadoPagoCheckout: NSObject {
     func validatePreference() {
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {
-            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { (_) -> Void in })
+            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { () -> Void in })
         }
         self.executeNextStep()
     }

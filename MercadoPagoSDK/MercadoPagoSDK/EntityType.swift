@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class EntityType: NSObject, Cellable {
+@objcMembers open class EntityType: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.entityType
     open var entityTypeId: String!
@@ -26,6 +26,7 @@ open class EntityType: NSObject, Cellable {
 
         return entityType
     }
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }

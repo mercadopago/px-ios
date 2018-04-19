@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class MerchantPayment: NSObject {
+@objcMembers open class MerchantPayment: NSObject {
     open var issuer: Issuer?
     open var cardTokenId: String!
     open var campaignId: Int = 0

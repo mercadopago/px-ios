@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
+@objcMembers open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
 
     var customerPaymentMethodId: String!
     var customerPaymentMethodDescription: String!

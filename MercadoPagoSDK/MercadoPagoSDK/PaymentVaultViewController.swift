@@ -29,6 +29,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+@objcMembers
 open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
@@ -127,7 +128,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
        self.collectionSearch.backgroundColor = UIColor.white
     }
 
-    func updateCoupon(_ notification: Notification) {
+    @objc func updateCoupon(_ notification: Notification) {
         if let discount = notification.userInfo?["coupon"] as? DiscountCoupon {
             self.viewModel.discount = discount
             self.collectionSearch.reloadData()
@@ -336,13 +337,13 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 view.removeFromSuperview()
             }
 
-            let amountFontSize: CGFloat = 16
-            let centsFontSize: CGFloat = 12
+            let amountFontSize: CGFloat = PXLayout.XS_FONT
+            let centsFontSize: CGFloat = PXLayout.XXXS_FONT
             let currency = MercadoPagoContext.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = currency.getThousandsSeparatorOrDefault()
             let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-            let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+            let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSAttributedStringKey.font: Utils.getFont(size: amountFontSize)])
 
             let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
             attributedTitle.append(attributedAmount)

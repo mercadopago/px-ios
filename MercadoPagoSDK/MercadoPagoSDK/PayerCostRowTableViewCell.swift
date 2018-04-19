@@ -19,9 +19,9 @@ class PayerCostRowTableViewCell: UITableViewCell {
             self.interestDescription.clearAttributedText()
 
         } else if payerCost.hasInstallmentsRate() {
-            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSForegroundColorAttributeName: UIColor.px_grayLight()]))
+            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSAttributedStringKey.foregroundColor: UIColor.px_grayLight()]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color: UIColor.px_grayLight(), fontSize: 15, baselineOffset: 3))
-            attributedTotal.append(NSAttributedString(string: ")", attributes: [NSForegroundColorAttributeName: UIColor.px_grayLight()]))
+            attributedTotal.append(NSAttributedString(string: ")", attributes: [NSAttributedStringKey.foregroundColor: UIColor.px_grayLight()]))
 
             if showDescription == false {
                 interestDescription.attributedText = NSAttributedString(string: "")
@@ -42,7 +42,7 @@ class PayerCostRowTableViewCell: UITableViewCell {
         installmentNumber = "\(installmentNumber) x "
         let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor.black, centsFontSize: 14, baselineOffset: 5)
 
-        let atribute = [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.black]
+        let atribute = [NSAttributedStringKey.font: Utils.getFont(size: 20), NSAttributedStringKey.foregroundColor: UIColor.black]
         let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: atribute)
 
         installmentLabel.append(totalAmount)

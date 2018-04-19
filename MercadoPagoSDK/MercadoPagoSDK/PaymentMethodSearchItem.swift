@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
+@objcMembers open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
 
     open var idPaymentMethodSearchItem: String!
     open var type: PaymentMethodSearchItemType!
@@ -106,6 +106,7 @@ open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMeth
                 if let childrenHeader = JSONHandler.attemptParseToString(json["children_header"]) {
                         pmSearchItem.childrenHeader = childrenHeader
                     }
+
                 var children = [PaymentMethodSearchItem]()
                 if let childrenJson = json["children"] as? NSArray {
                         for i in 0..<childrenJson.count {

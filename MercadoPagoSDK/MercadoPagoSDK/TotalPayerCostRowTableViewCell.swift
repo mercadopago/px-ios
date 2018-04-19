@@ -11,6 +11,7 @@ import UIKit
 class TotalPayerCostRowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var totalLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
@@ -26,7 +27,7 @@ class TotalPayerCostRowTableViewCell: UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
         // amount currency color fontsize centfontsize baselineoffset
         // (total, currency: currency, color : UIColor.black, fontSize: 16, centsFontSize: 12,  baselineOffset:3)
-        let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "Total".localized + ": ", attributes: [NSForegroundColorAttributeName: UIColor.black]))
+        let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "Total".localized + ": ", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black]))
         attributedTotal.append(Utils.getAttributedAmount(total, currency: currency, color: UIColor.black, fontSize: 16, centsFontSize: 12, baselineOffset: 3))
         totalLabel.attributedText = attributedTotal
     }

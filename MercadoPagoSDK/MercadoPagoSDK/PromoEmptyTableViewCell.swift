@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class PromoEmptyTableViewCell: UITableViewCell {
 
     override open func awakeFromNib() {

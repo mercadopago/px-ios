@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!

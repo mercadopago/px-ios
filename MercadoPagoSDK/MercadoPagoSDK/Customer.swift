@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class Customer: NSObject {
+@objcMembers open class Customer: NSObject {
     open var address: Address?
     open var cards: [Card]?
     open var defaultCard: String?
@@ -62,6 +62,7 @@ open class Customer: NSObject {
         customer.cards = cards.isEmpty ? nil : cards
         return customer
     }
+
     open func toJSONString() -> String {
         let defaultCard: Any =  self.defaultCard == nil ? JSONHandler.null : self.defaultCard!
         let description: Any =   self.customerDescription == nil ? JSONHandler.null : self.customerDescription!

@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class PayerCost: NSObject, Cellable {
+@objcMembers open class PayerCost: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.payerCost
     open var installments: Int = 0
@@ -96,7 +96,7 @@ open class PayerCost: NSObject, Cellable {
             let values = label.components(separatedBy: "|")
             for value in values {
                 if let range = value.range(of: "CFT_") {
-                    return value.substring(from: range.upperBound)
+                    return String(value[range.upperBound...])
                 }
             }
         }
@@ -109,7 +109,7 @@ open class PayerCost: NSObject, Cellable {
             let values = label.components(separatedBy: "|")
             for value in values {
                 if let range = value.range(of: "TEA_") {
-                    return value.substring(from: range.upperBound)
+                    return String(value[range.upperBound...])
                 }
             }
         }

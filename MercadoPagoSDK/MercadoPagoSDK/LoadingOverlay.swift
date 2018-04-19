@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class LoadingOverlay {
 
     var container = UIView()

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+@objcMembers
 open class PXHookNavigationHandler: NSObject {
 
     private var checkout: MercadoPagoCheckout?

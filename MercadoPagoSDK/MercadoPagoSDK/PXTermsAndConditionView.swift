@@ -40,7 +40,7 @@ final class PXTermsAndConditionView: PXComponentView {
 
         addSubview(termsAndConditionsText)
 
-        let URLAttribute = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String: Any]
+        let URLAttribute: [String: Any] = [NSAttributedStringKey.font.rawValue: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor.rawValue: ThemeManager.shared.getTheme().secondaryButton().tintColor]
 
         termsAndConditionsText.linkTextAttributes = URLAttribute
 
@@ -70,26 +70,25 @@ extension PXTermsAndConditionView {
     fileprivate func getTyCText() -> NSMutableAttributedString {
 
         let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 12), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().labelTintColor()]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.getTheme().labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: SCREEN_TITLE.localized)
 
-        mutableAttributedString.addAttribute(NSLinkAttributeName, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
+        mutableAttributedString.addAttribute(NSAttributedStringKey.link, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         style.lineSpacing = CGFloat(3)
 
-        mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSRange(location: 0, length: mutableAttributedString.length))
-
+        mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length: mutableAttributedString.length))
         return mutableAttributedString
     }
 }
 
 extension PXTermsAndConditionView: UITextViewDelegate, UIGestureRecognizerDelegate {
 
-    func handleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let url = URL(string: MercadoPagoContext.getTermsAndConditionsSite()) {
             delegate?.shouldOpenTermsCondition(SCREEN_TITLE.localized, screenName: SCREEN_NAME, url: url)
         }

@@ -386,7 +386,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let visaPaymentMethod = MockBuilder.buildPaymentMethod("visa")
         let paymentDataVisa = MockBuilder.buildPaymentData(paymentMethod: visaPaymentMethod)
 
-        let paymentResult = PaymentResult(status: "status", statusDetail: "statusDetail", paymentData: paymentDataVisa, payerEmail: "payerEmail", id: "id", statementDescription: "description")
+        let paymentResult = PaymentResult(status: "status", statusDetail: "statusDetail", paymentData: paymentDataVisa, payerEmail: "payerEmail", paymentId: "id", statementDescription: "description")
 
         let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData: paymentDataVisa, paymentResult: paymentResult, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)

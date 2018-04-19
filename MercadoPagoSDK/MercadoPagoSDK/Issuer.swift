@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Issuer: NSObject, Cellable {
+@objcMembers open class Issuer: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.issuer
     open var issuerId: String?
@@ -24,6 +24,7 @@ open class Issuer: NSObject, Cellable {
                 if let name = JSONHandler.attemptParseToString(json["name"]) {
                         issuer.name = name
                     }
+
                 return issuer
             }
 

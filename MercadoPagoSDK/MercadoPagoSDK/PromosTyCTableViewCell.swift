@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class PromosTyCTableViewCell: UITableViewCell {
 
 	@IBOutlet weak fileprivate var title: MPLabel!

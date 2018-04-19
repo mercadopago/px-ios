@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MercadoPagoPXTracking
 
+@objcMembers
 open class AdditionalStepViewModel: NSObject {
 
     var bundle: Bundle? = MercadoPago.getBundle()

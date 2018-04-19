@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class PurchaseDetailTableViewCell: UITableViewCell {
 
     static let ROW_HEIGHT = CGFloat(52)

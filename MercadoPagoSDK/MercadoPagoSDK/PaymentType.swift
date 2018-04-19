@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PaymentType: NSObject {
+@objcMembers open class PaymentType: NSObject {
 
     open static let allPaymentIDs: Set<String> = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.ACCOUNT_MONEY.rawValue, PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue, PaymentTypeId.ATM.rawValue, PaymentTypeId.BITCOIN.rawValue, PaymentTypeId.PREPAID_CARD.rawValue, PaymentTypeId.BOLBRADESCO.rawValue]
 

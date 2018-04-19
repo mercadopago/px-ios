@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class MPLabel: UILabel {
 
     /*
@@ -45,7 +46,7 @@ open class MPLabel: UILabel {
         if self.attributedText != nil {
             attributedString.append(self.attributedText!)
         }
-        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSRange(location: 0, length: self.attributedText!.length))
+        attributedString.addAttribute(NSAttributedStringKey.kern, value: spacing, range: NSRange(location: 0, length: self.attributedText!.length))
         self.attributedText = attributedString
     }
 
@@ -59,7 +60,7 @@ open class MPLabel: UILabel {
         if centered {
             paragraphStyle.alignment = .center
         }
-        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         self.attributedText = attributedString
 
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 open class Payer: NSObject {
 	open var email: String!
 	open var payerId: String?

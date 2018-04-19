@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class PromoTableViewCell: UITableViewCell {
 
 	@IBOutlet weak open var issuerImageView: UIImageView!

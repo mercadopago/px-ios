@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoPXTracking
 
+@objcMembers
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     open var callbackCancel: (() -> Void)?
@@ -98,8 +99,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             if let inData = try? Data(contentsOf: URL(fileURLWithPath: path)) {
                 var error: Unmanaged<CFError>?
                 let cfdata = CFDataCreate(nil, (inData as NSData).bytes.bindMemory(to: UInt8.self, capacity: inData.count), inData.count)
-                if let provider = CGDataProvider(data: cfdata!) {
-                    let font = CGFont(provider)
+                if let provider = CGDataProvider(data: cfdata!), let font = CGFont(provider) {
                     if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
                         print("Failed to load font: \(error.debugDescription)")
                     }
@@ -113,13 +113,13 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     internal func loadMPStyles() {
 
         if self.navigationController != nil {
-            var titleDict: NSDictionary = [:]
+            var titleDict: [NSAttributedStringKey: Any] = [:]
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: 18)
-            titleDict = [NSForegroundColorAttributeName: navBarTextColor, NSFontAttributeName: fontChosed]
+            titleDict = [NSAttributedStringKey.foregroundColor: navBarTextColor, NSAttributedStringKey.font: fontChosed]
 
             if titleDict.count > 0 {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict
             }
             self.navigationItem.hidesBackButton = true
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
@@ -152,14 +152,14 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         ThemeManager.shared.applyAppNavBarStyle(navigationController: navController)
     }
 
-    internal func invokeCallbackCancelShowingNavBar() {
+    @objc internal func invokeCallbackCancelShowingNavBar() {
         if self.callbackCancel != nil {
             self.showNavBar()
             self.callbackCancel!()
         }
 
     }
-    internal func invokeCallbackCancel() {
+    @objc internal func invokeCallbackCancel() {
         if self.callbackCancel != nil {
             self.callbackCancel!()
         }
@@ -210,7 +210,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.navigationItem.leftBarButtonItem = nil
     }
 
-    internal func executeBack() {
+    @objc internal func executeBack() {
         if let callbackCancel = callbackCancel {
             callbackCancel()
             return
@@ -297,8 +297,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             }
 
             let font: UIFont = Utils.getFont(size: navBarFontSize)
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: ThemeManager.shared.getTheme().navigationBar().tintColor, NSFontAttributeName: font]
-            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
+            let titleDict: [NSAttributedStringKey: Any] = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.getTheme().navigationBar().tintColor, NSAttributedStringKey.font: font]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict
         }
 
     }

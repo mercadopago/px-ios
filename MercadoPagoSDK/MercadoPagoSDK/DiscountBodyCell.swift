@@ -53,7 +53,7 @@ class DiscountBodyCell: UIView {
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSAttributedStringKey.font: Utils.getFont(size: amountFontSize)])
 
         let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
         attributedTitle.append(attributedAmount)
@@ -107,11 +107,12 @@ class DiscountBodyCell: UIView {
         let tituloLabel = MPLabel(frame: CGRect(x: margin, y: topMargin, width: (frame.size.width - 2 * margin), height: 20) )
         tituloLabel.textAlignment = .center
         let result = NSMutableAttributedString()
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: LABEL_COLOR]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 16), NSAttributedStringKey.foregroundColor: LABEL_COLOR]
         let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
         let space = NSMutableAttributedString(string: " ".localized, attributes: normalAttributes)
         let oldAmount = Utils.getAttributedAmount( coupon.amountWithoutDiscount, currency: currency, color: LABEL_COLOR, fontSize: 16, baselineOffset: 4)
-        oldAmount.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSRange(location: 0, length: oldAmount.length))
+
+        oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
         let newAmount = Utils.getAttributedAmount( coupon.newAmount(), currency: currency, color: DISCOUNT_COLOR, fontSize: 16, baselineOffset: 4)
         result.append(total)
         result.append(oldAmount)

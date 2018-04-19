@@ -27,7 +27,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-open class MPPayment: NSObject {
+@objcMembers open class MPPayment: NSObject {
 
     open var preferenceId: String!
     open var publicKey: String!
@@ -38,12 +38,13 @@ open class MPPayment: NSObject {
     open var payer: Payer?
     open var binaryMode: Bool = false
     open var transactionDetails: TransactionDetails?
-
+    open var discount: DiscountCoupon?
+    
     override init() {
         super.init()
     }
 
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool) {
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: DiscountCoupon? = nil) {
         self.preferenceId = preferenceId
         self.publicKey = publicKey
         self.paymentMethodId = paymentMethodId
@@ -53,6 +54,7 @@ open class MPPayment: NSObject {
         self.transactionDetails = transactionDetails
         self.payer = payer
         self.binaryMode = binaryMode
+        self.discount = discount
     }
 
     open func toJSONString() -> String {
@@ -84,12 +86,16 @@ open class MPPayment: NSObject {
         if self.transactionDetails != nil {
             obj["transaction_details"] = self.transactionDetails?.toJSON()
         }
+        if let discount = self.discount {
+            obj["campaign_id"] = discount.discountId
+            obj["coupon_amount"] = discount.coupon_amount
+        }
 
         return obj
     }
 }
 
-open class CustomerPayment: MPPayment {
+@objcMembers open class CustomerPayment: MPPayment {
 
     open var customerId: String!
 
@@ -106,7 +112,7 @@ open class CustomerPayment: MPPayment {
 
 }
 
-open class BlacklabelPayment: MPPayment {
+@objcMembers open class BlacklabelPayment: MPPayment {
 
     open override func toJSON() -> [String: Any] {
         // Override payer object with groupsPayer (which includes AT in its body)
@@ -122,7 +128,7 @@ open class BlacklabelPayment: MPPayment {
 
 open class MPPaymentFactory {
 
-    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool) -> MPPayment {
+    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: DiscountCoupon? = nil) -> MPPayment {
 
         if !String.isNullOrEmpty(customerId) {
             return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId!, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
@@ -130,7 +136,7 @@ open class MPPaymentFactory {
             return BlacklabelPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
         }
 
-        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
+        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode, discount: discount)
 
     }
 

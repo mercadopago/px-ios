@@ -9,6 +9,7 @@
 import Foundation
 import MercadoPagoServices
 
+@objcMembers
 open class PXResourceProvider: NSObject {
 
     static var error_body_title_base = "error_body_title_"

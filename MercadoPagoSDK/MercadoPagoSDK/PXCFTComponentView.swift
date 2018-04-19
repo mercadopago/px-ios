@@ -26,7 +26,7 @@ final class PXCFTComponentView: PXComponentView {
             cftLabel.translatesAutoresizingMaskIntoConstraints = false
             cftLabel.textAlignment = .center
             cftLabel.numberOfLines = 1
-            cftLabel.attributedText = NSAttributedString(string: "CFT \(cftValue)", attributes: [NSFontAttributeName: Utils.getLightFont(size: PXLayout.M_FONT)])
+            cftLabel.attributedText = NSAttributedString(string: "CFT \(cftValue)", attributes: [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.M_FONT)])
             cftLabel.textColor = titleColor
 
             self.addSubview(cftLabel)

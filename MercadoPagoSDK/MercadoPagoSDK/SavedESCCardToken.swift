@@ -6,7 +6,7 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-open class SavedESCCardToken: SavedCardToken {
+@objcMembers open class SavedESCCardToken: SavedCardToken {
     open var requireESC = MercadoPagoCheckoutViewModel.flowPreference.saveESC
     open var esc: String?
 

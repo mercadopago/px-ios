@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class PaymentMethod: NSObject, Cellable {
+@objcMembers open class PaymentMethod: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.paymentMethod
     open var paymentMethodId: String!

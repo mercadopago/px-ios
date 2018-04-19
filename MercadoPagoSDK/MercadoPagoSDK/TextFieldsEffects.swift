@@ -91,14 +91,14 @@ open class TextFieldEffects: MPTextField {
     /**
     The textfield has started an editing session.
     */
-    open func textFieldDidBeginEditing() {
+    @objc open func textFieldDidBeginEditing() {
         animateViewsForTextEntry()
     }
 
     /**
     The textfield has ended an editing session.
     */
-    open func textFieldDidEndEditing() {
+    @objc open func textFieldDidEndEditing() {
         animateViewsForTextDisplay()
     }
 

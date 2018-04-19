@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class TextMaskFormater: NSObject {
 
     var mask: String!

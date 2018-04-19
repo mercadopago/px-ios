@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@objcMembers
 open class PXPaymentMethodPlugin: NSObject {
 
     @objc public enum RemotePaymentStatus: Int {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentData: NSObject {
+@objcMembers public class PaymentData: NSObject {
 
     public var paymentMethod: PaymentMethod?
     public var issuer: Issuer?

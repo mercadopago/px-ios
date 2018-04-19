@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class SecurityCode: NSObject {
+@objcMembers open class SecurityCode: NSObject {
     open var length: Int = 0
     open var cardLocation: String!
     open var mode: String!

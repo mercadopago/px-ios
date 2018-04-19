@@ -27,6 +27,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+@objcMembers
 open class CurrenciesUtil {
 
     open class var currenciesList: [String: Currency] { return [

@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Identification: NSObject {
+@objcMembers open class Identification: NSObject {
 
     open var type: String?
     open var number: String?
@@ -19,6 +19,7 @@ open class Identification: NSObject {
                 identification.number = json["number"] as? String
                 return identification
             }
+
     public init (type: String? = nil, number: String? = nil) {
         self.type = type
         self.number = number

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+@objcMembers
 open class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var tipoDeDocumentoLabel: UILabel!
@@ -44,13 +44,13 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     override func loadMPStyles() {
-        var titleDict: NSDictionary = [:]
+        var titleDict: [NSAttributedStringKey: Any] = [:]
         if self.navigationController != nil {
             let font = Utils.getFont(size: 18)
-            titleDict = [NSForegroundColorAttributeName: ThemeManager.shared.getTheme().navigationBar().tintColor, NSFontAttributeName: font]
+            titleDict = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.getTheme().navigationBar().tintColor, NSAttributedStringKey.font: font]
 
             if self.navigationController != nil {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict
                 self.navigationItem.hidesBackButton = true
                 self.navigationController?.navigationBar.tintColor = UIColor.white
                 self.navigationController?.navigationBar.barTintColor = ThemeManager.shared.getMainColor()
@@ -74,7 +74,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 
         let font = Utils.getFont(size: 14)
-        doneButton.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: font], for: UIControlState())
 
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -107,7 +107,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         return true
     }
 
-    open func editingChanged(_ textField: UITextField) {
+    @objc open func editingChanged(_ textField: UITextField) {
         hideErrorMessage()
         self.remask()
         textField.text = defaultEditTextMask.textMasked(textField.text, remasked: true)
@@ -117,14 +117,14 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func donePicker() {
+    @objc open func donePicker() {
         textField.resignFirstResponder()
         numberTextField.becomeFirstResponder()
     }
 
     @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
 
-    func keyboardWillShow(notification: Notification) {
+    @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height + 61 // Keyboard + Vista, dejo el mismo nombre de variable para tener consistencia entre clases, pero esta constante no representa la altura real del teclado, sino una altura que varia dependiendo de la altura del teclado
             self.view.layoutIfNeeded()

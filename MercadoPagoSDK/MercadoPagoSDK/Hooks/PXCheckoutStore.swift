@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+@objcMembers
 open class PXCheckoutStore: NSObject {
 
     static let sharedInstance = PXCheckoutStore()

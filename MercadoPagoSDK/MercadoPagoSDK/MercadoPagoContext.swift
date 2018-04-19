@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class MercadoPagoContext: NSObject {
+@objcMembers open class MercadoPagoContext: NSObject {
 
     static let sharedInstance = MercadoPagoContext()
 

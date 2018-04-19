@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class FlowPreference: NSObject {
+@objcMembers open class FlowPreference: NSObject {
 
     static let DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3
     static let SHOW_ALL_SAVED_CARDS_CODE = "all"

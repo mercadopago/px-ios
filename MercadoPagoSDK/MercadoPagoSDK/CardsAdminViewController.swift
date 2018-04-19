@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!

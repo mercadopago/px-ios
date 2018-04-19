@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Refund: NSObject {
+@objcMembers open class Refund: NSObject {
     open var amount: Double = 0
     open var dateCreated: Date!
     open var refundId: Int = 0

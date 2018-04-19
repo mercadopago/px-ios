@@ -226,7 +226,7 @@ extension MercadoPagoCheckout {
         guard let businessResult = self.viewModel.businessResult else {
             return
         }
-        let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData)
+        let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData, amount: self.viewModel.getAmount())
         let congratsViewController = PXResultViewController(viewModel: viewModel) { _ in}
         self.pushViewController(viewController: congratsViewController, animated: false)
 

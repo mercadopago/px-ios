@@ -140,7 +140,7 @@ extension PXItemRenderer {
         let font = Utils.getFont(size: PXItemRenderer.AMOUNT_FONT_SIZE)
 
         let unitPrice = buildAttributedUnitAmount(amount: amount, color: labelColor, fontSize: font.pointSize)
-        let unitPriceTitle = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: font])
+        let unitPriceTitle = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font: font])
         unitPriceTitle.append(unitPrice)
 
         return buildLabel(attributedText: unitPriceTitle, color: labelColor, font: font)

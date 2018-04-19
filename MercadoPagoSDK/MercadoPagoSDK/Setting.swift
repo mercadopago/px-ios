@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Setting: NSObject {
+@objcMembers open class Setting: NSObject {
     open var binMask: BinMask!
     open var cardNumber: CardNumber!
     open var securityCode: SecurityCode!
@@ -26,6 +26,7 @@ open class Setting: NSObject {
                 setting.securityCode = SecurityCode.fromJSON(json["security_code"]! as! NSDictionary)
                 return setting
             }
+
     open class func getSettingByBin(_ settings: [Setting]!, bin: String!) -> [Setting]? {
         var selectedSetting = [Setting] ()
         if settings != nil && settings.count > 0 {

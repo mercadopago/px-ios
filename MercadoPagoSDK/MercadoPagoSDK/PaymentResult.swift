@@ -7,7 +7,7 @@
 //
 
 import Foundation
-open class PaymentResult: NSObject {
+@objcMembers open class PaymentResult: NSObject {
 
     @objc
     public enum CongratsState: Int {

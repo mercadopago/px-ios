@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class Instruction: NSObject {
+@objcMembers open class Instruction: NSObject {
 
     open var title: String = ""
     open var subtitle: String?
@@ -62,6 +62,7 @@ open class Instruction: NSObject {
             if json["references"] != nil && !(json["references"]! is NSNull) {
                         instruction.references = (json["references"] as! Array).map({InstructionReference.fromJSON($0)})
                     }
+
                 if json["info"] != nil && !(json["info"]! is NSNull) {
                         var info = [String]()
 
@@ -91,6 +92,7 @@ open class Instruction: NSObject {
 
                 if json["tertiary_info"] != nil && !(json["tertiary_info"]! is NSNull) {
                         var info = [String]()
+
                         if let arrayValues = json["tertiary_info"] as? NSArray {
                                 for value in arrayValues {
                                         if let value = value as? String {

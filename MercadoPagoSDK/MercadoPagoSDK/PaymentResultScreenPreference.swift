@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class PaymentResultScreenPreference: NSObject {
+@objcMembers open class PaymentResultScreenPreference: NSObject {
 
     static let PENDING_CONTENT_TITLE = "¿Qué puedo hacer?"
     static let REJECTED_CONTENT_TITLE = "¿Qué puedo hacer?"

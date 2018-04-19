@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var backgroundView: UIView!
@@ -77,11 +78,11 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         buttonNext.isEnabled = false
     }
 
-    func leftArrowKeyTapped() {
+    @objc func leftArrowKeyTapped() {
         self.exit()
     }
 
-    func rightArrowKeyTapped() {
+    @objc func rightArrowKeyTapped() {
 
         guard let couponCode = textBox.text else {
             return

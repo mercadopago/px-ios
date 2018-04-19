@@ -25,7 +25,7 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
         if let tertiaryInfoContent = instructionsTertiaryInfo.props.tertiaryInfo, !Array.isNullOrEmpty(instructionsTertiaryInfo.props.tertiaryInfo) {
             for text in tertiaryInfoContent {
 
-                let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
+                let attributes = [NSAttributedStringKey.font: Utils.getFont(size: INFO_LABEL_FONT_SIZE)]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
                 let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsTertiaryInfoView, onBottomOf: lastLabel)
                 instructionsTertiaryInfoView.tertiaryInfoLabels = Array.safeAppend(instructionsTertiaryInfoView.tertiaryInfoLabels, infoContentLabel)

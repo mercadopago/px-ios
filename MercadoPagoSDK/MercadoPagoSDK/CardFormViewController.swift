@@ -20,6 +20,7 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
+@objcMembers
 open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     let NAVIGATION_BAR_COLOR = ThemeManager.shared.getTheme().navigationBar().backgroundColor
@@ -101,10 +102,10 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: 18)
-            titleDict = [NSForegroundColorAttributeName: NAVIGATION_BAR_TEXT_COLOR, NSFontAttributeName: fontChosed]
+            titleDict = [NSAttributedStringKey.foregroundColor: NAVIGATION_BAR_TEXT_COLOR, NSAttributedStringKey.font: fontChosed]
 
             if self.navigationController != nil {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [NSAttributedStringKey: AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController?.navigationBar.barTintColor = NAVIGATION_BAR_COLOR
                 self.navigationController?.navigationBar.removeBottomLine()
@@ -229,7 +230,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         cardView.addSubview(cardFront!)
         textBox.placeholder = getTextboxPlaceholder()
     }
-    func keyboardWillShow(notification: Notification) {
+    @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height - 40
             self.view.layoutIfNeeded()
@@ -278,7 +279,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         return value
     }
 
-    open func verPromociones() {
+    @objc open func verPromociones() {
         guard let promos = self.viewModel.promos else {
             return
         }
@@ -290,7 +291,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         return PromoViewController(promos: promos, callback: callback)
     }
 
-    open func editingChanged(_ textField: UITextField) {
+    @objc open func editingChanged(_ textField: UITextField) {
         if isShowingTextBoxMessage {
             hideMessage()
         }
@@ -576,7 +577,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         self.textBox.becomeFirstResponder()
     }
 
-    func leftArrowKeyTapped() {
+    @objc func leftArrowKeyTapped() {
         switch editingLabel! {
         case cardNumberLabel! :
             return
@@ -597,7 +598,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         self.updateLabelsFontColors()
     }
 
-    func rightArrowKeyTapped() {
+    @objc func rightArrowKeyTapped() {
         switch editingLabel! {
 
         case cardNumberLabel! :

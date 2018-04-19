@@ -1,5 +1,6 @@
 import UIKit
 
+@objcMembers
 open class ReviewScreenPreference: NSObject {
 
     fileprivate static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized

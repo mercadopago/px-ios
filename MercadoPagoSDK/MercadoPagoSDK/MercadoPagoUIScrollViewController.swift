@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
 
     var displayNavBar = false

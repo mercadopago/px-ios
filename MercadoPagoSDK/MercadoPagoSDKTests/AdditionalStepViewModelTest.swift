@@ -357,8 +357,8 @@ class CardTypeAdditionalStepViewModelTest: BaseTest {
     }
 }
 
-class FinancialInstitutionAdditionalStepViewModelTest: BaseTest {
-    var instance: FinancialInstitutionAdditionalStepViewModel!
+class FinancialInstitutionViewModelTest: BaseTest {
+    var instance: FinancialInstitutionViewModel!
 
     override func setUp() {
         super.setUp()
@@ -368,7 +368,7 @@ class FinancialInstitutionAdditionalStepViewModelTest: BaseTest {
         financialInstitution.financialInstitutionId = 1232
         financialInstitution.financialInstitutionDescription = "sarasa"
         paymentMethod.financialInstitutions = [financialInstitution, financialInstitution]
-        self.instance = FinancialInstitutionAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: paymentMethod.financialInstitutions, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+        self.instance = FinancialInstitutionViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: paymentMethod.financialInstitutions, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testTitle() {
@@ -439,7 +439,7 @@ class FinancialInstitutionAdditionalStepViewModelTest: BaseTest {
 }
 
 class EntityTypeAdditionalStepViewModelTest: BaseTest {
-    var instance: EntityTypeAdditionalStepViewModel!
+    var instance: EntityTypeViewModel!
 
     override func setUp() {
         super.setUp()
@@ -448,7 +448,7 @@ class EntityTypeAdditionalStepViewModelTest: BaseTest {
         let entityType = EntityType()
         entityType.entityTypeId = "1232"
         entityType.name = "sarasa"
-        self.instance = EntityTypeAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [entityType, entityType], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+        self.instance = EntityTypeViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [entityType, entityType], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
     }
 
     func testTitle() {

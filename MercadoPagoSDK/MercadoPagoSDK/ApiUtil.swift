@@ -7,7 +7,7 @@
 //
 
 import Foundation
-open class ApiUtil {
+@objcMembers open class ApiUtil {
     enum StatusCodes: Int {
         case INTERNAL_SERVER_ERROR = 500
         case PROCESSING = 499

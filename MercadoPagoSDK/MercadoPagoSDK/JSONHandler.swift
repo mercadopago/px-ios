@@ -48,6 +48,7 @@ class JSONHandler: NSObject {
     }
 
     class func attemptParseToDouble(_ anyobject: Any?, defaultReturn: Double? = nil) -> Double? {
+
         guard let string = attemptParseToString(anyobject) else {
             return defaultReturn
         }

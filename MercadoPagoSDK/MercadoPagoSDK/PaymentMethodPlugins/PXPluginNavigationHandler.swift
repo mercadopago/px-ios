@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@objcMembers
 open class PXPluginNavigationHandler: NSObject {
 
     private var checkout: MercadoPagoCheckout?

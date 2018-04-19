@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class CallbackCancelTableViewCell: UITableViewCell {
 
     var callbackCancel: (() -> Void)?

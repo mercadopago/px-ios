@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class CardNumber: NSObject {
+@objcMembers open class CardNumber: NSObject {
     open var length: Int = 0
     open var validation: String!
 

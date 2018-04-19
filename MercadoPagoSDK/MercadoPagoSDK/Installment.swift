@@ -27,7 +27,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-open class Installment: NSObject {
+@objcMembers open class Installment: NSObject {
     open var issuer: Issuer!
     open var payerCosts: [PayerCost]!
     open var paymentMethodId: String!
@@ -46,6 +46,7 @@ open class Installment: NSObject {
                 if let issuerDic = json["issuer"] as? NSDictionary {
                         installment.issuer = Issuer.fromJSON(issuerDic)
                     }
+
                 var payerCosts: [PayerCost] = [PayerCost]()
                 if let payerCostsArray = json["payer_costs"] as? NSArray {
                         for i in 0..<payerCostsArray.count {

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 open class CardsAdminViewModel: NSObject {
 
     var cards: [Card]?

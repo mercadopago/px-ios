@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class Card: NSObject, CardInformation, PaymentMethodOption {
+@objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
 
     open var cardHolder: Cardholder?
     open var customerId: String?
@@ -62,6 +62,7 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
                     }
                 return card
             }
+
     public func getIssuer() -> Issuer? {
         return self.issuer
     }

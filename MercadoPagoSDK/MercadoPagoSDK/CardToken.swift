@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class CardToken: NSObject, CardInformationForm {
+@objcMembers open class CardToken: NSObject, CardInformationForm {
 
     let MIN_LENGTH_NUMBER: Int = 10
     let MAX_LENGTH_NUMBER: Int = 19
@@ -147,7 +147,7 @@ open class CardToken: NSObject, CardInformationForm {
             return validSecurityCode
         } else {
             let range = cardNumber.startIndex ..< cardNumber.index(cardNumber.startIndex, offsetBy: 6)
-             return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: cardNumber.substring(with: range))
+         return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: String(cardNumber[range]))
         }
     }
 
@@ -276,7 +276,7 @@ open class CardToken: NSObject, CardInformationForm {
         if year < 100 && year >= 0 {
             let currentYear: String = String(describing: now.year)
             let range = currentYear.startIndex ..< currentYear.index(currentYear.endIndex, offsetBy: -2)
-            let prefix: String = currentYear.substring(with: range)
+            let prefix: String = String(currentYear[range])
 
 			let nsReturn: NSString = prefix.appending(String(year)) as NSString
             return nsReturn.integerValue
@@ -301,7 +301,7 @@ open class CardToken: NSObject, CardInformationForm {
 
     open func getBin() -> String? {
         let range =  cardNumber!.startIndex ..< cardNumber!.index(cardNumber!.startIndex, offsetBy: 6)
-        let bin: String? = cardNumber!.count >= 6 ? cardNumber!.substring(with: range) : nil
+        let bin: String? = cardNumber!.count >= 6 ? String(cardNumber![range]) : nil
         return bin
     }
 
@@ -337,17 +337,15 @@ open class CardToken: NSObject, CardInformationForm {
         return str as NSString
     }
 
-    open func getExpirationDateFormated() -> NSString {
+    open func getExpirationDateFormated() -> String {
 
-        var str: String
+        let expirationMonth = self.expirationMonth.stringValue
+        let expirationYear = self.expirationYear.stringValue
 
-        str = String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from:
+        let range = expirationYear.index(before: expirationYear.index(before: expirationYear.endIndex))
+        let expirationDateFormatted = expirationMonth + "/" + String(expirationYear[range...])
 
-            String(self.expirationYear).index(before: String(self.expirationYear).index(before: String(self.expirationYear).endIndex)
-
-        ))
-
-        return str as NSString
+        return expirationDateFormatted
     }
 
     open func isCustomerPaymentMethod() -> Bool {
@@ -355,7 +353,7 @@ open class CardToken: NSObject, CardInformationForm {
     }
     open func getCardLastForDigits() -> String? {
         let index = cardNumber?.count
-        return cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)]
+        return String(cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)])
     }
     public func getCardBin() -> String? {
         return getBin()

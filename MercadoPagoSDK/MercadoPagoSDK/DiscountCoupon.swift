@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class DiscountCoupon: NSObject {
 
     open static var activeCoupon: DiscountCoupon!

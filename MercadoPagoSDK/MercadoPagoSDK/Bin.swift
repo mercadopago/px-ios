@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class BinMask: NSObject {
+@objcMembers open class BinMask: NSObject {
     open var exclusionPattern: String!
     open var installmentsPattern: String!
     open var pattern: String!

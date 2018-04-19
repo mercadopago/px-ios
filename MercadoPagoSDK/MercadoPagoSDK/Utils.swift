@@ -68,8 +68,8 @@ class Utils {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSForegroundColorAttributeName: color]
-        let smallAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName: baselineOffset as AnyObject]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
+        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -90,8 +90,8 @@ class Utils {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator: thousandSeparator, decimalSeparator: ".")
 
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSForegroundColorAttributeName: color]
-        let smallAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName: baselineOffset as AnyObject]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
+        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
 
         var symbols: String!
         if negativeAmount {
@@ -140,9 +140,9 @@ class Utils {
 
     class func getAccreditationTimeAttributedString(from text: String, fontSize: CGFloat? = nil) -> NSAttributedString {
         let clockImage = NSTextAttachment()
-        var attributes: [String: Any]? = nil
+        var attributes: [NSAttributedStringKey: Any]? = nil
         if let fontSize = fontSize {
-            attributes = [NSFontAttributeName: Utils.getFont(size: fontSize)]
+            attributes = [NSAttributedStringKey.font: Utils.getFont(size: fontSize)]
         }
         clockImage.image = MercadoPago.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
@@ -156,7 +156,7 @@ class Utils {
         let color = color ?? UIColor.lightBlue()
         let currency = MercadoPagoContext.getCurrency()
 
-        let descriptionAttributes: [String: AnyObject] = [NSFontAttributeName: getFont(size: fontSize), NSForegroundColorAttributeName: color]
+        let descriptionAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
 
         let stringToWrite = NSMutableAttributedString()
 
@@ -179,7 +179,7 @@ class Utils {
 
     class func getLightFont(size: CGFloat) -> UIFont {
         if #available(iOS 8.2, *) {
-            return UIFont(name: ThemeManager.shared.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+            return UIFont(name: ThemeManager.shared.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight.thin)
         } else {
             return UIFont(name: ThemeManager.shared.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
         }
@@ -187,7 +187,7 @@ class Utils {
 
     class func getIdentificationFont(size: CGFloat) -> UIFont {
         if #available(iOS 8.2, *) {
-            return UIFont(name: "KohinoorBangla-Regular", size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+            return UIFont(name: "KohinoorBangla-Regular", size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight.thin)
         } else {
             return UIFont(name: "KohinoorBangla-Regular", size: size) ?? UIFont.systemFont(ofSize: size)
         }
@@ -224,7 +224,7 @@ class Utils {
         var cents = ""
         if range != nil {
             let centsIndex = formattedString.index(range!.lowerBound, offsetBy: 1)
-            cents = formattedString.substring(from: centsIndex)
+            cents = String(formattedString[centsIndex...])
         }
 
         if cents.isEmpty || cents.count < decimalPlaces {
@@ -235,7 +235,7 @@ class Utils {
             }
         } else if cents.count > decimalPlaces {
             let index1 = cents.index(cents.startIndex, offsetBy: decimalPlaces)
-            cents = cents.substring(to: index1)
+            cents = String(cents[..<index1])
         }
 
         return cents
@@ -270,7 +270,7 @@ class Utils {
     class func getAmountDigits(_ formattedString: String, decimalSeparator: String) -> String {
         let range = formattedString.range(of: decimalSeparator)
         if range != nil {
-            return formattedString.substring(to: range!.lowerBound)
+            return String(formattedString[..<range!.lowerBound])
         }
         if Double(formattedString) != nil {
             return formattedString
@@ -368,7 +368,7 @@ class Utils {
                 let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod.paymentMethodId)
                 // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
-                    paymentTypeSelected = paymentMethodId.substring(from: paymentTypeIdRange!.upperBound)
+                    paymentTypeSelected = String(paymentMethodId[paymentTypeIdRange!.upperBound...])
                     if !String.isNullOrEmpty(paymentTypeSelected) {
                         paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
                     }

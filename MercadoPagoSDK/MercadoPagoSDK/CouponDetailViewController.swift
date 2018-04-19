@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class CouponDetailViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var exitButton: UIButton!

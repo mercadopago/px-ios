@@ -12,6 +12,7 @@ import Foundation
     import MLESCManager
 #endif
 
+@objcMembers
 open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
 
     public func hasESCEnable() -> Bool {

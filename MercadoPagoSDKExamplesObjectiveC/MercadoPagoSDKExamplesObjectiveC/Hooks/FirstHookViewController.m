@@ -36,7 +36,7 @@
     [button addTarget:self
      action:@selector(didTapOnNext)
      forControlEvents:UIControlEventTouchUpInside];
-    [button setBackgroundColor:[UIColor fromHex:@"#CA254D"]];
+    [button setBackgroundColor:[UIColor blueColor]];
     [button setTintColor:UIColor.whiteColor];
     [button setTitle:@"Continuar" forState:UIControlStateNormal];
     button.frame = CGRectMake(0, 0, self.view.bounds.size.width, 55.0);
@@ -113,7 +113,7 @@
 }
 
 - (UIColor * _Nullable)colorForNavigationBar {
-    return [UIColor fromHex:@"#CA254D"];
+    return [UIColor blueColor];
 }
 
 - (void)navigationHandlerForHookWithNavigationHandler:(PXHookNavigationHandler *)navigationHandler {

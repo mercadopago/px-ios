@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class BankDeal: NSObject {
+@objcMembers open class BankDeal: NSObject {
 
 	open var promoId: String!
 	open var issuer: Issuer!

@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Cause: NSObject {
+@objcMembers open class Cause: NSObject {
     open var code: String!
     open var causeDescription: String!
 

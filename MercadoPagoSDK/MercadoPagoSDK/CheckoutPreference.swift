@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CheckoutPreference: NSObject {
+@objcMembers open class CheckoutPreference: NSObject {
 
     open var preferenceId: String!
     open var items: [Item]!
@@ -27,6 +27,7 @@ open class CheckoutPreference: NSObject {
                 if let siteId = JSONHandler.attemptParseToString(json["site_id"]) {
                         preference.siteId = siteId
                     }
+
                 if let payerDic = json["payer"] as? NSDictionary {
                         preference.payer = Payer.fromJSON(payerDic)
                     }

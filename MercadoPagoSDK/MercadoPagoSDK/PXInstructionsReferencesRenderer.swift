@@ -20,7 +20,7 @@ class PXInstructionsReferencesRenderer: NSObject {
         var lastView: UIView?
 
         if let title = instructionsReferences.props.title, !title.isEmpty {
-            let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
+            let attributes = [ NSAttributedStringKey.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: title, attributes: attributes)
             instructionsReferencesView.titleLabel = buildTitleLabel(with: attributedString, in: instructionsReferencesView)
             lastView = instructionsReferencesView.titleLabel

@@ -17,7 +17,7 @@ extension UIView {
         addSubview(line)
     }
 
-    func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
+    @objc func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color
@@ -37,7 +37,7 @@ extension UIView {
         addSubview(line)
     }
 
-    func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
+    @objc func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color
@@ -57,7 +57,7 @@ extension UIView {
         addSubview(line)
     }
 
-    func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
+    @objc func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color

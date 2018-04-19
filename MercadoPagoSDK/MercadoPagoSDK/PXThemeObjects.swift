@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class PXNavigationHeaderLabel: UILabel {
 
     override init(frame: CGRect) {

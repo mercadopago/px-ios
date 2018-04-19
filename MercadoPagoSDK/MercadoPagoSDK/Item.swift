@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Item: NSObject {
+@objcMembers open class Item: NSObject {
 
     // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
     // que cada item no sea nulo, que su cantidad sea 1 o mayor
@@ -72,6 +72,7 @@ open class Item: NSObject {
                 if let pictureUrl = JSONHandler.attemptParseToString(json["picture_url"]) {
                         item.pictureUrl = pictureUrl
                     }
+
                 return item
             }
 

@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServices
 
-open class MercadoPagoServicesAdapter: NSObject {
+@objcMembers open class MercadoPagoServicesAdapter: NSObject {
 
     let mercadoPagoServices: MercadoPagoServices!
 

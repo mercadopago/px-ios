@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class AvailableCardsViewController: MercadoPagoUIViewController {
 
     let buttonFontSize: CGFloat = 18

@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class InstructionReference: NSObject {
+@objcMembers open class InstructionReference: NSObject {
 
     var label: String!
     var value: [String]!
@@ -20,6 +20,7 @@ open class InstructionReference: NSObject {
                 if json["label"] != nil && !(json["label"]! is NSNull) {
                         reference.label = json["label"] as! String
                     }
+
                 if json["field_value"] != nil && !(json["field_value"]! is NSNull) {
                         reference.value = [String]()
                         if let values = json["field_value"] as? NSArray {

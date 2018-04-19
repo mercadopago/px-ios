@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 import MercadoPagoPXTracking
 
+@objcMembers
 open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 
 	var publicKey: String?
