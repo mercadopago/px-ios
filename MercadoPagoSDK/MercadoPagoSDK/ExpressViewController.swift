@@ -17,6 +17,7 @@ class ExpressViewController: UIViewController {
     fileprivate var viewModel: PXReviewViewModel?
     fileprivate var bottomConstraint = NSLayoutConstraint()
     fileprivate var callbackChangePaymentMethod: (() -> Void)?
+    fileprivate var callbackShowCongrats: (() -> Void)?
 
     // MARK: Lifecycle - Publics
     override func viewDidAppear(_ animated: Bool) {
@@ -279,12 +280,46 @@ extension ExpressViewController {
             // TODO: Fallback on earlier versions
         }
     }
+
+    fileprivate func expandSheet() {
+
+        self.popupView.layer.masksToBounds = true
+
+        if #available(iOS 10.0, *) {
+
+            let targetFrame = view.frame
+
+            let transitionAnimator = UIViewPropertyAnimator(duration: 0.60, dampingRatio: 1.3, animations: {
+                self.popupView.frame = targetFrame
+                self.popupView.layer.cornerRadius = 0
+            })
+
+            transitionAnimator.addCompletion({ [weak self] _ in
+
+            })
+
+            transitionAnimator.startAnimation()
+
+        } else {
+            // TODO: Fallback on earlier versions
+        }
+    }
 }
 
-//MARK: - Button animation
+//MARK: - Button animation delegate
 extension ExpressViewController: PXAnimatedButtonDelegate {
+    func expandAnimationInProgress() {
+        expandSheet()
+    }
+
     func didFinishAnimation() {
-        self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.2)
+        // self.perform(#selector(ExpressViewController.hideSheet), with: self, afterDelay: 2.2) // receipent mode.
+        self.callbackShowCongrats?()
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.alpha = 0
+        }) { finish in
+            self.dismiss(animated: false, completion: nil)
+        }
     }
 }
 
@@ -325,6 +360,10 @@ extension ExpressViewController {
 extension ExpressViewController  {
     func setChangePaymentMethodAction(callbackAction: @escaping (() -> Void)) {
         self.callbackChangePaymentMethod = callbackAction
+    }
+
+    func setShowCongratsAction(callbackAction: @escaping (() -> Void)) {
+        self.callbackShowCongrats = callbackAction
     }
 }
 

@@ -92,8 +92,17 @@ open class MercadoPagoCheckout: NSObject {
             self?.executeNextStep()
         }
 
+        vc.setShowCongratsAction {
+            [weak self] in
+            self?.viewModel.businessResult = PXBusinessResult(status: PXBusinessResultStatus.APPROVED, title: "Pago confirmado", icon: MercadoPago.getImage("MPSDK_review_iconoCarrito")!, secondaryAction: PXComponentAction(label: "Continuar", action: {
+                self?.cancel()
+            }))
+            self?.executeNextStep()
+        }
+
         //TODO: Replace MockPaymentOption() with InferredService payment option response.
         vc.setViewModel(viewModel: self.viewModel.reviewConfirmViewModel(externalPaymentOption: MockPaymentOption()))
+
         vc.modalPresentationStyle = .overCurrentContext
         viewController.present(vc, animated: false, completion: {
             print("ExpressViewController Done")
