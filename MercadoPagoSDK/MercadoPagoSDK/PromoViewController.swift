@@ -68,8 +68,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	}
 
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !Array.isNullOrEmpty(promos) {
-            let promoCell: PromoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PromoTableViewCell", for: indexPath) as! PromoTableViewCell
+        if !Array.isNullOrEmpty(promos), let promoCell: PromoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PromoTableViewCell", for: indexPath) as? PromoTableViewCell {
             promoCell.setPromoInfo(self.promos[(indexPath as NSIndexPath).row])
             promoCell.isUserInteractionEnabled = true
             return promoCell
@@ -87,8 +86,8 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	}
 
     internal override func executeBack() {
-        if self.callback != nil {
-            self.callback!()
+        if let callback = self.callback {
+            callback()
         }
     }
 
