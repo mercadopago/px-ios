@@ -35,25 +35,7 @@ class PXResultViewController: PXComponentContainerViewController {
     }
 
     override func trackInfo() {
-        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
-                        TrackingUtil.METADATA_PAYMENT_STATUS: self.viewModel.getPaymentStatus(),
-                        TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.getPaymentStatusDetail(),
-                        TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.getPaymentId() ?? ""]
-        if let pm = self.viewModel.getPaymentData().getPaymentMethod() {
-            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.paymentMethodId
-        }
-        if let issuer = self.viewModel.getPaymentData().getIssuer() {
-            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.issuerId
-        }
-
-        let finalId = "\(screenId)/\(self.viewModel.getPaymentStatus())"
-
-        var name = screenName
-        if self.viewModel.isCallForAuth() {
-            name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
-        }
-
-        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: name, properties: metadata)
+        self.viewModel.trackInfo()
     }
 
     func renderViews() {

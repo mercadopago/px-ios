@@ -7,8 +7,35 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 public class PXResultViewModel: PXResultViewModelInterface {
+
+    var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
+    var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT }
+    
+    func trackInfo() {
+        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                        TrackingUtil.METADATA_PAYMENT_STATUS: self.getPaymentStatus(),
+                        TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.getPaymentStatusDetail(),
+                        TrackingUtil.METADATA_PAYMENT_ID: self.getPaymentId() ?? ""]
+        if let pm = self.getPaymentData().getPaymentMethod() {
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.paymentMethodId
+        }
+        if let issuer = self.getPaymentData().getIssuer() {
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.issuerId
+        }
+        
+        let finalId = "\(screenId)/\(self.getPaymentStatus())"
+        
+        var name = screenName
+        if self.isCallForAuth() {
+            name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
+        }
+        
+        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: name, properties: metadata)
+    }
+    
 
     func getPaymentData() -> PaymentData {
         return self.paymentResult.paymentData!
