@@ -46,35 +46,33 @@ extension PXPromotionLegalsViewController {
 
     fileprivate func renderViews() {
 
+        self.contentView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+
         self.contentView.prepareForRender()
 
         let bankDeal = self.viewModel.bankDeals[0]
-//
-//        let image = MercadoPago.getImage("financial_institution_1001")
-//        let cellProps = PXPromotionCellProps(image: image, title: "12 cuotas sin interés", subtitle: "Hasta el 30/jun/2017")
-//        let cellComponent = PXPromotionCell(props: cellProps)
-//        let cellView = cellComponent.render()
-//        self.contentView.addSubviewToBottom(cellView, withMargin: 0)
-////        self.contentView.addSubview(cellView)
-////        PXLayout.pinTop(view: cellView).isActive = true
-//        PXLayout.matchWidth(ofView: cellView).isActive = true
-//        PXLayout.setHeight(owner: cellView, height: 190).isActive = true
-//        PXLayout.centerHorizontally(view: cellView).isActive = true
+
+        let image = MercadoPago.getImage("financial_institution_1001")
+        let cellProps = PXPromotionCellProps(image: image, title: "12 cuotas sin interés", subtitle: "Hasta el 30/jun/2017")
+        let cellComponent = PXPromotionCell(props: cellProps)
+        let cellView = cellComponent.render()
+        cellView.layer.borderWidth = 2
+        self.contentView.addSubviewToBottom(cellView, withMargin: 0)
+        PXLayout.matchWidth(ofView: cellView).isActive = true
+        PXLayout.setHeight(owner: cellView, height: 190).isActive = true
+        PXLayout.centerHorizontally(view: cellView).isActive = true
 
 
         //CFT
         if 0 == 0 {
             let cftView = PXCFTComponentView(withCFTValue: "82%", titleColor: UIColor.UIColorFromRGB(0x616161), backgroundColor: UIColor.UIColorFromRGB(0xf7f7f7))
             cftView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 90, color: UIColor.UIColorFromRGB(0xe3e0e0))
-//            self.contentView.addSubview(cftView)
-//            PXLayout.put(view: cftView, onBottomOf: cellView, withMargin: 0).isActive = true
             self.contentView.addSubviewToBottom(cftView, withMargin: PXLayout.L_MARGIN)
             PXLayout.centerHorizontally(view: cftView).isActive = true
             PXLayout.matchWidth(ofView: cftView).isActive = true
             PXLayout.setHeight(owner: cftView, height: 135).isActive = true
         }
-
-//        //Legals
+        //Legals
         let legalsTextView = UITextView()
         legalsTextView.translatesAutoresizingMaskIntoConstraints = false
         legalsTextView.text = bankDeal.legals
@@ -83,8 +81,6 @@ extension PXPromotionLegalsViewController {
         legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
         legalsTextView.isScrollEnabled = true
         self.contentView.addSubviewToBottom(legalsTextView)
-//        self.contentView.addSubview(legalsTextView)
-//        PXLayout.put(view: legalsTextView, onBottomOfLastViewOf: self.contentView)?.isActive = true
         PXLayout.matchWidth(ofView: legalsTextView).isActive = true
         PXLayout.setHeight(owner: legalsTextView, height: 242).isActive = true
 //        PXLayout.pinBottom(view: legalsTextView).isActive = true
