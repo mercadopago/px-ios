@@ -671,6 +671,7 @@
 		FC65A1E6208E269C000A0DA0 /* PXCollectionRowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1E5208E269C000A0DA0 /* PXCollectionRowRenderer.swift */; };
 		FC65A1E9208E4907000A0DA0 /* PXPromotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1E8208E4907000A0DA0 /* PXPromotionCell.swift */; };
 		FC65A1EB208E4913000A0DA0 /* PXPromotionCellRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1EA208E4913000A0DA0 /* PXPromotionCellRenderer.swift */; };
+		FC65A1EF208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */; };
 		FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */; };
 		FC73AB46202B87AD00537C9F /* Localizable_pt.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB49202B87AD00537C9F /* Localizable_pt.plist */; };
 		FC73AB47202B87AD00537C9F /* Localizable_pt.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB49202B87AD00537C9F /* Localizable_pt.plist */; };
@@ -1151,6 +1152,7 @@
 		FC65A1E5208E269C000A0DA0 /* PXCollectionRowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCollectionRowRenderer.swift; sourceTree = "<group>"; };
 		FC65A1E8208E4907000A0DA0 /* PXPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionCell.swift; sourceTree = "<group>"; };
 		FC65A1EA208E4913000A0DA0 /* PXPromotionCellRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionCellRenderer.swift; sourceTree = "<group>"; };
+		FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionLegalsViewController.swift; sourceTree = "<group>"; };
 		FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCouponTest.swift; sourceTree = "<group>"; };
 		FC73AB48202B87AD00537C9F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = pt.lproj/Localizable_pt.plist; sourceTree = "<group>"; };
 		FC73AB4F202C957F00537C9F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = es.lproj/Localizable_es.plist; sourceTree = "<group>"; };
@@ -2351,6 +2353,7 @@
 		FC3918B2208E19E200B75366 /* Promotions */ = {
 			isa = PBXGroup;
 			children = (
+				FC65A1EC208F6BD3000A0DA0 /* Terms And Conditions */,
 				FC65A1E7208E48DE000A0DA0 /* Promotion Cell */,
 				FC3918B7208E1A7900B75366 /* Screen */,
 			);
@@ -2501,6 +2504,22 @@
 				FC65A1EA208E4913000A0DA0 /* PXPromotionCellRenderer.swift */,
 			);
 			name = "Promotion Cell";
+			sourceTree = "<group>";
+		};
+		FC65A1EC208F6BD3000A0DA0 /* Terms And Conditions */ = {
+			isa = PBXGroup;
+			children = (
+				FC65A1ED208F6BFF000A0DA0 /* Screen */,
+			);
+			name = "Terms And Conditions";
+			sourceTree = "<group>";
+		};
+		FC65A1ED208F6BFF000A0DA0 /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */,
+			);
+			name = Screen;
 			sourceTree = "<group>";
 		};
 		FC73AB42202B877600537C9F /* Translations */ = {
@@ -2903,6 +2922,7 @@
 				4BFD451F1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift in Sources */,
 				4B811DD11FCDCBD5000611AD /* PXHookStep.swift in Sources */,
 				FCBF132D1E71D6A60092B756 /* Updatable.swift in Sources */,
+				FC65A1EF208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift in Sources */,
 				7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */,
 				81F090E120177EDA008A69C1 /* PXContainedActionButtonComponent.swift in Sources */,
 				15AE1DAD1F61B98200B0DAF8 /* PXComponent.swift in Sources */,

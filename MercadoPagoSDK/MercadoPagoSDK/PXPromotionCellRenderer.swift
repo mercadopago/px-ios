@@ -18,11 +18,12 @@ class PXPromotionCellRenderer: NSObject {
         promotionCellView.backgroundColor = .white
 
         //Image View
+        let image = component.props.image
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         promotionCellView.imageView = imageView
         imageView.contentMode = .scaleAspectFit
-        imageView.image = component.props.image
+        imageView.image = image
         promotionCellView.addSubview(imageView)
         PXLayout.pinTop(view: imageView, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerHorizontally(view: imageView).isActive = true
@@ -31,17 +32,16 @@ class PXPromotionCellRenderer: NSObject {
         PXLayout.pinRight(view: imageView, withMargin: 0).isActive = true
 
         //Title Label
-        if let title = component.props.title {
-            let titleLabel = UILabel()
-            titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            promotionCellView.titleLabel = titleLabel
-            titleLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
-            titleLabel.text = title
-            titleLabel.textColor = UIColor.UIColorFromRGB(0x232323)
-            promotionCellView.addSubview(titleLabel)
-            PXLayout.put(view: titleLabel, onBottomOf: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.centerHorizontally(view: titleLabel).isActive = true
-        }
+        let title = component.props.title
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        promotionCellView.titleLabel = titleLabel
+        titleLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
+        titleLabel.text = title
+        titleLabel.textColor = UIColor.UIColorFromRGB(0x232323)
+        promotionCellView.addSubview(titleLabel)
+        PXLayout.put(view: titleLabel, onBottomOf: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
+        PXLayout.centerHorizontally(view: titleLabel).isActive = true
 
         //Subtitle Label
         if let subtitle = component.props.subtitle {
@@ -52,7 +52,7 @@ class PXPromotionCellRenderer: NSObject {
             subtitleLabel.text = subtitle
             subtitleLabel.textColor = UIColor.UIColorFromRGB(0x999999)
             promotionCellView.addSubview(subtitleLabel)
-            PXLayout.put(view: subtitleLabel, onBottomOf: promotionCellView.titleLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.put(view: subtitleLabel, onBottomOf: titleLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
             PXLayout.centerHorizontally(view: subtitleLabel).isActive = true
         }
 
