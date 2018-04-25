@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MercadoPagoServices
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -35,7 +37,7 @@ open class CardFormViewModel: NSObject {
 
     let animationDuration: Double = 0.6
 
-    var promos: [BankDeal]?
+    var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
     public init(paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {

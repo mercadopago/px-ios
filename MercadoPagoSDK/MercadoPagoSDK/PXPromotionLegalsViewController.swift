@@ -10,9 +10,9 @@ import UIKit
 
 class PXPromotionLegalsViewController: PXComponentContainerViewController {
 
-    fileprivate var viewModel: PXPromotionsViewModel!
+    fileprivate var viewModel: PXPromotionLegalsViewModel!
 
-    init(viewModel: PXPromotionsViewModel) {
+    init(viewModel: PXPromotionLegalsViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -45,22 +45,26 @@ extension PXPromotionLegalsViewController {
     }
 
     fileprivate func renderViews() {
-
-        self.contentView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
-
         self.contentView.prepareForRender()
 
-        let bankDeal = self.viewModel.bankDeals[0]
+        //Promotion Cell
+        let promotionCellView = buildPromotionCellView()
+        self.contentView.addSubviewToBottom(promotionCellView)
+        PXLayout.matchWidth(ofView: promotionCellView).isActive = true
+        PXLayout.centerHorizontally(view: promotionCellView).isActive = true
+        PXLayout.setHeight(owner: promotionCellView, height: 190).isActive = true
 
-        let image = MercadoPago.getImage("financial_institution_1001")
-        let cellProps = PXPromotionCellProps(image: image, title: "12 cuotas sin interés", subtitle: "Hasta el 30/jun/2017")
-        let cellComponent = PXPromotionCell(props: cellProps)
-        let cellView = cellComponent.render()
-        cellView.layer.borderWidth = 2
-        self.contentView.addSubviewToBottom(cellView, withMargin: 0)
-        PXLayout.matchWidth(ofView: cellView).isActive = true
-        PXLayout.setHeight(owner: cellView, height: 190).isActive = true
-        PXLayout.centerHorizontally(view: cellView).isActive = true
+//        let bankDeal = self.viewModel.bankDeals[0]
+//
+//        let image = MercadoPago.getImage("financial_institution_1001")
+//        let cellProps = PXPromotionCellProps(image: image, title: "12 cuotas sin interés", subtitle: "Hasta el 30/jun/2017")
+//        let cellComponent = PXPromotionCell(props: cellProps)
+//        let cellView = cellComponent.render()
+//        cellView.layer.borderWidth = 2
+//        self.contentView.addSubviewToBottom(cellView, withMargin: 0)
+//        PXLayout.matchWidth(ofView: cellView).isActive = true
+//        PXLayout.setHeight(owner: cellView, height: 190).isActive = true
+//        PXLayout.centerHorizontally(view: cellView).isActive = true
 
 
         //CFT
@@ -73,18 +77,20 @@ extension PXPromotionLegalsViewController {
             PXLayout.setHeight(owner: cftView, height: 135).isActive = true
         }
         //Legals
-        let legalsTextView = UITextView()
-        legalsTextView.translatesAutoresizingMaskIntoConstraints = false
-        legalsTextView.text = bankDeal.legals
-        legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
-        legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
-        legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
-        legalsTextView.isScrollEnabled = true
-        self.contentView.addSubviewToBottom(legalsTextView)
-        PXLayout.matchWidth(ofView: legalsTextView).isActive = true
-        PXLayout.setHeight(owner: legalsTextView, height: 242).isActive = true
-//        PXLayout.pinBottom(view: legalsTextView).isActive = true
-        PXLayout.centerHorizontally(view: legalsTextView).isActive = true
+        if let legalsText = self.viewModel.getLegalsText() {
+            let legalsTextView = UITextView()
+            legalsTextView.translatesAutoresizingMaskIntoConstraints = false
+            legalsTextView.text = legalsText
+            legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+            legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
+            legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+            legalsTextView.isScrollEnabled = true
+            self.contentView.addSubviewToBottom(legalsTextView)
+            PXLayout.matchWidth(ofView: legalsTextView).isActive = true
+            PXLayout.setHeight(owner: legalsTextView, height: 242).isActive = true
+            //        PXLayout.pinBottom(view: legalsTextView).isActive = true
+            PXLayout.centerHorizontally(view: legalsTextView).isActive = true
+        }
 
 
 
@@ -120,6 +126,10 @@ extension PXPromotionLegalsViewController {
 
 // MARK: Component Builders
 extension PXPromotionLegalsViewController {
-
+    fileprivate func buildPromotionCellView() -> UIView {
+        let component = self.viewModel.getPromotionCellComponent()
+        let view = component.render()
+        return view
+    }
 }
 

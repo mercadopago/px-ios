@@ -8,6 +8,7 @@
 
 import UIKit
 import MercadoPagoPXTracking
+import MercadoPagoServices
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
@@ -286,9 +287,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         self.navigationController?.pushViewController(self.startPromosStep(promos: promos), animated: true)
     }
 
-    func startPromosStep(promos: [BankDeal],
+    func startPromosStep(promos: [PXBankDeal],
                          _ callback: (() -> Void)? = nil) -> PXPromotionLegalsViewController {
-        let viewModel = PXPromotionsViewModel(bankDeals: promos)
+        let viewModel = PXPromotionLegalsViewModel(bankDeal: self.viewModel.promos![0])
         return PXPromotionLegalsViewController(viewModel: viewModel)
     }
 

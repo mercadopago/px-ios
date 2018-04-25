@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 final class PXPromotionsViewModel: NSObject {
 
-    var bankDeals: [BankDeal]
+    var bankDeals: [PXBankDeal]
 
-    public init(bankDeals: [BankDeal]) {
+    public init(bankDeals: [PXBankDeal]) {
         self.bankDeals = bankDeals
         super.init()
     }
