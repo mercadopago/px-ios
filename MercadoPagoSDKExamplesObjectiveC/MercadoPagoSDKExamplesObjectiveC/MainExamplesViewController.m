@@ -86,17 +86,17 @@
     dc.amountWithoutDiscount = 60;
     dc = nil;
 
-    self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
-   // self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c"; // Error;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-93c0061e-ba7d-479c-9d52-c60b0af58a91"
-    //self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2" // Error
+   // self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
+    self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c"; // Error;
+    //self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-93c0061e-ba7d-479c-9d52-c60b0af58a91"
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2" // Error
     accessToken:nil
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
     
     // Set default color or theme.
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
-    [self.mpCheckout setTheme:meliExampleTheme];
+   // [self.mpCheckout setTheme:meliExampleTheme];
 
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
     
@@ -113,7 +113,7 @@
     [self setVoidCallback];
 
     //Setear ReviewScreenPrefernce
-    [self setReviewScreenPreference];
+ //   [self setReviewScreenPreference];
 
     [self.mpCheckout start];
 
@@ -165,7 +165,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {
