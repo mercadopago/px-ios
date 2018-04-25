@@ -45,7 +45,6 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
         self.title = "Promociones".localized
 
 		self.tableView.register(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
-		self.tableView.register(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")
 		self.tableView.register(UINib(nibName: "PromoEmptyTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoEmptyTableViewCell")
 
 		self.tableView.estimatedRowHeight = 44.0
@@ -65,47 +64,31 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	}
 
 	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return promos == nil ? 1 : promos.count + 1
+		return Array.isNullOrEmpty(promos) ? 1 : promos.count
 	}
 
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if self.promos != nil && self.promos.count > 0 {
-			if (indexPath as NSIndexPath).row < self.promos.count {
-				let promoCell: PromoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PromoTableViewCell", for: indexPath) as! PromoTableViewCell
-				promoCell.setPromoInfo(self.promos[(indexPath as NSIndexPath).row])
-				return promoCell
-			} else {
-				return tableView.dequeueReusableCell(withIdentifier: "PromosTyCTableViewCell", for: indexPath) as! PromosTyCTableViewCell
-			}
+        if !Array.isNullOrEmpty(promos), let promoCell: PromoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PromoTableViewCell", for: indexPath) as? PromoTableViewCell {
+            promoCell.setPromoInfo(self.promos[(indexPath as NSIndexPath).row])
+            promoCell.isUserInteractionEnabled = true
+            return promoCell
 		} else {
 			return tableView.dequeueReusableCell(withIdentifier: "PromoEmptyTableViewCell", for: indexPath) as! PromoEmptyTableViewCell
 		}
 	}
 
 	open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if self.promos != nil && self.promos.count > 0 {
-			if (indexPath as NSIndexPath).row == self.promos.count {
-				return 55
-			} else {
-				return 151
-			}
+		if !Array.isNullOrEmpty(promos) {
+            return 151
 		} else {
 			return 80
 		}
 	}
 
-	open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-		if (indexPath as NSIndexPath).row == self.promos.count {
-			self.navigationController?.pushViewController(PromosTyCViewController(promos: self.promos), animated: true)
-		}
-
-	}
-
     internal override func executeBack() {
-            if self.callback != nil {
-                self.callback!()
-            }
+        if let callback = self.callback {
+            callback()
+        }
     }
 
 }

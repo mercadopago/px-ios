@@ -62,7 +62,11 @@ import Foundation
     public func addSubviewToBottom(_ view: UIView, withMargin margin: CGFloat = 0) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
-        putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
+        if self.contentView.subviews.count == 1 {
+            PXLayout.pinTop(view: view, withMargin: margin).isActive = true
+        } else {
+            putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
+        }
     }
 
     @objc override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
