@@ -17,6 +17,9 @@ class PXPromotionCellRenderer: NSObject {
         promotionCellView.translatesAutoresizingMaskIntoConstraints = false
         promotionCellView.backgroundColor = .white
 
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+
         //Image View
         let image = component.props.image
         let imageView = UIImageView()
@@ -56,7 +59,7 @@ class PXPromotionCellRenderer: NSObject {
             PXLayout.centerHorizontally(view: subtitleLabel).isActive = true
         }
 
-        PXLayout.pinLastSubviewToBottom(view: promotionCellView, withMargin: PXLayout.XS_MARGIN)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: promotionCellView, withMargin: PXLayout.M_MARGIN)?.isActive = true
         return promotionCellView
     }
 

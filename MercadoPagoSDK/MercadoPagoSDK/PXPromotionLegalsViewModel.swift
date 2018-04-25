@@ -32,13 +32,22 @@ extension PXPromotionLegalsViewModel {
     func getLegalsText() -> String? {
         return bankDeal.legals
     }
+
+    func getCFTValue() -> String? {
+        return "9.98%"
+    }
 }
 
 // MARK: - Components builders
 extension PXPromotionLegalsViewModel {
     func getPromotionCellComponent() -> PXPromotionCell {
         let image = MercadoPago.getImage("financial_institution_1001")
-        let props = PXPromotionCellProps(image: image, title: bankDeal.recommendedMessage, subtitle: "\(bankDeal.dateExpired)")
+
+        let expirationDateFormat = "Hasta el %@".localized
+        let dateString = Utils.getFormatedStringDate(bankDeal.dateExpired!)
+        let subtitle = String(format: expirationDateFormat, dateString)
+
+        let props = PXPromotionCellProps(image: image, title: bankDeal.recommendedMessage, subtitle: subtitle)
         let component = PXPromotionCell(props: props)
         return component
     }

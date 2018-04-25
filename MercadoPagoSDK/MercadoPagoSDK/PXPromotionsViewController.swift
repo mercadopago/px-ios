@@ -45,6 +45,8 @@ extension PXPromotionsViewController {
 
     fileprivate func renderViews() {
 
+        self.scrollView.isScrollEnabled = true
+
         self.contentView.prepareForRender()
 
         // Add Collection View

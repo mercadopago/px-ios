@@ -603,6 +603,7 @@
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
 		CCDD005D1DC52E4200858CF8 /* PaymentMethodSearch.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */; };
 		FC03FD791FCDE49F0006BBD6 /* PXBodyViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15661C5B1FCDCC47007FD7B7 /* PXBodyViewModelHelper.swift */; };
+		FC0D2FB02091018900B4CA5A /* TempPromotionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D2FAF2091018900B4CA5A /* TempPromotionsCollectionViewController.swift */; };
 		FC0F6CBC20179A01006E3EA1 /* PXContainedLabelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */; };
 		FC0F6CBE20179A08006E3EA1 /* PXContainedLabelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */; };
 		FC114D6B1E6DECEF00640196 /* Cellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC114D6A1E6DECEF00640196 /* Cellable.swift */; };
@@ -1108,6 +1109,7 @@
 		CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
 		CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethodSearch.plist; sourceTree = "<group>"; };
 		E51C3876B97C6D9DE3541750 /* Pods-MercadoPagoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.release.xcconfig"; sourceTree = "<group>"; };
+		FC0D2FAF2091018900B4CA5A /* TempPromotionsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPromotionsCollectionViewController.swift; sourceTree = "<group>"; };
 		FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelComponent.swift; sourceTree = "<group>"; };
 		FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelRenderer.swift; sourceTree = "<group>"; };
 		FC114D6A1E6DECEF00640196 /* Cellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cellable.swift; sourceTree = "<group>"; };
@@ -2367,6 +2369,7 @@
 			children = (
 				FC3918B3208E1A1200B75366 /* PXPromotionsViewController.swift */,
 				FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */,
+				FC0D2FAF2091018900B4CA5A /* TempPromotionsCollectionViewController.swift */,
 			);
 			name = Screen;
 			sourceTree = "<group>";
@@ -2987,6 +2990,7 @@
 				15D79A041CA96D6400623A84 /* MPLabel.swift in Sources */,
 				4BAA55EB1DB0015800501061 /* AdditionalStepCardTableViewCell.swift in Sources */,
 				FC3FC8811FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift in Sources */,
+				FC0D2FB02091018900B4CA5A /* TempPromotionsCollectionViewController.swift in Sources */,
 				15B8B1BD1E71DEAE0065DF50 /* AddCouponViewModel.swift in Sources */,
 				FC65A1E6208E269C000A0DA0 /* PXCollectionRowRenderer.swift in Sources */,
 				FC65A1E9208E4907000A0DA0 /* PXPromotionCell.swift in Sources */,

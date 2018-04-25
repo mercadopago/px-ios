@@ -34,7 +34,7 @@ class PXPromotionLegalsViewController: PXComponentContainerViewController {
 extension PXPromotionLegalsViewController {
 
     fileprivate func setupUI() {
-        self.title = "Banco Hiportecario"
+        self.title = "[TRADUCIR] Condiciones"
         navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         loadMPStyles()
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
@@ -54,73 +54,31 @@ extension PXPromotionLegalsViewController {
         PXLayout.centerHorizontally(view: promotionCellView).isActive = true
         PXLayout.setHeight(owner: promotionCellView, height: 190).isActive = true
 
-//        let bankDeal = self.viewModel.bankDeals[0]
-//
-//        let image = MercadoPago.getImage("financial_institution_1001")
-//        let cellProps = PXPromotionCellProps(image: image, title: "12 cuotas sin interés", subtitle: "Hasta el 30/jun/2017")
-//        let cellComponent = PXPromotionCell(props: cellProps)
-//        let cellView = cellComponent.render()
-//        cellView.layer.borderWidth = 2
-//        self.contentView.addSubviewToBottom(cellView, withMargin: 0)
-//        PXLayout.matchWidth(ofView: cellView).isActive = true
-//        PXLayout.setHeight(owner: cellView, height: 190).isActive = true
-//        PXLayout.centerHorizontally(view: cellView).isActive = true
-
-
         //CFT
-        if 0 == 0 {
-            let cftView = PXCFTComponentView(withCFTValue: "82%", titleColor: UIColor.UIColorFromRGB(0x616161), backgroundColor: UIColor.UIColorFromRGB(0xf7f7f7))
+        if self.viewModel.shouldShowCFT() {
+            let containerView = UIView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+            let cftView = buildCFTView()
             cftView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 90, color: UIColor.UIColorFromRGB(0xe3e0e0))
-            self.contentView.addSubviewToBottom(cftView, withMargin: PXLayout.L_MARGIN)
-            PXLayout.centerHorizontally(view: cftView).isActive = true
+            containerView.addSubview(cftView)
             PXLayout.matchWidth(ofView: cftView).isActive = true
-            PXLayout.setHeight(owner: cftView, height: 135).isActive = true
+            PXLayout.centerHorizontally(view: cftView).isActive = true
+            PXLayout.pinBottom(view: cftView).isActive = true
+            self.contentView.addSubviewToBottom(containerView)
+            PXLayout.centerHorizontally(view: containerView).isActive = true
+            PXLayout.matchWidth(ofView: containerView).isActive = true
+            PXLayout.setHeight(owner: containerView, height: 70).isActive = true
         }
         //Legals
         if let legalsText = self.viewModel.getLegalsText() {
-            let legalsTextView = UITextView()
-            legalsTextView.translatesAutoresizingMaskIntoConstraints = false
-            legalsTextView.text = legalsText
-            legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
-            legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
-            legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
-            legalsTextView.isScrollEnabled = true
-            self.contentView.addSubviewToBottom(legalsTextView)
+            let legalsTextView = buildLegalTextView(text: legalsText)
+            self.contentView.addSubviewToBottom(legalsTextView, withMargin: PXLayout.S_MARGIN)
             PXLayout.matchWidth(ofView: legalsTextView).isActive = true
-            PXLayout.setHeight(owner: legalsTextView, height: 242).isActive = true
-            //        PXLayout.pinBottom(view: legalsTextView).isActive = true
             PXLayout.centerHorizontally(view: legalsTextView).isActive = true
         }
 
-
-
-//        // Add Collection View
-//        for bankDeal in self.viewModel.bankDeals {
-//            let uiv = UIView()
-//            PXLayout.setHeight(owner: uiv, height: 50).isActive = true
-//            PXLayout.setWidth(owner: uiv, width: 50).isActive = true
-//            uiv.backgroundColor = .red
-//
-//            let image = MercadoPago.getImage("mediosIconoMaster")
-//            let cellProps = PXPromotionCellProps(image: image, title: "12 cuotas sin interés", subtitle: "Hasta el 30/jun/2017")
-//            let cellComponent = PXPromotionCell(props: cellProps)
-//            let cellView = cellComponent.render()
-//            cellView.translatesAutoresizingMaskIntoConstraints = false
-//            PXLayout.setWidth(owner: cellView, width: 150).isActive = true
-//            PXLayout.setHeight(owner: cellView, height: 150).isActive = true
-//            self.contentView.addSubviewToBottom(cellView)
-//            PXLayout.centerHorizontally(view: cellView).isActive = true
-//
-//        }
-
-
-        //        let props = PXCollectionRowProps(view1: cellView, view2: cellView)
-        //        let compo = PXCollectionRow(props: props)
-        //        let view = compo.render()
-        //        contentView.addSubview(view)
-        //        PXLayout.matchWidth(ofView: view, withPercentage: 100).isActive = true
-        //        PXLayout.centerHorizontally(view: view).isActive = true
-        //        PXLayout.setHeight(owner: view, height: 280).isActive = true
+        self.contentView.sizeToFit()    
     }
 }
 
@@ -130,6 +88,35 @@ extension PXPromotionLegalsViewController {
         let component = self.viewModel.getPromotionCellComponent()
         let view = component.render()
         return view
+    }
+
+    fileprivate func buildCFTView() -> UIView {
+        let value = self.viewModel.getCFTValue()
+        let view = PXCFTComponentView(withCFTValue: value, titleColor: UIColor.UIColorFromRGB(0x616161), backgroundColor: UIColor.UIColorFromRGB(0xf7f7f7))
+        return view
+    }
+
+    fileprivate func buildLegalTextView(text: String) -> UIView {
+        //            let legalsTextView = UITextView()
+        //            legalsTextView.translatesAutoresizingMaskIntoConstraints = false
+        //            legalsTextView.text = legalsText
+        //            legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        //            legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
+        //            legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+        //            legalsTextView.isScrollEnabled = true
+        //            self.contentView.addSubviewToBottom(legalsTextView)
+        //            PXLayout.matchWidth(ofView: legalsTextView).isActive = true
+        //            PXLayout.setHeight(owner: legalsTextView, height: 242).isActive = true
+        //            //        PXLayout.pinBottom(view: legalsTextView).isActive = true
+        //            PXLayout.centerHorizontally(view: legalsTextView).isActive = true
+        let legalsLabel = UILabel()
+        legalsLabel.translatesAutoresizingMaskIntoConstraints = false
+        legalsLabel.text = text
+        legalsLabel.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+        legalsLabel.textColor = UIColor.UIColorFromRGB(0x999999)
+        legalsLabel.numberOfLines = 0
+        legalsLabel.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        return legalsLabel
     }
 }
 
