@@ -46,6 +46,7 @@ extension PXPromotionLegalsViewController {
 
     fileprivate func renderViews() {
         self.contentView.prepareForRender()
+        self.view.isUserInteractionEnabled = true
 
         //Promotion Cell
         let promotionCellView = buildPromotionCellView()
@@ -78,7 +79,8 @@ extension PXPromotionLegalsViewController {
             PXLayout.centerHorizontally(view: legalsTextView).isActive = true
         }
 
-        self.contentView.sizeToFit()    
+        self.contentView.layoutIfNeeded()
+        super.refreshContentViewSize()
     }
 }
 
@@ -97,26 +99,24 @@ extension PXPromotionLegalsViewController {
     }
 
     fileprivate func buildLegalTextView(text: String) -> UIView {
-        //            let legalsTextView = UITextView()
-        //            legalsTextView.translatesAutoresizingMaskIntoConstraints = false
-        //            legalsTextView.text = legalsText
-        //            legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
-        //            legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
-        //            legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
-        //            legalsTextView.isScrollEnabled = true
-        //            self.contentView.addSubviewToBottom(legalsTextView)
-        //            PXLayout.matchWidth(ofView: legalsTextView).isActive = true
-        //            PXLayout.setHeight(owner: legalsTextView, height: 242).isActive = true
-        //            //        PXLayout.pinBottom(view: legalsTextView).isActive = true
-        //            PXLayout.centerHorizontally(view: legalsTextView).isActive = true
-        let legalsLabel = UILabel()
-        legalsLabel.translatesAutoresizingMaskIntoConstraints = false
-        legalsLabel.text = text
-        legalsLabel.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
-        legalsLabel.textColor = UIColor.UIColorFromRGB(0x999999)
-        legalsLabel.numberOfLines = 0
-        legalsLabel.font = Utils.getFont(size: PXLayout.XXXS_FONT)
-        return legalsLabel
+        let legalsTextView = UITextView()
+        legalsTextView.translatesAutoresizingMaskIntoConstraints = false
+        legalsTextView.text = text
+        legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
+        legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+        legalsTextView.isScrollEnabled = false
+        return legalsTextView
+
+//
+//        let legalsLabel = UILabel()
+//        legalsLabel.translatesAutoresizingMaskIntoConstraints = false
+//        legalsLabel.text = text
+//        legalsLabel.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+//        legalsLabel.textColor = UIColor.UIColorFromRGB(0x999999)
+//        legalsLabel.numberOfLines = 0
+//        legalsLabel.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+//        return legalsLabel
     }
 }
 
