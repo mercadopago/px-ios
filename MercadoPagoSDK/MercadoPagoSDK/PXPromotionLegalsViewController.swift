@@ -55,22 +55,6 @@ extension PXPromotionLegalsViewController {
         PXLayout.centerHorizontally(view: promotionCellView).isActive = true
         PXLayout.setHeight(owner: promotionCellView, height: 190).isActive = true
 
-        //CFT
-        if self.viewModel.shouldShowCFT() {
-            let containerView = UIView()
-            containerView.translatesAutoresizingMaskIntoConstraints = false
-            containerView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
-            let cftView = buildCFTView()
-            cftView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 90, color: UIColor.UIColorFromRGB(0xe3e0e0))
-            containerView.addSubview(cftView)
-            PXLayout.matchWidth(ofView: cftView).isActive = true
-            PXLayout.centerHorizontally(view: cftView).isActive = true
-            PXLayout.pinBottom(view: cftView).isActive = true
-            self.contentView.addSubviewToBottom(containerView)
-            PXLayout.centerHorizontally(view: containerView).isActive = true
-            PXLayout.matchWidth(ofView: containerView).isActive = true
-            PXLayout.setHeight(owner: containerView, height: 70).isActive = true
-        }
         //Legals
         if let legalsText = self.viewModel.getLegalsText() {
             let legalsTextView = buildLegalTextView(text: legalsText)
@@ -89,12 +73,6 @@ extension PXPromotionLegalsViewController {
     fileprivate func buildPromotionCellView() -> UIView {
         let component = self.viewModel.getPromotionCellComponent()
         let view = component.render()
-        return view
-    }
-
-    fileprivate func buildCFTView() -> UIView {
-        let value = self.viewModel.getCFTValue()
-        let view = PXCFTComponentView(withCFTValue: value, titleColor: UIColor.UIColorFromRGB(0x616161), backgroundColor: UIColor.UIColorFromRGB(0xf7f7f7))
         return view
     }
 

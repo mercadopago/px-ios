@@ -22,19 +22,12 @@ final class PXPromotionLegalsViewModel: NSObject {
 
 // MARK: - Logic
 extension PXPromotionLegalsViewModel {
-    func shouldShowCFT() -> Bool {
-        return true
-    }
 }
 
 // MARK: - Getters
 extension PXPromotionLegalsViewModel {
     func getLegalsText() -> String? {
         return bankDeal.legals
-    }
-
-    func getCFTValue() -> String? {
-        return "9.98%"
     }
 }
 
