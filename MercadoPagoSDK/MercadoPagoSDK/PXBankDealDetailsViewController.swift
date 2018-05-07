@@ -51,15 +51,15 @@ extension PXBankDealDetailsViewController {
         self.contentView.prepareForRender()
         self.view.isUserInteractionEnabled = true
 
-        //Promotion Cell
+        //Bank Deal Component
         let cellContainer = PXComponentView()
-        let promotionCellView = buildPromotionCellView()
-        cellContainer.backgroundColor = promotionCellView.backgroundColor
-        cellContainer.addSubview(promotionCellView)
-        PXLayout.setHeight(owner: promotionCellView, height: CELL_CONTENT_HEIGHT).isActive = true
-        PXLayout.matchWidth(ofView: promotionCellView).isActive = true
-        PXLayout.centerHorizontally(view: promotionCellView).isActive = true
-        PXLayout.centerVertically(view: promotionCellView).isActive = true
+        let bankDealComponentView = buildBankDealComponentView()
+        cellContainer.backgroundColor = bankDealComponentView.backgroundColor
+        cellContainer.addSubview(bankDealComponentView)
+        PXLayout.setHeight(owner: bankDealComponentView, height: CELL_CONTENT_HEIGHT).isActive = true
+        PXLayout.matchWidth(ofView: bankDealComponentView).isActive = true
+        PXLayout.centerHorizontally(view: bankDealComponentView).isActive = true
+        PXLayout.centerVertically(view: bankDealComponentView).isActive = true
         self.contentView.addSubviewToBottom(cellContainer)
         PXLayout.matchWidth(ofView: cellContainer).isActive = true
         PXLayout.centerHorizontally(view: cellContainer).isActive = true
@@ -82,7 +82,7 @@ extension PXBankDealDetailsViewController {
 
 // MARK: Component Builders
 extension PXBankDealDetailsViewController {
-    fileprivate func buildPromotionCellView() -> UIView {
+    fileprivate func buildBankDealComponentView() -> UIView {
         let component = self.viewModel.getPromotionCellComponent()
         let view = component.render()
         return view
