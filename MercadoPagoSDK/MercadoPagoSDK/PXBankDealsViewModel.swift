@@ -28,7 +28,7 @@ extension PXBankDealsViewModel {
 
 // MARK: - Components builders
 extension PXBankDealsViewModel {
-    func getPromotionCellComponentForIndexPath(_ indexPath: IndexPath) -> PXBankDealComponent {
+    func getBankDealComponentForIndexPath(_ indexPath: IndexPath) -> PXBankDealComponent {
         let bankDeal = bankDeals[indexPath.row]
         let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
         let placeholder = bankDeal.issuer?.name

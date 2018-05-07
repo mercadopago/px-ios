@@ -12,7 +12,7 @@ import UIKit
 open class PXBankDealComponent: PXComponentizable {
 
     public func render() -> UIView {
-        return PXPromotionCellRenderer().render(self)
+        return PXBankDealComponentRenderer().render(self)
     }
 
     var props: PXPromotionCellProps

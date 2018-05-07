@@ -1,5 +1,5 @@
 //
-//  PXPromotionCellRenderer.swift
+//  PXBankDealComponentRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 23/4/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXPromotionCellRenderer: NSObject {
+class PXBankDealComponentRenderer: NSObject {
 
     var IMAGE_VIEW_HEIGHT: CGFloat = 40
 
@@ -81,4 +81,3 @@ class PXPromotionCellView: PXComponentView {
     var titleLabel: UILabel!
     var subtitleLabel: UILabel!
 }
-

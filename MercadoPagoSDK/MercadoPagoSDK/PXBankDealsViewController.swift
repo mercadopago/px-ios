@@ -77,14 +77,14 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER, for: indexPath) as! PXBankDealCollectionCell
-        let promotionCellView = self.buildPromotionCellView(for: indexPath)
-        cell.contentView.addSubview(promotionCellView)
+        let bankDealComponentView = self.buildBankDealComponentView(for: indexPath)
+        cell.contentView.addSubview(bankDealComponentView)
 
         //Constraints
-        PXLayout.centerHorizontally(view: promotionCellView).isActive = true
-        PXLayout.centerVertically(view: promotionCellView).isActive = true
-        PXLayout.matchWidth(ofView: promotionCellView).isActive = true
-        PXLayout.setHeight(owner: promotionCellView, height: CELL_HEIGHT).isActive = true
+        PXLayout.centerHorizontally(view: bankDealComponentView).isActive = true
+        PXLayout.centerVertically(view: bankDealComponentView).isActive = true
+        PXLayout.matchWidth(ofView: bankDealComponentView).isActive = true
+        PXLayout.setHeight(owner: bankDealComponentView, height: CELL_HEIGHT).isActive = true
 
         return cell
     }
@@ -111,8 +111,8 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
 
 // MARK: Component Builders
 extension PXBankDealsViewController {
-    fileprivate func buildPromotionCellView(for indexPath: IndexPath) -> UIView {
-        let component = self.viewModel.getPromotionCellComponentForIndexPath(indexPath)
+    fileprivate func buildBankDealComponentView(for indexPath: IndexPath) -> UIView {
+        let component = self.viewModel.getBankDealComponentForIndexPath(indexPath)
         let view = component.render()
         return view
     }
