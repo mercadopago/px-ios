@@ -83,7 +83,7 @@ extension PXBankDealDetailsViewController {
 // MARK: Component Builders
 extension PXBankDealDetailsViewController {
     fileprivate func buildBankDealComponentView() -> UIView {
-        let component = self.viewModel.getPromotionCellComponent()
+        let component = self.viewModel.getBankDealComponent()
         let view = component.render()
         return view
     }

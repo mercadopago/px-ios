@@ -29,7 +29,7 @@ extension PXBankDealDetailsViewModel {
 
 // MARK: - Components builders
 extension PXBankDealDetailsViewModel {
-    func getPromotionCellComponent() -> PXBankDealComponent {
+    func getBankDealComponent() -> PXBankDealComponent {
         let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
         let placeholder = bankDeal.issuer?.name
         let expirationDateFormat = "Hasta el %@".localized
