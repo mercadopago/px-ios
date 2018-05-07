@@ -25,13 +25,15 @@ open class PXPromotionCell: PXComponentizable {
 @objcMembers
 open class PXPromotionCellProps: NSObject {
     var image: UIImage?
+    var placeholder: String?
     var title: String?
     var subtitle: String?
     
-    init(image: UIImage?, title: String?, subtitle: String?) {
+    init(image: UIImage?, placeholder: String?, title: String?, subtitle: String?) {
         self.image = image
         self.title = title
         self.subtitle = subtitle
+        self.placeholder = placeholder
     }
 }
 

@@ -288,16 +288,10 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func startPromosStep(promos: [PXBankDeal],
-                         _ callback: (() -> Void)? = nil) -> PXPromotionLegalsViewController {
+                         _ callback: (() -> Void)? = nil) -> PXPromotionsViewController {
 
-//        let viewModel = PXPromotionsViewModel(bankDeals: promos)
-//        return PXPromotionsViewController(viewModel: viewModel)
-
-//        let asda = TempPromotionsCollectionViewController(viewModel: viewModel)
-//        return asda
-
-        let viewModel = PXPromotionLegalsViewModel(bankDeal: self.viewModel.promos![0])
-        return PXPromotionLegalsViewController(viewModel: viewModel)
+        let viewModel = PXPromotionsViewModel(bankDeals: promos)
+        return PXPromotionsViewController(viewModel: viewModel)
     }
 
     @objc open func editingChanged(_ textField: UITextField) {

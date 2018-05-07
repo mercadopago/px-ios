@@ -10,6 +10,9 @@ import UIKit
 
 class PXPromotionLegalsViewController: PXComponentContainerViewController {
 
+    fileprivate let CELL_CONTENT_HEIGHT: CGFloat = 128
+    fileprivate let CELL_HEIGHT: CGFloat = 190
+
     fileprivate var viewModel: PXPromotionLegalsViewModel!
 
     init(viewModel: PXPromotionLegalsViewModel) {
@@ -49,14 +52,23 @@ extension PXPromotionLegalsViewController {
         self.view.isUserInteractionEnabled = true
 
         //Promotion Cell
+        let cellContainer = PXComponentView()
         let promotionCellView = buildPromotionCellView()
-        self.contentView.addSubviewToBottom(promotionCellView)
+        cellContainer.backgroundColor = promotionCellView.backgroundColor
+        cellContainer.addSubview(promotionCellView)
+        PXLayout.setHeight(owner: promotionCellView, height: CELL_CONTENT_HEIGHT).isActive = true
         PXLayout.matchWidth(ofView: promotionCellView).isActive = true
         PXLayout.centerHorizontally(view: promotionCellView).isActive = true
-        PXLayout.setHeight(owner: promotionCellView, height: 190).isActive = true
+        PXLayout.centerVertically(view: promotionCellView).isActive = true
+        self.contentView.addSubviewToBottom(cellContainer)
+        PXLayout.matchWidth(ofView: cellContainer).isActive = true
+        PXLayout.centerHorizontally(view: cellContainer).isActive = true
+        PXLayout.setHeight(owner: cellContainer, height: CELL_HEIGHT).isActive = true
+
 
         //Legals
         if let legalsText = self.viewModel.getLegalsText() {
+            let legalsContainer = PXComponentView()
             let legalsTextView = buildLegalTextView(text: legalsText)
             self.contentView.addSubviewToBottom(legalsTextView, withMargin: PXLayout.S_MARGIN)
             PXLayout.matchWidth(ofView: legalsTextView).isActive = true
@@ -82,19 +94,9 @@ extension PXPromotionLegalsViewController {
         legalsTextView.text = text
         legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
         legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
-        legalsTextView.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
+        legalsTextView.backgroundColor = .clear
         legalsTextView.isScrollEnabled = false
         return legalsTextView
-
-//
-//        let legalsLabel = UILabel()
-//        legalsLabel.translatesAutoresizingMaskIntoConstraints = false
-//        legalsLabel.text = text
-//        legalsLabel.backgroundColor = UIColor.UIColorFromRGB(0xf7f7f7)
-//        legalsLabel.textColor = UIColor.UIColorFromRGB(0x999999)
-//        legalsLabel.numberOfLines = 0
-//        legalsLabel.font = Utils.getFont(size: PXLayout.XXXS_FONT)
-//        return legalsLabel
     }
 }
 

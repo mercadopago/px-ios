@@ -17,22 +17,34 @@ class PXPromotionCellRenderer: NSObject {
         promotionCellView.translatesAutoresizingMaskIntoConstraints = false
         promotionCellView.backgroundColor = .white
 
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-
         //Image View
-        let image = component.props.image
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        promotionCellView.imageView = imageView
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = image
-        promotionCellView.addSubview(imageView)
-        PXLayout.pinTop(view: imageView, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.centerHorizontally(view: imageView).isActive = true
-        PXLayout.setHeight(owner: imageView, height: IMAGE_VIEW_HEIGHT).isActive = true
-        PXLayout.pinLeft(view: imageView, withMargin: 0).isActive = true
-        PXLayout.pinRight(view: imageView, withMargin: 0).isActive = true
+        if let image = component.props.image {
+            let imageView = UIImageView()
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            promotionCellView.imageView = imageView
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = image
+            promotionCellView.addSubview(imageView)
+            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
+            PXLayout.centerHorizontally(view: imageView).isActive = true
+            PXLayout.setHeight(owner: imageView, height: IMAGE_VIEW_HEIGHT).isActive = true
+            PXLayout.pinLeft(view: imageView, withMargin: 0).isActive = true
+            PXLayout.pinRight(view: imageView, withMargin: 0).isActive = true
+        } else if let placeholder = component.props.placeholder {
+            let label = UILabel()
+            label.font = Utils.getFont(size: PXLayout.XS_FONT)
+            label.textColor = .red
+            label.numberOfLines = 2
+            label.lineBreakMode = .byTruncatingTail
+            label.textAlignment = .center
+            label.text = placeholder
+            promotionCellView.addSubview(label)
+            PXLayout.pinTop(view: label, withMargin: PXLayout.XS_MARGIN).isActive = true
+            PXLayout.centerHorizontally(view: label).isActive = true
+            PXLayout.setHeight(owner: label, height: IMAGE_VIEW_HEIGHT).isActive = true
+            PXLayout.pinLeft(view: label, withMargin: 0).isActive = true
+            PXLayout.pinRight(view: label, withMargin: 0).isActive = true
+        }
 
         //Title Label
         let title = component.props.title
@@ -42,8 +54,7 @@ class PXPromotionCellRenderer: NSObject {
         titleLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
         titleLabel.text = title
         titleLabel.textColor = UIColor.UIColorFromRGB(0x232323)
-        promotionCellView.addSubview(titleLabel)
-        PXLayout.put(view: titleLabel, onBottomOf: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
+        promotionCellView.addSubviewToBottom(titleLabel, withMargin: PXLayout.XS_MARGIN)
         PXLayout.centerHorizontally(view: titleLabel).isActive = true
 
         //Subtitle Label
@@ -59,7 +70,7 @@ class PXPromotionCellRenderer: NSObject {
             PXLayout.centerHorizontally(view: subtitleLabel).isActive = true
         }
 
-        PXLayout.pinLastSubviewToBottom(view: promotionCellView, withMargin: PXLayout.M_MARGIN)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: promotionCellView, withMargin: PXLayout.XS_MARGIN)?.isActive = true
         return promotionCellView
     }
 

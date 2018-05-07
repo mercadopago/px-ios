@@ -20,10 +20,6 @@ final class PXPromotionLegalsViewModel: NSObject {
 
 }
 
-// MARK: - Logic
-extension PXPromotionLegalsViewModel {
-}
-
 // MARK: - Getters
 extension PXPromotionLegalsViewModel {
     func getLegalsText() -> String? {
@@ -34,13 +30,12 @@ extension PXPromotionLegalsViewModel {
 // MARK: - Components builders
 extension PXPromotionLegalsViewModel {
     func getPromotionCellComponent() -> PXPromotionCell {
-        let image = MercadoPago.getImage("financial_institution_1001")
-
+        let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
+        let placeholder = bankDeal.issuer?.name
         let expirationDateFormat = "Hasta el %@".localized
         let dateString = Utils.getFormatedStringDate(bankDeal.dateExpired!)
         let subtitle = String(format: expirationDateFormat, dateString)
-
-        let props = PXPromotionCellProps(image: image, title: bankDeal.recommendedMessage, subtitle: subtitle)
+        let props = PXPromotionCellProps(image: image, placeholder: placeholder, title: bankDeal.recommendedMessage, subtitle: subtitle)
         let component = PXPromotionCell(props: props)
         return component
     }

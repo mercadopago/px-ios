@@ -603,7 +603,6 @@
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
 		CCDD005D1DC52E4200858CF8 /* PaymentMethodSearch.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */; };
 		FC03FD791FCDE49F0006BBD6 /* PXBodyViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15661C5B1FCDCC47007FD7B7 /* PXBodyViewModelHelper.swift */; };
-		FC0D2FB02091018900B4CA5A /* TempPromotionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D2FAF2091018900B4CA5A /* TempPromotionsCollectionViewController.swift */; };
 		FC0F6CBC20179A01006E3EA1 /* PXContainedLabelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */; };
 		FC0F6CBE20179A08006E3EA1 /* PXContainedLabelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */; };
 		FC114D6B1E6DECEF00640196 /* Cellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC114D6A1E6DECEF00640196 /* Cellable.swift */; };
@@ -617,7 +616,6 @@
 		FC2A09551FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */; };
 		FC2A09571FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
 		FC2A09581FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
-		FC3918B4208E1A1200B75366 /* PXPromotionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3918B3208E1A1200B75366 /* PXPromotionsViewController.swift */; };
 		FC3918B6208E1A2900B75366 /* PXPromotionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */; };
 		FC3FC8421FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8431FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
@@ -666,6 +664,7 @@
 		FC3FC8901FBE13E800CF29E1 /* PXInstructionsActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88F1FBE13E800CF29E1 /* PXInstructionsActionComponent.swift */; };
 		FC3FC8911FBE13E800CF29E1 /* PXInstructionsActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88F1FBE13E800CF29E1 /* PXInstructionsActionComponent.swift */; };
 		FC3FC8931FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */; };
+		FC47524D20A0986B00A43FED /* PXPromotionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC47524C20A0986B00A43FED /* PXPromotionsViewController.swift */; };
 		FC5BCEBF208FA99300447D99 /* PXPromotionLegalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BCEBE208FA99300447D99 /* PXPromotionLegalsViewModel.swift */; };
 		FC6283F31FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
 		FC6283F41FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
@@ -1109,7 +1108,6 @@
 		CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
 		CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethodSearch.plist; sourceTree = "<group>"; };
 		E51C3876B97C6D9DE3541750 /* Pods-MercadoPagoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.release.xcconfig"; sourceTree = "<group>"; };
-		FC0D2FAF2091018900B4CA5A /* TempPromotionsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPromotionsCollectionViewController.swift; sourceTree = "<group>"; };
 		FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelComponent.swift; sourceTree = "<group>"; };
 		FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelRenderer.swift; sourceTree = "<group>"; };
 		FC114D6A1E6DECEF00640196 /* Cellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cellable.swift; sourceTree = "<group>"; };
@@ -1120,7 +1118,6 @@
 		FC239AFF2045D01800286B01 /* PXComponentAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentAction.swift; sourceTree = "<group>"; };
 		FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconComponent.swift; sourceTree = "<group>"; };
 		FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconRenderer.swift; sourceTree = "<group>"; };
-		FC3918B3208E1A1200B75366 /* PXPromotionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionsViewController.swift; sourceTree = "<group>"; };
 		FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionsViewModel.swift; sourceTree = "<group>"; };
 		FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsRenderer.swift; sourceTree = "<group>"; };
@@ -1146,6 +1143,7 @@
 		FC3FC88C1FBE13D600CF29E1 /* PXInstructionsActionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionsRenderer.swift; sourceTree = "<group>"; };
 		FC3FC88F1FBE13E800CF29E1 /* PXInstructionsActionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionComponent.swift; sourceTree = "<group>"; };
 		FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionRenderer.swift; sourceTree = "<group>"; };
+		FC47524C20A0986B00A43FED /* PXPromotionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionsViewController.swift; sourceTree = "<group>"; };
 		FC5BCEBE208FA99300447D99 /* PXPromotionLegalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionLegalsViewModel.swift; sourceTree = "<group>"; };
 		FC61854A202DD5E3000FE1CB /* es-CO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-CO"; path = "es-CO.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
 		FC61854B202DD5E3000FE1CB /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-PE"; path = "es-PE.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
@@ -2367,9 +2365,8 @@
 		FC3918B7208E1A7900B75366 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				FC3918B3208E1A1200B75366 /* PXPromotionsViewController.swift */,
+				FC47524C20A0986B00A43FED /* PXPromotionsViewController.swift */,
 				FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */,
-				FC0D2FAF2091018900B4CA5A /* TempPromotionsCollectionViewController.swift */,
 			);
 			name = Screen;
 			sourceTree = "<group>";
@@ -2990,7 +2987,6 @@
 				15D79A041CA96D6400623A84 /* MPLabel.swift in Sources */,
 				4BAA55EB1DB0015800501061 /* AdditionalStepCardTableViewCell.swift in Sources */,
 				FC3FC8811FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift in Sources */,
-				FC0D2FB02091018900B4CA5A /* TempPromotionsCollectionViewController.swift in Sources */,
 				15B8B1BD1E71DEAE0065DF50 /* AddCouponViewModel.swift in Sources */,
 				FC65A1E6208E269C000A0DA0 /* PXCollectionRowRenderer.swift in Sources */,
 				FC65A1E9208E4907000A0DA0 /* PXPromotionCell.swift in Sources */,
@@ -3003,6 +2999,7 @@
 				FCBF13491E7204C30092B756 /* FinancialInstitutionTableViewCell.swift in Sources */,
 				FC3FC88A1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
 				4B760D11204EEC78001E4976 /* PXItemContainerView.swift in Sources */,
+				FC47524D20A0986B00A43FED /* PXPromotionsViewController.swift in Sources */,
 				0FC4FC211B0FAF0E00CF7148 /* PromoTableViewCell.swift in Sources */,
 				23F5FEE7205078A9005382E9 /* PXCFTComponentView.swift in Sources */,
 				76AB4DB21E424BB10015EA3B /* PaymentData.swift in Sources */,
@@ -3063,7 +3060,6 @@
 				0F9883631AD2AB6000F750F0 /* CardNumber.swift in Sources */,
 				4BEF9B571FE2EB2D002ADAFF /* PXPluginComponent.swift in Sources */,
 				763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */,
-				FC3918B4208E1A1200B75366 /* PXPromotionsViewController.swift in Sources */,
 				231AE27020472C1400CB87CF /* PXSummaryComponent.swift in Sources */,
 				0F98836D1AD2AB6000F750F0 /* Device.swift in Sources */,
 				81ACC8221F9A88F700206F7B /* PXHeaderRenderer.swift in Sources */,
