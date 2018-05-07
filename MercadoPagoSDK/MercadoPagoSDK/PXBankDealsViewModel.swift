@@ -40,5 +40,10 @@ extension PXBankDealsViewModel {
         let component = PXPromotionCell(props: props)
         return component
     }
-}
 
+    func getBankDealDetailsViewControllerForIndexPath(_ indexPath: IndexPath) -> UIViewController {
+        let bankDeal = bankDeals[indexPath.row]
+        let viewModel = PXBankDealDetailsViewModel(bankDeal: bankDeal)
+        return PXBankDealDetailsViewController(viewModel: viewModel)
+    }
+}
