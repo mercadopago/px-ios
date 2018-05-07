@@ -36,7 +36,7 @@ extension PXBankDealsViewModel {
         let dateString = Utils.getFormatedStringDate(bankDeal.dateExpired!)
         let subtitle = String(format: expirationDateFormat, dateString)
 
-        let props = PXPromotionCellProps(image: image, placeholder: placeholder, title: bankDeal.recommendedMessage, subtitle: subtitle)
+        let props = PXBankDealComponentProps(image: image, placeholder: placeholder, title: bankDeal.recommendedMessage, subtitle: subtitle)
         let component = PXBankDealComponent(props: props)
         return component
     }

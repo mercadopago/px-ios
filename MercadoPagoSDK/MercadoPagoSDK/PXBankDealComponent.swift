@@ -15,15 +15,15 @@ open class PXBankDealComponent: PXComponentizable {
         return PXBankDealComponentRenderer().render(self)
     }
 
-    var props: PXPromotionCellProps
+    var props: PXBankDealComponentProps
 
-    init(props: PXPromotionCellProps) {
+    init(props: PXBankDealComponentProps) {
         self.props = props
     }
 }
 
 @objcMembers
-open class PXPromotionCellProps: NSObject {
+open class PXBankDealComponentProps: NSObject {
     var image: UIImage?
     var placeholder: String?
     var title: String?
