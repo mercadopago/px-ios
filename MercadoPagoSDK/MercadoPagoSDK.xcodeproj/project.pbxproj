@@ -2356,7 +2356,7 @@
 			isa = PBXGroup;
 			children = (
 				FCAFDEAC20A0CEF100D00B60 /* Screens */,
-				FC65A1E7208E48DE000A0DA0 /* Promotion Cell */,
+				FC65A1E7208E48DE000A0DA0 /* Bank Deal Component */,
 			);
 			name = "Bank Deals";
 			sourceTree = "<group>";
@@ -2489,13 +2489,13 @@
 			path = CollectionViewRow;
 			sourceTree = "<group>";
 		};
-		FC65A1E7208E48DE000A0DA0 /* Promotion Cell */ = {
+		FC65A1E7208E48DE000A0DA0 /* Bank Deal Component */ = {
 			isa = PBXGroup;
 			children = (
 				FC65A1E8208E4907000A0DA0 /* PXPromotionCell.swift */,
 				FC65A1EA208E4913000A0DA0 /* PXPromotionCellRenderer.swift */,
 			);
-			name = "Promotion Cell";
+			name = "Bank Deal Component";
 			sourceTree = "<group>";
 		};
 		FC73AB42202B877600537C9F /* Translations */ = {

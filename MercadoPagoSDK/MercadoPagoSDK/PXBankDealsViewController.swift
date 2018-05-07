@@ -19,10 +19,10 @@ class PXBankDealCollectionCell: UICollectionViewCell {
             miniView.removeFromSuperview()
         }
     }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
@@ -43,15 +43,26 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     }
 
     override func viewDidLoad() {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = MARGINS
-        flowLayout.minimumLineSpacing = MARGINS
-        let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
-        collectionView.register(PXBankDealCollectionCell.self, forCellWithReuseIdentifier: REUSE_IDENTIFIER)
+        createCollectionView()
+    }
+
+    func createCollectionView() {
+        //Collection View Flow Layout
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = MARGINS
+        layout.minimumLineSpacing = MARGINS
+
+        //Collection View
+        let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
+        self.view.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
-        self.view.addSubview(collectionView)
+
+        //Register Cells
+        collectionView.register(PXBankDealCollectionCell.self, forCellWithReuseIdentifier: REUSE_IDENTIFIER)
+
+        //Constraints
         PXLayout.matchWidth(ofView: collectionView).isActive = true
         //        PXLayout.matchHeight(ofView: collectionView).isActive = true
         PXLayout.centerHorizontally(view: collectionView).isActive = true
@@ -68,10 +79,13 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER, for: indexPath) as! PXBankDealCollectionCell
         let promotionCellView = self.buildPromotionCellView(for: indexPath)
         cell.contentView.addSubview(promotionCellView)
+
+        //Constraints
         PXLayout.centerHorizontally(view: promotionCellView).isActive = true
         PXLayout.centerVertically(view: promotionCellView).isActive = true
         PXLayout.matchWidth(ofView: promotionCellView).isActive = true
         PXLayout.setHeight(owner: promotionCellView, height: CELL_HEIGHT).isActive = true
+
         return cell
     }
 
