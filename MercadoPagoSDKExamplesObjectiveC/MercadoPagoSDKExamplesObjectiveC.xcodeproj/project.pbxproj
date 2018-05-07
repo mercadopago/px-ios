@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		156526C9209F76E600852D39 /* CustomComponentText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156526C8209F76E600852D39 /* CustomComponentText.swift */; };
 		15AF42AA1D36848100E70343 /* MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; };
 		15AF42AB1D36848100E70343 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */; };
@@ -14,6 +15,7 @@
 		23346C351FE83734005FD8C9 /* PaymentMethodPlugins.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */; };
 		23346C361FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */; };
 		2385C5DA20125871002C147D /* MeliTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2385C5D920125871002C147D /* MeliTheme.swift */; };
+		4B1A74F0209204B900E39587 /* MLMyMPPXTrackListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1A74EF209204B900E39587 /* MLMyMPPXTrackListener.m */; };
 		4B34DC331E5DA33100FDD295 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC41D2559140087C785 /* AppDelegate.m */; };
 		4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
 		4B7AA9811E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
@@ -96,6 +98,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		156526C8209F76E600852D39 /* CustomComponentText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComponentText.swift; sourceTree = "<group>"; };
 		15C84A961D2D531E002E4988 /* MediosOffTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediosOffTableViewController.h; sourceTree = "<group>"; };
 		15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediosOffTableViewController.m; sourceTree = "<group>"; };
 		23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentPluginViewController.m; sourceTree = "<group>"; };
@@ -105,6 +108,8 @@
 		23346C331FE83734005FD8C9 /* PaymentPluginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentPluginViewController.h; sourceTree = "<group>"; };
 		2385C5D920125871002C147D /* MeliTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeliTheme.swift; sourceTree = "<group>"; };
 		2E63040F2E13FF09B0FAC07F /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B1A74EF209204B900E39587 /* MLMyMPPXTrackListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLMyMPPXTrackListener.m; sourceTree = "<group>"; };
+		4B1A74F22092068700E39587 /* MLMyMPPXTrackListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLMyMPPXTrackListener.h; sourceTree = "<group>"; };
 		4B7AA97D1E55E64C000902B9 /* DineroEnCuentaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DineroEnCuentaTableViewCell.h; sourceTree = "<group>"; };
 		4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DineroEnCuentaTableViewCell.m; sourceTree = "<group>"; };
 		4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DineroEnCuentaTableViewCell.xib; sourceTree = "<group>"; };
@@ -196,6 +201,7 @@
 				23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */,
 				23346C331FE83734005FD8C9 /* PaymentPluginViewController.h */,
 				23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */,
+				156526C8209F76E600852D39 /* CustomComponentText.swift */,
 			);
 			name = PaymentMethodPlugins;
 			sourceTree = "<group>";
@@ -314,6 +320,8 @@
 				76EF7EC01D2559140087C785 /* Supporting Files */,
 				76EF7F201D255C7E0087C785 /* ExampleUtils.h */,
 				76EF7F211D255C7E0087C785 /* ExampleUtils.m */,
+				4B1A74EF209204B900E39587 /* MLMyMPPXTrackListener.m */,
+				4B1A74F22092068700E39587 /* MLMyMPPXTrackListener.h */,
 			);
 			path = MercadoPagoSDKExamplesObjectiveC;
 			sourceTree = "<group>";
@@ -613,6 +621,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76EF7EC51D2559140087C785 /* AppDelegate.m in Sources */,
+				156526C9209F76E600852D39 /* CustomComponentText.swift in Sources */,
 				767D8DBC1E5541EC0004FCA9 /* CustomItemTableViewCell.m in Sources */,
 				766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */,
 				4B7D07DB1E55324700E6CA78 /* SubeTableViewCell.m in Sources */,
@@ -629,6 +638,7 @@
 				76EF7F5D1D27027A0087C785 /* StepsExamplesViewController.m in Sources */,
 				76E6E06A1D2AD33F006CE49B /* SimpleVaultViewController.m in Sources */,
 				76EF7F601D2706720087C785 /* ServicesExamplesViewController.m in Sources */,
+				4B1A74F0209204B900E39587 /* MLMyMPPXTrackListener.m in Sources */,
 				76EF7EC21D2559140087C785 /* main.m in Sources */,
 				23346C341FE83734005FD8C9 /* PaymentPluginViewController.m in Sources */,
 				23346C361FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m in Sources */,

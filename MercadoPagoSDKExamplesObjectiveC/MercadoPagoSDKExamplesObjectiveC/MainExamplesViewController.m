@@ -18,8 +18,10 @@
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
+#import "MLMyMPPXTrackListener.h"
 
 @import MercadoPagoSDK;
+@import MercadoPagoPXTracking;
 
 
 @implementation MainExamplesViewController
@@ -85,6 +87,12 @@
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 60;
     dc = nil;
+    
+    self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
+
+    [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
+
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-93c0061e-ba7d-479c-9d52-c60b0af58a91"
 
    // self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
     self.pref.preferenceId = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5"; // Error;
@@ -102,7 +110,7 @@
     
     //[self setHooks];
     
-    //[self setPaymentMethodPlugins];
+    [self setPaymentMethodPlugins];
 
     [self setPaymentPlugin];
 
@@ -155,7 +163,7 @@
 
     //[self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 
-   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentPlugin {
@@ -165,7 +173,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {

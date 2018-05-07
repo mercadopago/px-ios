@@ -57,7 +57,6 @@ final class PXTermsAndConditionView: PXComponentView {
 
         PXLayout.pinBottom(view: termsAndConditionsText, withMargin: PXLayout.S_MARGIN).isActive = true
 
-        addSeparatorLineToBottom(height: 1.0, horizontalMarginPercentage: 100.0)
     }
 
     required init?(coder aDecoder: NSCoder) {

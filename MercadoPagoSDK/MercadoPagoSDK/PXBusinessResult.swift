@@ -30,22 +30,21 @@ import UIKit
  */
 @objcMembers open class PXBusinessResult: NSObject {
 
-    var status: PXBusinessResultStatus // APPROVED REJECTED PENDING
-    var title: String // Titluo de Congrats
-    var subtitle: String? // Sub Titluo de Congrats
-    var icon: UIImage  // Icono de Congrats
-    var mainAction: PXComponentAction? // Boton principal (Azul)
-    var secondaryAction: PXComponentAction // Boton secundario (link) - Obligatoria
-    var helpMessage: String? // Texto
-    var showPaymentMethod: Bool = false // Si quiere que muestre la celda de PM
-//paymentMethodVisible
-    var statementDescription : String?
+    private let status: PXBusinessResultStatus // APPROVED REJECTED PENDING
+    private let title: String // Titluo de Congrats
+    private let subtitle: String? // Sub Titluo de Congrats
+    private let icon: UIImage?  // Icono de Congrats
+    private let mainAction: PXComponentAction? // Boton principal (Azul)
+    private let secondaryAction: PXComponentAction? // Boton secundario (link)
+    private let helpMessage: String? // Texto
+    private let showPaymentMethod: Bool // Si quiere que muestre la celda de PM
+    private let statementDescription : String?
+    private let imageUrl: String?
+    private let topCustomView: UIView?
+    private let bottomCustomView: UIView?
+    private var receiptId: String?
     
-    //Datos que actualmente devuelve la procesadora de pagos
-    var receiptId: String?
-    //------
-
-    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction, helpMessage: String? = nil , showPaymentMethod : Bool = false, statementDescription: String? = nil) {
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction?, helpMessage: String? = nil , showPaymentMethod : Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil) {
         self.receiptId = receiptId
         self.status = status
         self.title = title
@@ -56,6 +55,54 @@ import UIKit
         self.helpMessage = helpMessage
         self.showPaymentMethod = showPaymentMethod
         self.statementDescription = statementDescription
+        self.imageUrl = imageUrl
+        self.topCustomView = topCustomView
+        self.bottomCustomView = bottomCustomView
         super.init()
+    }
+   
+}
+
+//MARK: Getters
+extension PXBusinessResult {
+    
+    public func getStatus() -> PXBusinessResultStatus {
+        return self.status
+    }
+    public func getTitle() -> String {
+        return self.title
+    }
+    public func getStatementDescription() -> String? {
+        return self.statementDescription
+    }
+    public func getTopCustomView() -> UIView? {
+        return self.topCustomView
+    }
+    public func getBottomCustomView() -> UIView? {
+        return self.bottomCustomView
+    }
+    public func getImageUrl() -> String? {
+        return self.imageUrl
+    }
+    public func getReceiptId() -> String? {
+        return self.receiptId
+    }
+    public func getSubTitle() -> String? {
+        return self.subtitle
+    }
+    public func getHelpMessage() -> String? {
+        return self.helpMessage
+    }
+    public func getIcon() -> UIImage? {
+        return self.icon
+    }
+    public func getMainAction() ->  PXComponentAction? {
+        return self.mainAction
+    }
+    public func getSecondaryAction() ->  PXComponentAction? {
+        return self.secondaryAction
+    }
+    public func mustShowPaymentMethod() ->  Bool {
+        return self.showPaymentMethod
     }
 }

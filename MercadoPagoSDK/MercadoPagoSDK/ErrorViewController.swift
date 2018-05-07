@@ -65,6 +65,11 @@ open class ErrorViewController: MercadoPagoUIViewController {
         if !String.isNullOrEmpty(error.requestOrigin) {
             metadata[TrackingUtil.METADATA_ERROR_REQUEST] = error.requestOrigin
         }
+
+        if !String.isNullOrEmpty(error.message) {
+            metadata["error_message"] = error.message
+        }
+
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
