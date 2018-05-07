@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXPromotionCollectionCell: UICollectionViewCell {
+class PXBankDealCollectionCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +47,7 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
         flowLayout.minimumInteritemSpacing = MARGINS
         flowLayout.minimumLineSpacing = MARGINS
         let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
-        collectionView.register(PXPromotionCollectionCell.self, forCellWithReuseIdentifier: REUSE_IDENTIFIER)
+        collectionView.register(PXBankDealCollectionCell.self, forCellWithReuseIdentifier: REUSE_IDENTIFIER)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
@@ -65,7 +65,7 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER, for: indexPath) as! PXPromotionCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER, for: indexPath) as! PXBankDealCollectionCell
         let promotionCellView = self.buildPromotionCellView(for: indexPath)
         cell.contentView.addSubview(promotionCellView)
         PXLayout.centerHorizontally(view: promotionCellView).isActive = true
