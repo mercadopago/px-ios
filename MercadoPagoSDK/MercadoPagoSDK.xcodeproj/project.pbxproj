@@ -616,7 +616,7 @@
 		FC2A09551FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */; };
 		FC2A09571FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
 		FC2A09581FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
-		FC3918B6208E1A2900B75366 /* PXPromotionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */; };
+		FC3918B6208E1A2900B75366 /* PXBankDealsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3918B5208E1A2900B75366 /* PXBankDealsViewModel.swift */; };
 		FC3FC8421FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8431FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8451FBCC1B800CF29E1 /* PXInstructionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */; };
@@ -1118,7 +1118,7 @@
 		FC239AFF2045D01800286B01 /* PXComponentAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentAction.swift; sourceTree = "<group>"; };
 		FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconComponent.swift; sourceTree = "<group>"; };
 		FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconRenderer.swift; sourceTree = "<group>"; };
-		FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionsViewModel.swift; sourceTree = "<group>"; };
+		FC3918B5208E1A2900B75366 /* PXBankDealsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealsViewModel.swift; sourceTree = "<group>"; };
 		FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSubtitleComponent.swift; sourceTree = "<group>"; };
@@ -2549,7 +2549,7 @@
 			isa = PBXGroup;
 			children = (
 				FCAFDEAA20A0CD7600D00B60 /* PXBankDealsViewController.swift */,
-				FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */,
+				FC3918B5208E1A2900B75366 /* PXBankDealsViewModel.swift */,
 			);
 			name = "Bank Deals Collection";
 			sourceTree = "<group>";
@@ -2919,7 +2919,7 @@
 				151ECC6C1FF55CDB003F5E4B /* PXCheckoutStore.swift in Sources */,
 				15DA6A1D1FC73FF40038D827 /* CardsAdminViewModel.swift in Sources */,
 				155954EE1F87CD200086854B /* BoletoComponent.swift in Sources */,
-				FC3918B6208E1A2900B75366 /* PXPromotionsViewModel.swift in Sources */,
+				FC3918B6208E1A2900B75366 /* PXBankDealsViewModel.swift in Sources */,
 				FC0F6CBC20179A01006E3EA1 /* PXContainedLabelComponent.swift in Sources */,
 				15FE72921E79AAA200111A9C /* AdditionalStepTitleTableViewCell.swift in Sources */,
 				4BFD451F1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift in Sources */,

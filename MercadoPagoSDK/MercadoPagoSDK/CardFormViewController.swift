@@ -290,7 +290,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     func startPromosStep(promos: [PXBankDeal],
                          _ callback: (() -> Void)? = nil) -> PXBankDealsViewController {
 
-        let viewModel = PXPromotionsViewModel(bankDeals: promos)
+        let viewModel = PXBankDealsViewModel(bankDeals: promos)
         return PXBankDealsViewController(viewModel: viewModel)
     }
 

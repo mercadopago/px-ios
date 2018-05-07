@@ -31,9 +31,9 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     fileprivate let CELL_HEIGHT: CGFloat = 128
     fileprivate let REUSE_IDENTIFIER = "bankDealCell"
 
-    fileprivate var viewModel: PXPromotionsViewModel!
+    fileprivate var viewModel: PXBankDealsViewModel!
 
-    init(viewModel: PXPromotionsViewModel) {
+    init(viewModel: PXBankDealsViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }

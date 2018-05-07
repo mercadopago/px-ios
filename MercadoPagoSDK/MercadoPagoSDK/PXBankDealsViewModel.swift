@@ -1,5 +1,5 @@
 //
-//  PXPromotionsViewModel.swift
+//  PXBankDealsViewModel.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 23/4/18.
@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServices
 
-final class PXPromotionsViewModel: NSObject {
+final class PXBankDealsViewModel: NSObject {
 
     var bankDeals: [PXBankDeal]
 
@@ -20,14 +20,14 @@ final class PXPromotionsViewModel: NSObject {
 }
 
 // MARK: - Logic
-extension PXPromotionsViewModel {
+extension PXBankDealsViewModel {
     func getAmountOfCells() -> Int {
         return self.bankDeals.count
     }
 }
 
 // MARK: - Components builders
-extension PXPromotionsViewModel {
+extension PXBankDealsViewModel {
     func getPromotionCellComponentForIndexPath(_ indexPath: IndexPath) -> PXPromotionCell {
         let bankDeal = bankDeals[indexPath.row]
         let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
