@@ -13,9 +13,9 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
     fileprivate let CELL_CONTENT_HEIGHT: CGFloat = 128
     fileprivate let CELL_HEIGHT: CGFloat = 190
 
-    fileprivate var viewModel: PXPromotionLegalsViewModel!
+    fileprivate var viewModel: PXBankDealDetailsViewModel!
 
-    init(viewModel: PXPromotionLegalsViewModel) {
+    init(viewModel: PXBankDealDetailsViewModel) {
         self.viewModel = viewModel
         super.init()
     }

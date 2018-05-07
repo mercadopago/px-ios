@@ -85,7 +85,7 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bankDeal = self.viewModel.bankDeals[indexPath.row]
-        let viewModel = PXPromotionLegalsViewModel(bankDeal: bankDeal)
+        let viewModel = PXBankDealDetailsViewModel(bankDeal: bankDeal)
         let viewController = PXBankDealDetailsViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }

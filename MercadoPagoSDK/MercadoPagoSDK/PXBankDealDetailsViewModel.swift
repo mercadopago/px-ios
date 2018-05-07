@@ -1,5 +1,5 @@
 //
-//  PXPromotionLegalsViewModel.swift
+//  PXBankDealDetailsViewModel.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 24/4/18.
@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServices
 
-final class PXPromotionLegalsViewModel: NSObject {
+final class PXBankDealDetailsViewModel: NSObject {
 
     var bankDeal: PXBankDeal
 
@@ -21,14 +21,14 @@ final class PXPromotionLegalsViewModel: NSObject {
 }
 
 // MARK: - Getters
-extension PXPromotionLegalsViewModel {
+extension PXBankDealDetailsViewModel {
     func getLegalsText() -> String? {
         return bankDeal.legals
     }
 }
 
 // MARK: - Components builders
-extension PXPromotionLegalsViewModel {
+extension PXBankDealDetailsViewModel {
     func getPromotionCellComponent() -> PXPromotionCell {
         let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
         let placeholder = bankDeal.issuer?.name
