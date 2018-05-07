@@ -1518,7 +1518,7 @@
 		15AE1DAB1F61B8BA00B0DAF8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				FC3918B2208E19E200B75366 /* Promotions */,
+				FC3918B2208E19E200B75366 /* Bank Deals */,
 				81F090DF20177E1A008A69C1 /* ReviewAndConfirm */,
 				FCF24589201901EF00CAF717 /* Common Components */,
 				816AB5AE1FE966B00070A932 /* Custom Component */,
@@ -2352,23 +2352,13 @@
 			name = "Payment Method Icon";
 			sourceTree = "<group>";
 		};
-		FC3918B2208E19E200B75366 /* Promotions */ = {
+		FC3918B2208E19E200B75366 /* Bank Deals */ = {
 			isa = PBXGroup;
 			children = (
-				FC65A1EC208F6BD3000A0DA0 /* Terms And Conditions */,
+				FCAFDEAC20A0CEF100D00B60 /* Screens */,
 				FC65A1E7208E48DE000A0DA0 /* Promotion Cell */,
-				FC3918B7208E1A7900B75366 /* Screen */,
 			);
-			name = Promotions;
-			sourceTree = "<group>";
-		};
-		FC3918B7208E1A7900B75366 /* Screen */ = {
-			isa = PBXGroup;
-			children = (
-				FCAFDEAA20A0CD7600D00B60 /* PXPromotionsViewController.swift */,
-				FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */,
-			);
-			name = Screen;
+			name = "Bank Deals";
 			sourceTree = "<group>";
 		};
 		FC3FC8471FBCC95C00CF29E1 /* Instructions */ = {
@@ -2508,23 +2498,6 @@
 			name = "Promotion Cell";
 			sourceTree = "<group>";
 		};
-		FC65A1EC208F6BD3000A0DA0 /* Terms And Conditions */ = {
-			isa = PBXGroup;
-			children = (
-				FC65A1ED208F6BFF000A0DA0 /* Screen */,
-			);
-			name = "Terms And Conditions";
-			sourceTree = "<group>";
-		};
-		FC65A1ED208F6BFF000A0DA0 /* Screen */ = {
-			isa = PBXGroup;
-			children = (
-				FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */,
-				FC5BCEBE208FA99300447D99 /* PXPromotionLegalsViewModel.swift */,
-			);
-			name = Screen;
-			sourceTree = "<group>";
-		};
 		FC73AB42202B877600537C9F /* Translations */ = {
 			isa = PBXGroup;
 			children = (
@@ -2552,6 +2525,33 @@
 				FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */,
 			);
 			name = PXUtils;
+			sourceTree = "<group>";
+		};
+		FCAFDEAC20A0CEF100D00B60 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				FCAFDEAE20A0CF1400D00B60 /* Bank Deals Collection */,
+				FCAFDEAD20A0CF0000D00B60 /* Bank Deal Details */,
+			);
+			name = Screens;
+			sourceTree = "<group>";
+		};
+		FCAFDEAD20A0CF0000D00B60 /* Bank Deal Details */ = {
+			isa = PBXGroup;
+			children = (
+				FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */,
+				FC5BCEBE208FA99300447D99 /* PXPromotionLegalsViewModel.swift */,
+			);
+			name = "Bank Deal Details";
+			sourceTree = "<group>";
+		};
+		FCAFDEAE20A0CF1400D00B60 /* Bank Deals Collection */ = {
+			isa = PBXGroup;
+			children = (
+				FCAFDEAA20A0CD7600D00B60 /* PXPromotionsViewController.swift */,
+				FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */,
+			);
+			name = "Bank Deals Collection";
 			sourceTree = "<group>";
 		};
 		FCCC11F51FCF28CC0001A591 /* Body */ = {
