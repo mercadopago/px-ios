@@ -28,7 +28,7 @@ extension PXBankDealsViewModel {
 
 // MARK: - Components builders
 extension PXBankDealsViewModel {
-    func getPromotionCellComponentForIndexPath(_ indexPath: IndexPath) -> PXPromotionCell {
+    func getPromotionCellComponentForIndexPath(_ indexPath: IndexPath) -> PXBankDealComponent {
         let bankDeal = bankDeals[indexPath.row]
         let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
         let placeholder = bankDeal.issuer?.name
@@ -37,7 +37,7 @@ extension PXBankDealsViewModel {
         let subtitle = String(format: expirationDateFormat, dateString)
 
         let props = PXPromotionCellProps(image: image, placeholder: placeholder, title: bankDeal.recommendedMessage, subtitle: subtitle)
-        let component = PXPromotionCell(props: props)
+        let component = PXBankDealComponent(props: props)
         return component
     }
 

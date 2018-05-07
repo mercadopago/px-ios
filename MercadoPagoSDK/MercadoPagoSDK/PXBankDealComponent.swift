@@ -1,5 +1,5 @@
 //
-//  PXPromotionCell.swift
+//  PXBankDealComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 23/4/18.
@@ -9,7 +9,7 @@
 import UIKit
 
 @objcMembers
-open class PXPromotionCell: PXComponentizable {
+open class PXBankDealComponent: PXComponentizable {
 
     public func render() -> UIView {
         return PXPromotionCellRenderer().render(self)

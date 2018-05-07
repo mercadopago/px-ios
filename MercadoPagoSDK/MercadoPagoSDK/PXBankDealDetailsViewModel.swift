@@ -29,14 +29,14 @@ extension PXBankDealDetailsViewModel {
 
 // MARK: - Components builders
 extension PXBankDealDetailsViewModel {
-    func getPromotionCellComponent() -> PXPromotionCell {
+    func getPromotionCellComponent() -> PXBankDealComponent {
         let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
         let placeholder = bankDeal.issuer?.name
         let expirationDateFormat = "Hasta el %@".localized
         let dateString = Utils.getFormatedStringDate(bankDeal.dateExpired!)
         let subtitle = String(format: expirationDateFormat, dateString)
         let props = PXPromotionCellProps(image: image, placeholder: placeholder, title: bankDeal.recommendedMessage, subtitle: subtitle)
-        let component = PXPromotionCell(props: props)
+        let component = PXBankDealComponent(props: props)
         return component
     }
 }

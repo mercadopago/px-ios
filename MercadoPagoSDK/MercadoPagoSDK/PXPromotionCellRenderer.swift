@@ -12,7 +12,7 @@ class PXPromotionCellRenderer: NSObject {
 
     var IMAGE_VIEW_HEIGHT: CGFloat = 40
 
-    func render(_ component: PXPromotionCell) -> PXPromotionCellView {
+    func render(_ component: PXBankDealComponent) -> PXPromotionCellView {
         let promotionCellView = PXPromotionCellView()
         promotionCellView.translatesAutoresizingMaskIntoConstraints = false
         promotionCellView.backgroundColor = .white
