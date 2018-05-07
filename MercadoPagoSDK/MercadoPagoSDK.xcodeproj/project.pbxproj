@@ -698,7 +698,7 @@
 		FCAA97011E6A0E0D000612F6 /* AdditionalStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAA96FF1E6A0E0D000612F6 /* AdditionalStepViewModel.swift */; };
 		FCAD2BE51E96E1370087D943 /* AdditionalStepCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAD2BE41E96E1370087D943 /* AdditionalStepCellFactory.swift */; };
 		FCAD2BE61E96E1370087D943 /* AdditionalStepCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAD2BE41E96E1370087D943 /* AdditionalStepCellFactory.swift */; };
-		FCAFDEAB20A0CD7600D00B60 /* PXPromotionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAFDEAA20A0CD7600D00B60 /* PXPromotionsViewController.swift */; };
+		FCAFDEAB20A0CD7600D00B60 /* PXBankDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAFDEAA20A0CD7600D00B60 /* PXBankDealsViewController.swift */; };
 		FCBF132D1E71D6A60092B756 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF132C1E71D6A60092B756 /* Updatable.swift */; };
 		FCBF132E1E71D6A60092B756 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF132C1E71D6A60092B756 /* Updatable.swift */; };
 		FCBF13421E7201570092B756 /* FinancialInstituion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF13411E7201570092B756 /* FinancialInstituion.swift */; };
@@ -1170,7 +1170,7 @@
 		FCA653831E79CFD700E8D9C0 /* EntityTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EntityTypes.plist; sourceTree = "<group>"; };
 		FCAA96FF1E6A0E0D000612F6 /* AdditionalStepViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewModel.swift; sourceTree = "<group>"; };
 		FCAD2BE41E96E1370087D943 /* AdditionalStepCellFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepCellFactory.swift; sourceTree = "<group>"; };
-		FCAFDEAA20A0CD7600D00B60 /* PXPromotionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionsViewController.swift; sourceTree = "<group>"; };
+		FCAFDEAA20A0CD7600D00B60 /* PXBankDealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealsViewController.swift; sourceTree = "<group>"; };
 		FCBF132C1E71D6A60092B756 /* Updatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
 		FCBF13411E7201570092B756 /* FinancialInstituion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinancialInstituion.swift; sourceTree = "<group>"; };
 		FCBF13471E7204C30092B756 /* FinancialInstitutionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinancialInstitutionTableViewCell.swift; sourceTree = "<group>"; };
@@ -2548,7 +2548,7 @@
 		FCAFDEAE20A0CF1400D00B60 /* Bank Deals Collection */ = {
 			isa = PBXGroup;
 			children = (
-				FCAFDEAA20A0CD7600D00B60 /* PXPromotionsViewController.swift */,
+				FCAFDEAA20A0CD7600D00B60 /* PXBankDealsViewController.swift */,
 				FC3918B5208E1A2900B75366 /* PXPromotionsViewModel.swift */,
 			);
 			name = "Bank Deals Collection";
@@ -3187,7 +3187,7 @@
 				76743C781C45A24600120347 /* PaymentPreference.swift in Sources */,
 				0F9883951AD2AB6000F750F0 /* Setting.swift in Sources */,
 				7619E93B1DF05E2900CEFAC1 /* Array+Extension.swift in Sources */,
-				FCAFDEAB20A0CD7600D00B60 /* PXPromotionsViewController.swift in Sources */,
+				FCAFDEAB20A0CD7600D00B60 /* PXBankDealsViewController.swift in Sources */,
 				FCA47E4C1E92925B003DB787 /* BankInsterestTableViewCell.swift in Sources */,
 				0F9883301AD2AB3C00F750F0 /* MercadoPago.swift in Sources */,
 				76EF21E71E52C07700718ED2 /* ReviewScreenPreference.swift in Sources */,

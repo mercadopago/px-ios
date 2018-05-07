@@ -1,5 +1,5 @@
 //
-//  PXPromotionsViewController.swift
+//  PXBankDealsViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 7/5/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyCollectionViewCell: UICollectionViewCell {
+class PXPromotionCollectionCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,13 +25,13 @@ class MyCollectionViewCell: UICollectionViewCell {
 
 }
 
-class PXPromotionsViewController: MercadoPagoUIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
 
     fileprivate let MARGINS: CGFloat = PXLayout.S_MARGIN
     fileprivate let CELL_HEIGHT: CGFloat = 128
-    fileprivate var viewModel: PXPromotionsViewModel!
-    private let cellReuseIdentifier = "collectionCell"
+    fileprivate let REUSE_IDENTIFIER = "bankDealCell"
 
+    fileprivate var viewModel: PXPromotionsViewModel!
 
     init(viewModel: PXPromotionsViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -47,15 +47,15 @@ class PXPromotionsViewController: MercadoPagoUIViewController, UICollectionViewD
         flowLayout.minimumInteritemSpacing = MARGINS
         flowLayout.minimumLineSpacing = MARGINS
         let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
-        collectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
+        collectionView.register(PXPromotionCollectionCell.self, forCellWithReuseIdentifier: REUSE_IDENTIFIER)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         self.view.addSubview(collectionView)
         PXLayout.matchWidth(ofView: collectionView).isActive = true
-//        PXLayout.matchHeight(ofView: collectionView).isActive = true
+        //        PXLayout.matchHeight(ofView: collectionView).isActive = true
         PXLayout.centerHorizontally(view: collectionView).isActive = true
-//        PXLayout.centerVertically(view: collectionView).isActive = true
+        //        PXLayout.centerVertically(view: collectionView).isActive = true
         PXLayout.pinTop(view: collectionView, withMargin: 100).isActive = true
         PXLayout.pinBottom(view: collectionView, withMargin: 100).isActive = true
     }
@@ -65,14 +65,13 @@ class PXPromotionsViewController: MercadoPagoUIViewController, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! MyCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER, for: indexPath) as! PXPromotionCollectionCell
         let promotionCellView = self.buildPromotionCellView(for: indexPath)
         cell.contentView.addSubview(promotionCellView)
         PXLayout.centerHorizontally(view: promotionCellView).isActive = true
         PXLayout.centerVertically(view: promotionCellView).isActive = true
         PXLayout.matchWidth(ofView: promotionCellView).isActive = true
         PXLayout.setHeight(owner: promotionCellView, height: CELL_HEIGHT).isActive = true
-//        PXLayout.matchHeight(ofView: view).isActive = true
         return cell
     }
 
@@ -99,7 +98,7 @@ class PXPromotionsViewController: MercadoPagoUIViewController, UICollectionViewD
 }
 
 // MARK: Component Builders
-extension PXPromotionsViewController {
+extension PXBankDealsViewController {
     fileprivate func buildPromotionCellView(for indexPath: IndexPath) -> UIView {
         let component = self.viewModel.getPromotionCellComponentForIndexPath(indexPath)
         let view = component.render()
