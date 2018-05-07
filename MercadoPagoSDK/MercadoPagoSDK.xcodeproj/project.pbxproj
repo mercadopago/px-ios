@@ -500,7 +500,6 @@
 		76EC47EE1C8615330086FA53 /* PaymentTypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC47ED1C8615330086FA53 /* PaymentTypeTest.swift */; };
 		76EC47F61C8619E70086FA53 /* SavedCardTokenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC47F51C8619E70086FA53 /* SavedCardTokenTest.swift */; };
 		76EC47FA1C862A030086FA53 /* SettingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC47F91C862A030086FA53 /* SettingTest.swift */; };
-		76EC48001C862A820086FA53 /* PromoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC47FF1C862A820086FA53 /* PromoTest.swift */; };
 		76EC48021C862ABC0086FA53 /* PaymentMethodSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC48011C862ABC0086FA53 /* PaymentMethodSearchTest.swift */; };
 		76EC48041C862AD70086FA53 /* PaymentMethodSearchitemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC48031C862AD70086FA53 /* PaymentMethodSearchitemTest.swift */; };
 		76EC48081C862B160086FA53 /* InstructionReferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC48071C862B160086FA53 /* InstructionReferenceTest.swift */; };
@@ -1032,7 +1031,6 @@
 		76EC47ED1C8615330086FA53 /* PaymentTypeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTypeTest.swift; sourceTree = "<group>"; };
 		76EC47F51C8619E70086FA53 /* SavedCardTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedCardTokenTest.swift; sourceTree = "<group>"; };
 		76EC47F91C862A030086FA53 /* SettingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTest.swift; sourceTree = "<group>"; };
-		76EC47FF1C862A820086FA53 /* PromoTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromoTest.swift; sourceTree = "<group>"; };
 		76EC48011C862ABC0086FA53 /* PaymentMethodSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchTest.swift; sourceTree = "<group>"; };
 		76EC48031C862AD70086FA53 /* PaymentMethodSearchitemTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchitemTest.swift; sourceTree = "<group>"; };
 		76EC48071C862B160086FA53 /* InstructionReferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionReferenceTest.swift; sourceTree = "<group>"; };
@@ -2019,7 +2017,6 @@
 				76EC48011C862ABC0086FA53 /* PaymentMethodSearchTest.swift */,
 				76EC47EB1C8614CA0086FA53 /* PaymentMethodTest.swift */,
 				76EC47ED1C8615330086FA53 /* PaymentTypeTest.swift */,
-				76EC47FF1C862A820086FA53 /* PromoTest.swift */,
 				76EC47F51C8619E70086FA53 /* SavedCardTokenTest.swift */,
 				76EC47F91C862A030086FA53 /* SettingTest.swift */,
 				4B277F681E38F00D00AF5DF8 /* ServicePreferenceTest.swift */,
@@ -3386,7 +3383,6 @@
 				7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */,
 				4B760D0D204ECDB8001E4976 /* PXItemComponentTest.swift in Sources */,
 				4B4E23232000417B007E8FDD /* MockComponent.swift in Sources */,
-				76EC48001C862A820086FA53 /* PromoTest.swift in Sources */,
 				76EC48081C862B160086FA53 /* InstructionReferenceTest.swift in Sources */,
 				0F9883981AD2AB6000F750F0 /* Token.swift in Sources */,
 				7622E3241DF5EE5400490C4E /* JSONHandler.swift in Sources */,
