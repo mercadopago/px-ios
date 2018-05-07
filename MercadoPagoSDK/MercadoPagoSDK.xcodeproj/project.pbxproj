@@ -671,7 +671,7 @@
 		FC65A1E6208E269C000A0DA0 /* PXCollectionRowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1E5208E269C000A0DA0 /* PXCollectionRowRenderer.swift */; };
 		FC65A1E9208E4907000A0DA0 /* PXPromotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1E8208E4907000A0DA0 /* PXPromotionCell.swift */; };
 		FC65A1EB208E4913000A0DA0 /* PXPromotionCellRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1EA208E4913000A0DA0 /* PXPromotionCellRenderer.swift */; };
-		FC65A1EF208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */; };
+		FC65A1EF208F6C30000A0DA0 /* PXBankDealDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC65A1EE208F6C30000A0DA0 /* PXBankDealDetailsViewController.swift */; };
 		FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */; };
 		FC73AB46202B87AD00537C9F /* Localizable_pt.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB49202B87AD00537C9F /* Localizable_pt.plist */; };
 		FC73AB47202B87AD00537C9F /* Localizable_pt.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB49202B87AD00537C9F /* Localizable_pt.plist */; };
@@ -1153,7 +1153,7 @@
 		FC65A1E5208E269C000A0DA0 /* PXCollectionRowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCollectionRowRenderer.swift; sourceTree = "<group>"; };
 		FC65A1E8208E4907000A0DA0 /* PXPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionCell.swift; sourceTree = "<group>"; };
 		FC65A1EA208E4913000A0DA0 /* PXPromotionCellRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionCellRenderer.swift; sourceTree = "<group>"; };
-		FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPromotionLegalsViewController.swift; sourceTree = "<group>"; };
+		FC65A1EE208F6C30000A0DA0 /* PXBankDealDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealDetailsViewController.swift; sourceTree = "<group>"; };
 		FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCouponTest.swift; sourceTree = "<group>"; };
 		FC73AB48202B87AD00537C9F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = pt.lproj/Localizable_pt.plist; sourceTree = "<group>"; };
 		FC73AB4F202C957F00537C9F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = es.lproj/Localizable_es.plist; sourceTree = "<group>"; };
@@ -2539,7 +2539,7 @@
 		FCAFDEAD20A0CF0000D00B60 /* Bank Deal Details */ = {
 			isa = PBXGroup;
 			children = (
-				FC65A1EE208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift */,
+				FC65A1EE208F6C30000A0DA0 /* PXBankDealDetailsViewController.swift */,
 				FC5BCEBE208FA99300447D99 /* PXPromotionLegalsViewModel.swift */,
 			);
 			name = "Bank Deal Details";
@@ -2925,7 +2925,7 @@
 				4BFD451F1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift in Sources */,
 				4B811DD11FCDCBD5000611AD /* PXHookStep.swift in Sources */,
 				FCBF132D1E71D6A60092B756 /* Updatable.swift in Sources */,
-				FC65A1EF208F6C30000A0DA0 /* PXPromotionLegalsViewController.swift in Sources */,
+				FC65A1EF208F6C30000A0DA0 /* PXBankDealDetailsViewController.swift in Sources */,
 				7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */,
 				81F090E120177EDA008A69C1 /* PXContainedActionButtonComponent.swift in Sources */,
 				15AE1DAD1F61B98200B0DAF8 /* PXComponent.swift in Sources */,

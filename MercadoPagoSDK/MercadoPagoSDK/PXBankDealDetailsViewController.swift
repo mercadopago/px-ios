@@ -1,5 +1,5 @@
 //
-//  PXPromotionLegalsViewController.swift
+//  PXBankDealDetailsViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 24/4/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXPromotionLegalsViewController: PXComponentContainerViewController {
+class PXBankDealDetailsViewController: PXComponentContainerViewController {
 
     fileprivate let CELL_CONTENT_HEIGHT: CGFloat = 128
     fileprivate let CELL_HEIGHT: CGFloat = 190
@@ -34,7 +34,7 @@ class PXPromotionLegalsViewController: PXComponentContainerViewController {
 }
 
 // MARK: UI Methods
-extension PXPromotionLegalsViewController {
+extension PXBankDealDetailsViewController {
 
     fileprivate func setupUI() {
         self.title = "[TRADUCIR] Condiciones"
@@ -81,7 +81,7 @@ extension PXPromotionLegalsViewController {
 }
 
 // MARK: Component Builders
-extension PXPromotionLegalsViewController {
+extension PXBankDealDetailsViewController {
     fileprivate func buildPromotionCellView() -> UIView {
         let component = self.viewModel.getPromotionCellComponent()
         let view = component.render()
