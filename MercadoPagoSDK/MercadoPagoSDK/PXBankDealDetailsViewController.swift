@@ -57,7 +57,7 @@ extension PXBankDealDetailsViewController {
         cellContainer.backgroundColor = bankDealComponentView.backgroundColor
         cellContainer.addSubview(bankDealComponentView)
         PXLayout.setHeight(owner: bankDealComponentView, height: CELL_CONTENT_HEIGHT).isActive = true
-        PXLayout.matchWidth(ofView: bankDealComponentView).isActive = true
+        PXLayout.matchWidth(ofView: bankDealComponentView, withPercentage: 60).isActive = true
         PXLayout.centerHorizontally(view: bankDealComponentView).isActive = true
         PXLayout.centerVertically(view: bankDealComponentView).isActive = true
         self.contentView.addSubviewToBottom(cellContainer)

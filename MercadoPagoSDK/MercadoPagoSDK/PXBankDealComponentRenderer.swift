@@ -53,8 +53,11 @@ class PXBankDealComponentRenderer: NSObject {
         bankDealComponentView.titleLabel = titleLabel
         titleLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
         titleLabel.text = title
+        titleLabel.numberOfLines = 2
+        titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor.UIColorFromRGB(0x232323)
         bankDealComponentView.addSubviewToBottom(titleLabel, withMargin: PXLayout.XS_MARGIN)
+        PXLayout.matchWidth(ofView: titleLabel).isActive = true
         PXLayout.centerHorizontally(view: titleLabel).isActive = true
 
         //Subtitle Label
