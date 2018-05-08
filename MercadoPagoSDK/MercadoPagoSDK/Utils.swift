@@ -441,6 +441,78 @@ class Utils {
         return dayString + " de ".localized + formatterMonth.string(from: date).localized.lowercased() + " de ".localized + formatterYear.string(from: date)
     }
 
+    static func getShortFormatedStringDate(_ date: Date?) -> String? {
+        if let date = date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yy"
+            return formatter.string(from: date)
+        }
+        return nil
+    }
+
+    static let imageCache = NSCache<NSString, AnyObject>()
+
+    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?) {
+        guard let urlString = urlStr else {return}
+
+        //Set placeholder view
+        if let placeholderView = placeholderView {
+            targetView.removeAllSubviews()
+            targetView.addSubviewAtFullSize(with: placeholderView)
+        }
+
+        //Check & Load cached image
+        if let cachedImage = Utils.imageCache.object(forKey: urlString as NSString) as? UIImage {
+            let imageView = self.createImageView(with: cachedImage)
+            targetView.removeAllSubviews()
+            targetView.addSubviewAtFullSize(with: imageView)
+            return
+        }
+
+        if let url = URL(string: urlString) {
+            // Request image.
+            URLSession.shared.dataTask(with: url, completionHandler: { (data, _, error) in
+
+                if error != nil {
+                    DispatchQueue.main.async {
+                        if let fallbackView = fallbackView {
+                            targetView.removeAllSubviews()
+                            targetView.addSubviewAtFullSize(with: fallbackView)
+                        }
+                    }
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    if let remoteData = data, let image = UIImage(data: remoteData) {
+                        //Save image to cache
+                        Utils.imageCache.setObject(image, forKey: urlString as NSString)
+
+                        //Add image
+                        let imageView = self.createImageView(with: image)
+                        targetView.removeAllSubviews()
+                        targetView.addSubviewAtFullSize(with: imageView)
+                    } else if let fallbackView = fallbackView {
+                        targetView.removeAllSubviews()
+                        targetView.addSubviewAtFullSize(with: fallbackView)
+                    }
+                }
+            }).resume()
+        } else if let fallbackView = fallbackView {
+            targetView.removeAllSubviews()
+            targetView.addSubviewAtFullSize(with: fallbackView)
+        }
+
+        return
+    }
+
+    func createImageView(with image: UIImage) -> UIImageView {
+        let imageView = UIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }
+
     func loadImageWithCache(withUrl urlStr: String?, targetImage: UIImageView, placeHolderImage: UIImage?, fallbackImage: UIImage?) {
 
         guard let urlString = urlStr else {return}

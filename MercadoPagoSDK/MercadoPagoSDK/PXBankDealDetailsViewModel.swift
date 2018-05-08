@@ -30,12 +30,16 @@ extension PXBankDealDetailsViewModel {
 // MARK: - Components builders
 extension PXBankDealDetailsViewModel {
     func getBankDealComponent() -> PXBankDealComponent {
-        let image = ViewUtils.loadImageFromUrl(bankDeal.picture?.url)
+        let imageUrl = bankDeal.picture?.url
         let placeholder = bankDeal.issuer?.name
-        let expirationDateFormat = "Hasta el %@".localized
-        let dateString = Utils.getFormatedStringDate(bankDeal.dateExpired!)
-        let subtitle = String(format: expirationDateFormat, dateString)
-        let props = PXBankDealComponentProps(image: image, placeholder: placeholder, title: bankDeal.recommendedMessage, subtitle: subtitle)
+
+        var subtitle = ""
+        if let dateString = Utils.getShortFormatedStringDate(bankDeal.dateExpired) {
+            let expirationDateFormat = "bank_deal_details_date_format".localized_beta
+            subtitle = String(format: expirationDateFormat, dateString)
+        }
+
+        let props = PXBankDealComponentProps(imageUrl: imageUrl, placeholder: placeholder, title: bankDeal.recommendedMessage, subtitle: subtitle)
         let component = PXBankDealComponent(props: props)
         return component
     }

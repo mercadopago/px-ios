@@ -67,4 +67,18 @@ extension UIView {
         PXLayout.centerHorizontally(view: line).isActive = true
         PXLayout.setHeight(owner: line, height: height).isActive = true
     }
+
+    func removeAllSubviews() {
+        for subview in self.subviews {
+            subview.removeFromSuperview()
+        }
+    }
+
+    func addSubviewAtFullSize(with view: UIView) {
+        self.addSubview(view)
+        PXLayout.centerHorizontally(view: view).isActive = true
+        PXLayout.centerVertically(view: view).isActive = true
+        PXLayout.matchWidth(ofView: view).isActive = true
+        PXLayout.matchHeight(ofView: view).isActive = true
+    }
 }

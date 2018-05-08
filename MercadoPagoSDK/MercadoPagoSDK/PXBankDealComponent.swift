@@ -24,13 +24,13 @@ open class PXBankDealComponent: PXComponentizable {
 
 @objcMembers
 open class PXBankDealComponentProps: NSObject {
-    var image: UIImage?
+    var imageUrl: String?
     var placeholder: String?
     var title: String?
     var subtitle: String?
     
-    init(image: UIImage?, placeholder: String?, title: String?, subtitle: String?) {
-        self.image = image
+    init(imageUrl: String?, placeholder: String?, title: String?, subtitle: String?) {
+        self.imageUrl = imageUrl
         self.title = title
         self.subtitle = subtitle
         self.placeholder = placeholder

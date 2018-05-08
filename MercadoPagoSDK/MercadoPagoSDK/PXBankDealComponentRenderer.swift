@@ -17,33 +17,41 @@ class PXBankDealComponentRenderer: NSObject {
         bankDealComponentView.translatesAutoresizingMaskIntoConstraints = false
         bankDealComponentView.backgroundColor = .white
 
+        //Placeholder Label
+        let placeholderLabel = getPlaceholderLabel(with: component.props.placeholder)
+
         //Image View
-        if let image = component.props.image {
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            bankDealComponentView.imageView = imageView
-            imageView.contentMode = .scaleAspectFit
-            imageView.image = image
-            bankDealComponentView.addSubview(imageView)
-            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.centerHorizontally(view: imageView).isActive = true
-            PXLayout.setHeight(owner: imageView, height: IMAGE_VIEW_HEIGHT).isActive = true
-            PXLayout.pinLeft(view: imageView, withMargin: 0).isActive = true
-            PXLayout.pinRight(view: imageView, withMargin: 0).isActive = true
-        } else if let placeholder = component.props.placeholder {
-            let label = UILabel()
-            label.font = Utils.getFont(size: PXLayout.XS_FONT)
-            label.textColor = .red
-            label.numberOfLines = 2
-            label.lineBreakMode = .byTruncatingTail
-            label.textAlignment = .center
-            label.text = placeholder
-            bankDealComponentView.addSubview(label)
-            PXLayout.pinTop(view: label, withMargin: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.centerHorizontally(view: label).isActive = true
-            PXLayout.setHeight(owner: label, height: IMAGE_VIEW_HEIGHT).isActive = true
-            PXLayout.pinLeft(view: label, withMargin: 0).isActive = true
-            PXLayout.pinRight(view: label, withMargin: 0).isActive = true
+        if let imageUrl = component.props.imageUrl {
+            let contentView = UIView()
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            bankDealComponentView.imageView = contentView
+            bankDealComponentView.addSubview(contentView)
+            PXLayout.pinTop(view: contentView, withMargin: PXLayout.XS_MARGIN).isActive = true
+            PXLayout.centerHorizontally(view: contentView).isActive = true
+            PXLayout.setHeight(owner: contentView, height: IMAGE_VIEW_HEIGHT).isActive = true
+            PXLayout.pinLeft(view: contentView).isActive = true
+            PXLayout.pinRight(view: contentView).isActive = true
+
+            Utils().loadImageFromURLWithCache(withUrl: imageUrl, targetView: contentView, placeholderView: placeholderLabel, fallbackView: placeholderLabel)
+
+//            let imageView = UIImageView()
+//            Utils().loadImageWithCache(withUrl: imageUrl, targetImage: imageView, placeHolderImage: nil, fallbackImage: placeholderLabel)
+//            imageView.translatesAutoresizingMaskIntoConstraints = false
+//            bankDealComponentView.imageView = imageView
+//            imageView.contentMode = .scaleAspectFit
+//            bankDealComponentView.addSubview(imageView)
+//            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
+//            PXLayout.centerHorizontally(view: imageView).isActive = true
+//            PXLayout.setHeight(owner: imageView, height: IMAGE_VIEW_HEIGHT).isActive = true
+//            PXLayout.pinLeft(view: imageView, withMargin: 0).isActive = true
+//            PXLayout.pinRight(view: imageView, withMargin: 0).isActive = true
+        } else {
+            bankDealComponentView.addSubview(placeholderLabel)
+            PXLayout.pinTop(view: placeholderLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
+            PXLayout.centerHorizontally(view: placeholderLabel).isActive = true
+            PXLayout.setHeight(owner: placeholderLabel, height: IMAGE_VIEW_HEIGHT).isActive = true
+            PXLayout.pinLeft(view: placeholderLabel, withMargin: 0).isActive = true
+            PXLayout.pinRight(view: placeholderLabel, withMargin: 0).isActive = true
         }
 
         //Title Label
@@ -77,10 +85,22 @@ class PXBankDealComponentRenderer: NSObject {
         return bankDealComponentView
     }
 
+    func getPlaceholderLabel(with text: String?) -> UILabel {
+        let placeholderLabel = UILabel()
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        placeholderLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
+        placeholderLabel.textColor = UIColor.UIColorFromRGB(0x999999)
+        placeholderLabel.numberOfLines = 2
+        placeholderLabel.lineBreakMode = .byTruncatingTail
+        placeholderLabel.textAlignment = .center
+        placeholderLabel.text = text
+        return placeholderLabel
+    }
+
 }
 
 class PXBankDealComponentView: PXComponentView {
-    var imageView: UIImageView!
+    var imageView: UIView!
     var titleLabel: UILabel!
     var subtitleLabel: UILabel!
 }

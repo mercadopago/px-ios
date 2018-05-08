@@ -12,6 +12,7 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
 
     fileprivate let CELL_CONTENT_HEIGHT: CGFloat = 128
     fileprivate let CELL_HEIGHT: CGFloat = 190
+    fileprivate let HIGHLIGHTED_BACKGROUND_COLOR = UIColor.UIColorFromRGB(0xf7f7f7)
 
     fileprivate var viewModel: PXBankDealDetailsViewModel!
 
@@ -67,12 +68,17 @@ extension PXBankDealDetailsViewController {
 
 
         //Legals
+
+        self.contentView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
+        self.scrollView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
+
         if let legalsText = self.viewModel.getLegalsText() {
-            let legalsContainer = PXComponentView()
             let legalsTextView = buildLegalTextView(text: legalsText)
-            self.contentView.addSubviewToBottom(legalsTextView, withMargin: PXLayout.S_MARGIN)
+            self.contentView.addSubview(legalsTextView)
+            PXLayout.put(view: legalsTextView, onBottomOf: cellContainer).isActive = true
             PXLayout.matchWidth(ofView: legalsTextView).isActive = true
             PXLayout.centerHorizontally(view: legalsTextView).isActive = true
+            PXLayout.pinBottom(view: legalsTextView).isActive = true
         }
 
         self.contentView.layoutIfNeeded()
@@ -93,6 +99,7 @@ extension PXBankDealDetailsViewController {
         legalsTextView.translatesAutoresizingMaskIntoConstraints = false
         legalsTextView.text = text
         legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        legalsTextView.textContainerInset = UIEdgeInsetsMake(16, 16, 16, 16)
         legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
         legalsTextView.backgroundColor = .clear
         legalsTextView.isScrollEnabled = false

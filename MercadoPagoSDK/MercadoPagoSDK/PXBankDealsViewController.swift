@@ -43,6 +43,7 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     }
 
     override func viewDidLoad() {
+        self.title = "bank_deals_screen_title".localized_beta
         createCollectionView()
     }
 
@@ -54,6 +55,7 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
 
         //Collection View
         let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -64,11 +66,9 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
 
         //Constraints
         PXLayout.matchWidth(ofView: collectionView).isActive = true
-        //        PXLayout.matchHeight(ofView: collectionView).isActive = true
         PXLayout.centerHorizontally(view: collectionView).isActive = true
-        //        PXLayout.centerVertically(view: collectionView).isActive = true
-        PXLayout.pinTop(view: collectionView, withMargin: 100).isActive = true
-        PXLayout.pinBottom(view: collectionView, withMargin: 100).isActive = true
+        PXLayout.pinTop(view: collectionView).isActive = true
+        PXLayout.pinBottom(view: collectionView).isActive = true
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
