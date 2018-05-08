@@ -193,5 +193,12 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Condiciones</string>
 	</dict>
+	<key>bank_deal_details_date_format</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Hasta el %@</string>
+	</dict>
 </dict>
 </plist>

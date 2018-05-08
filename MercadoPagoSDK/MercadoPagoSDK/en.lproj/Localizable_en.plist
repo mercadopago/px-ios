@@ -193,5 +193,12 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Conditions</string>
 	</dict>
+	<key>bank_deal_details_date_format</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Until %@</string>
+	</dict>
 </dict>
 </plist>
