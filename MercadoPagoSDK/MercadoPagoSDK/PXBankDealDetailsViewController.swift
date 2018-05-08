@@ -37,7 +37,7 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
 extension PXBankDealDetailsViewController {
 
     fileprivate func setupUI() {
-        self.title = "[TRADUCIR] Condiciones"
+        self.title = "bank_deal_details_title".localized_beta
         navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         loadMPStyles()
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
