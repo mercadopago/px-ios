@@ -20,6 +20,7 @@ class PXBankDealComponentRenderer: NSObject {
         //Image View
         let image = PXUIImage(url: component.props.imageUrl, placeholder: component.props.placeholder, fallback: component.props.placeholder)
         let imageView = PXUIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         bankDealComponentView.imageView = imageView
         bankDealComponentView.addSubview(imageView)

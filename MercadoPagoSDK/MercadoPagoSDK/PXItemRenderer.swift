@@ -35,7 +35,7 @@ struct PXItemRenderer {
             if let url = imageUrl {
                 buildCircle(targetImageView: itemImage)
                 itemImage.backgroundColor = ThemeManager.shared.placeHolderColor()
-                Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil, fallbackImage: imageObj)
+                Utils().loadImageWithCache(withUrl: url, targetImageView: itemImage, placeholderImage: nil, fallbackImage: imageObj)
             } else {
                 itemImage.image = imageObj
             }

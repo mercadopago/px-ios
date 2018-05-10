@@ -470,7 +470,7 @@ class Utils {
 
         //Check & Load cached image
         if let cachedImage = Utils.imageCache.object(forKey: urlString as NSString) as? UIImage {
-            let imageView = self.createImageView(with: cachedImage)
+            let imageView = self.createImageView(with: cachedImage, contentMode: targetView.contentMode)
             targetView.removeAllSubviews()
             targetView.addSubviewAtFullSize(with: imageView)
             didFinish?(cachedImage)
@@ -497,7 +497,7 @@ class Utils {
                         Utils.imageCache.setObject(image, forKey: urlString as NSString)
 
                         //Add image
-                        let imageView = self.createImageView(with: image)
+                        let imageView = self.createImageView(with: image, contentMode: targetView.contentMode)
                         targetView.removeAllSubviews()
                         targetView.addSubviewAtFullSize(with: imageView)
                         didFinish?(image)
@@ -515,56 +515,16 @@ class Utils {
         return
     }
 
-    func createImageView(with image: UIImage) -> UIImageView {
+    func createImageView(with image: UIImage?, contentMode: UIViewContentMode) -> UIImageView {
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = contentMode
         return imageView
     }
 
-    func loadImageWithCache(withUrl urlStr: String?, targetImage: UIImageView, placeHolderImage: UIImage?, fallbackImage: UIImage?) {
-
-        guard let urlString = urlStr else {return}
-
-        let url = URL(string: urlString)
-
-        let imageCache = NSCache<NSString, AnyObject>()
-
-        targetImage.image = placeHolderImage
-
-        // Get cached image
-        if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
-            targetImage.image = cachedImage
-            return
-        }
-
-        if let targetUrl = url {
-
-            // Request image.
-            URLSession.shared.dataTask(with: targetUrl, completionHandler: { (data, _, error) in
-
-                if error != nil {
-                    DispatchQueue.main.async {
-                        targetImage.image = fallbackImage
-                    }
-                    return
-                }
-
-                DispatchQueue.main.async {
-                    if let remoteData = data, let image = UIImage(data: remoteData) {
-                        imageCache.setObject(image, forKey: urlString as NSString)
-                        targetImage.image = image
-
-                    } else if let fallbackImage = fallbackImage {
-                        targetImage.image = fallbackImage
-                    }
-                }
-            }).resume()
-        } else if let fallbackImage = fallbackImage {
-            targetImage.image = fallbackImage
-        }
-
-        return
+    func loadImageWithCache(withUrl urlStr: String?, targetImageView: UIImageView, placeholderImage: UIImage?, fallbackImage: UIImage?) {
+        let placeholderView = createImageView(with: placeholderImage, contentMode: targetImageView.contentMode)
+        let fallbackView = createImageView(with: fallbackImage, contentMode: targetImageView.contentMode)
+        loadImageFromURLWithCache(withUrl: urlStr, targetView: targetImageView, placeholderView: placeholderView, fallbackView: fallbackView)
     }
-
 }
