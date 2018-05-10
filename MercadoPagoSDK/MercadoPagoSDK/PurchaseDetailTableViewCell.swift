@@ -34,8 +34,8 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
         //Deafult values for cells
         self.purchaseDetailTitle.text = title.localized
         self.purchaseDetailTitle.font = Utils.getFont(size: purchaseDetailTitle.font.pointSize)
-        self.purchaseDetailTitle.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
-        self.purchaseDetailAmount.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        self.purchaseDetailTitle.textColor = ThemeManager.shared.boldLabelTintColor()
+        self.purchaseDetailAmount.textColor = ThemeManager.shared.boldLabelTintColor()
         self.noRateLabel.text = ""
         self.noRateLabel.font = Utils.getFont(size: noRateLabel.font.pointSize)
         self.removeFromSuperview()
@@ -54,7 +54,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         } else {
-            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: ThemeManager.shared.getTheme().boldLabelTintColor(), fontSize: 18, centsFontSize: 12, baselineOffset: 5)
+            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 18, centsFontSize: 12, baselineOffset: 5)
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }
@@ -69,6 +69,6 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     }
 
     private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
-        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.getTheme().boldLabelTintColor(), fontSize: 24, baselineOffset: 8)
+        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 24, baselineOffset: 8)
     }
 }

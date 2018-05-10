@@ -9,8 +9,8 @@
 import UIKit
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (l__?, r__?):
+    return l__ < r__
   case (nil, _?):
     return true
   default:
@@ -20,8 +20,8 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func <= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l <= r
+  case let (l__?, r__?):
+    return l__ <= r__
   default:
     return !(rhs < lhs)
   }
@@ -29,8 +29,8 @@ private func <= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
+  case let (l__?, r__?):
+    return l__ > r__
   default:
     return rhs < lhs
   }
@@ -58,8 +58,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
                var excludedPaymentMethods = Set<String>()
                 if let pmArray = json["excluded_payment_methods"] as? NSArray {
-                       for i in 0..<pmArray.count {
-                                if let pmDic = pmArray[i] as? NSDictionary {
+                       for index in 0..<pmArray.count {
+                                if let pmDic = pmArray[index] as? NSDictionary {
                                         let pmDicValue = pmDic.value(forKey: "id") as? String
                                         if pmDicValue != nil && pmDicValue!.count > 0 {
                                                 excludedPaymentMethods.insert(pmDicValue!)
@@ -71,8 +71,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
                 var excludedPaymentTypesIds = Set<String>()
                 if let ptArray = json["excluded_payment_types"] as? NSArray {
-                        for i in 0..<ptArray.count {
-                                if let ptDic = ptArray[i] as? NSDictionary {
+                        for index in 0..<ptArray.count {
+                                if let ptDic = ptArray[index] as? NSDictionary {
                                         let ptDicValue = ptDic.value(forKey: "id") as? String
                                         if ptDicValue != nil && ptDicValue?.count > 0 {
                                                 excludedPaymentTypesIds.insert(ptDicValue!)

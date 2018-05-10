@@ -138,8 +138,8 @@ extension PXReviewViewModel {
                 let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
                 summary.addSummaryDetail(summaryDetail: discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
-            summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
-            summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
+            summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+            summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
         }
         if let payerCost = self.paymentData.payerCost {
             var interest = 0.0
@@ -192,9 +192,9 @@ extension PXReviewViewModel {
         var subtitle: NSAttributedString? = nil
         var accreditationTime: NSAttributedString? = nil
         var action = withAction
-        let backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
-        let lightLabelColor = ThemeManager.shared.getTheme().lightLabelTintColor()
-        let boldLabelColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
+        let lightLabelColor = ThemeManager.shared.labelTintColor()
+        let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
 
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
@@ -236,13 +236,13 @@ extension PXReviewViewModel {
             }
         }
 
-        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.boldLabelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
 
         return PXSummaryComponent(props: props)
     }
 
     func buildTitleComponent() -> PXReviewTitleComponent {
-        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
     }
 }
@@ -287,7 +287,7 @@ extension PXReviewViewModel {
         let amountTitle = reviewScreenPreference.getAmountTitle()
         let quantityTile = reviewScreenPreference.getQuantityLabel()
 
-        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
 
         let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: collectorIcon, itemTheme: itemTheme)
         return PXItemComponent(props: itemProps)

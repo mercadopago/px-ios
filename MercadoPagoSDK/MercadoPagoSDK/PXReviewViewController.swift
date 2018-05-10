@@ -15,11 +15,9 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
-    
     var footerView: UIView!
     var floatingButtonView: UIView!
-    
-    
+
     // MARK: Definitions
     var termsConditionView: PXTermsAndConditionView!
     lazy var itemViews = [UIView]()
@@ -62,7 +60,7 @@ extension PXReviewViewController {
     fileprivate func setupUI() {
         navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         loadMPStyles()
-        navigationController?.navigationBar.barTintColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.highlightBackgroundColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         if contentView.getSubviews().isEmpty {
             renderViews()
@@ -145,13 +143,13 @@ extension PXReviewViewController {
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-        
-        
+
         // Add floating button
         floatingButtonView = getFloatingButtonView()
         view.addSubview(floatingButtonView)
         PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
 
         // Add elastic header.
@@ -186,7 +184,7 @@ extension PXReviewViewController {
         let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
         return fixedButtonCoordinates.y > floatingButtonCoordinates.y
     }
-    
+
     fileprivate func getPaymentMethodComponentView() -> UIView? {
         let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
@@ -213,7 +211,7 @@ extension PXReviewViewController {
 
     fileprivate func getCFTComponentView() -> UIView? {
         if viewModel.hasPayerCostAddionalInfo() {
-            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.getTheme().labelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
             return cftView
         }
         return nil
@@ -241,21 +239,21 @@ extension PXReviewViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
-    
+
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
         let termsAndConditionView = PXTermsAndConditionView()
         return termsAndConditionView
     }
 
     fileprivate func getTopCustomView() -> UIView? {
-        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
+        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
             return componentView
         }
         return nil
     }
 
     fileprivate func getBottomCustomView() -> UIView? {
-        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
+        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
             return componentView
         }
         return nil
@@ -264,7 +262,7 @@ extension PXReviewViewController {
         super.scrollViewDidScroll(scrollView)
         self.checkFloatingButtonVisibility()
     }
-    
+
     func checkFloatingButtonVisibility() {
        if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1

@@ -26,8 +26,8 @@ import Foundation
         }
         var cause: [Cause] = [Cause]()
         if let causeArray = json["cause"] as? NSArray {
-            for i in 0..<causeArray.count {
-                if let causeDic = causeArray[i] as? NSDictionary {
+            for index in 0..<causeArray.count {
+                if let causeDic = causeArray[index] as? NSDictionary {
                     cause.append(Cause.fromJSON(causeDic))
                 }
             }

@@ -8,6 +8,8 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
   # Pods for MercadoPagoSDKExamplesObjectiveC
     pod 'MercadoPagoPXTracking', '2.1.2'
     pod 'MercadoPagoServices', '1.0.8'
+  # UI Meli Lib
+    pod 'MLUI', '4.0.0'
 
   target 'MercadoPagoSDKExamplesObjectiveCTests' do
     inherit! :search_paths

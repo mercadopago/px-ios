@@ -81,8 +81,8 @@ import UIKit
 
                 var settings: [Setting] = [Setting]()
                 if let settingsArray = json["settings"] as? NSArray {
-                        for i in 0..<settingsArray.count {
-                                if let settingDic = settingsArray[i] as? NSDictionary {
+                        for index in 0..<settingsArray.count {
+                                if let settingDic = settingsArray[index] as? NSDictionary {
                                         settings.append(Setting.fromJSON(settingDic))
                                     }
                             }
@@ -91,8 +91,8 @@ import UIKit
 
                 var additionalInfoNeeded: [String] = [String]()
                 if let additionalInfoNeededArray = json["additional_info_needed"] as? NSArray {
-                        for i in 0..<additionalInfoNeededArray.count {
-                                if let additionalInfoNeededStr = additionalInfoNeededArray[i] as? String {
+                        for index in 0..<additionalInfoNeededArray.count {
+                                if let additionalInfoNeededStr = additionalInfoNeededArray[index] as? String {
                                         additionalInfoNeeded.append(additionalInfoNeededStr)
                                     }
                             }
@@ -106,8 +106,8 @@ import UIKit
                 var financialInstitutions: [FinancialInstitution] = [FinancialInstitution]()
 
                 if let financialInstitutionsArray = json["financial_institutions"] as? NSArray {
-                       for i in 0..<financialInstitutionsArray.count {
-                                if let financialInstitutionsDic = financialInstitutionsArray[i] as? NSDictionary {
+                       for index in 0..<financialInstitutionsArray.count {
+                                if let financialInstitutionsDic = financialInstitutionsArray[index] as? NSDictionary {
                                         financialInstitutions.append(FinancialInstitution.fromJSON(financialInstitutionsDic))
                                     }
                             }

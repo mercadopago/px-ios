@@ -1,22 +1,17 @@
 //
-//  PXDefaultTheme.swift
+//  MPTheme.swift
 //  MercadoPagoSDK
 //
-//  Created by Juan sebastian Sanzone on 10/1/18.
+//  Created by Juan sebastian Sanzone on 1/5/18.
 //  Copyright © 2018 MercadoPago. All rights reserved.
 //
 
 import Foundation
+import MercadoPagoSDK
 
-class PXDefaultTheme: NSObject {
-    let primaryColor: UIColor
-    public init(withPrimaryColor: UIColor) {
-        self.primaryColor = withPrimaryColor
-    }
-}
+@objc class MPTheme: NSObject, PXTheme {
 
-// MARK: - Theme styles.
-extension PXDefaultTheme: PXTheme {
+    let primaryColor: UIColor = #colorLiteral(red: 0, green: 0.6117647059, blue: 0.9333333333, alpha: 1)
 
     public func navigationBar() -> PXThemeProperty {
         return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
@@ -32,6 +27,10 @@ extension PXDefaultTheme: PXTheme {
 
     public func detailedBackgroundColor() -> UIColor {
         return #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
+    }
+
+    func highlightNavigationTintColor() -> UIColor? {
+        return primaryColor
     }
 
     public func statusBarStyle() -> UIStatusBarStyle {

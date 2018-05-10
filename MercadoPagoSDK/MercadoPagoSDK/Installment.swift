@@ -9,8 +9,8 @@
 import Foundation
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
-    case let (l?, r?):
-        return l < r
+    case let (l__?, r__?):
+        return l__ < r__
     case (nil, _?):
         return true
     default:
@@ -20,8 +20,8 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
-    case let (l?, r?):
-        return l > r
+    case let (l__?, r__?):
+        return l__ > r__
     default:
         return rhs < lhs
     }
@@ -49,8 +49,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
                 var payerCosts: [PayerCost] = [PayerCost]()
                 if let payerCostsArray = json["payer_costs"] as? NSArray {
-                        for i in 0..<payerCostsArray.count {
-                                if let payerCostDic = payerCostsArray[i] as? NSDictionary {
+                        for index in 0..<payerCostsArray.count {
+                                if let payerCostDic = payerCostsArray[index] as? NSDictionary {
                                         payerCosts.append(PayerCost.fromJSON(payerCostDic))
                                     }
                             }

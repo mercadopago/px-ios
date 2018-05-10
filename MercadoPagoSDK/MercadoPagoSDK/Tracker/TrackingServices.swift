@@ -47,13 +47,13 @@ class TrackingServices: NSObject {
                             }
 
                         } else {
-                            let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-                            failure?(e)
+                            let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                            failure?(error)
                         }
                     }
                 } catch {
-                    let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-                    failure?(e)
+                    let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                    failure?(error)
                 }
             } else {
                 if failure != nil {

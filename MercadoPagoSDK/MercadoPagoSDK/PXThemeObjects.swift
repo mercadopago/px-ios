@@ -26,24 +26,4 @@ open class PXNavigationHeaderLabel: UILabel {
     }
 }
 
-open class PXPrimaryButton: UIButton {
-    public override init(frame: CGRect) {
-        super.init(frame:frame)
-        self.titleLabel?.font = Utils.getFont(size: 18)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-open class PXSecondaryButton: UIButton {
-    public override init(frame: CGRect) {
-        super.init(frame:frame)
-        self.titleLabel?.font = Utils.getFont(size: 18)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
 open class PXToolbar: UIToolbar {}

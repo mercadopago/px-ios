@@ -10,21 +10,17 @@ import UIKit
 
 class PXCustomComponent: PXCustomComponentizable, PXComponentizable {
 
-    
-    let view : UIView
-    
+    let view: UIView
+
     func render() -> UIView {
         return view
     }
-    
+
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
         return self.render()
     }
 
-    
-    init(view:UIView) {
+    init(view: UIView) {
         self.view = view
     }
-    
-
 }

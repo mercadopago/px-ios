@@ -165,12 +165,12 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     open func showErrorMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
-        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
+        self.errorLabel!.textColor = ThemeManager.shared.rejectedColor()
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.text = errorMessage
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
-        securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        securityCodeTextField.borderInactiveColor = ThemeManager.shared.rejectedColor()
+        securityCodeTextField.borderActiveColor = ThemeManager.shared.rejectedColor()
         securityCodeTextField.inputAccessoryView = errorLabel
         securityCodeTextField.setNeedsDisplay()
         securityCodeTextField.resignFirstResponder()
@@ -178,8 +178,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
     open func hideErrorMessage() {
-        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.secondaryColor()
+        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.secondaryColor()
         self.securityCodeTextField.inputAccessoryView = self.toolbar
         self.securityCodeTextField.setNeedsDisplay()
         self.securityCodeTextField.resignFirstResponder()

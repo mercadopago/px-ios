@@ -17,7 +17,7 @@ class PXPaymentMethodIconRenderer: NSObject {
         pmIconView.translatesAutoresizingMaskIntoConstraints = false
         let background = UIView()
         background.translatesAutoresizingMaskIntoConstraints = false
-        background.backgroundColor = ThemeManager.shared.getTheme().circleBackgroundColor()
+        background.backgroundColor = ThemeManager.shared.iconBackgroundColor()
         pmIconView.paymentMethodIconBackground = background
         pmIconView.addSubview(pmIconView.paymentMethodIconBackground!)
         PXLayout.matchWidth(ofView: pmIconView.paymentMethodIconBackground!).isActive = true

@@ -9,8 +9,8 @@
 import UIKit
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (l__?, r__?):
+    return l__ < r__
   case (nil, _?):
     return true
   default:
@@ -20,8 +20,8 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
+  case let (l__?, r__?):
+    return l__ > r__
   default:
     return rhs < lhs
   }
@@ -39,7 +39,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var binaryMode: Bool = false
     open var transactionDetails: TransactionDetails?
     open var discount: DiscountCoupon?
-    
+
     override init() {
         super.init()
     }

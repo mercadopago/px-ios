@@ -50,7 +50,7 @@ import Foundation
 
     open class func fromJSON(_ json: NSDictionary) -> Token {
         let literalJson = json
-        let _id = JSONHandler.attemptParseToString(literalJson["id"])
+        let tokenId = JSONHandler.attemptParseToString(literalJson["id"])
         let key = JSONHandler.attemptParseToString(literalJson["public_key"])
         let cardId =  JSONHandler.attemptParseToString(literalJson["card_id"])
         let status = JSONHandler.attemptParseToString(literalJson["status"])
@@ -74,7 +74,7 @@ import Foundation
         let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : Date()
         let creationDate = json.isKeyValid("date_created") ? Utils.getDateFromString(json["date_created"] as? String) : Date()
 
-        return Token(tokenId: _id!, publicKey: key, cardId: cardId, luhnValidation: luhn, status: status,
+        return Token(tokenId: tokenId!, publicKey: key, cardId: cardId, luhnValidation: luhn, status: status,
                      usedDate: usedDate, cardNumberLength: cardNumberLength!, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits,
                      securityCodeLength: securityCodeLength!, expirationMonth: expMonth!, expirationYear: expYear!, lastModifiedDate: lastModifiedDate,
                      dueDate: dueDate, cardHolder: cardHolder, esc: esc)
@@ -103,7 +103,7 @@ import Foundation
     }
 
     open func toJSON() -> [String: Any] {
-        let _id: Any = self.tokenId == nil ? JSONHandler.null : self.tokenId!
+        let tokenId: Any = self.tokenId == nil ? JSONHandler.null : self.tokenId!
         let cardId: Any = self.cardId == nil ? JSONHandler.null : self.cardId!
         let luhn: Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!
         let lastFour: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
@@ -114,7 +114,7 @@ import Foundation
         let esc: Any = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc ?? ""
 
         let obj: [String: Any] = [
-            "id": _id,
+            "id": tokenId,
             "card_id": cardId,
             "luhn_validation": luhn,
             "status": self.status,

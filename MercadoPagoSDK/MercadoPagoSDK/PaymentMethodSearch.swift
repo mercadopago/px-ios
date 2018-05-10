@@ -25,8 +25,8 @@ import Foundation
         let pmSearch = PaymentMethodSearch()
         var groups = [PaymentMethodSearchItem]()
         if let groupsJson = json["groups"] as? NSArray {
-            for i in 0..<groupsJson.count {
-                if let groupDic = groupsJson[i] as? NSDictionary {
+            for index in 0..<groupsJson.count {
+                if let groupDic = groupsJson[index] as? NSDictionary {
                     groups.append(PaymentMethodSearchItem.fromJSON(groupDic))
                 }
             }
@@ -35,8 +35,8 @@ import Foundation
 
         var paymentMethods = [PaymentMethod]()
         if let paymentMethodsJson = json["payment_methods"] as? NSArray {
-            for i in 0..<paymentMethodsJson.count {
-                if let paymentMethodsDic = paymentMethodsJson[i] as? NSDictionary {
+            for index in 0..<paymentMethodsJson.count {
+                if let paymentMethodsDic = paymentMethodsJson[index] as? NSDictionary {
                     let currentPaymentMethod = PaymentMethod.fromJSON(paymentMethodsDic)
                     paymentMethods.append(currentPaymentMethod)
                 }
@@ -46,8 +46,8 @@ import Foundation
 
         let customerCards = NSMutableDictionary()
         if let customerCardJson = json["cards"] as? NSArray {
-            for i in 0..<customerCardJson.count {
-                if let customerCardJsonDic = customerCardJson[i] as? NSDictionary {
+            for index in 0..<customerCardJson.count {
+                if let customerCardJsonDic = customerCardJson[index] as? NSDictionary {
                     let customerCardObject = Card.fromJSON(customerCardJsonDic)
                     customerCards.setValue(customerCardObject, forKey: String(describing: customerCardObject.idCard))
                 }
@@ -58,8 +58,8 @@ import Foundation
         var customerPaymentMethods = [CustomerPaymentMethod]()
 
         if let customerPaymentMethodsJson = json["custom_options"] as? NSArray {
-            for i in 0..<customerPaymentMethodsJson.count {
-                if let customerPaymentMethodDic = customerPaymentMethodsJson[i] as? NSDictionary {
+            for index in 0..<customerPaymentMethodsJson.count {
+                if let customerPaymentMethodDic = customerPaymentMethodsJson[index] as? NSDictionary {
                     let currentCustomerPaymentMethod = CustomerPaymentMethod.fromJSON(customerPaymentMethodDic)
                     customerPaymentMethods.append(currentCustomerPaymentMethod)
                     if let card = customerCards.value(forKey: currentCustomerPaymentMethod.getCardId()) as? Card {

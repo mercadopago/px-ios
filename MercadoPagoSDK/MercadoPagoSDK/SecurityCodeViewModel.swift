@@ -54,8 +54,8 @@ open class SecurityCodeViewModel: NSObject {
 
     func getCardY() -> CGFloat {
         let cardSeparation: CGFloat = 510
-        let y = (UIScreen.main.bounds.height - getCardHeight() - cardSeparation) / 2
-        return y>10 ? y : 10
+        let yPos = (UIScreen.main.bounds.height - getCardHeight() - cardSeparation) / 2
+        return yPos>10 ? yPos : 10
     }
 
     func getCardBounds() -> CGRect {

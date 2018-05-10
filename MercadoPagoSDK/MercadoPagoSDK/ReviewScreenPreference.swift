@@ -20,7 +20,7 @@ open class ReviewScreenPreference: NSObject {
     fileprivate var quantityTitle = DEFAULT_QUANTITY_TITLE
     fileprivate var collectorIcon: UIImage?
     fileprivate var disclaimerText: String?
-    fileprivate var disclaimerTextColor: UIColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
+    fileprivate var disclaimerTextColor: UIColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
     fileprivate var topCustomComponent: PXCustomComponentizable?
     fileprivate var bottomCustomComponent: PXCustomComponentizable?
 

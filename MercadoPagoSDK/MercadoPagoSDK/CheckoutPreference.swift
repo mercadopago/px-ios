@@ -21,8 +21,8 @@ import UIKit
     open class func fromJSON(_ json: NSDictionary) -> CheckoutPreference {
                 let preference: CheckoutPreference = CheckoutPreference()
 
-                if let _id = JSONHandler.attemptParseToString(json["id"]) {
-                        preference.preferenceId = _id
+                if let preferenceId = JSONHandler.attemptParseToString(json["id"]) {
+                        preference.preferenceId = preferenceId
                     }
                 if let siteId = JSONHandler.attemptParseToString(json["site_id"]) {
                         preference.siteId = siteId
@@ -34,8 +34,8 @@ import UIKit
 
                 var items = [Item]()
                 if let itemsArray = json["items"] as? NSArray {
-                        for i in 0..<itemsArray.count {
-                                if let itemDic = itemsArray[i] as? NSDictionary {
+                        for index in 0..<itemsArray.count {
+                                if let itemDic = itemsArray[index] as? NSDictionary {
                                         items.append(Item.fromJSON(itemDic))
                                 }
                             }
@@ -234,10 +234,10 @@ import UIKit
 
     open func toJSONString() -> String {
 
-        let _id: Any = self.preferenceId == nil ? JSONHandler.null : (self.preferenceId)!
+        let preferenceId: Any = self.preferenceId == nil ? JSONHandler.null : (self.preferenceId)!
         let player: Any = self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
         var obj: [String: Any] = [
-            "id": _id,
+            "id": preferenceId,
             "payer": player
         ]
 

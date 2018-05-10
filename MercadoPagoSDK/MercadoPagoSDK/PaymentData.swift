@@ -53,7 +53,7 @@ import UIKit
         if paymentMethod.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
-        
+
         if paymentMethod.isIssuerRequired && self.issuer == nil {
             return false
         }

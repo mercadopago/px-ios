@@ -42,11 +42,11 @@ class AvailableCardsDetailView: UIView {
 
         scrollCards.addSubview(getHeaderView())
 
-        var y: CGFloat = AvailableCardsDetailView.HEADER_SCROLL_HEIGHT
+        var yPos: CGFloat = AvailableCardsDetailView.HEADER_SCROLL_HEIGHT
 
         for paymentMethod in paymentMethods {
-            scrollCards.addSubview(getCardAvailableView(posY: y, paymentMethod: paymentMethod))
-            y += AvailableCardsDetailView.ITEMS_HEIGHT
+            scrollCards.addSubview(getCardAvailableView(posY: yPos, paymentMethod: paymentMethod))
+            yPos += AvailableCardsDetailView.ITEMS_HEIGHT
         }
 
         self.addSubview(scrollCards)
@@ -55,7 +55,7 @@ class AvailableCardsDetailView: UIView {
     func setTitles() {
         titleLable = MPCardFormToolbarLabel()
         titleLable.frame = getTitleLabelFrame()
-        titleLable.textColor = ThemeManager.shared.getTheme().modalComponent().tintColor
+        titleLable.textColor = ThemeManager.shared.boldLabelTintColor()
         titleLable.text = "No te preocupes, aún puedes terminar tu pago con:".localized
         titleLable.font = Utils.getFont(size: 22.0)
         titleLable.numberOfLines = 2

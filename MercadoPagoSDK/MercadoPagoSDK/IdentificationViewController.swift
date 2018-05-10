@@ -47,8 +47,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         var titleDict: [NSAttributedStringKey: Any] = [:]
         if self.navigationController != nil {
             let font = Utils.getFont(size: 18)
-            titleDict = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.getTheme().navigationBar().tintColor, NSAttributedStringKey.font: font]
-
+            titleDict = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedStringKey.font: font]
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict
                 self.navigationItem.hidesBackButton = true
@@ -81,7 +80,6 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
         textField.inputView = pickerView
         textField.inputAccessoryView = toolBar
-
     }
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -160,11 +158,11 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
         self.tipoDeDocumentoLabel.font = Utils.getIdentificationFont(size: 10)
         self.numberTextField.placeholder = "Número".localized
-        self.numberTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.numberTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.numberTextField.borderActiveColor = ThemeManager.shared.secondaryColor()
+        self.numberTextField.borderInactiveColor = ThemeManager.shared.secondaryColor()
         self.textField.placeholder = "Tipo".localized
-        self.textField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.textField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.textField.borderActiveColor = ThemeManager.shared.secondaryColor()
+        self.textField.borderInactiveColor = ThemeManager.shared.secondaryColor()
         self.view.backgroundColor = ThemeManager.shared.getMainColor()
         numberTextField.autocorrectionType = UITextAutocorrectionType.no
         numberTextField.keyboardType = UIKeyboardType.numberPad
@@ -285,12 +283,12 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
         errorLabel = MPLabel(frame: toolbar.frame)
         self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
-        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
+        self.errorLabel!.textColor = ThemeManager.shared.rejectedColor()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        numberTextField.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
-        numberTextField.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        numberTextField.borderInactiveColor = ThemeManager.shared.rejectedColor()
+        numberTextField.borderActiveColor = ThemeManager.shared.rejectedColor()
         numberTextField.inputAccessoryView = errorLabel
         numberTextField.setNeedsDisplay()
         numberTextField.resignFirstResponder()
@@ -299,8 +297,8 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     func hideErrorMessage() {
-        self.numberTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.numberTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.numberTextField.borderInactiveColor = ThemeManager.shared.secondaryColor()
+        self.numberTextField.borderActiveColor = ThemeManager.shared.secondaryColor()
         self.numberTextField.inputAccessoryView = self.toolbar
         self.numberTextField.setNeedsDisplay()
         self.numberTextField.resignFirstResponder()

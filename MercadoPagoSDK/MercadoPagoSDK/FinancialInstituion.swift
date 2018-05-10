@@ -16,8 +16,8 @@ import Foundation
 
     open class func fromJSON(_ json: NSDictionary) -> FinancialInstitution {
         let financialInstitution: FinancialInstitution = FinancialInstitution()
-        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue, let iid = _id as? Int {
-            financialInstitution.financialInstitutionId = iid
+        if let financialInstitutionId = JSONHandler.attemptParseToString(json["id"])?.numberValue, let finalId = financialInstitutionId as? Int {
+            financialInstitution.financialInstitutionId = finalId
         }
         if let description = JSONHandler.attemptParseToString(json["description"]) {
             financialInstitution.financialInstitutionDescription = description

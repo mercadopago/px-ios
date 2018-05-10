@@ -9,14 +9,14 @@
 import Foundation
 
 struct PXNotificationManager {
-  
+
 }
 
 extension PXNotificationManager {
     struct SuscribeTo {
         static func attemptToClose(_ observer: Any, selector: Selector) {
             let notificationCenter = NotificationCenter.default
-            notificationCenter.addObserver(observer, selector: selector, name: .attemptToClose , object: nil)
+            notificationCenter.addObserver(observer, selector: selector, name: .attemptToClose, object: nil)
         }
     }
 }
@@ -31,7 +31,7 @@ extension PXNotificationManager {
 }
 
 extension PXNotificationManager {
-    struct Post  {
+    struct Post {
         static func attemptToClose() {
             let notificationCenter = NotificationCenter.default
             notificationCenter.post(name: .attemptToClose, object: nil)
@@ -40,5 +40,5 @@ extension PXNotificationManager {
 }
 
 internal extension NSNotification.Name {
-      static let attemptToClose = Notification.Name(rawValue:"PXAttemptToClose")
+      static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
 }

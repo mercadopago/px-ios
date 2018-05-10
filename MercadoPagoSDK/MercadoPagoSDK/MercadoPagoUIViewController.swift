@@ -13,7 +13,7 @@ import MercadoPagoPXTracking
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     open var callbackCancel: (() -> Void)?
-    var navBarTextColor = ThemeManager.shared.getTheme().navigationBar().tintColor
+    var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
     private var navBarBackgroundColor = ThemeManager.shared.getMainColor()
     var shouldDisplayBackButton = false
     var shouldHideNavigationBar = false
@@ -30,7 +30,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open var screenName: String { return TrackingUtil.NO_NAME_SCREEN }
     open var screenId: String { return TrackingUtil.NO_SCREEN_ID }
 
-    var loadingInstance: UIView?
+    var loadingView: UIView?
+    var fistResponder: UITextField?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -49,12 +50,11 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        UIApplication.shared.statusBarStyle = ThemeManager.shared.getTheme().statusBarStyle()
+        UIApplication.shared.statusBarStyle = ThemeManager.shared.statusBarStyle()
 
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         self.loadMPStyles()
-        MercadoPagoCheckout.firstViewControllerPushed = true
 
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
@@ -218,12 +218,17 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.navigationController!.popViewController(animated: true)
     }
 
-    internal func showLoading() {
-        self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
-        self.view.bringSubview(toFront: self.loadingInstance!)
+    internal func hideLoading() {
+        PXComponentFactory.Loading.instance().hide()
+        loadingView = nil
     }
 
-    var fistResponder: UITextField?
+    internal func showLoading() {
+        loadingView = PXComponentFactory.Loading.instance().showInView(view)
+        if let lView = loadingView {
+            view.bringSubview(toFront: lView)
+        }
+    }
 
     internal func hideKeyboard(_ view: UIView) -> Bool {
         if let textField = view as? UITextField {
@@ -245,11 +250,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             fistResponder?.becomeFirstResponder()
         }
         fistResponder = nil
-    }
-
-    internal func hideLoading() {
-        LoadingOverlay.shared.hideOverlayView()
-        self.loadingInstance = nil
     }
 
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -297,7 +297,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             }
 
             let font: UIFont = Utils.getFont(size: navBarFontSize)
-            let titleDict: [NSAttributedStringKey: Any] = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.getTheme().navigationBar().tintColor, NSAttributedStringKey.font: font]
+            let titleDict: [NSAttributedStringKey: Any] = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedStringKey.font: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict
         }
 
@@ -358,15 +358,6 @@ extension UINavigationBar {
         self.setValue(false, forKey: "hidesShadow")
     }
 
-}
-extension UINavigationController {
-    internal func showLoading() {
-        _ = LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
-    }
-
-    internal func hideLoading() {
-        LoadingOverlay.shared.hideOverlayView()
-    }
 }
 
 extension UIImage {

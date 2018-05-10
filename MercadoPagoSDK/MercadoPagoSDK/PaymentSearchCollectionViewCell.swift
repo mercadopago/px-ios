@@ -33,7 +33,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         addPaymentOptionIconComponent(image: image)
 
-        backgroundColor = UIColor.px_white()
+        backgroundColor = .white
         titleSearch.textColor = UIColor.black
         layoutIfNeeded()
     }

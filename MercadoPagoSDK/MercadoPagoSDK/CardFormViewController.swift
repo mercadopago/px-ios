@@ -12,8 +12,8 @@ import MercadoPagoServices
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
-    case let (l?, r?):
-        return l < r
+    case let (l__?, r__?):
+        return l__ < r__
     case (nil, _?):
         return true
     default:
@@ -24,8 +24,8 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 @objcMembers
 open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
-    let NAVIGATION_BAR_COLOR = ThemeManager.shared.getTheme().navigationBar().backgroundColor
-    let NAVIGATION_BAR_TEXT_COLOR = ThemeManager.shared.getTheme().navigationBar().tintColor
+    let NAVIGATION_BAR_COLOR = ThemeManager.shared.navigationBar().backgroundColor
+    let NAVIGATION_BAR_TEXT_COLOR = ThemeManager.shared.navigationBar().tintColor
 
     @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var cardBackground: UIView!
@@ -187,8 +187,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         self.getPromos()
-        textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        textBox.borderInactiveColor = ThemeManager.shared.secondaryColor()
+        textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
         textBox.autocorrectionType = UITextAutocorrectionType.no
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
@@ -551,8 +551,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     func setTextBox(isError: Bool, inputAccessoryView: UIView) {
         isShowingTextBoxMessage = true
         if isError {
-            textBox.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
-            textBox.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
+            textBox.borderInactiveColor = ThemeManager.shared.rejectedColor()
+            textBox.borderActiveColor = ThemeManager.shared.rejectedColor()
         }
         textBox.inputAccessoryView = inputAccessoryView
         textBox.setNeedsDisplay()
@@ -563,7 +563,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     func showMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
-        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
+        self.errorLabel!.textColor = ThemeManager.shared.rejectedColor()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
@@ -572,8 +572,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     func hideMessage() {
         isShowingTextBoxMessage = false
-        self.textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.textBox.borderInactiveColor = ThemeManager.shared.secondaryColor()
+        self.textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
         setupToolbarButtons()
         self.textBox.setNeedsDisplay()
         self.textBox.resignFirstResponder()

@@ -110,17 +110,16 @@ class PXPaymentMethodComponentRenderer: NSObject {
         if let action = component.props.action {
             let actionButton = PXSecondaryButton()
             actionButton.translatesAutoresizingMaskIntoConstraints = false
-            actionButton.setTitle(action.label, for: .normal)
+            actionButton.buttonTitle = action.label
             actionButton.add(for: .touchUpInside, action.action)
             pmBodyView.actionButton = actionButton
             pmBodyView.addSubview(actionButton)
-            actionButton.backgroundColor = .clear
 
             pmBodyView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.S_MARGIN)?.isActive = true
 
             PXLayout.pinLeft(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinRight(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
+            //PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
         }
 
         pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true

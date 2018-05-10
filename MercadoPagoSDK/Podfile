@@ -6,9 +6,11 @@ target 'MercadoPagoSDK' do
   use_frameworks!
 
   # Pods for MercadoPagoSDK
-    pod 'MercadoPagoPXTracking', '2.1.2'
-    pod 'MercadoPagoServices', '1.0.8'
-
+  pod 'MercadoPagoPXTracking', '2.1.2'
+  pod 'MercadoPagoServices', '1.0.8'
+  
+  # MELI UI
+  pod 'MLUI', '4.0.0'
 
   target 'MercadoPagoSDKTests' do
     inherit! :search_paths

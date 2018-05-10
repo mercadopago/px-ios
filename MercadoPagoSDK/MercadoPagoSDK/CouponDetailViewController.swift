@@ -8,27 +8,27 @@
 
 import UIKit
 
-@objcMembers
-open class CouponDetailViewController: MercadoPagoUIViewController {
+final class CouponDetailViewController: MercadoPagoUIViewController {
 
-    @IBOutlet weak var exitButton: UIButton!
-
-    let cuponViewWidth: CGFloat = 256.0
-    let cuponViewHeight: CGFloat = 200.0
     override open var screenName: String { return "DISCOUNT_SUMMARY" }
-    var couponView: DiscountDetailView!
-    var viewModel: CouponDetailViewModel!
 
-    init(coupon: DiscountCoupon, callbackCancel: (() -> Void)? = nil) {
-        super.init(nibName: "CouponDetailViewController", bundle: MercadoPago.getBundle())
-        self.callbackCancel = callbackCancel
-        self.viewModel = CouponDetailViewModel(coupon: coupon)
-    }
+    private var dCoupon: DiscountCoupon?
 
-    init(viewModel: CouponDetailViewModel, callbackCancel: (() -> Void)? = nil) {
+    @IBOutlet weak var productTitle: UILabel!
+    @IBOutlet weak var productAmount: UILabel!
+    @IBOutlet weak var discountTitle: UILabel!
+    @IBOutlet weak var discountAmount: UILabel!
+    @IBOutlet weak var totalTitle: UILabel!
+    @IBOutlet weak var totalAmount: UILabel!
+
+    private let fontSize: CGFloat = 18.0
+    private let baselineOffSet: Int = 6
+    private let fontColor = ThemeManager.shared.boldLabelTintColor()
+    private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+
+    init(coupon: DiscountCoupon) {
         super.init(nibName: "CouponDetailViewController", bundle: MercadoPago.getBundle())
-        self.callbackCancel = callbackCancel
-        self.viewModel = viewModel
+        dCoupon = coupon
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -37,37 +37,33 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = ThemeManager.shared.getTheme().modalComponent().backgroundColor
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenHeight = screenSize.height
-        let screenWidth = screenSize.width
-        let xPos = (screenWidth - cuponViewWidth)/2
-        let yPos = (screenHeight - cuponViewHeight)/2
-        self.couponView = DiscountDetailView(frame: CGRect(x: xPos, y: yPos, width: cuponViewWidth, height: cuponViewHeight), coupon: self.viewModel.coupon, amount: self.viewModel.coupon.amountWithoutDiscount)
-        self.couponView.layer.cornerRadius = 4
-        self.couponView.layer.masksToBounds = true
-        self.view.addSubview(self.couponView)
-        let exitImage = MercadoPago.getImage("white_close")
-        let templateExitImage = exitImage?.withRenderingMode(.alwaysTemplate)
-        self.exitButton.setImage(templateExitImage, for: .normal)
-        self.exitButton.tintColor = ThemeManager.shared.getTheme().navigationBar().tintColor
+        populateDiscountData()
     }
-
-    @IBAction func exit() {
-        guard let callbackCancel = self.callbackCancel else {
-            self.dismiss(animated: false, completion: nil)
-            return
-        }
-        self.dismiss(animated: false) {
-            callbackCancel()
-        }
-    }
-
 }
 
-class CouponDetailViewModel: NSObject {
-    var coupon: DiscountCoupon!
-    init(coupon: DiscountCoupon) {
-        self.coupon = coupon
+// MARK: Coupon data
+extension CouponDetailViewController {
+
+    private func populateDiscountData() {
+
+        guard let discountCoupon = dCoupon else {
+            return
+        }
+
+        totalTitle.text = "Total".localized
+        productTitle.text = "Producto".localized
+        productTitle.textColor = fontColor
+        discountTitle.textColor = discountFontColor
+        totalTitle.textColor = fontColor
+
+        if let concept = discountCoupon.concept {
+            discountTitle.text = concept
+        }
+
+        let amount: Double = discountCoupon.amountWithoutDiscount
+        let currency = MercadoPagoContext.getCurrency()
+        productAmount.attributedText = Utils.getAttributedAmount(amount, currency: currency, color: fontColor, fontSize: fontSize, baselineOffset: baselineOffSet)
+        discountAmount.attributedText = Utils.getAttributedAmount(Double(discountCoupon.coupon_amount)!, currency: currency, color: discountFontColor, fontSize: fontSize, baselineOffset: baselineOffSet, negativeAmount: true)
+        totalAmount.attributedText = Utils.getAttributedAmount( amount - Double(discountCoupon.coupon_amount)!, currency: currency, color: fontColor, fontSize: fontSize, baselineOffset: baselineOffSet)
     }
 }

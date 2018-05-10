@@ -38,13 +38,13 @@ import UIKit
     private let secondaryAction: PXComponentAction? // Boton secundario (link)
     private let helpMessage: String? // Texto
     private let showPaymentMethod: Bool // Si quiere que muestre la celda de PM
-    private let statementDescription : String?
+    private let statementDescription: String?
     private let imageUrl: String?
     private let topCustomView: UIView?
     private let bottomCustomView: UIView?
     private var receiptId: String?
-    
-    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction?, helpMessage: String? = nil , showPaymentMethod : Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil) {
+
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil) {
         self.receiptId = receiptId
         self.status = status
         self.title = title
@@ -60,12 +60,12 @@ import UIKit
         self.bottomCustomView = bottomCustomView
         super.init()
     }
-   
+
 }
 
-//MARK: Getters
+// MARK: Getters
 extension PXBusinessResult {
-    
+
     public func getStatus() -> PXBusinessResultStatus {
         return self.status
     }
@@ -96,13 +96,13 @@ extension PXBusinessResult {
     public func getIcon() -> UIImage? {
         return self.icon
     }
-    public func getMainAction() ->  PXComponentAction? {
+    public func getMainAction() -> PXComponentAction? {
         return self.mainAction
     }
-    public func getSecondaryAction() ->  PXComponentAction? {
+    public func getSecondaryAction() -> PXComponentAction? {
         return self.secondaryAction
     }
-    public func mustShowPaymentMethod() ->  Bool {
+    public func mustShowPaymentMethod() -> Bool {
         return self.showPaymentMethod
     }
 }

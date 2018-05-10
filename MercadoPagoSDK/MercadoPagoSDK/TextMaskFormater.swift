@@ -110,18 +110,18 @@ open class TextMaskFormater: NSObject {
 
     fileprivate func completeWithEmptySpaces(_ text: String) -> String {
         let charset: Set<Character> = [characterSpace]
-        var xs: String = ""
+        var str: String = ""
         for char: Character in mask {
             if charset.contains(char) {
-                xs.append(char)
+                str.append(char)
             }
         }
-        var max = xs.count - text.count
-        let x: Character = characterSpace
+        var max = str.count - text.count
+        let spaceChar: Character = characterSpace
         if max < 0 {
            max = 0
         }
-        return (String(repeating: String(x), count: max) + text)
+        return (String(repeating: String(spaceChar), count: max) + text)
 
     }
 

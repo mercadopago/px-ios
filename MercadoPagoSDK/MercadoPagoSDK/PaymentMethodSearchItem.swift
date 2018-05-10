@@ -88,8 +88,8 @@ import UIKit
     open class func fromJSON(_ json: NSDictionary) -> PaymentMethodSearchItem {
               let pmSearchItem = PaymentMethodSearchItem()
 
-               if let _id = JSONHandler.attemptParseToString(json["id"]) {
-                        pmSearchItem.idPaymentMethodSearchItem = _id
+               if let idPaymentMethodSearchItem = JSONHandler.attemptParseToString(json["id"]) {
+                        pmSearchItem.idPaymentMethodSearchItem = idPaymentMethodSearchItem
                     }
                 if let type = JSONHandler.attemptParseToString(json["type"]) {
                         pmSearchItem.type = PaymentMethodSearchItemType(rawValue: type)
@@ -109,8 +109,8 @@ import UIKit
 
                 var children = [PaymentMethodSearchItem]()
                 if let childrenJson = json["children"] as? NSArray {
-                        for i in 0..<childrenJson.count {
-                                if let childJson = childrenJson[i] as? NSDictionary {
+                        for index in 0..<childrenJson.count {
+                                if let childJson = childrenJson[index] as? NSDictionary {
                                         children.append(PaymentMethodSearchItem.fromJSON(childJson))
                                     }
                             }

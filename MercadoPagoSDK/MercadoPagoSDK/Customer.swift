@@ -53,8 +53,8 @@ import UIKit
         customer.registrationDate = Utils.getDateFromString(json["date_registered"] as? String)
         var cards: [Card] = [Card]()
         if let cardsArray = json["cards"] as? NSArray {
-            for i in 0..<cardsArray.count {
-                if let cardDic = cardsArray[i] as? NSDictionary {
+            for index in 0..<cardsArray.count {
+                if let cardDic = cardsArray[index] as? NSDictionary {
                     cards.append(Card.fromJSON(cardDic))
                 }
             }

@@ -13,7 +13,7 @@ protocol InputComponentListener: NSObjectProtocol {
 
 class SimpleInputComponent: UIView, PXComponent {
     let INACTIVE_BORDER_COLOR = UIColor.UIColorFromRGB(0xCCCCCC)
-    let ACTIVE_BORDER_COLOR = ThemeManager.shared.getTheme().secondaryButton().tintColor
+    let ACTIVE_BORDER_COLOR = ThemeManager.shared.secondaryColor()
     let HEIGHT: CGFloat = 83.0
     let INPUT_HEIGHT: CGFloat = 45.0
     let HORIZONTAL_MARGIN: CGFloat = 31.0

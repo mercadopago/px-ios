@@ -41,8 +41,8 @@ import Foundation
 
                 var paymentMethods: [PaymentMethod] = [PaymentMethod]()
                 if let pmArray = json["payment_methods"] as? NSArray {
-                        for i in 0..<pmArray.count {
-                                if let pmDic = pmArray[i] as? NSDictionary {
+                        for index in 0..<pmArray.count {
+                                if let pmDic = pmArray[index] as? NSDictionary {
                                         paymentMethods.append(PaymentMethod.fromJSON(pmDic))
                                    }
                             }

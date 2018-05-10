@@ -157,10 +157,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         }
         if self.viewModel.isDiscountCellFor(indexPath: indexPath) {
             if let coupon = self.viewModel.discount {
-                let step = CouponDetailViewController(coupon: coupon)
-                DispatchQueue.main.async {
-                    self.present(step, animated: false, completion: {})
-                }
+                let couponDetailVC = CouponDetailViewController(coupon: coupon)
+                PXComponentFactory.Modal.show(viewController: couponDetailVC, title: coupon.getDescription())
             } else {
                 let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { [weak self](coupon) in
                     let couponDataDict: [String: DiscountCoupon] = ["coupon": coupon]

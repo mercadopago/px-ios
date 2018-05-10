@@ -38,8 +38,8 @@ public enum PaymentTypeId: String {
 
     public static func fromJSON(_ json: NSDictionary) -> PaymentType {
                 let paymentType = PaymentType()
-                if let _id = JSONHandler.attemptParseToString(json["id"]) {
-                        paymentType.paymentTypeId = PaymentTypeId(rawValue: _id)
+                if let paymentTypeId = JSONHandler.attemptParseToString(json["id"]) {
+                        paymentType.paymentTypeId = PaymentTypeId(rawValue: paymentTypeId)
                     }
                 return paymentType
             }

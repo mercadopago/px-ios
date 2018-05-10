@@ -57,8 +57,8 @@ import Foundation
                         payerCost.recommendedMessage = recommendedMessage
                     }
                 if let labelsArray = json["labels"] as? NSArray {
-                        for i in 0..<labelsArray.count {
-                                if let label = labelsArray[i] as? String {
+                        for index in 0..<labelsArray.count {
+                                if let label = labelsArray[index] as? String {
                                         payerCost.labels.append(label)
                                     }
                             }

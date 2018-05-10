@@ -40,7 +40,7 @@ final class PXTermsAndConditionView: PXComponentView {
 
         addSubview(termsAndConditionsText)
 
-        let URLAttribute: [String: Any] = [NSAttributedStringKey.font.rawValue: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor.rawValue: ThemeManager.shared.getTheme().secondaryButton().tintColor]
+        let URLAttribute: [String: Any] = [NSAttributedStringKey.font.rawValue: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor.rawValue: ThemeManager.shared.secondaryColor()]
 
         termsAndConditionsText.linkTextAttributes = URLAttribute
 
@@ -69,7 +69,8 @@ extension PXTermsAndConditionView {
     fileprivate func getTyCText() -> NSMutableAttributedString {
 
         let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.getTheme().labelTintColor()]
+
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: SCREEN_TITLE.localized)

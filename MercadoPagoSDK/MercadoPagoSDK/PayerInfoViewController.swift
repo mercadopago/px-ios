@@ -120,7 +120,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
 
     func showToolbarError(message: String) {
         errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
-        errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
+        errorLabel!.textColor = ThemeManager.shared.rejectedColor()
         errorLabel!.text = message
         errorLabel!.textAlignment = .center
         errorLabel!.font = errorLabel!.font.withSize(12)

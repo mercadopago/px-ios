@@ -253,7 +253,6 @@ extension MercadoPagoCheckout {
             }
             strongSelf.navigationController.present(errorStep, animated: true, completion: {})
         }
-        
     }
 
     func showFinancialInstitutionsScreen() {

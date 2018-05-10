@@ -9,8 +9,8 @@
 import Foundation
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (l__?, r__?):
+    return l__ < r__
   case (nil, _?):
     return true
   default:
@@ -20,8 +20,8 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
+  case let (l__?, r__?):
+    return l__ > r__
   default:
     return rhs < lhs
   }
@@ -69,8 +69,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open class func fromJSON(_ json: NSDictionary) -> Payment {
                 let payment: Payment = Payment()
 
-                if let _id = JSONHandler.attemptParseToString(json["id"]) {
-                        payment.paymentId = _id
+                if let paymentId = JSONHandler.attemptParseToString(json["id"]) {
+                        payment.paymentId = paymentId
                     }
                 if let binaryMode = JSONHandler.attemptParseToBool(json["binary_mode"]) {
                         payment.binaryMode = binaryMode
@@ -93,8 +93,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let dateApproved = JSONHandler.attemptParseToString(json["date_approved"]) {
                         payment.dateApproved = Utils.getDateFromString(dateApproved)
                     }
-                if let _description = JSONHandler.attemptParseToString(json["description"]) {
-                        payment.paymentDescription = _description
+                if let paymentDescription = JSONHandler.attemptParseToString(json["description"]) {
+                        payment.paymentDescription = paymentDescription
                     }
                 if let externalReference = JSONHandler.attemptParseToString(json["external_reference"]) {
                         payment.externalReference = externalReference
@@ -110,8 +110,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                     }
                 var feesDetails: [FeesDetail] = [FeesDetail]()
                 if let feesDetailsArray = json["fee_details"] as? NSArray {
-                        for i in 0..<feesDetailsArray.count {
-                                if let feedDic = feesDetailsArray[i] as? NSDictionary {
+                        for index in 0..<feesDetailsArray.count {
+                                if let feedDic = feesDetailsArray[index] as? NSDictionary {
                                         feesDetails.append(FeesDetail.fromJSON(feedDic))
                                     }
                             }
@@ -135,8 +135,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                     }
                 var refunds: [Refund] = [Refund]()
                 if let refArray = json["refunds"] as? NSArray {
-                        for i in 0..<refArray.count {
-                                if let refDic = refArray[i] as? NSDictionary {
+                        for index in 0..<refArray.count {
+                                if let refDic = refArray[index] as? NSDictionary {
                                         refunds.append(Refund.fromJSON(refDic))
                                     }
                             }

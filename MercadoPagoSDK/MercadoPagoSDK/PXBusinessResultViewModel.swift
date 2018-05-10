@@ -12,11 +12,10 @@ import MercadoPagoPXTracking
 class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
     var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT_BUSINESS }
-    
+
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: [String:String]())
+        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: [String: String]())
     }
-    
 
     let businessResult: PXBusinessResult
     let paymentData: PaymentData
@@ -41,15 +40,14 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
         switch self.businessResult.getStatus() {
         case .APPROVED:
-            return ThemeManager.shared.getTheme().successColor()
+            return ThemeManager.shared.successColor()
         case .REJECTED:
-            return ThemeManager.shared.getTheme().rejectedColor()
+            return ThemeManager.shared.rejectedColor()
         case .PENDING:
-            return ThemeManager.shared.getTheme().warningColor()
+            return ThemeManager.shared.warningColor()
         case .IN_PROGRESS:
-            return ThemeManager.shared.getTheme().warningColor()
+            return ThemeManager.shared.warningColor()
         }
-
     }
 
     func setCallback(callback: @escaping (PaymentResult.CongratsState) -> Void) {
@@ -105,15 +103,16 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildBodyComponent() -> PXComponentizable? {
-        var pmComponent : PXComponentizable? = nil
-        var helpComponent : PXComponentizable? = nil
+        var pmComponent: PXComponentizable? = nil
+        var helpComponent: PXComponentizable? = nil
         if self.businessResult.mustShowPaymentMethod() {
             pmComponent =  getPaymentMethodComponent()
         }
+
         if (self.businessResult.getHelpMessage() != nil) {
             helpComponent = getHelpMessageComponent()
         }
-        
+
         return PXBusinessResultBodyComponent(paymentMethodComponent: pmComponent, helpMessageComponent: helpComponent)
     }
 
@@ -121,15 +120,15 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         guard let labelInstruction = self.businessResult.getHelpMessage() else {
             return nil
         }
-        
+
         let title = PXResourceProvider.getTitleForErrorBody()
         let props = PXErrorProps(title: title.toAttributedString(), message: labelInstruction.toAttributedString())
-        
+
         return PXErrorComponent(props: props)
     }
     public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.paymentData.paymentMethod!
-        
+
         let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = MercadoPagoContext.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.amount, forCurrency: currency)
@@ -142,11 +141,11 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
         var pmDescription: String = ""
         let paymentMethodName = pm.name ?? ""
-        
+
         let issuer = self.paymentData.getIssuer()
         let paymentMethodIssuerName = issuer?.name ?? ""
         var descriptionDetail: NSAttributedString? = nil
-        
+
         if pm.isCard {
             if let lastFourDigits = (self.paymentData.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
@@ -157,17 +156,16 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         } else {
             pmDescription = paymentMethodName
         }
-        
+
         var disclaimerText: String? = nil
         if let statementDescription = self.businessResult.getStatementDescription() {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
-        
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail?.toAttributedString(), descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor())
-        
+      
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail?.toAttributedString(), descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
         return PXPaymentMethodComponent(props: bodyProps)
     }
-    
+
     fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
@@ -177,7 +175,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
         return paymentMethodImage
     }
-    
+
     func buildTopCustomComponent() -> PXCustomComponentizable? {
         guard let view = self.businessResult.getTopCustomView() else {
             return nil
@@ -207,14 +205,15 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
 }
 
-class PXBusinessResultBodyComponent : PXComponentizable {
-    var paymentMethodComponent : PXComponentizable?
-    var helpMessageComponent : PXComponentizable?
-    
-    init(paymentMethodComponent : PXComponentizable?, helpMessageComponent : PXComponentizable?) {
+class PXBusinessResultBodyComponent: PXComponentizable {
+    var paymentMethodComponent: PXComponentizable?
+    var helpMessageComponent: PXComponentizable?
+
+    init(paymentMethodComponent: PXComponentizable?, helpMessageComponent: PXComponentizable?) {
         self.paymentMethodComponent = paymentMethodComponent
         self.helpMessageComponent = helpMessageComponent
     }
+
     func render() -> UIView {
         let bodyView = UIView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false

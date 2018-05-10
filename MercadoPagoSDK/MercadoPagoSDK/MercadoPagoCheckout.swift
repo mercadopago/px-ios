@@ -16,14 +16,11 @@ open class MercadoPagoCheckout: NSObject {
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
-    var countLoadings: Int = 0
 
+    private var countLoadings: Int = 0
     private var currentLoadingView: UIViewController?
 
-    internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
-
-    var entro = false
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
 
@@ -251,7 +248,7 @@ open class MercadoPagoCheckout: NSObject {
         goToRootViewController()
     }
     @objc
-    func closeCheckout(){
+    func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
     }
@@ -267,7 +264,7 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
 
-    func presentLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
+    func presentLoading(completion: (() -> Swift.Void)? = nil) {
         self.countLoadings += 1
         if self.countLoadings == 1 {
             let when = DispatchTime.now() //+ 0.3
@@ -287,11 +284,11 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
     }
 
-    func dismissLoading(animated: Bool = true, finishCallback:(()-> Void)? = nil) {
+    func dismissLoading(finishCallback: (()-> Void)? = nil) {
         self.countLoadings = 0
         if self.currentLoadingView != nil {
             self.currentLoadingView?.modalTransitionStyle = .crossDissolve
-            self.currentLoadingView!.dismiss(animated: animated, completion: {
+            self.currentLoadingView!.dismiss(animated: true, completion: {
                 self.currentLoadingView = nil
                 if let callback = finishCallback {
                     callback()
@@ -301,12 +298,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     internal func createCurrentLoading() {
-        let vcLoading = MPXLoadingViewController()
-        vcLoading.view.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
-        vcLoading.view.addSubview(loadingInstance)
-        loadingInstance.bringSubview(toFront: vcLoading.view)
-        self.currentLoadingView = vcLoading
+        self.currentLoadingView = PXLoadingViewController()
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,

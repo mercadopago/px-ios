@@ -22,7 +22,7 @@ class CardNotAvailableErrorView: UIView {
 
     init(frame: CGRect, paymentMethods: [PaymentMethod], showAvaibleCardsCallback: (() -> Void)?) {
         super.init(frame: frame)
-        self.backgroundColor = ThemeManager.shared.getTheme().rejectedColor()
+        self.backgroundColor = ThemeManager.shared.rejectedColor()
         self.paymentMethods = paymentMethods
         self.showAvaibleCardsCallback = showAvaibleCardsCallback
         errorMessage = "No puedes pagar con esta tarjeta".localized
@@ -61,10 +61,10 @@ class CardNotAvailableErrorView: UIView {
 
     func getMoreInfoFrame() -> CGRect {
         let errorMessageWidth = (self.frame.width - (3 * margin)) * MESSAGE_WIDTH_PERCENT
-        let x = errorMessageWidth + 2 * margin
+        let xPos = errorMessageWidth + 2 * margin
         let moreInfoWidth = (self.frame.width - (3 * margin)) * MORE_INFO_WIDTH_PERCENT
         let height = self.frame.height - 2 * margin
-        return CGRect(x: x, y: margin, width: moreInfoWidth, height: height)
+        return CGRect(x: xPos, y: margin, width: moreInfoWidth, height: height)
     }
 
     func getErrorMessageFrame() -> CGRect {
