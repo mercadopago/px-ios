@@ -32,9 +32,7 @@ class PXBankDealComponentRenderer: NSObject {
         PXLayout.pinLeft(view: imageView).isActive = true
         PXLayout.pinRight(view: imageView).isActive = true
 
-        if let imageUrl = component.props.imageUrl {
-
-
+//        if let imageUrl = component.props.imageUrl {
 //            let contentView = UIView()
 //            contentView.translatesAutoresizingMaskIntoConstraints = false
 //            bankDealComponentView.imageView = contentView
@@ -46,8 +44,6 @@ class PXBankDealComponentRenderer: NSObject {
 //            PXLayout.pinRight(view: contentView).isActive = true
 //
 //            Utils().loadImageFromURLWithCache(withUrl: imageUrl, targetView: contentView, placeholderView: placeholderLabel, fallbackView: placeholderLabel)
-
-        }
 //        } else {
 //            bankDealComponentView.addSubview(placeholderLabel)
 //            PXLayout.pinTop(view: placeholderLabel, withMargin: PXLayout.XS_MARGIN).isActive = true

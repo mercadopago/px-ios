@@ -23,7 +23,6 @@ class PXUIImage: UIImage {
 
 class PXUIImageView: UIImageView {
 
-
     private var currentImage : UIImage?
     override var image: UIImage? {
         set {
