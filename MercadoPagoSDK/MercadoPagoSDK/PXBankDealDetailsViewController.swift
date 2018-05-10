@@ -39,10 +39,13 @@ extension PXBankDealDetailsViewController {
 
     fileprivate func setupUI() {
         self.title = "bank_deal_details_title".localized_beta
+        
         navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         loadMPStyles()
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
+        self.contentView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
+        self.scrollView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
         if contentView.getSubviews().isEmpty {
             renderViews()
         }
@@ -68,10 +71,6 @@ extension PXBankDealDetailsViewController {
 
 
         //Legals
-
-        self.contentView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
-        self.scrollView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
-
         if let legalsText = self.viewModel.getLegalsText() {
             let legalsTextView = buildLegalTextView(text: legalsText)
             self.contentView.addSubview(legalsTextView)

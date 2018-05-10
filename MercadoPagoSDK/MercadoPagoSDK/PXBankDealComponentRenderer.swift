@@ -33,18 +33,6 @@ class PXBankDealComponentRenderer: NSObject {
             PXLayout.pinRight(view: contentView).isActive = true
 
             Utils().loadImageFromURLWithCache(withUrl: imageUrl, targetView: contentView, placeholderView: placeholderLabel, fallbackView: placeholderLabel)
-
-//            let imageView = UIImageView()
-//            Utils().loadImageWithCache(withUrl: imageUrl, targetImage: imageView, placeHolderImage: nil, fallbackImage: placeholderLabel)
-//            imageView.translatesAutoresizingMaskIntoConstraints = false
-//            bankDealComponentView.imageView = imageView
-//            imageView.contentMode = .scaleAspectFit
-//            bankDealComponentView.addSubview(imageView)
-//            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
-//            PXLayout.centerHorizontally(view: imageView).isActive = true
-//            PXLayout.setHeight(owner: imageView, height: IMAGE_VIEW_HEIGHT).isActive = true
-//            PXLayout.pinLeft(view: imageView, withMargin: 0).isActive = true
-//            PXLayout.pinRight(view: imageView, withMargin: 0).isActive = true
         } else {
             bankDealComponentView.addSubview(placeholderLabel)
             PXLayout.pinTop(view: placeholderLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
