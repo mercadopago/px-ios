@@ -18,29 +18,44 @@ class PXBankDealComponentRenderer: NSObject {
         bankDealComponentView.backgroundColor = .white
 
         //Placeholder Label
-        let placeholderLabel = getPlaceholderLabel(with: component.props.placeholder)
+//        let placeholderLabel = getPlaceholderLabel(with: component.props.placeholder)
 
         //Image View
-        if let imageUrl = component.props.imageUrl {
-            let contentView = UIView()
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            bankDealComponentView.imageView = contentView
-            bankDealComponentView.addSubview(contentView)
-            PXLayout.pinTop(view: contentView, withMargin: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.centerHorizontally(view: contentView).isActive = true
-            PXLayout.setHeight(owner: contentView, height: IMAGE_VIEW_HEIGHT).isActive = true
-            PXLayout.pinLeft(view: contentView).isActive = true
-            PXLayout.pinRight(view: contentView).isActive = true
+        let image = PXUIImage(url: component.props.imageUrl, placeholder: component.props.placeholder, fallback: component.props.placeholder)
+        let imageView = PXUIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        bankDealComponentView.imageView = imageView
+        bankDealComponentView.addSubview(imageView)
+        PXLayout.pinTop(view: imageView, withMargin: PXLayout.XS_MARGIN).isActive = true
+        PXLayout.centerHorizontally(view: imageView).isActive = true
+        PXLayout.setHeight(owner: imageView, height: IMAGE_VIEW_HEIGHT).isActive = true
+        PXLayout.pinLeft(view: imageView).isActive = true
+        PXLayout.pinRight(view: imageView).isActive = true
 
-            Utils().loadImageFromURLWithCache(withUrl: imageUrl, targetView: contentView, placeholderView: placeholderLabel, fallbackView: placeholderLabel)
-        } else {
-            bankDealComponentView.addSubview(placeholderLabel)
-            PXLayout.pinTop(view: placeholderLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.centerHorizontally(view: placeholderLabel).isActive = true
-            PXLayout.setHeight(owner: placeholderLabel, height: IMAGE_VIEW_HEIGHT).isActive = true
-            PXLayout.pinLeft(view: placeholderLabel, withMargin: 0).isActive = true
-            PXLayout.pinRight(view: placeholderLabel, withMargin: 0).isActive = true
+        if let imageUrl = component.props.imageUrl {
+
+
+//            let contentView = UIView()
+//            contentView.translatesAutoresizingMaskIntoConstraints = false
+//            bankDealComponentView.imageView = contentView
+//            bankDealComponentView.addSubview(contentView)
+//            PXLayout.pinTop(view: contentView, withMargin: PXLayout.XS_MARGIN).isActive = true
+//            PXLayout.centerHorizontally(view: contentView).isActive = true
+//            PXLayout.setHeight(owner: contentView, height: IMAGE_VIEW_HEIGHT).isActive = true
+//            PXLayout.pinLeft(view: contentView).isActive = true
+//            PXLayout.pinRight(view: contentView).isActive = true
+//
+//            Utils().loadImageFromURLWithCache(withUrl: imageUrl, targetView: contentView, placeholderView: placeholderLabel, fallbackView: placeholderLabel)
+
         }
+//        } else {
+//            bankDealComponentView.addSubview(placeholderLabel)
+//            PXLayout.pinTop(view: placeholderLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
+//            PXLayout.centerHorizontally(view: placeholderLabel).isActive = true
+//            PXLayout.setHeight(owner: placeholderLabel, height: IMAGE_VIEW_HEIGHT).isActive = true
+//            PXLayout.pinLeft(view: placeholderLabel, withMargin: 0).isActive = true
+//            PXLayout.pinRight(view: placeholderLabel, withMargin: 0).isActive = true
+//        }
 
         //Title Label
         let title = component.props.title

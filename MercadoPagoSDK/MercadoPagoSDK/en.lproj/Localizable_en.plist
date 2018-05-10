@@ -198,7 +198,7 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Until %@</string>
+		<string>Up to %@</string>
 	</dict>
 	<key>bank_deals_screen_title</key>
 	<dict>

@@ -452,7 +452,7 @@ class Utils {
 
     static let imageCache = NSCache<NSString, AnyObject>()
 
-    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?) {
+    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, didFinish:((UIImage)-> Void)? = nil) {
         guard let urlString = urlStr else {return}
 
         //Set placeholder view
@@ -466,6 +466,7 @@ class Utils {
             let imageView = self.createImageView(with: cachedImage)
             targetView.removeAllSubviews()
             targetView.addSubviewAtFullSize(with: imageView)
+            didFinish?(cachedImage)
             return
         }
 
@@ -492,6 +493,7 @@ class Utils {
                         let imageView = self.createImageView(with: image)
                         targetView.removeAllSubviews()
                         targetView.addSubviewAtFullSize(with: imageView)
+                        didFinish?(image)
                     } else if let fallbackView = fallbackView {
                         targetView.removeAllSubviews()
                         targetView.addSubviewAtFullSize(with: fallbackView)
