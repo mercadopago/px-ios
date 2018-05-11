@@ -80,7 +80,7 @@ extension ThemeManager {
         return currentStylesheet.midGreyColor
     }
 
-    func lightLabelTintColor() -> UIColor {
+    func lightTintColor() -> UIColor {
         return currentStylesheet.lightGreyColor
     }
 
@@ -195,7 +195,7 @@ extension ThemeManager {
 
     fileprivate func customizeToolBar() {
         PXToolbar.appearance().tintColor = getAccentColor()
-        PXToolbar.appearance().backgroundColor = lightLabelTintColor()
+        PXToolbar.appearance().backgroundColor = lightTintColor()
         PXToolbar.appearance().alpha = 1
     }
 }

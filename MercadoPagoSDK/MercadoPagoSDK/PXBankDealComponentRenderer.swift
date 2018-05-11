@@ -39,7 +39,7 @@ class PXBankDealComponentRenderer: NSObject {
         titleLabel.text = title
         titleLabel.numberOfLines = 2
         titleLabel.textAlignment = .center
-        titleLabel.textColor = UIColor.UIColorFromRGB(0x232323)
+        titleLabel.textColor = ThemeManager.shared.boldLabelTintColor()
         bankDealComponentView.addSubviewToBottom(titleLabel, withMargin: PXLayout.XS_MARGIN)
         PXLayout.matchWidth(ofView: titleLabel).isActive = true
         PXLayout.centerHorizontally(view: titleLabel).isActive = true
@@ -51,7 +51,7 @@ class PXBankDealComponentRenderer: NSObject {
             bankDealComponentView.subtitleLabel = subtitleLabel
             subtitleLabel.font = Utils.getFont(size: PXLayout.XXS_FONT)
             subtitleLabel.text = subtitle
-            subtitleLabel.textColor = UIColor.UIColorFromRGB(0x999999)
+            subtitleLabel.textColor = ThemeManager.shared.labelTintColor()
             bankDealComponentView.addSubview(subtitleLabel)
             PXLayout.put(view: subtitleLabel, onBottomOf: titleLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
             PXLayout.centerHorizontally(view: subtitleLabel).isActive = true
@@ -59,17 +59,5 @@ class PXBankDealComponentRenderer: NSObject {
 
         PXLayout.pinLastSubviewToBottom(view: bankDealComponentView, withMargin: PXLayout.XS_MARGIN)?.isActive = true
         return bankDealComponentView
-    }
-
-    func getPlaceholderLabel(with text: String?) -> UILabel {
-        let placeholderLabel = UILabel()
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        placeholderLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
-        placeholderLabel.textColor = UIColor.UIColorFromRGB(0x999999)
-        placeholderLabel.numberOfLines = 2
-        placeholderLabel.lineBreakMode = .byTruncatingTail
-        placeholderLabel.textAlignment = .center
-        placeholderLabel.text = text
-        return placeholderLabel
     }
 }

@@ -12,7 +12,7 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
 
     fileprivate let CELL_CONTENT_HEIGHT: CGFloat = 128
     fileprivate let CELL_HEIGHT: CGFloat = 190
-    fileprivate let HIGHLIGHTED_BACKGROUND_COLOR = UIColor.UIColorFromRGB(0xf7f7f7)
+    fileprivate let HIGHLIGHTED_BACKGROUND_COLOR = ThemeManager.shared.lightTintColor()
 
     fileprivate var viewModel: PXBankDealDetailsViewModel!
 
@@ -94,7 +94,7 @@ extension PXBankDealDetailsViewController {
         legalsTextView.text = text
         legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
         legalsTextView.textContainerInset = UIEdgeInsetsMake(16, 16, 16, 16)
-        legalsTextView.textColor = UIColor.UIColorFromRGB(0x999999)
+        legalsTextView.textColor = ThemeManager.shared.labelTintColor()
         legalsTextView.backgroundColor = .clear
         legalsTextView.isScrollEnabled = false
         return legalsTextView

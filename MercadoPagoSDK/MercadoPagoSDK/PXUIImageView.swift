@@ -35,7 +35,7 @@ class PXUIImageView: UIImageView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Utils.getFont(size: PXLayout.XS_FONT)
-        label.textColor = UIColor.UIColorFromRGB(0x999999)
+        label.textColor = ThemeManager.shared.labelTintColor()
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
         label.textAlignment = .center
