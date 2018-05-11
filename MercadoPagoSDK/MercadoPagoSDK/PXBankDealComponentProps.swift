@@ -8,7 +8,6 @@
 
 import Foundation
 
-@objcMembers
 class PXBankDealComponentProps: NSObject {
     let imageUrl: String?
     let placeholder: String?

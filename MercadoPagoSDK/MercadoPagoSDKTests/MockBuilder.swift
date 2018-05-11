@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 open class MockBuilder: NSObject {
 
@@ -315,6 +316,64 @@ open class MockBuilder: NSObject {
         cardNumber.length = 4
         cardNumber.validation = "luhn"
         return cardNumber
+    }
+
+    class func buildPXBankDeal() -> PXBankDeal {
+        let id_ = "bankDealID"
+        let dateExpired = Date()
+        let dateStarted = Date()
+        let installments = [1,2]
+        let issuer = MockBuilder.buildPXIssuer()
+        let legals = "Legals Text"
+        let picture = MockBuilder.buildPXPicture()
+        let maxInstallments = 6
+        let paymentMethods = [MockBuilder.buildPXPaymentMethod("idPaymentMethod")]
+        let recommendedMessage = "Recommended Message"
+        let totalFinancialCost = 86.0
+
+        return PXBankDeal(id: id_, dateExpired: dateExpired, dateStarted: dateStarted, installments: installments, issuer: issuer, legals: legals, picture: picture, maxInstallments: maxInstallments, paymentMethods: paymentMethods, recommendedMessage: recommendedMessage, totalFinancialCost: totalFinancialCost)
+    }
+
+    class func buildPXIssuer() -> PXIssuer {
+        return PXIssuer(id: "issuer ID", name: "Issuer Name")
+    }
+
+    class func buildPXPicture() -> PXPicture {
+        return PXPicture(id: "pictureID", size: nil, url: "http://secure.mlstatic.com/openplatform/resources/images/issuers/ico_bank_1078.png", secureUrl: "https://secure.mlstatic.com/openplatform/resources/images/issuers/ico_bank_1078.png")
+    }
+
+    class func buildPXBin() -> PXBin {
+        return PXBin(exclusionPattern: nil, installmentPattern: "^4", pattern: "^4")
+    }
+
+    class func buildPXCardNumber() -> PXCardNumber {
+        return PXCardNumber(length: 16, validation: "standard")
+    }
+
+    class func buildPXSecurityCode(cvvOnTheBack: Bool = true) -> PXSecurityCode {
+        var cardLocation = "back"
+        if !cvvOnTheBack {
+            cardLocation = "front"
+        }
+        return PXSecurityCode(cardLocation: cardLocation, mode: "mandatory", length: 3)
+    }
+
+    class func buildPXSetting() -> PXSetting {
+        let bin = MockBuilder.buildPXBin()
+        let cardNumber = MockBuilder.buildPXCardNumber()
+        let securityCode = MockBuilder.buildPXSecurityCode()
+        return PXSetting(bin: bin, cardNumber: cardNumber, securityCode: securityCode)
+    }
+
+    class func buildPXPaymentMethod(_ id: String, name: String? = "", paymentTypeId: String? = "credit_card", multipleSettings: Bool = false) -> PXPaymentMethod {
+        let additionalInfoNeeded = ["info"]
+        var settings = [MockBuilder.buildPXSetting()]
+
+        if multipleSettings {
+            settings = [MockBuilder.buildPXSetting(), MockBuilder.buildPXSetting()]
+        }
+
+        return PXPaymentMethod(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: nil, secureThumbnail: nil, thumbnail: nil, deferredCapture: nil, settings: settings, minAllowedAmount: 0.0, maxAllowedAmount: 2000000, accreditationTime: 1200, merchantAccountId: nil, financialInstitutions: nil)
     }
 
     class func buildBankDeal() -> BankDeal {

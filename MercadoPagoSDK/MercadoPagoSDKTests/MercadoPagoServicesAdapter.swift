@@ -63,8 +63,8 @@ open class MercadoPagoServicesAdapter: NSObject {
         callback(MockBuilder.buildToken())
     }
 
-    open func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        callback([MockBuilder.buildBankDeal()])
+    open func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        callback([MockBuilder.buildPXBankDeal()])
     }
 
     open func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {

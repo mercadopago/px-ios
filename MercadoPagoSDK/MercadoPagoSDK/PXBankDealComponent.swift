@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 class PXBankDealComponent: PXComponentizable {
 
     public func render() -> UIView {
