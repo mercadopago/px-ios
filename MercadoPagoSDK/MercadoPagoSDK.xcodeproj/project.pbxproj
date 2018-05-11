@@ -601,6 +601,8 @@
 		FC2A09551FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */; };
 		FC2A09571FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
 		FC2A09581FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
+		FC2E9B9820A5EB2300D43B1E /* PXUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B9720A5EB2300D43B1E /* PXUIImageView.swift */; };
+		FC2E9B9920A5EB2600D43B1E /* PXUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B9720A5EB2300D43B1E /* PXUIImageView.swift */; };
 		FC3918B6208E1A2900B75366 /* PXBankDealsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3918B5208E1A2900B75366 /* PXBankDealsViewModel.swift */; };
 		FC3FC8421FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8431FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
@@ -1090,6 +1092,7 @@
 		FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconComponent.swift; sourceTree = "<group>"; };
 		FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconRenderer.swift; sourceTree = "<group>"; };
 		FC2A988169A4E397C97004CC /* Pods-MercadoPagoSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FC2E9B9720A5EB2300D43B1E /* PXUIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUIImageView.swift; sourceTree = "<group>"; };
 		FC3918B5208E1A2900B75366 /* PXBankDealsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealsViewModel.swift; sourceTree = "<group>"; };
 		FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsRenderer.swift; sourceTree = "<group>"; };
@@ -1469,6 +1472,8 @@
 				150E4BFD1FB37FD300773565 /* PXComponentContainerViewController.swift */,
 				23675B5420A073E7008C4E1D /* PXComponentFactory.swift */,
 				156526C6209F74A800852D39 /* PXCustomComponent.swift */,
+				FC54C6FF20A493F600C73A36 /* PXUIImage.swift */,
+				FC2E9B9720A5EB2300D43B1E /* PXUIImageView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -2291,7 +2296,6 @@
 			children = (
 				FCAFDEAC20A0CEF100D00B60 /* Screens */,
 				FC65A1E7208E48DE000A0DA0 /* Bank Deal Component */,
-				FC54C6FF20A493F600C73A36 /* PXUIImage.swift */,
 			);
 			name = "Bank Deals";
 			sourceTree = "<group>";
@@ -2879,6 +2883,7 @@
 				157704B51DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */,
 				232FA92C1F06D30F002F7E39 /* Cause.swift in Sources */,
 				23BDC9212073DF3500678B0F /* Double+Format.swift in Sources */,
+				FC2E9B9820A5EB2300D43B1E /* PXUIImageView.swift in Sources */,
 				FC7BD8AA1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */,
 				FC3FC8761FBE122F00CF29E1 /* PXInstructionsTertiaryInfoRenderer.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
@@ -3291,6 +3296,7 @@
 				76D00A081CA3397B00F52BC6 /* MercadoPagoServicesAdapter.swift in Sources */,
 				0F98838A1AD2AB6000F750F0 /* PaymentMethod.swift in Sources */,
 				FC3FC8821FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift in Sources */,
+				FC2E9B9920A5EB2600D43B1E /* PXUIImageView.swift in Sources */,
 				0F9883721AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
 				76F41E281D3D4A9700B25E5B /* MercadoPagoContext.swift in Sources */,
 				76445ADC1CC93998008EE68E /* ViewUtils.swift in Sources */,
