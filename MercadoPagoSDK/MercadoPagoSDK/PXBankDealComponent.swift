@@ -9,7 +9,7 @@
 import UIKit
 
 @objcMembers
-open class PXBankDealComponent: PXComponentizable {
+class PXBankDealComponent: PXComponentizable {
 
     public func render() -> UIView {
         return PXBankDealComponentRenderer().render(self)
@@ -21,19 +21,3 @@ open class PXBankDealComponent: PXComponentizable {
         self.props = props
     }
 }
-
-@objcMembers
-open class PXBankDealComponentProps: NSObject {
-    var imageUrl: String?
-    var placeholder: String?
-    var title: String?
-    var subtitle: String?
-    
-    init(imageUrl: String?, placeholder: String?, title: String?, subtitle: String?) {
-        self.imageUrl = imageUrl
-        self.title = title
-        self.subtitle = subtitle
-        self.placeholder = placeholder
-    }
-}
-

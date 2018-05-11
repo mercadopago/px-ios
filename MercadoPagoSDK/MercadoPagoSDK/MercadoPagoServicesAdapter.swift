@@ -153,7 +153,6 @@ import MercadoPagoServices
     }
 
     open func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
         mercadoPagoServices.getBankDeals(callback: callback, failure: failure)
     }
 

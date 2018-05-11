@@ -8,34 +8,16 @@
 
 import UIKit
 
-class PXBankDealCollectionCell: UICollectionViewCell {
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-
-    override func prepareForReuse() {
-        for miniView in self.contentView.subviews {
-            miniView.removeFromSuperview()
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
 
     fileprivate let MARGINS: CGFloat = PXLayout.S_MARGIN
     fileprivate let CELL_HEIGHT: CGFloat = 128
-    fileprivate let REUSE_IDENTIFIER = "bankDealCell"
 
-    fileprivate var viewModel: PXBankDealsViewModel!
+    fileprivate var viewModel: PXBankDealsViewModel
 
     init(viewModel: PXBankDealsViewModel) {
-        super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -62,7 +44,7 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
         collectionView.backgroundColor = .white
 
         //Register Cells
-        collectionView.register(PXBankDealCollectionCell.self, forCellWithReuseIdentifier: REUSE_IDENTIFIER)
+        collectionView.register(PXBankDealCollectionCell.self, forCellWithReuseIdentifier: PXBankDealCollectionCell.REUSE_IDENTIFIER)
 
         //Constraints
         PXLayout.matchWidth(ofView: collectionView).isActive = true
@@ -76,17 +58,19 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER, for: indexPath) as! PXBankDealCollectionCell
-        let bankDealComponentView = self.buildBankDealComponentView(for: indexPath)
-        cell.contentView.addSubview(bankDealComponentView)
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PXBankDealCollectionCell.REUSE_IDENTIFIER, for: indexPath) as? PXBankDealCollectionCell {
+            let bankDealComponentView = self.buildBankDealComponentView(for: indexPath)
+            cell.contentView.addSubview(bankDealComponentView)
 
-        //Constraints
-        PXLayout.centerHorizontally(view: bankDealComponentView).isActive = true
-        PXLayout.centerVertically(view: bankDealComponentView).isActive = true
-        PXLayout.matchWidth(ofView: bankDealComponentView).isActive = true
-        PXLayout.setHeight(owner: bankDealComponentView, height: CELL_HEIGHT).isActive = true
+            //Constraints
+            PXLayout.centerHorizontally(view: bankDealComponentView).isActive = true
+            PXLayout.centerVertically(view: bankDealComponentView).isActive = true
+            PXLayout.matchWidth(ofView: bankDealComponentView).isActive = true
+            PXLayout.setHeight(owner: bankDealComponentView, height: CELL_HEIGHT).isActive = true
 
-        return cell
+            return cell
+        }
+        return UICollectionViewCell()
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

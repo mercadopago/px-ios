@@ -10,7 +10,7 @@ import UIKit
 
 class PXBankDealComponentRenderer: NSObject {
 
-    var IMAGE_VIEW_HEIGHT: CGFloat = 40
+    let IMAGE_VIEW_HEIGHT: CGFloat = 40
 
     func render(_ component: PXBankDealComponent) -> PXBankDealComponentView {
         let bankDealComponentView = PXBankDealComponentView()
@@ -72,11 +72,4 @@ class PXBankDealComponentRenderer: NSObject {
         placeholderLabel.text = text
         return placeholderLabel
     }
-
-}
-
-class PXBankDealComponentView: PXComponentView {
-    var imageView: UIView!
-    var titleLabel: UILabel!
-    var subtitleLabel: UILabel!
 }

@@ -11,7 +11,7 @@ import MercadoPagoServices
 
 final class PXBankDealsViewModel: NSObject {
 
-    var bankDeals: [PXBankDeal]
+    let bankDeals: [PXBankDeal]
 
     public init(bankDeals: [PXBankDeal]) {
         self.bankDeals = bankDeals
