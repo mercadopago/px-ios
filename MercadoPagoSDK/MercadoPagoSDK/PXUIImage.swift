@@ -34,6 +34,7 @@ class PXUIImageView: UIImageView {
     }
 
     private func loadImage(image: UIImage?) {
+        self.contentMode = .scaleAspectFit
         if let pxImage = image as? PXUIImage {
             Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: buildLabel(with: pxImage.placeholder), fallbackView: buildLabel(with: pxImage.fallback)){ newImage in
                 self.currentImage = newImage
