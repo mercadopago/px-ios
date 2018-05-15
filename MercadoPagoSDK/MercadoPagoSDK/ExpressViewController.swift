@@ -10,7 +10,7 @@ import UIKit
 
 class ExpressViewController: UIViewController {
 
-    let popUpViewHeight: CGFloat = 480
+    let popUpViewHeight: CGFloat = 390
     let borderMargin = PXLayout.XXXS_MARGIN
     var blurView: UIVisualEffectView!
     
@@ -116,6 +116,7 @@ class ExpressViewController: UIViewController {
             
             //Item Theme
             let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: UIColor.white, boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+            /*
             // Item
             let itemProps = PXItemComponentProps(imageURL: nil, title: "AXION Energy", description: "Carga combustible", quantity: 1, unitAmount: 1, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
             let itemComponent = PXItemComponent(props: itemProps)
@@ -123,7 +124,7 @@ class ExpressViewController: UIViewController {
             view.addSubview(itemView)
             PXLayout.matchWidth(ofView: itemView).isActive = true
             PXLayout.centerHorizontally(view: itemView).isActive = true
-            PXLayout.put(view: itemView, onBottomOf: sView).isActive = true
+            PXLayout.put(view: itemView, onBottomOf: sView).isActive = true*/
             
             //Payment Method
             let pmImage = MercadoPago.getImage("mediosIconoMaster")
@@ -136,22 +137,18 @@ class ExpressViewController: UIViewController {
             pmView.layer.borderColor = color.cgColor
             pmView.layer.cornerRadius = 4
             view.addSubview(pmView)
-            PXLayout.pinLeft(view: pmView, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinRight(view: pmView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinLeft(view: pmView, withMargin: 16.0).isActive = true
+            PXLayout.pinRight(view: pmView, withMargin: 16.0).isActive = true
             PXLayout.centerHorizontally(view: pmView).isActive = true
-            PXLayout.put(view: pmView, onBottomOf: itemView).isActive = true
+            PXLayout.put(view: pmView, onBottomOf: sView, withMargin: 24.0).isActive = true
+            PXLayout.setHeight(owner: pmView, height: 70).isActive = true
 
-            let changePaymentMethodBtn = UIButton()
-            pmView.addSubview(changePaymentMethodBtn)
-            PXLayout.centerVertically(view: changePaymentMethodBtn).isActive = true
-            PXLayout.centerHorizontally(view: changePaymentMethodBtn).isActive = true
-            PXLayout.matchWidth(ofView: changePaymentMethodBtn, toView: pmView, withPercentage: 100.0).isActive = true
-            PXLayout.matchHeight(ofView: changePaymentMethodBtn, toView: pmView, withPercentage: 100.0).isActive = true
-            changePaymentMethodBtn.backgroundColor = .clear
-            changePaymentMethodBtn.setTitle("", for: .normal)
-            changePaymentMethodBtn.add(for: .touchUpInside, {
-                self.shouldOpenGroups()
-            })
+            let paymentMethodTap = UITapGestureRecognizer(target: self, action: #selector(self.handlePaymentMethodTap(_:)))
+            pmView.addGestureRecognizer(paymentMethodTap)
+
+
+
+
 
             //Footer
             var footerView: PXFooterView = PXFooterView()
@@ -172,9 +169,8 @@ class ExpressViewController: UIViewController {
             
             view.layoutIfNeeded()
             
-            let heightForRows = (self.popUpViewHeight - titleView.frame.height - sView.frame.height - footerView.frame.height)/2
-            PXLayout.setHeight(owner: pmView, height: heightForRows).isActive = true
-            PXLayout.setHeight(owner: itemView, height: heightForRows).isActive = true
+            //let heightForRows = (self.popUpViewHeight - titleView.frame.height - sView.frame.height - footerView.frame.height)/1
+
             
             view.backgroundColor = UIColor.white
         }
@@ -325,6 +321,10 @@ extension ExpressViewController: PXAnimatedButtonDelegate {
 
 //MARK: - User Actions
 extension ExpressViewController {
+
+    func handlePaymentMethodTap(_ sender: UITapGestureRecognizer) {
+        shouldOpenGroups()
+    }
 
     fileprivate func shouldOpenGroups() {
         if #available(iOS 10.0, *) {
