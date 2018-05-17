@@ -22,6 +22,11 @@ open class MercadoPagoCheckout: NSObject {
 
     private var rootViewController: UIViewController?
 
+
+    /*POC EXPRESS CHO*/
+    private var startLoadingClosure :  (() -> Void)?
+    private var finishLoadingClosure :  (() -> Void)?
+    
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
@@ -45,7 +50,11 @@ open class MercadoPagoCheckout: NSObject {
             viewControllerBase = newNavigationStack.last
         }
     }
-
+    /*POC EXPRESS CHO*/
+    public func setCustom(startLoading: @escaping (() -> Void),dismissLoading: @escaping (() -> Void)){
+        self.startLoadingClosure = startLoading
+        self.finishLoadingClosure = dismissLoading
+    }
     public func setTheme(_ theme: PXTheme) {
         ThemeManager.shared.setTheme(theme: theme)
     }
@@ -64,6 +73,40 @@ open class MercadoPagoCheckout: NSObject {
         self.viewModel.binaryMode = binaryMode
     }
 
+    public func startExpress() {
+        guard let viewController = self.navigationController.viewControllers.last else {
+            fatalError("Checkout express doesn't work in a empty navigation controller")
+        }
+        self.startExpress(from: viewController)
+    }
+    
+    private func startExpress(from viewController:UIViewController) {
+        let vc = ExpressViewController()
+
+        vc.setChangePaymentMethodAction {
+            [weak self] in
+            self?.viewModel.paymentOptionSelected = nil
+            self?.viewModel.expressChosen = false
+            self?.executeNextStep()
+        }
+
+        vc.setShowCongratsAction {
+            [weak self] in
+            self?.viewModel.businessResult = PXBusinessResult(status: PXBusinessResultStatus.APPROVED, title: "Pago confirmado", icon: MercadoPago.getImage("MPSDK_review_iconoCarrito")!, secondaryAction: PXComponentAction(label: "Continuar", action: {
+                self?.cancel()
+            }))
+            self?.executeNextStep()
+        }
+
+        //TODO: Replace MockPaymentOption() with InferredService payment option response.
+        vc.setViewModel(viewModel: self.viewModel.reviewConfirmViewModel(externalPaymentOption: MockPaymentOption()))
+
+        vc.modalPresentationStyle = .overCurrentContext
+        viewController.present(vc, animated: false, completion: {
+            print("ExpressViewController Done")
+        })
+    }
+    
     public func start() {
         presentInitLoading()
         MercadoPagoCheckout.currentCheckout = self
@@ -118,6 +161,8 @@ open class MercadoPagoCheckout: NSObject {
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {
+        case .START_EXPRESS_CHECKOUT:
+            self.startExpress()
         case .START :
             self.initialize()
         case .SERVICE_GET_PREFERENCE:
@@ -183,7 +228,7 @@ open class MercadoPagoCheckout: NSObject {
         default: break
         }
     }
-
+    
     func validatePreference() {
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {
@@ -265,6 +310,10 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func presentLoading(completion: (() -> Swift.Void)? = nil) {
+        if let presentLoadingCustom = self.startLoadingClosure {  /*POC EXPRESS CHO*/
+            presentLoadingCustom()
+            return
+        }
         self.countLoadings += 1
         if self.countLoadings == 1 {
             let when = DispatchTime.now() //+ 0.3
@@ -279,12 +328,20 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func presentInitLoading() {
+        if let presentLoadingCustom = self.startLoadingClosure { /*POC EXPRESS CHO*/
+            presentLoadingCustom()
+            return
+        }
         self.createCurrentLoading()
         self.currentLoadingView?.modalTransitionStyle = .crossDissolve
         self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
     }
 
-    func dismissLoading(finishCallback: (()-> Void)? = nil) {
+    func dismissLoading(animated: Bool = true) {
+        if let dismissLoadingCustom = self.finishLoadingClosure { /*POC EXPRESS CHO*/
+            dismissLoadingCustom()
+            return
+        }
         self.countLoadings = 0
         if self.currentLoadingView != nil {
             self.currentLoadingView?.modalTransitionStyle = .crossDissolve

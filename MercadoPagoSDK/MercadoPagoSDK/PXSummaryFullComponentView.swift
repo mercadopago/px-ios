@@ -26,7 +26,10 @@ final class PXSummaryFullComponentView: PXComponentView {
     fileprivate let customSummaryTitle: String
     fileprivate var requiredHeight: CGFloat = PXLayout.L_MARGIN
 
-    init(width: CGFloat, summaryViewModel: Summary, paymentData: PaymentData, totalAmount: Double, backgroundColor: UIColor, customSummaryTitle: String) {
+    init(width: CGFloat, summaryViewModel: Summary, paymentData: PaymentData, totalAmount: Double, backgroundColor: UIColor, customSummaryTitle: String, topMargin: CGFloat?=nil) {
+        if let customTopMargin = topMargin {
+            requiredHeight = customTopMargin
+        }
         self.summary = summaryViewModel
         self.customSummaryTitle = customSummaryTitle
         super.init()

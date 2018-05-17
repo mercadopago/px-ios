@@ -17,6 +17,7 @@ public enum CheckoutStep: String {
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
     case SERVICE_GET_IDENTIFICATION_TYPES
+    case START_EXPRESS_CHECKOUT /*POC EXPRESS CHO*/
     case SCREEN_PAYMENT_METHOD_SELECTION
     case SCREEN_CARD_FORM
     case SCREEN_SECURITY_CODE
@@ -101,6 +102,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var savedESCCardToken: SavedESCCardToken?
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
+
+    // TODO: Review state machine for dimissed/not-chosen
+    var expressChosen = true
 
     var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
 
@@ -288,7 +292,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!, reason: reason)
     }
 
-    func reviewConfirmViewModel() -> PXReviewViewModel {
+    func reviewConfirmViewModel(externalPaymentOption: PaymentMethodOption?=nil) -> PXReviewViewModel {
+        if let externalPo = externalPaymentOption {
+            self.paymentOptionSelected = externalPo
+        }
         return PXReviewViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentOptionSelected: self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
     }
 
@@ -432,7 +439,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if needSearch() {
             return .SERVICE_GET_PAYMENT_METHODS
         }
-
+        if isExpressChoAvaible() && expressChosen {
+            return .START_EXPRESS_CHECKOUT
+        }
         if !isPaymentTypeSelected() {
             return .SCREEN_PAYMENT_METHOD_SELECTION
         }

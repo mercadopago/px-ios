@@ -19,7 +19,11 @@ class PXDefaultTheme: NSObject {
 extension PXDefaultTheme: PXTheme {
 
     public func navigationBar() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
+        var themeProperty = PXThemeProperty(backgroundColor: #colorLiteral(red: 0, green: 0.5411764706, blue: 0.8392156863, alpha: 1), tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
+        if let customColor = primaryColor {
+           themeProperty = PXThemeProperty(backgroundColor: customColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
+        }
+        return themeProperty
     }
 
     public func loadingComponent() -> PXThemeProperty {

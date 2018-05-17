@@ -16,12 +16,21 @@ struct PXSummaryComponentRenderer {
         }
         return buildCompactSummary(props: summaryComponent.props)
     }
+    
+    func expressRender(_ summaryComponent: PXSummaryComponent) -> UIView {
+        summaryComponent.props.setTopMargin(margin: PXLayout.S_MARGIN)
+        summaryComponent.props.backgroundColor = UIColor(red:0.98, green:0.98, blue:0.98, alpha:1.0)
+        if summaryComponent.props.summaryViewModel.details.count > 1 || summaryComponent.props.paymentData.getNumberOfInstallments() > 1 {
+            return buildFullSummary(props: summaryComponent.props)
+        }
+        return buildCompactSummary(props: summaryComponent.props)
+    }
 }
 
 extension PXSummaryComponentRenderer {
 
     fileprivate func buildFullSummary(props: PXSummaryComponentProps) -> UIView {
-        let fullSummaryView = PXSummaryFullComponentView(width: props.width, summaryViewModel: props.summaryViewModel, paymentData: props.paymentData, totalAmount: props.totalAmount, backgroundColor: props.backgroundColor, customSummaryTitle: props.customTitle)
+        let fullSummaryView = PXSummaryFullComponentView(width: props.width, summaryViewModel: props.summaryViewModel, paymentData: props.paymentData, totalAmount: props.totalAmount, backgroundColor: props.backgroundColor, customSummaryTitle: props.customTitle, topMargin: props.topMargin)
         PXLayout.setHeight(owner: fullSummaryView, height: fullSummaryView.getHeight()).isActive = true
         return fullSummaryView
     }

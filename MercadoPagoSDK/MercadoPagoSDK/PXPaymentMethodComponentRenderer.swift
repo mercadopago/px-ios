@@ -13,6 +13,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
+    let margin = PXLayout.S_MARGIN
+    
     //Action Button
     let BUTTON_HEIGHT: CGFloat = 34.0
 
@@ -20,6 +22,70 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let SUBTITLE_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let DESCRIPTION_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
+    
+    func expressRender(component: PXPaymentMethodComponent) -> PXExpressPaymentMethodView {
+        let pmBodyView = PXExpressPaymentMethodView()
+        pmBodyView.backgroundColor = component.props.backgroundColor
+        pmBodyView.translatesAutoresizingMaskIntoConstraints = false
+        
+        //Icon
+        let paymentMethodIcon = component.getPaymentMethodIconComponent()
+        pmBodyView.paymentMethodIcon = paymentMethodIcon.render()
+        pmBodyView.paymentMethodIcon!.layer.cornerRadius = IMAGE_WIDTH/2
+        pmBodyView.addSubview(pmBodyView.paymentMethodIcon!)
+        PXLayout.pinLeft(view: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
+        PXLayout.setWidth(owner: pmBodyView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
+        PXLayout.centerVertically(view: pmBodyView.paymentMethodIcon!).isActive = true
+        
+        //Title
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        pmBodyView.amountTitle = title
+        pmBodyView.addSubview(title)
+        title.attributedText = component.props.title
+        title.font = Utils.getFont(size: PXLayout.XS_FONT)
+        title.textColor = component.props.boldLabelColor
+        title.textAlignment = .left
+        title.numberOfLines = 0
+        PXLayout.put(view: pmBodyView.amountTitle!, rightOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.pinRight(view: pmBodyView.amountTitle!, withMargin: margin).isActive = true
+        PXLayout.setHeight(owner: pmBodyView.amountTitle!, height: 20).isActive = true
+        
+        if let detailText = component.props.subtitle {
+            let detailLabel = UILabel()
+            detailLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.addSubview(detailLabel)
+            pmBodyView.amountDetail = detailLabel
+            detailLabel.attributedText = detailText
+            detailLabel.font = Utils.getFont(size: PXLayout.XXS_FONT)
+            detailLabel.textColor = component.props.lightLabelColor
+            detailLabel.textAlignment = .left
+            PXLayout.setHeight(owner: detailLabel, height: 20).isActive = true
+            PXLayout.pinLeft(view: pmBodyView.amountDetail!, to: pmBodyView.amountTitle!).isActive = true
+            PXLayout.pinRight(view: pmBodyView.amountDetail!, to: pmBodyView.amountTitle!).isActive = true
+        }
+        
+        if pmBodyView.amountDetail != nil {
+            PXLayout.pinTop(view: pmBodyView.amountTitle!, to: pmBodyView.paymentMethodIcon!, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: pmBodyView.amountDetail!, to: pmBodyView.paymentMethodIcon!, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        } else {
+            PXLayout.centerVertically(view: pmBodyView.amountTitle!, to: pmBodyView.paymentMethodIcon!).isActive = true
+            
+        }
+
+        //Divider
+        /*let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.backgroundColor = .pxMediumLightGray
+        pmBodyView.addSubview(divider)
+        PXLayout.setHeight(owner: divider, height: 1).isActive = true
+        PXLayout.matchWidth(ofView: divider, toView: pmBodyView).isActive = true
+        PXLayout.centerHorizontally(view: divider).isActive = true
+        PXLayout.put(view: divider, onBottomOf: pmBodyView.paymentMethodIcon!, withMargin: margin).isActive = true */
+        
+        return pmBodyView
+    }
 
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()
@@ -127,6 +193,18 @@ class PXPaymentMethodComponentRenderer: NSObject {
         return pmBodyView
     }
 }
+
+class PXExpressPaymentMethodView: PXBodyView {
+    var paymentMethodIcon: UIView?
+    var amountTitle: UILabel?
+    var amountDetail: UILabel?
+    var installmentsIcon: UIView?
+    var paymentMethodDescription: UILabel?
+    var paymentMethodDetail: UILabel?
+    var disclaimerLabel: UILabel?
+    var actionButton: PXSecondaryButton?
+}
+
 
 class PXPaymentMethodView: PXBodyView {
     var paymentMethodIcon: UIView?

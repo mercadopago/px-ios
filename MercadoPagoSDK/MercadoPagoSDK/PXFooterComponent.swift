@@ -9,7 +9,8 @@
 import UIKit
 
 class PXFooterComponent: NSObject, PXComponentizable {
-  var props: PXFooterProps
+    
+    var props: PXFooterProps
 
     init(props: PXFooterProps) {
         self.props = props
@@ -17,6 +18,10 @@ class PXFooterComponent: NSObject, PXComponentizable {
 
     func render() -> UIView {
         return PXFooterRenderer().render(self)
+    }
+    
+    func expressRender() -> PXFooterView {
+        return PXFooterRenderer().expressRender(self)
     }
 }
 

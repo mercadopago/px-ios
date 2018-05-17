@@ -28,6 +28,13 @@ final class PXSummaryComponent: PXComponentizable {
         }
         return dequeueReusableView
     }
+    
+    public func expressRender() -> UIView {
+        guard let dequeueReusableView = reusableView else {
+            return PXSummaryComponentRenderer().expressRender(self)
+        }
+        return dequeueReusableView
+    }
 }
 
 extension PXSummaryComponent {

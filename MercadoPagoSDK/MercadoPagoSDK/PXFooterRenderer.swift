@@ -50,6 +50,37 @@ class PXFooterRenderer: NSObject {
         return fooView
     }
 
+    func expressRender(_ footer: PXFooterComponent) -> PXFooterView {
+        let fooView = PXFooterView()
+        var topView: UIView = fooView
+        fooView.translatesAutoresizingMaskIntoConstraints = false
+        fooView.backgroundColor = .pxWhite
+        if let principalAction = footer.props.buttonAction {
+            let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
+            fooView.principalButton = principalButton
+            fooView.addSubview(principalButton)
+            
+            PXLayout.pinLeft(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.pinRight(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
+            
+            if PXLayout.getSafeAreaTopInset() > 0 {
+                PXLayout.pinTop(view: principalButton, to: topView, withMargin: PXLayout.S_MARGIN).isActive = true
+                PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT + 5).isActive = true
+            } else {
+                PXLayout.centerVertically(view: principalButton).isActive = true
+                PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
+            }
+            
+            topView = principalButton
+        }
+        
+        if topView != fooView {
+            PXLayout.pinBottom(view: topView, to: fooView, withMargin: PXLayout.M_MARGIN).isActive = true
+        }
+        
+        return fooView
+    }
+
     func buildPrincipalButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) ->  PXPrimaryButton {
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -68,6 +99,11 @@ class PXFooterRenderer: NSObject {
 }
 
 class PXFooterView: UIView {
+    func getPrincipalButton() -> PXPrimaryButton? {
+        guard let mainButton = principalButton else { return nil }
+        return mainButton as? PXPrimaryButton
+    }
+
     public var principalButton: PXPrimaryButton?
     public var linkButton: PXSecondaryButton?
 }

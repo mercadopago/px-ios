@@ -121,7 +121,15 @@
     //Setear ReviewScreenPrefernce
  //   [self setReviewScreenPreference];
 
-    [self.mpCheckout start];
+    [self.mpCheckout setCustomWithStartLoading:^{
+        NSLog(@"CUSTOM LOADING Init");
+    } dismissLoading:^{
+        NSLog(@"CUSTOM LOADING finish");
+    }];
+    //[self.mpCheckout start];
+   [self.mpCheckout startExpressFrom:self];
+
+
 }
 
 -(void)setHooks {
