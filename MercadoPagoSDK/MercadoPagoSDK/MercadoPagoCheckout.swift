@@ -9,25 +9,23 @@
 import UIKit
 import MercadoPagoPXTracking
 
+@objcMembers
 open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
-    var countLoadings: Int = 0
 
+    private var countLoadings: Int = 0
     private var currentLoadingView: UIViewController?
 
-    internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
-    var entro = false
 
     /*POC EXPRESS CHO*/
     private var startLoadingClosure :  (() -> Void)?
     private var finishLoadingClosure :  (() -> Void)?
-    
     
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
 
@@ -157,6 +155,7 @@ open class MercadoPagoCheckout: NSObject {
         // MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
         suscribeToNavigationFlow()
+        PXNotificationManager.SuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout, selector: #selector(closeCheckout))
     }
 
     func executeNextStep() {
@@ -233,7 +232,7 @@ open class MercadoPagoCheckout: NSObject {
     func validatePreference() {
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {
-            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { (_) -> Void in })
+            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { () -> Void in })
         }
         self.executeNextStep()
     }
@@ -275,8 +274,10 @@ open class MercadoPagoCheckout: NSObject {
         } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
             return
+
         } else if let finishFlowCallback = MercadoPagoCheckoutViewModel.finishFlowCallback {
             finishFlowCallback(self.viewModel.payment)
+            return
         }
 
         goToRootViewController()
@@ -291,6 +292,11 @@ open class MercadoPagoCheckout: NSObject {
 
         goToRootViewController()
     }
+    @objc
+    func closeCheckout() {
+        PXNotificationManager.UnsuscribeTo.attemptToClose(self)
+        cancel()
+    }
 
     public func goToRootViewController() {
         if let rootViewController = viewControllerBase {
@@ -303,7 +309,7 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
 
-    func presentLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
+    func presentLoading(completion: (() -> Swift.Void)? = nil) {
         if let presentLoadingCustom = self.startLoadingClosure {  /*POC EXPRESS CHO*/
             presentLoadingCustom()
             return
@@ -341,17 +347,15 @@ open class MercadoPagoCheckout: NSObject {
             self.currentLoadingView?.modalTransitionStyle = .crossDissolve
             self.currentLoadingView!.dismiss(animated: true, completion: {
                 self.currentLoadingView = nil
+                if let callback = finishCallback {
+                    callback()
+                }
             })
         }
     }
 
     internal func createCurrentLoading() {
-        let vcLoading = MPXLoadingViewController()
-        vcLoading.view.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
-        vcLoading.view.addSubview(loadingInstance)
-        loadingInstance.bringSubview(toFront: vcLoading.view)
-        self.currentLoadingView = vcLoading
+        self.currentLoadingView = PXLoadingViewController()
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,
@@ -378,8 +382,8 @@ open class MercadoPagoCheckout: NSObject {
 
     }
     internal func removeRootLoading() {
-        let currentViewControllers = self.navigationController.viewControllers.filter { (vc: UIViewController) -> Bool in
-            return vc != self.rootViewController
+        let currentViewControllers = self.navigationController.viewControllers.filter { (viewController: UIViewController) -> Bool in
+            return viewController != self.rootViewController
         }
         self.navigationController.viewControllers = currentViewControllers
     }

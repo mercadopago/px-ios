@@ -7,11 +7,11 @@
 //
 
 import Foundation
-open class PaymentResult: NSObject {
+@objcMembers open class PaymentResult: NSObject {
 
     @objc
     public enum CongratsState: Int {
-        case ok = 0
+        case approved = 0
         case cancel_SELECT_OTHER = 1
         case cancel_RETRY = 2
         case cancel_RECOVER = 3
@@ -34,12 +34,12 @@ open class PaymentResult: NSObject {
         self.statementDescription = payment.statementDescriptor
     }
 
-    public init (status: String, statusDetail: String, paymentData: PaymentData, payerEmail: String?, id: String?, statementDescription: String?) {
+    public init (status: String, statusDetail: String, paymentData: PaymentData, payerEmail: String?, paymentId: String?, statementDescription: String?) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData
         self.payerEmail = payerEmail
-        self.paymentId = id
+        self.paymentId = paymentId
         self.statementDescription = statementDescription
     }
 

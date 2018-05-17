@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PaymentType: NSObject {
+@objcMembers open class PaymentType: NSObject {
 
     open static let allPaymentIDs: Set<String> = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.ACCOUNT_MONEY.rawValue, PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue, PaymentTypeId.ATM.rawValue, PaymentTypeId.BITCOIN.rawValue, PaymentTypeId.PREPAID_CARD.rawValue, PaymentTypeId.BOLBRADESCO.rawValue]
 
@@ -35,6 +35,14 @@ public enum PaymentTypeId: String {
     case PREPAID_CARD = "prepaid_card"
     case BOLBRADESCO = "bolbradesco"
     case PAYMENT_METHOD_PLUGIN = "payment_method_plugin"
+
+    public static func fromJSON(_ json: NSDictionary) -> PaymentType {
+                let paymentType = PaymentType()
+                if let paymentTypeId = JSONHandler.attemptParseToString(json["id"]) {
+                        paymentType.paymentTypeId = PaymentTypeId(rawValue: paymentTypeId)
+                    }
+                return paymentType
+            }
 
     public func isCard() -> Bool {
         return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD
@@ -94,5 +102,4 @@ public enum PaymentTypeId: String {
         }
         return paymentTypeIdEnum.isOfflinePaymentType()
     }
-
 }

@@ -19,8 +19,8 @@
                 <outlet property="errorIcon" destination="Lo5-cf-7x0" id="fmN-Th-915"/>
                 <outlet property="errorSubtitle" destination="TOU-E7-PRN" id="OhE-Wf-aIE"/>
                 <outlet property="errorTitle" destination="ODG-43-ocD" id="J9y-R2-Xeu"/>
-                <outlet property="exitButton" destination="895-Ju-YJT" id="H3G-GP-nC3"/>
-                <outlet property="retryButton" destination="W9v-lm-yGm" id="wtU-Mh-RKj"/>
+                <outlet property="exitButton" destination="895-Ju-YJT" id="6hf-EF-g6z"/>
+                <outlet property="retryButton" destination="W9v-lm-yGm" id="f1l-Wn-ADX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="mz7-kw-dFy"/>
             </connections>
         </placeholder>
@@ -55,7 +55,7 @@
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="895-Ju-YJT" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="895-Ju-YJT">
                     <rect key="frame" x="169.5" y="603" width="36" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="GS6-dL-zAL"/>
@@ -65,7 +65,7 @@
                         <color key="titleColor" red="0.0" green="0.61960784313725492" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9v-lm-yGm" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9v-lm-yGm">
                     <rect key="frame" x="146" y="407" width="83" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="XUu-Go-aLX"/>

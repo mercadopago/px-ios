@@ -115,7 +115,7 @@ extension PXResultViewModel {
 
     func pressButton() {
         if self.isAccepted() {
-             self.callback(PaymentResult.CongratsState.ok)
+             self.callback(PaymentResult.CongratsState.approved)
         } else if self.isError() {
              self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
         } else if self.isWarning() {
@@ -129,12 +129,12 @@ extension PXResultViewModel {
 
     func pressLink() {
         if self.isAccepted() {
-            self.callback(PaymentResult.CongratsState.ok)
+            self.callback(PaymentResult.CongratsState.approved)
         } else if self.isError() {
-            self.callback(PaymentResult.CongratsState.ok) //
+            self.callback(PaymentResult.CongratsState.approved) //
         } else if self.isWarning() {
             if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
-                self.callback(PaymentResult.CongratsState.ok)
+                self.callback(PaymentResult.CongratsState.approved)
             } else {
                 self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
             }

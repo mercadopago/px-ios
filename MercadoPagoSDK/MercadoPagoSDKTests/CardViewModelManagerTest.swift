@@ -110,7 +110,7 @@ class CardViewModelManagerTest: BaseTest {
     }
 
     func testShowBankDeals_promosLoaded() {
-        self.cardFormManager!.promos = [MockBuilder.buildBankDeal()]
+        self.cardFormManager!.promos = [MockBuilder.buildPXBankDeal()]
         let result = self.cardFormManager!.showBankDeals()
 
         XCTAssertTrue(result)
@@ -123,7 +123,7 @@ class CardViewModelManagerTest: BaseTest {
     }
 
     func testShowBankDeals_promosLoadedHidePromosByUser() {
-        self.cardFormManager!.promos = [MockBuilder.buildBankDeal()]
+        self.cardFormManager!.promos = [MockBuilder.buildPXBankDeal()]
         CardFormViewController.showBankDeals = false
         let result = self.cardFormManager!.showBankDeals()
         XCTAssertFalse(result)

@@ -120,8 +120,8 @@ struct PXItemRenderer {
 
             if let url = imageUrl {
                 buildCircle(targetImageView: itemImage)
-                itemImage.backgroundColor = ThemeManager.shared.getPlaceHolderColor()
-                Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil, fallbackImage: imageObj)
+                itemImage.backgroundColor = ThemeManager.shared.placeHolderColor()
+                Utils().loadImageWithCache(withUrl: url, targetImageView: itemImage, placeholderImage: nil, fallbackImage: imageObj)
             } else {
                 itemImage.image = imageObj
             }
@@ -226,7 +226,7 @@ extension PXItemRenderer {
         let font = Utils.getFont(size: PXItemRenderer.AMOUNT_FONT_SIZE)
 
         let unitPrice = buildAttributedUnitAmount(amount: amount, color: labelColor, fontSize: font.pointSize)
-        let unitPriceTitle = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: font])
+        let unitPriceTitle = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font: font])
         unitPriceTitle.append(unitPrice)
 
         return buildLabel(attributedText: unitPriceTitle, color: labelColor, font: font)

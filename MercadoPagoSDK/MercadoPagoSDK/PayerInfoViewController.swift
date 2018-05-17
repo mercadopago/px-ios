@@ -120,7 +120,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
 
     func showToolbarError(message: String) {
         errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
-        errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
+        errorLabel!.textColor = ThemeManager.shared.rejectedColor()
         errorLabel!.text = message
         errorLabel!.textAlignment = .center
         errorLabel!.font = errorLabel!.font.withSize(12)
@@ -238,7 +238,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         }
     }
 
-    func rightArrowKeyTapped() {
+    @objc func rightArrowKeyTapped() {
         let validStep = self.viewModel.validateCurrentStep()
         if validStep {
             let currentStep = self.viewModel.getNextStep()
@@ -248,7 +248,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         }
     }
 
-    func leftArrowKeyTapped() {
+    @objc func leftArrowKeyTapped() {
         let currentStep = self.viewModel.getPreviousStep()
         executeStep(currentStep)
     }
@@ -275,7 +275,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
 
     var keyboardFrame: CGRect?
 
-    func keyboardWasShown(_ notification: NSNotification) {
+    @objc func keyboardWasShown(_ notification: NSNotification) {
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         self.keyboardFrame = keyboardFrame

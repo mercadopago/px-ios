@@ -23,7 +23,7 @@ final class PXReviewTitleComponentView: PXComponentView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
-        titleLabel.attributedText = NSAttributedString(string: withTitle, attributes: [NSFontAttributeName: Utils.getFont(size: PXLayout.L_FONT)])
+        titleLabel.attributedText = NSAttributedString(string: withTitle, attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.L_FONT)])
         titleLabel.textColor = titleColor
 
         self.addSubview(titleLabel)

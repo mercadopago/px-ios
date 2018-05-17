@@ -56,7 +56,7 @@ public class ResultMockComponentHelper: NSObject {
     }
 
     // Mark: Body builders
-    static func buildBodyView(resultViewModel: PXResultViewModel) -> PXBodyView? {
+    static func buildBodyView(resultViewModel: PXResultViewModel) -> UIView? {
         if let bodyComponentizable = resultViewModel.buildBodyComponent(), let bodyComponent = bodyComponentizable as? PXBodyComponent {
             return PXBodyRenderer().render(bodyComponent)
         }

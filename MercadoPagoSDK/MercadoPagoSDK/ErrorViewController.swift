@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoPXTracking
 
+@objcMembers
 open class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var  errorTitle: MPLabel!
@@ -17,9 +18,9 @@ open class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet internal weak var errorIcon: UIImageView!
 
-    @IBOutlet weak var exitButton: MPButton!
+    @IBOutlet weak var exitButton: UIButton!
 
-    @IBOutlet weak var retryButton: MPButton!
+    @IBOutlet weak var retryButton: UIButton!
 
     var error: MPSDKError!
     var callback: (() -> Void)?
@@ -64,6 +65,11 @@ open class ErrorViewController: MercadoPagoUIViewController {
         if !String.isNullOrEmpty(error.requestOrigin) {
             metadata[TrackingUtil.METADATA_ERROR_REQUEST] = error.requestOrigin
         }
+
+        if !String.isNullOrEmpty(error.message) {
+            metadata["error_message"] = error.message
+        }
+
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
@@ -72,12 +78,16 @@ open class ErrorViewController: MercadoPagoUIViewController {
         self.errorTitle.text = error.message
         self.errorSubtitle.textColor = UIColor.pxBrownishGray
 
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 14)]
 
         self.errorSubtitle.attributedText = NSAttributedString(string: error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
+
         self.exitButton.setTitle("Salir".localized, for: .normal)
         self.retryButton.setTitle("Reintentar".localized, for: .normal)
+
+        self.exitButton.setTitleColor(ThemeManager.shared.getAccentColor(), for: .normal)
+        self.retryButton.setTitleColor(ThemeManager.shared.getAccentColor(), for: .normal)
 
         if self.error.retry! {
             self.retryButton.addTarget(self, action: #selector(ErrorViewController.invokeCallback), for: .touchUpInside)
@@ -91,7 +101,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    internal func invokeCallback() {
+    @objc internal func invokeCallback() {
         if callback != nil {
             callback!()
         } else {
@@ -103,7 +113,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
         }
     }
 
-    internal func invokeExitCallback() {
+    @objc internal func invokeExitCallback() {
         if let cancelCallback = ErrorViewController.defaultErrorCancel {
             cancelCallback()
         }

@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoPXTracking
 
+@objcMembers
 open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     var securityCodeLabel: PXMonospaceLabel!
@@ -31,7 +32,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
-    func keyboardWillShow(notification: Notification) {
+    @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height - 40
             self.view.layoutIfNeeded()
@@ -111,7 +112,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         self.securityCodeTextField.inputAccessoryView = toolbar
     }
 
-    func continueAction() {
+    @objc func continueAction() {
         securityCodeTextField.resignFirstResponder()
         guard securityCodeTextField.text?.count == viewModel.secCodeLenght() else {
             let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
@@ -121,7 +122,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         self.viewModel.executeCallback(secCode: securityCodeTextField.text)
     }
 
-    func backAction() {
+    @objc func backAction() {
         self.executeBack()
     }
 
@@ -152,7 +153,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         return true
     }
 
-    open func editingChanged(_ textField: UITextField) {
+    @objc open func editingChanged(_ textField: UITextField) {
         hideErrorMessage()
         securityCodeLabel.text = textField.text
         self.ccvLabelEmpty = (textField.text != nil && textField.text!.count == 0)
@@ -164,12 +165,12 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     open func showErrorMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
-        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
+        self.errorLabel!.textColor = ThemeManager.shared.rejectedColor()
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.text = errorMessage
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
-        securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        securityCodeTextField.borderInactiveColor = ThemeManager.shared.rejectedColor()
+        securityCodeTextField.borderActiveColor = ThemeManager.shared.rejectedColor()
         securityCodeTextField.inputAccessoryView = errorLabel
         securityCodeTextField.setNeedsDisplay()
         securityCodeTextField.resignFirstResponder()
@@ -177,8 +178,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
     open func hideErrorMessage() {
-        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.secondaryColor()
+        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.secondaryColor()
         self.securityCodeTextField.inputAccessoryView = self.toolbar
         self.securityCodeTextField.setNeedsDisplay()
         self.securityCodeTextField.resignFirstResponder()

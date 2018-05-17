@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class SecurityCode: NSObject {
+@objcMembers open class SecurityCode: NSObject {
     open var length: Int = 0
     open var cardLocation: String!
     open var mode: String!
@@ -30,4 +30,17 @@ open class SecurityCode: NSObject {
 
         return obj
     }
+    open class func fromJSON(_ json: NSDictionary) -> SecurityCode {
+                let securityCode: SecurityCode = SecurityCode()
+                if let length = JSONHandler.attemptParseToInt(json["length"]) {
+                        securityCode.length = length
+                    }
+                if let cardLocation = JSONHandler.attemptParseToString(json["card_location"]) {
+                        securityCode.cardLocation = cardLocation
+                    }
+                if let mode = JSONHandler.attemptParseToString(json["mode"]) {
+                        securityCode.mode = mode
+                    }
+                return securityCode
+           }
 }

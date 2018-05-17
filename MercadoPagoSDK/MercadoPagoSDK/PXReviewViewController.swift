@@ -15,9 +15,10 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
-    // MARK: Definitions
     var footerView: UIView!
     var floatingButtonView: UIView!
+
+    // MARK: Definitions
     var termsConditionView: PXTermsAndConditionView!
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
@@ -45,15 +46,11 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
+        self.checkFloatingButtonVisibility()
     }
 
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.checkFloatingButtonVisibility()
     }
 }
 
@@ -63,7 +60,7 @@ extension PXReviewViewController {
     fileprivate func setupUI() {
         navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         loadMPStyles()
-        navigationController?.navigationBar.barTintColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.highlightBackgroundColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         if contentView.getSubviews().isEmpty {
             renderViews()
@@ -152,6 +149,7 @@ extension PXReviewViewController {
         view.addSubview(floatingButtonView)
         PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
 
         // Add elastic header.
@@ -184,7 +182,7 @@ extension PXReviewViewController {
         }
         let floatingButtonCoordinates = floatingButton.convert(CGPoint.zero, from: self.view.window)
         let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
-        return fixedButtonCoordinates.y >= floatingButtonCoordinates.y
+        return fixedButtonCoordinates.y > floatingButtonCoordinates.y
     }
 
     fileprivate func getPaymentMethodComponentView() -> UIView? {
@@ -213,7 +211,7 @@ extension PXReviewViewController {
 
     fileprivate func getCFTComponentView() -> UIView? {
         if viewModel.hasPayerCostAddionalInfo() {
-            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.getTheme().labelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
             return cftView
         }
         return nil
@@ -232,19 +230,12 @@ extension PXReviewViewController {
 
     fileprivate func getFooterView() -> UIView {
         let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
-            guard let strongSelf = self else {
-                return
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.confirmPayment()
             }
-            strongSelf.confirmPayment()
-        }
-        let cancelAction = PXComponentAction(label: "Cancelar".localized) {
-            [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.cancelPayment()
-        }
-        let footerProps = PXFooterProps(buttonAction: payAction, linkAction: cancelAction)
+        let footerProps = PXFooterProps(buttonAction: payAction)
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
@@ -255,30 +246,30 @@ extension PXReviewViewController {
     }
 
     fileprivate func getTopCustomView() -> UIView? {
-        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
+        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
             return componentView
         }
         return nil
     }
 
     fileprivate func getBottomCustomView() -> UIView? {
-        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
+        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
             return componentView
         }
         return nil
     }
-
-    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
         self.checkFloatingButtonVisibility()
     }
-    
-    func checkFloatingButtonVisibility(){
-        if !isConfirmButtonVisible() {
+
+    func checkFloatingButtonVisibility() {
+       if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1
+            self.footerView.alpha = 0
         } else {
             self.floatingButtonView.alpha = 0
+            self.footerView.alpha = 1
         }
     }
 }

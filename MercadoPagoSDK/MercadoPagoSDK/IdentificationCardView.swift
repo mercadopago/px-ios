@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class IdentificationCardView: UIView, Updatable {
 var view: UIView!
 

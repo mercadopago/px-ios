@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 open class Regex {
     let internalExpression: NSRegularExpression?
     let pattern: String
@@ -23,7 +24,7 @@ open class Regex {
 
     open func test(_ input: String) -> Bool {
 		if self.internalExpression != nil {
-			let matches = self.internalExpression!.matches(in: input, options: [], range: NSMakeRange(0, input.count))
+            let matches = self.internalExpression!.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
 			return matches.count > 0
 		} else {
 			return false

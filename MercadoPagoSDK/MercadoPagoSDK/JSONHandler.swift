@@ -27,17 +27,6 @@ class JSONHandler: NSObject {
         return result
     }
 
-    class func convertToDictionary(text: String) -> [String: Any]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
-    }
-
     class func parseToJSON(_ data: Data) -> Any {
         var result: Any = []
         do {
@@ -46,18 +35,6 @@ class JSONHandler: NSObject {
             print("ERROR PARSIBNG JSON, ERROR = \(error)")
         }
         return result
-    }
-
-    class func attemptParseToString(_ anyobject: Any?, defaultReturn: String? = nil) -> String? {
-
-        guard anyobject != nil, let string = (anyobject! as AnyObject).description else {
-            return defaultReturn
-        }
-        if  string != "<null>" {
-            return string
-        } else {
-            return defaultReturn
-        }
     }
 
     class func attemptParseToBool(_ anyobject: Any?) -> Bool? {
@@ -77,6 +54,30 @@ class JSONHandler: NSObject {
         }
         return Double(string) ?? defaultReturn
     }
+
+    class func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+
+    class func attemptParseToString(_ anyobject: Any?, defaultReturn: String? = nil) -> String? {
+
+        guard anyobject != nil, let string = (anyobject! as AnyObject).description else {
+            return defaultReturn
+        }
+        if  string != "<null>" {
+            return string
+        } else {
+            return defaultReturn
+        }
+    }
+
     class func attemptParseToInt(_ anyobject: Any?, defaultReturn: Int? = nil) -> Int? {
 
         guard let string = attemptParseToString(anyobject) else {

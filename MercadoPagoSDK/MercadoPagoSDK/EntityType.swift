@@ -8,11 +8,24 @@
 
 import Foundation
 
-open class EntityType: NSObject, Cellable {
+@objcMembers open class EntityType: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.entityType
     open var entityTypeId: String!
     open var name: String!
+
+    open class func fromJSON(_ json: NSDictionary) -> EntityType {
+        let entityType: EntityType = EntityType()
+
+        if let entityTypeId = JSONHandler.attemptParseToString(json["id"]) {
+            entityType.entityTypeId = entityTypeId
+        }
+        if let name = JSONHandler.attemptParseToString(json["name"]) {
+            entityType.name = name
+        }
+
+        return entityType
+    }
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentData: NSObject {
+@objcMembers public class PaymentData: NSObject {
 
     public var paymentMethod: PaymentMethod?
     public var issuer: Issuer?
@@ -52,6 +52,10 @@ public class PaymentData: NSObject {
 
         if paymentMethod.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
+        }
+
+        if paymentMethod.isIssuerRequired && self.issuer == nil {
+            return false
         }
 
         if paymentMethod.isCard && (token == nil || payerCost == nil) {

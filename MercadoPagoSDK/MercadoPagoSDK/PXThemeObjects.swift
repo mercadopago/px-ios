@@ -14,6 +14,7 @@ protocol PXAnimatedButtonDelegate: NSObjectProtocol {
     func didFinishAnimation()
 }
 
+@objcMembers
 open class PXNavigationHeaderLabel: UILabel {
 
     override init(frame: CGRect) {
@@ -29,13 +30,6 @@ open class PXNavigationHeaderLabel: UILabel {
             self.font = Utils.getFont(size: self.font!.pointSize)
         }
     }
-}
-
-open class PXSecondaryButton: UIButton {}
-open class PXToolbar: UIToolbar {}
-open class PXPrimaryButton: UIButton {
-    weak var animationDelegate: PXAnimatedButtonDelegate?
-    var progressView: JSSPogressView?
 }
 
 extension PXPrimaryButton {

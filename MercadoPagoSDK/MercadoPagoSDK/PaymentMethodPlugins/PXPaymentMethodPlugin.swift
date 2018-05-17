@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@objcMembers
 open class PXPaymentMethodPlugin: NSObject {
 
     @objc public enum RemotePaymentStatus: Int {
@@ -21,7 +22,7 @@ open class PXPaymentMethodPlugin: NSObject {
 
     static let PAYMENT_METHOD_TYPE_ID = PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
 
-    var id: String
+    var paymentMethodPluginId: String
     var name: String
     var paymentMethodPluginDescription: String?
     var image: UIImage
@@ -34,8 +35,8 @@ open class PXPaymentMethodPlugin: NSObject {
 
     open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 
-    public init (id: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPaymentPluginComponent) {
-        self.id = id
+    public init (paymentMethodPluginId: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPaymentPluginComponent) {
+        self.paymentMethodPluginId = paymentMethodPluginId
         self.name = name
         self.image = image
         self.paymentMethodPluginDescription = description
@@ -55,7 +56,7 @@ open class PXPaymentMethodPlugin: NSObject {
 // MARK: PXPaymentMethodPlugin as PaymentOptionDrawable/PaymentMethodOption
 extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
     public func getId() -> String {
-        return id
+        return paymentMethodPluginId
     }
 
     public func getDescription() -> String {

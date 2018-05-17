@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class Card: NSObject, CardInformation, PaymentMethodOption {
+@objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
 
     open var cardHolder: Cardholder?
     open var customerId: String?
@@ -23,6 +23,45 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
     open var paymentMethod: PaymentMethod?
     open var issuer: Issuer?
     open var securityCode: SecurityCode?
+
+    open class func fromJSON(_ json: NSDictionary) -> Card {
+                let card: Card = Card()
+                if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
+                        card.customerId = customerId
+                    }
+                if let expirationMonth = JSONHandler.attemptParseToInt(json["expiration_month"]) {
+                        card.expirationMonth = expirationMonth
+                    }
+                if let expirationYear = JSONHandler.attemptParseToInt(json["expiration_year"]) {
+                        card.expirationYear = expirationYear
+                    }
+                card.idCard = JSONHandler.attemptParseToString(json["id"], defaultReturn: "")!
+                if let lastFourDigits = JSONHandler.attemptParseToString(json["last_four_digits"]) {
+                        card.lastFourDigits = lastFourDigits
+                   }
+                if let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"]) {
+                        card.firstSixDigits = firstSixDigits
+                    }
+                if let issuerDic = json["issuer"] as? NSDictionary {
+                        card.issuer = Issuer.fromJSON(issuerDic)
+                    }
+                if let secDic = json["security_code"] as? NSDictionary {
+                        card.securityCode = SecurityCode.fromJSON(secDic)
+                    }
+                if let pmDic = json["payment_method"] as? NSDictionary {
+                        card.paymentMethod = PaymentMethod.fromJSON(pmDic)
+                    }
+                if let chDic = json["card_holder"] as? NSDictionary {
+                       card.cardHolder = Cardholder.fromJSON(chDic)
+                   }
+               if let dateLastUpdated = JSONHandler.attemptParseToString(json["date_last_updated"]) {
+                        card.dateLastUpdated = Utils.getDateFromString(dateLastUpdated)
+                    }
+                if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]) {
+                        card.dateCreated = Utils.getDateFromString(dateCreated)
+                    }
+                return card
+            }
 
     public func getIssuer() -> Issuer? {
         return self.issuer

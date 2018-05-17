@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Device: NSObject {
+@objcMembers open class Device: NSObject {
     open var fingerprint: Fingerprint!
 
     public override init() {

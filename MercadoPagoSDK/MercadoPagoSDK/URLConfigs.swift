@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class URLConfigs: NSObject {
+@objcMembers open class URLConfigs: NSObject {
     static let MP_ALPHA_ENV = "/gamma"
     static var MP_TEST_ENV = "/beta"
     static var MP_PROD_ENV = "/v1"

@@ -186,5 +186,26 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Change payment method</string>
 	</dict>
+	<key>bank_deal_details_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Conditions</string>
+	</dict>
+	<key>bank_deal_details_date_format</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Up to %@</string>
+	</dict>
+	<key>bank_deals_screen_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Promotions</string>
+	</dict>
 </dict>
 </plist>

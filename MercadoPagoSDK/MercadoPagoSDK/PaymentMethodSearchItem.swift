@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
+@objcMembers open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
 
     open var idPaymentMethodSearchItem: String!
     open var type: PaymentMethodSearchItemType!
@@ -84,6 +84,40 @@ open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMeth
     public func getComment() -> String {
         return self.comment ?? ""
     }
+
+    open class func fromJSON(_ json: NSDictionary) -> PaymentMethodSearchItem {
+              let pmSearchItem = PaymentMethodSearchItem()
+
+               if let idPaymentMethodSearchItem = JSONHandler.attemptParseToString(json["id"]) {
+                        pmSearchItem.idPaymentMethodSearchItem = idPaymentMethodSearchItem
+                    }
+                if let type = JSONHandler.attemptParseToString(json["type"]) {
+                        pmSearchItem.type = PaymentMethodSearchItemType(rawValue: type)
+                    }
+                if let description = JSONHandler.attemptParseToString(json["description"]) {
+                        pmSearchItem.paymentMethodSearchItemDescription = description
+                    }
+                if let comment = JSONHandler.attemptParseToString(json["comment"]) {
+                        pmSearchItem.comment = comment
+                    }
+                if let showIcon = JSONHandler.attemptParseToBool(json["show_icon"]) {
+                        pmSearchItem.showIcon = showIcon
+                    }
+                if let childrenHeader = JSONHandler.attemptParseToString(json["children_header"]) {
+                        pmSearchItem.childrenHeader = childrenHeader
+                    }
+
+                var children = [PaymentMethodSearchItem]()
+                if let childrenJson = json["children"] as? NSArray {
+                        for index in 0..<childrenJson.count {
+                                if let childJson = childrenJson[index] as? NSDictionary {
+                                        children.append(PaymentMethodSearchItem.fromJSON(childJson))
+                                    }
+                            }
+                        pmSearchItem.children = children
+                    }
+                return pmSearchItem
+            }
 }
 
 public enum PaymentMethodSearchItemType: String {

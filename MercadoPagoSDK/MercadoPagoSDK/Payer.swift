@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 open class Payer: NSObject {
 	open var email: String!
 	open var payerId: String?
@@ -23,6 +24,40 @@ open class Payer: NSObject {
 		self.identification = identification
         self.entityType = entityType
 	}
+
+    open class func fromJSON(_ json: NSDictionary) -> Payer {
+        let payer: Payer = Payer()
+
+        if let id = JSONHandler.attemptParseToString(json["id"]) {
+            payer.payerId  = id
+        }
+
+        if let email = JSONHandler.attemptParseToString(json["email"]) {
+            payer.email  = email
+        }
+
+        if let identificationDic = json["identification"] as? NSDictionary {
+            payer.identification = Identification.fromJSON(identificationDic)
+        }
+
+        if let entityTypeDic = json["entity_type"] as? NSDictionary {
+            payer.entityType = EntityType.fromJSON(entityTypeDic)
+        }
+
+        if let name = JSONHandler.attemptParseToString(json["first_name"]) {
+            payer.name = name
+        }
+
+        if let surname = JSONHandler.attemptParseToString(json["last_name"]) {
+            payer.surname = surname
+        }
+
+        if let addressDic = json["address"] as? NSDictionary {
+            payer.address = Address.fromJSON(addressDic)
+        }
+
+        return payer
+    }
 
     func clearCollectedData() {
         self.entityType = nil

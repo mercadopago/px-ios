@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Currency: NSObject {
+@objcMembers open class Currency: NSObject {
 
     open var currencyId: String!
     open var currencyDescription: String!

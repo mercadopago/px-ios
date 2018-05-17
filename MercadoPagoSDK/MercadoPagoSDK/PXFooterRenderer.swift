@@ -49,7 +49,7 @@ class PXFooterRenderer: NSObject {
         }
         return fooView
     }
-    
+
     func expressRender(_ footer: PXFooterComponent) -> PXFooterView {
         let fooView = PXFooterView()
         var topView: UIView = fooView
@@ -80,31 +80,30 @@ class PXFooterRenderer: NSObject {
         
         return fooView
     }
-    
-    func buildPrincipalButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> UIButton {
+
+    func buildPrincipalButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) ->  PXPrimaryButton {
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 3
-        button.setTitle(footerAction.label, for: .normal)
+        button.buttonTitle = footerAction.label
         button.add(for: .touchUpInside, footerAction.action)
         return button
     }
 
-    func buildLinkButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> UIButton {
+    func buildLinkButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> PXSecondaryButton {
         let linkButton = PXSecondaryButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false
-        linkButton.setTitle(footerAction.label, for: .normal)
+        linkButton.buttonTitle = footerAction.label
         linkButton.add(for: .touchUpInside, footerAction.action)
         return linkButton
     }
 }
 
 class PXFooterView: UIView {
-    public var principalButton: UIButton?
-    public var linkButton: UIButton?
-    
     func getPrincipalButton() -> PXPrimaryButton? {
         guard let mainButton = principalButton else { return nil }
         return mainButton as? PXPrimaryButton
     }
+
+    public var principalButton: PXPrimaryButton?
+    public var linkButton: PXSecondaryButton?
 }

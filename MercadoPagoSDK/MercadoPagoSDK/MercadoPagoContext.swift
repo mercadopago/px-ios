@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class MercadoPagoContext: NSObject {
+@objcMembers open class MercadoPagoContext: NSObject {
 
     static let sharedInstance = MercadoPagoContext()
 
@@ -49,8 +49,8 @@ open class MercadoPagoContext: NSObject {
         return  "iOS"
     }
 
-    open func sdkVersion() -> String! {
-        let sdkVersion: String = Utils.getSetting(identifier: MercadoPagoContext.kSdkVersion)
+    open func sdkVersion() -> String {
+        let sdkVersion: String = Utils.getSetting(identifier: MercadoPagoContext.kSdkVersion) ?? ""
         return sdkVersion
     }
 
@@ -71,7 +71,7 @@ open class MercadoPagoContext: NSObject {
         //Colombia
         "MCO": ["language": "es-CO", "currency": "COP", "termsconditions": "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
         //Venezuela
-        "MLV": ["language": "es", "currency": "VEF", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
+        "MLV": ["language": "es", "currency": "VES", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
     ]
 
     public enum Site: String {
@@ -93,7 +93,7 @@ open class MercadoPagoContext: NSObject {
         let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             self.site = site
-            self.termsAndConditionsSite = siteConfig!["termsconditions"] as! String
+            self.termsAndConditionsSite = siteConfig!["termsconditions"] as? String ?? ""
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
                 self.currency = currency!

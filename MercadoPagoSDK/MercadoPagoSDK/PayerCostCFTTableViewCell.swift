@@ -31,7 +31,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
 
         if !payerCost.hasInstallmentsRate() && payerCost.installments != 1 {
-            self.totalLabel.attributedText = NSAttributedString(string: "Sin interés".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 14)])
+            self.totalLabel.attributedText = NSAttributedString(string: "Sin interés".localized, attributes: [NSAttributedStringKey.font: Utils.getFont(size: 14)])
             self.totalLabel.textColor = UIColor.mpGreenishTeal()
 
         } else if payerCost.installments != 1 {

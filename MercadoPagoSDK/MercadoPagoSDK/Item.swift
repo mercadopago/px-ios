@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Item: NSObject {
+@objcMembers open class Item: NSObject {
 
     // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
     // que cada item no sea nulo, que su cantidad sea 1 o mayor
@@ -45,6 +45,36 @@ open class Item: NSObject {
         self.itemDescription = description ?? ""
         self.currencyId = currencyId
     }
+
+    open class func fromJSON(_ json: NSDictionary) -> Item {
+                let item = Item()
+
+                item.itemId = JSONHandler.getValue(of: String.self, key: "id", from: json)
+
+                if let quantity = JSONHandler.attemptParseToInt(json["quantity"]) {
+                        item.quantity = quantity
+                    }
+                if let unitPrice = JSONHandler.attemptParseToDouble(json["unit_price"]) {
+                        item.unitPrice = unitPrice
+                    }
+                if let title = JSONHandler.attemptParseToString(json["title"]) {
+                        item.title = title
+                    }
+                if let description = JSONHandler.attemptParseToString(json["description"]) {
+                        item.itemDescription = description
+                    }
+
+                item.currencyId = JSONHandler.getValue(of: String.self, key: "currency_id", from: json)
+
+                if let categoryId = JSONHandler.attemptParseToString(json["category_id"]) {
+                        item.categoryId = categoryId
+                    }
+                if let pictureUrl = JSONHandler.attemptParseToString(json["picture_url"]) {
+                        item.pictureUrl = pictureUrl
+                    }
+
+                return item
+            }
 
     open func toJSONString() -> String {
 

@@ -21,7 +21,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
     }
 
     // MARK: APPROVED - ACCOUNT MONEY
@@ -34,7 +34,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
     }
 
     // MARK: REJECTED - CARD
@@ -46,8 +46,8 @@ class PXFooterComponentTest: BaseTest {
         let footerView = ResultMockComponentHelper.buildFooterView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(footerView.principalButton?.title(for: .normal), PXFooterResultConstants.ERROR_BUTTON_TEXT.localized)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.ERROR_LINK_TEXT.localized)
+        XCTAssertEqual(footerView.principalButton?.buttonTitle, PXFooterResultConstants.ERROR_BUTTON_TEXT.localized)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.ERROR_LINK_TEXT.localized)
     }
 
     func testFooterView_rejectedC4AuthCardPayment_render() {
@@ -58,8 +58,8 @@ class PXFooterComponentTest: BaseTest {
         let footerView = ResultMockComponentHelper.buildFooterView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(footerView.principalButton?.title(for: .normal), PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.C4AUTH_LINK_TEXT.localized)
+        XCTAssertEqual(footerView.principalButton?.buttonTitle, PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.C4AUTH_LINK_TEXT.localized)
     }
 
     // MARK: PENDING - CARD
@@ -72,7 +72,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
     }
 
     // MARK: Instructions
@@ -85,8 +85,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.title(for: .normal), PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
-
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
     }
 
 }

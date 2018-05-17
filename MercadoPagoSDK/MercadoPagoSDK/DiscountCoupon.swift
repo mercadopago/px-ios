@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class DiscountCoupon: NSObject {
 
     open static var activeCoupon: DiscountCoupon!
@@ -43,6 +44,36 @@ open class DiscountCoupon: NSObject {
    open var campaignId: String?
 
    open var amountWithoutDiscount: Double = 0
+
+    open class func fromJSON(_ json: NSDictionary, amountWithoutDiscount: Double) -> DiscountCoupon? {
+                guard let couponId = json["id"]  else {
+                        return nil
+                    }
+                let discount = DiscountCoupon(discountId: couponId as! UInt)
+                if json["name"] != nil && !(json["name"]! is NSNull) {
+                        discount.name = json["name"] as? String
+                    }
+                if json["percent_off"] != nil && !(json["percent_off"]! is NSNull) {
+                        discount.percent_off = String( describing: json["percent_off"]  as! NSNumber)
+                    }
+                if json["amount_off"] != nil && !(json["amount_off"]! is NSNull) {
+                        discount.amount_off = String( describing: json["amount_off"]  as! NSNumber)
+                    }
+                if json["coupon_amount"] != nil && !(json["coupon_amount"]! is NSNull) {
+                        discount.coupon_amount = String( describing: json["coupon_amount"]  as! NSNumber)
+                    }
+                if json["currency_id"] != nil && !(json["currency_id"]! is NSNull) {
+                        discount.currency_id = json["currency_id"] as? String
+                    }
+                if json["concept"] != nil && !(json["concept"]! is NSNull) {
+                        discount.concept = json["concept"] as? String
+                    }
+                if json["campaign_id"] != nil && !(json["campaign_id"]! is NSNull) {
+                        discount.campaignId = json["campaign_id"] as? String
+                    }
+                discount.amountWithoutDiscount = amountWithoutDiscount
+                return discount
+            }
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())

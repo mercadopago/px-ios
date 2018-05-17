@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Address: NSObject {
+@objcMembers open class Address: NSObject {
     open var streetName: String?
     open var streetNumber: NSNumber?
     open var zipCode: String?
@@ -21,6 +21,20 @@ open class Address: NSObject {
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
+    }
+
+    open class func fromJSON(_ json: NSDictionary) -> Address {
+        let address: Address = Address()
+        if let streetName = JSONHandler.attemptParseToString(json["street_name"]) {
+            address.streetName = streetName
+        }
+        if let streetNumber = JSONHandler.attemptParseToString(json["street_number"]) {
+            address.streetNumber = streetNumber.numberValue
+        }
+        if let zipCode = JSONHandler.attemptParseToString(json["zip_code"]) {
+            address.zipCode = zipCode
+        }
+        return address
     }
 
     open func toJSON() -> [String: Any] {

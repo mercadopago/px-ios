@@ -19,7 +19,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
 
         var lastLabel: UILabel?
         for string in instructionsSecondaryInfo.props.secondaryInfo {
-            let attributes = [ NSFontAttributeName: Utils.getFont(size: LABEL_FONT_SIZE) ]
+            let attributes = [ NSAttributedStringKey.font: Utils.getFont(size: LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: string, attributes: attributes)
             let secondaryInfoLabel = buildSecondaryInfoLabel(with: attributedString, in: instructionsSecondaryInfoView, onBottomOf: lastLabel)
             instructionsSecondaryInfoView.secondaryInfoLabels = Array.safeAppend(instructionsSecondaryInfoView.secondaryInfoLabels, secondaryInfoLabel)

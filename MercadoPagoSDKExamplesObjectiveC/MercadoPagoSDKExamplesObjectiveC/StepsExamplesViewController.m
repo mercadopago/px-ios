@@ -139,7 +139,7 @@ CheckoutPreference *pref;
     //pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
     
     pd.issuer = nil;//[[Issuer alloc] init];
-     PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_bad_filled_other" paymentData:pd payerEmail:nil id:nil statementDescription:nil];
+     PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_bad_filled_other" paymentData:pd payerEmail:nil paymentId:nil statementDescription:nil];
     
     [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:pd paymentResult:paymentResult discount:nil navigationController:self.navigationController] start];
 

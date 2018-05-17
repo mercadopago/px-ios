@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class PXComponentAction: NSObject {
     var label: String
     var action : (() -> Void)

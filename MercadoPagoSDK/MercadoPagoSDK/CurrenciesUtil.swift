@@ -9,8 +9,8 @@
 import Foundation
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (l__?, r__?):
+    return l__ < r__
   case (nil, _?):
     return true
   default:
@@ -20,13 +20,14 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
+  case let (l__?, r__?):
+    return l__ > r__
   default:
     return rhs < lhs
   }
 }
 
+@objcMembers
 open class CurrenciesUtil {
 
     open class var currenciesList: [String: Currency] { return [
@@ -48,7 +49,7 @@ open class CurrenciesUtil {
         "COP": Currency(currencyId: "COP", description: "Peso colombiano", symbol: "$", decimalPlaces: 0, decimalSeparator: "", thousandSeparator: "."),
 
 		//Venezuela
-        "VEF": Currency(currencyId: "VEF", description: "Bolivar fuerte", symbol: "BsF", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: ".")
+        "VES": Currency(currencyId: "VES", description: "Bolívares Soberanos", symbol: "BsS", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: ".")
 
         ]}
 

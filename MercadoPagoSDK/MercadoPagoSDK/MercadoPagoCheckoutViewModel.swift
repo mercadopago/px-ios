@@ -44,6 +44,7 @@ public enum CheckoutStep: String {
     case SERVICE_PAYMENT_METHOD_PLUGIN_INIT
 }
 
+@objcMembers
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var startedCheckout = false
@@ -241,11 +242,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
-        return EntityTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.entityTypes!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        return EntityTypeViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.entityTypes!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func financialInstitutionViewModel() -> AdditionalStepViewModel {
-        return FinancialInstitutionAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.financialInstitutions!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        return FinancialInstitutionViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.financialInstitutions!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func issuerViewModel() -> AdditionalStepViewModel {
@@ -273,7 +274,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
-        let cardInformation = self.paymentOptionSelected as! CardInformation
+        guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+            fatalError("Cannot conver payment option selected to CardInformation")
+        }
         var reason: SecurityCodeViewModel.Reason
         if paymentResult != nil && paymentResult!.isInvalidESC() {
             reason = SecurityCodeViewModel.Reason.INVALID_ESC
@@ -537,12 +540,16 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return
         }
 
-        self.reviewScreenPreference.disableChangeMethodOption()
+        if !search.paymentMethods.isEmpty, !search.paymentMethods[0].isCard {
+            self.reviewScreenPreference.disableChangeMethodOption()
+        }
 
         if !Array.isNullOrEmpty(search.groups) && search.groups.count == 1 {
             self.updateCheckoutModel(paymentOptionSelected: search.groups[0])
         } else if !Array.isNullOrEmpty(search.customerPaymentMethods) && search.customerPaymentMethods?.count == 1 {
-            let customOption = search.customerPaymentMethods![0] as! PaymentMethodOption
+            guard let customOption = search.customerPaymentMethods![0] as? PaymentMethodOption else {
+                fatalError("Cannot conver customerPaymentMethod to PaymentMethodOption")
+            }
             self.updateCheckoutModel(paymentOptionSelected: customOption)
         } else if  !Array.isNullOrEmpty(paymentMethodPluginsToShow) && paymentMethodPluginsToShow.count == 1 {
             self.updateCheckoutModel(paymentOptionSelected: paymentMethodPluginsToShow[0])
@@ -577,7 +584,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let totalPaymentMethodsToShow =  totalPaymentMethodSearchCount + paymentMethodPluginsToShow.count
 
         if totalPaymentMethodsToShow == 0 {
-            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
+            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
         } else if totalPaymentMethodsToShow == 1 {
             autoselectOnlyPaymentMethod()
@@ -608,7 +615,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let isBlacklabelPayment = paymentData.hasToken() && paymentData.getToken()!.cardId != nil && String.isNullOrEmpty(customerId)
 
-        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
+        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode, discount: paymentData.discount)
         return mpPayment
     }
 
@@ -675,7 +682,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
             self.paymentData.updatePaymentDataWith(issuer: cardInformation.getIssuer())
         }
-
     }
 
     func hasCustomPaymentOptions() -> Bool {
@@ -687,7 +693,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected!.getId()))
         } else {
             // Se necesita completar información faltante de settings y pm para custom payment options
-            let cardInformation = (self.paymentOptionSelected as! CardInformation)
+            guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+                fatalError("Cannot convert paymentOptionSelected to CardInformation")
+            }
             let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: cardInformation.getPaymentMethodId())
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)

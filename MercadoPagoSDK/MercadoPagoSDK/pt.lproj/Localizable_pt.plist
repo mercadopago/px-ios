@@ -186,5 +186,26 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Alterar meio de pagamento</string>
 	</dict>
+	<key>bank_deal_details_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Condições</string>
+	</dict>
+	<key>bank_deal_details_date_format</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Até %@</string>
+	</dict>
+	<key>bank_deals_screen_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Promoções</string>
+	</dict>
 </dict>
 </plist>

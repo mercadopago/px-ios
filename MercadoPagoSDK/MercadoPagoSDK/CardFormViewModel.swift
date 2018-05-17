@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import MercadoPagoServices
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (l__?, r__?):
+    return l__ < r__
   case (nil, _?):
     return true
   default:
@@ -18,6 +20,7 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+@objcMembers
 open class CardFormViewModel: NSObject {
 
     var paymentMethods: [PaymentMethod]
@@ -34,7 +37,7 @@ open class CardFormViewModel: NSObject {
 
     let animationDuration: Double = 0.6
 
-    var promos: [BankDeal]?
+    var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
     public init(paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
@@ -119,7 +122,8 @@ open class CardFormViewModel: NSObject {
         if trimmedNumber.count < 6 {
             return nil
         } else {
-            let bin = trimmedNumber.substring(to: (trimmedNumber.index(trimmedNumber.startIndex, offsetBy: 6)))
+            let range = (trimmedNumber.index(trimmedNumber.startIndex, offsetBy: 6))
+            let bin = String(trimmedNumber[..<range])
             return bin
         }
     }
@@ -205,10 +209,10 @@ open class CardFormViewModel: NSObject {
 
         var paymentMethods = [PaymentMethod]()
 
-        for (_, value) in self.paymentMethods.enumerated() {
-                if value.conformsToBIN(getBIN(cardNumber)!) {
-                    paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
-                }
+        for paymentMethod in self.paymentMethods {
+            if paymentMethod.conformsToBIN(getBIN(cardNumber)!) {
+                paymentMethods.append(paymentMethod.cloneWithBIN(getBIN(cardNumber)!)!)
+            }
         }
         if paymentMethods.isEmpty {
             return nil

@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class MPCardFormToolbarLabel: MPLabel {
 
     override open func drawText(in rect: CGRect) {

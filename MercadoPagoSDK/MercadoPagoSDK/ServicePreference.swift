@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class ServicePreference: NSObject {
+@objcMembers open class ServicePreference: NSObject {
 
     var customerURL: String?
     var customerURI = ""
@@ -47,7 +47,7 @@ open class ServicePreference: NSObject {
         customerAdditionalInfo = additionalInfo
     }
 
-    public func setCreatePayment(baseURL: String = URLConfigs.MP_API_BASE_URL, URI: String = URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION, additionalInfo: NSDictionary = [:]) {
+    public func setCreatePayment(baseURL: String, URI: String, additionalInfo: NSDictionary = [:]) {
         paymentURL = baseURL
         paymentURI = URI
         paymentAdditionalInfo = additionalInfo

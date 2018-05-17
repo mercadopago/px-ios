@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class ApiException: NSObject {
+@objcMembers open class ApiException: NSObject {
     open var cause: [Cause]?
     open var error: String?
     open var message: String?
@@ -26,8 +26,8 @@ open class ApiException: NSObject {
         }
         var cause: [Cause] = [Cause]()
         if let causeArray = json["cause"] as? NSArray {
-            for i in 0..<causeArray.count {
-                if let causeDic = causeArray[i] as? NSDictionary {
+            for index in 0..<causeArray.count {
+                if let causeDic = causeArray[index] as? NSDictionary {
                     cause.append(Cause.fromJSON(causeDic))
                 }
             }

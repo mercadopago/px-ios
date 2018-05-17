@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 open class PXThemeProperty: NSObject {
     let backgroundColor: UIColor
     let tintColor: UIColor

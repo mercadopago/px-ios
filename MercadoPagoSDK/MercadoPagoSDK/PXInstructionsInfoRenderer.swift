@@ -23,7 +23,7 @@ class PXInstructionsInfoRenderer: NSObject {
         var lastView: UIView?
 
         if let infoTitle = instructionsInfo.props.infoTitle, !infoTitle.isEmpty {
-            let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
+            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE)]
             let attributedString = NSAttributedString(string: infoTitle, attributes: attributes)
             let isLastLabel = Array.isNullOrEmpty(instructionsInfo.props.infoContent)
             instructionsInfoView.titleLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastView, isLastLabel: isLastLabel, isTitle: true)
@@ -39,7 +39,7 @@ class PXInstructionsInfoRenderer: NSObject {
                     isLast = true
                 }
 
-                let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
+                let attributes = [NSAttributedStringKey.font: Utils.getFont(size: INFO_LABEL_FONT_SIZE)]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
                 let isFirstInfo = loopsDone == 0
                 let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastView, isLastLabel: isLast, bottomDivider: instructionsInfo.props.bottomDivider, isFirstInfo: isFirstInfo)

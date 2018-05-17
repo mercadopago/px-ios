@@ -21,7 +21,7 @@ final class TitleValueView: UIView, PXComponent {
     fileprivate var titleLabel: UILabel!
     fileprivate var valueLabel: UILabel?
 
-    public init(frame: CGRect, titleText: String, valueDouble: Double, colorTitle: UIColor =  ThemeManager.shared.getTheme().boldLabelTintColor(), colorValue: UIColor =  ThemeManager.shared.getTheme().boldLabelTintColor(), upperSeparatorLine: Bool = false, valueEnable: Bool = true, titleFontSize: CGFloat = FONT_SIZE, valueFontSize: CGFloat = FONT_SIZE) {
+    public init(frame: CGRect, titleText: String, valueDouble: Double, colorTitle: UIColor =  ThemeManager.shared.boldLabelTintColor(), colorValue: UIColor =  ThemeManager.shared.boldLabelTintColor(), upperSeparatorLine: Bool = false, valueEnable: Bool = true, titleFontSize: CGFloat = FONT_SIZE, valueFontSize: CGFloat = FONT_SIZE) {
         super.init(frame: frame)
         titleLabel = UILabel(frame: getTitleFrame())
         titleLabel.textAlignment = .left

@@ -10,10 +10,10 @@ import UIKit
 
 class DiscountBodyCell: UIView {
 
-    let DISCOUNT_COLOR = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
-    let LABEL_COLOR = ThemeManager.shared.getTheme().boldLabelTintColor()
-    let ACCENT_LINK = ThemeManager.shared.getTheme().secondaryButton().tintColor
-    let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.getTheme().primaryButton().tintColor
+    let DISCOUNT_COLOR = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+    let LABEL_COLOR = ThemeManager.shared.boldLabelTintColor()
+    let ACCENT_LINK = ThemeManager.shared.secondaryColor()
+    let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.whiteColor()
     let SEPARATOR_BORDER_COLOR: UIColor = UIColor.UIColorFromRGB(0x999999)
 
     let margin: CGFloat = 5.0
@@ -53,7 +53,7 @@ class DiscountBodyCell: UIView {
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSAttributedStringKey.font: Utils.getFont(size: amountFontSize)])
 
         let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
         attributedTitle.append(attributedAmount)
@@ -84,14 +84,14 @@ class DiscountBodyCell: UIView {
         detailLabel.font = Utils.getFont(size: 16)
         let widthlabelDiscount = detailLabel.attributedText?.widthWithConstrainedHeight(height: 18)
         let totalViewWidth = widthlabelDiscount! + 20 + 8 + 2 * margin
-        var x = (screenWidth - totalViewWidth) / 2
-        let frameFlag = CGRect(x: x, y: (margin * 2 + 40), width: 20, height: 20)
+        var xPos = (screenWidth - totalViewWidth) / 2
+        let frameFlag = CGRect(x: xPos, y: (margin * 2 + 40), width: 20, height: 20)
         couponFlag.frame = frameFlag
-        x += 20 + margin
-        let frameLabel = CGRect(x: x, y: (margin * 2 + 40), width: widthlabelDiscount!, height: 18)
+        xPos += 20 + margin
+        let frameLabel = CGRect(x: xPos, y: (margin * 2 + 40), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-        x += widthlabelDiscount! + margin
-        let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + 40), width: 8, height: 12)
+        xPos += widthlabelDiscount! + margin
+        let frameArrow = CGRect(x: xPos, y: 4 + (margin * 2 + 40), width: 8, height: 12)
         rightArrow.frame = frameArrow
         self.addSubview(couponFlag)
         self.addSubview(detailLabel)
@@ -107,11 +107,12 @@ class DiscountBodyCell: UIView {
         let tituloLabel = MPLabel(frame: CGRect(x: margin, y: topMargin, width: (frame.size.width - 2 * margin), height: 20) )
         tituloLabel.textAlignment = .center
         let result = NSMutableAttributedString()
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: LABEL_COLOR]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 16), NSAttributedStringKey.foregroundColor: LABEL_COLOR]
         let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
         let space = NSMutableAttributedString(string: " ".localized, attributes: normalAttributes)
         let oldAmount = Utils.getAttributedAmount( coupon.amountWithoutDiscount, currency: currency, color: LABEL_COLOR, fontSize: 16, baselineOffset: 4)
-        oldAmount.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, oldAmount.length))
+
+        oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
         let newAmount = Utils.getAttributedAmount( coupon.newAmount(), currency: currency, color: DISCOUNT_COLOR, fontSize: 16, baselineOffset: 4)
         result.append(total)
         result.append(oldAmount)
@@ -147,17 +148,17 @@ class DiscountBodyCell: UIView {
         let widthlabelDiscount = detailLabel.attributedText?.widthWithConstrainedHeight(height: 18)
         let widthlabelAmount = (discountAmountLabel.attributedText?.widthWithConstrainedHeight(height: 12))! + 10
         let totalViewWidth = widthlabelDiscount! + widthlabelAmount + 10 + 8 + 2 * margin
-        var x = (screenWidth - totalViewWidth) / 2
-        let frameLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
+        var xPos = (screenWidth - totalViewWidth) / 2
+        let frameLabel = CGRect(x: xPos, y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-        x += widthlabelDiscount! + margin
-        let framePic = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: 10, height: 19)
+        xPos += widthlabelDiscount! + margin
+        let framePic = CGRect(x: xPos, y: (margin * 2 + topMargin + 20), width: 10, height: 19)
         picFlag.frame = framePic
-        x += 10
-        let frameAmountLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelAmount, height: 19)
+        xPos += 10
+        let frameAmountLabel = CGRect(x: xPos, y: (margin * 2 + topMargin + 20), width: widthlabelAmount, height: 19)
         discountAmountLabel.frame = frameAmountLabel
-        x += widthlabelAmount + margin
-        let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
+        xPos += widthlabelAmount + margin
+        let frameArrow = CGRect(x: xPos, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
         rightArrow.frame = frameArrow
 
         let path = UIBezierPath(roundedRect: discountAmountLabel.bounds,

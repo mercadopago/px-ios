@@ -31,13 +31,13 @@ extension MercadoPagoServicesAdapter {
 
     open func getCurrencyFromPXCurrency(_ pxCurrency: PXCurrency?) -> Currency {
         if let pxCurrency = pxCurrency {
-            let _id: String = pxCurrency.id
+            let currencyId: String = pxCurrency.id
             let description: String = pxCurrency._description ?? ""
             let symbol: String = pxCurrency.symbol ?? "$"
             let decimalPlaces: Int = pxCurrency.decimalPlaces ?? 2
             let decimalSeparator: String = pxCurrency.decimalSeparator ?? ","
             let thousandSeparator: String = pxCurrency.thousandSeparator ?? "."
-            let currency = Currency(currencyId: _id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
+            let currency = Currency(currencyId: currencyId, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
             return currency
         }
         return Currency()

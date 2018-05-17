@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class AvailableCardsViewController: MercadoPagoUIViewController {
 
     let buttonFontSize: CGFloat = 18
@@ -36,7 +37,7 @@ open class AvailableCardsViewController: MercadoPagoUIViewController {
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = ThemeManager.shared.getTheme().modalComponent().backgroundColor
+        self.view.backgroundColor = ThemeManager.shared.modalComponent().backgroundColor
 
         self.availableCardsDetailView = AvailableCardsDetailView(frame: self.viewModel.getDatailViewFrame(), paymentMethods: self.viewModel.paymentMethods)
         self.availableCardsDetailView.layer.cornerRadius = 4
@@ -44,7 +45,7 @@ open class AvailableCardsViewController: MercadoPagoUIViewController {
         self.view.addSubview(self.availableCardsDetailView)
 
         self.retryButton.setTitle(viewModel.getEnterCardMessage(), for: .normal)
-        self.retryButton.setTitleColor(ThemeManager.shared.getTheme().modalComponent().tintColor, for: .normal)
+        self.retryButton.setTitleColor(ThemeManager.shared.modalComponent().tintColor, for: .normal)
         self.retryButton.titleLabel?.font = Utils.getFont(size: buttonFontSize)
     }
     override open func didReceiveMemoryWarning() {

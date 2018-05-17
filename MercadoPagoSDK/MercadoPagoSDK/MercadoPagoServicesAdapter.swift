@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServices
 
-open class MercadoPagoServicesAdapter: NSObject {
+@objcMembers open class MercadoPagoServicesAdapter: NSObject {
 
     let mercadoPagoServices: MercadoPagoServices!
 
@@ -152,19 +152,8 @@ open class MercadoPagoServicesAdapter: NSObject {
             }, failure: failure)
     }
 
-    open func getBankDeals(callback : @escaping ([BankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        mercadoPagoServices.getBankDeals(callback: { [weak self] (pxBankDeals) in
-            guard let strongSelf = self else {
-                return
-            }
-            var bankDeals: [BankDeal] = []
-            for pxBankDeal in pxBankDeals {
-                let bankDeal = strongSelf.getBankDealFromPXBankDeal(pxBankDeal)
-                bankDeals.append(bankDeal)
-            }
-            callback(bankDeals)
-            }, failure: failure)
+    open func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        mercadoPagoServices.getBankDeals(callback: callback, failure: failure)
     }
 
     open func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {

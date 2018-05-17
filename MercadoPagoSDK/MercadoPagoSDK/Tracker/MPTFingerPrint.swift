@@ -10,13 +10,13 @@ import UIKit
 
 class MPTDevice: NSObject {
     var model: String
-    var os: String
+    var systemOs: String
     var systemVersion: String
     var screenSize: String
     var resolution: String
     override init() {
         self.model = UIDevice.current.model
-        self.os =  "iOS"
+        self.systemOs =  "iOS"
         self.systemVersion = UIDevice.current.systemVersion
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
@@ -27,7 +27,7 @@ class MPTDevice: NSObject {
     open func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "model": model,
-            "os": os,
+            "os": systemOs,
             "system_version": systemVersion,
             "screen_size": screenSize,
             "resolution": resolution
@@ -91,12 +91,11 @@ class ScreenTrackInfo {
         return obj
     }
     init(from json: [String: Any]) {
-
-        self.screenName = json["screen_name"] as! String
-        self.screenId = json["screen_id"] as! String
-        self.timestamp = json["timestamp"] as! Int64
-        self.type = json["type"] as! String
-        self.metadata = json["metadata"] as! [String: Any]
+        self.screenName = json["screen_name"] as? String
+        self.screenId = json["screen_id"] as? String
+        self.timestamp = json["timestamp"] as? Int64
+        self.type = json["type"] as? String
+        self.metadata = json["metadata"] as? [String: Any]
     }
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())

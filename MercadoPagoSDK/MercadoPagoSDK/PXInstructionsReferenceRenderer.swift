@@ -22,14 +22,14 @@ class PXInstructionsReferenceRenderer: NSObject {
         var lastView: UIView?
 
         if let title = instructionReference.props.reference?.label {
-            let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
+            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE)]
             let attributedString = NSAttributedString(string: title, attributes: attributes)
             instructionReferenceView.titleLabel = buildLabel(with: attributedString, in: instructionReferenceView, onBottomOf: nil, isTitle: true)
             lastView = instructionReferenceView.titleLabel
         }
 
         if let referenceText = instructionReference.props.reference?.getFullReferenceValue(), referenceText.isNotEmpty {
-            let attributes = [ NSFontAttributeName: Utils.getFont(size: REFERENCE_LABEL_FONT_SIZE) ]
+            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: REFERENCE_LABEL_FONT_SIZE)]
             let attributedString = NSAttributedString(string: referenceText, attributes: attributes)
             instructionReferenceView.referenceLabel = buildLabel(with: attributedString, in: instructionReferenceView, onBottomOf: lastView)
             lastView = instructionReferenceView.referenceLabel

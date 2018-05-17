@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class BankDeal: NSObject {
+@objcMembers open class BankDeal: NSObject {
 
 	open var promoId: String!
 	open var issuer: Issuer!
@@ -16,6 +16,44 @@ open class BankDeal: NSObject {
 	open var paymentMethods: [PaymentMethod]!
 	open var legals: String!
 	open var url: String?
+
+    open class func fromJSON(_ json: NSDictionary) -> BankDeal {
+
+                let promo: BankDeal = BankDeal()
+                promo.promoId = json["id"] as? String
+
+                if let issuerDic = json["issuer"] as? NSDictionary {
+                       promo.issuer = Issuer.fromJSON(issuerDic)
+                    }
+
+                if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]) {
+                        promo.recommendedMessage = recommendedMessage
+                    }
+                if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]) {
+                        promo.recommendedMessage = recommendedMessage
+                    }
+
+                if let picDic = json["picture"] as? NSDictionary {
+                        if let url = JSONHandler.attemptParseToString(picDic["url"]) {
+                                promo.url = url
+                            }
+                    }
+
+                var paymentMethods: [PaymentMethod] = [PaymentMethod]()
+                if let pmArray = json["payment_methods"] as? NSArray {
+                        for index in 0..<pmArray.count {
+                                if let pmDic = pmArray[index] as? NSDictionary {
+                                        paymentMethods.append(PaymentMethod.fromJSON(pmDic))
+                                   }
+                            }
+                   }
+
+                promo.paymentMethods = paymentMethods
+
+                promo.legals = json["legals"] as? String
+
+                return promo
+            }
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())

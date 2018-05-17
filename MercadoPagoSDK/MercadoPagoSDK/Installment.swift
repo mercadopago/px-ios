@@ -9,8 +9,8 @@
 import Foundation
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
-    case let (l?, r?):
-        return l < r
+    case let (l__?, r__?):
+        return l__ < r__
     case (nil, _?):
         return true
     default:
@@ -20,18 +20,44 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
-    case let (l?, r?):
-        return l > r
+    case let (l__?, r__?):
+        return l__ > r__
     default:
         return rhs < lhs
     }
 }
 
-open class Installment: NSObject {
+@objcMembers open class Installment: NSObject {
     open var issuer: Issuer!
     open var payerCosts: [PayerCost]!
     open var paymentMethodId: String!
     open var paymentTypeId: String!
+
+    open class func fromJSON(_ json: NSDictionary) -> Installment {
+                let installment: Installment = Installment()
+
+            if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]) {
+                        installment.paymentMethodId = paymentMethodId
+                    }
+                if let paymentTypeId = JSONHandler.attemptParseToString(json["payment_type_id"]) {
+                        installment.paymentTypeId = paymentTypeId
+                    }
+
+                if let issuerDic = json["issuer"] as? NSDictionary {
+                        installment.issuer = Issuer.fromJSON(issuerDic)
+                    }
+
+                var payerCosts: [PayerCost] = [PayerCost]()
+                if let payerCostsArray = json["payer_costs"] as? NSArray {
+                        for index in 0..<payerCostsArray.count {
+                                if let payerCostDic = payerCostsArray[index] as? NSDictionary {
+                                        payerCosts.append(PayerCost.fromJSON(payerCostDic))
+                                    }
+                            }
+                    }
+                installment.payerCosts = payerCosts
+                return installment
+            }
 
     open func toJSONString() -> String {
 

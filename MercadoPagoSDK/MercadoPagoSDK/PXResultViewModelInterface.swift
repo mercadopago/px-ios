@@ -23,4 +23,5 @@ protocol PXResultViewModelInterface {
     func buildBodyComponent() -> PXComponentizable?
     func buildTopCustomComponent() -> PXCustomComponentizable?
     func buildBottomCustomComponent() -> PXCustomComponentizable?
+    func trackInfo()
 }

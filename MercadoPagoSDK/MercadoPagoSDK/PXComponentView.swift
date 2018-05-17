@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PXComponentView: UIView {
+@objcMembers public class PXComponentView: UIView {
 
     private var topGuideView = UIView()
     private var bottomGuideView = UIView()
@@ -62,18 +62,22 @@ public class PXComponentView: UIView {
     public func addSubviewToBottom(_ view: UIView, withMargin margin: CGFloat = 0) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
-        putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
+        if self.contentView.subviews.count == 1 {
+            PXLayout.pinTop(view: view, withMargin: margin).isActive = true
+        } else {
+            putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
+        }
     }
 
-    override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
+    @objc override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
         self.topGuideView.addSeparatorLineToTop(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
 
-    override func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
+    @objc override func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
         self.bottomGuideView.addSeparatorLineToBottom(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
 
-    override func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor) {
+    @objc override func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor) {
         super.addLine(yCoordinate: yCoordinate, height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
 

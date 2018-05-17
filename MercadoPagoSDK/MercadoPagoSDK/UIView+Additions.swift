@@ -17,7 +17,7 @@ extension UIView {
         addSubview(line)
     }
 
-    func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
+    @objc func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color
@@ -37,7 +37,7 @@ extension UIView {
         addSubview(line)
     }
 
-    func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
+    @objc func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color
@@ -57,7 +57,7 @@ extension UIView {
         addSubview(line)
     }
 
-    func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
+    @objc func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color
@@ -66,5 +66,19 @@ extension UIView {
         PXLayout.matchWidth(ofView: line, withPercentage: horizontalMarginPercentage).isActive = true
         PXLayout.centerHorizontally(view: line).isActive = true
         PXLayout.setHeight(owner: line, height: height).isActive = true
+    }
+
+    func removeAllSubviews() {
+        for subview in self.subviews {
+            subview.removeFromSuperview()
+        }
+    }
+
+    func addSubviewAtFullSize(with view: UIView) {
+        self.addSubview(view)
+        PXLayout.centerHorizontally(view: view).isActive = true
+        PXLayout.centerVertically(view: view).isActive = true
+        PXLayout.matchWidth(ofView: view).isActive = true
+        PXLayout.matchHeight(ofView: view).isActive = true
     }
 }

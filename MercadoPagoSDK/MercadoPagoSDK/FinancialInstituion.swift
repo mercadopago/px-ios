@@ -8,11 +8,22 @@
 
 import Foundation
 
-open class FinancialInstitution: NSObject, Cellable {
+@objcMembers open class FinancialInstitution: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.financialInstitution
     open var financialInstitutionId: Int?
     open var financialInstitutionDescription: String?
+
+    open class func fromJSON(_ json: NSDictionary) -> FinancialInstitution {
+        let financialInstitution: FinancialInstitution = FinancialInstitution()
+        if let financialInstitutionId = JSONHandler.attemptParseToString(json["id"])?.numberValue, let finalId = financialInstitutionId as? Int {
+            financialInstitution.financialInstitutionId = finalId
+        }
+        if let description = JSONHandler.attemptParseToString(json["description"]) {
+            financialInstitution.financialInstitutionDescription = description
+        }
+        return financialInstitution
+    }
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())

@@ -18,8 +18,10 @@
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
+#import "MLMyMPPXTrackListener.h"
 
 @import MercadoPagoSDK;
+@import MercadoPagoPXTracking;
 
 
 @implementation MainExamplesViewController
@@ -85,25 +87,30 @@
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 60;
     //dc = nil;
+    
+    self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
 
-    self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c";
+    [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2"
+    self.pref.preferenceId = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-648a260d-6fd9-4ad7-9284-90f22262c18d"
     accessToken:nil
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
     
     // Set default color or theme.
-    MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
-    [self.mpCheckout setTheme:meliExampleTheme];
+//    MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
+//    MPTheme *mpExampleTheme = [[MPTheme alloc] init];
+//    [self.mpCheckout setTheme: meliExampleTheme];
 
-    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
+    // CDP color.
+    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
     
     //[self setHooks];
     
     //[self setPaymentMethodPlugins];
 
-//    [self setPaymentPlugin];
+    //[self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
 //    [self setPaymentResultScreenPreference];
@@ -112,15 +119,16 @@
     [self setVoidCallback];
 
     //Setear ReviewScreenPrefernce
-    [self setReviewScreenPreference];
+ //   [self setReviewScreenPreference];
 
     [self.mpCheckout setCustomWithStartLoading:^{
         NSLog(@"CUSTOM LOADING Init");
     } dismissLoading:^{
         NSLog(@"CUSTOM LOADING finish");
     }];
-    [self.mpCheckout start];
-   // [self.mpCheckout startExpressFrom:self];
+    //[self.mpCheckout start];
+   [self.mpCheckout startExpressFrom:self];
+
 
 }
 
@@ -148,7 +156,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithId:@"bitcoin_payment" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
+    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"bitcoin_payment" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
 
     // Payment method config plugin component.
     PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
@@ -158,9 +166,9 @@
     NSMutableArray *paymentMethodPlugins = [[NSMutableArray alloc] init];
     [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
 
-    [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
+    //[self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 
-    //[self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentPlugin {
@@ -174,7 +182,7 @@
 }
 
 -(void)setPaymentResult {
-    PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_call_for_authorize" paymentData:self.paymentData payerEmail:@"sarasa" id:@"123" statementDescription:@"sarasa"];
+    PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_call_for_authorize" paymentData:self.paymentData payerEmail:@"sarasa" paymentId:@"123" statementDescription:@"sarasa"];
     self.paymentResult = paymentResult;
 
 }

@@ -8,6 +8,9 @@
 
 #import "PaymentMethodPluginConfigViewController.h"
 
+#import <MLUI/MLButton.h>
+#import <MLUI/MLButtonStylesFactory.h>
+
 @interface PaymentMethodPluginConfigViewController ()
 
 @property (strong, nonatomic) PXPluginNavigationHandler * pluginNavigationHandler;
@@ -30,13 +33,11 @@
 
 #pragma mark - Setup methods
 - (void)setupNextButton {
-    
-    PXPrimaryButton *button = [PXPrimaryButton buttonWithType:UIButtonTypeCustom];
-    
+    MLButton *button = [[MLButton alloc] initWithConfig:[MLButtonStylesFactory configForButtonType:MLButtonTypePrimaryAction]];
     [button addTarget:self
                action:@selector(didTapOnNext)
      forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"Continuar" forState:UIControlStateNormal];
+    button.buttonTitle = @"Continuar";
     button.frame = CGRectMake(0, 0, self.view.bounds.size.width, 55.0);
     _walletTextField.inputAccessoryView = button;
 }

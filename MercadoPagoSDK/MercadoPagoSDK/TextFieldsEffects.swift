@@ -74,6 +74,10 @@ open class TextFieldEffects: MPTextField {
         }
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     // MARK: - UITextField Observing
 
     override open func willMove(toSuperview newSuperview: UIView!) {
@@ -81,22 +85,20 @@ open class TextFieldEffects: MPTextField {
             NotificationCenter.default.addObserver(self, selector: #selector(TextFieldEffects.textFieldDidEndEditing), name: NSNotification.Name.UITextFieldTextDidEndEditing, object: self)
 
             NotificationCenter.default.addObserver(self, selector: #selector(TextFieldEffects.textFieldDidBeginEditing), name: NSNotification.Name.UITextFieldTextDidBeginEditing, object: self)
-        } else {
-            NotificationCenter.default.removeObserver(self)
         }
     }
 
     /**
     The textfield has started an editing session.
     */
-    open func textFieldDidBeginEditing() {
+    @objc open func textFieldDidBeginEditing() {
         animateViewsForTextEntry()
     }
 
     /**
     The textfield has ended an editing session.
     */
-    open func textFieldDidEndEditing() {
+    @objc open func textFieldDidEndEditing() {
         animateViewsForTextDisplay()
     }
 

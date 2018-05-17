@@ -30,7 +30,7 @@ class PXContainedLabelRenderer: NSObject {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = text
-        label.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        label.textColor = ThemeManager.shared.boldLabelTintColor()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         return label

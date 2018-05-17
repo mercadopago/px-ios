@@ -11,8 +11,8 @@ import MercadoPagoPXTracking
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (l__?, r__?):
+    return l__ < r__
   case (nil, _?):
     return true
   default:
@@ -22,13 +22,14 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
+  case let (l__?, r__?):
+    return l__ > r__
   default:
     return rhs < lhs
   }
 }
 
+@objcMembers
 open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
@@ -127,7 +128,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
        self.collectionSearch.backgroundColor = UIColor.white
     }
 
-    func updateCoupon(_ notification: Notification) {
+    @objc func updateCoupon(_ notification: Notification) {
         if let discount = notification.userInfo?["coupon"] as? DiscountCoupon {
             self.viewModel.discount = discount
             self.collectionSearch.reloadData()
@@ -256,8 +257,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
         } else if isCouponSection(section: indexPath.section) {
             if let coupon = self.viewModel.discount {
-                let step = CouponDetailViewController(coupon: coupon)
-                self.present(step, animated: false, completion: {})
+
+
+                PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: coupon), title: coupon.getDescription())
+
+
             } else {
                 let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { (coupon) in
                     self.viewModel.discount = coupon
@@ -336,13 +340,13 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 view.removeFromSuperview()
             }
 
-            let amountFontSize: CGFloat = 16
-            let centsFontSize: CGFloat = 12
+            let amountFontSize: CGFloat = PXLayout.XS_FONT
+            let centsFontSize: CGFloat = PXLayout.XXXS_FONT
             let currency = MercadoPagoContext.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = currency.getThousandsSeparatorOrDefault()
             let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-            let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+            let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSAttributedStringKey.font: Utils.getFont(size: amountFontSize)])
 
             let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
             attributedTitle.append(attributedAmount)

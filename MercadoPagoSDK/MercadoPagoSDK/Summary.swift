@@ -13,7 +13,7 @@ class Summary: NSObject {
     var details: [SummaryType: SummaryDetail]
     var disclaimer: String?
     var disclaimerColor: UIColor = UIColor.UIColorFromRGB(0x3bc280)
-    var showSubitle: Bool = false
+    var showSubtitle: Bool = false
 
     init(details: [SummaryType: SummaryDetail]) {
         self.details = details

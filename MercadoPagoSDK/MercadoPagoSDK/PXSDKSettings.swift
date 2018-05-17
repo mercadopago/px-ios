@@ -10,7 +10,7 @@ import Foundation
 import MercadoPagoServices
 import MercadoPagoPXTracking
 
-open class PXSDKSettings: NSObject {
+@objcMembers open class PXSDKSettings: NSObject {
 
     open class func enableBetaServices() {
         URLConfigs.MP_SELECTED_ENV = URLConfigs.MP_TEST_ENV
