@@ -14,13 +14,14 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     var name: String?
     var navBarTitle: String!
     @IBOutlet weak var webView: UIWebView!
+    var loadingVC: PXLoadingViewController
 
     init( url: URL, screenName: String, navigationBarTitle: String) {
-        super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
         self.url = url
         self.name = screenName
         self.navBarTitle = navigationBarTitle
-
+        self.loadingVC = PXLoadingViewController()
+        super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
     }
     override internal var screenName: String { return name! }
 
@@ -32,12 +33,12 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         super.viewDidLoad()
         self.loadUrl(url!)
         self.webView.delegate = self
+        self.present(loadingVC, animated: false, completion: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.showNavBar()
-        self.showLoading()
     }
 
     override func getNavigationBarTitle() -> String {
@@ -50,6 +51,6 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        self.hideLoading()
+        self.loadingVC.dismiss(animated: false, completion: nil)
     }
 }

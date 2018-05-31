@@ -24,6 +24,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     let STATUS_BAR_HEIGTH = ViewUtils.getStatusBarHeight()
     let NAV_BAR_HEIGHT = 44.0
+    var navBarFontSize: CGFloat = 18
 
     var hideNavBarCallback: (() -> Void)?
 
@@ -49,17 +50,13 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         UIApplication.shared.statusBarStyle = ThemeManager.shared.statusBarStyle()
-
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
         self.loadMPStyles()
 
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
-
         pluginComponentInterface?.viewWillAppear?()
     }
 
@@ -69,7 +66,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }
-
         pluginComponentInterface?.viewWillDisappear?()
     }
 
@@ -90,10 +86,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
     }
 
-    var lastDefaultFontLabel: String?
-    var lastDefaultFontTextField: String?
-    var lastDefaultFontButton: String?
-
     static func loadFont(_ fontName: String) -> Bool {
         if let path = MercadoPago.getBundle()!.path(forResource: fontName, ofType: "ttf") {
             if let inData = try? Data(contentsOf: URL(fileURLWithPath: path)) {
@@ -111,11 +103,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     internal func loadMPStyles() {
-
         if self.navigationController != nil {
             var titleDict: [NSAttributedStringKey: Any] = [:]
             //Navigation bar colors
-            let fontChosed = Utils.getFont(size: 18)
+            let fontChosed = Utils.getFont(size: navBarFontSize)
             titleDict = [NSAttributedStringKey.foregroundColor: navBarTextColor, NSAttributedStringKey.font: fontChosed]
 
             if titleDict.count > 0 {
@@ -133,41 +124,18 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         }
     }
 
-    internal func clearMercadoPagoStyleAndGoBackAnimated() {
-        self.clearMercadoPagoStyle()
-        self.navigationController?.popViewController(animated: true)
-    }
-
-    internal func clearMercadoPagoStyleAndGoBack() {
-        self.clearMercadoPagoStyle()
-        self.navigationController?.popViewController(animated: false)
-    }
-
-    internal func clearMercadoPagoStyle() {
-        //Navigation bar colors
-        guard let navController = self.navigationController else {
-            return
-        }
-
-        ThemeManager.shared.applyAppNavBarStyle(navigationController: navController)
-    }
-
     @objc internal func invokeCallbackCancelShowingNavBar() {
         if self.callbackCancel != nil {
             self.showNavBar()
             self.callbackCancel!()
         }
-
     }
+
     @objc internal func invokeCallbackCancel() {
         if self.callbackCancel != nil {
             self.callbackCancel!()
         }
         self.navigationController!.popViewController(animated: true)
-    }
-
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
     override open var shouldAutorotate: Bool {
@@ -176,22 +144,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
-    }
-
-    open func rightButtonClose() {
-        let action = self.navigationItem.rightBarButtonItem?.action
-        var shoppingCartImage = MercadoPago.getImage("iconClose")
-        shoppingCartImage = shoppingCartImage!.withRenderingMode(.alwaysTemplate)
-        let shoppingCartButton = UIBarButtonItem()
-        shoppingCartButton.image = shoppingCartImage
-        shoppingCartButton.style = .plain
-        shoppingCartButton.title = ""
-        shoppingCartButton.target = self
-        shoppingCartButton.tintColor = navBarTextColor
-        if action != nil {
-            shoppingCartButton.action = action!
-        }
-        self.navigationItem.rightBarButtonItem = shoppingCartButton
     }
 
     internal func displayBackButton() {
@@ -230,28 +182,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         }
     }
 
-    internal func hideKeyboard(_ view: UIView) -> Bool {
-        if let textField = view as? UITextField {
-            // if (textField.isFirstResponder()){
-            fistResponder = textField
-            textField.resignFirstResponder()
-            //   return true
-            // }
-        }
-        for subview in view.subviews {
-            if hideKeyboard(subview) {
-                return true
-            }
-        }
-        return false
-    }
-    internal func showKeyboard() {
-        if fistResponder != nil {
-            fistResponder?.becomeFirstResponder()
-        }
-        fistResponder = nil
-    }
-
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
 
         //En caso de que el vc no sea root
@@ -261,31 +191,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         return false
     }
 
-    internal func requestFailure(_ error: NSError, requestOrigin: String, callback: (() -> Void)? = nil, callbackCancel: (() -> Void)? = nil) {
-        let errorVC = ErrorViewController(error: MPSDKError.convertFrom(error, requestOrigin: requestOrigin), callback: callback, callbackCancel: callbackCancel)
-        if self.navigationController != nil {
-            self.navigationController?.present(errorVC, animated: true, completion: {})
-        } else {
-            self.present(errorVC, animated: true, completion: {})
-        }
-    }
-
-    internal func displayFailure(_ mpError: MPSDKError) {
-        let errorVC = ErrorViewController(error: mpError, callback: nil, callbackCancel: self.callbackCancel)
-        if self.navigationController != nil {
-            self.navigationController?.present(errorVC, animated: true, completion: {})
-        } else {
-            self.present(errorVC, animated: true, completion: {})
-        }
-    }
-
-    var navBarFontSize: CGFloat = 18
-
     func showNavBar() {
-
         if navigationController != nil {
             self.title = self.getNavigationBarTitle()
-            // self.navigationController?.navigationBar.isHidden = false
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = nil
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
@@ -306,9 +214,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     func hideNavBar() {
         if navigationController != nil {
             self.title = ""
-
             navigationController?.navigationBar.titleTextAttributes = nil
-
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -358,15 +264,4 @@ extension UINavigationBar {
         self.setValue(false, forKey: "hidesShadow")
     }
 
-}
-
-extension UIImage {
-    public static func imageFromColor(color: UIColor, frame: CGRect) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
-        color.setFill()
-        UIRectFill(frame)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image!
-    }
 }

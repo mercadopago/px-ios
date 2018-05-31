@@ -41,8 +41,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
         let cardNib = UINib(nibName: "AdditionalStepCardTableViewCell", bundle: self.bundle)
         self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
-        let totalRowNib = UINib(nibName: "TotalPayerCostRowTableViewCell", bundle: self.bundle)
-        self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
         let bankInsterestNib = UINib(nibName: "BankInsterestTableViewCell", bundle: self.bundle)
         self.tableView.register(bankInsterestNib, forCellReuseIdentifier: "bankInsterestNib")
     }
@@ -53,6 +51,69 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         self.extendedLayoutIncludesOpaqueBars = true
         self.titleCellHeight = 44
+
+        if self.viewModel.showFloatingTotalRow() {
+            getTableViewPinBottomContraint()?.isActive = false
+            renderViews()
+        } else {
+            getTableViewPinBottomContraint()?.isActive = true
+        }
+    }
+
+    func getTableViewPinBottomContraint() -> NSLayoutConstraint? {
+        let filteredConstraints = self.view.constraints.filter { $0.identifier == "table_view_pin_bottom" }
+        if let bottomContraint = filteredConstraints.first {
+            return bottomContraint
+        }
+        return nil
+    }
+
+    fileprivate func renderViews() {
+        var floatingButtonView: UIView!
+        floatingButtonView = getFloatingButtonView()
+        self.view.addSubview(floatingButtonView)
+        PXLayout.setHeight(owner: floatingButtonView, height: 82 + PXLayout.getSafeAreaBottomInset()/2).isActive = true
+        PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
+        PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+        PXLayout.put(view: floatingButtonView, onBottomOf: self.tableView).isActive = true
+    }
+
+    fileprivate func getFloatingButtonView() -> UIView {
+
+
+        let amountFontSize: CGFloat = PXLayout.M_FONT
+        let centsFontSize: CGFloat = PXLayout.XXXS_FONT
+        let currency = MercadoPagoContext.getCurrency()
+
+
+        let oldAmount = Utils.getAttributedAmount((self.viewModel.discount?.amountWithoutDiscount)!, currency: currency, color: UIColor.red, fontSize: PXLayout.XXS_FONT, baselineOffset: 4)
+
+        oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
+
+
+
+
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+
+        let discountAmount = self.viewModel.discount?.amount_off.toAttributedString()
+
+        let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .black, fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
+
+        oldAmount.append(" ".toAttributedString())
+        oldAmount.append(attributedAmount)
+
+
+        let action = PXComponentAction(label: "Descuento") {
+            PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: self.viewModel.discount!), title: self.viewModel.discount?.getDescription())
+        }
+
+        let props = PXTotalRowProps(title: "Total".toAttributedString(), disclaimer: "disclaimer".toAttributedString(), mainValue: "main".toAttributedString(), secondaryValue: "secondary".toAttributedString())
+        let total = PXTotalRowComponent(props: props)
+        let totalView = total.render()
+        return totalView
     }
 
     override func loadMPStyles() {
@@ -123,23 +184,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                 bankInsterestCell.backgroundColor = UIColor.primaryColor()
             return bankInsterestCell
 
-        } else if viewModel.isDiscountCellFor(indexPath: indexPath) {
-            let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
-            cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: DiscountBodyCell.HEIGHT), coupon: self.viewModel.discount, amount: self.viewModel.amount)
-            discountBody.tag = 1
-            cell.contentView.addSubview(discountBody)
-            cell.selectionStyle = .none
-            return cell
-
-        } else if viewModel.isTotalCellFor(indexPath: indexPath) {
-            let cellHeight = Double(viewModel.getAmountDetailCellHeight(indexPath: indexPath))
-            let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
-            totalCell.fillCell(total: self.viewModel.amount)
-            totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: cellHeight)
-            totalCell.selectionStyle = .none
-            return totalCell as UITableViewCell
-
         } else if viewModel.isBodyCellFor(indexPath: indexPath) {
             let object = self.viewModel.dataSource[indexPath.row]
             let cell = AdditionalStepCellFactory.buildCell(object: object, width: Double(cellWidth), height: Double(viewModel.getDefaultRowCellHeight()))
@@ -155,28 +199,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             self.viewModel.callback!(callbackData)
 
         }
-        if self.viewModel.isDiscountCellFor(indexPath: indexPath) {
-            if let coupon = self.viewModel.discount {
-                let couponDetailVC = CouponDetailViewController(coupon: coupon)
-                PXComponentFactory.Modal.show(viewController: couponDetailVC, title: coupon.getDescription())
-            } else {
-                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { [weak self](coupon) in
-                    let couponDataDict: [String: DiscountCoupon] = ["coupon": coupon]
-
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil, userInfo: couponDataDict)
-
-                    self?.viewModel.discount = coupon
-
-                    if let updateMercadoPagoCheckout = self?.viewModel.couponCallback {
-                        updateMercadoPagoCheckout(coupon)
-                    }
-                })
-
-                self.navigationController?.pushViewController(step, animated: true)
-            }
-
-        }
-
     }
 
     public func updateDataSource(dataSource: [Cellable]) {

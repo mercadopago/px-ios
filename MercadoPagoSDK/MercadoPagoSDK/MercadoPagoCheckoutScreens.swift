@@ -303,7 +303,7 @@ extension MercadoPagoCheckout {
         guard let search = viewModel.search, let paymentOtionSelected = viewModel.paymentOptionSelected else {
             return
         }
-        let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, finishOneTap: { [weak self] (paymentData) in
+        let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, finishOneTap: { [weak self] (paymentData) in
             guard let strongSelf = self else {
                 return
             }

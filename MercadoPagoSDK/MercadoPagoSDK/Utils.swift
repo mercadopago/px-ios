@@ -82,16 +82,19 @@ class Utils {
         return attributedSymbol
     }
 
-    class func getAttributedAmount(_ amount: Double, currency: Currency, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false) -> NSMutableAttributedString {
-        return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount)
+    class func getAttributedAmount(_ amount: Double, currency: Currency, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
+        return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount, lightFont: lightFont)
     }
 
-    class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, smallSymbol: Bool = false) -> NSMutableAttributedString {
+    class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, smallSymbol: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator: thousandSeparator, decimalSeparator: ".")
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
-        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
+        let normalAttributesFont = lightFont ? Utils.getLightFont(size: fontSize) : Utils.getFont(size: fontSize)
+        let smallAttributesFont = lightFont ? Utils.getLightFont(size: centsFontSize) : Utils.getFont(size: centsFontSize)
+
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: normalAttributesFont, NSAttributedStringKey.foregroundColor: color]
+        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: smallAttributesFont, NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
 
         var symbols: String!
         if negativeAmount {
@@ -182,6 +185,14 @@ class Utils {
             return UIFont(name: ThemeManager.shared.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight.thin)
         } else {
             return UIFont(name: ThemeManager.shared.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+        }
+    }
+
+    class func getSemiBoldFont(size: CGFloat) -> UIFont {
+        if #available(iOS 8.2, *) {
+            return UIFont(name: ThemeManager.shared.getSemiBoldFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight.semibold)
+        } else {
+            return UIFont(name: ThemeManager.shared.getSemiBoldFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
         }
     }
 
@@ -452,8 +463,8 @@ class Utils {
 
     static let imageCache = NSCache<NSString, AnyObject>()
 
-    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, didFinish:((UIImage)-> Void)? = nil) {
-        
+    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, didFinish: ((UIImage) -> Void)? = nil) {
+
         guard let urlString = urlStr else {
             if let fallbackView = fallbackView {
                 targetView.removeAllSubviews()

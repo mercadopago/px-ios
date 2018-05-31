@@ -21,4 +21,5 @@ import Foundation
 
     @objc optional func fontName() -> String?
     @objc optional func lightFontName() -> String?
+    @objc optional func semiBoldFontName() -> String?
 }

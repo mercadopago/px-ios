@@ -221,4 +221,9 @@ open class MercadoPagoCheckout: NSObject {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
     }
+
+    public func popToWhenFinish(viewController: UIViewController) {
+        pxNavigationHandler.popToWhenFinish(viewController: viewController)
+    }
+
 }

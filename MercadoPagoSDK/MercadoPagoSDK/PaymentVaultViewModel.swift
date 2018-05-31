@@ -26,6 +26,8 @@ class PaymentVaultViewModel: NSObject {
 
     var discount: DiscountCoupon?
 
+    var currency: Currency!
+
     var customerId: String?
 
     var couponCallback: ((DiscountCoupon) -> Void)?
@@ -48,6 +50,7 @@ class PaymentVaultViewModel: NSObject {
 
         super.init()
         self.populateDisplayItemsDrawable()
+        self.currency = MercadoPagoContext.getCurrency()
     }
 }
 
@@ -180,5 +183,72 @@ extension PaymentVaultViewModel {
             }
         }
         return 0
+    }
+}
+
+// MARK: Floating Total Row Logic
+extension PaymentVaultViewModel {
+    func getTitle() -> NSAttributedString? {
+        //TODO: Add translations
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
+            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
+
+            if let discount = self.discount {
+                if discount.amount_off != "0" {
+                    let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
+                    string.append(NSAttributedString(string: discount.amount_off, attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
+                    return string
+                } else if discount.percent_off != "0" {
+                    let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
+                    string.append(NSAttributedString(string: discount.percent_off, attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
+                    return string
+                }
+            } else {
+                let defaultTitleString = "Ingresá tu cupón de descuento"
+                let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: addNewDiscountAttributes)
+                return defaultTitleAttributedString
+            }
+        }
+        let defaultTitleString = "Total a pagar"
+        let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+        let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: defaultAttributes)
+        return defaultTitleAttributedString
+    }
+
+    func getDisclaimer() -> NSAttributedString? {
+        //TOOD: agregar logica de tope de descuento
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.discount {
+            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+            let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
+            return string
+        }
+        return nil
+    }
+
+    func getMainValue() -> NSAttributedString? {
+        let amountFontSize: CGFloat = PXLayout.L_FONT
+
+        //TOOD: amount con centavos
+        return Utils.getAttributedAmount(self.amount, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: amountFontSize, baselineOffset: 0, negativeAmount: false)
+    }
+
+    func getSecondaryValue() -> NSAttributedString? {
+        if let discount = self.discount {
+            let oldAmount = Utils.getAttributedAmount(discount.amountWithoutDiscount, currency: currency, color: UIColor.UIColorFromRGB(0xa3a3a3), fontSize: PXLayout.XXS_FONT, baselineOffset: 0)
+
+            oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
+            return oldAmount
+        }
+        return nil
+    }
+
+    func shouldShowChevron() -> Bool {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+            return true
+        }
+        return false
     }
 }

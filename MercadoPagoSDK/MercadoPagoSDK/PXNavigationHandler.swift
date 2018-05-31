@@ -121,7 +121,7 @@ class PXNavigationHandler: NSObject {
         self.navigationController.viewControllers = currentViewControllers
     }
 
-    public func popToWhenFinish(viewController: UIViewController) {
+    func popToWhenFinish(viewController: UIViewController) {
         if self.navigationController.viewControllers.contains(viewController) {
             self.viewControllerBase = viewController
         }

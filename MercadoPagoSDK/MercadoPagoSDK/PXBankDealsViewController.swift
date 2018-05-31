@@ -101,4 +101,3 @@ extension PXBankDealsViewController {
         return view
     }
 }
-

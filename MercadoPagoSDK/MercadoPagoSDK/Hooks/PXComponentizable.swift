@@ -7,12 +7,18 @@
 //
 
 import Foundation
-@objc
-public protocol PXComponentizable {
+
+@objc public protocol PXComponentizable {
     func render() -> UIView
+    @objc optional func oneTapRender() -> UIView
 }
 
-@objc
-public protocol PXCustomComponentizable {
+@objc public protocol PXCustomComponentizable {
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
+}
+
+@objc public protocol PXXibComponentizable {
+    func xibName() -> String
+    func containerView() -> UIView
+    func render() -> UIView
 }

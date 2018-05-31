@@ -37,14 +37,14 @@ class PXResultViewController: PXComponentContainerViewController {
     override func trackInfo() {
         self.viewModel.trackInfo()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
         self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.showsHorizontalScrollIndicator = false
         if contentView.getSubviews().isEmpty {
-            renderViews()       
+            renderViews()
         }
     }
 

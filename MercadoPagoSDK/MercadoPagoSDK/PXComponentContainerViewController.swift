@@ -21,31 +21,33 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     var contentView = PXComponentView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
+    private var topContentConstraint: NSLayoutConstraint?
 
     init() {
-        self.scrollView = UIScrollView()
-        self.scrollView.backgroundColor = .white
-        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
-        self.scrollView.delaysContentTouches = true
-        self.scrollView.canCancelContentTouches = false
-        self.scrollView.isUserInteractionEnabled = true
+        scrollView = UIScrollView()
+        scrollView.backgroundColor = .white
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.delaysContentTouches = true
+        scrollView.canCancelContentTouches = false
+        scrollView.isUserInteractionEnabled = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        self.scrollView.addSubview(contentView)
+        scrollView.addSubview(contentView)
 
-        PXLayout.pinTop(view: contentView, to: scrollView).isActive = true
+        topContentConstraint = PXLayout.pinTop(view: contentView, to: scrollView)
+        topContentConstraint?.isActive = true
         PXLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
         PXLayout.matchWidth(ofView: contentView, toView: scrollView).isActive = true
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
-        self.view.addSubview(self.scrollView)
+        view.addSubview(scrollView)
 
-        PXLayout.pinLeft(view: scrollView, to: self.view).isActive = true
-        PXLayout.pinRight(view: scrollView, to: self.view).isActive = true
-        PXLayout.pinTop(view: scrollView, to: self.view).isActive = true
+        PXLayout.pinLeft(view: scrollView, to: view).isActive = true
+        PXLayout.pinRight(view: scrollView, to: view).isActive = true
+        PXLayout.pinTop(view: scrollView, to: view).isActive = true
 
         let bottomDeltaMargin: CGFloat = PXLayout.getSafeAreaBottomInset()
 
-        PXLayout.pinBottom(view: scrollView, to: self.view, withMargin: -bottomDeltaMargin).isActive = true
+        PXLayout.pinBottom(view: scrollView, to: view, withMargin: -bottomDeltaMargin).isActive = true
         scrollView.bounces = false
     }
 
@@ -56,6 +58,13 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func centerContentView() {
+        if contentView.frame.height < PXLayout.getScreenHeight() {
+            topContentConstraint?.isActive = false
+            PXLayout.centerVertically(view: contentView, to: scrollView).isActive = true
+        }
     }
 }
 
@@ -90,10 +99,10 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         for view in contentView.getSubviews() {
             height += view.frame.height
         }
-
+        height += contentView.getCarryMarginY()
         contentView.fixHeight(height: height)
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
-        self.view.layoutIfNeeded()
+        view.layoutIfNeeded()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

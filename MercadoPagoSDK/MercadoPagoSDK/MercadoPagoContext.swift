@@ -178,16 +178,16 @@ import UIKit
     open class func setPayerAccessToken(_ payerAccessToken: String) {
 
         sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
-        _ = CardFrontView()
-        _ = CardBackView()
+//        _ = CardFrontView()
+//        _ = CardBackView()
 
     }
 
     open class func setPublicKey(_ public_key: String) {
 
         sharedInstance.public_key = public_key.trimSpaces()
-        _ = CardFrontView()
-        _ = CardBackView()
+//        _ = CardFrontView()
+//        _ = CardBackView()
 
     }
 

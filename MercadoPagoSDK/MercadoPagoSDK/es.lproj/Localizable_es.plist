@@ -207,5 +207,12 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Promociones</string>
 	</dict>
+	<key>review_terms_and_conditions</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Al pagar, declaro que soy mayor de edad y acepto los Términos y Condiciones.</string>
+	</dict>
 </dict>
 </plist>

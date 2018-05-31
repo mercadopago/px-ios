@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXFooterRenderer: NSObject {
+final class PXFooterRenderer: NSObject {
 
     let BUTTON_HEIGHT: CGFloat = 50.0
 
@@ -65,9 +65,4 @@ class PXFooterRenderer: NSObject {
         linkButton.add(for: .touchUpInside, footerAction.action)
         return linkButton
     }
-}
-
-class PXFooterView: UIView {
-    public var principalButton: PXPrimaryButton?
-    public var linkButton: PXSecondaryButton?
 }

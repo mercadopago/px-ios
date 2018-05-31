@@ -24,15 +24,15 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     var payerCosts: [PayerCost]?
 
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
-    let reviewScreenPreference = ReviewScreenPreference()
+    let reviewScreenPreference: ReviewScreenPreference
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
-
+        self.reviewScreenPreference = reviewScreenPreference
         super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.getSelectedPayerCost() {
@@ -117,7 +117,7 @@ extension OneTapFlowViewModel {
     }
 
     func needSecurityCode() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod() else {
+        guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
 
@@ -125,7 +125,7 @@ extension OneTapFlowViewModel {
             return false
         }
 
-        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !pm.isCreditCard
+        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
@@ -135,13 +135,13 @@ extension OneTapFlowViewModel {
     }
 
     func needCreateESCToken() -> Bool {
-
-        guard let pm = self.paymentData.getPaymentMethod() else {
+        
+        guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
 
-        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard
-        let savedCardWithESC = !paymentData.hasToken() && pm.isCard && hasSavedESC() && hasInstallmentsIfNeeded
+        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !paymentMethod.isCreditCard
+        let savedCardWithESC = !paymentData.hasToken() && paymentMethod.isCard && hasSavedESC() && hasInstallmentsIfNeeded
 
         return savedCardWithESC
     }

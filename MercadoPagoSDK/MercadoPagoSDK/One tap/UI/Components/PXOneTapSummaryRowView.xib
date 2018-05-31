@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PXOneTapSummaryRowRenderer" customModule="MercadoPagoSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="amountLabel" destination="kbF-rL-A31" id="CxA-j1-Kn1"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="y8X-n1-SMq"/>
+                <outlet property="subtitleHeightConstraint" destination="4ze-94-hGN" id="2wU-5w-JtY"/>
+                <outlet property="subtitleLabel" destination="bNx-X1-jwb" id="eBv-wW-E5v"/>
+                <outlet property="titleLabel" destination="r16-AU-s3w" id="jMe-dK-sHE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="542" height="73"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r16-AU-s3w">
+                    <rect key="frame" x="24" y="16" width="31.5" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="UOn-nl-TTQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNx-X1-jwb">
+                    <rect key="frame" x="24" y="37" width="494" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="4ze-94-hGN"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbF-rL-A31">
+                    <rect key="frame" x="461" y="16" width="57" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="FaL-Eb-AbL"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="r16-AU-s3w" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="24F-na-cBJ"/>
+                <constraint firstItem="bNx-X1-jwb" firstAttribute="leading" secondItem="r16-AU-s3w" secondAttribute="leading" id="4Rv-B8-yFk"/>
+                <constraint firstItem="bNx-X1-jwb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="r16-AU-s3w" secondAttribute="bottom" constant="2" id="6GJ-oM-6AN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="bNx-X1-jwb" secondAttribute="bottom" constant="16" id="IAw-Yw-vez"/>
+                <constraint firstItem="r16-AU-s3w" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="IyN-FS-M1n"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kbF-rL-A31" secondAttribute="trailing" constant="24" id="RKi-Ds-ReS"/>
+                <constraint firstItem="kbF-rL-A31" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r16-AU-s3w" secondAttribute="trailing" constant="8" id="XO6-q4-uTl"/>
+                <constraint firstItem="kbF-rL-A31" firstAttribute="centerY" secondItem="r16-AU-s3w" secondAttribute="centerY" id="fW7-Pg-Wvy"/>
+                <constraint firstItem="bNx-X1-jwb" firstAttribute="trailing" secondItem="kbF-rL-A31" secondAttribute="trailing" id="kSo-M6-LnZ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="58" y="-424.5"/>
+        </view>
+    </objects>
+</document>

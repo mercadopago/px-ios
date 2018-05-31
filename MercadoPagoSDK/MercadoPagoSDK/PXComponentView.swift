@@ -13,6 +13,7 @@ import Foundation
     private var topGuideView = UIView()
     private var bottomGuideView = UIView()
     private var contentView = UIView()
+    private lazy var carryMarginY: CGFloat = 0
 
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -67,6 +68,7 @@ import Foundation
         } else {
             putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
         }
+        carryMarginY += margin
     }
 
     @objc override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
@@ -86,6 +88,7 @@ import Foundation
         guard let firstView = self.contentView.subviews.first else {
             return nil
         }
+        carryMarginY += margin
         return PXLayout.pinTop(view: firstView, to: self.contentView, withMargin: margin)
     }
 
@@ -94,6 +97,7 @@ import Foundation
         guard let lastView = self.contentView.subviews.last else {
             return nil
         }
+        carryMarginY += margin
         return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
     }
 
@@ -102,6 +106,7 @@ import Foundation
         if !self.contentView.subviews.contains(view) {
             return nil
         }
+        carryMarginY += margin
         for actualView in self.contentView.subviews.reversed() where actualView != view {
             return PXLayout.put(view: view, onBottomOf: actualView, withMargin: margin)
         }
@@ -110,6 +115,10 @@ import Foundation
 
     func getSubviews() -> [UIView] {
         return self.contentView.subviews
+    }
+
+    func getCarryMarginY() -> CGFloat {
+        return carryMarginY
     }
 
     var heightConstraint: NSLayoutConstraint?
@@ -121,5 +130,22 @@ import Foundation
             self.heightConstraint?.isActive = true
         }
         self.layoutIfNeeded()
+    }
+
+    func isEmpty() -> Bool {
+        return self.contentView.subviews.count == 0
+    }
+}
+
+extension PXComponentView {
+    func animateContentOnY() {
+        if #available(iOS 10.0, *) {
+            let animatorInit = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1.4, animations: { [weak self] in
+                self?.contentView.transform = CGAffineTransform(translationX: 0, y: -4)
+            })
+            animatorInit.startAnimation()
+        } else {
+            // No animation for iOS 9 or minor.
+        }
     }
 }

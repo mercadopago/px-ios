@@ -64,7 +64,6 @@ extension PXBankDealDetailsViewController {
         PXLayout.centerHorizontally(view: cellContainer).isActive = true
         PXLayout.setHeight(owner: cellContainer, height: CELL_HEIGHT).isActive = true
 
-
         //Legals
         if let legalsText = self.viewModel.getLegalsText() {
             let legalsTextView = buildLegalTextView(text: legalsText)
@@ -93,11 +92,10 @@ extension PXBankDealDetailsViewController {
         legalsTextView.translatesAutoresizingMaskIntoConstraints = false
         legalsTextView.text = text
         legalsTextView.font = Utils.getFont(size: PXLayout.XXXS_FONT)
-        legalsTextView.textContainerInset = UIEdgeInsetsMake(16, 16, 16, 16)
+        legalsTextView.textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         legalsTextView.textColor = ThemeManager.shared.labelTintColor()
         legalsTextView.backgroundColor = .clear
         legalsTextView.isScrollEnabled = false
         return legalsTextView
     }
 }
-

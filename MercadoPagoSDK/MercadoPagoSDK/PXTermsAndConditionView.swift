@@ -12,10 +12,10 @@ protocol PXTermsAndConditionViewDelegate: NSObjectProtocol {
     func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL)
 }
 
-final class PXTermsAndConditionView: PXComponentView {
+class PXTermsAndConditionView: PXComponentView {
 
-    fileprivate let SCREEN_NAME = "TERMS_AND_CONDITIONS"
-    fileprivate let SCREEN_TITLE = "Términos y Condiciones"
+    var SCREEN_NAME = "TERMS_AND_CONDITIONS"
+    var SCREEN_TITLE = "Términos y Condiciones"
 
     fileprivate let termsAndConditionsText: MPTextView = MPTextView()
 
@@ -46,17 +46,13 @@ final class PXTermsAndConditionView: PXComponentView {
 
         let PERCENT_WIDTH: CGFloat = 90.0
         PXLayout.matchWidth(ofView: termsAndConditionsText, toView: self, withPercentage: PERCENT_WIDTH).isActive = true
-
         PXLayout.centerHorizontally(view: termsAndConditionsText).isActive = true
-
-        let dynamicHeight: CGFloat = termsAndConditionsText.contentSize.height + PXLayout.S_MARGIN
-
-        PXLayout.setHeight(owner: termsAndConditionsText, height: dynamicHeight).isActive = true
-
         PXLayout.pinTop(view: termsAndConditionsText, withMargin: PXLayout.S_MARGIN).isActive = true
-
         PXLayout.pinBottom(view: termsAndConditionsText, withMargin: PXLayout.S_MARGIN).isActive = true
 
+        let screenWidth = PXLayout.getScreenWidth()
+        let dynamicSize: CGSize = termsAndConditionsText.sizeThatFits(CGSize(width: screenWidth, height: CGFloat.greatestFiniteMagnitude))
+        PXLayout.setHeight(owner: termsAndConditionsText, height: dynamicSize.height).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,9 +62,9 @@ final class PXTermsAndConditionView: PXComponentView {
 
 extension PXTermsAndConditionView {
 
-    fileprivate func getTyCText() -> NSMutableAttributedString {
+    func getTyCText() -> NSMutableAttributedString {
 
-        let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
+        let termsAndConditionsText = "review_terms_and_conditions".localized_beta
 
         let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 

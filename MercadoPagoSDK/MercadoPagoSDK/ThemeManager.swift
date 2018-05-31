@@ -22,6 +22,7 @@ class ThemeManager {
     fileprivate var currentStylesheet = MLStyleSheetManager.styleSheet
     fileprivate var fontName: String = ".SFUIDisplay-Regular"
     fileprivate var fontLightName: String = ".SFUIDisplay-Light"
+    fileprivate var fontSemiBoldName: String = ".SFUIDisplay-SemiBold"
 
     var navigationControllerMemento: NavigationControllerMemento?
 }
@@ -51,6 +52,9 @@ extension ThemeManager {
         if let externalLightFont = theme.lightFontName?() {
             fontLightName = externalLightFont
         }
+        if let externalSemiBoldFont = theme.semiBoldFontName?() {
+            fontSemiBoldName = externalSemiBoldFont
+        }
     }
 
     func getCurrentTheme() -> PXTheme {
@@ -63,6 +67,10 @@ extension ThemeManager {
 
     func getLightFontName() -> String {
         return fontLightName
+    }
+
+    func getSemiBoldFontName() -> String {
+        return fontSemiBoldName
     }
 }
 

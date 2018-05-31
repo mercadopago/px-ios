@@ -63,16 +63,8 @@ open class AdditionalStepViewModel: NSObject {
         return self.bankInterestWarningCellVisible && MercadoPagoCheckout.showBankInterestWarning()
     }
 
-    func showDiscountSection() -> Bool {
+    func showFloatingTotalRow() -> Bool {
         return false
-    }
-
-    func showTotalRow() -> Bool {
-        return totalRowVisible && !showDiscountSection()
-    }
-
-    func showAmountDetailRow() -> Bool {
-        return showTotalRow() || showDiscountSection()
     }
 
     func getScreenName() -> String {
@@ -100,8 +92,6 @@ open class AdditionalStepViewModel: NSObject {
             var rows: Int = showCardSection() ? 1 : 0
             rows = showBankInsterestCell() ? rows + 1 : rows
             return rows
-        case Sections.amountDetail.rawValue:
-            return showAmountDetailRow() ? 1 : 0
         case Sections.body.rawValue:
             return numberOfCellsInBody()
         default:
@@ -123,9 +113,6 @@ open class AdditionalStepViewModel: NSObject {
 
         } else if isBankInterestCellFor(indexPath: indexPath) {
             return self.getBankInterestWarningCellHeight()
-
-        } else if isDiscountCellFor(indexPath: indexPath) || isTotalCellFor(indexPath: indexPath) {
-            return self.getAmountDetailCellHeight(indexPath: indexPath)
 
         } else if isBodyCellFor(indexPath: indexPath) {
             return self.getDefaultRowCellHeight()
@@ -153,22 +140,6 @@ open class AdditionalStepViewModel: NSObject {
         return BankInsterestTableViewCell.cellHeight
     }
 
-    func getAmountDetailCellHeight(indexPath: IndexPath) -> CGFloat {
-        if isDiscountCellFor(indexPath: indexPath) {
-            return DiscountBodyCell.HEIGHT
-        } else if isTotalCellFor(indexPath: indexPath) {
-            return 42
-        }
-        return 0
-    }
-
-    func isDiscountCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.amountDetail.rawValue && showDiscountSection()
-    }
-
-    func isTotalCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.amountDetail.rawValue && showTotalRow()
-    }
 
     func isTitleCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.title.rawValue
@@ -194,8 +165,7 @@ open class AdditionalStepViewModel: NSObject {
     public enum Sections: Int {
         case title = 0
         case card = 1
-        case amountDetail = 2
-        case body = 3
+        case body = 2
     }
 
     func track() {
@@ -233,16 +203,16 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS }
 
+    override func showFloatingTotalRow() -> Bool {
+        return true
+    }
+
     override func getDefaultRowCellHeight() -> CGFloat {
         if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PayerCost) {
             return 86
         } else {
             return 60
         }
-    }
-
-    override func showDiscountSection() -> Bool {
-        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
 
     override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {

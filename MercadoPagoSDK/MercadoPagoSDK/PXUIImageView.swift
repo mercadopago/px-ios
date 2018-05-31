@@ -10,7 +10,7 @@ import UIKit
 
 class PXUIImageView: UIImageView {
 
-    private var currentImage : UIImage?
+    private var currentImage: UIImage?
     override var image: UIImage? {
         set {
             loadImage(image: newValue)
@@ -23,7 +23,7 @@ class PXUIImageView: UIImageView {
     private func loadImage(image: UIImage?) {
         self.contentMode = .scaleAspectFit
         if let pxImage = image as? PXUIImage {
-            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: buildLabel(with: pxImage.placeholder), fallbackView: buildLabel(with: pxImage.fallback)){ newImage in
+            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: buildLabel(with: pxImage.placeholder), fallbackView: buildLabel(with: pxImage.fallback)) { newImage in
                 self.currentImage = newImage
             }
         } else {

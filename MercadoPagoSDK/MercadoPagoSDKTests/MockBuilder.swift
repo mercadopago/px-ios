@@ -323,7 +323,7 @@ open class MockBuilder: NSObject {
         let id_ = "bankDealID"
         let dateExpired = Date()
         let dateStarted = Date()
-        let installments = [1,2]
+        let installments = [1, 2]
         let issuer = MockBuilder.buildPXIssuer()
         let legals = "Legals Text"
         let picture = MockBuilder.buildPXPicture()
