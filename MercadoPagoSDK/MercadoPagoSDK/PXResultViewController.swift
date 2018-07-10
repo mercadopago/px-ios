@@ -45,7 +45,10 @@ class PXResultViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         if contentView.getSubviews().isEmpty {
             renderViews()
+            super.prepareForAnimation()
+            super.animateContentView()
         }
+        contentView.backgroundColor = viewModel.primaryResultColor()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -128,6 +131,10 @@ class PXResultViewController: PXComponentContainerViewController {
         super.refreshContentViewSize()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
     func expandHeader() {
         self.view.layoutIfNeeded()
         self.scrollView.layoutIfNeeded()
@@ -184,7 +191,13 @@ extension PXResultViewController {
 
     func buildReceiptView() -> UIView? {
         let receiptComponent = viewModel.buildReceiptComponent()
-        return receiptComponent?.render()
+        if let receiptView = receiptComponent?.render() {
+            if receiptView.backgroundColor == nil {
+                receiptView.backgroundColor = .white
+            }
+            return receiptView
+        }
+        return nil
     }
 
     func buildBodyView() -> UIView? {
@@ -194,6 +207,9 @@ extension PXResultViewController {
 
     func buildTopCustomView() -> UIView? {
         if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
+            if componentView.backgroundColor == nil {
+                componentView.backgroundColor = .white
+            }
             return componentView
         }
         let view = UIView()
@@ -203,6 +219,9 @@ extension PXResultViewController {
 
     func buildBottomCustomView() -> UIView? {
         if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
+            if componentView.backgroundColor == nil {
+                componentView.backgroundColor = .white
+            }
             return componentView
         }
         let view = UIView()
