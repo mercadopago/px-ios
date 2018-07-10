@@ -141,3 +141,13 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         }
     }
 }
+
+extension PXComponentContainerViewController {
+    func animateContentView() {
+        contentView.pxSpruce.animate(PXSpruce.PXDefaultAnimation.appearAnimation, sortFunction: PXSpruce.PXDefaultAnimation.appearSortFunction)
+    }
+
+    func prepareForAnimation() {
+        contentView.pxSpruce.prepare(with: PXSpruce.PXDefaultAnimation.appearAnimation)
+    }
+}

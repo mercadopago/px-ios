@@ -165,6 +165,10 @@ import Foundation
     func isEmpty() -> Bool {
         return self.contentView.subviews.count == 0
     }
+
+    func getContentView() -> UIView {
+        return contentView
+    }
 }
 
 extension PXComponentView {
