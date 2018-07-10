@@ -131,10 +131,6 @@ class PXResultViewController: PXComponentContainerViewController {
         super.refreshContentViewSize()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
     func expandHeader() {
         self.view.layoutIfNeeded()
         self.scrollView.layoutIfNeeded()
