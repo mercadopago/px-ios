@@ -19,6 +19,10 @@ extension MercadoPagoCheckout {
             MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
         }
 
+        if self.startSelectedCardFlow() {
+            return
+        }
+
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
@@ -317,5 +321,42 @@ extension MercadoPagoCheckout {
                 self?.finish()
         })
         onetapFlow.start()
+    }
+
+    func startSelectedCardFlow() -> Bool {
+
+        guard let cardId = self.viewModel.amountHelper.preference.paymentPreference.defaultPaymentMethodId else {
+            return false
+        }
+
+        if let search = self.viewModel.search {
+            guard let customerPaymentMethods = search.customerPaymentMethods else {
+                return false
+            }
+            let customOptionsFound = customerPaymentMethods.filter { (cardInformation: CardInformation) -> Bool in
+                return cardInformation.getCardId() == cardId
+            }
+            if let customerPaymentMethod = customOptionsFound.first, let customerPaymentOption = customerPaymentMethod as? PaymentMethodOption {
+                setPaymentOptionSelected(paymentOptionSelected: customerPaymentOption)
+                return true
+            }
+        }
+        if let options = self.viewModel.paymentMethodOptions {
+            let optionsFound = options.filter { (paymentMethodOption: PaymentMethodOption) -> Bool in
+                return paymentMethodOption.getId() == cardId
+            }
+            if let paymentOption = optionsFound.first {
+                setPaymentOptionSelected(paymentOptionSelected: paymentOption)
+                return true
+            }
+        }
+
+        return false
+    }
+
+    func setPaymentOptionSelected(paymentOptionSelected: PaymentMethodOption) {
+        self.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
+        self.viewModel.rootVC = false
+        self.executeNextStep()
     }
 }
