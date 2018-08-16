@@ -7,8 +7,8 @@
 //
 
 import Foundation
-extension PXAnimatedButton {
 
+extension PXAnimatedButton {
     static func animateButtonWith(paymentResult: PaymentResult) {
         if paymentResult.isAccepted() {
             PXNotificationManager.Post.animateButtonForSuccess()

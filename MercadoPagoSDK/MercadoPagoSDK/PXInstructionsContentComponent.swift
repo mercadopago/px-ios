@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 public class PXInstructionsContentComponent: NSObject, PXComponentizable {
     var props: PXInstructionsContentProps
 
@@ -128,6 +129,8 @@ public class PXInstructionsContentComponent: NSObject, PXComponentizable {
         return PXInstructionsContentRenderer().render(self)
     }
 }
+
+/** :nodoc: */
 public class PXInstructionsContentProps: NSObject {
     var instruction: Instruction
     init(instruction: Instruction) {

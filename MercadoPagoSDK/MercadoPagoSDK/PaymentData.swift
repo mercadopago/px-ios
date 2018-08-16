@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers public class PaymentData: NSObject, NSCopying {
 
     public var paymentMethod: PaymentMethod?

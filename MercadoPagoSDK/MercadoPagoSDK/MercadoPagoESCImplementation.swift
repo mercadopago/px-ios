@@ -12,6 +12,7 @@ import Foundation
     import MLESCManager
 #endif
 
+/** :nodoc: */
 @objcMembers
 open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
 

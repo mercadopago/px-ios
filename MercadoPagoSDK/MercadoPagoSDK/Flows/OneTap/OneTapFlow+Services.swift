@@ -18,9 +18,9 @@ extension OneTapFlow {
             let esc = self.model.mpESCManager.getESC(cardId: cardInfo.getCardId())
 
             if !String.isNullOrEmpty(esc) {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc)
+                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: advancedConfig.escEnabled)
             } else {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode)
+                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: advancedConfig.escEnabled)
             }
             createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 

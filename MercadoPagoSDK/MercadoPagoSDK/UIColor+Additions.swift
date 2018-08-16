@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-extension UIColor {
+/** :nodoc: */
+internal extension UIColor {
 
     class public func UIColorFromRGB(_ rgbValue: UInt) -> UIColor {
         return UIColor(
@@ -151,6 +152,7 @@ extension UIColor {
 }
 
 // COMPONENTS
+/** :nodoc: */
 extension UIColor {
     class var pxWarmGray: UIColor {
         return UIColor(white: 153.0 / 255.0, alpha: 1.0)

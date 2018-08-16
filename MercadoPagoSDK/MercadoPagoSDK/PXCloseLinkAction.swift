@@ -9,7 +9,6 @@
 import UIKit
 
 class PXCloseLinkAction: PXComponentAction {
-
     init() {
         super.init(label: PXFooterResultConstants.DEFAULT_LINK_TEXT.localized) {
             PXNotificationManager.Post.attemptToClose()

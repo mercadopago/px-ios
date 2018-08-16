@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 public class PXPaymentMethodIconComponent: NSObject, PXComponentizable {
     var props: PXPaymentMethodIconProps
 

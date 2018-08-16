@@ -25,6 +25,7 @@
 
 import UIKit
 
+/** :nodoc: */
 internal extension PXSpruce {
 
     /// Run a spruce style animation on this view. This method is the most basic form of a spruce animation and allows you to setup your view with stock spruce animations. Feel free to chain together animations that would work nicely together.

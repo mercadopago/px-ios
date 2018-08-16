@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 public class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
     var props: PXInstructionsSubtitleProps
 
@@ -19,6 +20,8 @@ public class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
         return PXInstructionsSubtitleRenderer().render(self)
     }
 }
+
+/** :nodoc: */
 public class PXInstructionsSubtitleProps: NSObject {
     var subtitle: String
     init(subtitle: String) {

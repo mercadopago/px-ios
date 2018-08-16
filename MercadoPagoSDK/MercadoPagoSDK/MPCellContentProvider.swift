@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 @objc
 public protocol MPCellContentProvider: NSObjectProtocol {
 

@@ -8,8 +8,8 @@
 
 import Foundation
 
+/** :nodoc: */
 extension PXPaymentFlow {
-
     func showPaymentPluginComponent(paymentPluginComponent: PXPaymentPluginComponent?) {
 
         guard let paymentPluginComponent = paymentPluginComponent else {

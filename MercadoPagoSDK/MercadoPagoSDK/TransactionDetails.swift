@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class TransactionDetails: NSObject {
     open var couponAmount: Double?
     open var externalResourceUrl: String?

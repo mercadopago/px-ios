@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class FeesDetail: NSObject {
     open var amount: Double = 0
     open var amountRefunded: Double = 0

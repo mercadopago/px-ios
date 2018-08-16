@@ -41,7 +41,7 @@ extension PXOneTapViewModel {
             title = paymentMethodName.toAttributedString()
         }
 
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.amountHelper.discount != nil {
+        if self.amountHelper.discount != nil {
             // With discount
             if let pCost = self.amountHelper.paymentData.payerCost, pCost.installments > 1 {
                 let amount: String = Utils.getAmountFormatted(amount: self.amountHelper.preferenceAmountWithCharges, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)

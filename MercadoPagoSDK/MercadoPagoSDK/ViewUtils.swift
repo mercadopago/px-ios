@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/** :nodoc: */
 class ViewUtils {
 
     class func getTableCellSeparatorLineView(_ posX: CGFloat, posY: CGFloat, width: CGFloat, height: CGFloat) -> UIView {

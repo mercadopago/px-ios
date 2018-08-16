@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers
 open class SecurityCodeViewModel: NSObject {
     var paymentMethod: PaymentMethod!

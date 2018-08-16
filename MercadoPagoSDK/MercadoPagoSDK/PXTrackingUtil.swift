@@ -9,6 +9,8 @@
 import Foundation
 import MercadoPagoPXTrackingV4
 
+/** :nodoc: */
+
 // MARK: - Metadata/Params
 extension TrackingUtil {
     struct Metadata {

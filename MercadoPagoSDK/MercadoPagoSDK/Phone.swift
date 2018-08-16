@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class Phone: NSObject {
     open var areaCode: String?
     open var number: String?

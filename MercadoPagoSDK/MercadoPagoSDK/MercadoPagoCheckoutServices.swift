@@ -60,12 +60,12 @@ extension MercadoPagoCheckout {
             let esc = self.viewModel.mpESCManager.getESC(cardId: cardInfo.getCardId())
 
             if !String.isNullOrEmpty(esc) {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc)
+                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
             } else {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode)
+                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
             }
-            createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 
+            createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
         } else {
             guard let securityCode = securityCode else {
                 return

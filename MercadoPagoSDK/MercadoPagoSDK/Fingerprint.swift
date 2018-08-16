@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/** :nodoc: */
 @objcMembers open class Fingerprint: NSObject {
 
     open var fingerprint: [String: Any]

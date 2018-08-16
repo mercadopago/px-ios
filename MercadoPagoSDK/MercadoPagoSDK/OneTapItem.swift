@@ -8,11 +8,16 @@
 
 import Foundation
 
+/** :nodoc: */
 open class OneTapItem: NSObject {
+    /// :nodoc:
     open var paymentMethodId: String
+    /// :nodoc:
     open var paymentTypeId: String?
+    /// :nodoc:
     open var oneTapCard: OneTapCard?
 
+    /// :nodoc:
     public init(paymentMethodId: String, paymentTypeId: String?, oneTapCard: OneTapCard?) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId

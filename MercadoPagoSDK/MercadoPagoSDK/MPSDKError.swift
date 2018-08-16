@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class MPSDKError: NSObject {
 
     open var message: String = ""

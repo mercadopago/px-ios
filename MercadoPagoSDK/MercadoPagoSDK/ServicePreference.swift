@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class ServicePreference: NSObject {
 
     var customerURL: String?
@@ -202,6 +203,7 @@ import Foundation
     }
 }
 
+/** :nodoc: */
 public enum ProcessingMode: String {
     case gateway = "gateway"
     case aggregator = "aggregator"

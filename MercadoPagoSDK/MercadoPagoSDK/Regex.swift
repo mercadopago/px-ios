@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers
 open class Regex {
     let internalExpression: NSRegularExpression?

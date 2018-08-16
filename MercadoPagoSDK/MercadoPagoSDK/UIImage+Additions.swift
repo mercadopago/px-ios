@@ -7,7 +7,8 @@
 //
 
 import Foundation
-extension UIImage {
+
+internal extension UIImage {
     func imageGreyScale() -> UIImage {
         let imageRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
         let greyContext = CGContext(

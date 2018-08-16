@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+/** :nodoc: */
+//TODO: v4 sign - Ver si lo usamos/exponemos.
 @objcMembers open class MercadoPagoContext: NSObject {
 
     static let sharedInstance = MercadoPagoContext()
@@ -25,12 +27,7 @@ import UIKit
 
     var termsAndConditionsSite: String!
 
-    var account_money_available = false
-
     var currency: Currency!
-
-    // TODO: Deprecate/Delete in Q2. - 2018
-    var display_default_loading = true
 
     var language: String = NSLocale.preferredLanguages[0]
 
@@ -180,29 +177,11 @@ import UIKit
     }
 
     open class func setPayerAccessToken(_ payerAccessToken: String) {
-
         sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
-//        _ = CardFrontView()
-//        _ = CardBackView()
-
     }
 
     open class func setPublicKey(_ public_key: String) {
-
         sharedInstance.public_key = public_key.trimSpaces()
-//        _ = CardFrontView()
-//        _ = CardBackView()
-
-    }
-
-    open class func setAccountMoneyAvailable(accountMoneyAvailable: Bool) {
-        sharedInstance.account_money_available = accountMoneyAvailable
-    }
-
-    @available(*, deprecated, message: "Do not use. Deprecated in Q2 - 2018.")
-    open class func setDisplayDefaultLoading(flag: Bool) {
-        print("setDisplayDefaultLoading - Do not use. Deprecated in Q2 - 2018")
-        //sharedInstance.display_default_loading = flag
     }
 
     open class func merchantAccessToken() -> String {
@@ -220,16 +199,6 @@ import UIKit
         return sharedInstance.payer_access_token
     }
 
-    open class func accountMoneyAvailable() -> Bool {
-        return sharedInstance.account_money_available
-    }
-
-    @available(*, deprecated, message: "Do not use. Deprecated in Q2 - 2018.")
-    open class func shouldDisplayDefaultLoading() -> Bool {
-        return false
-        //return sharedInstance.display_default_loading
-    }
-
     open class func paymentKey() -> String {
         if sharedInstance.payment_key == "" {
             sharedInstance.payment_key = String(arc4random()) + String(Date().timeIntervalSince1970)
@@ -240,32 +209,4 @@ import UIKit
     open class func clearPaymentKey() {
         sharedInstance.payment_key = ""
     }
-}
-
-@objc public enum Languages: Int {
-    case _SPANISH
-    case _SPANISH_MEXICO
-    case _SPANISH_COLOMBIA
-    case _SPANISH_URUGUAY
-    case _SPANISH_PERU
-    case _SPANISH_VENEZUELA
-    //        case _SPANISH_CHILE
-    case _PORTUGUESE
-    case _ENGLISH
-
-    func langPrefix() -> String {
-        switch self {
-        case ._SPANISH : return "es"
-        case ._SPANISH_MEXICO : return "es-MX"
-        case ._SPANISH_COLOMBIA : return "es-CO"
-        case ._SPANISH_URUGUAY : return "es-UY"
-        case ._SPANISH_PERU : return "es-PE"
-        case ._SPANISH_VENEZUELA : return "es-VE"
-            //            case ._SPANISH_CHILE : return "es-CH"
-
-        case ._PORTUGUESE : return "pt"
-        case ._ENGLISH : return "en"
-        }
-    }
-
 }

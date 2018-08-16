@@ -6,6 +6,7 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
+/** :nodoc: */
 public enum PayerInfoFlowStep: String {
 
     case CANCEL

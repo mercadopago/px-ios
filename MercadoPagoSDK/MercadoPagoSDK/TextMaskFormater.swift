@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 @objcMembers
 open class TextMaskFormater: NSObject {
 

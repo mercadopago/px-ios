@@ -177,6 +177,7 @@ class PXResultViewController: PXComponentContainerViewController {
 }
 
 // Components
+/** :nodoc: */
 extension PXResultViewController {
     func buildHeaderView() -> UIView {
         let headerComponent = viewModel.buildHeaderComponent()

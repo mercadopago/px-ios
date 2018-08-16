@@ -36,7 +36,7 @@ extension PXOneTapViewModel {
     }
 
     private func isNoPayerCostAndDiscount() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.amountHelper.discount != nil {
+        if  self.amountHelper.discount != nil {
             // If there is more than one installment, don't show total amount without discount
             if let payerCost = self.amountHelper.paymentData.payerCost {
                 return payerCost.installments == 1
@@ -48,7 +48,7 @@ extension PXOneTapViewModel {
     }
 
     private func getDiscountDescription() -> String? {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.amountHelper.discount {
+        if let discount = self.amountHelper.discount {
             return discount.getDiscountDescription()
         }
         return nil

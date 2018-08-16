@@ -7,9 +7,10 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 @objcMembers
 open class PXPaymentPluginNavigationHandler: NSObject {
-
     private var flow: PXPaymentFlow?
 
     internal init(flow: PXPaymentFlow) {

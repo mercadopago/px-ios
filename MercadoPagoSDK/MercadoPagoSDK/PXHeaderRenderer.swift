@@ -126,6 +126,7 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
+/** :nodoc: */
 public class PXHeaderView: PXComponentView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?

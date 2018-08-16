@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 @objcMembers open class ApiUtil {
     enum StatusCodes: Int {
         case INTERNAL_SERVER_ERROR = 500
@@ -41,6 +43,7 @@ import Foundation
     }
 }
 
+/** :nodoc: */
 open class ApiParams: NSObject {
     static let PAYER_ACCESS_TOKEN = "access_token"
     static let PUBLIC_KEY = "public_key"

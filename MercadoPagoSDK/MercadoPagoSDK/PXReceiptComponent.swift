@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 class PXReceiptComponent: PXComponentizable {
     var props: PXReceiptProps
 
@@ -18,6 +19,8 @@ class PXReceiptComponent: PXComponentizable {
         return PXReceiptRenderer().render(self)
     }
 }
+
+/** :nodoc: */
 open class PXReceiptProps: NSObject {
     var dateLabelString: String?
     var receiptDescriptionString: String?

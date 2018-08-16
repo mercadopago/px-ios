@@ -7,6 +7,8 @@
 //
 
 import UIKit
+
+/** :nodoc: */
 @objcMembers
 open class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 

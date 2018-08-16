@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers public class PXComponentView: UIView {
 
     private var topGuideView = UIView()

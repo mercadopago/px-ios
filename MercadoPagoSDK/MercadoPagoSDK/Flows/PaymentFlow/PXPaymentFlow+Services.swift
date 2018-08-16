@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 extension PXPaymentFlow {
     func createPaymentWithPlugin(plugin: PXPaymentPluginComponent?) {
         guard let paymentData = model.paymentData, let plugin = plugin else {

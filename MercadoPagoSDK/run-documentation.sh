@@ -1,0 +1,11 @@
+jazzy \
+  --clean \
+  --author Mercadopago \
+  --author_url https://github.com/mercadopago/px-ios \
+  --github_url https://github.com/mercadopago/px-ios \
+  --github-file-prefix https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36 \
+  --module-version 4.0.0.beta.36 \
+  --xcodebuild-arguments -scheme,MercadoPagoSDK \
+  --module MercadoPagoSDK \
+  --root-url https://mercadopago.github.io/px-ios \
+  --output documentation/v4 \

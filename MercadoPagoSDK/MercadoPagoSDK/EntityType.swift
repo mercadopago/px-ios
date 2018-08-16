@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class EntityType: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.entityType
@@ -42,6 +43,7 @@ import Foundation
     }
 }
 
+/** :nodoc: */
 public func == (obj1: EntityType, obj2: EntityType) -> Bool {
 
     let areEqual =

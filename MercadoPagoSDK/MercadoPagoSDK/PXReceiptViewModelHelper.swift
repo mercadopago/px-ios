@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 extension PXResultViewModel {
     open func getReceiptComponentProps() -> PXReceiptProps {
         if hasReceiptComponent() {

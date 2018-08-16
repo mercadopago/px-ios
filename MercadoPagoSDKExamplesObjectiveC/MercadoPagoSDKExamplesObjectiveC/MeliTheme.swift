@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoSDK
 
-@objc class MeliTheme: NSObject, PXTheme {
+@objc final class MeliTheme: NSObject, PXTheme {
 
     let primaryColor: UIColor = #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1)
 

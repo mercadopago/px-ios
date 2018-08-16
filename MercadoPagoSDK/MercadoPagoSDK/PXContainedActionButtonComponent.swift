@@ -20,6 +20,7 @@ class PXContainedActionButtonComponent: PXComponentizable {
     }
 }
 
+/** :nodoc: */
 open class PXContainedActionButtonProps: NSObject {
     let title: String
     let action : (() -> Void)

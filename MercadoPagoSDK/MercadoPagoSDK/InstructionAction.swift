@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 @objcMembers open class InstructionAction: NSObject {
 
     var label: String!
@@ -28,6 +29,7 @@ import UIKit
             }
 }
 
+/** :nodoc: */
 public enum ActionTag: String {
     case LINK = "link"
     case PRINT = "print"

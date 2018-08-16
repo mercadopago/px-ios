@@ -51,6 +51,7 @@ private class Localizator {
     }
 }
 
+/** :nodoc: */
 extension String {
     var localized_beta: String {
         return Localizator.sharedInstance.localize(string: self)

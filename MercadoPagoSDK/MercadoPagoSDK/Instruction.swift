@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 @objcMembers open class Instruction: NSObject {
 
     open var title: String = ""

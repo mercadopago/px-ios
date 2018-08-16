@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class SavedCardToken: CardToken {
 
     open var cardId: String

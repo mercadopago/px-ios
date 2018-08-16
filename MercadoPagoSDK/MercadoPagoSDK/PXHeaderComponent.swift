@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 open class PXHeaderComponent: PXComponentizable {
 
     public func render() -> UIView {
@@ -21,6 +22,7 @@ open class PXHeaderComponent: PXComponentizable {
     }
 }
 
+/** :nodoc: */
 open class PXHeaderProps: NSObject {
     var labelText: NSAttributedString?
     var title: NSAttributedString

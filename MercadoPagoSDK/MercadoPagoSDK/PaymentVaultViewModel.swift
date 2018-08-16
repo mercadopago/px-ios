@@ -162,18 +162,10 @@ extension PaymentVaultViewModel {
 
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
         if !Array.isNullOrEmpty(customerPaymentOptions) && self.isRoot {
-            let realCount = self.customerPaymentOptions!.count
-
-            if MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled() {
-                return realCount
-            } else {
-                var maxChosenCount = MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow()
-                let hasAccountMoney = hasAccountMoneyIn(customerOptions: self.customerPaymentOptions!)
-                if hasAccountMoney {
-                    maxChosenCount += 1
-                }
-                return (realCount <= maxChosenCount ? realCount : maxChosenCount)
+            guard let realCount = self.customerPaymentOptions?.count else {
+                return 0
             }
+            return realCount
         }
         return 0
     }

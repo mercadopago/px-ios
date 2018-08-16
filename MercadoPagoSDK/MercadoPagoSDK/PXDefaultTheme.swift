@@ -16,8 +16,8 @@ class PXDefaultTheme: NSObject {
 }
 
 // MARK: - Theme styles.
+/** :nodoc: */
 extension PXDefaultTheme: PXTheme {
-
     public func navigationBar() -> PXThemeProperty {
         return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
     }

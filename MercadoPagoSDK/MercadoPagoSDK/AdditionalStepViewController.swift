@@ -8,18 +8,23 @@
 
 import UIKit
 
+/** :nodoc: */
 @objcMembers
 open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
 
     var bundle: Bundle? = MercadoPago.getBundle()
+    /// :nodoc:
     open let viewModel: AdditionalStepViewModel!
     override var maxFontSize: CGFloat { return self.viewModel.maxFontSize}
 
+    /// :nodoc:
     override open var screenName: String { return viewModel.getScreenName() }
+    /// :nodoc:
     override open var screenId: String { return viewModel.getScreenId() }
 
+    /// :nodoc:
     override open func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -45,6 +50,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.tableView.register(bankInsterestNib, forCellReuseIdentifier: "bankInsterestNib")
     }
 
+    /// :nodoc:
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideNavBar()
@@ -104,28 +110,34 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         viewModel.track()
     }
 
+    /// :nodoc:
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// :nodoc:
     public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void)) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
         super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
     }
 
+    /// :nodoc:
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.viewModel.heightForRowAt(indexPath: indexPath)
     }
 
+    /// :nodoc:
     public func numberOfSections(in tableView: UITableView) -> Int {
         return self.viewModel.numberOfSections()
     }
 
+    /// :nodoc:
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  self.viewModel.numberOfRowsInSection(section: section)
     }
 
+    /// :nodoc:
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellWidth = self.tableView.bounds.width
 
@@ -165,6 +177,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         return UITableViewCell()
     }
 
+    /// :nodoc:
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if viewModel.isBodyCellFor(indexPath: indexPath) {
@@ -174,11 +187,13 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         }
     }
 
+    /// :nodoc:
     public func updateDataSource(dataSource: [Cellable]) {
         self.viewModel.dataSource = dataSource
         self.tableView.reloadData()
     }
 
+    /// :nodoc:
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.didScrollInTable(scrollView)
         let visibleIndexPaths = tableView.indexPathsForVisibleRows!

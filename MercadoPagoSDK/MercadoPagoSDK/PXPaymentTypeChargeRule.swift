@@ -10,12 +10,10 @@ import UIKit
 
 @objc
 public final class PXPaymentTypeChargeRule: NSObject {
-
     let paymentMethdodId: String
     let amountCharge: Double
 
-   @objc
-    public init(paymentMethdodId: String, amountCharge: Double) {
+   @objc public init(paymentMethdodId: String, amountCharge: Double) {
         self.paymentMethdodId = paymentMethdodId
         self.amountCharge = amountCharge
         super.init()

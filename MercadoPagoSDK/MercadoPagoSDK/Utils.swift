@@ -28,6 +28,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
+/** :nodoc: */
 class Utils {
 
     private static let kSdkSettingsFile = "mpsdk_settings"

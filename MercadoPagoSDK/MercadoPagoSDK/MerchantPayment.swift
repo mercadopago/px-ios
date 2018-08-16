@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class MerchantPayment: NSObject {
     open var issuer: Issuer?
     open var cardTokenId: String!

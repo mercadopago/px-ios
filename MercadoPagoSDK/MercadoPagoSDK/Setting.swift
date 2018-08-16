@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class Setting: NSObject {
     open var binMask: BinMask!
     open var cardNumber: CardNumber!

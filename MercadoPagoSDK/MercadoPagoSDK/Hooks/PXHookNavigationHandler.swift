@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 @objcMembers
 open class PXHookNavigationHandler: NSObject {
 

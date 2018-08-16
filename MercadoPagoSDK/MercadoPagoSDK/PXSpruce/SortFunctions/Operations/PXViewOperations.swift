@@ -25,6 +25,7 @@
 
 import UIKit
 
+/** :nodoc: */
 internal extension PXSpruce {
 
     /// The receiver's immediate subviews given the recursive depth. If a subview contains other subviews, they will be listed in the array following their parent view. Consider the following example:

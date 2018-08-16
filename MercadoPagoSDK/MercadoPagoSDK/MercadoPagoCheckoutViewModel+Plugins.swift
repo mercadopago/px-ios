@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 extension MercadoPagoCheckoutViewModel {
 
     func needToShowPaymentMethodConfigPlugin() -> Bool {
@@ -55,6 +57,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 }
 
+/** :nodoc: */
 // MARK: Payment Plugin
 extension MercadoPagoCheckoutViewModel {
     func needToCreatePaymentForPaymentPlugin() -> Bool {

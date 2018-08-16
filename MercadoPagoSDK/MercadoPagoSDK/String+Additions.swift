@@ -8,7 +8,8 @@
 
 import Foundation
 
-extension String {
+/** :nodoc: */
+internal extension String {
 
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
 

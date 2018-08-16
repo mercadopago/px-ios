@@ -293,6 +293,7 @@ extension PXReviewViewController {
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton
         loadingButtonComponent?.layer.cornerRadius = 4
+        footerView.backgroundColor = .clear
         return footerView
     }
 

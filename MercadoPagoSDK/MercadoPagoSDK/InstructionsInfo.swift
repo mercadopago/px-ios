@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 @objcMembers open class InstructionsInfo: NSObject {
 
     var amountInfo: AmountInfo!

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class Currency: NSObject {
 
     open var currencyId: String!

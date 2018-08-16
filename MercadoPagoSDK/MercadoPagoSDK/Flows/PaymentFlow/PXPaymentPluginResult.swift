@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 @objcMembers
 open class PXPaymentPluginResult: NSObject {
     let status: String

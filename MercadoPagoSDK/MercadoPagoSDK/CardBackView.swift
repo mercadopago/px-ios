@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/** :nodoc: */
 @objcMembers
 @IBDesignable open class CardBackView: UIView {
     var view: UIView!

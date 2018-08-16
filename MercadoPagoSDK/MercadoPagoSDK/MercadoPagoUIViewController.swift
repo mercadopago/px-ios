@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
+/** :nodoc: */
 @objcMembers
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
@@ -260,21 +261,19 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
 }
 
+/** :nodoc: */
 extension UINavigationController {
-
     override open var shouldAutorotate: Bool {
         return (self.viewControllers.count > 0 && self.viewControllers.last!.shouldAutorotate)
     }
-
 }
 
+/** :nodoc: */
 extension UINavigationBar {
-
     func removeBottomLine() {
         self.setValue(true, forKey: "hidesShadow")
     }
     func restoreBottomLine() {
         self.setValue(false, forKey: "hidesShadow")
     }
-
 }

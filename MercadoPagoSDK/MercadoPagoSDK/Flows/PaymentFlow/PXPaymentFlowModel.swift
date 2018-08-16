@@ -7,8 +7,8 @@
 //
 
 import Foundation
-internal final class PXPaymentFlowModel: NSObject {
 
+internal final class PXPaymentFlowModel: NSObject {
     var paymentData: PaymentData?
     var checkoutPreference: CheckoutPreference?
     let binaryMode: Bool
@@ -146,6 +146,7 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 }
 
+/** :nodoc: */
 extension PXPaymentFlowModel {
     func hasPluginPaymentScreen(plugin: PXPaymentPluginComponent?) -> Bool {
         guard let paymentPlugin = plugin else {

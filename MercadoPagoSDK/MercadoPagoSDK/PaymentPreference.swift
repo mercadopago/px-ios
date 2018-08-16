@@ -36,8 +36,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+/** :nodoc: */
 @objcMembers open class PaymentPreference: NSObject {
-
     open var excludedPaymentMethodIds: Set<String>?
     open var excludedPaymentTypeIds: Set<String>?
     open var defaultPaymentMethodId: String?
@@ -92,10 +92,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let defaultInstallments = JSONHandler.attemptParseToInt(json["default_installments"]) {
                         preferencePaymentMethods.defaultInstallments = defaultInstallments
                     }
-
-                if let defaultCardId = JSONHandler.attemptParseToString(json["card_id"]) {
-                    preferencePaymentMethods.cardId = defaultCardId
-                }
 
                 return preferencePaymentMethods
             }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objc public enum PXHookStep: Int {
     case BEFORE_PAYMENT_METHOD_CONFIG = 1
     case AFTER_PAYMENT_METHOD_CONFIG

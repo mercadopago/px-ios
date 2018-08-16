@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class FinancialInstitution: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.financialInstitution

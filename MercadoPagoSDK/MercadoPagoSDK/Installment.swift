@@ -27,6 +27,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
+/** :nodoc: */
 @objcMembers open class Installment: NSObject {
     open var issuer: Issuer!
     open var payerCosts: [PayerCost]!

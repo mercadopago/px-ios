@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class IdentificationType: NSObject {
     open var identificationTypeId: String?
     open var name: String?
@@ -51,6 +52,7 @@ import Foundation
     }
 }
 
+/** :nodoc: */
 public func == (obj1: IdentificationType, obj2: IdentificationType) -> Bool {
 
     let areEqual =

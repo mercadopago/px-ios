@@ -26,6 +26,7 @@
 import UIKit
 
 /// Access to all of the Spruce library animations. Use this to call functions such as `.animate` or `.prepare`
+/** :nodoc: */
 internal struct PXSpruce {
 
     struct PXDefaultAnimation {
@@ -44,6 +45,7 @@ internal struct PXSpruce {
 /// Used to keep track of the `UIView` object and a changing reference point. Since Spruce allows for
 /// recursive subview lookup, we need to handle changing the coordinate space. Once the coordinate space
 /// has been accounted for we can then alter the reference point.
+/** :nodoc: */
 internal protocol View {
     /// The view that should be animating
     weak var view: UIView? { get }
@@ -51,6 +53,7 @@ internal protocol View {
     var referencePoint: CGPoint { get set }
 }
 
+/** :nodoc: */
 internal struct PXSpruceUIView: View {
     public private(set) weak var view: UIView?
     public var referencePoint: CGPoint

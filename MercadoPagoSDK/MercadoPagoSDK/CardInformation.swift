@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 @objc
 public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
@@ -34,8 +35,9 @@ public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
     func getFirstSixDigits() -> String!
 
 }
-@objc
 
+/** :nodoc: */
+@objc
 public protocol CardInformationForm: NSObjectProtocol {
 
     func getCardBin() -> String?

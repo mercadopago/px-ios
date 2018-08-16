@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers
 open class Payer: NSObject {
 	open var email: String!
@@ -105,6 +106,7 @@ open class Payer: NSObject {
 
 }
 
+/** :nodoc: */
 public class GroupsPayer: Payer {
 
     open override func toJSON() -> [String: Any] {

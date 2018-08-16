@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objc
 public protocol MercadoPagoESC: NSObjectProtocol {
 

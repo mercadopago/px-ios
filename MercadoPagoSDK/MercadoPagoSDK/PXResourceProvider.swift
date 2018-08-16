@@ -9,6 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers
 open class PXResourceProvider: NSObject {
 

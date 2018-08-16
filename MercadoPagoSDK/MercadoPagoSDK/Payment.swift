@@ -27,6 +27,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+/** :nodoc: */
 @objcMembers open class Payment: NSObject {
     open var binaryMode: Bool!
     open var callForAuthorizeId: String!

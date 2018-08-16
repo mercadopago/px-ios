@@ -77,10 +77,11 @@ class AdditionalStepCellFactory: NSObject {
     }
 
     open class func needsCFTPayerCostCell(payerCost: PayerCost) -> Bool {
-        return payerCost.hasCFTValue() && MercadoPagoCheckoutViewModel.flowPreference.isInstallmentsReviewScreenEnable() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+        return payerCost.hasCFTValue()
     }
 }
 
+/** :nodoc: */
 public enum ObjectTypes: String {
     case payerCost = "payer_cost"
     case issuer = "issuer"

@@ -9,7 +9,6 @@
 import Foundation
 
 final class OneTapFlowModel: NSObject, PXFlowModel {
-
     enum Steps: String {
         case finish
         case screenReviewOneTap
@@ -77,6 +76,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     }
 }
 
+/** :nodoc: */
 // MARK: Create view model
 extension OneTapFlowModel {
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
@@ -97,6 +97,7 @@ extension OneTapFlowModel {
     }
 }
 
+/** :nodoc: */
 // MARK: Update view models
 extension OneTapFlowModel {
     func updateCheckoutModel(paymentData: PaymentData) {
@@ -117,6 +118,7 @@ extension OneTapFlowModel {
 
 }
 
+/** :nodoc: */
 // MARK: Flow logic
 extension OneTapFlowModel {
     func needReviewAndConfirmForOneTap() -> Bool {

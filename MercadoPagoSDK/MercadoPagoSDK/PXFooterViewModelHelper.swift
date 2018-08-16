@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 extension PXResultViewModel {
 
     func getFooterComponentProps() -> PXFooterProps {
@@ -20,6 +21,7 @@ extension PXResultViewModel {
     }
 }
 
+/** :nodoc: */
 // MARK: Build Helpers
 extension PXResultViewModel {
 
@@ -39,7 +41,7 @@ extension PXResultViewModel {
         return actionLink
     }
 
-    func getButtonLabel() -> String? {
+    private func getButtonLabel() -> String? {
         if paymentResult.isAccepted() {
             if self.paymentResult.isWaitingForPayment() {
                 if preference.getPendingSecondaryButtonText() != nil {
@@ -72,7 +74,7 @@ extension PXResultViewModel {
         return PXFooterResultConstants.DEFAULT_BUTTON_TEXT
     }
 
-    func getLinkLabel() -> String? {
+    private func getLinkLabel() -> String? {
         if let label = preference.getExitButtonTitle() {
             return label
         }
@@ -90,30 +92,15 @@ extension PXResultViewModel {
         return PXFooterResultConstants.DEFAULT_LINK_TEXT.localized
     }
 
-    func getButtonAction() -> (() -> Void)? {
-        if paymentResult.isAccepted() {
-            if self.paymentResult.isWaitingForPayment() {
-                if preference.getPendingSecondaryButtonCallback() != nil {
-                    return { self.preference.getPendingSecondaryButtonCallback()!(self.paymentResult) }
-                } else {
-                    return nil
-                }
-            } else if preference.getApprovedSecondaryButtonCallback() != nil {
-                return { self.preference.getApprovedSecondaryButtonCallback()!(self.paymentResult) }
-            } else {
-                return nil
-            }
-        }
-        if (paymentResult.isWarning() || paymentResult.isError()) && preference.getRejectedSecondaryButtonCallback()  != nil {
-            return { self.preference.getRejectedSecondaryButtonCallback()!(self.paymentResult)  }
-        }
+    private func getButtonAction() -> (() -> Void)? {
         return { self.pressButton() }
     }
-    func getLinkAction() -> (() -> Void)? {
+
+    private func getLinkAction() -> (() -> Void)? {
         return { self.pressLink() }
     }
 
-    func pressButton() {
+    private func pressButton() {
         if paymentResult.isAccepted() {
              self.callback(PaymentResult.CongratsState.approved)
         } else if paymentResult.isError() {
@@ -127,7 +114,7 @@ extension PXResultViewModel {
         }
     }
 
-    func pressLink() {
+    private func pressLink() {
         if paymentResult.isAccepted() {
             self.callback(PaymentResult.CongratsState.approved)
         } else if paymentResult.isError() {

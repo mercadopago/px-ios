@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objc
 public protocol PXHookComponent: PXCustomComponentizable {
     func hookForStep() -> PXHookStep

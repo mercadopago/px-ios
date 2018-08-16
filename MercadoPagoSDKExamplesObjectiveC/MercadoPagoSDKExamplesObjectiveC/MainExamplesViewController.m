@@ -27,53 +27,25 @@
 
 @implementation MainExamplesViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)checkoutFlow:(id)sender {
-
-    [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
 
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.opaque = YES;
 
     self.pref = nil;
-    self.paymentData = nil;
-    self.paymentResult = nil;
-    
-    // Setear el idioma de la aplicación
-    [MercadoPagoCheckout setLanguageWithLanguage:Languages_SPANISH_MEXICO];
 
     ///  PASO 1: SETEAR PREFERENCIAS
 
     // Setear ServicePreference
-    //[self setServicePreference];
-
-
-    //Setear flowPreference
-    //[self finishFlowBeforeRYC];
-
+    // [self setServicePreference];
 
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
 
     // Setear una preferencia hecha a mano
-    [self setCheckoutPref_CardsNotExcluded];
+    //[self setCheckoutPref_CardsNotExcluded];
 
-    // Setear PaymentData
-    ///  PASO 3: SETEAR CALLBACK
+    [self setCheckoutPref_WithId];
 
-    //Setear PaymentDataCallback
-    //[self setPaymentDataCallback];
-
-    //Setear PaymentCallback
-
-    [self setPaymentCallback];
 /*
     DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
     
@@ -90,73 +62,73 @@
     
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
-    //self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
+
+    // self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
     //Differential pricing
-  //  self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
-                                                         accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
+    // self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+    /* self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
+                                                         accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController]; */
 
-    //PXDiscount* discount = [[PXDiscount alloc] init];
-    
+    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+
+    // AdvancedConfig
+    PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
     // Set default color or theme.
-    MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
-    MPTheme *mpExampleTheme = [[MPTheme alloc] init];
-    [self.mpCheckout setTheme: meliExampleTheme];
+    // MeliTheme *meliTheme = [[MeliTheme alloc] init];
+    MPTheme *mpTheme = [[MPTheme alloc] init];
+    [advancedConfig setTheme:mpTheme];
 
-    
+    [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
+
+    // CDP color.
+    // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
+
+    // [self.mpCheckout discountNotAvailable];
+
+    // PXDiscount* discount = [[PXDiscount alloc] init];
+
+
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
-
-    [self.mpCheckout setDiscount:discount withCampaign:campaign];
+    
+    // [self.mpCheckout setDiscount:discount withCampaign:campaign];
     
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
     PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"payment_method_plugin" amountCharge:10.5];
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
-  //  [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
-    // CDP color.
-    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
+    // [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
 
-    //[self setHooks];
-    
-    //[self setPaymentMethodPlugins];
+    // Setear Callback Cancel
+    // [self setVoidCallback];
 
-    [self setPaymentPlugin];
+    // [self.mpCheckout discountNotAvailable];
 
-    // Setear PaymentResultScreenPreference
-//    [self setPaymentResultScreenPreference];
-
-    //Setear Callback Cancel
-    [self setVoidCallback];
-
-    //Setear ReviewScreenPrefernce
-//    [self setReviewScreenPreference];
-
-  //  [self.mpCheckout discountNotAvailable];
     //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
-    [self.mpCheckout start];
+
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
+
+    [self.mpCheckout startWithNavigationController:self.navigationController];
 }
 
--(void)setHooks {
 
-    FlowPreference *flowPref = [[FlowPreference alloc] init];
+-(PXPaymentConfiguration *)getPaymentConfiguration {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-                                @"Hooks" bundle:[NSBundle mainBundle]];
+                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
+    PaymentPluginViewController *paymentProcessorPlugin = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-    FirstHookViewController *firstHook = [storyboard instantiateViewControllerWithIdentifier:@"firstHook"];
-    SecondHookViewController *secondHook = [storyboard instantiateViewControllerWithIdentifier:@"secondHook"];
-    ThirdHookViewController *thirdHook = [storyboard instantiateViewControllerWithIdentifier:@"thirdHook"];
+    self.paymentConfig = [[PXPaymentConfiguration alloc] initWithPaymentProcessor:paymentProcessorPlugin];
 
-    [flowPref addHookToFlowWithHook:firstHook];
-    [flowPref addHookToFlowWithHook:secondHook];
-    [flowPref addHookToFlowWithHook:thirdHook];
+    [self addPaymentMethodPluginToPaymentConfig];
 
-    [MercadoPagoCheckout setFlowPreference:flowPref];
+    return self.paymentConfig;
 }
 
--(void)setPaymentMethodPlugins {
 
+-(void)addPaymentMethodPluginToPaymentConfig {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
 
@@ -165,106 +137,18 @@
     PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"account_money" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"Hola mundo" paymentPlugin:makePaymentComponent];
 
     // Payment method config plugin component.
-    PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
+    // PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
+    // [bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
 
-    //[bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
-
-    NSMutableArray *paymentMethodPlugins = [[NSMutableArray alloc] init];
-    [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
-
-    [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
-
-    //[self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
-}
-
--(void)setPaymentPlugin {
-
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
-
-    PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
-}
-
--(void)setPaymentResult {
-    PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_call_for_authorize" paymentData:self.paymentData payerEmail:@"sarasa" paymentId:@"123" statementDescription:@"sarasa"];
-    self.paymentResult = paymentResult;
-
-}
-
--(void) setPaymentData {
-    PaymentData* paymentData = [[PaymentData alloc] init];
-    paymentData.paymentMethod = [[PaymentMethod alloc] init];
-    paymentData.paymentMethod.paymentMethodId = @"visa";
-    paymentData.paymentMethod.paymentTypeId = @"credit_card";
-    paymentData.paymentMethod.name = @"visa";
-    paymentData.payerCost = [[PayerCost alloc] initWithInstallments:1 installmentRate:0 labels:nil minAllowedAmount:100 maxAllowedAmount:1000 recommendedMessage:nil installmentAmount:100 totalAmount:100];
-
-    self.paymentData = paymentData;
-}
--(void)setRyCUpdate {
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.paymentMethod.paymentMethodId);
-        NSLog(@"%@", paymentData.token.tokenId);
-        NSLog(@"%ld", paymentData.payerCost.installments);
-
-        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
-        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
-        //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
-        [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
-        //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
-        //[self.navigationController popToRootViewControllerAnimated:NO];
-    }];
-}
-
-
--(void)setPaymentDataCallback {
-
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
-        NSLog(@"PaymentMethod: %@", paymentData.paymentMethod.paymentMethodId);
-        NSLog(@"Token_id: %@", paymentData.token.tokenId);
-        NSLog(@"Installemtns: %ld", paymentData.payerCost.installments);
-        NSLog(@"Issuer_id: %@", paymentData.issuer.issuerId);
-        self.paymentData = paymentData;
-        [self setPaymentCallback];
-
-    }];
-}
-
--(void)setPaymentCallback {
-    [MercadoPagoCheckout setPaymentCallbackWithPaymentCallback:^(Payment * payment) {
-        NSLog(@"%@", payment.paymentId);
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
+    [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
 }
 
 -(void)setVoidCallback {
-    [self.mpCheckout setCallbackCancelWithCallback:^{
+    // Deprecated
+    /* [self.mpCheckout setCallbackCancelWithCallback:^{
         NSLog(@"Se termino el flujo");
         [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
-}
-
--(void)finishFlowBeforeRYC {
-    FlowPreference *flowPreference = [[FlowPreference alloc]init];
-    [flowPreference disableReviewAndConfirmScreen];
-    [MercadoPagoCheckout setFlowPreference:flowPreference];
-
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
-        NSLog(@"PaymentMethod: %@", paymentData.paymentMethod.paymentMethodId);
-        NSLog(@"Token_id: %@", paymentData.token.tokenId);
-        NSLog(@"Installemtns: %ld", paymentData.payerCost.installments);
-        NSLog(@"Issuer_id: %@", paymentData.issuer.issuerId);
-
-        FlowPreference *flowPreference = [[FlowPreference alloc]init];
-        [flowPreference enableReviewAndConfirmScreen];
-        [MercadoPagoCheckout setFlowPreference:flowPreference];
-
-
-        [self.mpCheckout start];
-
-    }];
+    }]; */
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
@@ -301,15 +185,14 @@
 
 -(void)setPaymentResultScreenPreference {
     PaymentResultScreenPreference *resultPreference = [TestComponent getPaymentResultPreference];
-
-    [self.mpCheckout setPaymentResultScreenPreference:resultPreference];
+    // Deprecated
+    //[self.mpCheckout setPaymentResultScreenPreference:resultPreference];
 }
 
 -(void)setReviewScreenPreference {
-    
     ReviewScreenPreference *resultPreference = [TestComponent getReviewScreenPreference];
-    
-    [self.mpCheckout setReviewScreenPreference:resultPreference];
+    // Deprecated
+    //[self.mpCheckout setReviewScreenPreference:resultPreference];
 }
 
 -(void)setServicePreference {
@@ -322,66 +205,16 @@
     //    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
     //
     [servicePreference setGetCustomerWithBaseURL:@"https://api.mercadopago.com" URI:@"/v1/customers/261207170-jxqdmty1ClVKjU" additionalInfo:extraParams];
-    [PXSDKSettings enableBetaServices];
 
-    [MercadoPagoCheckout setServicePreference:servicePreference];
+    // Deprecated
+    // [MercadoPagoCheckout setServicePreference:servicePreference];
 }
 
--(IBAction)startCardManager:(id)sender  {
-
-    NSString *customerSinTarjetas = @"{\"cards\":null,\"identification\":{\"type\":null,\"number\":null},\"id\":\"239785138-ZJ25PFw7cYGu7L\",\"last_name\":null,\"default_card\":null,\"email\":\"palazzogcba@gmail.com\",\"date_created\":\"2017-01-30\",\"description\":null,\"first_name\":null}";
-
-    NSString *customerCon3Tarjetas = @"{\"cards\":[{\"expiration_year\":2017,\"issuer\":{\"id\":279,\"name\":\"Banco Galicia\"},\"last_four_digits\":\"6762\",\"date_created\":\"2017-05-23 03:00:00 +0000\",\"id\":210616405,\"payment_method\":{\"secure_thumbnail\":\"https:\/\/www.mercadopago.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"name\":\"Visa\",\"thumbnail\":\"http:\/\/img.mlstatic.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"payment_type_id\":\"credit_card\",\"accreditation_time\":null,\"additional_info_needed\":\"\",\"financial_institutions\":null,\"status\":null,\"id\":\"visa\",\"settings\":null,\"max_allowed_amount\":null,\"min_allowed_amount\":0,\"deferred_capture\":null},\"expiration_month\":6,\"security_code\":{\"mode\":\"\",\"cardLocation\":\"back\",\"length\":3},\"card_holder\":{\"name\":\"IGNACIO OVIEDO\",\"identification\":{\"type\":\"DNI\",\"number\":\"36409502\"}},\"date_last_updated\":\"2017-05-23 03:00:00 +0000\",\"customer_id\":\"242465951-bE6gna32mdkmFG\",\"first_six_digits\":\"454640\"}, {\"expiration_year\":2017,\"issuer\":{\"id\":279,\"name\":\"Banco Galicia\"},\"last_four_digits\":\"1111\",\"date_created\":\"2017-05-23 03:00:00 +0000\",\"id\":210616405,\"payment_method\":{\"secure_thumbnail\":\"https:\/\/www.mercadopago.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"name\":\"Visa\",\"thumbnail\":\"http:\/\/img.mlstatic.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"payment_type_id\":\"credit_card\",\"accreditation_time\":null,\"additional_info_needed\":\"\",\"financial_institutions\":null,\"status\":null,\"id\":\"visa\",\"settings\":null,\"max_allowed_amount\":null,\"min_allowed_amount\":0,\"deferred_capture\":null},\"expiration_month\":6,\"security_code\":{\"mode\":\"\",\"cardLocation\":\"back\",\"length\":3},\"card_holder\":{\"name\":\"IGNACIO OVIEDO\",\"identification\":{\"type\":\"DNI\",\"number\":\"36409502\"}},\"date_last_updated\":\"2017-05-23 03:00:00 +0000\",\"customer_id\":\"242465951-bE6gna32mdkmFG\",\"first_six_digits\":\"454640\"}, {\"expiration_year\":2017,\"issuer\":{\"id\":279,\"name\":\"Banco Galicia\"},\"last_four_digits\":\"2222\",\"date_created\":\"2017-05-23 03:00:00 +0000\",\"id\":210616405,\"payment_method\":{\"secure_thumbnail\":\"https:\/\/www.mercadopago.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"name\":\"Visa\",\"thumbnail\":\"http:\/\/img.mlstatic.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"payment_type_id\":\"credit_card\",\"accreditation_time\":null,\"additional_info_needed\":\"\",\"financial_institutions\":null,\"status\":null,\"id\":\"visa\",\"settings\":null,\"max_allowed_amount\":null,\"min_allowed_amount\":0,\"deferred_capture\":null},\"expiration_month\":6,\"security_code\":{\"mode\":\"\",\"cardLocation\":\"back\",\"length\":3},\"card_holder\":{\"name\":\"IGNACIO OVIEDO\",\"identification\":{\"type\":\"DNI\",\"number\":\"36409502\"}},\"date_last_updated\":\"2017-05-23 03:00:00 +0000\",\"customer_id\":\"242465951-bE6gna32mdkmFG\",\"first_six_digits\":\"454640\"}],\"identification\":{\"type\":null,\"number\":null}\,\"id\":\"242465951-bE6gna32mdkmFG\",\"last_name\":null\,\"default_card\":null\,\"email\":\"ignaciooviedo.gcba@gmail.com\",\"date_created\":\"2017-01-30\",\"description\":null,\"first_name\":null}";
-
-    NSString *customerCon2Tarjetas = @"{\"cards\":[{\"expiration_year\":2017,\"issuer\":{\"id\":279,\"name\":\"Banco Galicia\"},\"last_four_digits\":\"6762\",\"date_created\":\"2017-05-23 03:00:00 +0000\",\"id\":210616405,\"payment_method\":{\"secure_thumbnail\":\"https:\/\/www.mercadopago.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"name\":\"Visa\",\"thumbnail\":\"http:\/\/img.mlstatic.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"payment_type_id\":\"credit_card\",\"accreditation_time\":null,\"additional_info_needed\":\"\",\"financial_institutions\":null,\"status\":null,\"id\":\"visa\",\"settings\":null,\"max_allowed_amount\":null,\"min_allowed_amount\":0,\"deferred_capture\":null},\"expiration_month\":6,\"security_code\":{\"mode\":\"\",\"cardLocation\":\"back\",\"length\":3},\"card_holder\":{\"name\":\"IGNACIO OVIEDO\",\"identification\":{\"type\":\"DNI\",\"number\":\"36409502\"}},\"date_last_updated\":\"2017-05-23 03:00:00 +0000\",\"customer_id\":\"242465951-bE6gna32mdkmFG\",\"first_six_digits\":\"454640\"}, {\"expiration_year\":2017,\"issuer\":{\"id\":279,\"name\":\"Banco Galicia\"},\"last_four_digits\":\"1111\",\"date_created\":\"2017-05-23 03:00:00 +0000\",\"id\":210616405,\"payment_method\":{\"secure_thumbnail\":\"https:\/\/www.mercadopago.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"name\":\"Visa\",\"thumbnail\":\"http:\/\/img.mlstatic.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"payment_type_id\":\"credit_card\",\"accreditation_time\":null,\"additional_info_needed\":\"\",\"financial_institutions\":null,\"status\":null,\"id\":\"visa\",\"settings\":null,\"max_allowed_amount\":null,\"min_allowed_amount\":0,\"deferred_capture\":null},\"expiration_month\":6,\"security_code\":{\"mode\":\"\",\"cardLocation\":\"back\",\"length\":3},\"card_holder\":{\"name\":\"IGNACIO OVIEDO\",\"identification\":{\"type\":\"DNI\",\"number\":\"36409502\"}},\"date_last_updated\":\"2017-05-23 03:00:00 +0000\",\"customer_id\":\"242465951-bE6gna32mdkmFG\",\"first_six_digits\":\"454640\"}, {\"expiration_year\":2017,\"issuer\":{\"id\":279,\"name\":\"Banco Galicia\"},\"last_four_digits\":\"2222\",\"date_created\":\"2017-05-23 03:00:00 +0000\",\"id\":210616405,\"payment_method\":{\"secure_thumbnail\":\"https:\/\/www.mercadopago.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"name\":\"Visa\",\"thumbnail\":\"http:\/\/img.mlstatic.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"payment_type_id\":\"credit_card\",\"accreditation_time\":null,\"additional_info_needed\":\"\",\"financial_institutions\":null,\"status\":null,\"id\":\"visa\",\"settings\":null,\"max_allowed_amount\":null,\"min_allowed_amount\":0,\"deferred_capture\":null},\"expiration_month\":6,\"security_code\":{\"mode\":\"\",\"cardLocation\":\"back\",\"length\":3},\"card_holder\":{\"name\":\"IGNACIO OVIEDO\",\"identification\":{\"type\":\"DNI\",\"number\":\"36409502\"}},\"date_last_updated\":\"2017-05-23 03:00:00 +0000\",\"customer_id\":\"242465951-bE6gna32mdkmFG\",\"first_six_digits\":\"454640\"}],\"identification\":{\"type\":null,\"number\":null}\,\"id\":\"242465951-bE6gna32mdkmFG\",\"last_name\":null\,\"default_card\":null\,\"email\":\"ignaciooviedo.gcba@gmail.com\",\"date_created\":\"2017-01-30\",\"description\":null,\"first_name\":null}";
-
-    NSString *customerCon1Tarjetas = @"{\"cards\":[{\"expiration_year\":2017,\"issuer\":{\"id\":279,\"name\":\"Banco Galicia\"},\"last_four_digits\":\"1111\",\"date_created\":\"2017-05-23 03:00:00 +0000\",\"id\":210616405,\"payment_method\":{\"secure_thumbnail\":\"https:\/\/www.mercadopago.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"name\":\"Visa\",\"thumbnail\":\"http:\/\/img.mlstatic.com\/org-img\/MP3\/API\/logos\/visa.gif\",\"payment_type_id\":\"credit_card\",\"accreditation_time\":null,\"additional_info_needed\":\"\",\"financial_institutions\":null,\"status\":null,\"id\":\"visa\",\"settings\":null,\"max_allowed_amount\":null,\"min_allowed_amount\":0,\"deferred_capture\":null},\"expiration_month\":6,\"security_code\":{\"mode\":\"\",\"cardLocation\":\"back\",\"length\":3},\"card_holder\":{\"name\":\"IGNACIO OVIEDO\",\"identification\":{\"type\":\"DNI\",\"number\":\"36409502\"}},\"date_last_updated\":\"2017-05-23 03:00:00 +0000\",\"customer_id\":\"242465951-bE6gna32mdkmFG\",\"first_six_digits\":\"454640\"}],\"identification\":{\"type\":null,\"number\":null}\,\"id\":\"242465951-bE6gna32mdkmFG\",\"last_name\":null\,\"default_card\":null\,\"email\":\"ignaciooviedo.gcba@gmail.com\",\"date_created\":\"2017-01-30\",\"description\":null,\"first_name\":null}";
-
-
-//    NSData *customerData = [customerCon3Tarjetas dataUsingEncoding:NSUTF8StringEncoding];
-//    id customerJson = [NSJSONSerialization JSONObjectWithData:customerData options:0 error:nil];
-//    Customer *customer = [Customer fromJSON:customerJson];
-//
-//
-//    CardsAdminViewModel *viewModel = [[CardsAdminViewModel alloc]initWithCards:customer.cards extraOptionTitle:@"Opcion" confirmPromptText: @"Eliminar"];
-//    CardsAdminViewController *vc = [[CardsAdminViewController alloc]initWithViewModel:viewModel callback:^(Card * card) {
-//        NSLog(@"callback");
-//    }];
-//
-//    [self.navigationController pushViewController:vc animated:YES];
-}
-
--(void)invokeCallback:(MPCustomCell *)button {
-
-    [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.paymentMethod.paymentMethodId);
-        NSLog(@"%@", paymentData.token.tokenId);
-        NSLog(@"%ld", paymentData.payerCost.installments);
-
-        // Mostrar modal
-        NSArray *currentViewControllers = self.navigationController.viewControllers;
-
-        // Cuando retorna de modal
-        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
-        [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
-
-        //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
-        //
-        //[self.mpCheckout updateReviewAndConfirm];
-
-    }];
-}
-
--(void)invokeCallbackPaymentResult:(MPCustomCell *)button {
-    [[self.dineroEnCuentaCell getDelegate] invokeCallbackWithPaymentResultWithRowCallback:^(PaymentResult *paymentResult) {
-        NSLog(@"%@", paymentResult.status);
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
-}
+-(IBAction)startCardManager:(id)sender  {}
 
 - (void)lazyInitDidFinish {
     NSLog(@"lazyInitDidFinish");
-    [self.mpCheckout start];
+    [self.mpCheckout startWithNavigationController:self.navigationController];
 }
 
 - (void)lazyInitFailureWithErrorDetail:(NSString *)errorDetail {

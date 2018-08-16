@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class SummaryRow: NSObject {
     var customDescription: String
     var customAmount: Double

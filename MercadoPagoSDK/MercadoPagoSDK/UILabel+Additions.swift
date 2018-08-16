@@ -8,23 +8,22 @@
 
 import Foundation
 
-extension UILabel {
-
-    open static func requiredHeight(forText text: String, withFont font: UIFont, inNumberOfLines lines: Int = 0, inWidth width: CGFloat) -> CGFloat {
+internal extension UILabel {
+    static func requiredHeight(forText text: String, withFont font: UIFont, inNumberOfLines lines: Int = 0, inWidth width: CGFloat) -> CGFloat {
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.text = text
         label.font = font
         return label.requiredHeight(numberOfLines: lines)
     }
 
-    open static func requiredHeight(forAttributedText text: NSAttributedString, withFont font: UIFont, inNumberOfLines lines: Int = 0, inWidth width: CGFloat) -> CGFloat {
+    static func requiredHeight(forAttributedText text: NSAttributedString, withFont font: UIFont, inNumberOfLines lines: Int = 0, inWidth width: CGFloat) -> CGFloat {
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.attributedText = text
         label.font = font
         return label.requiredAttributedHeight(numberOfLines: lines)
     }
 
-    open func requiredHeight(numberOfLines: Int = 0) -> CGFloat {
+    func requiredHeight(numberOfLines: Int = 0) -> CGFloat {
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = numberOfLines
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -33,7 +32,7 @@ extension UILabel {
         label.sizeToFit()
         return label.frame.height
     }
-    open func requiredAttributedHeight(numberOfLines: Int = 0) -> CGFloat {
+    func requiredAttributedHeight(numberOfLines: Int = 0) -> CGFloat {
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = numberOfLines
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -43,7 +42,7 @@ extension UILabel {
         return label.frame.height
     }
 
-    open static func getHeight(width: CGFloat, font: UIFont, text: String) -> CGFloat {
+    static func getHeight(width: CGFloat, font: UIFont, text: String) -> CGFloat {
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -53,11 +52,12 @@ extension UILabel {
         return label.frame.height
     }
 
-    open func clearAttributedText() {
+    func clearAttributedText() {
         self.attributedText = NSAttributedString(string: "")
     }
 }
 
+/** :nodoc: */
 extension NSAttributedString {
     func heightWithConstrainedWidth(width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)

@@ -9,6 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 internal extension PXDiscount {
     override open var description: String {
         get {

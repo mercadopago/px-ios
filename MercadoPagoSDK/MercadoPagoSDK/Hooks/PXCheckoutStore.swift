@@ -7,9 +7,10 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 @objcMembers
 open class PXCheckoutStore: NSObject {
-
     static let sharedInstance = PXCheckoutStore()
     private var data = [String: Any]()
     var checkoutPreference: CheckoutPreference?

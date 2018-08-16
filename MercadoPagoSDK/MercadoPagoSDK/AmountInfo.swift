@@ -8,6 +8,7 @@
 
 import UIKit
 
+/** :nodoc: */
 @objcMembers open class AmountInfo: NSObject {
 
     var amount: Double!

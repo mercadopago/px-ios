@@ -97,6 +97,7 @@ class JSONHandler: NSObject {
     internal class var null: NSNull { return NSNull() }
  }
 
+/** :nodoc: */
 extension String {
     func toBool() -> Bool? {
         switch self {
@@ -110,6 +111,7 @@ extension String {
     }
 }
 
+/** :nodoc: */
 extension String {
 
     var numberValue: NSNumber? {

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers open class Device: NSObject {
     open var fingerprint: Fingerprint!
 

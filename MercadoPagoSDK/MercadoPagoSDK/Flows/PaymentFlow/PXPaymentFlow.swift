@@ -9,7 +9,6 @@
 import Foundation
 
 internal final class PXPaymentFlow: NSObject, PXFlow {
-
     let model: PXPaymentFlowModel
 
     weak var resultHandler: PXPaymentResultHandlerProtocol?
@@ -92,6 +91,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
     }
 }
 
+/** :nodoc: */
 extension PXPaymentFlow: PXPaymentFlowHandlerProtocol {
     public func showError() {
         let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: false)
