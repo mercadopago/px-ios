@@ -754,6 +754,7 @@
 		FC2E9B9820A5EB2300D43B1E /* PXUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B9720A5EB2300D43B1E /* PXUIImageView.swift */; };
 		FC2E9B9920A5EB2600D43B1E /* PXUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B9720A5EB2300D43B1E /* PXUIImageView.swift */; };
 		FC329A282134A9C5007BB76E /* PXTranslations.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC329A2A2134A9C5007BB76E /* PXTranslations.plist */; };
+		FC329A332134B323007BB76E /* PXTranslations.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC329A2A2134A9C5007BB76E /* PXTranslations.plist */; };
 		FC3918B6208E1A2900B75366 /* PXBankDealsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3918B5208E1A2900B75366 /* PXBankDealsViewModel.swift */; };
 		FC3FC8421FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8431FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
@@ -3197,6 +3198,7 @@
 				157704B81DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */,
 				15E7D6E81C87164E00101872 /* MockedData.plist in Resources */,
 				FCBF13551E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */,
+				FC329A332134B323007BB76E /* PXTranslations.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
