@@ -102,14 +102,6 @@ DEPENDENCIES:
   - MercadoPagoServicesV4 (= 1.0.21)
   - MLUI (~> 5.0)
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - FXBlurView
-    - JRSwizzle
-    - MercadoPagoPXTrackingV4
-    - MercadoPagoServicesV4
-    - MLUI
-
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
@@ -119,4 +111,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6c537999736f381d32a43a9dca0fe6ebb303fb7d
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.4.0

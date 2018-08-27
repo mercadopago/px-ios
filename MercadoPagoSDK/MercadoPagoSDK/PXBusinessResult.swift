@@ -7,7 +7,13 @@
 //
 
 import UIKit
-
+/**
+ Possible Business Result Status:
+ - APPROVED
+ - REJECTED
+ - PENDING
+ - IN_PROGRESS
+ */
 @objc public enum PXBusinessResultStatus: Int {
     case APPROVED
     case REJECTED
@@ -24,12 +30,11 @@ import UIKit
     }
 }
 
-/*
- Esta clase representa un resultado de pago de negocio.
- Por ejemplo, cuando hay un error al momento de realizar un pago que tiene que ver con el negocio y no con el payment method.
+/**
+ This class represents a business payment result.
+ For example, when there is an error when making a payment that has to do with the business and not with the payment method.
  */
 @objcMembers open class PXBusinessResult: NSObject {
-
     private let status: PXBusinessResultStatus // APPROVED REJECTED PENDING
     private let title: String // Titluo de Congrats
     private let subtitle: String? // Sub Titluo de Congrats
@@ -46,6 +51,26 @@ import UIKit
     let paymentStatus: String
     let paymentStatusDetail: String
 
+    
+    // MARK: Initialization
+    /**
+     Creates a `PXBusinessResult` which represents Business Payment Result.
+     - parameter receiptId: Reference id for payment receipt.
+     - parameter status: Business Status Result
+     - parameter title: Title that will be displayed on the result screen
+     - parameter subtitle: Sub-title that will be displayed on the result screen
+     - parameter icon: Icon that will be displayed on the result screen
+     - parameter mainAction: Action for the main action button that will be displayed on the result screen
+     - parameter secondaryAction: Action for the secondary action button that will be displayed on the result screen
+     - parameter helpMessage: Help message that will be displayed on the result screen
+     - parameter showPaymentMethod: True if you want to show the cell of payment method in the result screen
+     - parameter statementDescription: Statement description that will be displayed on the result screen
+     - parameter imageUrl: Image url for the icon that will be displayed on the result screen
+     - parameter topCustomView: Custom view that will be displayed on the result screen on top
+     - parameter bottomCustomView: Custom view that will be displayed on the result screen on bottom
+     - parameter paymentStatus: Payment status of the payment result
+     - parameter paymentStatusDetail: Payment status detail of the payment result
+     */
     public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXAction? = nil, secondaryAction: PXAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil, paymentStatus: String, paymentStatusDetail: String) {
         self.receiptId = receiptId
         self.status = status
