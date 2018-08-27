@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CheckoutPreference Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/CheckoutPreference" class="dashAnchor"></a>
+    <a title="CheckoutPreference Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MercadoPagoSDK Docs</a> (2% documented)</p>
+        <p class="header-right"><a href="https://github.com/mercadopago/px-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmercadopago%2Egithub%2Eio%2Fdocsets%2FMercadoPagoSDK%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MercadoPagoSDK Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CheckoutPreference Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CheckoutPreference.html">CheckoutPreference</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Item.html">Item</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckout.html">MercadoPagoCheckout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckoutBuilder.html">MercadoPagoCheckoutBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAction.html">PXAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAdvancedConfiguration.html">PXAdvancedConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXBusinessResult.html">PXBusinessResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXCheckoutStore.html">PXCheckoutStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXDiscountConfiguration.html">PXDiscountConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentConfiguration.html">PXPaymentConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentData.html">PXPaymentData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentResultConfiguration.html">PXPaymentResultConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentTypeChargeRule.html">PXPaymentTypeChargeRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXReviewConfirmConfiguration.html">PXReviewConfirmConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXThemeProperty.html">PXThemeProperty</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/PXBusinessResultStatus.html">PXBusinessResultStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXLanguages.html">PXLanguages</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentStatus.html">PXPaymentStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentTypes.html">PXPaymentTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPendingStatusDetail.html">PXPendingStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXRejectedStatusDetail.html">PXRejectedStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXSites.html">PXSites</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/PXLazyInitProtocol.html">PXLazyInitProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentPluginConfigProtocol.html">PXPaymentPluginConfigProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentProcessor.html">PXPaymentProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXTheme.html">PXTheme</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CheckoutPreference</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">CheckoutPreference</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)CheckoutPreference(im)initWithPreferenceId:"></a>
+                    <a name="//apple_ref/swift/Method/init(preferenceId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)CheckoutPreference(im)initWithPreferenceId:">init(preferenceId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">preferenceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L23-L25">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)CheckoutPreference(im)initWithSiteId:payerEmail:items:"></a>
+                    <a name="//apple_ref/swift/Method/init(siteId:payerEmail:items:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)CheckoutPreference(im)initWithSiteId:payerEmail:items:">init(siteId:payerEmail:items:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">siteId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payerEmail</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Item.html">Item</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L27-L35">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Setters"></a>
+                <a name="//apple_ref/swift/Section/Setters" class="dashAnchor"></a>
+                <a href="#/Setters">
+                  <h3 class="section-name">Setters</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setExpirationDate:"></a>
+                    <a name="//apple_ref/swift/Method/setExpirationDate(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setExpirationDate:">setExpirationDate(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setExpirationDate</span><span class="p">(</span><span class="n">_</span> <span class="nv">expirationDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L61-L63">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setActiveFromDate:"></a>
+                    <a name="//apple_ref/swift/Method/setActiveFromDate(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setActiveFromDate:">setActiveFromDate(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setActiveFromDate</span><span class="p">(</span><span class="n">_</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L65-L67">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK18CheckoutPreferenceC22setDifferentialPricingXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/setDifferentialPricing(differentialPricing:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK18CheckoutPreferenceC22setDifferentialPricingXeXeF">setDifferentialPricing(differentialPricing:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setDifferentialPricing</span><span class="p">(</span><span class="nv">differentialPricing</span><span class="p">:</span> <span class="kt">PXDifferentialPricing</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="o">&lt;&lt;</span><span class="n">error</span> <span class="n">type</span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L69-L71">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)addExcludedPaymentMethod:"></a>
+                    <a name="//apple_ref/swift/Method/addExcludedPaymentMethod(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)addExcludedPaymentMethod:">addExcludedPaymentMethod(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addExcludedPaymentMethod</span><span class="p">(</span><span class="n">_</span> <span class="nv">paymentMethodId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L73-L79">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setExcludedPaymentMethods:"></a>
+                    <a name="//apple_ref/swift/Method/setExcludedPaymentMethods(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setExcludedPaymentMethods:">setExcludedPaymentMethods(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setExcludedPaymentMethods</span><span class="p">(</span><span class="n">_</span> <span class="nv">paymentMethodIds</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L80-L82">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)addExcludedPaymentType:"></a>
+                    <a name="//apple_ref/swift/Method/addExcludedPaymentType(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)addExcludedPaymentType:">addExcludedPaymentType(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addExcludedPaymentType</span><span class="p">(</span><span class="n">_</span> <span class="nv">paymentTypeId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L84-L90">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setExcludedPaymentTypes:"></a>
+                    <a name="//apple_ref/swift/Method/setExcludedPaymentTypes(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setExcludedPaymentTypes:">setExcludedPaymentTypes(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setExcludedPaymentTypes</span><span class="p">(</span><span class="n">_</span> <span class="nv">paymentTypeIds</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L92-L94">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setMaxInstallments:"></a>
+                    <a name="//apple_ref/swift/Method/setMaxInstallments(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setMaxInstallments:">setMaxInstallments(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setMaxInstallments</span><span class="p">(</span><span class="n">_</span> <span class="nv">maxInstallments</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L96-L98">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setDefaultInstallments:"></a>
+                    <a name="//apple_ref/swift/Method/setDefaultInstallments(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setDefaultInstallments:">setDefaultInstallments(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setDefaultInstallments</span><span class="p">(</span><span class="n">_</span> <span class="n">defaultInstallments</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L100-L102">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setDefaultPaymentMethodId:"></a>
+                    <a name="//apple_ref/swift/Method/setDefaultPaymentMethodId(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setDefaultPaymentMethodId:">setDefaultPaymentMethodId(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setDefaultPaymentMethodId</span><span class="p">(</span><span class="n">_</span> <span class="nv">paymetMethodId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L104-L106">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Getters"></a>
+                <a name="//apple_ref/swift/Section/Getters" class="dashAnchor"></a>
+                <a href="#/Getters">
+                  <h3 class="section-name">Getters</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getId"></a>
+                    <a name="//apple_ref/swift/Method/getId()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getId">getId()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L112-L114">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getItems"></a>
+                    <a name="//apple_ref/swift/Method/getItems()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getItems">getItems()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getItems</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Item.html">Item</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L116-L118">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getSiteId"></a>
+                    <a name="//apple_ref/swift/Method/getSiteId()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getSiteId">getSiteId()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getSiteId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L120-L122">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getExpirationDate"></a>
+                    <a name="//apple_ref/swift/Method/getExpirationDate()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getExpirationDate">getExpirationDate()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getExpirationDate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L124-L126">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getActiveFromDate"></a>
+                    <a name="//apple_ref/swift/Method/getActiveFromDate()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getActiveFromDate">getActiveFromDate()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getActiveFromDate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L128-L130">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getExcludedPaymentTypesIds"></a>
+                    <a name="//apple_ref/swift/Method/getExcludedPaymentTypesIds()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getExcludedPaymentTypesIds">getExcludedPaymentTypesIds()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getExcludedPaymentTypesIds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L132-L134">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getDefaultInstallments"></a>
+                    <a name="//apple_ref/swift/Method/getDefaultInstallments()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getDefaultInstallments">getDefaultInstallments()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getDefaultInstallments</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L136-L138">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getMaxAcceptedInstallments"></a>
+                    <a name="//apple_ref/swift/Method/getMaxAcceptedInstallments()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getMaxAcceptedInstallments">getMaxAcceptedInstallments()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getMaxAcceptedInstallments</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L140-L142">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getExcludedPaymentMethodsIds"></a>
+                    <a name="//apple_ref/swift/Method/getExcludedPaymentMethodsIds()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getExcludedPaymentMethodsIds">getExcludedPaymentMethodsIds()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getExcludedPaymentMethodsIds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L144-L146">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getDefaultPaymentMethodId"></a>
+                    <a name="//apple_ref/swift/Method/getDefaultPaymentMethodId()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getDefaultPaymentMethodId">getDefaultPaymentMethodId()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getDefaultPaymentMethodId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L148-L150">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getTotalAmount"></a>
+                    <a name="//apple_ref/swift/Method/getTotalAmount()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)getTotalAmount">getTotalAmount()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getTotalAmount</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L152-L158">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/BinaryMode"></a>
+                <a name="//apple_ref/swift/Section/BinaryMode" class="dashAnchor"></a>
+                <a href="#/BinaryMode">
+                  <h3 class="section-name">BinaryMode</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)isBinaryMode"></a>
+                    <a name="//apple_ref/swift/Method/isBinaryMode()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)isBinaryMode">isBinaryMode()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">isBinaryMode</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L211-L213">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setBinaryModeWithIsBinaryMode:"></a>
+                    <a name="//apple_ref/swift/Method/setBinaryMode(isBinaryMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)CheckoutPreference(im)setBinaryModeWithIsBinaryMode:">setBinaryMode(isBinaryMode:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setBinaryMode</span><span class="p">(</span><span class="nv">isBinaryMode</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CheckoutPreference</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/CheckoutPreference.swift#L215-L218">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

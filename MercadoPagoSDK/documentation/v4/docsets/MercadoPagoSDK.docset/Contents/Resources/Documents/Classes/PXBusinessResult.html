@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PXBusinessResult Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/PXBusinessResult" class="dashAnchor"></a>
+    <a title="PXBusinessResult Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MercadoPagoSDK Docs</a> (2% documented)</p>
+        <p class="header-right"><a href="https://github.com/mercadopago/px-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmercadopago%2Egithub%2Eio%2Fdocsets%2FMercadoPagoSDK%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MercadoPagoSDK Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        PXBusinessResult Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CheckoutPreference.html">CheckoutPreference</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Item.html">Item</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckout.html">MercadoPagoCheckout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckoutBuilder.html">MercadoPagoCheckoutBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAction.html">PXAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAdvancedConfiguration.html">PXAdvancedConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXBusinessResult.html">PXBusinessResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXCheckoutStore.html">PXCheckoutStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXDiscountConfiguration.html">PXDiscountConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentConfiguration.html">PXPaymentConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentData.html">PXPaymentData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentResultConfiguration.html">PXPaymentResultConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentTypeChargeRule.html">PXPaymentTypeChargeRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXReviewConfirmConfiguration.html">PXReviewConfirmConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXThemeProperty.html">PXThemeProperty</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/PXBusinessResultStatus.html">PXBusinessResultStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXLanguages.html">PXLanguages</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentStatus.html">PXPaymentStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentTypes.html">PXPaymentTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPendingStatusDetail.html">PXPendingStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXRejectedStatusDetail.html">PXRejectedStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXSites.html">PXSites</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/PXLazyInitProtocol.html">PXLazyInitProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentPluginConfigProtocol.html">PXPaymentPluginConfigProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentProcessor.html">PXPaymentProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXTheme.html">PXTheme</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PXBusinessResult</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXBusinessResult</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>This class represents a business payment result.
+For example, when there is an error when making a payment that has to do with the business and not with the payment method.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                <a href="#/Initialization">
+                  <h3 class="section-name">Initialization</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXBusinessResult(im)initWithReceiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:"></a>
+                    <a name="//apple_ref/swift/Method/init(receiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXBusinessResult(im)initWithReceiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:">init(receiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code>PXBusinessResult</code> which represents Business Payment Result.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">receiptId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">status</span><span class="p">:</span> <span class="kt"><a href="../Enums/PXBusinessResultStatus.html">PXBusinessResultStatus</a></span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">subtitle</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">icon</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">mainAction</span><span class="p">:</span> <span class="kt"><a href="../Classes/PXAction.html">PXAction</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">secondaryAction</span><span class="p">:</span> <span class="kt"><a href="../Classes/PXAction.html">PXAction</a></span><span class="p">?,</span> <span class="nv">helpMessage</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">showPaymentMethod</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">statementDescription</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">imageUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">topCustomView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">bottomCustomView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">paymentStatus</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">paymentStatusDetail</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>receiptId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Reference id for payment receipt.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>status</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Business Status Result</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>title</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Title that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>subtitle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Sub-title that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>icon</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Icon that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mainAction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action for the main action button that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>secondaryAction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action for the secondary action button that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>helpMessage</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Help message that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>showPaymentMethod</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>True if you want to show the cell of payment method in the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>statementDescription</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Statement description that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>imageUrl</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Image url for the icon that will be displayed on the result screen</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>topCustomView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Custom view that will be displayed on the result screen on top</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bottomCustomView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Custom view that will be displayed on the result screen on bottom</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>paymentStatus</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Payment status of the payment result</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>paymentStatusDetail</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Payment status detail of the payment result</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L74-L91">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

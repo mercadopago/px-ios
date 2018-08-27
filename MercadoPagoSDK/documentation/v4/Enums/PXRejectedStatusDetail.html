@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PXRejectedStatusDetail Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/PXRejectedStatusDetail" class="dashAnchor"></a>
+    <a title="PXRejectedStatusDetail Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MercadoPagoSDK Docs</a> (2% documented)</p>
+        <p class="header-right"><a href="https://github.com/mercadopago/px-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmercadopago%2Egithub%2Eio%2Fdocsets%2FMercadoPagoSDK%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MercadoPagoSDK Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        PXRejectedStatusDetail Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CheckoutPreference.html">CheckoutPreference</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Item.html">Item</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckout.html">MercadoPagoCheckout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckoutBuilder.html">MercadoPagoCheckoutBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAction.html">PXAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAdvancedConfiguration.html">PXAdvancedConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXBusinessResult.html">PXBusinessResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXCheckoutStore.html">PXCheckoutStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXDiscountConfiguration.html">PXDiscountConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentConfiguration.html">PXPaymentConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentData.html">PXPaymentData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentResultConfiguration.html">PXPaymentResultConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentTypeChargeRule.html">PXPaymentTypeChargeRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXReviewConfirmConfiguration.html">PXReviewConfirmConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXThemeProperty.html">PXThemeProperty</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/PXBusinessResultStatus.html">PXBusinessResultStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXLanguages.html">PXLanguages</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentStatus.html">PXPaymentStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentTypes.html">PXPaymentTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPendingStatusDetail.html">PXPendingStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXRejectedStatusDetail.html">PXRejectedStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXSites.html">PXSites</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/PXLazyInitProtocol.html">PXLazyInitProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentPluginConfigProtocol.html">PXPaymentPluginConfigProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentProcessor.html">PXPaymentProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXTheme.html">PXTheme</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PXRejectedStatusDetail</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PXRejectedStatusDetail</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO9HIGH_RISKA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/HIGH_RISK" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO9HIGH_RISKA2CmF">HIGH_RISK</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">HIGH_RISK</span> <span class="o">=</span> <span class="s">"rejected_high_risk"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO12OTHER_REASONA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/OTHER_REASON" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO12OTHER_REASONA2CmF">OTHER_REASON</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">OTHER_REASON</span> <span class="o">=</span> <span class="s">"cc_rejected_other_reason"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO12MAX_ATTEMPTSA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/MAX_ATTEMPTS" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO12MAX_ATTEMPTSA2CmF">MAX_ATTEMPTS</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">MAX_ATTEMPTS</span> <span class="o">=</span> <span class="s">"cc_rejected_max_attempts"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO12CARD_DISABLEA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/CARD_DISABLE" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO12CARD_DISABLEA2CmF">CARD_DISABLE</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">CARD_DISABLE</span> <span class="o">=</span> <span class="s">"cc_rejected_card_disabled"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO16BAD_FILLED_OTHERA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/BAD_FILLED_OTHER" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO16BAD_FILLED_OTHERA2CmF">BAD_FILLED_OTHER</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">BAD_FILLED_OTHER</span> <span class="o">=</span> <span class="s">"cc_rejected_bad_filled_other"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO22BAD_FILLED_CARD_NUMBERA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/BAD_FILLED_CARD_NUMBER" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO22BAD_FILLED_CARD_NUMBERA2CmF">BAD_FILLED_CARD_NUMBER</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">BAD_FILLED_CARD_NUMBER</span> <span class="o">=</span> <span class="s">"cc_rejected_bad_filled_card_number"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO24BAD_FILLED_SECURITY_CODEA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/BAD_FILLED_SECURITY_CODE" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO24BAD_FILLED_SECURITY_CODEA2CmF">BAD_FILLED_SECURITY_CODE</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">BAD_FILLED_SECURITY_CODE</span> <span class="o">=</span> <span class="s">"cc_rejected_bad_filled_security_code"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO15BAD_FILLED_DATEA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/BAD_FILLED_DATE" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO15BAD_FILLED_DATEA2CmF">BAD_FILLED_DATE</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">BAD_FILLED_DATE</span> <span class="o">=</span> <span class="s">"cc_rejected_bad_filled_date"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO13CALL_FOR_AUTHA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/CALL_FOR_AUTH" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO13CALL_FOR_AUTHA2CmF">CALL_FOR_AUTH</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">CALL_FOR_AUTH</span> <span class="o">=</span> <span class="s">"cc_rejected_call_for_authorize"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO18DUPLICATED_PAYMENTA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/DUPLICATED_PAYMENT" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO18DUPLICATED_PAYMENTA2CmF">DUPLICATED_PAYMENT</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">DUPLICATED_PAYMENT</span> <span class="o">=</span> <span class="s">"cc_rejected_duplicated_payment"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO19INSUFFICIENT_AMOUNTA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/INSUFFICIENT_AMOUNT" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO19INSUFFICIENT_AMOUNTA2CmF">INSUFFICIENT_AMOUNT</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">INSUFFICIENT_AMOUNT</span> <span class="o">=</span> <span class="s">"cc_rejected_insufficient_amount"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO17INSUFFICIENT_DATAA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/INSUFFICIENT_DATA" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO17INSUFFICIENT_DATAA2CmF">INSUFFICIENT_DATA</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">INSUFFICIENT_DATA</span> <span class="o">=</span> <span class="s">"rejected_insufficient_data"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO16REJECTED_BY_BANKA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/REJECTED_BY_BANK" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO16REJECTED_BY_BANKA2CmF">REJECTED_BY_BANK</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">REJECTED_BY_BANK</span> <span class="o">=</span> <span class="s">"rejected_by_bank"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO11INVALID_ESCA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/INVALID_ESC" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO11INVALID_ESCA2CmF">INVALID_ESC</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">INVALID_ESC</span> <span class="o">=</span> <span class="s">"invalid_esc"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK22PXRejectedStatusDetailO18REJECTED_PLUGIN_PMA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/REJECTED_PLUGIN_PM" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK22PXRejectedStatusDetailO18REJECTED_PLUGIN_PMA2CmF">REJECTED_PLUGIN_PM</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">REJECTED_PLUGIN_PM</span> <span class="o">=</span> <span class="s">"cc_rejected_plugin_pm"</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

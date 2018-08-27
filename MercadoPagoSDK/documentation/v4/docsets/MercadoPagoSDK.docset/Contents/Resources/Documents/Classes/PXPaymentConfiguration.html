@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PXPaymentConfiguration Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/PXPaymentConfiguration" class="dashAnchor"></a>
+    <a title="PXPaymentConfiguration Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MercadoPagoSDK Docs</a> (2% documented)</p>
+        <p class="header-right"><a href="https://github.com/mercadopago/px-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmercadopago%2Egithub%2Eio%2Fdocsets%2FMercadoPagoSDK%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MercadoPagoSDK Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        PXPaymentConfiguration Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CheckoutPreference.html">CheckoutPreference</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Item.html">Item</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckout.html">MercadoPagoCheckout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MercadoPagoCheckoutBuilder.html">MercadoPagoCheckoutBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAction.html">PXAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAdvancedConfiguration.html">PXAdvancedConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXBusinessResult.html">PXBusinessResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXCheckoutStore.html">PXCheckoutStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXDiscountConfiguration.html">PXDiscountConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentConfiguration.html">PXPaymentConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentData.html">PXPaymentData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentResultConfiguration.html">PXPaymentResultConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentTypeChargeRule.html">PXPaymentTypeChargeRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXReviewConfirmConfiguration.html">PXReviewConfirmConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXThemeProperty.html">PXThemeProperty</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/PXBusinessResultStatus.html">PXBusinessResultStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXLanguages.html">PXLanguages</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentStatus.html">PXPaymentStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPaymentTypes.html">PXPaymentTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXPendingStatusDetail.html">PXPendingStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXRejectedStatusDetail.html">PXRejectedStatusDetail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PXSites.html">PXSites</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/PXLazyInitProtocol.html">PXLazyInitProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentPluginConfigProtocol.html">PXPaymentPluginConfigProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentProcessor.html">PXPaymentProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXTheme.html">PXTheme</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PXPaymentConfiguration</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXPaymentConfiguration</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)initWithPaymentProcessor:"></a>
+                    <a name="//apple_ref/swift/Method/init(paymentProcessor:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)initWithPaymentProcessor:">init(paymentProcessor:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">paymentProcessor</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PXPaymentProcessor.html">PXPaymentProcessor</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXPaymentConfiguration.swift#L21-L23">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Builder"></a>
+                <a name="//apple_ref/swift/Section/Builder" class="dashAnchor"></a>
+                <a href="#/Builder">
+                  <h3 class="section-name">Builder</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)addPaymentMethodPluginWithPlugin:"></a>
+                    <a name="//apple_ref/swift/Method/addPaymentMethodPlugin(plugin:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)addPaymentMethodPluginWithPlugin:">addPaymentMethodPlugin(plugin:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">addPaymentMethodPlugin</span><span class="p">(</span><span class="nv">plugin</span><span class="p">:</span> <span class="kt">PXPaymentMethodPlugin</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">PXPaymentConfiguration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXPaymentConfiguration.swift#L28-L31">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)addChargeRulesWithCharges:"></a>
+                    <a name="//apple_ref/swift/Method/addChargeRules(charges:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)addChargeRulesWithCharges:">addChargeRules(charges:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">addChargeRules</span><span class="p">(</span><span class="nv">charges</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/PXPaymentTypeChargeRule.html">PXPaymentTypeChargeRule</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">PXPaymentConfiguration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXPaymentConfiguration.swift#L33-L36">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)setDiscountConfigurationWithConfig:"></a>
+                    <a name="//apple_ref/swift/Method/setDiscountConfiguration(config:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXPaymentConfiguration(im)setDiscountConfigurationWithConfig:">setDiscountConfiguration(config:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setDiscountConfiguration</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Classes/PXDiscountConfiguration.html">PXDiscountConfiguration</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">PXPaymentConfiguration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXPaymentConfiguration.swift#L38-L41">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
