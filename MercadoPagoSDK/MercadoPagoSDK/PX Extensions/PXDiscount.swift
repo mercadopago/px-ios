@@ -13,7 +13,7 @@ internal extension PXDiscount {
     override open var description: String {
         get {
             if getDiscountDescription() != "" {
-                return getDiscountDescription() + "discount_coupon_detail_description".localized_beta
+                return getDiscountDescription() + "discount_coupon_detail_description".PXLocalized
             } else {
                 return ""
             }
@@ -24,11 +24,11 @@ internal extension PXDiscount {
         let currency = MercadoPagoContext.getCurrency()
         if self.percentOff != 0 {
             let percentageAttributedString = Utils.getAttributedPercentage(withAttributes: [:], amount: self.percentOff, addPercentageSymbol: true, negativeAmount: false)
-            let string: String = ("total_row_title_percent_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)
+            let string: String = ("total_row_title_percent_off".PXLocalized as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)
             return string
         } else {
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: [:], amount: self.amountOff, currency: currency, negativeAmount: true)
-            let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
+            let string: String = ("total_row_title_amount_off".PXLocalized as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
             return string
         }
     }
@@ -38,7 +38,7 @@ internal extension PXDiscount {
     }
 
     internal func getDiscountReviewDescription() -> String {
-        let text  = "discount_coupon_detail_default_concept".localized_beta
+        let text  = "discount_coupon_detail_default_concept".PXLocalized
          if self.percentOff != 0 {
             return text + " " + String(describing: self.percentOff) + " %"
         }

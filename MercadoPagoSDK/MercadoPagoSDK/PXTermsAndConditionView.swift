@@ -70,7 +70,7 @@ extension PXTermsAndConditionView {
 
     func getTyCText() -> NSMutableAttributedString {
 
-        let termsAndConditionsText = "review_terms_and_conditions".localized_beta
+        let termsAndConditionsText = "review_terms_and_conditions".PXLocalized
 
         let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 

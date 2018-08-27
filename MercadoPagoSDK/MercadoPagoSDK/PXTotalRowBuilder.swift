@@ -32,13 +32,13 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.secondaryColor()]
 
-            let string = "total_row_title_add_coupon".localized_beta
+            let string = "total_row_title_add_coupon".PXLocalized
             let attributedString = NSAttributedString(string: string, attributes: addNewDiscountAttributes)
             title = attributedString
         } else {
-            var defaultTitleString = "total_row_title_default".localized_beta
+            var defaultTitleString = "total_row_title_default".PXLocalized
             if amountHelper.consumedDiscount {
-                defaultTitleString = "total_row_consumed_discount".localized_beta
+                defaultTitleString = "total_row_consumed_discount".PXLocalized
             }
             let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                      NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
@@ -52,7 +52,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                               NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
 
-            let string = NSAttributedString(string: "total_row_disclaimer".localized_beta, attributes: attributes)
+            let string = NSAttributedString(string: "total_row_disclaimer".PXLocalized, attributes: attributes)
             disclaimer = string
         }
 
@@ -108,7 +108,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             }
             inputModal = PXComponentFactory.Modal.show(viewController: inputVC, title: nil)
         } else if amountHelper.consumedDiscount {
-            _ = PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".localized_beta)
+            _ = PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".PXLocalized)
         }
     }
 }

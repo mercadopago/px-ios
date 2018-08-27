@@ -860,8 +860,8 @@
 		FCF0EEBB1FA111F9007D878C /* MercadoPagoServicesModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0EEBA1FA111F9007D878C /* MercadoPagoServicesModelAdapter.swift */; };
 		FCF24596201A2C1400CAF717 /* PXContainedLabelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */; };
 		FCF24597201A2C2100CAF717 /* PXContainedLabelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */; };
-		FCF723F4202CB2D9002F125C /* Localizator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF723F3202CB2D9002F125C /* Localizator.swift */; };
-		FCF723F5202CB2D9002F125C /* Localizator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF723F3202CB2D9002F125C /* Localizator.swift */; };
+		FCF723F4202CB2D9002F125C /* PXLocalizator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF723F3202CB2D9002F125C /* PXLocalizator.swift */; };
+		FCF723F5202CB2D9002F125C /* PXLocalizator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF723F3202CB2D9002F125C /* PXLocalizator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1404,7 +1404,7 @@
 		FCE865661F9E61A6000EF023 /* MercadoPagoServicesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercadoPagoServicesAdapter.swift; sourceTree = "<group>"; };
 		FCEB90861EB8F7F00096B1A2 /* RevampImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RevampImages.xcassets; sourceTree = "<group>"; };
 		FCF0EEBA1FA111F9007D878C /* MercadoPagoServicesModelAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercadoPagoServicesModelAdapter.swift; sourceTree = "<group>"; };
-		FCF723F3202CB2D9002F125C /* Localizator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizator.swift; sourceTree = "<group>"; };
+		FCF723F3202CB2D9002F125C /* PXLocalizator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXLocalizator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2916,7 +2916,7 @@
 				FC03E7FD211CAED900439B82 /* Localizable_es.plist */,
 				2313F712211B1399008DFE7A /* Localizable_pt.plist */,
 				2313F707211B1334008DFE7A /* Localizable_en.plist */,
-				FCF723F3202CB2D9002F125C /* Localizator.swift */,
+				FCF723F3202CB2D9002F125C /* PXLocalizator.swift */,
 			);
 			name = Translations;
 			sourceTree = "<group>";
@@ -3623,7 +3623,7 @@
 				23E2158520062EFC00B968F6 /* PXThemeProperty.swift in Sources */,
 				FC3FC8871FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift in Sources */,
 				0F9883811AD2AB6000F750F0 /* Order.swift in Sources */,
-				FCF723F4202CB2D9002F125C /* Localizator.swift in Sources */,
+				FCF723F4202CB2D9002F125C /* PXLocalizator.swift in Sources */,
 				766EE1BE1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift in Sources */,
 				4BAD08BB20F006B000F3A77F /* PXOneTapResultHandlerProtocol.swift in Sources */,
 				FC7E14981F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */,
@@ -4033,7 +4033,7 @@
 				812BA9BF1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift in Sources */,
 				4B6954C220A4BA0800CCF735 /* PXTrackingUtil.swift in Sources */,
 				0F98837A1AD2AB6000F750F0 /* Installment.swift in Sources */,
-				FCF723F5202CB2D9002F125C /* Localizator.swift in Sources */,
+				FCF723F5202CB2D9002F125C /* PXLocalizator.swift in Sources */,
 				4B1EE16020D0145F00560838 /* PXAnimatedButton.swift in Sources */,
 				237A19F92050046F00B0C2D2 /* PXReviewTitleComponent.swift in Sources */,
 				4BD1E8671FB38096002B3F75 /* PXSDKSettings.swift in Sources */,

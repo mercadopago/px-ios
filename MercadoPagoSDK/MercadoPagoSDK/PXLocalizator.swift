@@ -1,5 +1,5 @@
 //
-//  Localizator.swift
+//  PXLocalizator.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 2/8/18.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-private class Localizator {
+private class PXLocalizator {
 
-    static let sharedInstance = Localizator()
+    static let sharedInstance = PXLocalizator()
 
     lazy var localizableDictionary: NSDictionary! = {
         let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
@@ -52,7 +52,7 @@ private class Localizator {
 }
 
 extension String {
-    var localized_beta: String {
-        return Localizator.sharedInstance.localize(string: self)
+    var PXLocalized: String {
+        return PXLocalizator.sharedInstance.localize(string: self)
     }
 }

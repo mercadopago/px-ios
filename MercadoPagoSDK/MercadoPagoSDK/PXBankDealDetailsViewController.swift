@@ -38,7 +38,7 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
 extension PXBankDealDetailsViewController {
 
     fileprivate func setupUI() {
-        self.title = "bank_deal_details_title".localized_beta
+        self.title = "bank_deal_details_title".PXLocalized
         self.contentView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
         self.scrollView.backgroundColor = HIGHLIGHTED_BACKGROUND_COLOR
         if contentView.getSubviews().isEmpty {
