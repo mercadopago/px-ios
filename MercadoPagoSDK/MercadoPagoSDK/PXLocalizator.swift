@@ -9,34 +9,26 @@
 import Foundation
 
 private class PXLocalizator {
-
     static let sharedInstance = PXLocalizator()
 
     lazy var localizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
-        let languageID = MercadoPagoContext.getParentLanguageID()
+        let bundle = MercadoPago.getBundle()
 
-        if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
-            return NSDictionary(contentsOfFile: path)
-        }
-        fatalError("Localizable file NOT found")
-    }()
-
-    lazy var parentLocalizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path: MercadoPagoContext.getParentLocalizedPath())
-        let languageID = MercadoPagoContext.getParentLanguageID()
-
-        if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
+        if let path = bundle?.path(forResource: "PXTranslations", ofType: "plist") {
             return NSDictionary(contentsOfFile: path)
         }
         fatalError("Localizable file NOT found")
     }()
 
     func localize(string: String) -> String {
-        guard let localizedStringDictionary = localizableDictionary.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
+        let languageID = MercadoPagoContext.getLanguage()
+        let parentlanguageID = MercadoPagoContext.getParentLanguageID()
 
-            let parentLocalizableDictionary = self.parentLocalizableDictionary.value(forKey: string) as? NSDictionary
-            if let parentLocalizedString = parentLocalizableDictionary?.value(forKey: "value") as? String {
+        let localizedStringDictionary = localizableDictionary.value(forKey: string) as? NSDictionary
+
+        guard localizedStringDictionary != nil, let localizedString = localizedStringDictionary?.value(forKey: languageID) as? String else {
+
+            if let parentLocalizedString = localizedStringDictionary?.value(forKey: parentlanguageID) as? String {
                 return parentLocalizedString
             }
 
