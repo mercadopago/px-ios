@@ -21,7 +21,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.PXLocalized)
     }
 
     // MARK: APPROVED - ACCOUNT MONEY
@@ -34,7 +34,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.PXLocalized)
     }
 
     // MARK: REJECTED - CARD
@@ -72,7 +72,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.PXLocalized)
     }
 
     // MARK: Instructions
@@ -85,7 +85,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.PXLocalized)
     }
 
 }

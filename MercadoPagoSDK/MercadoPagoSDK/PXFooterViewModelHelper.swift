@@ -77,7 +77,7 @@ extension PXResultViewModel {
             return label
         }
         if paymentResult.isAccepted() {
-           return PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta
+           return PXFooterResultConstants.APPROVED_LINK_TEXT.PXLocalized
         } else if paymentResult.isError() {
             return PXFooterResultConstants.ERROR_LINK_TEXT.localized
         } else if paymentResult.isWarning() {
