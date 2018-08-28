@@ -35,7 +35,7 @@ extension PXBankDealDetailsViewModel {
 
         var subtitle = ""
         if let dateString = Utils.getShortFormatedStringDate(bankDeal.dateExpired) {
-            let expirationDateFormat = "bank_deal_details_date_format".localized_beta
+            let expirationDateFormat = PXStrings.bank_deal_details_date_format.PXLocalized
             subtitle = String(format: expirationDateFormat, dateString)
         }
 

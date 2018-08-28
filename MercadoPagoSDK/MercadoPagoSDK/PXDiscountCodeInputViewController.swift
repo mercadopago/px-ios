@@ -87,7 +87,7 @@ extension PXDiscountCodeInputViewController {
         //Build action button
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.buttonTitle = "discount_input_modal_action".localized_beta
+        button.buttonTitle = PXStrings.discount_input_modal_action.PXLocalized
         self.contentView.addSubview(button)
         PXLayout.put(view: button, onBottomOf: textfield, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.centerHorizontally(view: button).isActive = true
@@ -97,7 +97,7 @@ extension PXDiscountCodeInputViewController {
             if let text = textfield.text, text.isNotEmpty {
                 self.getCodeDiscount(with: text)
             } else {
-                self.showError(with: "discount_input_modal_empty_code_error".localized_beta)
+                self.showError(with: PXStrings.discount_input_modal_empty_code_error.PXLocalized)
             }
         }
 
@@ -118,13 +118,13 @@ extension PXDiscountCodeInputViewController {
                                         NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor(),
                                         NSAttributedStringKey.paragraphStyle: paragraph]
 
-        let string = "discount_input_modal_title".localized_beta
+        let string = PXStrings.discount_input_modal_title.PXLocalized
         let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
         return attributedString
     }
 
     private func getErrorMessage() -> String {
-        return "discount_input_modal_invalid_code_error".localized_beta
+        return PXStrings.discount_input_modal_invalid_code_error.PXLocalized
     }
 
     private func showError(with text: String) {
@@ -163,16 +163,16 @@ extension PXDiscountCodeInputViewController {
                                  NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor(),
                                  NSAttributedStringKey.paragraphStyle: paragraph]
 
-        let titleString = "discount_input_success_modal_title".localized_beta
+        let titleString = PXStrings.discount_input_success_modal_title.PXLocalized
         let titleAttributedString = NSMutableAttributedString(string: titleString, attributes: titleAttributes)
 
         let discountDescription = discount.getDiscountDescription()
-        let messageString = "discount_input_success_modal_message".localized_beta.replacingOccurrences(of: "%1$s", with: discountDescription)
+        let messageString = PXStrings.discount_input_success_modal_message.PXLocalized.replacingOccurrences(of: "%1$s", with: discountDescription)
         let messageAttributedString = NSMutableAttributedString(string: messageString, attributes: messageAttributes)
 
         let image = MercadoPago.getImage("codeInputSuccess")
 
-        let action = PXComponentAction(label: "discount_input_success_modal_action".localized_beta) {
+        let action = PXComponentAction(label: PXStrings.discount_input_success_modal_action.PXLocalized) {
             self.closeModalCallback()
         }
 
@@ -205,7 +205,7 @@ extension PXDiscountCodeInputViewController {
                         }, {
                             strongSelf.spinner?.hide()
                             strongSelf.textfield?.isEnabled = true
-                            strongSelf.showError(with: "discount_input_modal_service_error".localized_beta)
+                            strongSelf.showError(with: PXStrings.discount_input_modal_service_error.PXLocalized)
                         })
                     }
                 }

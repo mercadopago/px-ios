@@ -25,7 +25,7 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     }
 
     override func viewDidLoad() {
-        self.title = "bank_deals_screen_title".localized_beta
+        self.title = PXStrings.bank_deals_screen_title.PXLocalized
         createCollectionView()
     }
 
