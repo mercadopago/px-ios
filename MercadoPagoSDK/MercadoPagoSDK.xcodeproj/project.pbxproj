@@ -808,6 +808,7 @@
 		FC5B55D12135B7320008EFEF /* PXLocalizator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B55CE2135B7310008EFEF /* PXLocalizator.swift */; };
 		FC5B55D22135B7320008EFEF /* PXTranslations.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC5B55CF2135B7310008EFEF /* PXTranslations.plist */; };
 		FC5B55D32135B7320008EFEF /* PXTranslations.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC5B55CF2135B7310008EFEF /* PXTranslations.plist */; };
+		FC5B55D72135BBBC0008EFEF /* PXStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B55D62135BBBC0008EFEF /* PXStrings.swift */; };
 		FC5B769A212C802500237FB3 /* PXAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */; };
 		FC5B769F212C974C00237FB3 /* PXAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */; };
 		FC5BCEBF208FA99300447D99 /* PXBankDealDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */; };
@@ -1361,6 +1362,7 @@
 		FC54C6FF20A493F600C73A36 /* PXUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUIImage.swift; sourceTree = "<group>"; };
 		FC5B55CE2135B7310008EFEF /* PXLocalizator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXLocalizator.swift; sourceTree = "<group>"; };
 		FC5B55CF2135B7310008EFEF /* PXTranslations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PXTranslations.plist; sourceTree = "<group>"; };
+		FC5B55D62135BBBC0008EFEF /* PXStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXStrings.swift; sourceTree = "<group>"; };
 		FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAnimatedImageView.swift; sourceTree = "<group>"; };
 		FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAnimatedView.swift; sourceTree = "<group>"; };
 		FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -2885,6 +2887,7 @@
 		FC5B55CD2135B7170008EFEF /* Translations */ = {
 			isa = PBXGroup;
 			children = (
+				FC5B55D62135BBBC0008EFEF /* PXStrings.swift */,
 				FC5B55CE2135B7310008EFEF /* PXLocalizator.swift */,
 				FC5B55CF2135B7310008EFEF /* PXTranslations.plist */,
 			);
@@ -3039,6 +3042,7 @@
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
 				6430645135AC127D7E0B82E8 /* [CP] Copy Pods Resources */,
+				FC5B55D52135BB6E0008EFEF /* PXTranslations Script */,
 			);
 			buildRules = (
 			);
@@ -3310,6 +3314,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FC5B55D52135BB6E0008EFEF /* PXTranslations Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "PXTranslations Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash -e\n\nvalue=$(<./MercadoPagoSDK/Translations/PXTranslations.plist)\n\ncat /dev/null >| ./MercadoPagoSDK/Translations/PXStrings.swift\n\ncat <<EOT >> ./MercadoPagoSDK/Translations/PXStrings.swift\n//\n//  PXStrings.swift\n//  MercadoPagoSDK\n\nimport Foundation\n\nenum PXStrings {\nEOT\n\n    for key in $value\n    do\n    if [[ $key = *\"<key>\"* ]]; then\n    prefix=\"<key>\"\n    suffix=\"</key>\"\n    trimmed=${key#$prefix}\n        trimmed=${trimmed%$suffix}\n        if [ $trimmed != \"es\" ] && [ $trimmed != \"pt\" ] && [ $trimmed != \"en\" ] && [ $trimmed != \"comment\" ] && [[ $trimmed != es-* ]] && [[ $trimmed != en-* ]] && [[ $trimmed != pt-* ]]; then\n        echo \"    static let $trimmed = \\\"$trimmed\\\"\" >> ./MercadoPagoSDK/Translations/PXStrings.swift\n        fi\n        fi\n        done\n\n        echo \"}\" >> ./MercadoPagoSDK/Translations/PXStrings.swift\n        \n        exit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3636,6 +3654,7 @@
 				534D84281F5485B000C2C6F9 /* CardAvailableView.swift in Sources */,
 				4B2EC49E20FFC26F008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */,
 				0F9883911AD2AB6000F750F0 /* SavedCardToken.swift in Sources */,
+				FC5B55D72135BBBC0008EFEF /* PXStrings.swift in Sources */,
 				FC0F6CBE20179A08006E3EA1 /* PXContainedLabelRenderer.swift in Sources */,
 				15DA7E5E1CD92C670068896E /* IdentificationViewController.swift in Sources */,
 				4B8D73511E780F8F009C1209 /* SummaryRow.swift in Sources */,
