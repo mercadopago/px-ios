@@ -12,10 +12,10 @@ import MercadoPagoServicesV4
 @objcMembers
 open class PXResourceProvider: NSObject {
 
-    static var error_body_title_base = "error_body_title_"
-    static var error_body_description_base = "error_body_description_"
-    static var error_body_action_text_base = "error_body_action_text_"
-    static var error_body_secondary_title_base = "error_body_secondary_title_"
+    static var error_body_title_base = PXStrings.error_body_title_
+    static var error_body_description_base = PXStrings.error_body_description_
+    static var error_body_action_text_base = PXStrings.error_body_action_text_
+    static var error_body_secondary_title_base = PXStrings.error_body_secondary_title_
 
     static open func getTitleForErrorBody() -> String {
         return error_body_title_base.PXLocalized

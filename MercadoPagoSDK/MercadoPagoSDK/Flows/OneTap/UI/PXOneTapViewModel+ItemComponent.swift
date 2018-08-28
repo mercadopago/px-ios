@@ -14,7 +14,7 @@ extension PXOneTapViewModel {
         
         var disclaimerMessage: String? = nil
         if amountHelper.consumedDiscount {
-            disclaimerMessage = "total_row_consumed_discount".PXLocalized
+            disclaimerMessage = PXStrings.total_row_consumed_discount.PXLocalized
         }
         let props = PXOneTapItemComponentProps(title: getIconTitle(), collectorImage: getCollectorIcon(), numberOfInstallments: getNumberOfInstallmentsForItem(), installmentAmount: getInstallmentAmountForItem(), totalWithoutDiscount: amountWithoutDiscount, discountDescription: getDiscountDescription(), discountLimit: getDiscountLimit(), shouldShowArrow: shouldShowSummaryModal(), disclaimerMessage: disclaimerMessage)
         return PXOneTapItemComponent(props: props)
@@ -56,7 +56,7 @@ extension PXOneTapViewModel {
 
     private func getDiscountLimit() -> String? {
         if amountHelper.maxCouponAmount != nil {
-            return "total_row_disclaimer".PXLocalized
+            return PXStrings.total_row_disclaimer.PXLocalized
         }
         return nil
     }
