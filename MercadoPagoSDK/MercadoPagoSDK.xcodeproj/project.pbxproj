@@ -1452,7 +1452,7 @@
 				232114B0211897E800B50503 /* Plist */,
 				4B2EC4A420FFC284008D03F8 /* Flows */,
 				15D5173A20D15E0D00CC2D90 /* Comisiones */,
-				FC73AB42202B877600537C9F /* Translations */,
+				FC329A3521358263007BB76E /* Translations */,
 				4B1CA5911FFE943200F576AA /* Constants */,
 				4BEF9B4F1FE2EA4C002ADAFF /* PaymentMethodPlugins */,
 				4B811DCF1FCDCB97000611AD /* Hooks */,
@@ -2754,6 +2754,16 @@
 			name = Discounts;
 			sourceTree = "<group>";
 		};
+		FC329A3521358263007BB76E /* Translations */ = {
+			isa = PBXGroup;
+			children = (
+				FC329A2A2134A9C5007BB76E /* PXTranslations.plist */,
+				FCF723F3202CB2D9002F125C /* PXLocalizator.swift */,
+			);
+			name = Translations;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		FC3918B2208E19E200B75366 /* Bank Deals */ = {
 			isa = PBXGroup;
 			children = (
@@ -2900,15 +2910,6 @@
 				FCBA43CE20A5D6FE0049A503 /* PXBankDealComponentView.swift */,
 			);
 			name = "Bank Deal Component";
-			sourceTree = "<group>";
-		};
-		FC73AB42202B877600537C9F /* Translations */ = {
-			isa = PBXGroup;
-			children = (
-				FC329A2A2134A9C5007BB76E /* PXTranslations.plist */,
-				FCF723F3202CB2D9002F125C /* PXLocalizator.swift */,
-			);
-			name = Translations;
 			sourceTree = "<group>";
 		};
 		FC7BD8A81FD5895800D5B2C7 /* Error */ = {
