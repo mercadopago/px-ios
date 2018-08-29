@@ -579,7 +579,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let tokenId: String = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
 
-        let installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
+        let installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 1
 
         var transactionDetails = TransactionDetails()
         if paymentData.transactionDetails != nil {
