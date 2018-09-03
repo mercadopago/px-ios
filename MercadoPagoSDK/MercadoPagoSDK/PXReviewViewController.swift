@@ -198,7 +198,7 @@ extension PXReviewViewController {
 
         contentView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         scrollView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
-        
+
         // Add elastic header.
         addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized, textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation())
 

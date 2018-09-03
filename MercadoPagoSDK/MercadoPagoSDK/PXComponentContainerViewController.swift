@@ -40,6 +40,13 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         PXLayout.matchWidth(ofView: contentView, toView: scrollView).isActive = true
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
+
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
+
         view.addSubview(scrollView)
 
         PXLayout.pinLeft(view: scrollView, to: view).isActive = true
