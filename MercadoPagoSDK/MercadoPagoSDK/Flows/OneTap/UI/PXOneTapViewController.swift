@@ -80,6 +80,10 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
     }
+    
+    override func adjustInsets() {
+        
+    }
 }
 
 // MARK: UI Methods.
@@ -145,7 +149,9 @@ extension PXOneTapViewController {
         view.layoutIfNeeded()
         refreshContentViewSize()
         _ = centerContentView(margin: -PXLayout.getStatusBarHeight())
+        
     }
+    
 }
 
 // MARK: Components Builders.
@@ -188,6 +194,7 @@ extension PXOneTapViewController {
         }
         return nil
     }
+
 }
 
 // MARK: User Actions.

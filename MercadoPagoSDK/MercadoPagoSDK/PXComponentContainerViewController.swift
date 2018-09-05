@@ -41,11 +41,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
 
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
-        }
+        adjustInsets()
 
         view.addSubview(scrollView)
 
@@ -57,6 +53,14 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
         PXLayout.pinBottom(view: scrollView, to: view, withMargin: -bottomDeltaMargin).isActive = true
         scrollView.bounces = false
+    }
+    
+    func adjustInsets() {
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

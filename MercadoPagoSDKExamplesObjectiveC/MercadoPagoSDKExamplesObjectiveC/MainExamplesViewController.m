@@ -65,7 +65,7 @@
 //    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
 //
 
-    [self setCheckoutPref_CreditCardNotExcluded];
+    [self setCheckoutPref_WithId];
 
 self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
@@ -79,9 +79,9 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
 
     // Add theme to advanced config.
-    // MeliTheme *meliTheme = [[MeliTheme alloc] init];
-    MPTheme *mpTheme = [[MPTheme alloc] init];
-    [advancedConfig setTheme:mpTheme];
+     MeliTheme *meliTheme = [[MeliTheme alloc] init];
+   // MPTheme *mpTheme = [[MPTheme alloc] init];
+    [advancedConfig setTheme:meliTheme];
 
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
