@@ -79,8 +79,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         }
 
         let groupsPayerBody = try! payer.toJSONString()
-        //ONE TAP TEST
-        //self.baseURL = "http://private-175b69-onetapgroups.apiary-mock.com/new?"
+
         let headers = ["Accept-Language": language]
 
         self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (data) -> Void in
