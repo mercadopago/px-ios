@@ -28,7 +28,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
     var consumedDiscount: Bool = false
-    
+
     // Payment flow
     var paymentFlow: PXPaymentFlow?
     weak var paymentResultHandler: PXPaymentResultHandlerProtocol?
@@ -179,7 +179,7 @@ extension OneTapFlowModel {
             return true
         }
         if let paymentFlow = paymentFlow, paymentMethod.isAccountMoney || hasSavedESC() {
-            return paymentFlow.needToShowPaymentPluginScreen()
+            return paymentFlow.hasPaymentPluginScreen()
         }
         return true
     }

@@ -155,4 +155,12 @@ extension PXPaymentFlowModel {
         let view = paymentPlugin.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared)
         return  view != nil
     }
+
+    func hasPluginPaymentScreenForPaymentPlugin() -> Bool {
+        return hasPluginPaymentScreen(plugin: paymentPlugin)
+    }
+
+    func hasPluginPaymentScreenForPaymentMethodPlugin() -> Bool {
+        return hasPluginPaymentScreen(plugin: paymentMethodPaymentPlugin)
+    }
 }
