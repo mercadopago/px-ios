@@ -39,4 +39,18 @@ open class PXAdvancedConfiguration: NSObject {
      Enable to preset configurations to customize visualization on the 'Congrats' screen / 'PaymentResult' screen.
      */
     open var paymentResultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()
+
+    /**
+     Internal use. To force binary mode.
+     */
+    internal var binaryModeForced: Bool = false
+}
+
+extension PXAdvancedConfiguration {
+    /**
+     Use this method to force the binary mode. (Set binary mode to `TRUE`). If you use this method, you can override any backend configuration related to binary mode flag.
+     */
+    open func forceBinaryMode() {
+        binaryModeForced = true
+    }
 }

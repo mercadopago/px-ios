@@ -791,7 +791,13 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
         guard let paymentFlow = paymentFlow else {
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference)
+            // Override binaryMode if need.
+            var binaryModeEnabled = checkoutPreference.isBinaryMode()
+            if advancedConfig.binaryModeForced {
+                binaryModeEnabled = true
+            }
+
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference, binaryMode: binaryModeEnabled)
             self.paymentFlow = paymentFlow
             return paymentFlow
         }

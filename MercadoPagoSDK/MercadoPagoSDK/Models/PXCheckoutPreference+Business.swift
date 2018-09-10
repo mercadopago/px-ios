@@ -143,21 +143,13 @@ extension PXCheckoutPreference {
 // MARK: BinaryMode
 extension PXCheckoutPreference {
     /**
-     Determinate if binaryMode feature is enabled/disabled.
+     Default value is `FALSE`. If return `TRUE` value processed payment can only be APPROVED or REJECTED.
+     Non compatible with PaymentProcessor or off payments methods.
+     Determinate if binaryMode backend feature is enabled or disabled. This is the raw value from backend.
+     If you need to force and override this backend value, use the method `forceBinaryMode()` in `PXAdvancedConfiguration`
      */
     open func isBinaryMode() -> Bool {
         return binaryModeEnabled
-    }
-
-    /**
-     Default value is `FALSE`.
-     `TRUE` value processed payment can only be APPROVED or REJECTED.
-     Non compatible with PaymentProcessor or off payments methods.
-     - parameter isBinaryMode: Binary mode Bool value.
-     */
-    open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
-        self.binaryModeEnabled = isBinaryMode
-        return self
     }
 }
 

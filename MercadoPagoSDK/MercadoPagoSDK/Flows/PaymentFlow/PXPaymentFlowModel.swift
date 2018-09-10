@@ -19,9 +19,12 @@ internal final class PXPaymentFlowModel: NSObject {
     var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    let binaryMode: Bool
+
+    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, binaryMode: Bool) {
         self.paymentPlugin = paymentPlugin
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.binaryMode = binaryMode
     }
 
     enum Steps: String {

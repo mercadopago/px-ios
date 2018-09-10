@@ -16,8 +16,8 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: PXCheckoutPreference?) {
-        model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: PXCheckoutPreference?, binaryMode: Bool) {
+        model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, binaryMode: binaryMode)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
         self.model.paymentData = paymentData
