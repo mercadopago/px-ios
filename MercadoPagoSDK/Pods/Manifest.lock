@@ -1,0 +1,107 @@
+PODS:
+  - FXBlurView (1.6.4)
+  - JRSwizzle (1.0)
+  - MLUI (5.1.0):
+    - MLUI/ActionButton (= 5.1.0)
+    - MLUI/Core (= 5.1.0)
+    - MLUI/Helpers (= 5.1.0)
+    - MLUI/MLButton (= 5.1.0)
+    - MLUI/MLCheckBox (= 5.1.0)
+    - MLUI/MLColorPalette (= 5.1.0)
+    - MLUI/MLContextualMenu (= 5.1.0)
+    - MLUI/MLFonts (= 5.1.0)
+    - MLUI/MLGenericErrorView (= 5.1.0)
+    - MLUI/MLHtml (= 5.1.0)
+    - MLUI/MLModal (= 5.1.0)
+    - MLUI/MLRadioButton (= 5.1.0)
+    - MLUI/MLSnackBar (= 5.1.0)
+    - MLUI/MLSpacing (= 5.1.0)
+    - MLUI/MLSpinner (= 5.1.0)
+    - MLUI/MLSwitch (= 5.1.0)
+    - MLUI/MLTextView (= 5.1.0)
+    - MLUI/MLTitledMultiLineTextField (= 5.1.0)
+    - MLUI/MLTitledSingleLineTextField (= 5.1.0)
+    - MLUI/PriceView (= 5.1.0)
+    - MLUI/SnackBarView (= 5.1.0)
+    - MLUI/StyleSheet (= 5.1.0)
+  - MLUI/ActionButton (5.1.0):
+    - MLUI/Core
+  - MLUI/Core (5.1.0):
+    - MLUI/MLFonts
+  - MLUI/Helpers (5.1.0)
+  - MLUI/MLButton (5.1.0):
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+    - MLUI/MLSpinner
+    - MLUI/StyleSheet
+  - MLUI/MLCheckBox (5.1.0):
+    - MLUI/MLColorPalette
+  - MLUI/MLColorPalette (5.1.0)
+  - MLUI/MLContextualMenu (5.1.0):
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+  - MLUI/MLFonts (5.1.0):
+    - JRSwizzle (= 1.0)
+    - MLUI/Helpers
+    - MLUI/StyleSheet
+  - MLUI/MLGenericErrorView (5.1.0):
+    - MLUI/MLButton
+    - MLUI/MLColorPalette
+    - MLUI/MLSpacing
+  - MLUI/MLHtml (5.1.0):
+    - MLUI/MLFonts
+  - MLUI/MLModal (5.1.0):
+    - FXBlurView (~> 1.6)
+    - MLUI/Core
+    - MLUI/MLButton
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+    - MLUI/StyleSheet
+  - MLUI/MLRadioButton (5.1.0):
+    - MLUI/MLColorPalette
+  - MLUI/MLSnackBar (5.1.0):
+    - MLUI/Helpers
+    - MLUI/MLButton
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+  - MLUI/MLSpacing (5.1.0):
+    - JRSwizzle (= 1.0)
+    - MLUI/MLFonts
+  - MLUI/MLSpinner (5.1.0):
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+    - MLUI/StyleSheet
+  - MLUI/MLSwitch (5.1.0):
+    - MLUI/Helpers
+    - MLUI/MLColorPalette
+  - MLUI/MLTextView (5.1.0):
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+  - MLUI/MLTitledMultiLineTextField (5.1.0):
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+    - MLUI/MLTitledSingleLineTextField
+    - MLUI/StyleSheet
+  - MLUI/MLTitledSingleLineTextField (5.1.0):
+    - MLUI/MLColorPalette
+    - MLUI/MLFonts
+    - MLUI/StyleSheet
+  - MLUI/PriceView (5.1.0):
+    - MLUI/Core
+    - MLUI/MLFonts
+  - MLUI/SnackBarView (5.1.0):
+    - MLUI/Helpers
+    - MLUI/MLFonts
+  - MLUI/StyleSheet (5.1.0)
+
+DEPENDENCIES:
+  - MLUI (~> 5.0)
+
+SPEC CHECKSUMS:
+  FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  MLUI: 4bc30710e102d8348eece6a57f15ca86060f36b2
+
+PODFILE CHECKSUM: 87adc2f5f50b8d3be3f248153ffda54008a9c743
+
+COCOAPODS: 1.4.0

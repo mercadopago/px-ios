@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLSpinner">
+            <connections>
+                <outlet property="containerView" destination="Ebx-N3-lSU" id="img-fF-Ubb"/>
+                <outlet property="label" destination="ES8-wO-Fqk" id="qhl-rU-AZp"/>
+                <outlet property="spinnerHeightConstraint" destination="aGi-ON-i5O" id="awp-75-ibs"/>
+                <outlet property="spinnerLabelVerticalSpacing" destination="Kp3-63-KOh" id="zgk-aR-50w"/>
+                <outlet property="spinnerView" destination="BMX-Oq-663" id="BpQ-A1-FAe"/>
+                <outlet property="spinnerWidthConstraint" destination="3qD-ri-URx" id="fvW-fV-Zfe"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nUf-A1-z7m" userLabel="Widget">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ebx-N3-lSU" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="244" width="600" height="113"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BMX-Oq-663" userLabel="Spinner">
+                            <rect key="frame" x="270" y="0.0" width="60" height="60"/>
+                            <color key="backgroundColor" red="0.0" green="0.8383413462" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="3qD-ri-URx"/>
+                                <constraint firstAttribute="width" constant="60" id="aGi-ON-i5O"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ES8-wO-Fqk" userLabel="Label">
+                            <rect key="frame" x="279" y="92" width="42" height="21"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="BMX-Oq-663" secondAttribute="bottom" id="1kH-BQ-bRr"/>
+                        <constraint firstItem="ES8-wO-Fqk" firstAttribute="centerX" secondItem="Ebx-N3-lSU" secondAttribute="centerX" id="3Fa-Ql-xhS"/>
+                        <constraint firstAttribute="trailing" secondItem="BMX-Oq-663" secondAttribute="trailing" priority="900" id="BaQ-Wx-6OI"/>
+                        <constraint firstAttribute="trailing" secondItem="ES8-wO-Fqk" secondAttribute="trailing" priority="900" id="Eo7-CQ-rgq"/>
+                        <constraint firstItem="ES8-wO-Fqk" firstAttribute="top" secondItem="BMX-Oq-663" secondAttribute="bottom" constant="32" id="Kp3-63-KOh"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BMX-Oq-663" secondAttribute="trailing" id="Ns1-2L-eWe"/>
+                        <constraint firstItem="BMX-Oq-663" firstAttribute="centerX" secondItem="Ebx-N3-lSU" secondAttribute="centerX" id="SEh-dm-xwh"/>
+                        <constraint firstItem="ES8-wO-Fqk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ebx-N3-lSU" secondAttribute="leading" id="USs-Jx-ohN"/>
+                        <constraint firstItem="BMX-Oq-663" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ebx-N3-lSU" secondAttribute="leading" id="V0G-ba-8FT"/>
+                        <constraint firstItem="BMX-Oq-663" firstAttribute="leading" secondItem="Ebx-N3-lSU" secondAttribute="leading" priority="900" id="amX-XV-32i"/>
+                        <constraint firstAttribute="bottom" secondItem="ES8-wO-Fqk" secondAttribute="bottom" id="pST-we-vll"/>
+                        <constraint firstItem="ES8-wO-Fqk" firstAttribute="leading" secondItem="Ebx-N3-lSU" secondAttribute="leading" priority="900" id="s9D-DW-Bc5"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ES8-wO-Fqk" secondAttribute="trailing" id="xvM-72-D2p"/>
+                        <constraint firstItem="BMX-Oq-663" firstAttribute="top" secondItem="Ebx-N3-lSU" secondAttribute="top" id="yV7-hv-Tti"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="1kH-BQ-bRr"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.92600888690000005" green="0.0" blue="0.92387820509999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Ebx-N3-lSU" firstAttribute="top" secondItem="nUf-A1-z7m" secondAttribute="top" priority="900" id="AnN-0I-MZg"/>
+                <constraint firstAttribute="trailing" secondItem="Ebx-N3-lSU" secondAttribute="trailing" id="ICf-xn-PcK"/>
+                <constraint firstItem="Ebx-N3-lSU" firstAttribute="leading" secondItem="nUf-A1-z7m" secondAttribute="leading" id="IX4-ie-4Oa"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ebx-N3-lSU" secondAttribute="bottom" id="YuZ-lA-gfh"/>
+                <constraint firstAttribute="bottom" secondItem="Ebx-N3-lSU" secondAttribute="bottom" priority="900" id="bhD-Jc-sBX"/>
+                <constraint firstItem="Ebx-N3-lSU" firstAttribute="centerY" secondItem="nUf-A1-z7m" secondAttribute="centerY" id="ni6-D0-VJK"/>
+                <constraint firstItem="Ebx-N3-lSU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="nUf-A1-z7m" secondAttribute="top" id="raM-dR-C3N"/>
+            </constraints>
+            <point key="canvasLocation" x="547" y="608"/>
+        </view>
+    </objects>
+</document>

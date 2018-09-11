@@ -49,7 +49,7 @@ internal class MPPayment: Encodable {
     }
 
     init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
-        self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.id! : ""
+        self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.id : ""
         self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.id : ""
         self.installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
 

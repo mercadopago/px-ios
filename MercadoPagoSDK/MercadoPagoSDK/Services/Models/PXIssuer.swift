@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 open class PXIssuer: NSObject, Codable {
-    open var id: String!
+    open var id: String = ""
     open var name: String?
 
     public init(id: String, name: String?) {

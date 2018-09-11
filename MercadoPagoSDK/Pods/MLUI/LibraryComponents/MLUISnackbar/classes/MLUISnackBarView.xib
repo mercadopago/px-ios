@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLUISnackBarView">
+            <connections>
+                <outlet property="actionButton" destination="Tva-hO-SR6" id="Kqp-ko-eG7"/>
+                <outlet property="textLabel" destination="XVK-Te-gl3" id="5eB-za-ZGm"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tva-hO-SR6">
+                    <rect key="frame" x="290" y="0.0" width="67" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="CTF-8t-gtU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="Reintentar">
+                        <color key="titleColor" red="0.98431372549019602" green="0.90588235294117647" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="actionButtonTapped:" destination="-2" eventType="touchUpInside" id="8PG-1b-WVg"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error de servicio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XVK-Te-gl3">
+                    <rect key="frame" x="16" y="0.0" width="106" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="FGx-7O-WFA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="highlightedColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="XVK-Te-gl3" secondAttribute="bottom" id="8AF-EE-kfW"/>
+                <constraint firstItem="XVK-Te-gl3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8Dm-mo-7rr"/>
+                <constraint firstAttribute="centerY" secondItem="XVK-Te-gl3" secondAttribute="centerY" id="Md0-9x-F9f"/>
+                <constraint firstAttribute="trailing" secondItem="Tva-hO-SR6" secondAttribute="trailing" constant="16" id="WgW-GA-XEX"/>
+                <constraint firstAttribute="trailing" secondItem="Tva-hO-SR6" secondAttribute="trailing" constant="33" id="beO-m4-ddy"/>
+                <constraint firstItem="Tva-hO-SR6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hMH-fw-Xxp"/>
+                <constraint firstAttribute="centerY" secondItem="Tva-hO-SR6" secondAttribute="centerY" id="hoX-2s-2a1"/>
+                <constraint firstAttribute="bottom" secondItem="Tva-hO-SR6" secondAttribute="bottom" id="ok1-bO-4qQ"/>
+                <constraint firstItem="XVK-Te-gl3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="owE-Iv-0vn"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Tva-hO-SR6" secondAttribute="trailing" constant="33" id="plu-7z-MuM"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="beO-m4-ddy"/>
+                    <exclude reference="plu-7z-MuM"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="25.5" y="-114"/>
+        </view>
+    </objects>
+</document>

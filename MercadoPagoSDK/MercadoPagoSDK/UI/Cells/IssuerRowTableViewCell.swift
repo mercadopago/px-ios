@@ -12,8 +12,8 @@ class IssuerRowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var issuerImage: UIImageView!
 
-    func fillCell(issuer: PXIssuer, bundle: Bundle) {
-        if let image = UIImage(named: "issuer_\(issuer.id!)", in: bundle, compatibleWith: nil) {
+    func fillCell(issuer: PXIssuer) {
+        if let image = ResourceManager.shared.getImage("issuer_\(issuer.id)") {
             issuerImage.image = image
         } else {
             issuerImage.image = nil
@@ -21,11 +21,7 @@ class IssuerRowTableViewCell: UITableViewCell {
             textLabel?.textAlignment = .center
         }
     }
-    override func awakeFromNib() {
-        super.awakeFromNib()
 
-        // Initialization code
-    }
     func addSeparatorLineToBottom(width: Double, height: Double) {
         let lineFrame = CGRect(origin: CGPoint(x: 0, y: Int(height)), size: CGSize(width: width, height: 0.5))
         let line = UIView(frame: lineFrame)
@@ -33,11 +29,4 @@ class IssuerRowTableViewCell: UITableViewCell {
         line.backgroundColor = UIColor.px_grayLight()
         addSubview(line)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

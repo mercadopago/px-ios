@@ -24,7 +24,6 @@ internal class ResourceManager {
         }
         return UIImage(named: name, in: bundle, compatibleWith: nil)
     }
-
 }
 
 // MARK: Payment Method Resources

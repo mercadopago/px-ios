@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 open class PXFinancialInstitution: NSObject, Codable {
-    open var id: String!
+    open var id: String = ""
     open var _description: String?
 
     public init(id: String, description: String?) {

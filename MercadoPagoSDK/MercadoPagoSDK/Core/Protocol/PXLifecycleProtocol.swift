@@ -21,11 +21,13 @@ import Foundation
      - parameter payment: Optional PXPayment object. (Payment info)
      */
     @objc func finishCheckout(payment: PXPayment?) -> (() -> Void)?
+
     /**
      User tap on our change payment method action. If you return a block,
      you can override the change payment method action. For example to
-     go to specific viewController, etc.
+     go to specific viewController, etc. (Only moneyIn use case)
      - warning: This is and internal method. Use it at your own risk.
      */
+    /// :nodoc:
     @objc optional func changePaymentMethodTapped() -> (() -> Void)?
 }

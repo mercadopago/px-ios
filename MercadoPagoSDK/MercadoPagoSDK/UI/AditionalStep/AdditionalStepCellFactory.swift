@@ -30,7 +30,7 @@ class AdditionalStepCellFactory: NSObject {
 
         if object.objectType == ObjectTypes.issuer {
             if let cell = bundle.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as? IssuerRowTableViewCell, let issuerObj = object as? PXIssuer {
-                cell.fillCell(issuer: issuerObj, bundle: bundle)
+                cell.fillCell(issuer: issuerObj)
                 cell.addSeparatorLineToBottom(width: width, height: height)
                 cell.selectionStyle = .none
                 return cell
@@ -48,7 +48,7 @@ class AdditionalStepCellFactory: NSObject {
 
         if object.objectType == ObjectTypes.financialInstitution {
             if let cell = bundle.loadNibNamed("FinancialInstitutionTableViewCell", owner: nil, options: nil)?[0] as? FinancialInstitutionTableViewCell, let financialObj = object as? PXFinancialInstitution {
-                cell.fillCell(financialInstitution: financialObj, bundle: bundle)
+                cell.fillCell(financialInstitution: financialObj)
                 cell.addSeparatorLineToBottom(width: width, height: height)
                 cell.selectionStyle = .none
                 return cell
