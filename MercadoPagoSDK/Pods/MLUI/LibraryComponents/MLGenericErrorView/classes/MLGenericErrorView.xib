@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLGenericErrorView"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="HNY-F8-hSA" customClass="MLGenericErrorView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="548"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Wb1-SF-4HG">
+                    <rect key="frame" x="24" y="108" width="327" height="333"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cao-CK-brW">
+                            <rect key="frame" x="22" y="0.0" width="283" height="141.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Cao-CK-brW" secondAttribute="height" multiplier="2:1" id="3L3-6n-tbG"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="¡Parece que no hay Internet!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PbO-eo-p29">
+                            <rect key="frame" x="0.0" y="174" width="327" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Revisa tu conexión para seguir navegando." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdv-lQ-JaN">
+                            <rect key="frame" x="0.0" y="210" width="327" height="43"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="fIA-UL-DVD" customClass="MLButton">
+                            <rect key="frame" x="0.0" y="285" width="327" height="48"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="pGI-NC-sc0"/>
+                            </constraints>
+                            <connections>
+                                <action selector="retryButtonDidTapped:" destination="-1" eventType="touchUpInside" id="q1x-K5-Jqw"/>
+                            </connections>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="fIA-UL-DVD" secondAttribute="trailing" id="1Et-PY-9c5"/>
+                        <constraint firstAttribute="trailing" secondItem="Cao-CK-brW" secondAttribute="trailing" constant="22" id="4Jq-DF-R9B"/>
+                        <constraint firstAttribute="bottom" secondItem="fIA-UL-DVD" secondAttribute="bottom" id="FXE-up-thj"/>
+                        <constraint firstItem="PbO-eo-p29" firstAttribute="leading" secondItem="Wb1-SF-4HG" secondAttribute="leading" id="Ndc-8C-sbw"/>
+                        <constraint firstItem="Cao-CK-brW" firstAttribute="centerX" secondItem="Wb1-SF-4HG" secondAttribute="centerX" id="O93-0w-pDU"/>
+                        <constraint firstItem="fIA-UL-DVD" firstAttribute="top" secondItem="Cdv-lQ-JaN" secondAttribute="bottom" constant="32" id="QWy-qF-Cvl"/>
+                        <constraint firstItem="fIA-UL-DVD" firstAttribute="leading" secondItem="Wb1-SF-4HG" secondAttribute="leading" id="UMH-h4-RnG"/>
+                        <constraint firstItem="Cdv-lQ-JaN" firstAttribute="top" secondItem="PbO-eo-p29" secondAttribute="bottom" constant="12" id="ZRd-E4-rEl"/>
+                        <constraint firstAttribute="trailing" secondItem="Cdv-lQ-JaN" secondAttribute="trailing" id="buG-8z-fiP"/>
+                        <constraint firstItem="Cao-CK-brW" firstAttribute="leading" secondItem="Wb1-SF-4HG" secondAttribute="leading" constant="22" id="iOJ-uM-lW6"/>
+                        <constraint firstItem="Cao-CK-brW" firstAttribute="top" secondItem="Wb1-SF-4HG" secondAttribute="top" id="opn-il-hHi"/>
+                        <constraint firstAttribute="trailing" secondItem="PbO-eo-p29" secondAttribute="trailing" id="oxu-ir-0AT"/>
+                        <constraint firstItem="Cdv-lQ-JaN" firstAttribute="leading" secondItem="Wb1-SF-4HG" secondAttribute="leading" id="qq6-ga-Sw8"/>
+                        <constraint firstItem="PbO-eo-p29" firstAttribute="top" secondItem="Cao-CK-brW" secondAttribute="bottom" constant="32" id="tPK-Bz-zfW"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="O93-0w-pDU"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Wb1-SF-4HG" secondAttribute="trailing" constant="24" id="IPB-6h-FHr"/>
+                <constraint firstItem="Wb1-SF-4HG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="HNY-F8-hSA" secondAttribute="top" constant="24" id="MaA-yb-Muu"/>
+                <constraint firstItem="Wb1-SF-4HG" firstAttribute="centerX" secondItem="HNY-F8-hSA" secondAttribute="centerX" id="T5c-NZ-WlS"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Wb1-SF-4HG" secondAttribute="bottom" constant="24" id="bJp-tJ-m8f"/>
+                <constraint firstItem="Wb1-SF-4HG" firstAttribute="leading" secondItem="HNY-F8-hSA" secondAttribute="leading" constant="24" id="ffd-rK-yol"/>
+                <constraint firstItem="Wb1-SF-4HG" firstAttribute="centerY" secondItem="HNY-F8-hSA" secondAttribute="centerY" id="qJO-hH-1Zo"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="containerView" destination="Wb1-SF-4HG" id="Trm-x3-34K"/>
+                <outlet property="imageView" destination="Cao-CK-brW" id="5fq-wC-GJ2"/>
+                <outlet property="retryButton" destination="fIA-UL-DVD" id="NhS-0p-rkS"/>
+                <outlet property="subtitle" destination="Cdv-lQ-JaN" id="mHU-Dz-W5i"/>
+                <outlet property="title" destination="PbO-eo-p29" id="htO-zw-vho"/>
+            </connections>
+        </view>
+    </objects>
+</document>

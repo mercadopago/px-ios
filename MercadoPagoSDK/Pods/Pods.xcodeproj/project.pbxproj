@@ -1,0 +1,1832 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02507200518760F52312E71901ADE984 /* UIColor+Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = DCEFBA33658C511C24296A1B6D766723 /* UIColor+Theme.m */; };
+		04EAAB59AF96B9A3005364A34943C168 /* UILabel+MLFonts.h in Headers */ = {isa = PBXBuildFile; fileRef = 8077E991D9326EB5E1563C04D7E645DB /* UILabel+MLFonts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0522CBCB19CD4F914C041458D2F23897 /* NSString+BoundingSize.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFFFD116BE1B2EB1E7908FD567B0D48 /* NSString+BoundingSize.m */; };
+		061721D0C6F81236484E8DF8CA6EBCD7 /* MLButtonStylesFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 23ADAEEDC0487021FE0A8CD2E2658B54 /* MLButtonStylesFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0979C2D0B1D6A76A224F2F6132C0F302 /* MLTitledMultiLineTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 360D234C1C59188D45DCBC82F8AD3395 /* MLTitledMultiLineTextField.m */; };
+		0AB20B63448A9BD5CA257D749B61FC5D /* MLSnackbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 515B21795D05530456BBC6EB5887B230 /* MLSnackbar.xib */; };
+		0BCF7B955CFDD99B193C5E50A4F6ECA7 /* Pods-MercadoPagoSDKTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC7E915CC3F1E885F0250C38E080AF3C /* Pods-MercadoPagoSDKTests-dummy.m */; };
+		0CFFAD9138641F7CC1BF78BFD7B53A8C /* NSAttributedString+MLFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C694C9E2F7E22BB09208B7946B82CC /* NSAttributedString+MLFonts.m */; };
+		0D6B413AE31BB16EF2E06148971FEFAE /* MLTitledMultiLineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CF7B46051ACA8BF51C990EC4A3F75C08 /* MLTitledMultiLineTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0ED7C688C65F90DCBAD10B708FB31C60 /* MLUIPriceView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A671F7CB03B9E19BC6193E7CDCA255 /* MLUIPriceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FE2276B6DF5CF0C2D5F62319223BAD0 /* UIImageView+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 51445B4E897663CDE9AA5DB292063C42 /* UIImageView+Animations.m */; };
+		11DB3D962953ECB78FEAE00C973897BD /* UILabel+MLStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 96F5CE6E21D43B7809172714222E6762 /* UILabel+MLStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1911098AB3DD526CCB29F67800570A50 /* MLModalStyleFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBFADE178660510444C180DDFAD517 /* MLModalStyleFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DDEA2C3C936131E1433E73B59F8BD3F /* MLUIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 343A11F5F6773D7143D43446FE7F3580 /* MLUIBundle.m */; };
+		1DF141B4EFFF24874AB4DFDC3B57135E /* FXBlurView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0561CC897E2C6BE7402E39706B00F89C /* FXBlurView-dummy.m */; };
+		1E35A2620063447F3DC6A1016648797E /* FXBlurView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 97BF50456793874159A6774A2EF59C7B /* FXBlurView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1E3DD374C6B47209CE6AFDC7D217937D /* MLSnackbar.h in Headers */ = {isa = PBXBuildFile; fileRef = D773E6CBB3F66969EE31397BF73CC346 /* MLSnackbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1EB2454C00456D13A1E35E17B31E12A9 /* MLUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC80289C05CEB163A63D6082EAF406F /* MLUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1F4C31AB1A96C331964692CBEC3794C2 /* MLUISnackBarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 742F01F1E84FFF2103E20D1C330B5904 /* MLUISnackBarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1F62BCDD224C46375F12D5535879B5FF /* FXBlurView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7618E182E62D62A8B360C76B8356401C /* FXBlurView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1F8A9D1945768975FA6157E6273A208A /* MLBooleanWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = D0230C6E949A8423BFD1088A839EDE0F /* MLBooleanWidget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2661A31E4025E6634DE45A1639DBE471 /* MLTitledLineTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0E889D98A0C368AD5A0D68042E2110A /* MLTitledLineTextField.xib */; };
+		26EFACE72803F0A664CBCAC86BC0805C /* MLHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6706B2A6C1C5A528A9B998F407B6C6 /* MLHtml.m */; };
+		273EA13FF6F1E8CEB3A81744AC2B889E /* MLUIActionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 79E66F2A655D3EDA9043CCD0B65913E7 /* MLUIActionButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		275F612F810BD90929A8853C4EB48BAC /* MLRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = F8E1C588115B6708F88ED337239F796A /* MLRadioButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2976CA85CEB3D2B56D983E83619AD78E /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F6940DEE6B29DD57104ACF0CC5A517A9 /* es.lproj */; };
+		2B6854315D6036BDFFACC0F67F757A77 /* MLUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6490C7E7422406487A9DB53BA804C55 /* MLUI-dummy.m */; };
+		2F3DD894F5B858B4AE4EC33A3B471521 /* Pods-MercadoPagoSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 80808121CB6A00E351224012352F3810 /* Pods-MercadoPagoSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F854C094BA547BE60DDD776EC8E2088 /* MLGenericErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B44BBCAF08ECE9525329A055F6370AB /* MLGenericErrorView.m */; };
+		304497A735658E8B62CF99EFCC433FA2 /* MLButtonConfigStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 291FB0EB26BA0120A43557C79F9DDB46 /* MLButtonConfigStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		33E6589DA8C59A641C981527FA50F0B8 /* MLHtml.h in Headers */ = {isa = PBXBuildFile; fileRef = 6661735A08DB37D876E59235785914A3 /* MLHtml.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3483A4D132F49745E1231CA1F65888D4 /* MLGrowingTextViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C5010E55F35CA6A615770D87230312BF /* MLGrowingTextViewHandler.m */; };
+		363EFCF3F628A982FC414EBB5E08B406 /* MLCheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = A397DF700AC7AD4415523C201D2A03C3 /* MLCheckBox.m */; };
+		3DF0FBD3E59D87323827D9DC7B5A656C /* JRSwizzle-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10431045F029C862DC677BF3FE5F6229 /* JRSwizzle-dummy.m */; };
+		3E5358B0BACB09064F07774257030AC2 /* MLSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BEF5363617A51FD687B819BB5D6F0A /* MLSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4449256F8D4A0033E8BB22A7B1E1BF1A /* MLCheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE842EAC901782ACE756413B682F108 /* MLCheckBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4624E9490FBCC69AA869320F07F5C6A2 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEBBF36A397DAAFCA797E23C2F2B6D94 /* Accelerate.framework */; };
+		46C80200EBF919F8357904B49A413F27 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDEEB1BB43D68F5221CDFAF4A65DF75 /* Foundation.framework */; };
+		4788D9E78E9E55326321FF922ABBE0D4 /* MLModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222713FB0FAB12D3B7D8FD2F724D5683 /* MLModal.xib */; };
+		478D7EE784D8C181E10DFBB9E186F285 /* MLRadioButtonCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = F411D39C99F8C6563F2D09C82F649D08 /* MLRadioButtonCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		47C55464E9C810E3BC018536AF8A9AC5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDEEB1BB43D68F5221CDFAF4A65DF75 /* Foundation.framework */; };
+		4A3582E57CFB53AAAF5FADD488E59BB1 /* MLContextualMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C480A34F7A3D32327FF51695A7DD1109 /* MLContextualMenu.m */; };
+		4CA894D93B653D9705CB3E01A2E11E3C /* JRSwizzle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C63935387A8F9E449763FD682ECD2DE7 /* JRSwizzle.framework */; };
+		4E962449F2DC5BF696EF871F5F9653B5 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4314B5423A85176D565135DABEA7F8 /* JRSwizzle.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		5180340FDF8677C6426A8427D4085322 /* UIFont+MLFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 2733DF386817F1BCA1F3CB3B0771107C /* UIFont+MLFonts.m */; };
+		519D70A725A121B58E3BFE27F3664013 /* MLUISnackBarProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = DC6C5386DF12E2BE6CE1BC3C2C1835D5 /* MLUISnackBarProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		535B048B490B8C77F69F2FE4DFB5CB59 /* MLSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DDA09BE21BEFFA0950E9BD8F005C7 /* MLSpinner.m */; };
+		54475C77563A9C57FCBE29BFA58906FC /* MLModal.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32F86CCF08D50051732D11ED29E1CC1F /* MLModal.xcassets */; };
+		5455941D83A84C6C7A1B7D9267F7E4B7 /* MLGenericErrorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 45B1DF39ABD47276617520A2C4C720C6 /* MLGenericErrorView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		557DE6A2D889E79FF1B3AACC8EC104D3 /* MLTitledSingleLineStringProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8D0CC42E47EECC5A1A57EB4E6A54E8 /* MLTitledSingleLineStringProvider.m */; };
+		55D3E57C156DD6EF8104C41976B7A80E /* MLBooleanWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BF1C4354ABD00181D95E4359EEEF87 /* MLBooleanWidget.m */; };
+		56DF2FD6D39BE1FDE1D67A506C3C7C3B /* MLTitledSingleLineStringProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = BEDC3C5BB31C794B3827EDCFBDFFEEB1 /* MLTitledSingleLineStringProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		57F74E8B7653DE84769C27844F4DA9BA /* UIImage+Transformations.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E68225F25989EEE55B715CB7815311 /* UIImage+Transformations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		59EEAA3615B03FEEC8E6B78B31245415 /* MLButtonConfigStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = CAD43CD14EA46FD4DB080E346C3A8761 /* MLButtonConfigStyle.m */; };
+		5E5B925D5549D8648094019E1E06A087 /* MLContextualMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 976B13A12B45F2808889A99D2D7D3B37 /* MLContextualMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5E5C88BCE2794FDD97B078B3DB5964F2 /* FXBlurView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0ECEB0ECD0E3ECEE7B9BAE499FC7CA4 /* FXBlurView.framework */; };
+		6067039EC0A0E18E5043AC720AABE396 /* MLBooleanWidget_Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = A1828F81127BB394787BED3343E244E3 /* MLBooleanWidget_Protected.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6574D249CF6201C7AA4ACBD0E0D4B89E /* MLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C6EA481CC6C723ED17A7F95D507ACB9 /* MLTextView.m */; };
+		677D4A83A473549ED481EE2A21201C70 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C91F84A497DC93A7160FB06D477CA2E /* QuartzCore.framework */; };
+		67990890BD3064106EEEDEC30DC95477 /* UIColor+MLColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CEB19D33E9D0EFEA4DF0DE850DFE8C /* UIColor+MLColorPalette.m */; };
+		6A51C34D5CA5EF0932F442EFD252B9D5 /* NSString+BoundingSize.h in Headers */ = {isa = PBXBuildFile; fileRef = E58E4D704936BBB4C0A433563C6B7896 /* NSString+BoundingSize.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		72F8DCDC702C94D8BF021A2479D38A02 /* MLButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C09EE09D205B7607E6C2FE298AD8C3E /* MLButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		77FF55308B742F76B9765843769788B2 /* MLSnackbarType.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D6D4353911D1845A3EE690A8D80C4 /* MLSnackbarType.m */; };
+		7A4F9B6C42A294C39B7BCCFA0E295107 /* UIImageView+Animations.h in Headers */ = {isa = PBXBuildFile; fileRef = 339681E54123E6F1B0E02C94F4B01140 /* UIImageView+Animations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A8AED88691C28D69FDAB16AD4D67A8A /* UITextView+MLFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC757D3FB7758B477F4548AB83B2EC9 /* UITextView+MLFonts.m */; };
+		7B7A895D2B9C1D0CC36FBE38FEEF7B05 /* Pods-MercadoPagoSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D691E85A6AF94FB7AE8AB72D7863E3 /* Pods-MercadoPagoSDK-dummy.m */; };
+		80240E331AEB6DF70C5DEAE8FE274C7A /* MLModalConfigStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 254DFF1372A9DC1FF32437B6E469006B /* MLModalConfigStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		808297040539B5CC3B4C273DD05C2129 /* MLModalStyleFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E7306780CF2CB82CE85FDF9131A8EB52 /* MLModalStyleFactory.m */; };
+		811F8F130FD578B4368EBFFEFFA7FBAA /* NSAttributedString+MLFonts.h in Headers */ = {isa = PBXBuildFile; fileRef = 56073054052EBE1242B31C61267D02CF /* NSAttributedString+MLFonts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		826D01F10A080E895F50D676AF27DABE /* MLStyleSheetManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C7D3E1927B9084E75C47704F0C3BC3E /* MLStyleSheetManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84000771137EE95677CB80B89FAF306E /* MLModalConfigStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 19199A918EBE9672E751BE9BF806FCED /* MLModalConfigStyle.m */; };
+		85B5958C8D6CAA5B62FCD560DE9ECD38 /* MLStyleUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A73F21E7721A0C47947FAE849AB09F3 /* MLStyleUtils.m */; };
+		863FF52AC4ACBE9F7AD1B683D500E414 /* MLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9D69814209EA731B05583AA0AA99DC /* MLButton.m */; };
+		872C68F22CB388E146D3E2DC6223A831 /* MLSpinnerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = F661D10707A18E56B629A44F5FE5DEED /* MLSpinnerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		876CCB9781B75D4B093C0442DE062B4C /* MLContextualMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEC103A17CD44B16F4428A1EE9B6FA /* MLContextualMenuItem.m */; };
+		87B8AF6DF83F2ABBC4C039C5B07103C4 /* UIViewController+SnackBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 746E99FB24D558E6C25C7F6B0E98F658 /* UIViewController+SnackBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8D51C1794AA4C5B969018FCA9EDFA598 /* MLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E94D6ED1D104DBA7B5DFEC8005BA21B /* MLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		90693D39040DF475F2BD7A8FEA58AE44 /* MLStyleSheetDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B978DDCBB52C181416B2AAAAC92DA6 /* MLStyleSheetDefault.m */; };
+		9282508BE58F5E9CC33F48388AC12CB5 /* MLModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8336180B3CE9488BC997CAEF5AE54CF3 /* MLModal.m */; };
+		92FFAC7B3C6844AD9D0C5C46429917FF /* MLUIPriceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2F456D04B38D87DB2C31B970CDF650A /* MLUIPriceView.xib */; };
+		934AFA0793DC4C3E2AD1D1F33459E992 /* MLButtonConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 75828DF7C9F021C2D03D83A5DCB0012F /* MLButtonConfig.m */; };
+		94AD45244F946EC458CAF8A6B41B116F /* Pods-MercadoPagoSDKTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A65A264F6783CC80E6668607B03620B7 /* Pods-MercadoPagoSDKTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95825978A3AF9C69EF2C917AEA34494B /* UITextView+MLStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 448E068D860C3751A2F02146E44725A9 /* UITextView+MLStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		97A58A209AA5FA2639AF40B97CC25044 /* MLTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3577439CAAEB11D8D2B32248B8E31030 /* MLTextView.xib */; };
+		9B6875B53BFC60FDDF3C6B108055FB1A /* MLModal.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA9DCB0822F9A3BF5F5F5DAEF5B27D8 /* MLModal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C935DA77892BE77AD4B38DCBC5E3152 /* MLSwitch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1CCDF2CE09FB9351224D1A93E33A9F3 /* MLSwitch.xib */; };
+		9E3D6C76D8822E50F8C76F6022AD9808 /* UIColor+Theme.h in Headers */ = {isa = PBXBuildFile; fileRef = AFB1BA3F8AF8CC789A83066895B63486 /* UIColor+Theme.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9E8C302A26AC8929A4211744E00670A2 /* MLStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D7E2E54C1BE71E89791869A154C758 /* MLStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9F29A504F013045FBB568DFE9311BDC0 /* MLSpinner.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF865B08372D6CB5A162C51044A85AF7 /* MLSpinner.xib */; };
+		9FCA2CA04C535C03B6DE174014A9310B /* MLGrowingTextViewHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DE9AC5FC84B2287E9E7BE275C7B366B /* MLGrowingTextViewHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A4C564F89D363B3681F09F61E2436F22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDEEB1BB43D68F5221CDFAF4A65DF75 /* Foundation.framework */; };
+		A8C98D483D800B96E37AA5069EF04E68 /* JRSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = 09243A614CF47C861404198D90F7046C /* JRSwizzle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A94345F1EF46E369A119855B0CAEB438 /* MLGenericErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CCA55F4EB48EDA6EAC3BBAF18D6C664 /* MLGenericErrorView.xib */; };
+		ADE91409C8CB482DAC32619D74FED2CE /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806DF0DEE15E02A3EC5F4A196057376 /* FXBlurView.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		B0A917C1F1B1A12DB10B72834972BA62 /* MLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7ED1BC1E0109223171DFF1BB4ED5F3 /* MLSwitch.m */; };
+		B503FE04A9C2074EE478C4B76E89DAEA /* JRSwizzle-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CA001A406FB95378EEFECFCA6C8950B4 /* JRSwizzle-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B57B3C3DB6BEDA6C4B0666D670E23FC5 /* MLUIActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7698AE0684DDF2D1E6E1BA0359E6E14E /* MLUIActionButton.m */; };
+		B5995E7172E2F1A9749383237772DCD9 /* MLCheckList.h in Headers */ = {isa = PBXBuildFile; fileRef = 20E2ABAFF70A6D40B608374E81F65051 /* MLCheckList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B709C662A3B0F2A0C64C4BEEE81EB7EE /* MLRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A7CE425C433F771826781A60358E16 /* MLRadioButton.m */; };
+		B70AA8BC87663E53F6608AFCAAD440E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDEEB1BB43D68F5221CDFAF4A65DF75 /* Foundation.framework */; };
+		BB6BA13A911FB0486DFD6807662D93C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDEEB1BB43D68F5221CDFAF4A65DF75 /* Foundation.framework */; };
+		BD83F1669968F34625EC8A2740B5A2EC /* MLUIPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A485D447AF073D005BC14879654DF77 /* MLUIPriceView.m */; };
+		BE6D2F6B29F4635CC43AF0FDEC6CBB57 /* MLButtonStylesFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC2AB32AE7A7A014CE90884B8E8E1CD /* MLButtonStylesFactory.m */; };
+		C3DADE1C906A85E54E6702E80C7AAE08 /* MLRadioButtonCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 94B03E7C772332FD9C5F3FD373B4C210 /* MLRadioButtonCollection.m */; };
+		C9F6A00555D64342CAEA3576E6316801 /* NSAttributedString+MLHtml.h in Headers */ = {isa = PBXBuildFile; fileRef = 9476B4D19A1938FDC5E87CCCE5100085 /* NSAttributedString+MLHtml.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CA742F7C0BBA1B73EE0AA9397D8E3AF5 /* MLStyleSheetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3508A36866C32368C2306436E2DC0B87 /* MLStyleSheetManager.m */; };
+		CF0C7EE6D76593553BD43E4BCBB8676B /* MLUISnackBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042E821846C51BE553B28A44C96EEBDB /* MLUISnackBarView.xib */; };
+		CFB021481D821034FE797462756624AF /* MLSpinnerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F651608E5723AA8D6434A35FB13AF3BF /* MLSpinnerConfig.m */; };
+		D101D2B4C2C0A26F81D280658EE505F1 /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 50437CB1EF9CE5C89233CC7B454734E4 /* pt.lproj */; };
+		D5A77AEB1482F57D043298D2E387A02D /* MLStyleSheetProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 759037CB95580837870E41646BB13A6F /* MLStyleSheetProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D5BF2404AD63DC2A0C28F2570EDD9AD4 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 0A9540578BB85BAA2B8A634D240339FA /* en.lproj */; };
+		D923C8CF2EF5D07BFC1AC204612C177E /* MLContextualMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C38BA16B123701042ACEA4B2D9862E8 /* MLContextualMenuItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DDC160D3AACD53E40A196ADABC3881DD /* UIViewController+SnackBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E01041D657E230376A1562839E658E /* UIViewController+SnackBar.m */; };
+		DEFE2013725A22EA48C5C3725ABD157B /* MLStyleSheetDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 109D6D69038D7D01857B2D46BB415F65 /* MLStyleSheetDefault.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E295785B3F201726803FA9D1C008ABF9 /* NSAttributedString+MLHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = CC65BE997AF5D25778DB2D77CB7E6F55 /* NSAttributedString+MLHtml.m */; };
+		E308616E0EB912CD9E73C0A8C99CB4CE /* MLSnackbarType.h in Headers */ = {isa = PBXBuildFile; fileRef = D8521DC2E5D1C214C55F95A25AF5B82E /* MLSnackbarType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E3E02E2E030A2071032D8F7CB2D53398 /* UITextView+MLFonts.h in Headers */ = {isa = PBXBuildFile; fileRef = 6968CBF787BC165CBC2CB5DFD85F6855 /* UITextView+MLFonts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E41765A999F7B702CEDB2F28EA7EBC2A /* UIImage+Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = CD14E9F4C2BFAC632A8A679137DBECCE /* UIImage+Misc.m */; };
+		E54878CCD0DD6FB51D25CA2AAD1E00ED /* UIFont+MLFonts.h in Headers */ = {isa = PBXBuildFile; fileRef = 50925FF560BDCF22C5D68B7B9B2298A3 /* UIFont+MLFonts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E58A9E985E86A8311583D5E7E5AE247E /* UIColor+MLColorPalette.h in Headers */ = {isa = PBXBuildFile; fileRef = 05EB3F4287C140B4A8A5298BFAE2623B /* UIColor+MLColorPalette.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E8BBD0756468DC7C83C0C5B5B9D3E722 /* UILabel+MLFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B1CCFE7637E1798D51000FD34243C1 /* UILabel+MLFonts.m */; };
+		E93A2AD690F4E75599271AC5B504CF7C /* MLCheckList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49557227A3BFA922FD381937E923CA33 /* MLCheckList.m */; };
+		EB87272DF003D3F4BF7DFE8232F611B8 /* MLSwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = BD5546A39A090DCD16AEA8B8D2AEB799 /* MLSwitch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EBE537CEF906510007EEDA6C0B8CC815 /* MLStyleUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DF47ECA199EBA439DA3ABDC55A1E69A9 /* MLStyleUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED5587560BAB419A24A62249C72DAA9B /* MLTitledSingleLineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2211DF1AFD42B6054814013D6D8CB0B0 /* MLTitledSingleLineTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDBCD041759363A4275E2FF5D54CDD18 /* MLButtonConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F4ED51C184FA7EBBB12DFBB3D41E68 /* MLButtonConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F01E18B442A6C63C1CDE4EECD6DC27F1 /* UILabel+MLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A4BEF752705B0C239050D20318165 /* UILabel+MLStyle.m */; };
+		F092FC8D1A866D6D127BF9EE67D405A6 /* UIImage+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = DD99C67A4BF1F94D9A332513AED39F08 /* UIImage+Transformations.m */; };
+		F6CC499EC7015F5C63CF2D7E864E63BE /* MLTitledSingleLineTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA4F293625FEA0D8F823450CA6E4B71 /* MLTitledSingleLineTextField.m */; };
+		F740EEC41A1C7308363DA8B9D32C7074 /* UIImage+Misc.h in Headers */ = {isa = PBXBuildFile; fileRef = 4922A8D0802C22E2CCF30773E9155433 /* UIImage+Misc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FABD495F770C6706C3474068AD8761A5 /* MLUISnackBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B8DA7CD16B6B249FB1AEF99AB587E3 /* MLUISnackBarView.m */; };
+		FB6B47F7846E4F42AAF24F57F3D57714 /* MLSnackbar.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4628B24059678A1134D8284F3987CD /* MLSnackbar.m */; };
+		FE94624C50EA6E1798AE99A6FC2AEC42 /* MLUIBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 35F382919A3E2CCF01075587AC37F5F7 /* MLUIBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF77578B61645537CB44D9B8B39EF507 /* UITextView+MLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9556FF56F6D0975EBADE42D25CAEE561 /* UITextView+MLStyle.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		615C0E2D179751E5AADEBFBAA0D5EADB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B45D666DABB464D83D203554EE4AA8B;
+			remoteInfo = MLUI;
+		};
+		63ED20C3FD284359552CA2B1DAC10DDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD5BFC2F630B07DE8A20EBC90A7C8D49;
+			remoteInfo = FXBlurView;
+		};
+		93B673FA593DFE21E8B660A84F1877F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5E7B86C60FCB91858074F7C2F733BE5;
+			remoteInfo = JRSwizzle;
+		};
+		B953776F763B1307624EBD99EA17DCD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD5BFC2F630B07DE8A20EBC90A7C8D49;
+			remoteInfo = FXBlurView;
+		};
+		CA21E61D5021C310052C6C9A7AE1C36F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5E7B86C60FCB91858074F7C2F733BE5;
+			remoteInfo = JRSwizzle;
+		};
+		E6803DB9C2BEB21C9498792F14148B7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5E7B86C60FCB91858074F7C2F733BE5;
+			remoteInfo = JRSwizzle;
+		};
+		ED8FB07C0A224F0B2AABAD13FDA109E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B45D666DABB464D83D203554EE4AA8B;
+			remoteInfo = MLUI;
+		};
+		F7E24BC916713879CB115BC721B086B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD5BFC2F630B07DE8A20EBC90A7C8D49;
+			remoteInfo = FXBlurView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		042E821846C51BE553B28A44C96EEBDB /* MLUISnackBarView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLUISnackBarView.xib; path = LibraryComponents/MLUISnackbar/classes/MLUISnackBarView.xib; sourceTree = "<group>"; };
+		0561CC897E2C6BE7402E39706B00F89C /* FXBlurView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FXBlurView-dummy.m"; sourceTree = "<group>"; };
+		05BF1C4354ABD00181D95E4359EEEF87 /* MLBooleanWidget.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLBooleanWidget.m; path = LibraryComponents/MLBooleanWidget/classes/MLBooleanWidget.m; sourceTree = "<group>"; };
+		05EB3F4287C140B4A8A5298BFAE2623B /* UIColor+MLColorPalette.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+MLColorPalette.h"; path = "LibraryComponents/MLColorPalette/classes/UIColor+MLColorPalette.h"; sourceTree = "<group>"; };
+		0806DF0DEE15E02A3EC5F4A196057376 /* FXBlurView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FXBlurView.m; path = FXBlurView/FXBlurView.m; sourceTree = "<group>"; };
+		09243A614CF47C861404198D90F7046C /* JRSwizzle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		0A485D447AF073D005BC14879654DF77 /* MLUIPriceView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLUIPriceView.m; path = LibraryComponents/PriceView/classes/MLUIPriceView.m; sourceTree = "<group>"; };
+		0A9540578BB85BAA2B8A634D240339FA /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = LibraryComponents/MLTitledSingleLineTextField/assets/en.lproj; sourceTree = "<group>"; };
+		0B7ED1BC1E0109223171DFF1BB4ED5F3 /* MLSwitch.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLSwitch.m; path = LibraryComponents/MLBooleanWidget/MLSwitch/classes/MLSwitch.m; sourceTree = "<group>"; };
+		0C38BA16B123701042ACEA4B2D9862E8 /* MLContextualMenuItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLContextualMenuItem.h; path = LibraryComponents/MLContextualMenu/MLContextualMenuItem.h; sourceTree = "<group>"; };
+		0CCA55F4EB48EDA6EAC3BBAF18D6C664 /* MLGenericErrorView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLGenericErrorView.xib; path = LibraryComponents/MLGenericErrorView/classes/MLGenericErrorView.xib; sourceTree = "<group>"; };
+		0D4F7054E9C4BBF5A99BF94D349E2205 /* MLUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MLUI.framework; path = MLUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		10431045F029C862DC677BF3FE5F6229 /* JRSwizzle-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JRSwizzle-dummy.m"; sourceTree = "<group>"; };
+		109D6D69038D7D01857B2D46BB415F65 /* MLStyleSheetDefault.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLStyleSheetDefault.h; path = LibraryComponents/StyleSheet/classes/MLStyleSheetDefault.h; sourceTree = "<group>"; };
+		13E3D027D2D816EBA1FFDC018D0A2A88 /* Pods-MercadoPagoSDKTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MercadoPagoSDKTests-resources.sh"; sourceTree = "<group>"; };
+		15F4ED51C184FA7EBBB12DFBB3D41E68 /* MLButtonConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLButtonConfig.h; path = LibraryComponents/MLButton/classes/MLButtonConfig.h; sourceTree = "<group>"; };
+		19199A918EBE9672E751BE9BF806FCED /* MLModalConfigStyle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLModalConfigStyle.m; path = LibraryComponents/MLModal/classes/MLModalConfigStyle.m; sourceTree = "<group>"; };
+		1A7A4BEF752705B0C239050D20318165 /* UILabel+MLStyle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UILabel+MLStyle.m"; path = "LibraryComponents/MLSpacing/classes/UILabel+MLStyle.m"; sourceTree = "<group>"; };
+		1CC757D3FB7758B477F4548AB83B2EC9 /* UITextView+MLFonts.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITextView+MLFonts.m"; path = "LibraryComponents/MLFonts/classes/UITextView+MLFonts.m"; sourceTree = "<group>"; };
+		1CFB7B3F6E515E56E3B8A1FD6163B000 /* FXBlurView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FXBlurView.modulemap; sourceTree = "<group>"; };
+		1F481357F9E82CD654103F08B9E1D22B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20E2ABAFF70A6D40B608374E81F65051 /* MLCheckList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLCheckList.h; path = LibraryComponents/MLBooleanWidget/MLCheckBox/classes/MLCheckList.h; sourceTree = "<group>"; };
+		2211DF1AFD42B6054814013D6D8CB0B0 /* MLTitledSingleLineTextField.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLTitledSingleLineTextField.h; path = LibraryComponents/MLTitledSingleLineTextField/classes/MLTitledSingleLineTextField.h; sourceTree = "<group>"; };
+		222713FB0FAB12D3B7D8FD2F724D5683 /* MLModal.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLModal.xib; path = LibraryComponents/MLModal/classes/MLModal.xib; sourceTree = "<group>"; };
+		23ADAEEDC0487021FE0A8CD2E2658B54 /* MLButtonStylesFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLButtonStylesFactory.h; path = LibraryComponents/MLButton/classes/MLButtonStylesFactory.h; sourceTree = "<group>"; };
+		24D0AC7F9281DE449A08C79E8626F559 /* JRSwizzle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JRSwizzle.framework; path = JRSwizzle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		254DFF1372A9DC1FF32437B6E469006B /* MLModalConfigStyle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLModalConfigStyle.h; path = LibraryComponents/MLModal/classes/MLModalConfigStyle.h; sourceTree = "<group>"; };
+		2733DF386817F1BCA1F3CB3B0771107C /* UIFont+MLFonts.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIFont+MLFonts.m"; path = "LibraryComponents/MLFonts/classes/UIFont+MLFonts.m"; sourceTree = "<group>"; };
+		27A7CE425C433F771826781A60358E16 /* MLRadioButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLRadioButton.m; path = LibraryComponents/MLBooleanWidget/MLRadioButton/classes/MLRadioButton.m; sourceTree = "<group>"; };
+		28724DF73EAE3E2E4185B311D01A6062 /* MLUI.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MLUI.xcconfig; sourceTree = "<group>"; };
+		291FB0EB26BA0120A43557C79F9DDB46 /* MLButtonConfigStyle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLButtonConfigStyle.h; path = LibraryComponents/MLButton/classes/MLButtonConfigStyle.h; sourceTree = "<group>"; };
+		2C09EE09D205B7607E6C2FE298AD8C3E /* MLButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLButton.h; path = LibraryComponents/MLButton/classes/MLButton.h; sourceTree = "<group>"; };
+		2CDEC103A17CD44B16F4428A1EE9B6FA /* MLContextualMenuItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLContextualMenuItem.m; path = LibraryComponents/MLContextualMenu/MLContextualMenuItem.m; sourceTree = "<group>"; };
+		2CDEEB1BB43D68F5221CDFAF4A65DF75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		2D4314B5423A85176D565135DABEA7F8 /* JRSwizzle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		32F86CCF08D50051732D11ED29E1CC1F /* MLModal.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = MLModal.xcassets; path = LibraryComponents/MLModal/assets/MLModal.xcassets; sourceTree = "<group>"; };
+		339681E54123E6F1B0E02C94F4B01140 /* UIImageView+Animations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+Animations.h"; path = "LibraryComponents/Core/classes/UIImageView+Animations.h"; sourceTree = "<group>"; };
+		343A11F5F6773D7143D43446FE7F3580 /* MLUIBundle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLUIBundle.m; path = LibraryComponents/Helpers/classes/MLUIBundle.m; sourceTree = "<group>"; };
+		3508A36866C32368C2306436E2DC0B87 /* MLStyleSheetManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLStyleSheetManager.m; path = LibraryComponents/StyleSheet/classes/MLStyleSheetManager.m; sourceTree = "<group>"; };
+		3577439CAAEB11D8D2B32248B8E31030 /* MLTextView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLTextView.xib; path = LibraryComponents/MLTextView/assets/MLTextView.xib; sourceTree = "<group>"; };
+		35B978DDCBB52C181416B2AAAAC92DA6 /* MLStyleSheetDefault.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLStyleSheetDefault.m; path = LibraryComponents/StyleSheet/classes/MLStyleSheetDefault.m; sourceTree = "<group>"; };
+		35F382919A3E2CCF01075587AC37F5F7 /* MLUIBundle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLUIBundle.h; path = LibraryComponents/Helpers/classes/MLUIBundle.h; sourceTree = "<group>"; };
+		360D234C1C59188D45DCBC82F8AD3395 /* MLTitledMultiLineTextField.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLTitledMultiLineTextField.m; path = LibraryComponents/MLTitledMultiLineTextField/classes/MLTitledMultiLineTextField.m; sourceTree = "<group>"; };
+		37BEF5363617A51FD687B819BB5D6F0A /* MLSpinner.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLSpinner.h; path = LibraryComponents/MLSpinner/classes/MLSpinner.h; sourceTree = "<group>"; };
+		3EDBFADE178660510444C180DDFAD517 /* MLModalStyleFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLModalStyleFactory.h; path = LibraryComponents/MLModal/classes/MLModalStyleFactory.h; sourceTree = "<group>"; };
+		3F29FE8B7F598C9193F013DC02C360D2 /* Pods-MercadoPagoSDKTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MercadoPagoSDKTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		43E01041D657E230376A1562839E658E /* UIViewController+SnackBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+SnackBar.m"; path = "LibraryComponents/MLUISnackbar/classes/UIViewController+SnackBar.m"; sourceTree = "<group>"; };
+		448E068D860C3751A2F02146E44725A9 /* UITextView+MLStyle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITextView+MLStyle.h"; path = "LibraryComponents/MLSpacing/classes/UITextView+MLStyle.h"; sourceTree = "<group>"; };
+		45B1DF39ABD47276617520A2C4C720C6 /* MLGenericErrorView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLGenericErrorView.h; path = LibraryComponents/MLGenericErrorView/classes/MLGenericErrorView.h; sourceTree = "<group>"; };
+		4922A8D0802C22E2CCF30773E9155433 /* UIImage+Misc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Misc.h"; path = "LibraryComponents/Core/classes/UIImage+Misc.h"; sourceTree = "<group>"; };
+		49557227A3BFA922FD381937E923CA33 /* MLCheckList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLCheckList.m; path = LibraryComponents/MLBooleanWidget/MLCheckBox/classes/MLCheckList.m; sourceTree = "<group>"; };
+		50437CB1EF9CE5C89233CC7B454734E4 /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pt.lproj; path = LibraryComponents/MLTitledSingleLineTextField/assets/pt.lproj; sourceTree = "<group>"; };
+		50925FF560BDCF22C5D68B7B9B2298A3 /* UIFont+MLFonts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIFont+MLFonts.h"; path = "LibraryComponents/MLFonts/classes/UIFont+MLFonts.h"; sourceTree = "<group>"; };
+		51445B4E897663CDE9AA5DB292063C42 /* UIImageView+Animations.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+Animations.m"; path = "LibraryComponents/Core/classes/UIImageView+Animations.m"; sourceTree = "<group>"; };
+		515B21795D05530456BBC6EB5887B230 /* MLSnackbar.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLSnackbar.xib; path = LibraryComponents/MLSnackBar/classes/MLSnackbar.xib; sourceTree = "<group>"; };
+		56073054052EBE1242B31C61267D02CF /* NSAttributedString+MLFonts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+MLFonts.h"; path = "LibraryComponents/MLFonts/classes/NSAttributedString+MLFonts.h"; sourceTree = "<group>"; };
+		5B44BBCAF08ECE9525329A055F6370AB /* MLGenericErrorView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLGenericErrorView.m; path = LibraryComponents/MLGenericErrorView/classes/MLGenericErrorView.m; sourceTree = "<group>"; };
+		5DA4F293625FEA0D8F823450CA6E4B71 /* MLTitledSingleLineTextField.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLTitledSingleLineTextField.m; path = LibraryComponents/MLTitledSingleLineTextField/classes/MLTitledSingleLineTextField.m; sourceTree = "<group>"; };
+		613DD2D7F40367C00D7277B12A9322FD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		632D6D4353911D1845A3EE690A8D80C4 /* MLSnackbarType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLSnackbarType.m; path = LibraryComponents/MLSnackBar/classes/MLSnackbarType.m; sourceTree = "<group>"; };
+		65E68225F25989EEE55B715CB7815311 /* UIImage+Transformations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Transformations.h"; path = "LibraryComponents/Core/classes/UIImage+Transformations.h"; sourceTree = "<group>"; };
+		6661735A08DB37D876E59235785914A3 /* MLHtml.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLHtml.h; path = LibraryComponents/MLHtml/classes/MLHtml.h; sourceTree = "<group>"; };
+		6968CBF787BC165CBC2CB5DFD85F6855 /* UITextView+MLFonts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITextView+MLFonts.h"; path = "LibraryComponents/MLFonts/classes/UITextView+MLFonts.h"; sourceTree = "<group>"; };
+		6A6706B2A6C1C5A528A9B998F407B6C6 /* MLHtml.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLHtml.m; path = LibraryComponents/MLHtml/classes/MLHtml.m; sourceTree = "<group>"; };
+		6A73F21E7721A0C47947FAE849AB09F3 /* MLStyleUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLStyleUtils.m; path = LibraryComponents/MLSpacing/classes/MLStyleUtils.m; sourceTree = "<group>"; };
+		6C91F84A497DC93A7160FB06D477CA2E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		6CE842EAC901782ACE756413B682F108 /* MLCheckBox.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLCheckBox.h; path = LibraryComponents/MLBooleanWidget/MLCheckBox/classes/MLCheckBox.h; sourceTree = "<group>"; };
+		6DE9AC5FC84B2287E9E7BE275C7B366B /* MLGrowingTextViewHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLGrowingTextViewHandler.h; path = LibraryComponents/MLTextView/classes/MLGrowingTextViewHandler.h; sourceTree = "<group>"; };
+		6E94D6ED1D104DBA7B5DFEC8005BA21B /* MLTextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLTextView.h; path = LibraryComponents/MLTextView/classes/MLTextView.h; sourceTree = "<group>"; };
+		73D9582F4AC1929B325696967112415F /* FXBlurView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FXBlurView.xcconfig; sourceTree = "<group>"; };
+		742F01F1E84FFF2103E20D1C330B5904 /* MLUISnackBarView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLUISnackBarView.h; path = LibraryComponents/MLUISnackbar/classes/MLUISnackBarView.h; sourceTree = "<group>"; };
+		746E99FB24D558E6C25C7F6B0E98F658 /* UIViewController+SnackBar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIViewController+SnackBar.h"; path = "LibraryComponents/MLUISnackbar/classes/UIViewController+SnackBar.h"; sourceTree = "<group>"; };
+		75828DF7C9F021C2D03D83A5DCB0012F /* MLButtonConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLButtonConfig.m; path = LibraryComponents/MLButton/classes/MLButtonConfig.m; sourceTree = "<group>"; };
+		759037CB95580837870E41646BB13A6F /* MLStyleSheetProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLStyleSheetProtocol.h; path = LibraryComponents/StyleSheet/classes/MLStyleSheetProtocol.h; sourceTree = "<group>"; };
+		7618E182E62D62A8B360C76B8356401C /* FXBlurView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FXBlurView.h; path = FXBlurView/FXBlurView.h; sourceTree = "<group>"; };
+		7698AE0684DDF2D1E6E1BA0359E6E14E /* MLUIActionButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLUIActionButton.m; path = LibraryComponents/ActionButton/classes/MLUIActionButton.m; sourceTree = "<group>"; };
+		76F5720D1636FF78AC03C61FE836E597 /* Pods-MercadoPagoSDK-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MercadoPagoSDK-resources.sh"; sourceTree = "<group>"; };
+		79E66F2A655D3EDA9043CCD0B65913E7 /* MLUIActionButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLUIActionButton.h; path = LibraryComponents/ActionButton/classes/MLUIActionButton.h; sourceTree = "<group>"; };
+		7C6EA481CC6C723ED17A7F95D507ACB9 /* MLTextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLTextView.m; path = LibraryComponents/MLTextView/classes/MLTextView.m; sourceTree = "<group>"; };
+		7E37995853803A6F4D0BD8ACF54220A4 /* MLUI-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MLUI-prefix.pch"; sourceTree = "<group>"; };
+		8077E991D9326EB5E1563C04D7E645DB /* UILabel+MLFonts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UILabel+MLFonts.h"; path = "LibraryComponents/MLFonts/classes/UILabel+MLFonts.h"; sourceTree = "<group>"; };
+		80808121CB6A00E351224012352F3810 /* Pods-MercadoPagoSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MercadoPagoSDK-umbrella.h"; sourceTree = "<group>"; };
+		8336180B3CE9488BC997CAEF5AE54CF3 /* MLModal.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLModal.m; path = LibraryComponents/MLModal/classes/MLModal.m; sourceTree = "<group>"; };
+		85B8DA7CD16B6B249FB1AEF99AB587E3 /* MLUISnackBarView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLUISnackBarView.m; path = LibraryComponents/MLUISnackbar/classes/MLUISnackBarView.m; sourceTree = "<group>"; };
+		860C9454D138AC0B419C09834A8C50E0 /* Pods-MercadoPagoSDKTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MercadoPagoSDKTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		895AD988FDAA5432E87DAE6D9E8250E3 /* Pods-MercadoPagoSDKTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MercadoPagoSDKTests.modulemap"; sourceTree = "<group>"; };
+		8B8DDA09BE21BEFFA0950E9BD8F005C7 /* MLSpinner.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLSpinner.m; path = LibraryComponents/MLSpinner/classes/MLSpinner.m; sourceTree = "<group>"; };
+		8C56090EC2BD5BDFC07EBDF1E9C16201 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C7D3E1927B9084E75C47704F0C3BC3E /* MLStyleSheetManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLStyleSheetManager.h; path = LibraryComponents/StyleSheet/classes/MLStyleSheetManager.h; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9476B4D19A1938FDC5E87CCCE5100085 /* NSAttributedString+MLHtml.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+MLHtml.h"; path = "LibraryComponents/MLHtml/classes/NSAttributedString+MLHtml.h"; sourceTree = "<group>"; };
+		94B03E7C772332FD9C5F3FD373B4C210 /* MLRadioButtonCollection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLRadioButtonCollection.m; path = LibraryComponents/MLBooleanWidget/MLRadioButton/classes/MLRadioButtonCollection.m; sourceTree = "<group>"; };
+		9556FF56F6D0975EBADE42D25CAEE561 /* UITextView+MLStyle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITextView+MLStyle.m"; path = "LibraryComponents/MLSpacing/classes/UITextView+MLStyle.m"; sourceTree = "<group>"; };
+		96F5CE6E21D43B7809172714222E6762 /* UILabel+MLStyle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UILabel+MLStyle.h"; path = "LibraryComponents/MLSpacing/classes/UILabel+MLStyle.h"; sourceTree = "<group>"; };
+		976B13A12B45F2808889A99D2D7D3B37 /* MLContextualMenu.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLContextualMenu.h; path = LibraryComponents/MLContextualMenu/MLContextualMenu.h; sourceTree = "<group>"; };
+		97BDC9EED5A7F9C428CACE16E014A346 /* JRSwizzle-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JRSwizzle-prefix.pch"; sourceTree = "<group>"; };
+		97BF50456793874159A6774A2EF59C7B /* FXBlurView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FXBlurView-umbrella.h"; sourceTree = "<group>"; };
+		98B1CCFE7637E1798D51000FD34243C1 /* UILabel+MLFonts.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UILabel+MLFonts.m"; path = "LibraryComponents/MLFonts/classes/UILabel+MLFonts.m"; sourceTree = "<group>"; };
+		A0E889D98A0C368AD5A0D68042E2110A /* MLTitledLineTextField.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLTitledLineTextField.xib; path = LibraryComponents/MLTitledSingleLineTextField/assets/MLTitledLineTextField.xib; sourceTree = "<group>"; };
+		A1828F81127BB394787BED3343E244E3 /* MLBooleanWidget_Protected.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLBooleanWidget_Protected.h; path = LibraryComponents/MLBooleanWidget/classes/MLBooleanWidget_Protected.h; sourceTree = "<group>"; };
+		A2BDE791E2E9B15A30805F97C295E775 /* FXBlurView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FXBlurView-prefix.pch"; sourceTree = "<group>"; };
+		A2F456D04B38D87DB2C31B970CDF650A /* MLUIPriceView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLUIPriceView.xib; path = LibraryComponents/PriceView/classes/MLUIPriceView.xib; sourceTree = "<group>"; };
+		A397DF700AC7AD4415523C201D2A03C3 /* MLCheckBox.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLCheckBox.m; path = LibraryComponents/MLBooleanWidget/MLCheckBox/classes/MLCheckBox.m; sourceTree = "<group>"; };
+		A65A264F6783CC80E6668607B03620B7 /* Pods-MercadoPagoSDKTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MercadoPagoSDKTests-umbrella.h"; sourceTree = "<group>"; };
+		A8CEB19D33E9D0EFEA4DF0DE850DFE8C /* UIColor+MLColorPalette.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MLColorPalette.m"; path = "LibraryComponents/MLColorPalette/classes/UIColor+MLColorPalette.m"; sourceTree = "<group>"; };
+		AB8D0CC42E47EECC5A1A57EB4E6A54E8 /* MLTitledSingleLineStringProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLTitledSingleLineStringProvider.m; path = LibraryComponents/MLTitledSingleLineTextField/classes/MLTitledSingleLineStringProvider.m; sourceTree = "<group>"; };
+		ACC80289C05CEB163A63D6082EAF406F /* MLUI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MLUI-umbrella.h"; sourceTree = "<group>"; };
+		AFB1BA3F8AF8CC789A83066895B63486 /* UIColor+Theme.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+Theme.h"; path = "LibraryComponents/Core/classes/UIColor+Theme.h"; sourceTree = "<group>"; };
+		B1CCDF2CE09FB9351224D1A93E33A9F3 /* MLSwitch.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLSwitch.xib; path = LibraryComponents/MLBooleanWidget/MLSwitch/classes/MLSwitch.xib; sourceTree = "<group>"; };
+		B40D16198196137665E731B6BEBED178 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B70355669DD22774B47C03CDC6D685D3 /* JRSwizzle.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JRSwizzle.xcconfig; sourceTree = "<group>"; };
+		B968ECAFF4280028F18D4527C20E239E /* Pods_MercadoPagoSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MercadoPagoSDKTests.framework; path = "Pods-MercadoPagoSDKTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBC2AB32AE7A7A014CE90884B8E8E1CD /* MLButtonStylesFactory.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLButtonStylesFactory.m; path = LibraryComponents/MLButton/classes/MLButtonStylesFactory.m; sourceTree = "<group>"; };
+		BD5546A39A090DCD16AEA8B8D2AEB799 /* MLSwitch.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLSwitch.h; path = LibraryComponents/MLBooleanWidget/MLSwitch/classes/MLSwitch.h; sourceTree = "<group>"; };
+		BEDC3C5BB31C794B3827EDCFBDFFEEB1 /* MLTitledSingleLineStringProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLTitledSingleLineStringProvider.h; path = LibraryComponents/MLTitledSingleLineTextField/classes/MLTitledSingleLineStringProvider.h; sourceTree = "<group>"; };
+		BFC4D89841110CE4898B7064A7EBFBDB /* Pods-MercadoPagoSDK-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MercadoPagoSDK-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C0ECEB0ECD0E3ECEE7B9BAE499FC7CA4 /* FXBlurView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FXBlurView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C480A34F7A3D32327FF51695A7DD1109 /* MLContextualMenu.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLContextualMenu.m; path = LibraryComponents/MLContextualMenu/MLContextualMenu.m; sourceTree = "<group>"; };
+		C5010E55F35CA6A615770D87230312BF /* MLGrowingTextViewHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLGrowingTextViewHandler.m; path = LibraryComponents/MLTextView/classes/MLGrowingTextViewHandler.m; sourceTree = "<group>"; };
+		C63935387A8F9E449763FD682ECD2DE7 /* JRSwizzle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JRSwizzle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C67B4B0DE3270D397BFBA29BB4C77740 /* Pods-MercadoPagoSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MercadoPagoSDK.modulemap"; sourceTree = "<group>"; };
+		CA001A406FB95378EEFECFCA6C8950B4 /* JRSwizzle-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JRSwizzle-umbrella.h"; sourceTree = "<group>"; };
+		CABFC89F5C793BA3C097CA0D24DB420C /* Pods-MercadoPagoSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MercadoPagoSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CAD43CD14EA46FD4DB080E346C3A8761 /* MLButtonConfigStyle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLButtonConfigStyle.m; path = LibraryComponents/MLButton/classes/MLButtonConfigStyle.m; sourceTree = "<group>"; };
+		CB992B8DAAF5E0CF0EA1E3A101740F3C /* Pods-MercadoPagoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MercadoPagoSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		CC65BE997AF5D25778DB2D77CB7E6F55 /* NSAttributedString+MLHtml.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+MLHtml.m"; path = "LibraryComponents/MLHtml/classes/NSAttributedString+MLHtml.m"; sourceTree = "<group>"; };
+		CC9D69814209EA731B05583AA0AA99DC /* MLButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLButton.m; path = LibraryComponents/MLButton/classes/MLButton.m; sourceTree = "<group>"; };
+		CD14E9F4C2BFAC632A8A679137DBECCE /* UIImage+Misc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Misc.m"; path = "LibraryComponents/Core/classes/UIImage+Misc.m"; sourceTree = "<group>"; };
+		CF0D4E6B7DFEAB35BEC26EF86CB38CDF /* Pods_MercadoPagoSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MercadoPagoSDK.framework; path = "Pods-MercadoPagoSDK.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF7B46051ACA8BF51C990EC4A3F75C08 /* MLTitledMultiLineTextField.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLTitledMultiLineTextField.h; path = LibraryComponents/MLTitledMultiLineTextField/classes/MLTitledMultiLineTextField.h; sourceTree = "<group>"; };
+		D0230C6E949A8423BFD1088A839EDE0F /* MLBooleanWidget.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLBooleanWidget.h; path = LibraryComponents/MLBooleanWidget/classes/MLBooleanWidget.h; sourceTree = "<group>"; };
+		D3A671F7CB03B9E19BC6193E7CDCA255 /* MLUIPriceView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLUIPriceView.h; path = LibraryComponents/PriceView/classes/MLUIPriceView.h; sourceTree = "<group>"; };
+		D4C694C9E2F7E22BB09208B7946B82CC /* NSAttributedString+MLFonts.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+MLFonts.m"; path = "LibraryComponents/MLFonts/classes/NSAttributedString+MLFonts.m"; sourceTree = "<group>"; };
+		D5D691E85A6AF94FB7AE8AB72D7863E3 /* Pods-MercadoPagoSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MercadoPagoSDK-dummy.m"; sourceTree = "<group>"; };
+		D63FAB766A0190789615B8CD4E6AD09B /* FXBlurView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FXBlurView.framework; path = FXBlurView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6490C7E7422406487A9DB53BA804C55 /* MLUI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MLUI-dummy.m"; sourceTree = "<group>"; };
+		D773E6CBB3F66969EE31397BF73CC346 /* MLSnackbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLSnackbar.h; path = LibraryComponents/MLSnackBar/classes/MLSnackbar.h; sourceTree = "<group>"; };
+		D8521DC2E5D1C214C55F95A25AF5B82E /* MLSnackbarType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLSnackbarType.h; path = LibraryComponents/MLSnackBar/classes/MLSnackbarType.h; sourceTree = "<group>"; };
+		D9D7E2E54C1BE71E89791869A154C758 /* MLStyle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLStyle.h; path = LibraryComponents/MLSpacing/classes/MLStyle.h; sourceTree = "<group>"; };
+		DC6C5386DF12E2BE6CE1BC3C2C1835D5 /* MLUISnackBarProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLUISnackBarProtocol.h; path = LibraryComponents/MLUISnackbar/classes/MLUISnackBarProtocol.h; sourceTree = "<group>"; };
+		DCEFBA33658C511C24296A1B6D766723 /* UIColor+Theme.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Theme.m"; path = "LibraryComponents/Core/classes/UIColor+Theme.m"; sourceTree = "<group>"; };
+		DD99C67A4BF1F94D9A332513AED39F08 /* UIImage+Transformations.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Transformations.m"; path = "LibraryComponents/Core/classes/UIImage+Transformations.m"; sourceTree = "<group>"; };
+		DE4628B24059678A1134D8284F3987CD /* MLSnackbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLSnackbar.m; path = LibraryComponents/MLSnackBar/classes/MLSnackbar.m; sourceTree = "<group>"; };
+		DEBBF36A397DAAFCA797E23C2F2B6D94 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
+		DF47ECA199EBA439DA3ABDC55A1E69A9 /* MLStyleUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLStyleUtils.h; path = LibraryComponents/MLSpacing/classes/MLStyleUtils.h; sourceTree = "<group>"; };
+		E58E4D704936BBB4C0A433563C6B7896 /* NSString+BoundingSize.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+BoundingSize.h"; path = "LibraryComponents/Core/classes/NSString+BoundingSize.h"; sourceTree = "<group>"; };
+		E7306780CF2CB82CE85FDF9131A8EB52 /* MLModalStyleFactory.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLModalStyleFactory.m; path = LibraryComponents/MLModal/classes/MLModalStyleFactory.m; sourceTree = "<group>"; };
+		E863BACED0319818A1B2AB1CA8909C3E /* Pods-MercadoPagoSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MercadoPagoSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		E8BCEE172BF3476A3C89649E92A536E0 /* Pods-MercadoPagoSDK-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MercadoPagoSDK-acknowledgements.plist"; sourceTree = "<group>"; };
+		EDFFFD116BE1B2EB1E7908FD567B0D48 /* NSString+BoundingSize.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+BoundingSize.m"; path = "LibraryComponents/Core/classes/NSString+BoundingSize.m"; sourceTree = "<group>"; };
+		EF865B08372D6CB5A162C51044A85AF7 /* MLSpinner.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MLSpinner.xib; path = LibraryComponents/MLSpinner/classes/MLSpinner.xib; sourceTree = "<group>"; };
+		F172B08E01D2310F9C771A34AB79E31B /* JRSwizzle.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = JRSwizzle.modulemap; sourceTree = "<group>"; };
+		F411D39C99F8C6563F2D09C82F649D08 /* MLRadioButtonCollection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLRadioButtonCollection.h; path = LibraryComponents/MLBooleanWidget/MLRadioButton/classes/MLRadioButtonCollection.h; sourceTree = "<group>"; };
+		F651608E5723AA8D6434A35FB13AF3BF /* MLSpinnerConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLSpinnerConfig.m; path = LibraryComponents/MLSpinner/classes/MLSpinnerConfig.m; sourceTree = "<group>"; };
+		F661D10707A18E56B629A44F5FE5DEED /* MLSpinnerConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLSpinnerConfig.h; path = LibraryComponents/MLSpinner/classes/MLSpinnerConfig.h; sourceTree = "<group>"; };
+		F6940DEE6B29DD57104ACF0CC5A517A9 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = es.lproj; path = LibraryComponents/MLTitledSingleLineTextField/assets/es.lproj; sourceTree = "<group>"; };
+		F8418D01F20D19706A9B9F6DA6897A9F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8E133597BB3F0E45A2797DD40BF1857 /* Pods-MercadoPagoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MercadoPagoSDK.release.xcconfig"; sourceTree = "<group>"; };
+		F8E1C588115B6708F88ED337239F796A /* MLRadioButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLRadioButton.h; path = LibraryComponents/MLBooleanWidget/MLRadioButton/classes/MLRadioButton.h; sourceTree = "<group>"; };
+		FA9AC6CFE1648C2CF41C0F14D3915D79 /* Pods-MercadoPagoSDKTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MercadoPagoSDKTests-frameworks.sh"; sourceTree = "<group>"; };
+		FC7E915CC3F1E885F0250C38E080AF3C /* Pods-MercadoPagoSDKTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MercadoPagoSDKTests-dummy.m"; sourceTree = "<group>"; };
+		FE8ADD5A24A78A4283A758F8F7FC2453 /* MLUI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = MLUI.modulemap; sourceTree = "<group>"; };
+		FFA9DCB0822F9A3BF5F5F5DAEF5B27D8 /* MLModal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MLModal.h; path = LibraryComponents/MLModal/classes/MLModal.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03A52B89DB6F0154312503C35543B4EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4C564F89D363B3681F09F61E2436F22 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		166395856F8980AE7F82DFB1C86D4235 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4624E9490FBCC69AA869320F07F5C6A2 /* Accelerate.framework in Frameworks */,
+				46C80200EBF919F8357904B49A413F27 /* Foundation.framework in Frameworks */,
+				677D4A83A473549ED481EE2A21201C70 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		20E2D1F93162D226FBF9A802FE6D4CE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B70AA8BC87663E53F6608AFCAAD440E8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4659FCF82B0399CA20E2C9646EE7B24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB6BA13A911FB0486DFD6807662D93C7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFF4F4DF6299F4F91213FD9A5E72FC5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C55464E9C810E3BC018536AF8A9AC5 /* Foundation.framework in Frameworks */,
+				5E5C88BCE2794FDD97B078B3DB5964F2 /* FXBlurView.framework in Frameworks */,
+				4CA894D93B653D9705CB3E01A2E11E3C /* JRSwizzle.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		055F7ED38E842EB73E2C63536727B30F /* MLTitledSingleLineTextField */ = {
+			isa = PBXGroup;
+			children = (
+				BEDC3C5BB31C794B3827EDCFBDFFEEB1 /* MLTitledSingleLineStringProvider.h */,
+				AB8D0CC42E47EECC5A1A57EB4E6A54E8 /* MLTitledSingleLineStringProvider.m */,
+				2211DF1AFD42B6054814013D6D8CB0B0 /* MLTitledSingleLineTextField.h */,
+				5DA4F293625FEA0D8F823450CA6E4B71 /* MLTitledSingleLineTextField.m */,
+				2E18302B41C4A729D407E32ED0F86061 /* Resources */,
+			);
+			name = MLTitledSingleLineTextField;
+			sourceTree = "<group>";
+		};
+		111511190F0F7171159CF8E1DE1AAAE3 /* MLSnackBar */ = {
+			isa = PBXGroup;
+			children = (
+				D773E6CBB3F66969EE31397BF73CC346 /* MLSnackbar.h */,
+				DE4628B24059678A1134D8284F3987CD /* MLSnackbar.m */,
+				D8521DC2E5D1C214C55F95A25AF5B82E /* MLSnackbarType.h */,
+				632D6D4353911D1845A3EE690A8D80C4 /* MLSnackbarType.m */,
+				E647E0AFEEB600BA44EFBCB74F25FE99 /* Resources */,
+			);
+			name = MLSnackBar;
+			sourceTree = "<group>";
+		};
+		1475D97234C3D7EDD7108CB64049A5F2 /* MLHtml */ = {
+			isa = PBXGroup;
+			children = (
+				6661735A08DB37D876E59235785914A3 /* MLHtml.h */,
+				6A6706B2A6C1C5A528A9B998F407B6C6 /* MLHtml.m */,
+				9476B4D19A1938FDC5E87CCCE5100085 /* NSAttributedString+MLHtml.h */,
+				CC65BE997AF5D25778DB2D77CB7E6F55 /* NSAttributedString+MLHtml.m */,
+			);
+			name = MLHtml;
+			sourceTree = "<group>";
+		};
+		1D17C1DB9A6DD9E5BF384DF99869A4A5 /* MLTextView */ = {
+			isa = PBXGroup;
+			children = (
+				6DE9AC5FC84B2287E9E7BE275C7B366B /* MLGrowingTextViewHandler.h */,
+				C5010E55F35CA6A615770D87230312BF /* MLGrowingTextViewHandler.m */,
+				6E94D6ED1D104DBA7B5DFEC8005BA21B /* MLTextView.h */,
+				7C6EA481CC6C723ED17A7F95D507ACB9 /* MLTextView.m */,
+				CDC53AC180B051AE6B3E4A865E7F024C /* Resources */,
+			);
+			name = MLTextView;
+			sourceTree = "<group>";
+		};
+		26F5B8428C6D005AFB5B74CA767C164E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5B6A2C07E2D52E01A18BF1CBB0AC4F61 /* FXBlurView */,
+				56B576D05069EE13FD51AD2FA6B6E2AD /* JRSwizzle */,
+				624B43308D05DBD3AC1E3DE76E9D5A62 /* MLUI */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		2E18302B41C4A729D407E32ED0F86061 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0A9540578BB85BAA2B8A634D240339FA /* en.lproj */,
+				F6940DEE6B29DD57104ACF0CC5A517A9 /* es.lproj */,
+				A0E889D98A0C368AD5A0D68042E2110A /* MLTitledLineTextField.xib */,
+				50437CB1EF9CE5C89233CC7B454734E4 /* pt.lproj */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		319875A4B2A288E4D72047294BA24F09 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B1CCDF2CE09FB9351224D1A93E33A9F3 /* MLSwitch.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		360684C31551F02E94D0BB067CA53EE2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A2F456D04B38D87DB2C31B970CDF650A /* MLUIPriceView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		434F76A82274B37B1961B4620050B4F0 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DEBBF36A397DAAFCA797E23C2F2B6D94 /* Accelerate.framework */,
+				2CDEEB1BB43D68F5221CDFAF4A65DF75 /* Foundation.framework */,
+				6C91F84A497DC93A7160FB06D477CA2E /* QuartzCore.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		48D6E36C91745D1ECF58737792C228EB /* ActionButton */ = {
+			isa = PBXGroup;
+			children = (
+				79E66F2A655D3EDA9043CCD0B65913E7 /* MLUIActionButton.h */,
+				7698AE0684DDF2D1E6E1BA0359E6E14E /* MLUIActionButton.m */,
+			);
+			name = ActionButton;
+			sourceTree = "<group>";
+		};
+		4A14029407C3819856883152CF5CB56F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				35F382919A3E2CCF01075587AC37F5F7 /* MLUIBundle.h */,
+				343A11F5F6773D7143D43446FE7F3580 /* MLUIBundle.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		4A5164ACCE60EC98511B3FA2464ADFCE /* MLGenericErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				45B1DF39ABD47276617520A2C4C720C6 /* MLGenericErrorView.h */,
+				5B44BBCAF08ECE9525329A055F6370AB /* MLGenericErrorView.m */,
+				D54FECB2AE404B1DC7BCF0427137DA15 /* Resources */,
+			);
+			name = MLGenericErrorView;
+			sourceTree = "<group>";
+		};
+		4C7278129259A698EA07803F2387B02A /* MLSpinner */ = {
+			isa = PBXGroup;
+			children = (
+				37BEF5363617A51FD687B819BB5D6F0A /* MLSpinner.h */,
+				8B8DDA09BE21BEFFA0950E9BD8F005C7 /* MLSpinner.m */,
+				F661D10707A18E56B629A44F5FE5DEED /* MLSpinnerConfig.h */,
+				F651608E5723AA8D6434A35FB13AF3BF /* MLSpinnerConfig.m */,
+				F1E5E12F1C98B7F735F0CD705360EACF /* Resources */,
+			);
+			name = MLSpinner;
+			sourceTree = "<group>";
+		};
+		4DC1F0079F3F353FACF31A1289108173 /* StyleSheet */ = {
+			isa = PBXGroup;
+			children = (
+				109D6D69038D7D01857B2D46BB415F65 /* MLStyleSheetDefault.h */,
+				35B978DDCBB52C181416B2AAAAC92DA6 /* MLStyleSheetDefault.m */,
+				8C7D3E1927B9084E75C47704F0C3BC3E /* MLStyleSheetManager.h */,
+				3508A36866C32368C2306436E2DC0B87 /* MLStyleSheetManager.m */,
+				759037CB95580837870E41646BB13A6F /* MLStyleSheetProtocol.h */,
+			);
+			name = StyleSheet;
+			sourceTree = "<group>";
+		};
+		506D7B5A22B4B4AFAC881E5266724177 /* MLSpacing */ = {
+			isa = PBXGroup;
+			children = (
+				D9D7E2E54C1BE71E89791869A154C758 /* MLStyle.h */,
+				DF47ECA199EBA439DA3ABDC55A1E69A9 /* MLStyleUtils.h */,
+				6A73F21E7721A0C47947FAE849AB09F3 /* MLStyleUtils.m */,
+				96F5CE6E21D43B7809172714222E6762 /* UILabel+MLStyle.h */,
+				1A7A4BEF752705B0C239050D20318165 /* UILabel+MLStyle.m */,
+				448E068D860C3751A2F02146E44725A9 /* UITextView+MLStyle.h */,
+				9556FF56F6D0975EBADE42D25CAEE561 /* UITextView+MLStyle.m */,
+			);
+			name = MLSpacing;
+			sourceTree = "<group>";
+		};
+		56B576D05069EE13FD51AD2FA6B6E2AD /* JRSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				09243A614CF47C861404198D90F7046C /* JRSwizzle.h */,
+				2D4314B5423A85176D565135DABEA7F8 /* JRSwizzle.m */,
+				6BD61C589BA9E6F83AA9F992904DCAEA /* Support Files */,
+			);
+			name = JRSwizzle;
+			path = JRSwizzle;
+			sourceTree = "<group>";
+		};
+		58675239414BEF3A5433D48128D1ADD7 /* MLFonts */ = {
+			isa = PBXGroup;
+			children = (
+				56073054052EBE1242B31C61267D02CF /* NSAttributedString+MLFonts.h */,
+				D4C694C9E2F7E22BB09208B7946B82CC /* NSAttributedString+MLFonts.m */,
+				50925FF560BDCF22C5D68B7B9B2298A3 /* UIFont+MLFonts.h */,
+				2733DF386817F1BCA1F3CB3B0771107C /* UIFont+MLFonts.m */,
+				8077E991D9326EB5E1563C04D7E645DB /* UILabel+MLFonts.h */,
+				98B1CCFE7637E1798D51000FD34243C1 /* UILabel+MLFonts.m */,
+				6968CBF787BC165CBC2CB5DFD85F6855 /* UITextView+MLFonts.h */,
+				1CC757D3FB7758B477F4548AB83B2EC9 /* UITextView+MLFonts.m */,
+			);
+			name = MLFonts;
+			sourceTree = "<group>";
+		};
+		58D3135A592B9D4776207414EB61F2AE /* MLColorPalette */ = {
+			isa = PBXGroup;
+			children = (
+				05EB3F4287C140B4A8A5298BFAE2623B /* UIColor+MLColorPalette.h */,
+				A8CEB19D33E9D0EFEA4DF0DE850DFE8C /* UIColor+MLColorPalette.m */,
+			);
+			name = MLColorPalette;
+			sourceTree = "<group>";
+		};
+		5B6A2C07E2D52E01A18BF1CBB0AC4F61 /* FXBlurView */ = {
+			isa = PBXGroup;
+			children = (
+				7618E182E62D62A8B360C76B8356401C /* FXBlurView.h */,
+				0806DF0DEE15E02A3EC5F4A196057376 /* FXBlurView.m */,
+				A164413F3662238202EA6371596F02E4 /* Support Files */,
+			);
+			name = FXBlurView;
+			path = FXBlurView;
+			sourceTree = "<group>";
+		};
+		61308830DF8195A9DBCE54983C3063CF /* MLSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				BD5546A39A090DCD16AEA8B8D2AEB799 /* MLSwitch.h */,
+				0B7ED1BC1E0109223171DFF1BB4ED5F3 /* MLSwitch.m */,
+				319875A4B2A288E4D72047294BA24F09 /* Resources */,
+			);
+			name = MLSwitch;
+			sourceTree = "<group>";
+		};
+		624B43308D05DBD3AC1E3DE76E9D5A62 /* MLUI */ = {
+			isa = PBXGroup;
+			children = (
+				48D6E36C91745D1ECF58737792C228EB /* ActionButton */,
+				D07419D00FA55A61964898DC1CA74599 /* Core */,
+				4A14029407C3819856883152CF5CB56F /* Helpers */,
+				DFCAEEED55D4ACBD5273061DAE1B5870 /* MLButton */,
+				C65542397555DD1D4A8B6DF1E516FDCA /* MLCheckBox */,
+				58D3135A592B9D4776207414EB61F2AE /* MLColorPalette */,
+				86601698A9D0171B19AD7E49190D7B7A /* MLContextualMenu */,
+				58675239414BEF3A5433D48128D1ADD7 /* MLFonts */,
+				4A5164ACCE60EC98511B3FA2464ADFCE /* MLGenericErrorView */,
+				1475D97234C3D7EDD7108CB64049A5F2 /* MLHtml */,
+				B9232D6797836A1F1BEA309FF9B8AECF /* MLModal */,
+				FAD515C60B8B25112C2954A98C651F60 /* MLRadioButton */,
+				111511190F0F7171159CF8E1DE1AAAE3 /* MLSnackBar */,
+				506D7B5A22B4B4AFAC881E5266724177 /* MLSpacing */,
+				4C7278129259A698EA07803F2387B02A /* MLSpinner */,
+				61308830DF8195A9DBCE54983C3063CF /* MLSwitch */,
+				1D17C1DB9A6DD9E5BF384DF99869A4A5 /* MLTextView */,
+				FE8027E50AB813995890FA6401B77395 /* MLTitledMultiLineTextField */,
+				055F7ED38E842EB73E2C63536727B30F /* MLTitledSingleLineTextField */,
+				E27CBF9FA5BABA1219221E4B55CDA8F4 /* PriceView */,
+				CA10AA981D22A073211BCDE804E13BD3 /* SnackBarView */,
+				4DC1F0079F3F353FACF31A1289108173 /* StyleSheet */,
+				9C143C93309C52CACAD088FC71DAFB0C /* Support Files */,
+			);
+			name = MLUI;
+			path = MLUI;
+			sourceTree = "<group>";
+		};
+		6BD61C589BA9E6F83AA9F992904DCAEA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F8418D01F20D19706A9B9F6DA6897A9F /* Info.plist */,
+				F172B08E01D2310F9C771A34AB79E31B /* JRSwizzle.modulemap */,
+				B70355669DD22774B47C03CDC6D685D3 /* JRSwizzle.xcconfig */,
+				10431045F029C862DC677BF3FE5F6229 /* JRSwizzle-dummy.m */,
+				97BDC9EED5A7F9C428CACE16E014A346 /* JRSwizzle-prefix.pch */,
+				CA001A406FB95378EEFECFCA6C8950B4 /* JRSwizzle-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/JRSwizzle";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				D3A732C739382C9BEA77CE084ABD78A7 /* Frameworks */,
+				26F5B8428C6D005AFB5B74CA767C164E /* Pods */,
+				E52F2A37FED6413FCCC3DC5DB2706482 /* Products */,
+				E6EFD8C2AE3728BEA307F1B3C524F669 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		86601698A9D0171B19AD7E49190D7B7A /* MLContextualMenu */ = {
+			isa = PBXGroup;
+			children = (
+				976B13A12B45F2808889A99D2D7D3B37 /* MLContextualMenu.h */,
+				C480A34F7A3D32327FF51695A7DD1109 /* MLContextualMenu.m */,
+				0C38BA16B123701042ACEA4B2D9862E8 /* MLContextualMenuItem.h */,
+				2CDEC103A17CD44B16F4428A1EE9B6FA /* MLContextualMenuItem.m */,
+			);
+			name = MLContextualMenu;
+			sourceTree = "<group>";
+		};
+		8C74E672CED4260937B9A337D561D15C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				042E821846C51BE553B28A44C96EEBDB /* MLUISnackBarView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		9724A3AE7C204D3B773505D218599CB3 /* Pods-MercadoPagoSDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				8C56090EC2BD5BDFC07EBDF1E9C16201 /* Info.plist */,
+				895AD988FDAA5432E87DAE6D9E8250E3 /* Pods-MercadoPagoSDKTests.modulemap */,
+				3F29FE8B7F598C9193F013DC02C360D2 /* Pods-MercadoPagoSDKTests-acknowledgements.markdown */,
+				860C9454D138AC0B419C09834A8C50E0 /* Pods-MercadoPagoSDKTests-acknowledgements.plist */,
+				FC7E915CC3F1E885F0250C38E080AF3C /* Pods-MercadoPagoSDKTests-dummy.m */,
+				FA9AC6CFE1648C2CF41C0F14D3915D79 /* Pods-MercadoPagoSDKTests-frameworks.sh */,
+				13E3D027D2D816EBA1FFDC018D0A2A88 /* Pods-MercadoPagoSDKTests-resources.sh */,
+				A65A264F6783CC80E6668607B03620B7 /* Pods-MercadoPagoSDKTests-umbrella.h */,
+				CABFC89F5C793BA3C097CA0D24DB420C /* Pods-MercadoPagoSDKTests.debug.xcconfig */,
+				E863BACED0319818A1B2AB1CA8909C3E /* Pods-MercadoPagoSDKTests.release.xcconfig */,
+			);
+			name = "Pods-MercadoPagoSDKTests";
+			path = "Target Support Files/Pods-MercadoPagoSDKTests";
+			sourceTree = "<group>";
+		};
+		9C143C93309C52CACAD088FC71DAFB0C /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				613DD2D7F40367C00D7277B12A9322FD /* Info.plist */,
+				FE8ADD5A24A78A4283A758F8F7FC2453 /* MLUI.modulemap */,
+				28724DF73EAE3E2E4185B311D01A6062 /* MLUI.xcconfig */,
+				D6490C7E7422406487A9DB53BA804C55 /* MLUI-dummy.m */,
+				7E37995853803A6F4D0BD8ACF54220A4 /* MLUI-prefix.pch */,
+				ACC80289C05CEB163A63D6082EAF406F /* MLUI-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/MLUI";
+			sourceTree = "<group>";
+		};
+		A164413F3662238202EA6371596F02E4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1CFB7B3F6E515E56E3B8A1FD6163B000 /* FXBlurView.modulemap */,
+				73D9582F4AC1929B325696967112415F /* FXBlurView.xcconfig */,
+				0561CC897E2C6BE7402E39706B00F89C /* FXBlurView-dummy.m */,
+				A2BDE791E2E9B15A30805F97C295E775 /* FXBlurView-prefix.pch */,
+				97BF50456793874159A6774A2EF59C7B /* FXBlurView-umbrella.h */,
+				1F481357F9E82CD654103F08B9E1D22B /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/FXBlurView";
+			sourceTree = "<group>";
+		};
+		B9232D6797836A1F1BEA309FF9B8AECF /* MLModal */ = {
+			isa = PBXGroup;
+			children = (
+				FFA9DCB0822F9A3BF5F5F5DAEF5B27D8 /* MLModal.h */,
+				8336180B3CE9488BC997CAEF5AE54CF3 /* MLModal.m */,
+				254DFF1372A9DC1FF32437B6E469006B /* MLModalConfigStyle.h */,
+				19199A918EBE9672E751BE9BF806FCED /* MLModalConfigStyle.m */,
+				3EDBFADE178660510444C180DDFAD517 /* MLModalStyleFactory.h */,
+				E7306780CF2CB82CE85FDF9131A8EB52 /* MLModalStyleFactory.m */,
+				FF6D24A272C6136EEAD0C5B81EBC9FF0 /* Resources */,
+			);
+			name = MLModal;
+			sourceTree = "<group>";
+		};
+		C40855C62F7848EED51E174059A0E960 /* Pods-MercadoPagoSDK */ = {
+			isa = PBXGroup;
+			children = (
+				B40D16198196137665E731B6BEBED178 /* Info.plist */,
+				C67B4B0DE3270D397BFBA29BB4C77740 /* Pods-MercadoPagoSDK.modulemap */,
+				BFC4D89841110CE4898B7064A7EBFBDB /* Pods-MercadoPagoSDK-acknowledgements.markdown */,
+				E8BCEE172BF3476A3C89649E92A536E0 /* Pods-MercadoPagoSDK-acknowledgements.plist */,
+				D5D691E85A6AF94FB7AE8AB72D7863E3 /* Pods-MercadoPagoSDK-dummy.m */,
+				76F5720D1636FF78AC03C61FE836E597 /* Pods-MercadoPagoSDK-resources.sh */,
+				80808121CB6A00E351224012352F3810 /* Pods-MercadoPagoSDK-umbrella.h */,
+				CB992B8DAAF5E0CF0EA1E3A101740F3C /* Pods-MercadoPagoSDK.debug.xcconfig */,
+				F8E133597BB3F0E45A2797DD40BF1857 /* Pods-MercadoPagoSDK.release.xcconfig */,
+			);
+			name = "Pods-MercadoPagoSDK";
+			path = "Target Support Files/Pods-MercadoPagoSDK";
+			sourceTree = "<group>";
+		};
+		C65542397555DD1D4A8B6DF1E516FDCA /* MLCheckBox */ = {
+			isa = PBXGroup;
+			children = (
+				D0230C6E949A8423BFD1088A839EDE0F /* MLBooleanWidget.h */,
+				05BF1C4354ABD00181D95E4359EEEF87 /* MLBooleanWidget.m */,
+				A1828F81127BB394787BED3343E244E3 /* MLBooleanWidget_Protected.h */,
+				6CE842EAC901782ACE756413B682F108 /* MLCheckBox.h */,
+				A397DF700AC7AD4415523C201D2A03C3 /* MLCheckBox.m */,
+				20E2ABAFF70A6D40B608374E81F65051 /* MLCheckList.h */,
+				49557227A3BFA922FD381937E923CA33 /* MLCheckList.m */,
+			);
+			name = MLCheckBox;
+			sourceTree = "<group>";
+		};
+		CA10AA981D22A073211BCDE804E13BD3 /* SnackBarView */ = {
+			isa = PBXGroup;
+			children = (
+				DC6C5386DF12E2BE6CE1BC3C2C1835D5 /* MLUISnackBarProtocol.h */,
+				742F01F1E84FFF2103E20D1C330B5904 /* MLUISnackBarView.h */,
+				85B8DA7CD16B6B249FB1AEF99AB587E3 /* MLUISnackBarView.m */,
+				746E99FB24D558E6C25C7F6B0E98F658 /* UIViewController+SnackBar.h */,
+				43E01041D657E230376A1562839E658E /* UIViewController+SnackBar.m */,
+				8C74E672CED4260937B9A337D561D15C /* Resources */,
+			);
+			name = SnackBarView;
+			sourceTree = "<group>";
+		};
+		CDC53AC180B051AE6B3E4A865E7F024C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3577439CAAEB11D8D2B32248B8E31030 /* MLTextView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D07419D00FA55A61964898DC1CA74599 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E58E4D704936BBB4C0A433563C6B7896 /* NSString+BoundingSize.h */,
+				EDFFFD116BE1B2EB1E7908FD567B0D48 /* NSString+BoundingSize.m */,
+				AFB1BA3F8AF8CC789A83066895B63486 /* UIColor+Theme.h */,
+				DCEFBA33658C511C24296A1B6D766723 /* UIColor+Theme.m */,
+				4922A8D0802C22E2CCF30773E9155433 /* UIImage+Misc.h */,
+				CD14E9F4C2BFAC632A8A679137DBECCE /* UIImage+Misc.m */,
+				65E68225F25989EEE55B715CB7815311 /* UIImage+Transformations.h */,
+				DD99C67A4BF1F94D9A332513AED39F08 /* UIImage+Transformations.m */,
+				339681E54123E6F1B0E02C94F4B01140 /* UIImageView+Animations.h */,
+				51445B4E897663CDE9AA5DB292063C42 /* UIImageView+Animations.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		D3A732C739382C9BEA77CE084ABD78A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0ECEB0ECD0E3ECEE7B9BAE499FC7CA4 /* FXBlurView.framework */,
+				C63935387A8F9E449763FD682ECD2DE7 /* JRSwizzle.framework */,
+				434F76A82274B37B1961B4620050B4F0 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D54FECB2AE404B1DC7BCF0427137DA15 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0CCA55F4EB48EDA6EAC3BBAF18D6C664 /* MLGenericErrorView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		DFCAEEED55D4ACBD5273061DAE1B5870 /* MLButton */ = {
+			isa = PBXGroup;
+			children = (
+				2C09EE09D205B7607E6C2FE298AD8C3E /* MLButton.h */,
+				CC9D69814209EA731B05583AA0AA99DC /* MLButton.m */,
+				15F4ED51C184FA7EBBB12DFBB3D41E68 /* MLButtonConfig.h */,
+				75828DF7C9F021C2D03D83A5DCB0012F /* MLButtonConfig.m */,
+				291FB0EB26BA0120A43557C79F9DDB46 /* MLButtonConfigStyle.h */,
+				CAD43CD14EA46FD4DB080E346C3A8761 /* MLButtonConfigStyle.m */,
+				23ADAEEDC0487021FE0A8CD2E2658B54 /* MLButtonStylesFactory.h */,
+				BBC2AB32AE7A7A014CE90884B8E8E1CD /* MLButtonStylesFactory.m */,
+			);
+			name = MLButton;
+			sourceTree = "<group>";
+		};
+		E27CBF9FA5BABA1219221E4B55CDA8F4 /* PriceView */ = {
+			isa = PBXGroup;
+			children = (
+				D3A671F7CB03B9E19BC6193E7CDCA255 /* MLUIPriceView.h */,
+				0A485D447AF073D005BC14879654DF77 /* MLUIPriceView.m */,
+				360684C31551F02E94D0BB067CA53EE2 /* Resources */,
+			);
+			name = PriceView;
+			sourceTree = "<group>";
+		};
+		E52F2A37FED6413FCCC3DC5DB2706482 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D63FAB766A0190789615B8CD4E6AD09B /* FXBlurView.framework */,
+				24D0AC7F9281DE449A08C79E8626F559 /* JRSwizzle.framework */,
+				0D4F7054E9C4BBF5A99BF94D349E2205 /* MLUI.framework */,
+				CF0D4E6B7DFEAB35BEC26EF86CB38CDF /* Pods_MercadoPagoSDK.framework */,
+				B968ECAFF4280028F18D4527C20E239E /* Pods_MercadoPagoSDKTests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E647E0AFEEB600BA44EFBCB74F25FE99 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				515B21795D05530456BBC6EB5887B230 /* MLSnackbar.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		E6EFD8C2AE3728BEA307F1B3C524F669 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C40855C62F7848EED51E174059A0E960 /* Pods-MercadoPagoSDK */,
+				9724A3AE7C204D3B773505D218599CB3 /* Pods-MercadoPagoSDKTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		F1E5E12F1C98B7F735F0CD705360EACF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EF865B08372D6CB5A162C51044A85AF7 /* MLSpinner.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FAD515C60B8B25112C2954A98C651F60 /* MLRadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				F8E1C588115B6708F88ED337239F796A /* MLRadioButton.h */,
+				27A7CE425C433F771826781A60358E16 /* MLRadioButton.m */,
+				F411D39C99F8C6563F2D09C82F649D08 /* MLRadioButtonCollection.h */,
+				94B03E7C772332FD9C5F3FD373B4C210 /* MLRadioButtonCollection.m */,
+			);
+			name = MLRadioButton;
+			sourceTree = "<group>";
+		};
+		FE8027E50AB813995890FA6401B77395 /* MLTitledMultiLineTextField */ = {
+			isa = PBXGroup;
+			children = (
+				CF7B46051ACA8BF51C990EC4A3F75C08 /* MLTitledMultiLineTextField.h */,
+				360D234C1C59188D45DCBC82F8AD3395 /* MLTitledMultiLineTextField.m */,
+			);
+			name = MLTitledMultiLineTextField;
+			sourceTree = "<group>";
+		};
+		FF6D24A272C6136EEAD0C5B81EBC9FF0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				32F86CCF08D50051732D11ED29E1CC1F /* MLModal.xcassets */,
+				222713FB0FAB12D3B7D8FD2F724D5683 /* MLModal.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1F39875707A60FF0FBFEE847D4A2E1DA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B503FE04A9C2074EE478C4B76E89DAEA /* JRSwizzle-umbrella.h in Headers */,
+				A8C98D483D800B96E37AA5069EF04E68 /* JRSwizzle.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C7512EAB9760E356749847CD4EECBA8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F3DD894F5B858B4AE4EC33A3B471521 /* Pods-MercadoPagoSDK-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D3F6984E26E0602651F23B52939F3C2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E35A2620063447F3DC6A1016648797E /* FXBlurView-umbrella.h in Headers */,
+				1F62BCDD224C46375F12D5535879B5FF /* FXBlurView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9E687C3D22466641391C42F60E17FA0A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94AD45244F946EC458CAF8A6B41B116F /* Pods-MercadoPagoSDKTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C90E184929AF7FC20CD07E468F8AFF66 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F8A9D1945768975FA6157E6273A208A /* MLBooleanWidget.h in Headers */,
+				6067039EC0A0E18E5043AC720AABE396 /* MLBooleanWidget_Protected.h in Headers */,
+				72F8DCDC702C94D8BF021A2479D38A02 /* MLButton.h in Headers */,
+				EDBCD041759363A4275E2FF5D54CDD18 /* MLButtonConfig.h in Headers */,
+				304497A735658E8B62CF99EFCC433FA2 /* MLButtonConfigStyle.h in Headers */,
+				061721D0C6F81236484E8DF8CA6EBCD7 /* MLButtonStylesFactory.h in Headers */,
+				4449256F8D4A0033E8BB22A7B1E1BF1A /* MLCheckBox.h in Headers */,
+				B5995E7172E2F1A9749383237772DCD9 /* MLCheckList.h in Headers */,
+				5E5B925D5549D8648094019E1E06A087 /* MLContextualMenu.h in Headers */,
+				D923C8CF2EF5D07BFC1AC204612C177E /* MLContextualMenuItem.h in Headers */,
+				5455941D83A84C6C7A1B7D9267F7E4B7 /* MLGenericErrorView.h in Headers */,
+				9FCA2CA04C535C03B6DE174014A9310B /* MLGrowingTextViewHandler.h in Headers */,
+				33E6589DA8C59A641C981527FA50F0B8 /* MLHtml.h in Headers */,
+				9B6875B53BFC60FDDF3C6B108055FB1A /* MLModal.h in Headers */,
+				80240E331AEB6DF70C5DEAE8FE274C7A /* MLModalConfigStyle.h in Headers */,
+				1911098AB3DD526CCB29F67800570A50 /* MLModalStyleFactory.h in Headers */,
+				275F612F810BD90929A8853C4EB48BAC /* MLRadioButton.h in Headers */,
+				478D7EE784D8C181E10DFBB9E186F285 /* MLRadioButtonCollection.h in Headers */,
+				1E3DD374C6B47209CE6AFDC7D217937D /* MLSnackbar.h in Headers */,
+				E308616E0EB912CD9E73C0A8C99CB4CE /* MLSnackbarType.h in Headers */,
+				3E5358B0BACB09064F07774257030AC2 /* MLSpinner.h in Headers */,
+				872C68F22CB388E146D3E2DC6223A831 /* MLSpinnerConfig.h in Headers */,
+				9E8C302A26AC8929A4211744E00670A2 /* MLStyle.h in Headers */,
+				DEFE2013725A22EA48C5C3725ABD157B /* MLStyleSheetDefault.h in Headers */,
+				826D01F10A080E895F50D676AF27DABE /* MLStyleSheetManager.h in Headers */,
+				D5A77AEB1482F57D043298D2E387A02D /* MLStyleSheetProtocol.h in Headers */,
+				EBE537CEF906510007EEDA6C0B8CC815 /* MLStyleUtils.h in Headers */,
+				EB87272DF003D3F4BF7DFE8232F611B8 /* MLSwitch.h in Headers */,
+				8D51C1794AA4C5B969018FCA9EDFA598 /* MLTextView.h in Headers */,
+				0D6B413AE31BB16EF2E06148971FEFAE /* MLTitledMultiLineTextField.h in Headers */,
+				56DF2FD6D39BE1FDE1D67A506C3C7C3B /* MLTitledSingleLineStringProvider.h in Headers */,
+				ED5587560BAB419A24A62249C72DAA9B /* MLTitledSingleLineTextField.h in Headers */,
+				1EB2454C00456D13A1E35E17B31E12A9 /* MLUI-umbrella.h in Headers */,
+				273EA13FF6F1E8CEB3A81744AC2B889E /* MLUIActionButton.h in Headers */,
+				FE94624C50EA6E1798AE99A6FC2AEC42 /* MLUIBundle.h in Headers */,
+				0ED7C688C65F90DCBAD10B708FB31C60 /* MLUIPriceView.h in Headers */,
+				519D70A725A121B58E3BFE27F3664013 /* MLUISnackBarProtocol.h in Headers */,
+				1F4C31AB1A96C331964692CBEC3794C2 /* MLUISnackBarView.h in Headers */,
+				811F8F130FD578B4368EBFFEFFA7FBAA /* NSAttributedString+MLFonts.h in Headers */,
+				C9F6A00555D64342CAEA3576E6316801 /* NSAttributedString+MLHtml.h in Headers */,
+				6A51C34D5CA5EF0932F442EFD252B9D5 /* NSString+BoundingSize.h in Headers */,
+				E58A9E985E86A8311583D5E7E5AE247E /* UIColor+MLColorPalette.h in Headers */,
+				9E3D6C76D8822E50F8C76F6022AD9808 /* UIColor+Theme.h in Headers */,
+				E54878CCD0DD6FB51D25CA2AAD1E00ED /* UIFont+MLFonts.h in Headers */,
+				F740EEC41A1C7308363DA8B9D32C7074 /* UIImage+Misc.h in Headers */,
+				57F74E8B7653DE84769C27844F4DA9BA /* UIImage+Transformations.h in Headers */,
+				7A4F9B6C42A294C39B7BCCFA0E295107 /* UIImageView+Animations.h in Headers */,
+				04EAAB59AF96B9A3005364A34943C168 /* UILabel+MLFonts.h in Headers */,
+				11DB3D962953ECB78FEAE00C973897BD /* UILabel+MLStyle.h in Headers */,
+				E3E02E2E030A2071032D8F7CB2D53398 /* UITextView+MLFonts.h in Headers */,
+				95825978A3AF9C69EF2C917AEA34494B /* UITextView+MLStyle.h in Headers */,
+				87B8AF6DF83F2ABBC4C039C5B07103C4 /* UIViewController+SnackBar.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1C31259B0A885224359DBD78199CFC86 /* Pods-MercadoPagoSDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BF9FDD4A9757EB63457AC4CA82C050B /* Build configuration list for PBXNativeTarget "Pods-MercadoPagoSDKTests" */;
+			buildPhases = (
+				A02499B1AEA9432148D444978055D520 /* Sources */,
+				D4659FCF82B0399CA20E2C9646EE7B24 /* Frameworks */,
+				9E687C3D22466641391C42F60E17FA0A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E9D395B31698E3BD06E86A23FCDDF352 /* PBXTargetDependency */,
+				AFA4032D2E200C8A3F940990DB82A2FF /* PBXTargetDependency */,
+				BDB8D02320F1B4AFD2374CD533606D4B /* PBXTargetDependency */,
+			);
+			name = "Pods-MercadoPagoSDKTests";
+			productName = "Pods-MercadoPagoSDKTests";
+			productReference = B968ECAFF4280028F18D4527C20E239E /* Pods_MercadoPagoSDKTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		2B45D666DABB464D83D203554EE4AA8B /* MLUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6FC436B38606CB83E6BF2F19F5F11A78 /* Build configuration list for PBXNativeTarget "MLUI" */;
+			buildPhases = (
+				EEDF08445F2A5DDC7A419A46C36B72F7 /* Sources */,
+				EFF4F4DF6299F4F91213FD9A5E72FC5C /* Frameworks */,
+				C90E184929AF7FC20CD07E468F8AFF66 /* Headers */,
+				C34A8658510D09FA73D68E3D0C3A85C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C233C0DF37285CB6B81C96707CE331AE /* PBXTargetDependency */,
+				81DB1213327358A87EEC02CFC7AFB92D /* PBXTargetDependency */,
+			);
+			name = MLUI;
+			productName = MLUI;
+			productReference = 0D4F7054E9C4BBF5A99BF94D349E2205 /* MLUI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		764FE141DB620FB9F0BA37BFEB844178 /* Pods-MercadoPagoSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 60BDCFC97699B87187B979C9568847B5 /* Build configuration list for PBXNativeTarget "Pods-MercadoPagoSDK" */;
+			buildPhases = (
+				76830292F737062548AFD7A4E5327729 /* Sources */,
+				20E2D1F93162D226FBF9A802FE6D4CE8 /* Frameworks */,
+				4C7512EAB9760E356749847CD4EECBA8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74F960D541F149399D6973ED574D9103 /* PBXTargetDependency */,
+				5C1F3DFEAA8B6ECAE199E0786475BEEA /* PBXTargetDependency */,
+				8F52E00134791BBFED217CE53C1C6B14 /* PBXTargetDependency */,
+			);
+			name = "Pods-MercadoPagoSDK";
+			productName = "Pods-MercadoPagoSDK";
+			productReference = CF0D4E6B7DFEAB35BEC26EF86CB38CDF /* Pods_MercadoPagoSDK.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BD5BFC2F630B07DE8A20EBC90A7C8D49 /* FXBlurView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6AD9B7CA019B1DC5B03042AB5E2C1CB3 /* Build configuration list for PBXNativeTarget "FXBlurView" */;
+			buildPhases = (
+				2F3D09A43F342210F70357E995DF843F /* Sources */,
+				166395856F8980AE7F82DFB1C86D4235 /* Frameworks */,
+				8D3F6984E26E0602651F23B52939F3C2 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FXBlurView;
+			productName = FXBlurView;
+			productReference = D63FAB766A0190789615B8CD4E6AD09B /* FXBlurView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F5E7B86C60FCB91858074F7C2F733BE5 /* JRSwizzle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFB7E4A191A2188BE7C8E30FE682DB2E /* Build configuration list for PBXNativeTarget "JRSwizzle" */;
+			buildPhases = (
+				6C192372F9220548B74119C3A7966FA5 /* Sources */,
+				03A52B89DB6F0154312503C35543B4EC /* Frameworks */,
+				1F39875707A60FF0FBFEE847D4A2E1DA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JRSwizzle;
+			productName = JRSwizzle;
+			productReference = 24D0AC7F9281DE449A08C79E8626F559 /* JRSwizzle.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = E52F2A37FED6413FCCC3DC5DB2706482 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BD5BFC2F630B07DE8A20EBC90A7C8D49 /* FXBlurView */,
+				F5E7B86C60FCB91858074F7C2F733BE5 /* JRSwizzle */,
+				2B45D666DABB464D83D203554EE4AA8B /* MLUI */,
+				764FE141DB620FB9F0BA37BFEB844178 /* Pods-MercadoPagoSDK */,
+				1C31259B0A885224359DBD78199CFC86 /* Pods-MercadoPagoSDKTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C34A8658510D09FA73D68E3D0C3A85C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5BF2404AD63DC2A0C28F2570EDD9AD4 /* en.lproj in Resources */,
+				2976CA85CEB3D2B56D983E83619AD78E /* es.lproj in Resources */,
+				A94345F1EF46E369A119855B0CAEB438 /* MLGenericErrorView.xib in Resources */,
+				54475C77563A9C57FCBE29BFA58906FC /* MLModal.xcassets in Resources */,
+				4788D9E78E9E55326321FF922ABBE0D4 /* MLModal.xib in Resources */,
+				0AB20B63448A9BD5CA257D749B61FC5D /* MLSnackbar.xib in Resources */,
+				9F29A504F013045FBB568DFE9311BDC0 /* MLSpinner.xib in Resources */,
+				9C935DA77892BE77AD4B38DCBC5E3152 /* MLSwitch.xib in Resources */,
+				97A58A209AA5FA2639AF40B97CC25044 /* MLTextView.xib in Resources */,
+				2661A31E4025E6634DE45A1639DBE471 /* MLTitledLineTextField.xib in Resources */,
+				92FFAC7B3C6844AD9D0C5C46429917FF /* MLUIPriceView.xib in Resources */,
+				CF0C7EE6D76593553BD43E4BCBB8676B /* MLUISnackBarView.xib in Resources */,
+				D101D2B4C2C0A26F81D280658EE505F1 /* pt.lproj in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2F3D09A43F342210F70357E995DF843F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DF141B4EFFF24874AB4DFDC3B57135E /* FXBlurView-dummy.m in Sources */,
+				ADE91409C8CB482DAC32619D74FED2CE /* FXBlurView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C192372F9220548B74119C3A7966FA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DF0FBD3E59D87323827D9DC7B5A656C /* JRSwizzle-dummy.m in Sources */,
+				4E962449F2DC5BF696EF871F5F9653B5 /* JRSwizzle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76830292F737062548AFD7A4E5327729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B7A895D2B9C1D0CC36FBE38FEEF7B05 /* Pods-MercadoPagoSDK-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A02499B1AEA9432148D444978055D520 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCF7B955CFDD99B193C5E50A4F6ECA7 /* Pods-MercadoPagoSDKTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEDF08445F2A5DDC7A419A46C36B72F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D3E57C156DD6EF8104C41976B7A80E /* MLBooleanWidget.m in Sources */,
+				863FF52AC4ACBE9F7AD1B683D500E414 /* MLButton.m in Sources */,
+				934AFA0793DC4C3E2AD1D1F33459E992 /* MLButtonConfig.m in Sources */,
+				59EEAA3615B03FEEC8E6B78B31245415 /* MLButtonConfigStyle.m in Sources */,
+				BE6D2F6B29F4635CC43AF0FDEC6CBB57 /* MLButtonStylesFactory.m in Sources */,
+				363EFCF3F628A982FC414EBB5E08B406 /* MLCheckBox.m in Sources */,
+				E93A2AD690F4E75599271AC5B504CF7C /* MLCheckList.m in Sources */,
+				4A3582E57CFB53AAAF5FADD488E59BB1 /* MLContextualMenu.m in Sources */,
+				876CCB9781B75D4B093C0442DE062B4C /* MLContextualMenuItem.m in Sources */,
+				2F854C094BA547BE60DDD776EC8E2088 /* MLGenericErrorView.m in Sources */,
+				3483A4D132F49745E1231CA1F65888D4 /* MLGrowingTextViewHandler.m in Sources */,
+				26EFACE72803F0A664CBCAC86BC0805C /* MLHtml.m in Sources */,
+				9282508BE58F5E9CC33F48388AC12CB5 /* MLModal.m in Sources */,
+				84000771137EE95677CB80B89FAF306E /* MLModalConfigStyle.m in Sources */,
+				808297040539B5CC3B4C273DD05C2129 /* MLModalStyleFactory.m in Sources */,
+				B709C662A3B0F2A0C64C4BEEE81EB7EE /* MLRadioButton.m in Sources */,
+				C3DADE1C906A85E54E6702E80C7AAE08 /* MLRadioButtonCollection.m in Sources */,
+				FB6B47F7846E4F42AAF24F57F3D57714 /* MLSnackbar.m in Sources */,
+				77FF55308B742F76B9765843769788B2 /* MLSnackbarType.m in Sources */,
+				535B048B490B8C77F69F2FE4DFB5CB59 /* MLSpinner.m in Sources */,
+				CFB021481D821034FE797462756624AF /* MLSpinnerConfig.m in Sources */,
+				90693D39040DF475F2BD7A8FEA58AE44 /* MLStyleSheetDefault.m in Sources */,
+				CA742F7C0BBA1B73EE0AA9397D8E3AF5 /* MLStyleSheetManager.m in Sources */,
+				85B5958C8D6CAA5B62FCD560DE9ECD38 /* MLStyleUtils.m in Sources */,
+				B0A917C1F1B1A12DB10B72834972BA62 /* MLSwitch.m in Sources */,
+				6574D249CF6201C7AA4ACBD0E0D4B89E /* MLTextView.m in Sources */,
+				0979C2D0B1D6A76A224F2F6132C0F302 /* MLTitledMultiLineTextField.m in Sources */,
+				557DE6A2D889E79FF1B3AACC8EC104D3 /* MLTitledSingleLineStringProvider.m in Sources */,
+				F6CC499EC7015F5C63CF2D7E864E63BE /* MLTitledSingleLineTextField.m in Sources */,
+				2B6854315D6036BDFFACC0F67F757A77 /* MLUI-dummy.m in Sources */,
+				B57B3C3DB6BEDA6C4B0666D670E23FC5 /* MLUIActionButton.m in Sources */,
+				1DDEA2C3C936131E1433E73B59F8BD3F /* MLUIBundle.m in Sources */,
+				BD83F1669968F34625EC8A2740B5A2EC /* MLUIPriceView.m in Sources */,
+				FABD495F770C6706C3474068AD8761A5 /* MLUISnackBarView.m in Sources */,
+				0CFFAD9138641F7CC1BF78BFD7B53A8C /* NSAttributedString+MLFonts.m in Sources */,
+				E295785B3F201726803FA9D1C008ABF9 /* NSAttributedString+MLHtml.m in Sources */,
+				0522CBCB19CD4F914C041458D2F23897 /* NSString+BoundingSize.m in Sources */,
+				67990890BD3064106EEEDEC30DC95477 /* UIColor+MLColorPalette.m in Sources */,
+				02507200518760F52312E71901ADE984 /* UIColor+Theme.m in Sources */,
+				5180340FDF8677C6426A8427D4085322 /* UIFont+MLFonts.m in Sources */,
+				E41765A999F7B702CEDB2F28EA7EBC2A /* UIImage+Misc.m in Sources */,
+				F092FC8D1A866D6D127BF9EE67D405A6 /* UIImage+Transformations.m in Sources */,
+				0FE2276B6DF5CF0C2D5F62319223BAD0 /* UIImageView+Animations.m in Sources */,
+				E8BBD0756468DC7C83C0C5B5B9D3E722 /* UILabel+MLFonts.m in Sources */,
+				F01E18B442A6C63C1CDE4EECD6DC27F1 /* UILabel+MLStyle.m in Sources */,
+				7A8AED88691C28D69FDAB16AD4D67A8A /* UITextView+MLFonts.m in Sources */,
+				FF77578B61645537CB44D9B8B39EF507 /* UITextView+MLStyle.m in Sources */,
+				DDC160D3AACD53E40A196ADABC3881DD /* UIViewController+SnackBar.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5C1F3DFEAA8B6ECAE199E0786475BEEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JRSwizzle;
+			target = F5E7B86C60FCB91858074F7C2F733BE5 /* JRSwizzle */;
+			targetProxy = CA21E61D5021C310052C6C9A7AE1C36F /* PBXContainerItemProxy */;
+		};
+		74F960D541F149399D6973ED574D9103 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FXBlurView;
+			target = BD5BFC2F630B07DE8A20EBC90A7C8D49 /* FXBlurView */;
+			targetProxy = B953776F763B1307624EBD99EA17DCD7 /* PBXContainerItemProxy */;
+		};
+		81DB1213327358A87EEC02CFC7AFB92D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JRSwizzle;
+			target = F5E7B86C60FCB91858074F7C2F733BE5 /* JRSwizzle */;
+			targetProxy = E6803DB9C2BEB21C9498792F14148B7F /* PBXContainerItemProxy */;
+		};
+		8F52E00134791BBFED217CE53C1C6B14 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MLUI;
+			target = 2B45D666DABB464D83D203554EE4AA8B /* MLUI */;
+			targetProxy = ED8FB07C0A224F0B2AABAD13FDA109E0 /* PBXContainerItemProxy */;
+		};
+		AFA4032D2E200C8A3F940990DB82A2FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JRSwizzle;
+			target = F5E7B86C60FCB91858074F7C2F733BE5 /* JRSwizzle */;
+			targetProxy = 93B673FA593DFE21E8B660A84F1877F4 /* PBXContainerItemProxy */;
+		};
+		BDB8D02320F1B4AFD2374CD533606D4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MLUI;
+			target = 2B45D666DABB464D83D203554EE4AA8B /* MLUI */;
+			targetProxy = 615C0E2D179751E5AADEBFBAA0D5EADB /* PBXContainerItemProxy */;
+		};
+		C233C0DF37285CB6B81C96707CE331AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FXBlurView;
+			target = BD5BFC2F630B07DE8A20EBC90A7C8D49 /* FXBlurView */;
+			targetProxy = F7E24BC916713879CB115BC721B086B0 /* PBXContainerItemProxy */;
+		};
+		E9D395B31698E3BD06E86A23FCDDF352 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FXBlurView;
+			target = BD5BFC2F630B07DE8A20EBC90A7C8D49 /* FXBlurView */;
+			targetProxy = 63ED20C3FD284359552CA2B1DAC10DDC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0F4AF27AE8648BB1A4174AD21E75C55F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B70355669DD22774B47C03CDC6D685D3 /* JRSwizzle.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/JRSwizzle/JRSwizzle-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JRSwizzle/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JRSwizzle/JRSwizzle.modulemap";
+				PRODUCT_NAME = JRSwizzle;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		26F954BA177A9A46FFFD4E23ED11D67A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		35CA7D6EF4EA50CAC3005647782DDEB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB992B8DAAF5E0CF0EA1E3A101740F3C /* Pods-MercadoPagoSDK.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDK/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MercadoPagoSDK;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3895FAB418301C6E86D92293F7850F9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73D9582F4AC1929B325696967112415F /* FXBlurView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/FXBlurView/FXBlurView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FXBlurView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FXBlurView/FXBlurView.modulemap";
+				PRODUCT_NAME = FXBlurView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3A9CB0063DE65484D57C4D58B317BADD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8E133597BB3F0E45A2797DD40BF1857 /* Pods-MercadoPagoSDK.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDK/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MercadoPagoSDK;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5B71B052C277ADF4F70487733D1F0F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CABFC89F5C793BA3C097CA0D24DB420C /* Pods-MercadoPagoSDKTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MercadoPagoSDKTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7385307037F06C187545F171D9AEA054 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73D9582F4AC1929B325696967112415F /* FXBlurView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/FXBlurView/FXBlurView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FXBlurView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FXBlurView/FXBlurView.modulemap";
+				PRODUCT_NAME = FXBlurView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8D711B8B5694549F4958D9075583050A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B70355669DD22774B47C03CDC6D685D3 /* JRSwizzle.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/JRSwizzle/JRSwizzle-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JRSwizzle/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JRSwizzle/JRSwizzle.modulemap";
+				PRODUCT_NAME = JRSwizzle;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C928C1CBE7E87010C6008408CD9A341C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28724DF73EAE3E2E4185B311D01A6062 /* MLUI.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/MLUI/MLUI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MLUI/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MLUI/MLUI.modulemap";
+				PRODUCT_NAME = MLUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DE016F1DC9B61E8B02FB3A93E78A871B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E863BACED0319818A1B2AB1CA8909C3E /* Pods-MercadoPagoSDKTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MercadoPagoSDKTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DF14ACFE8EC0EE078CF66F91051E1EF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28724DF73EAE3E2E4185B311D01A6062 /* MLUI.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/MLUI/MLUI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MLUI/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MLUI/MLUI.modulemap";
+				PRODUCT_NAME = MLUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E2BF6D6731C31DE69900B7B24E6F0445 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2BF6D6731C31DE69900B7B24E6F0445 /* Debug */,
+				26F954BA177A9A46FFFD4E23ED11D67A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4BF9FDD4A9757EB63457AC4CA82C050B /* Build configuration list for PBXNativeTarget "Pods-MercadoPagoSDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B71B052C277ADF4F70487733D1F0F4F /* Debug */,
+				DE016F1DC9B61E8B02FB3A93E78A871B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		60BDCFC97699B87187B979C9568847B5 /* Build configuration list for PBXNativeTarget "Pods-MercadoPagoSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35CA7D6EF4EA50CAC3005647782DDEB4 /* Debug */,
+				3A9CB0063DE65484D57C4D58B317BADD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6AD9B7CA019B1DC5B03042AB5E2C1CB3 /* Build configuration list for PBXNativeTarget "FXBlurView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7385307037F06C187545F171D9AEA054 /* Debug */,
+				3895FAB418301C6E86D92293F7850F9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6FC436B38606CB83E6BF2F19F5F11A78 /* Build configuration list for PBXNativeTarget "MLUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C928C1CBE7E87010C6008408CD9A341C /* Debug */,
+				DF14ACFE8EC0EE078CF66F91051E1EF1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFB7E4A191A2188BE7C8E30FE682DB2E /* Build configuration list for PBXNativeTarget "JRSwizzle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D711B8B5694549F4958D9075583050A /* Debug */,
+				0F4AF27AE8648BB1A4174AD21E75C55F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

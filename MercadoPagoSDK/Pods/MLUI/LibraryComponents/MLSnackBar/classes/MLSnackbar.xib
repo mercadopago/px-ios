@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLSnackbar">
+            <connections>
+                <outlet property="actionButton" destination="5Kz-Cv-8rH" id="AKd-M2-NFo"/>
+                <outlet property="buttonTrailingConstraint" destination="Gdg-Sd-lND" id="IGH-9i-caz"/>
+                <outlet property="labelButtonSpacing" destination="q7z-VR-HMC" id="hir-ZI-EnM"/>
+                <outlet property="messageLabel" destination="7qg-RS-ep6" id="Oaa-Y1-p7v"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="384" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qg-RS-ep6">
+                    <rect key="frame" x="24" y="0.0" width="42" height="48"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Kz-Cv-8rH" customClass="MLSnackbarButton">
+                    <rect key="frame" x="340" y="2" width="20" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="ydF-r3-JIR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                    <state key="normal">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="selected">
+                        <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="actionButtonCancelTimer:" destination="-1" eventType="touchDown" id="XCH-IG-9Bh"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="5Kz-Cv-8rH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="9fc-1y-Na6"/>
+                <constraint firstItem="7qg-RS-ep6" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FZC-M8-d2y"/>
+                <constraint firstAttribute="trailing" secondItem="5Kz-Cv-8rH" secondAttribute="trailing" constant="24" id="Gdg-Sd-lND"/>
+                <constraint firstAttribute="bottom" secondItem="7qg-RS-ep6" secondAttribute="bottom" id="VWO-8A-1Qq"/>
+                <constraint firstItem="7qg-RS-ep6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="iiI-pY-aS6"/>
+                <constraint firstItem="5Kz-Cv-8rH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7qg-RS-ep6" secondAttribute="trailing" constant="14" id="q7z-VR-HMC"/>
+                <constraint firstItem="5Kz-Cv-8rH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="qF1-s4-B83"/>
+                <constraint firstItem="7qg-RS-ep6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rSP-h1-5fO"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="qF1-s4-B83"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="103" y="50"/>
+        </view>
+    </objects>
+</document>

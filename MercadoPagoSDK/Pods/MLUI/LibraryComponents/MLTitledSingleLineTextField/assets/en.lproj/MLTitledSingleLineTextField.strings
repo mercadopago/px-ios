@@ -1,0 +1,9 @@
+/* 
+  MLTitledSingleLineTextField.strings
+  MLUI
+
+  Created by Juan Andres Gebhard on 5/24/16.
+  Copyright © 2016 MercadoLibre. All rights reserved.
+*/
+
+"CHARACTER_COUNT_FORMAT" = "%lu of %lu";

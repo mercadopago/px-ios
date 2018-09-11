@@ -28,7 +28,7 @@ extension PXCheckoutPreference {
     }
 
     internal func clearCardId() {
-        self.paymentPreference?.cardId = nil
+        self.paymentPreference.cardId = nil
     }
 }
 
@@ -65,9 +65,6 @@ extension PXCheckoutPreference {
      - parameter paymentMethodId: paymentMethodId exclusion id.
      */
     public func addExcludedPaymentMethod(_ paymentMethodId: String) {
-        guard let paymentPreference = paymentPreference else {
-            return
-        }
         paymentPreference.excludedPaymentMethodIds.append(paymentMethodId)
     }
 
@@ -76,7 +73,7 @@ extension PXCheckoutPreference {
      - parameter paymentMethodIds: paymentMethodId exclusion id.
      */
     public func setExcludedPaymentMethods(_ paymentMethodIds: [String]) {
-        self.paymentPreference?.excludedPaymentMethodIds = paymentMethodIds
+        self.paymentPreference.excludedPaymentMethodIds = paymentMethodIds
     }
 
     /**
@@ -85,9 +82,6 @@ extension PXCheckoutPreference {
      - parameter paymentTypeId: paymentTypeId exclusion type
      */
     public func addExcludedPaymentType(_ paymentTypeId: String) {
-        guard let paymentPreference = paymentPreference else {
-            return
-        }
         paymentPreference.excludedPaymentMethodIds.append(paymentTypeId)
     }
 
@@ -97,7 +91,7 @@ extension PXCheckoutPreference {
      - parameter paymentTypeIds: paymentTypeIds exclusion list.
      */
     public func setExcludedPaymentTypes(_ paymentTypeIds: [String]) {
-        self.paymentPreference?.excludedPaymentTypeIds = paymentTypeIds
+        self.paymentPreference.excludedPaymentTypeIds = paymentTypeIds
     }
 
     /**
@@ -105,7 +99,7 @@ extension PXCheckoutPreference {
      - parameter maxInstallments: max installments to be shown
      */
     public func setMaxInstallments(_ maxInstallments: Int) {
-        self.paymentPreference?.maxAcceptedInstallments = maxInstallments
+        self.paymentPreference.maxAcceptedInstallments = maxInstallments
     }
 
     /**
@@ -115,7 +109,7 @@ extension PXCheckoutPreference {
      - parameter defaultInstallments: number of the value to be forced
      */
     public func setDefaultInstallments(_ defaultInstallments: Int) {
-        self.paymentPreference?.defaultInstallments = defaultInstallments
+        self.paymentPreference.defaultInstallments = defaultInstallments
     }
 
     /**
@@ -125,7 +119,7 @@ extension PXCheckoutPreference {
      - parameter paymetMethodId: Payment method ID to make default.
      */
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
-        self.paymentPreference?.defaultPaymentMethodId = paymetMethodId
+        self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
 
     // MARK: MoneyIn
@@ -136,7 +130,7 @@ extension PXCheckoutPreference {
      - parameter paymetMethodId: cardId to autoselection Moneyin feature.
      */
     public func setCardId(cardId: String) {
-        self.paymentPreference?.cardId = cardId
+        self.paymentPreference.cardId = cardId
     }
 }
 
@@ -202,35 +196,35 @@ extension PXCheckoutPreference {
      getExcludedPaymentTypesIds
      */
     open func getExcludedPaymentTypesIds() -> [String] {
-        return paymentPreference?.getExcludedPaymentTypesIds() ?? []
+        return paymentPreference.getExcludedPaymentTypesIds() ?? []
     }
 
     /**
      getDefaultInstallments
      */
     open func getDefaultInstallments() -> Int {
-        return paymentPreference?.getDefaultInstallments() ?? 0
+        return paymentPreference.getDefaultInstallments() ?? 0
     }
 
     /**
      getMaxAcceptedInstallments
      */
     open func getMaxAcceptedInstallments() -> Int {
-        return paymentPreference?.getMaxAcceptedInstallments() ?? 0
+        return paymentPreference.getMaxAcceptedInstallments() ?? 0
     }
 
     /**
      getExcludedPaymentMethodsIds
      */
     open func getExcludedPaymentMethodsIds() -> [String] {
-        return paymentPreference?.getExcludedPaymentMethodsIds() ?? []
+        return paymentPreference.getExcludedPaymentMethodsIds() ?? []
     }
 
     /**
      getDefaultPaymentMethodId
      */
     open func getDefaultPaymentMethodId() -> String? {
-        return paymentPreference?.getDefaultPaymentMethodId()
+        return paymentPreference.getDefaultPaymentMethodId()
     }
 
     /**
