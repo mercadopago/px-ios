@@ -67,13 +67,13 @@
 
     [self setCheckoutPref_CreditCardNotExcluded];
 
-self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-04c0e3ac-d6f5-415a-8db1-5d555469d42e" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
     //self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
 
     [PXTracker setListener:self];
 
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-080815-c6ea450de1bf828e39add499237d727f-312667294"];
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
@@ -179,6 +179,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
     self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
+    [self.pref setCardIdWithCardId:@"260077840"];
     [self.pref addExcludedPaymentType:@"ticket"];
 }
 
