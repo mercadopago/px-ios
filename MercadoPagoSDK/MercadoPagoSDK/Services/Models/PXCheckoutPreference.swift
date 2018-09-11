@@ -31,7 +31,7 @@ import Foundation
     /**
      paymentPreference
      */
-    open var paymentPreference: PXPaymentPreference? = PXPaymentPreference()
+    open var paymentPreference: PXPaymentPreference = PXPaymentPreference()
     /**
         siteId
      */

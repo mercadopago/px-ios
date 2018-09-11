@@ -251,7 +251,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         // MoneyIn default card - OneTap safe business check.
-        if amountHelper.preference.paymentPreference?.cardId != nil {
+        if amountHelper.preference.paymentPreference.cardId != nil {
             return false
         }
 

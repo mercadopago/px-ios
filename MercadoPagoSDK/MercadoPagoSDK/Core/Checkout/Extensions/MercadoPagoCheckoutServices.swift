@@ -219,7 +219,7 @@ extension MercadoPagoCheckout {
 
             strongSelf.viewModel.payerCosts = installments[0].payerCosts
 
-            let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts)
+            let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(installments[0].payerCosts)
             if let defaultPC = defaultPayerCost {
                 strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
             }
