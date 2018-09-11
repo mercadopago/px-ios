@@ -1,10 +1,10 @@
 PODS:
   - FXBlurView (1.6.4)
   - JRSwizzle (1.0)
-  - MercadoPagoSDKV4 (4.0.1):
-    - MercadoPagoSDKV4/Default (= 4.0.1)
+  - MercadoPagoSDKV4 (4.0.2):
+    - MercadoPagoSDKV4/Default (= 4.0.2)
     - MLUI (~> 5.0)
-  - MercadoPagoSDKV4/Default (4.0.1):
+  - MercadoPagoSDKV4/Default (4.0.2):
     - MLUI (~> 5.0)
   - MLUI (5.1.0):
     - MLUI/ActionButton (= 5.1.0)
@@ -110,7 +110,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
-  MercadoPagoSDKV4: 0aa007412e25840df7e4ddabf696ad0b24eae197
+  MercadoPagoSDKV4: c5f1d3f6e9b13c24fb398794ed585331d9457f1e
   MLUI: 4bc30710e102d8348eece6a57f15ca86060f36b2
 
 PODFILE CHECKSUM: 9fbf5d290aaabfdd7a4deecec6a5e7d7ba6a6d53
