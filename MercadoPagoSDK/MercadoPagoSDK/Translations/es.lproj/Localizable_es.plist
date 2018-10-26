@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>main_verb</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>pagar</string>
+	</dict>
 	<key>error_body_title_</key>
 	<dict>
 		<key>comment</key>
@@ -310,7 +317,7 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Total a pagar</string>
+		<string>Total a %1$s</string>
 	</dict>
 	<key>total_row_consumed_discount</key>
 	<dict>

@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>main_verb</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>pagar</string>
+	</dict>
 	<key>error_body_title_</key>
 	<dict>
 		<key>comment</key>
@@ -310,7 +317,7 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Total a pagar</string>
+		<string>Total a %1$s</string>
 	</dict>
 	<key>total_row_consumed_discount</key>
 	<dict>
@@ -340,40 +347,40 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Algo não vai bem</string>
 	</dict>
-    <key>add_card_congrats_title</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Pronto! O seu cartão foi salvo</string>
-    </dict>
-    <key>add_card_go_to_my_cards</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Ir para Meus cartões</string>
-    </dict>
-    <key>add_card_failed_label_text</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Ocorreu um erro…</string>
-    </dict>
-    <key>add_card_failed_title</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Não foi possível carregar os dados do seu cartão</string>
-    </dict>
-    <key>add_card_try_again</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Tentar novamente</string>
-    </dict>
+	<key>add_card_congrats_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Pronto! O seu cartão foi salvo</string>
+	</dict>
+	<key>add_card_go_to_my_cards</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Ir para Meus cartões</string>
+	</dict>
+	<key>add_card_failed_label_text</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Ocorreu um erro…</string>
+	</dict>
+	<key>add_card_failed_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Não foi possível carregar os dados do seu cartão</string>
+	</dict>
+	<key>add_card_try_again</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Tentar novamente</string>
+	</dict>
 </dict>
 </plist>

@@ -96,7 +96,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         collectionSearch.addSubview(upperView)
 
         if self.title == nil || self.title!.isEmpty {
-            self.title = "¿Cómo quieres pagar?".localized
+            self.title = self.viewModel.advancedConfiguration.customStringConfiguration.getPaymentMethodsScreenTitle()
         }
 
         self.registerAllCells()
@@ -175,7 +175,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
     }
 
     private func getFloatingTotalRowView() -> UIView {
-        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper, shouldShowChevron: PXTotalRowBuilder.shouldAddActionToRow(amountHelper: self.viewModel.amountHelper))
+        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper, shouldShowChevron: PXTotalRowBuilder.shouldAddActionToRow(amountHelper: self.viewModel.amountHelper), customStrings: self.viewModel.advancedConfiguration.customStringConfiguration)
         let view = component.render()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))
         view.addGestureRecognizer(tap)
@@ -192,7 +192,10 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> Void) {
         return { [weak self] () -> Void in
-            self?.titleSectionReference?.fillCell()
+            if let weakSelf = self, let titleSectionReference = weakSelf.titleSectionReference {
+                let title = weakSelf.viewModel.advancedConfiguration.customStringConfiguration.getPaymentMethodsScreenTitle()
+                titleSectionReference.fillCell(titleText: title)
+            }
         }
     }
 
@@ -221,7 +224,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         if let cellRef = self.titleSectionReference {
             cellRef.title.text = ""
         }
-        return "¿Cómo quieres pagar?".localized
+        return self.viewModel.advancedConfiguration.customStringConfiguration.getPaymentMethodsScreenTitle()
     }
 
     open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -282,6 +285,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
         if indexPath.section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell", for: indexPath) as? PaymentVaultTitleCollectionViewCell else { return UICollectionViewCell.init() }
+            cell.title.text = self.viewModel.advancedConfiguration.customStringConfiguration.getPaymentMethodsScreenTitle()
             self.titleSectionReference = cell
             titleCell = cell
             return cell

@@ -77,7 +77,7 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
     }
 
     private func getFloatingTotalRowView() -> UIView {
-        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper, shouldShowChevron: PXTotalRowBuilder.shouldAddActionToRow(amountHelper: self.viewModel.amountHelper))
+        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper, shouldShowChevron: PXTotalRowBuilder.shouldAddActionToRow(amountHelper: self.viewModel.amountHelper), customStrings: self.viewModel.advancedConfigurations.customStringConfiguration)
         let view = component.render()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))
         view.addGestureRecognizer(tap)

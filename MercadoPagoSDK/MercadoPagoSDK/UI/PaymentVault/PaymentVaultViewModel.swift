@@ -19,6 +19,8 @@ class PaymentVaultViewModel: NSObject {
     var paymentMethods: [PXPaymentMethod]!
     var defaultPaymentOption: PXPaymentMethodSearchItem?
 
+    let advancedConfiguration: PXAdvancedConfiguration
+    
     var displayItems = [PaymentOptionDrawable]()
     var currency: PXCurrency = SiteManager.shared.getCurrency()
 
@@ -29,7 +31,7 @@ class PaymentVaultViewModel: NSObject {
 
     internal var isRoot = true
 
-    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [PXCardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((PXDiscount) -> Void)? = nil) {
+    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [PXCardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((PXDiscount) -> Void)? = nil, advancedConfiguration: PXAdvancedConfiguration) {
         self.amountHelper = amountHelper
         self.email = email
         self.groupName = groupName
@@ -39,6 +41,7 @@ class PaymentVaultViewModel: NSObject {
         self.isRoot = isRoot
         self.couponCallback = couponCallback
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.advancedConfiguration = advancedConfiguration
 
         super.init()
         self.populateDisplayItemsDrawable()

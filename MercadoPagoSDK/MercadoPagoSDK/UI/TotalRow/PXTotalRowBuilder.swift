@@ -10,7 +10,7 @@ import Foundation
 
 final class PXTotalRowBuilder: PXTotalRowComponent {
 
-    init(amountHelper: PXAmountHelper, shouldShowChevron: Bool = false) {
+    init(amountHelper: PXAmountHelper, shouldShowChevron: Bool = false, customStrings: PXCustomStringConfiguration) {
         let currency = SiteManager.shared.getCurrency()
         var title: NSAttributedString?
         var disclaimer: NSAttributedString?
@@ -27,7 +27,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
             title = attributedString
         } else {
-            var defaultTitleString = "total_row_title_default".localized_beta
+            var defaultTitleString = customStrings.getTotalRowTitle()
             if amountHelper.consumedDiscount {
                 defaultTitleString = "total_row_consumed_discount".localized_beta
             }

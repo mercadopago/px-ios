@@ -16,11 +16,10 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScroll
         super.awakeFromNib()
         self.title.font = Utils.getFont(size: title.font.pointSize)
         self.backgroundColor = ThemeManager.shared.getMainColor()
-        fillCell()
     }
 
-    func fillCell() {
-        title.text = "¿Cómo quieres pagar?".localized
+    func fillCell(titleText: String) {
+        title.text = titleText
     }
 
     internal func updateTitleFontSize(toSize: CGFloat) {

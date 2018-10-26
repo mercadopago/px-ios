@@ -206,9 +206,10 @@
 
 // RyC
 "Revisa si está todo bien..." = "Revisa si está todo bien...";
-"Total a pagar " = "Total a pagar ";
+"Total a pagar " = "Total a %1$s ";
 
-"¿Cómo quieres pagar?"="¿Cómo quieres pagar?";
+"¿Cómo quieres pagar?"="¿Cómo quieres %1$s?";
+"Verbo Pagar"="pagar";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
 "Con dinero en cuenta" = "Con dinero en cuenta";

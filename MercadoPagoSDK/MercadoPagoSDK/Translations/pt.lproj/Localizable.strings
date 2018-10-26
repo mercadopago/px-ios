@@ -205,9 +205,10 @@
 
 
 "Revisa si está todo bien..." = "Verifique para ver se está tudo bem...";
-"Total a pagar " = "Total a pagar ";
+"Total a pagar " = "Total a %1$s ";
 
-"¿Cómo quieres pagar?"="Como você prefere pagar?";
+"¿Cómo quieres pagar?"="Como você prefere %1$s?";
+"Verbo Pagar"="pagar";
 "Cancelar Pago"="Cancelar pagamento";
 
 "Términos y Condiciones"="Termos e Condições";

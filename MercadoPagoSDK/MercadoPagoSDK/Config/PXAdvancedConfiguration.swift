@@ -40,4 +40,9 @@ open class PXAdvancedConfiguration: NSObject {
      Enable to preset configurations to customize visualization on the 'Congrats' screen / 'PaymentResult' screen.
      */
     open var paymentResultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()
+    
+    /**
+     Enable to preset configurations to customize certain strings on the 'Payment Vault' screen.
+     */
+    public var customStringConfiguration: PXCustomStringConfiguration = PXCustomStringConfiguration()
 }

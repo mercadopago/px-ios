@@ -14,7 +14,9 @@ internal class CardsAdminViewModel {
     var customerId: String?
     var extraOptionTitle: String?
     var confirmPromptText: String?
-    var titleScreen = "¿Con qué tarjeta?".localized
+    var titleScreen: String
+
+    let advancedConfiguration: PXAdvancedConfiguration
 
     // View Constants
     let screenWidth: CGFloat = UIScreen.main.bounds.width
@@ -24,10 +26,12 @@ internal class CardsAdminViewModel {
     lazy var availableWidth: CGFloat = self.screenWidth - self.paddingSpace
     lazy var widthPerItem: CGFloat = self.availableWidth / CGFloat(self.itemsPerRow)
 
-    public init(cards: [PXCard]? = nil, extraOptionTitle: String? = nil, confirmPromptText: String? = nil) {
+    public init(cards: [PXCard]? = nil, titleScreen: String, extraOptionTitle: String? = nil, confirmPromptText: String? = nil, advancedConfigurations: PXAdvancedConfiguration) {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
+        self.titleScreen = titleScreen;
         self.confirmPromptText = confirmPromptText
+        self.advancedConfiguration = advancedConfigurations
     }
 
     func numberOfOptions() -> Int {

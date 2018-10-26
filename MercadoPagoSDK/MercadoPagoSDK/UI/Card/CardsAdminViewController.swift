@@ -37,7 +37,7 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
 
     private var callback : ((_ selectedCard: PXCard?) -> Void)!
 
-    public init(viewModel: CardsAdminViewModel, callback : @escaping (_ selectedCard: PXCard?) -> Void) {
+    public init(viewModel: CardsAdminViewModel, advancedConfiguration: PXAdvancedConfiguration, callback : @escaping (_ selectedCard: PXCard?) -> Void) {
         super.init(nibName: CardsAdminViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.viewModel = viewModel
         self.callback = callback
@@ -199,9 +199,10 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
 
     fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> Void) {
         return { [weak self] in
-            if self?.titleSectionReference != nil {
-                self?.titleSectionReference.fillCell()
-                self?.titleSectionReference.title.text = self?.viewModel.getScreenTitle()
+            if let weakSelf = self, let titleSelectionReference = weakSelf.titleSectionReference {
+                let title: String = weakSelf.viewModel.advancedConfiguration.customStringConfiguration.getPaymentMethodsScreenTitle()
+                titleSelectionReference.fillCell(titleText: title)
+                titleSelectionReference.title.text = weakSelf.viewModel.getScreenTitle()
             }
         }
     }

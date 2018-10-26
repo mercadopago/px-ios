@@ -14,7 +14,7 @@ extension MercadoPagoCheckout {
 
         viewModel.cleanPaymentData()
 
-        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
+        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel:  self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
                 return

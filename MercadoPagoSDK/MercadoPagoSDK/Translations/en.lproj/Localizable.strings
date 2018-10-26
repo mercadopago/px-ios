@@ -193,9 +193,10 @@
 
 // RyC
 "Revisa si está todo bien..." = "Verify that everything is fine…";
-"Total a pagar " = "Total to pay ";
+"Total a pagar " = "Total to %1$s ";
 
-"¿Cómo quieres pagar?"="How do you want to pay?";
+"¿Cómo quieres pagar?"="How do you want to %1$s?";
+"Verbo Pagar"="pay";
 "Términos y Condiciones"="Terms and Conditions";
 "Revisa tu pago" = "Check your payment";
 "Revisa si está todo bien" = "Check your payment";
