@@ -109,7 +109,7 @@ extension OneTapFlow {
                 }
 
                 if let firstPaymentMethodId = search.expressCho?.first?.paymentMethodId {
-                    let customOptionsFound = customerPaymentMethods.filter { return  $0.getCardId() == firstPaymentMethodId }
+                    let customOptionsFound = customerPaymentMethods.filter { return $0.getPaymentMethodId() == firstPaymentMethodId }
                     if let customerPaymentMethod = customOptionsFound.first {
                         // Check if one tap response has payer costs
                         if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, expressPaymentMethod.selectedPayerCost != nil {
