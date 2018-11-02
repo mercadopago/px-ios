@@ -10,10 +10,10 @@ import Foundation
 
 internal class PXTrackingStore {
     static let sharedInstance = PXTrackingStore()
-    static let PAYMENT_METHOD_OPTIONS = "PAYMENT_METHOD_OPTIONS"
-    private var data = [String: String]()
+    static let cardIdsESC = "CARD_IDS_ESC"
+    private var data = [String: Any]()
 
-    public func addData(forKey: String, value: String) {
+    public func addData(forKey: String, value: Any) {
         self.data[forKey] = value
     }
 
@@ -25,7 +25,7 @@ internal class PXTrackingStore {
         data.removeAll()
     }
 
-    public func getData(forKey: String) -> String? {
+    public func getData(forKey: String) -> Any? {
         return self.data[forKey]
     }
 }

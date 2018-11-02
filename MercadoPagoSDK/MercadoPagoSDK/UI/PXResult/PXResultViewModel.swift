@@ -26,17 +26,6 @@ internal class PXResultViewModel: PXResultViewModelInterface {
     }
 
     func trackInfo() {
-        var metadata = [TrackingPaths.METADATA_PAYMENT_IS_EXPRESS: TrackingPaths.IS_EXPRESS_DEFAULT_VALUE,
-                        TrackingPaths.METADATA_PAYMENT_STATUS: self.getPaymentStatus(),
-                        TrackingPaths.METADATA_PAYMENT_STATUS_DETAIL: self.getPaymentStatusDetail(),
-                        TrackingPaths.METADATA_PAYMENT_ID: self.getPaymentId() ?? ""]
-        if let pm = self.getPaymentData().getPaymentMethod() {
-            metadata[TrackingPaths.METADATA_PAYMENT_METHOD_ID] = pm.id
-        }
-        if let issuer = self.getPaymentData().getIssuer() {
-            metadata[TrackingPaths.METADATA_ISSUER_ID] = issuer.id
-        }
-
         let paymentStatus = self.getPaymentStatus()
         var screenPath = ""
 
@@ -48,7 +37,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 
     func getPaymentData() -> PXPaymentData {

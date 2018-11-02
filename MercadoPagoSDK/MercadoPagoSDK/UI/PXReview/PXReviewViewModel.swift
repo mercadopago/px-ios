@@ -30,16 +30,7 @@ class PXReviewViewModel: NSObject {
 
     // MARK: Tracking logic
     func trackConfirmActionEvent() {
-        var properties: [String: String] = [TrackingPaths.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.id ?? "", TrackingPaths.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingPaths.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmountWithCharges)]
 
-        if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
-            properties[TrackingPaths.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
-        }
-        if let installments = amountHelper.paymentData.payerCost?.installments {
-            properties[TrackingPaths.METADATA_INSTALLMENTS] = installments.stringValue
-        }
-
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.ACTION_CHECKOUT_CONFIRMED, screenId: "", screenName: screenName, properties: properties)
     }
 
     func trackInfo() {

@@ -67,9 +67,6 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
     }
 
     override func trackInfo() {
-        let paymentMethodsOptions = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS) ?? ""
-        let properties: [String: String] = [TrackingPaths.METADATA_OPTIONS: paymentMethodsOptions]
-
         var screenPath = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
 
         if let groupName = groupName {
@@ -80,7 +77,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
             }
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: properties)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 
     required  public init(coder aDecoder: NSCoder) {

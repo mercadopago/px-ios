@@ -19,34 +19,49 @@ final class PXOneTapViewModel: PXReviewViewModel {
     var items: [PXItem] = [PXItem]()
 
     override func trackConfirmActionEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.ACTION_CHECKOUT_CONFIRMED, screenId: "screenId", screenName: TrackingPaths.Screens.getOneTapPath())
+        guard let paymentMethod = amountHelper.paymentData.paymentMethod else {
+            return
+        }
+        var properties: [String: Any] = [:]
+        if paymentMethod.isCard {
+            properties["payment_method_type"] = paymentMethod.id
+            properties["payment_method_id"] = paymentMethod.paymentTypeId
+            var extraInfo: [String: Any] = [:]
+            // TODO: Obtener card id
+//            extraInfo["card_id"] = savedCard.cardId
+//            extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
+            extraInfo["selected_installment"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
+            properties["extra_info"] = extraInfo
+        } else {
+            properties["payment_method_type"] = paymentMethod.id
+            properties["payment_method_id"] = paymentMethod.id
+            var extraInfo: [String: Any] = [:]
+            extraInfo["balance"] = // TODO: Buscar balance
+            properties["extra_info"] = extraInfo
+        }
+
+        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getConfirmPath(), properties: properties)
     }
 
     override func trackInfo() {
-        var properties: [String: String] = [TrackingPaths.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.id ?? "", TrackingPaths.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingPaths.METADATA_AMOUNT_ID: self.amountHelper.preferenceAmountWithCharges.stringValue]
-
-        if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
-            properties[TrackingPaths.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
+        var properties: [String: Any] = [:]
+        properties["available_methods"] = getAvailablePaymentMethodForTracking()
+        properties["total_amount"] = amountHelper.amountToPay
+        properties["currency_id"] = SiteManager.shared.getSiteId()
+        properties["discount"] = amountHelper.getDiscountForTracking()
+        var itemsDic: [Any] = []
+        for item in amountHelper.preference.items {
+            var itemDic: [String: Any] = [:]
+            itemDic["id"] = item.id
+            itemDic["description"] = item.getDescription()
+            itemDic["price"] = item.getUnitPrice()
+            itemDic["quantity"] = item.getQuantity()
+            itemDic["currency_id"] = SiteManager.shared.getCurrency().id
+            itemsDic.append(itemDic)
         }
-        if let installments = self.amountHelper.paymentData.payerCost?.installments {
-            properties[TrackingPaths.METADATA_INSTALLMENTS] = installments.stringValue
-        }
+        properties["items"] = itemsDic
 
-        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.getOneTapPath(), properties: properties)
-    }
-}
-
-// MARK: - Extra events
-extension PXOneTapViewModel {
-    func trackTapSummaryDetailEvent() {
-        var properties: [String: String] = [String: String]()
-        properties[TrackingPaths.Metadata.HAS_DISCOUNT] = hasDiscount().description
-        properties[TrackingPaths.Metadata.INSTALLMENTS] = amountHelper.paymentData.getNumberOfInstallments().stringValue
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_SUMMARY_DETAIL, screenId: TrackingPaths.Screens.getOneTapPath(), screenName: TrackingPaths.Screens.getOneTapPath(), properties: properties)
-    }
-
-    func trackTapBackEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_BACK, screenId: TrackingPaths.Screens.getOneTapPath(), screenName: TrackingPaths.Screens.getOneTapPath())
+        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: properties)
     }
 }
 
@@ -222,5 +237,60 @@ extension PXOneTapViewModel {
             }
         }
         return text
+    }
+}
+
+// MARK: Tracking
+extension PXOneTapViewModel {
+    func getAvailablePaymentMethodForTracking() -> [Any] {
+        var dic: [Any] = []
+        if let expressData = expressData {
+            let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
+            for expressItem in expressData {
+                if let savedCard = expressItem.oneTapCard {
+                    var savedCardDic: [String: Any] = [:]
+                    savedCardDic["payment_method_type"] = expressItem.paymentMethodId
+                    savedCardDic["payment_method_id"] = expressItem.paymentTypeId
+                    var extraInfo: [String: Any] = [:]
+                    extraInfo["card_id"] = savedCard.cardId
+                    extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
+                    extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
+                    savedCardDic["extra_info"] = extraInfo
+                    dic.append(savedCardDic)
+                } else if let accountMoney = expressItem.accountMoney {
+                    var accountMoneyDic: [String: Any] = [:]
+                    accountMoneyDic["payment_method_type"] = expressItem.paymentMethodId
+                    accountMoneyDic["payment_method_id"] = expressItem.paymentTypeId
+                    var extraInfo: [String: Any] = [:]
+                    extraInfo["balance"] = accountMoney.availableBalance
+                    accountMoneyDic["extra_info"] = extraInfo
+                    dic.append(accountMoneyDic)
+                }
+            }
+        }
+        return dic
+    }
+
+    func trackSwipe() {
+        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.OneTap.getSwipePath())
+    }
+
+    func trackTapBackEvent() {
+        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.OneTap.getAbortPath())
+    }
+
+    func trackInstallmentsView(installmentData: PXInstallment) {
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.id
+        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.paymentTypeId
+        properties["card_id"] =  // TODO: Get card id
+        properties["issuer_id"] = amountHelper.paymentData.issuer?.id
+        properties["total_amount"] = amountHelper.amountToPay
+        var dic: [Any] = []
+        for payerCost in installmentData.payerCosts {
+            dic.append(payerCost.getPayerCostForTracking())
+        }
+        properties["available_installments"] = dic
+        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapInstallmentsPath())
     }
 }

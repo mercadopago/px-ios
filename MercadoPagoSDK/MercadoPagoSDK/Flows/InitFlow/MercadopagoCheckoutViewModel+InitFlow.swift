@@ -28,7 +28,7 @@ extension MercadoPagoCheckoutViewModel {
         // Create init flow.
         initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse, pxCampaigns, pxDiscount)  in
             self?.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-
+            PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.cardIdsESC, value: self?.getCardsIdsWithESC() ?? [])
             self?.campaigns = pxCampaigns
             self?.checkoutPreference = checkoutPreference
             self?.attemptToApplyDiscount(discount: pxDiscount)

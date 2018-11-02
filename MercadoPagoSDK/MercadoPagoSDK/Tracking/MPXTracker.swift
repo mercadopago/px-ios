@@ -68,13 +68,15 @@ internal extension MPXTracker {
 
 // MARK: Public interfase.
 internal extension MPXTracker {
-    internal func trackScreen(screenName: String, properties: [String: String] = [:]) {
+    internal func trackScreen(screenName: String, properties: [String: Any] = [:]) {
         if let trackListenerInterfase = trackListener {
             trackListenerInterfase.trackScreen(screenName: screenName, extraParams: [:])
         }
     }
 
-    internal func trackActionEvent(action: String, screenId: String, screenName: String, properties: [String: String] = [:]) {
-
+    internal func trackEvent(path: String, properties: [String: Any] = [:]) {
+        if let trackListenerInterfase = trackListener {
+            trackListenerInterfase.trackEvent(screenName: path, action: "", result: "", extraParams: properties)
+        }
     }
 }

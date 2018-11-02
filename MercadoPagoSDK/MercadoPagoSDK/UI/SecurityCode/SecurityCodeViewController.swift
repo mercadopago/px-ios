@@ -22,11 +22,9 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     var toolbar: PXToolbar?
 
     override func trackInfo() {
-        let metadata: [String: String] = [TrackingPaths.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
-
         let screenPath = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 
     @objc func keyboardWillShow(notification: Notification) {

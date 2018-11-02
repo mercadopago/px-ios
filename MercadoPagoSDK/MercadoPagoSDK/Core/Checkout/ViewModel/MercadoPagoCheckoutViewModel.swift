@@ -182,33 +182,17 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
     }
 
-    // Returns lists of all payment option available
-    fileprivate func getPaymentMethodsOptions(_ paymentMethodPluginsToShow: [PXPaymentMethodPlugin]) -> String {
-        var paymentMethodsOptions = ""
-
-        if let paymentMethods = search?.paymentMethods {
-            for paymentMethod in paymentMethods {
-                if let id = paymentMethod.id {
-                    paymentMethodsOptions += "\(id):\(paymentMethod.paymentTypeId)|"
-                }
-            }
-        }
-
+    // Returns list with all cards ids with esc
+    func getCardsIdsWithESC() -> [String] {
+        var cardIdsWithESC: [String] = []
         if let customPaymentOptions = customPaymentOptions {
             for customCard in customPaymentOptions {
-                paymentMethodsOptions += "\(customCard.getPaymentMethodId()):\(customCard.getPaymentTypeId()):\(customCard.getCardId())"
                 if mpESCManager.getESC(cardId: customCard.getCardId()) != nil {
-                    paymentMethodsOptions += ":ESC"
+                    cardIdsWithESC.append(customCard.getCardId())
                 }
-                paymentMethodsOptions += "|"
             }
         }
-
-        for paymentMethodPlugin in paymentMethodPluginsToShow {
-            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\(PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue)|"
-        }
-        paymentMethodsOptions = String(paymentMethodsOptions.dropLast())
-        return paymentMethodsOptions
+        return cardIdsWithESC
     }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {
@@ -219,10 +203,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         populateCheckoutStore()
         let paymentMethodPluginsToShow = paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
-
-        // Get payment methods options for tracking in PaymentVault
-        let paymentMethodsOptions = getPaymentMethodsOptions(paymentMethodPluginsToShow)
-        PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS, value: paymentMethodsOptions)
 
         return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
             if self == nil {

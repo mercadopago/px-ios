@@ -205,8 +205,7 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override func track() {
-        let metadata: [String: String] = [TrackingPaths.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].id]
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
 }

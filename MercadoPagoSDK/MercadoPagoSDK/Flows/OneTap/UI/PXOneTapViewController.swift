@@ -271,6 +271,8 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
 extension PXOneTapViewController: PXCardSliderProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
 
+        viewModel.trackSwipe()
+
         // Installments arrow animation
         if targetModel.shouldShowArrow {
             installmentInfoRow?.showArrow()
@@ -356,6 +358,8 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
         }
+
+        self.viewModel.trackInstallmentsView(installmentData: installmentData)
 
         PXFeedbackGenerator.selectionFeedback()
 

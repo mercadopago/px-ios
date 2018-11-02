@@ -37,6 +37,10 @@ internal extension PXDiscount {
         return self.couponAmount
     }
 
+    internal func hasPercentOff() -> Bool {
+        return percentOff != 0
+    }
+
     internal func getDiscountReviewDescription() -> String {
         let text  = "discount_coupon_detail_default_concept".localized_beta
          if self.percentOff != 0 {

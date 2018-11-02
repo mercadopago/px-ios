@@ -22,7 +22,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: [String: String]())
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 
     let businessResult: PXBusinessResult
