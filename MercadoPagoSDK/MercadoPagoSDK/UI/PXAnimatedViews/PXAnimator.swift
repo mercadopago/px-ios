@@ -46,9 +46,7 @@ struct PXAnimator {
 
             transitionAnimator.startAnimation()
         } else {
-
             // TODO: Minimum version should be iOS 10.0
-
         }
     }
 

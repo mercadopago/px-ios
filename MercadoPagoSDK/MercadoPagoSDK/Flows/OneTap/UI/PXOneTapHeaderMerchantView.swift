@@ -27,7 +27,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     private var IMAGE_SIZE: CGFloat {
         if UIDevice.isSmallDevice() {
             return 40
-        } else if UIDevice.isBigDevice() {
+        } else if UIDevice.isLargeDevice() || UIDevice.isExtraLargeDevice() {
             return 65
         } else {
             return 55

@@ -116,7 +116,13 @@ extension InitFlow {
             differentialPricingString = String(describing: diffPricing)
         }
 
-        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString), callback: { [weak self] (paymentMethodSearch) in
+        var defaultInstallments: String?
+        let dInstallments = model.properties.checkoutPreference.getDefaultInstallments()
+        if dInstallments > 0 {
+            defaultInstallments = String(dInstallments)
+        }
+
+        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments), callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return

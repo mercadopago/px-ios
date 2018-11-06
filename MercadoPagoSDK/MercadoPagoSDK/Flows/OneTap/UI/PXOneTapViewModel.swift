@@ -11,7 +11,6 @@ import Foundation
 final class PXOneTapViewModel: PXReviewViewModel {
     // Privates
     private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
-
     // Publics
     var expressData: [PXOneTapDto]?
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
@@ -45,8 +44,7 @@ extension PXOneTapViewModel {
     func createCardSliderViewModel() {
         var sliderModel: [PXCardSliderViewModel] = []
         let currency = SiteManager.shared.getCurrency()
-        // TODO: Translation
-        let amTitle: String = "Total en Mercado Pago:"
+        let amTitle: String = "onetap_am_total_balance".localized_beta
         guard let expressNode = expressData else { return }
         for targetNode in expressNode {
 
@@ -131,14 +129,13 @@ extension PXOneTapViewModel {
         var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
 
         if let discount = amountHelper.discount {
-            // TODO: Translations and Set proper colors / localized or beta_localize
-            customData.append(OneTapHeaderSummaryData("Tu compra".localized, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
+            customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_title".localized_beta, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
             let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
             let helperImage: UIImage? = isDefaultStatusBarStyle ? ResourceManager.shared.getImage("helper_ico") : ResourceManager.shared.getImage("helper_ico_light")
             customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
         }
 
-        customData.append(OneTapHeaderSummaryData("Total a pagar".localized, totalAmountToShow, totalColor, totalAlpha, true, nil))
+        customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_total".localized_beta, totalAmountToShow, totalColor, totalAlpha, true, nil))
 
         // HeaderImage
         var headerImage: UIImage = UIImage()
@@ -197,11 +194,9 @@ extension PXOneTapViewModel {
             text.append(firstAttributedString)
 
             // Second attr
-            // TODO: Check with Android and Backend rule based on recommendedMessage or installmentRate.
             // if let recommendedMessage = payerCostData.recommendedMessage {
             if payerCostData.installmentRate == 0 {
                 let secondAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
-                // let secondText = " \(recommendedMessage)"
                 let secondText = " Sin interés".localized
                 let secondAttributedString = NSAttributedString(string: secondText, attributes: secondAttributes)
                 text.append(secondAttributedString)

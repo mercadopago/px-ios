@@ -101,10 +101,10 @@ extension PXOneTapViewController {
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.navigationBar().getTintColor()
         navigationController?.navigationBar.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.backgroundColor = .clear
     }
 
     private func setupUI() {
-        self.navigationController?.navigationBar.backgroundColor = .clear
         if contentView.getSubviews().isEmpty {
             viewModel.createCardSliderViewModel()
             renderViews()
@@ -124,8 +124,6 @@ extension PXOneTapViewController {
 
         // Center white View
         let whiteView = getWhiteView()
-        // TODO: Margin factor for white view is temporary. Only for test
-        // Make solution like expandBody
         contentView.addSubviewToBottom(whiteView)
         PXLayout.setHeight(owner: whiteView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)).isActive = true
         PXLayout.centerHorizontally(view: whiteView).isActive = true
@@ -264,9 +262,19 @@ extension PXOneTapViewController {
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
     func didTapSummary() {
         if viewModel.amountHelper.discount != nil {
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: viewModel.amountHelper.discount?.getDiscountDescription())
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: viewModel.amountHelper.discount?.getDiscountDescription()) {
+
+                if UIDevice.isSmallDevice() {
+                    self.setupNavigationBar()
+                }
+            }
         } else if viewModel.amountHelper.consumedDiscount {
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: "modal_title_consumed_discount".localized_beta)
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: "modal_title_consumed_discount".localized_beta) {
+
+                if UIDevice.isSmallDevice() {
+                    self.setupNavigationBar()
+                }
+            }
         }
     }
 }
@@ -307,7 +315,6 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     func addPaymentMethodCardDidTap() {
-        // TODO: Go to grupos -> add new card
         shouldChangePaymentMethod()
     }
 

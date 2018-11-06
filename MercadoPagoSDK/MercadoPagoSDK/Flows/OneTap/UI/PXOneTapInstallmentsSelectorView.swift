@@ -7,16 +7,13 @@
 
 import UIKit
 
-protocol PXOneTapInstallmentsSelectorProtocol: NSObjectProtocol {
-    func payerCostSelected(_ payerCost: PXPayerCost)
-}
-
-final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelegate, UITableViewDataSource {
-
+final class PXOneTapInstallmentsSelectorView: PXComponentView {
     private var model: PXOneTapInstallmentsSelectorViewModel
     let tableView = UITableView()
-
+    let tableViewTopSeparator = UIView()
+    let shadowView = UIImageView(image: ResourceManager.shared.getImage("one-tap-installments-shadow"))
     weak var delegate: PXOneTapInstallmentsSelectorProtocol?
+    var tableViewHeightConstraint: NSLayoutConstraint?
 
     init(viewModel: PXOneTapInstallmentsSelectorViewModel) {
         model = viewModel
@@ -32,17 +29,14 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         model = viewModel
         render()
     }
+}
 
-    var tableViewHeightConstraint: NSLayoutConstraint?
-    let tableViewTopSeparator = UIView()
-    let shadowView = UIImageView(image: ResourceManager.shared.getImage("one-tap-installments-shadow"))
-
+extension PXOneTapInstallmentsSelectorView {
     func render() {
         removeAllSubviews()
         pinContentViewToTop()
         addSubviewToBottom(tableView)
-
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         tableViewHeightConstraint = PXLayout.setHeight(owner: tableView, height: 0)
         tableViewHeightConstraint?.isActive = true
         PXLayout.pinLeft(view: tableView).isActive = true
@@ -51,7 +45,6 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-
         tableViewTopSeparator.translatesAutoresizingMaskIntoConstraints = false
         tableViewTopSeparator.backgroundColor = tableView.separatorColor
         PXLayout.setHeight(owner: tableViewTopSeparator, height: 0.5).isActive = true
@@ -98,7 +91,10 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         }
         pxAnimator.animate()
     }
+}
 
+// MARK: UITableViewDelegate & DataSource
+extension PXOneTapInstallmentsSelectorView: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

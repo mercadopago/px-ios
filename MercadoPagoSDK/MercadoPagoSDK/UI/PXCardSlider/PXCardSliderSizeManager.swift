@@ -26,12 +26,20 @@ struct PXCardSliderSizeManager {
 
     static func getItemSize() -> CGSize {
         if UIDevice.isSmallDevice() {
-            return CGSize(width: 290, height: 190)
-        } else if UIDevice.isBigDevice() {
-            return CGSize(width: 340, height: 220)
+            return getSizeByGoldenAspectRatio(width: 290)
+        } else if UIDevice.isLargeDevice() {
+            return getSizeByGoldenAspectRatio(width: 340)
+        } else if UIDevice.isExtraLargeDevice() {
+            return getSizeByGoldenAspectRatio(width: 380)
         } else {
-            return CGSize(width: 340, height: 220)
+            return getSizeByGoldenAspectRatio(width: 340)
         }
+    }
+
+    static func getSizeByGoldenAspectRatio(width: CGFloat) -> CGSize {
+        let goldenAspectRation: CGFloat = 1.586
+        let size = CGSize(width: width, height: width / goldenAspectRation)
+        return size
     }
 
     static func getItemContainerSize() -> CGSize {

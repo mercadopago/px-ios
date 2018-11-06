@@ -49,7 +49,7 @@ extension MercadoPagoCheckout {
         }
         if cardInfo.canBeClone() {
             guard let token = cardInfo as? PXToken else {
-                return // TODO Refactor : Tenemos unos lios barbaros con CardInformation y CardInformationForm, no entiendo porque hay uno y otr
+                return // TODO Refactor: Check CardInformation y CardInformationForm.
             }
             cloneCardToken(token: token, securityCode: securityCode!)
 

@@ -375,5 +375,33 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Intentar de nuevo</string>
 	</dict>
+    <key>onetap_add_new_card_title</key>
+    <dict>
+        <key>comment</key>
+        <string></string>
+        <key>value</key>
+        <string>Agregar una tarjeta nueva</string>
+    </dict>
+    <key>onetap_purchase_summary_total</key>
+    <dict>
+        <key>comment</key>
+        <string></string>
+        <key>value</key>
+        <string>Total a pagar</string>
+    </dict>
+    <key>onetap_purchase_summary_title</key>
+    <dict>
+        <key>comment</key>
+        <string></string>
+        <key>value</key>
+        <string>Tu compra</string>
+    </dict>
+    <key>onetap_am_total_balance</key>
+    <dict>
+        <key>comment</key>
+        <string></string>
+        <key>value</key>
+        <string>Total en Mercado Pago:</string>
+    </dict>
 </dict>
 </plist>

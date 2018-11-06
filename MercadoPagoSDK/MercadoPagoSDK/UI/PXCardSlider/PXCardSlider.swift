@@ -6,13 +6,6 @@
 
 import UIKit
 
-protocol PXCardSliderProtocol: NSObjectProtocol {
-    func newCardDidSelected(targetModel: PXCardSliderViewModel)
-    func addPaymentMethodCardDidTap()
-    func didScroll(offset: CGPoint)
-    func didEndDecelerating()
-}
-
 final class PXCardSlider: NSObject {
     private var pagerView = FSPagerView(frame: .zero)
     private var pageControl = ISPageControl(frame: .zero, numberOfPages: 0)

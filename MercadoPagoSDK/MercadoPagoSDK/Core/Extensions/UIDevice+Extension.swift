@@ -10,15 +10,21 @@ import Foundation
 internal extension UIDevice {
 
     static func isSmallDevice() -> Bool {
-        let smallDevices = ["iPhone SE", "iPhone 5s", "iPhone 5c", "iPhone 5"]
+        let devices = ["iPhone SE", "iPhone 5s", "iPhone 5c", "iPhone 5"]
         let modelName = self.modelName.replacingOccurrences(of: "Simulator ", with: "")
-        return smallDevices.contains(modelName)
+        return devices.contains(modelName)
     }
 
-    static func isBigDevice() -> Bool {
-        let bigDevices = ["iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X", "iPhone XS", "iPhone XS Max", "iPhone XR"]
+    static func isLargeDevice() -> Bool {
+        let devices = ["iPhone X", "iPhone XS"]
         let modelName = self.modelName.replacingOccurrences(of: "Simulator ", with: "")
-        return bigDevices.contains(modelName)
+        return devices.contains(modelName)
+    }
+
+    static func isExtraLargeDevice() -> Bool {
+        let devices = ["iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone XS Max", "iPhone XR"]
+        let modelName = self.modelName.replacingOccurrences(of: "Simulator ", with: "")
+        return devices.contains(modelName)
     }
 
     static let modelName: String = {

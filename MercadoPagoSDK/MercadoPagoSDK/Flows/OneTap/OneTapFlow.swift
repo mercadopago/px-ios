@@ -57,6 +57,12 @@ final class OneTapFlow: NSObject, PXFlow {
         model.search.deleteCheckoutDefaultOption()
         resultHandler?.cancelOneTap()
     }
+    
+    // Cancel one tap and go to checkout
+    func cancelFlowForNewPaymentSelection() {
+        model.search.deleteCheckoutDefaultOption()
+        resultHandler?.cancelOneTapForNewPaymentMethodSelection()
+    }
 
     // Finish one tap and continue with checkout
     func finishFlow() {

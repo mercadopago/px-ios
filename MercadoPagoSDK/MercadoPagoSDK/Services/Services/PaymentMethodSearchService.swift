@@ -41,11 +41,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-
-        // TODO: Remove for PROD.
-        // Mock apiary to test.
-        // self.baseURL = "http://private-175b69-onetapgroups.apiary-mock.com/new?"
+    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, defaultInstallments: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
 
@@ -65,6 +61,10 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         if let defaultPaymenMethodId = defaultPaymenMethodId {
             params.paramsAppend(key: ApiParams.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
+        }
+
+        if let customDefaultInstallments = defaultInstallments {
+            params.paramsAppend(key: ApiParams.DEFAULT_INSTALLMENTS, value: customDefaultInstallments)
         }
 
         params.paramsAppend(key: ApiParams.EMAIL, value: customerEmail)

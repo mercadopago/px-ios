@@ -36,7 +36,7 @@ open class MercadoPagoCheckout: NSObject {
             choPref = PXCheckoutPreference(preferenceId: preferenceId)
         } else if let preference = builder.checkoutPreference {
             choPref = preference
-            SiteManager.shared.setSite(siteId: choPref.getSiteId()) // TODO: Ver esto
+            SiteManager.shared.setSite(siteId: choPref.getSiteId())
         } else {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }

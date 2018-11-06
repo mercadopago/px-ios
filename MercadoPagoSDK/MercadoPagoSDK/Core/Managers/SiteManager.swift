@@ -42,6 +42,7 @@ internal class SiteManager {
 
         // TODO: Remove force
         let siteConfig = siteIdsSettings[siteId]
+
         self.currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)!
         self.termsAndConditionsSite = siteConfig!["termsconditions"] as? String ?? ""
     }

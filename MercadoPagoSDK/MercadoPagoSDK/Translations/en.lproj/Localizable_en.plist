@@ -214,5 +214,33 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Something went wrong</string>
 	</dict>
+	<key>onetap_am_total_balance</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Total in Mercado Pago:</string>
+	</dict>
+	<key>onetap_purchase_summary_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Your purchase</string>
+	</dict>
+	<key>onetap_purchase_summary_total</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Total due</string>
+	</dict>
+	<key>onetap_add_new_card_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Add new card</string>
+	</dict>
 </dict>
 </plist>

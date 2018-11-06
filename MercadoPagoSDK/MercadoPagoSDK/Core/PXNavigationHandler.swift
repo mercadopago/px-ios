@@ -102,7 +102,6 @@ internal class PXNavigationHandler: NSObject {
                                      animated: Bool, backToFirstPaymentVault: Bool = false) {
         viewController.hidesBottomBarWhenPushed = true
 
-        // TODO: Review with Product, navigation flow for -> backToFirstPaymentVault = true.
         if backToFirstPaymentVault {
             self.navigationController.navigationBar.isHidden = false
             viewController.callbackCancel = { [weak self] in self?.backToFirstPaymentVaultViewController() }

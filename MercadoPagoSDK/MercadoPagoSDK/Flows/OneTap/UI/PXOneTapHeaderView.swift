@@ -7,24 +7,6 @@
 
 import UIKit
 
-typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, alpha: CGFloat, isTotal: Bool, image: UIImage?)
-
-protocol PXOneTapHeaderProtocol: NSObjectProtocol {
-    func didTapSummary()
-}
-
-class PXOneTapHeaderViewModel {
-    let icon: UIImage
-    let title: String
-    let data: [OneTapHeaderSummaryData]
-
-    init(icon: UIImage, title: String, data: [OneTapHeaderSummaryData]) {
-        self.icon = icon
-        self.title = title
-        self.data = data
-    }
-}
-
 class PXOneTapHeaderView: PXComponentView {
     let model: PXOneTapHeaderViewModel
     private weak var delegate: PXOneTapHeaderProtocol?
@@ -39,7 +21,10 @@ class PXOneTapHeaderView: PXComponentView {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
+// MARK: Privates.
+extension PXOneTapHeaderView {
     private func render() {
         removeAllSubviews()
         backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
@@ -91,7 +76,10 @@ class PXOneTapHeaderView: PXComponentView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSummaryTap))
         summaryView.addGestureRecognizer(tapGesture)
     }
+}
 
+// MARK: Publics.
+extension PXOneTapHeaderView {
     func getSummaryRowView(with data: OneTapHeaderSummaryData) -> UIView {
         let rowHeight: CGFloat = data.isTotal ? 20 : 16
         let titleFont = data.isTotal ? Utils.getFont(size: PXLayout.S_FONT) : Utils.getFont(size: PXLayout.XXS_FONT)
