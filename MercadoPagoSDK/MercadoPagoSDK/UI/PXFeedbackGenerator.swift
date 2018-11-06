@@ -13,8 +13,12 @@ struct PXFeedbackGenerator {
         return UIDevice.current.batteryLevel
     }
 
+    private static func getBatteryState() -> UIDeviceBatteryState {
+        return UIDevice.current.batteryState
+    }
+
     private static func shouldGiveFeedback() -> Bool {
-        return getBatteryLevel() > 0.2
+        return getBatteryLevel() > 0.2 || getBatteryState() == .charging
     }
 
     // UINotificationFeedbackGenerator

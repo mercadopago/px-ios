@@ -8,7 +8,7 @@
 import UIKit
 
 class ISPageControl: UIControl {
-    private let limit = 5
+    private let limit = 4
     private var fullScaleIndex = [0, 1, 2]
     private var dotLayers: [CALayer] = []
     private var diameter: CGFloat { return radius * 2 }

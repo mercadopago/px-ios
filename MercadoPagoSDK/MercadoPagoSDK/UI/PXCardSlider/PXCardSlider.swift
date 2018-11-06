@@ -141,6 +141,7 @@ extension PXCardSlider {
         let pagerYMargin: CGFloat = PXLayout.XXXS_MARGIN
         let pagerHeight: CGFloat = 10
         pageControl.radius = 3
+        pageControl.padding = 6
         pageControl.contentHorizontalAlignment = .center
         pageControl.numberOfPages = model.count
         pageControl.currentPage = 0

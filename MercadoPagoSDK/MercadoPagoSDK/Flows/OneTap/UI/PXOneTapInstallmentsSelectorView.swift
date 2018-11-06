@@ -63,17 +63,18 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
     func expand(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
         self.tableViewTopSeparator.alpha = 1
-        animateTableViewHeight(tableViewHeight: self.frame.height, completion: completion)
+        self.tableView.alpha = 0
+        animateTableViewHeight(tableViewHeight: self.frame.height, tableViewAlpha: 1, completion: completion)
         animator.animate()
     }
 
     func collapse(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        animateTableViewHeight(tableViewHeight: 0, hideTopSeparator: true, completion: completion)
+        animateTableViewHeight(tableViewHeight: 0, tableViewAlpha: 0, hideTopSeparator: true, completion: completion)
         animator.animate()
     }
 
-    func animateTableViewHeight(tableViewHeight: CGFloat, hideTopSeparator: Bool = false, completion: @escaping () -> ()) {
+    func animateTableViewHeight(tableViewHeight: CGFloat, tableViewAlpha: CGFloat, hideTopSeparator: Bool = false, completion: @escaping () -> ()) {
         self.superview?.layoutIfNeeded()
 
         tableView.isUserInteractionEnabled = false
@@ -87,6 +88,7 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
                 strongSelf.tableViewTopSeparator.alpha = 0
             }
             strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
+            strongSelf.tableView.alpha = tableViewAlpha
             strongSelf.layoutIfNeeded()
         })
 
