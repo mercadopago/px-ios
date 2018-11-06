@@ -31,6 +31,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var installmentInfoRow: PXOneTapInstallmentInfoView?
     var installmentsSelectorView: PXOneTapInstallmentsSelectorView?
 
+    var selectedCard: PXCardSliderViewModel?
+
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
@@ -240,7 +242,9 @@ extension PXOneTapViewController {
     private func confirmPayment() {
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
-        self.viewModel.trackConfirmActionEvent()
+        if let selectedCardItem = selectedCard {
+            viewModel.trackConfirmEvent(selectedCard: selectedCardItem)
+        }
         self.hideBackButton()
         self.hideNavBar()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
@@ -270,6 +274,7 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
 // MARK: CardSlider delegate.
 extension PXOneTapViewController: PXCardSliderProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
+        selectedCard = targetModel
 
         viewModel.trackSwipe()
 
@@ -359,7 +364,9 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             return
         }
 
-        self.viewModel.trackInstallmentsView(installmentData: installmentData)
+        if let selectedCardItem = selectedCard {
+            self.viewModel.trackInstallmentsView(installmentData: installmentData, selectedCard: selectedCardItem)
+        }
 
         PXFeedbackGenerator.selectionFeedback()
 
