@@ -98,6 +98,22 @@ internal class PXNavigationHandler: NSObject {
         }
     }
 
+    internal func pushViewController(viewController: MercadoPagoUIViewController, presentViewController: UIViewController,
+                                     animated: Bool, backToFirstPaymentVault: Bool = false) {
+        viewController.hidesBottomBarWhenPushed = true
+
+        if backToFirstPaymentVault {
+            self.navigationController.navigationBar.isHidden = false
+            viewController.callbackCancel = { [weak self] in self?.backToFirstPaymentVaultViewController() }
+        }
+
+        self.navigationController.pushViewController(viewController, animated: animated)
+        self.cleanCompletedCheckoutsFromNavigationStack()
+        self.dismissLoading(animated: false) {
+            self.navigationController.present(presentViewController, animated: false)
+        }
+    }
+    
     internal func pushViewController(viewController: MercadoPagoUIViewController,
                                      animated: Bool, backToFirstPaymentVault: Bool = false) {
         viewController.hidesBottomBarWhenPushed = true

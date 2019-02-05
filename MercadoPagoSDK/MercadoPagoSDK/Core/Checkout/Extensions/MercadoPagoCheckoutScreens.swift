@@ -160,7 +160,11 @@ extension MercadoPagoCheckout {
             reviewVC.changePaymentMethodCallback = nil
         }
 
-        viewModel.pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
+        if let dynamicViewController = self.viewModel.reviewConfirmViewModel().getDynamicViewController() {
+            viewModel.pxNavigationHandler.pushViewController(viewController: reviewVC, presentViewController: dynamicViewController, animated: false)
+        } else {
+            viewModel.pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
+        }
     }
 
     func showSecurityCodeScreen() {
