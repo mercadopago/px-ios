@@ -241,7 +241,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             pluginOptions = paymentMethodPluginsToShow
         }
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.paymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.paymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: self.advancedConfig)
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {

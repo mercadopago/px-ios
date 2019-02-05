@@ -213,7 +213,12 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         if let cellRef = self.titleSectionReference {
             cellRef.title.text = ""
         }
-        return "¿Cómo quieres pagar?".localized
+        
+        if (self.viewModel.advancedConfiguration.customTitle != nil) {
+            return self.viewModel.advancedConfiguration.customTitle!
+        } else {
+            return "¿Cómo quieres pagar?".localized
+        }
     }
 
     open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -276,6 +281,12 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell", for: indexPath) as? PaymentVaultTitleCollectionViewCell else { return UICollectionViewCell.init() }
             self.titleSectionReference = cell
             titleCell = cell
+            
+            if (self.viewModel.advancedConfiguration.customTitle != nil) {
+                cell.viewTitle = self.viewModel.advancedConfiguration.customTitle!
+                cell.fillCell()
+            }
+            
             return cell
         } else if isGroupSection(section: indexPath.section) {
 

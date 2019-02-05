@@ -61,4 +61,9 @@ open class PXAdvancedConfiguration: NSObject {
      Set additional data to get discounts
      */
     open var discountParamsConfiguration: PXDiscountParamsConfiguration?
+    
+    /**
+     Set custom checkout title
+     */
+    open var customTitle: String?
 }

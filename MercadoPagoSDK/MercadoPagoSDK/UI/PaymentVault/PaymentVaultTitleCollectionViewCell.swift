@@ -12,6 +12,8 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScroll
 
     @IBOutlet weak var title: PXNavigationHeaderLabel!
 
+    var viewTitle : String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.title.font = Utils.getFont(size: title.font.pointSize)
@@ -20,7 +22,11 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScroll
     }
 
     func fillCell() {
-        title.text = "¿Cómo quieres pagar?".localized
+        if (self.viewTitle != nil) {
+            title.text = self.viewTitle
+        } else {
+            title.text = "¿Cómo quieres pagar?".localized
+        }
     }
 
     internal func updateTitleFontSize(toSize: CGFloat) {
