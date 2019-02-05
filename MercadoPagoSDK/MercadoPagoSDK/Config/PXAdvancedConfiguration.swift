@@ -33,6 +33,11 @@ open class PXAdvancedConfiguration: NSObject {
     open var expressEnabled: Bool = false
 
     /**
+     Add the possibility to enable/disable the bottom amount row.
+     */
+    open var amountRowEnabled: Bool = true
+
+    /**
     Instores usage / money in usage. - Use case: Not all bank deals apply right now to all preferences.
      */
     open var bankDealsEnabled: Bool = true

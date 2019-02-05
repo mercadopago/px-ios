@@ -79,12 +79,15 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
     }
 
     private func renderViews() {
-        let floatingRowView = getFloatingTotalRowView()
-        self.view.addSubview(floatingRowView)
-        PXLayout.matchWidth(ofView: floatingRowView).isActive = true
-        PXLayout.centerHorizontally(view: floatingRowView).isActive = true
-        PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
-        PXLayout.put(view: floatingRowView, onBottomOf: self.tableView).isActive = true
+
+        if (self.viewModel.advancedConfiguration.amountRowEnabled) {
+            let floatingRowView = getFloatingTotalRowView()
+            self.view.addSubview(floatingRowView)
+            PXLayout.matchWidth(ofView: floatingRowView).isActive = true
+            PXLayout.centerHorizontally(view: floatingRowView).isActive = true
+            PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
+            PXLayout.put(view: floatingRowView, onBottomOf: self.tableView).isActive = true
+        }
     }
 
     private func getFloatingTotalRowView() -> UIView {
