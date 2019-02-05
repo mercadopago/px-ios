@@ -283,7 +283,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
             titleCell = cell
             
             if (self.viewModel.advancedConfiguration.customTitle != nil) {
-                cell.viewTitle = self.viewModel.advancedConfiguration.customTitle!
+                cell.customTitle = self.viewModel.advancedConfiguration.customTitle!
                 cell.fillCell()
             }
             

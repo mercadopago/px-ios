@@ -12,7 +12,7 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScroll
 
     @IBOutlet weak var title: PXNavigationHeaderLabel!
 
-    var viewTitle : String?
+    var customTitle : String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,8 +22,8 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScroll
     }
 
     func fillCell() {
-        if (self.viewTitle != nil) {
-            title.text = self.viewTitle
+        if (self.customTitle != nil) {
+            title.text = self.customTitle
         } else {
             title.text = "¿Cómo quieres pagar?".localized
         }
