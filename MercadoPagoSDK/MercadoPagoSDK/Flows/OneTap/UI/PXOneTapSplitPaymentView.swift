@@ -110,9 +110,13 @@ class PXOneTapSplitPaymentView: PXComponentView {
 
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
 
+        let messageAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
+
+        let messageAttributed = NSAttributedString(string: splitConfiguration.secondaryPaymentMethod?.message ?? "", attributes: messageAttributes)
+
         let amountAttributed = NSMutableAttributedString(string: amount, attributes: attributes)
         amountAttributed.append(" ".toAttributedString())
-        amountAttributed.append(splitConfiguration.secondaryPaymentMethod?.message?.toAttributedString() ?? "".toAttributedString())
+        amountAttributed.append(messageAttributed)
         return amountAttributed
     }
 
