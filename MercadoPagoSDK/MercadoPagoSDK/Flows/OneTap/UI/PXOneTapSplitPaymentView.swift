@@ -69,6 +69,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
         splitSwitch.onTintColor = ThemeManager.shared.getAccentColor()
 
         let label = UILabel()
+        label.lineBreakMode = .byTruncatingTail
         self.splitMessageLabel = label
         label.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(label)
