@@ -11,17 +11,14 @@ import Foundation
 // MARK: Init flow Protocol
 extension MercadoPagoCheckout: InitFlowProtocol {
     func didFailInitFlow(flowError: InitFlowError) {
+        var errorDetail = ""
+        #if DEBUG
+            errorDetail = flowError.errorStep.rawValue
+        #endif
         if initMode == .lazy {
-            initProtocol?.failure(checkout: self)
+            initProtocol?.failure(checkout: self, error: errorDetail)
             trackErrorEvent(flowError: flowError)
-            #if DEBUG
-                print("Error - \(flowError.errorStep.rawValue)")
-            #endif
         } else {
-            var errorDetail = ""
-            #if DEBUG
-                errorDetail = flowError.errorStep.rawValue
-            #endif
             let customError = MPSDKError(message: "Error".localized, errorDetail: errorDetail, retry: flowError.shouldRetry, requestOrigin: flowError.requestOrigin?.rawValue)
             viewModel.errorInputs(error: customError, errorCallback: { [weak self] in
                 if flowError.shouldRetry {
