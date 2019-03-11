@@ -21,5 +21,5 @@ import Foundation
      Init checkout methods fail.
      - parameter checkout: Checkout reference.
      */
-    func failure(checkout: MercadoPagoCheckout)
+    func failure(checkout: MercadoPagoCheckout, error: String? = nil)
 }
