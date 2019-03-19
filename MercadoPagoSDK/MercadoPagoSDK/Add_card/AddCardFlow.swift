@@ -99,7 +99,6 @@ public class AddCardFlow: NSObject, PXFlow {
 
     private func getIdentificationTypes() {
         self.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] identificationTypes in
-            self?.navigationHandler.dismissLoading()
             self?.model.identificationTypes = identificationTypes
             self?.executeNextStep()
         }, failure: { [weak self] error in
@@ -107,6 +106,7 @@ public class AddCardFlow: NSObject, PXFlow {
             if error.code == ErrorTypes.NO_INTERNET_ERROR {
                 let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue)
                 self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
+                    self?.navigationHandler.dismissLoading()
                     self?.finish()
                 }, errorCallback: nil)
             } else {
@@ -116,6 +116,7 @@ public class AddCardFlow: NSObject, PXFlow {
                     self?.model.lastStepFailed = false
                     self?.executeNextStep()
                 } else {
+                    self?.navigationHandler.dismissLoading()
                     self?.showErrorScreen()
                 }
             }
@@ -133,6 +134,7 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.executeNextStep()
         })
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormViewController, animated: true)
+        self.navigationHandler.dismissLoading()
     }
 
     private func openIdentificationTypesScreen() {
