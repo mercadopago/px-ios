@@ -17,6 +17,8 @@ internal protocol PaymentOptionDrawable {
     func getTitle() -> String
 
     func getSubtitle() -> String?
+
+    func isDisabled() -> Bool
 }
 
 @objc

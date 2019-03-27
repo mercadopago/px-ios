@@ -23,6 +23,10 @@ internal extension PXPaymentMethodSearchItem {
 }
 
 extension PXPaymentMethodSearchItem: PaymentOptionDrawable {
+    func isDisabled() -> Bool {
+        return false
+    }
+
     func getTitle() -> String {
         return _description ?? ""
     }

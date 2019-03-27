@@ -8,6 +8,13 @@
 import Foundation
 /// :nodoc:
 extension PXCard: PXCardInformation {
+    func setDisabled(_ disabled: Bool) {
+        disabledOption = disabled
+    }
+
+    func isDisabled() -> Bool {
+        return disabledOption
+    }
 
     internal func getIssuer() -> PXIssuer? {
         return issuer

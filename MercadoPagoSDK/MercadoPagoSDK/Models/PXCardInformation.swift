@@ -32,4 +32,8 @@ internal protocol PXCardInformation: PXCardInformationForm, PaymentOptionDrawabl
 
     func getFirstSixDigits() -> String
 
+    func isDisabled() -> Bool
+
+    func setDisabled(_ disabled: Bool)
+
 }

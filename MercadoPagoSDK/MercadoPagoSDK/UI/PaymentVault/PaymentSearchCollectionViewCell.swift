@@ -24,7 +24,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    public func fillCell(image: UIImage?, title: String? = "", subtitle: NSAttributedString?) {
+    public func fillCell(image: UIImage?, title: String? = "", subtitle: NSAttributedString?, isDisabled: Bool) {
         titleSearch.text = title
         titleSearch.font = Utils.getFont(size: titleSearch.font.pointSize)
 
@@ -34,6 +34,10 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         backgroundColor = .white
         titleSearch.textColor = UIColor.black
+
+        if isDisabled {
+            self.alpha = 0.5
+        }
         layoutIfNeeded()
     }
 
@@ -50,11 +54,17 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         let attributedSubtitle = PaymentSearchCollectionViewCell.getSubtitleAttributedString(subtitle: drawablePaymentOption.getSubtitle(), discountInfo: discountInfo, fontSize: subtitleSearch.font.pointSize, textColor: subtitleSearch.textColor)
 
-        self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: attributedSubtitle)
+        self.fillCell(image: image,
+                      title: drawablePaymentOption.getTitle(),
+                      subtitle: attributedSubtitle,
+                      isDisabled: drawablePaymentOption.isDisabled())
     }
 
     func fillCell(optionText: String) {
-        self.fillCell(image: nil, title: optionText, subtitle: nil)
+        self.fillCell(image: nil,
+                      title: optionText,
+                      subtitle: nil,
+                      isDisabled: false)
     }
 
     static func getSubtitleAttributedString(subtitle: String?, discountInfo: String? = nil, fontSize: CGFloat = 15, textColor: UIColor = .black) -> NSAttributedString {

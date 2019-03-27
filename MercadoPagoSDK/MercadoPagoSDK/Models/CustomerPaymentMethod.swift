@@ -9,12 +9,21 @@
 import UIKit
 
 @objcMembers internal class CustomerPaymentMethod: NSObject, PXCardInformation, PaymentMethodOption {
+    func setDisabled(_ disabled: Bool) {
+        disabledOption = disabled
+    }
+
+    func isDisabled() -> Bool {
+        return disabledOption
+    }
+
 
     var customerPaymentMethodId: String!
     var customerPaymentMethodDescription: String!
     var paymentMethodId: String!
     var paymentMethodTypeId: String!
     var firstSixDigits: String!
+    var disabledOption: Bool = false
 
     var securityCode: PXSecurityCode?
     var paymentMethod: PXPaymentMethod?

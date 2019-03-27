@@ -77,6 +77,10 @@ extension PXPaymentMethodPlugin {
 
 /** :nodoc: */
 extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
+    func isDisabled() -> Bool {
+        return false
+    }
+
     func getPaymentType() -> String {
         return paymentMethodPluginId
     }

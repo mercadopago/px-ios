@@ -21,6 +21,7 @@ open class PXCard: NSObject, Codable {
     open var lastFourDigits: String?
     open var paymentMethod: PXPaymentMethod?
     open var securityCode: PXSecurityCode?
+    open var disabledOption: Bool = false
 
     public init(cardHolder: PXCardHolder?, customerId: String?, dateCreated: Date?, dateLastUpdated: Date?, expirationMonth: Int?, expirationYear: Int?, firstSixDigits: String?, id: String?, issuer: PXIssuer?, lastFourDigits: String?, paymentMethod: PXPaymentMethod?, securityCode: PXSecurityCode?) {
 

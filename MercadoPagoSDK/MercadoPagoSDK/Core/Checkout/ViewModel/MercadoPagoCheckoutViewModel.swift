@@ -79,6 +79,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     internal var splitAccountMoney: PXPaymentData?
     var payment: PXPayment?
     internal var paymentResult: PaymentResult?
+    internal var previousPaymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
     open var payerCosts: [PXPayerCost]?
     open var issuers: [PXIssuer]?
@@ -245,7 +246,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             pluginOptions = paymentMethodPluginsToShow
         }
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.paymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig)
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.paymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig, previousPaymentResult: previousPaymentResult)
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
@@ -844,6 +845,7 @@ extension MercadoPagoCheckoutViewModel {
 
     func prepareForNewSelection() {
         self.setIsCheckoutComplete(isCheckoutComplete: false)
+        self.keepPreviousPaymentResult()
         self.cleanPaymentResult()
         self.resetInformation()
         self.resetGroupSelection()
@@ -903,5 +905,11 @@ extension MercadoPagoCheckoutViewModel {
         paymentFlow.model.amountHelper = amountHelper
         paymentFlow.model.checkoutPreference = checkoutPreference
         return paymentFlow
+    }
+}
+
+extension MercadoPagoCheckoutViewModel {
+    func keepPreviousPaymentResult() {
+        self.previousPaymentResult = self.paymentResult
     }
 }
