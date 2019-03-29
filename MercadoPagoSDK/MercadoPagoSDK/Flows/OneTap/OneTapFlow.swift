@@ -66,8 +66,6 @@ final class OneTapFlow: NSObject, PXFlow {
 
     // Finish one tap and continue with checkout
     func finishFlow() {
-        model.search.deleteCheckoutDefaultOption()
-
         if let paymentResult = model.paymentResult {
             resultHandler?.finishOneTap(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo)
         } else if let businessResult = model.businessResult {
