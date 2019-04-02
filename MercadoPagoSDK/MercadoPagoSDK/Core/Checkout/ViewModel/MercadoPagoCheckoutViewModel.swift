@@ -79,7 +79,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     internal var splitAccountMoney: PXPaymentData?
     var payment: PXPayment?
     internal var paymentResult: PaymentResult?
-    internal var previousPaymentResult: PaymentResult?
+    internal var disabledOption: PXDisabledOption?
     var businessResult: PXBusinessResult?
     open var payerCosts: [PXPayerCost]?
     open var issuers: [PXIssuer]?
@@ -246,7 +246,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             pluginOptions = paymentMethodPluginsToShow
         }
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.paymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig, previousPaymentResult: previousPaymentResult)
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.paymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig, disabledOption: disabledOption)
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
@@ -845,7 +845,7 @@ extension MercadoPagoCheckoutViewModel {
 
     func prepareForNewSelection() {
         self.setIsCheckoutComplete(isCheckoutComplete: false)
-        self.keepPreviousPaymentResult()
+        self.keepDisabledOptionIfNeeded()
         self.cleanPaymentResult()
         self.resetInformation()
         self.resetGroupSelection()
@@ -909,7 +909,7 @@ extension MercadoPagoCheckoutViewModel {
 }
 
 extension MercadoPagoCheckoutViewModel {
-    func keepPreviousPaymentResult() {
-        self.previousPaymentResult = self.paymentResult
+    func keepDisabledOptionIfNeeded() {
+        disabledOption = PXDisabledOption(paymentResult: self.paymentResult)
     }
 }
