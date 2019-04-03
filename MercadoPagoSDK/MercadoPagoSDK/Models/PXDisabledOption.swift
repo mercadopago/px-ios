@@ -14,11 +14,14 @@ class PXDisabledOption {
 
     init(paymentResult: PaymentResult?) {
         if let paymentResult = paymentResult {
-            if let cardId = paymentResult.cardId {
+            if let cardId = paymentResult.cardId,
+                paymentResult.statusDetail == PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK ||
+                    paymentResult.statusDetail == PXPayment.StatusDetails.REJECTED_BLACKLIST {
                 disabledCardId = cardId
             }
 
-            if paymentResult.paymentData?.getPaymentMethod()?.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
+            if paymentResult.paymentData?.getPaymentMethod()?.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue,
+                paymentResult.statusDetail == PXPayment.StatusDetails.REJECTED_HIGH_RISK {
                 disabledAccountMoney = true
             }
         }

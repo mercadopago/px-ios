@@ -156,6 +156,7 @@ extension PaymentVaultViewModel {
                 }
             }
         }
+        returnDrawable = returnDrawable.sorted(by: { return $1.isDisabled() })
         return returnDrawable
     }
 

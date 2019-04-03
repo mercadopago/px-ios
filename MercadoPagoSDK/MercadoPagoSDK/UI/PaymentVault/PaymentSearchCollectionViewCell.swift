@@ -30,14 +30,11 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         subtitleSearch.attributedText = subtitle
 
+        let image = isDisabled ? grayscale(originalImage: image) : image
         addPaymentOptionIconComponent(image: image)
 
         backgroundColor = .white
         titleSearch.textColor = UIColor.black
-
-        if isDisabled {
-            self.alpha = 0.5
-        }
         layoutIfNeeded()
     }
 
@@ -108,7 +105,6 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 extension PaymentSearchCollectionViewCell {
 
     fileprivate func addPaymentOptionIconComponent(image: UIImage?) {
-
         let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: PXPaymentMethodIconProps(paymentMethodIcon: image)).render()
 
         paymentMethodIconComponent.layer.cornerRadius = paymentOptionImageContainer.frame.width/2
@@ -122,4 +118,18 @@ extension PaymentSearchCollectionViewCell {
         PXLayout.setWidth(owner: paymentMethodIconComponent, width: paymentOptionImageContainer.frame.width).isActive = true
         PXLayout.pinTop(view: paymentMethodIconComponent, withMargin: 0).isActive = true
     }
+
+    func grayscale(originalImage: UIImage?) -> UIImage? {
+        if let originalImage = originalImage, let currentFilter = CIFilter(name: "CIPhotoEffectMono")  {
+            let context = CIContext(options: nil)
+            currentFilter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
+            if let output = currentFilter.outputImage,
+                let cgimg = context.createCGImage(output,from: output.extent) {
+                let processedImage = UIImage(cgImage: cgimg)
+                return processedImage
+            }
+        }
+        return nil
+    }
+
 }
