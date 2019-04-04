@@ -19,7 +19,7 @@ class PXDisabledViewController: UIViewController {
         title.textColor = ThemeManager.shared.boldLabelTintColor()
         title.textAlignment = .center
         title.numberOfLines = 0
-        _ = PXLayout.pinTop(view: title, to: view, withMargin: PXLayout.S_MARGIN)
+        _ = PXLayout.pinTop(view: title, to: view, withMargin: PXLayout.M_MARGIN)
         PXLayout.setHeight(owner: title, height: 50).isActive = true
         _ = PXLayout.pinLeft(view: title, to: view, withMargin: PXLayout.M_MARGIN).isActive = true
         _ = PXLayout.pinRight(view: title, to: view, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -44,8 +44,7 @@ class PXDisabledViewController: UIViewController {
         _ = PXLayout.pinLeft(view: dismissButton, to: view, withMargin: PXLayout.S_MARGIN).isActive = true
         _ = PXLayout.pinRight(view: dismissButton, to: view, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.setHeight(owner: dismissButton, height: 48).isActive = true
-
-        PXLayout.setHeight(owner: view, height: 250).isActive = true
+        _ = PXLayout.pinBottom(view: dismissButton, to: view, withMargin: PXLayout.M_MARGIN)
     }
 
     required init?(coder aDecoder: NSCoder) {
