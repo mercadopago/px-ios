@@ -1,0 +1,54 @@
+//
+//  PXDisabledViewController.swift
+//  FXBlurView
+//
+//  Created by Federico Bustos Fierro on 03/04/2019.
+//
+
+import UIKit
+
+class PXDisabledViewController: UIViewController {
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+        let title = UILabel()
+        title.text = "Esta tarjeta no está disponible ahora"
+        view.addSubview(title)
+        title.font = Utils.getFont(size: PXLayout.M_FONT)
+        title.textColor = ThemeManager.shared.boldLabelTintColor()
+        title.textAlignment = .center
+        title.numberOfLines = 0
+        _ = PXLayout.pinTop(view: title, to: view, withMargin: PXLayout.S_MARGIN)
+        PXLayout.setHeight(owner: title, height: 50).isActive = true
+        _ = PXLayout.pinLeft(view: title, to: view, withMargin: PXLayout.M_MARGIN).isActive = true
+        _ = PXLayout.pinRight(view: title, to: view, withMargin: PXLayout.M_MARGIN).isActive = true
+
+        let description = UILabel()
+        description.text = "No te preocupes, puedes usar otro medio para completar el pago."
+        view.addSubview(description)
+        description.font = Utils.getFont(size: PXLayout.XS_FONT)
+        description.textColor = ThemeManager.shared.labelTintColor()
+        description.textAlignment = .center
+        description.numberOfLines = 0
+        PXLayout.setHeight(owner: description, height: 50).isActive = true
+        _ = PXLayout.put(view: description, onBottomOf: title, withMargin: PXLayout.S_MARGIN, relation: .equal).isActive = true
+        _ = PXLayout.pinLeft(view: description, to: view, withMargin: PXLayout.S_MARGIN).isActive = true
+        _ = PXLayout.pinRight(view: description, to: view, withMargin: PXLayout.S_MARGIN).isActive = true
+
+        let dismissButton = PXSecondaryButton()
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        dismissButton.buttonTitle = "Probar con otro medio"
+        view.addSubview(dismissButton)
+        _ = PXLayout.put(view: dismissButton, onBottomOf: description, withMargin: PXLayout.S_MARGIN, relation: .equal)
+        _ = PXLayout.pinLeft(view: dismissButton, to: view, withMargin: PXLayout.S_MARGIN).isActive = true
+        _ = PXLayout.pinRight(view: dismissButton, to: view, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.setHeight(owner: dismissButton, height: 48).isActive = true
+
+        PXLayout.setHeight(owner: view, height: 250).isActive = true
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

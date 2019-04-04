@@ -243,7 +243,8 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
                 let paymentSearchItemSelected = paymentItemDrawable as? PaymentMethodOption {
                 collectionView.deselectItem(at: indexPath, animated: true)
                 if paymentItemDrawable.isDisabled() {
-                    //show alert
+                    let vc = PXDisabledViewController()
+                    PXComponentFactory.Modal.show(viewController: vc, title: nil)
                 } else {
                     collectionView.allowsSelection = false
                     self.callback!(paymentSearchItemSelected)
