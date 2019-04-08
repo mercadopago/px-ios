@@ -19,6 +19,13 @@ final class PXOneTapViewModel: PXReviewViewModel {
 
     var splitPaymentEnabled: Bool = false
     var splitPaymentSelectionByUser: Bool?
+    var disabledOption: PXDisabledOption? = nil
+
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil) {
+        self.disabledOption = disabledOption
+        super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged)
+    }
+
 }
 
 // MARK: ViewModels Publics.
@@ -33,7 +40,8 @@ extension PXOneTapViewModel {
                 let cardData = PXCardDataFactory().create(cardName: displayTitle, cardNumber: "", cardCode: "", cardExpiration: "")
                 let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(accountMoney.getId())
 
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration)
+                let isDisabled = self.disabledOption?.isAccountMoneyDisabled() ?? false
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, isDisabled: isDisabled)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
                 let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 viewModelCard.displayMessage = NSAttributedString(string: accountMoney.sliderTitle ?? "", attributes: attributes)
@@ -93,14 +101,15 @@ extension PXOneTapViewModel {
 
                     let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment)
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration)
+                    let isDisabled = self.disabledOption?.getDisabledCardId() == targetCardData.cardId
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, isDisabled: isDisabled)
 
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel("", "", "", EmptyCard(), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil))
+        sliderModel.append(PXCardSliderViewModel("", "", "", EmptyCard(), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, isDisabled: false))
         cardSliderViewModel = sliderModel
     }
 

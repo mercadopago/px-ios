@@ -20,8 +20,9 @@ final class PXCardSliderViewModel {
     var cardId: String?
     var displayMessage: NSAttributedString?
     var amountConfiguration: PXAmountConfiguration?
+    var isDisabled: Bool
 
-    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?) {
+    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, isDisabled: Bool) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.issuerId = issuerId
@@ -32,6 +33,7 @@ final class PXCardSliderViewModel {
         self.cardId = cardId
         self.shouldShowArrow = shouldShowArrow
         self.amountConfiguration = amountConfiguration
+        self.isDisabled = isDisabled
     }
 }
 

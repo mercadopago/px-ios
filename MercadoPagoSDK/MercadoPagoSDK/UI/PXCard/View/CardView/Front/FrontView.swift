@@ -13,8 +13,8 @@ class FrontView: CardView {
         super.setupUI(cardUI)
 
         securityCodeCircle.alpha = 0
-        bank.image = cardUI.bankImage
-        logo.image = cardUI.cardLogoImage
+        bank.image = isDisabled ? grayscale(originalImage: cardUI.bankImage) : cardUI.bankImage
+        logo.image = isDisabled ? grayscale(originalImage: cardUI.cardLogoImage) : cardUI.cardLogoImage
         securityCode.textColor = cardUI.cardFontColor
         let input = [model?.name, model?.number, model?.expiration, model?.securityCode]
         securityCode.isHidden = cardUI.securityCodeLocation == .back
@@ -26,6 +26,20 @@ class FrontView: CardView {
         [name, number, expirationDate].enumerated().forEach({
             $0.element?.setup(input[$0.offset], FontFactory.font(cardUI))
         })
+    }
+
+
+    func grayscale(originalImage: UIImage?) -> UIImage? {
+        if let originalImage = originalImage, let currentFilter = CIFilter(name: "CIPhotoEffectMono")  {
+            let context = CIContext(options: nil)
+            currentFilter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
+            if let output = currentFilter.outputImage,
+                let cgimg = context.createCGImage(output,from: output.extent) {
+                let processedImage = UIImage(cgImage: cgimg)
+                return processedImage
+            }
+        }
+        return nil
     }
 
     func setupAnimated(_ cardUI: CardUI) {

@@ -33,10 +33,10 @@ extension PXCardSlider: FSPagerViewDataSource {
             if let cardData = targetModel.cardData, let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
                 if targetModel.cardUI is AccountMoneyCard {
                     // AM card.
-                    cell.renderAccountMoneyCard(balanceText: cardData.name)
+                    cell.renderAccountMoneyCard(balanceText: cardData.name, isDisabled: targetModel.isDisabled)
                 } else {
                     // Other cards.
-                    cell.render(withCard: targetModel.cardUI, cardData: cardData)
+                    cell.render(withCard: targetModel.cardUI, cardData: cardData, isDisabled: targetModel.isDisabled)
                 }
                 return cell
             } else {

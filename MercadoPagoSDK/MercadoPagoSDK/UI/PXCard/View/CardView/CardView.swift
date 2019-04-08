@@ -8,14 +8,17 @@ class CardView: UIView {
     @objc var model: CardData?
     private var cardUI: CardUI?
     var color: UIColor?
+    var isDisabled: Bool = false
 
+    let disabledGray = UIColor(red: 73/255, green: 73/255, blue: 73/255, alpha: 1)
     let cornerRadius: CGFloat = 11
 
-    func setup(_ cardUI: CardUI, _ model: CardData, _ frame: CGRect) {
+    func setup(_ cardUI: CardUI, _ model: CardData, _ frame: CGRect, _ isDisabled: Bool) {
         self.frame = frame
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = true
         layer.isDoubleSided = false
+        self.isDisabled = isDisabled
         loadFromNib()
         setupModel(model)
         setupUI(cardUI)
@@ -34,7 +37,8 @@ class CardView: UIView {
         self.cardUI = cardUI
         securityCode.formatter = Mask(pattern: [cardUI.securityCodePattern])
         if !(cardUI is AccountMoneyCard) {
-            animation.backgroundColor = cardUI.cardBackgroundColor
+            let mainColor = isDisabled ? disabledGray : cardUI.cardBackgroundColor
+            animation.backgroundColor = mainColor
         }
     }
 
@@ -51,7 +55,8 @@ class CardView: UIView {
         if let currentCardUI = cardUI, currentCardUI is AccountMoneyCard {
             let gradient = CAGradientLayer()
             gradient.frame = frame
-            gradient.colors = [currentCardUI.cardBackgroundColor.cgColor, UIColor.white.cgColor]
+            let mainColor = isDisabled ? disabledGray.cgColor : currentCardUI.cardBackgroundColor.cgColor
+            gradient.colors = [mainColor, UIColor.white.cgColor]
             gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
             gradient.endPoint = CGPoint(x: 1.6, y: 0.5)
             self.gradient.layer.addSublayer(gradient)

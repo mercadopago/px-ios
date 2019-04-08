@@ -22,11 +22,12 @@ class AccountMoneyCard: NSObject, CardUI {
 }
 
 extension AccountMoneyCard {
-    static func render(containerView: UIView, balanceText: String) {
+    static func render(containerView: UIView, balanceText: String, isDisabled: Bool) {
         let amImage = UIImageView()
         amImage.backgroundColor = .clear
         amImage.contentMode = .scaleAspectFit
-        amImage.image = ResourceManager.shared.getImage("amImage")
+        let amImageRaw = ResourceManager.shared.getImage("amImage")
+        amImage.image = isDisabled ? amImageRaw?.imageGreyScale() : amImageRaw
         amImage.alpha = 0.6
         containerView.addSubview(amImage)
         PXLayout.setWidth(owner: amImage, width: PXCardSliderSizeManager.getItemContainerSize().height * 0.65).isActive = true
@@ -64,7 +65,8 @@ extension AccountMoneyCard {
         let amLogo = UIImageView()
         amLogo.backgroundColor = .clear
         amLogo.contentMode = .scaleAspectFit
-        amLogo.image = ResourceManager.shared.getImage("amLogo")
+        let logoImage = ResourceManager.shared.getImage("amLogo")
+        amLogo.image = isDisabled ? logoImage?.imageGreyScale() : logoImage
         containerView.addSubview(amLogo)
         PXLayout.setWidth(owner: amLogo, width: PXCardSliderSizeManager.getItemContainerSize().height * 0.60).isActive = true
         PXLayout.setHeight(owner: amLogo, height: PXCardSliderSizeManager.getItemContainerSize().height * 0.35).isActive = true

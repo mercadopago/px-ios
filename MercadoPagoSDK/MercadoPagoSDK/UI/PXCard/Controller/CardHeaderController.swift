@@ -17,12 +17,12 @@ class CardHeaderController: UIViewController {
         }
     }
 
-    init(_ cardUI: CardUI, _ model: CardData) {
+    init(_ cardUI: CardUI, _ model: CardData, _ isDisabled: Bool) {
         self.cardUI = cardUI
         UIFont.registerFont(fontName: cardFont, fontExtension: "ttf")
         super.init(nibName: nil, bundle: nil)
-        backView.setup(cardUI, model, view.frame)
-        frontView.setup(cardUI, model, view.frame)
+        backView.setup(cardUI, model, view.frame, isDisabled)
+        frontView.setup(cardUI, model, view.frame, isDisabled)
     }
 
     func show() {

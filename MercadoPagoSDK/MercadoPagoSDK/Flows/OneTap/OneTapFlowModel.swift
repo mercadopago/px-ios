@@ -28,6 +28,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var paymentMethodPlugins: [PXPaymentMethodPlugin]?
     var splitAccountMoney: PXPaymentData?
+    var disabledOption: PXDisabledOption? = nil
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -47,7 +48,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
     let paymentConfigurationService: PXPaymentConfigurationServices
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, disabledOption: PXDisabledOption?) {
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
@@ -57,6 +58,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         self.mpESCManager = MercadoPagoESCImplementation(enabled: advancedConfiguration.escEnabled)
         self.paymentConfigurationService = paymentConfigurationService
+        self.disabledOption = disabledOption
 
         // Payer cost pre selection.
         if let firstCardID = search.expressCho?.first?.oneTapCard?.cardId, let payerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(firstCardID) {
@@ -96,7 +98,7 @@ internal extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        let viewModel = PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false)
+        let viewModel = PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption)
         viewModel.expressData = search.expressCho
         viewModel.paymentMethods = search.paymentMethods
         viewModel.items = checkoutPreference.items
