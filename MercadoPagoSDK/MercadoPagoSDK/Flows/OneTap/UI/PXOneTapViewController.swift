@@ -319,7 +319,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         }
 
         // Add card. - CardData nil
-        if targetModel.cardData == nil {
+        if targetModel.cardData == nil || targetModel.isDisabled {
             loadingButtonComponent?.setDisabled()
             headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: nil))
         } else {

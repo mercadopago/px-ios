@@ -31,7 +31,7 @@ final class PXCardSliderViewModel {
         self.payerCost = payerCost
         self.selectedPayerCost = selectedPayerCost
         self.cardId = cardId
-        self.shouldShowArrow = shouldShowArrow
+        self.shouldShowArrow = isDisabled ? false : shouldShowArrow
         self.amountConfiguration = amountConfiguration
         self.isDisabled = isDisabled
     }

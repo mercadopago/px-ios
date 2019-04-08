@@ -120,8 +120,13 @@ extension PXOneTapViewModel {
             let payerCost = sliderNode.payerCost
             let selectedPayerCost = sliderNode.selectedPayerCost
             let installment = PXInstallment(issuer: nil, payerCosts: payerCost, paymentMethodId: nil, paymentTypeId: nil)
-
-            if sliderNode.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
+            if sliderNode.isDisabled {
+                let disabledInfoModel = PXOneTapInstallmentInfoViewModel(text: getDisabledOptionMessage(),
+                                                                            installmentData: nil,
+                                                                            selectedPayerCost: nil,
+                                                                            shouldShowArrow: false)
+                model.append(disabledInfoModel)
+            } else if sliderNode.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
                 // If it's debit and has split, update split message
                 if let amountToPay = sliderNode.selectedPayerCost?.totalAmount {
                     let displayMessage = getSplitMessageForDebit(amountToPay: amountToPay)
@@ -314,5 +319,11 @@ extension PXOneTapViewModel {
 
         amount = Utils.getAmountFormated(amount: amountToPay, forCurrency: SiteManager.shared.getCurrency())
         return NSAttributedString(string: amount, attributes: attributes)
+    }
+
+    internal func getDisabledOptionMessage() -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+        let text = "No podes usar esta tarjeta"
+        return NSAttributedString(string: text, attributes: attributes)
     }
 }
