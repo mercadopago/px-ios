@@ -37,13 +37,13 @@ extension PXCardSliderPagerCell {
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: PXCardSliderSizeManager.getItemContainerSize())
         cardHeader?.animated(false)
         cardHeader?.show()
-        addWarningBadge()
 
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
+        addWarningBadge(isDisabled)
     }
 
     func renderEmptyCard() {
@@ -72,7 +72,6 @@ extension PXCardSliderPagerCell {
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: PXCardSliderSizeManager.getItemContainerSize())
         cardHeader?.animated(false)
         cardHeader?.show()
-        addWarningBadge()
 
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
@@ -80,17 +79,19 @@ extension PXCardSliderPagerCell {
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
+        addWarningBadge(isDisabled)
     }
 
-    func addWarningBadge() {
-        let image = ResourceManager.shared.getImage("warning_badge")
-        warningBadgeIcon = UIImageView(image: image)
-        containerView.insertSubview(warningBadgeIcon, at: 2)
-        PXLayout.setHeight(owner: warningBadgeIcon, height: 60).isActive = true
-        PXLayout.setWidth(owner: warningBadgeIcon, width: 60).isActive = true
-        PXLayout.pinTop(view: warningBadgeIcon, withMargin: -PXLayout.XXS_MARGIN).isActive = true
-        PXLayout.pinRight(view: warningBadgeIcon, withMargin: -PXLayout.S_MARGIN).isActive = true
-        warningBadgeIcon.isHidden = true
+    func addWarningBadge(_ isDisabled: Bool) {
+        if isDisabled {
+            let image = ResourceManager.shared.getImage("warning_badge")
+            warningBadgeIcon = UIImageView(image: image)
+            containerView.insertSubview(warningBadgeIcon, at: 10)
+            PXLayout.setHeight(owner: warningBadgeIcon, height: 60).isActive = true
+            PXLayout.setWidth(owner: warningBadgeIcon, width: 60).isActive = true
+            PXLayout.pinTop(view: warningBadgeIcon, withMargin: -28).isActive = true
+            PXLayout.pinRight(view: warningBadgeIcon, withMargin: PXLayout.S_MARGIN).isActive = true
+        }
     }
 
     func flipToBack() {

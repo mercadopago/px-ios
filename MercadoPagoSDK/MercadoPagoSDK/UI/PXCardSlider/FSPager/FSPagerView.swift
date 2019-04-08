@@ -294,7 +294,7 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         super.prepareForInterfaceBuilder()
         self.contentView.layer.borderWidth = 1
         self.contentView.layer.cornerRadius = 5
-        self.contentView.layer.masksToBounds = true
+        self.contentView.layer.masksToBounds = false
         self.contentView.frame = self.bounds
         let label = UILabel(frame: self.contentView.bounds)
         label.textAlignment = .center
@@ -332,6 +332,7 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         let index = indexPath.item
         self.dequeingSection = indexPath.section
         let cell = self.dataSource!.pagerView(self, cellForItemAt: index)
+        cell.layer.masksToBounds = false
         return cell
     }
 
@@ -575,6 +576,9 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         self.contentView.addSubview(collectionView)
         self.collectionView = collectionView
         self.collectionViewLayout = collectionViewLayout
+
+        collectionView.clipsToBounds = false
+        collectionView.layer.masksToBounds = false
 
     }
 
