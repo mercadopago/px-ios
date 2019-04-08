@@ -133,7 +133,7 @@ internal class PaymentResult {
     }
 
     func isAccountMoney() -> Bool {
-        return self.paymentData?.getPaymentMethod()?.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue
+        return self.paymentData?.getPaymentMethod()?.isAccountMoney ?? false
     }
 }
 
