@@ -305,6 +305,7 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
 
 // MARK: CardSlider delegate.
 extension PXOneTapViewController: PXCardSliderProtocol {
+
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
         selectedCard = targetModel
 
@@ -347,6 +348,11 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             }
 
         }
+    }
+
+    func disabledCardDidTap() {
+        let vc = PXDisabledViewController()
+        PXComponentFactory.Modal.show(viewController: vc, title: nil)
     }
 
     func addPaymentMethodCardDidTap() {

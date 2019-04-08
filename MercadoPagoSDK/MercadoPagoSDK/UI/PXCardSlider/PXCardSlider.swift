@@ -76,6 +76,11 @@ extension PXCardSlider: FSPagerViewDelegate {
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         if model.indices.contains(index) {
             let modelData = model[index]
+
+            if modelData.isDisabled {
+                delegate?.disabledCardDidTap()
+            }
+
             if modelData.cardData == nil {
                 delegate?.addPaymentMethodCardDidTap()
             }
