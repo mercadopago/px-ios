@@ -36,8 +36,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     var cardView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
     var cardViewBack: UIView?
-    var cardFront: CardFrontView?
-    var cardBack: CardBackView?
+    var cardFront: CardFrontView = CardFrontView()
+    var cardBack: CardBackView = CardBackView()
     var cardNumberLabel: UILabel?
     var numberLabelEmpty: Bool = true
     var nameLabel: MPLabel?
@@ -170,8 +170,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
 
         self.cardView.frame = rectBackground
-        cardFront?.frame = rect
-        cardBack?.frame = rect
+        cardFront.frame = rect
+        cardBack.frame = rect
         self.cardView.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
         self.cardView.layer.cornerRadius = 11
         self.cardView.layer.masksToBounds = true
@@ -182,12 +182,12 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         PXLayout.pinLeft(view: cardView, to: cardBackground, withMargin: xMargin)
         PXLayout.pinTop(view: cardView, to: cardBackground, withMargin: yMargin)
 
-        cardBack!.backgroundColor = UIColor.clear
+        cardBack.backgroundColor = UIColor.clear
 
-        cardNumberLabel = cardFront?.cardNumber
-        nameLabel = cardFront?.cardName
-        expirationDateLabel = cardFront?.cardExpirationDate
-        cvvLabel = cardBack?.cardCVV
+        cardNumberLabel = cardFront.cardNumber
+        nameLabel = cardFront.cardName
+        expirationDateLabel = cardFront.cardExpirationDate
+        cvvLabel = cardBack.cardCVV
 
         cardNumberLabel?.text = textMaskFormater.textMasked("")
         nameLabel?.text = "NOMBRE APELLIDO".localized
@@ -196,20 +196,20 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         editingLabel = cardNumberLabel
 
         view.setNeedsUpdateConstraints()
-        cardView.addSubview(cardFront!)
+        cardView.addSubview(cardFront)
         textBox.placeholder = getTextboxPlaceholder()
 
-        PXLayout.setWidth(owner: cardFront!, width: cardWidht).isActive = true
-        PXLayout.setHeight(owner: cardFront!, height: cardHeight).isActive = true
-        PXLayout.centerVertically(view: cardFront!, to: cardView, withMargin: 0).isActive = true
-        PXLayout.centerHorizontally(view: cardFront!, to: cardView).isActive = true
+        PXLayout.setWidth(owner: cardFront, width: cardWidht).isActive = true
+        PXLayout.setHeight(owner: cardFront, height: cardHeight).isActive = true
+        PXLayout.centerVertically(view: cardFront, to: cardView, withMargin: 0).isActive = true
+        PXLayout.centerHorizontally(view: cardFront, to: cardView).isActive = true
 
-        cardView.addSubview(cardBack!)
-        PXLayout.setWidth(owner: cardBack!, width: cardWidht).isActive = true
-        PXLayout.setHeight(owner: cardBack!, height: cardHeight).isActive = true
-        PXLayout.centerVertically(view: cardBack!, to: cardView, withMargin: 0).isActive = true
-        PXLayout.centerHorizontally(view: cardBack!, to: cardView).isActive = true
-        cardBack!.isHidden = true
+        cardView.addSubview(cardBack)
+        PXLayout.setWidth(owner: cardBack, width: cardWidht).isActive = true
+        PXLayout.setHeight(owner: cardBack, height: cardHeight).isActive = true
+        PXLayout.centerVertically(view: cardBack, to: cardView, withMargin: 0).isActive = true
+        PXLayout.centerHorizontally(view: cardBack, to: cardView).isActive = true
+        cardBack.isHidden = true
     }
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -370,15 +370,15 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
             showBackCardSideIfNeeded() {
                 self.updateLabelsFontColors()
             }
-            cvvLabel = cardBack?.cardCVV
-            cardFront?.cardCVV.text = "•••"
-            cardFront?.cardCVV.alpha = 0
-            cardBack?.cardCVV.alpha = 1
+            cvvLabel = cardBack.cardCVV
+            cardFront.cardCVV.text = "•••"
+            cardFront.cardCVV.alpha = 0
+            cardBack.cardCVV.alpha = 1
         } else {
-            cvvLabel = cardFront?.cardCVV
-            cardBack?.cardCVV.text = "••••"
-            cardBack?.cardCVV.alpha = 0
-            cardFront?.cardCVV.alpha = 1
+            cvvLabel = cardFront.cardCVV
+            cardBack.cardCVV.text = "••••"
+            cardBack.cardCVV.alpha = 0
+            cardFront.cardCVV.alpha = 1
         }
 
         editingLabel = cvvLabel
@@ -664,15 +664,15 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     func clearCardSkin() {
-        if self.cardFront?.cardLogo.image != nil, self.cardFront?.cardLogo.image != ResourceManager.shared.getCardDefaultLogo() {
-            self.cardFront?.cardLogo.alpha = 0
-            self.cardFront?.cardLogo.image = ResourceManager.shared.getCardDefaultLogo()
+        if self.cardFront.cardLogo.image != nil, self.cardFront.cardLogo.image != ResourceManager.shared.getCardDefaultLogo() {
+            self.cardFront.cardLogo.alpha = 0
+            self.cardFront.cardLogo.image = ResourceManager.shared.getCardDefaultLogo()
             UIView.animate(withDuration: 0.7, animations: { () -> Void in
                 self.cardView.backgroundColor = UIColor.cardDefaultColor()
-                self.cardFront?.cardLogo.alpha = 1
+                self.cardFront.cardLogo.alpha = 1
             })
-        } else if self.cardFront?.cardLogo.image == nil {
-            self.cardFront?.cardLogo.image = ResourceManager.shared.getCardDefaultLogo()
+        } else if self.cardFront.cardLogo.image == nil {
+            self.cardFront.cardLogo.image = ResourceManager.shared.getCardDefaultLogo()
             self.cardView.backgroundColor = UIColor.cardDefaultColor()
         }
 
@@ -685,7 +685,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         }
         textEditMaskFormater = textMaskFormaterAux
         textEditMaskFormater = textEditMaskFormaterAux
-        cardFront?.cardCVV.alpha = 0
+        cardFront.cardCVV.alpha = 0
         viewModel.guessedPMS = nil
         self.updateLabelsFontColors()
     }
@@ -707,15 +707,15 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
             let bin = viewModel.getBIN(self.cardNumberLabel!.text!)
             if let paymentMethod = viewModel.getGuessedPM() {
 
-                if self.cardFront?.cardLogo.image == ResourceManager.shared.getCardDefaultLogo() {
-                    self.cardFront?.cardLogo.alpha = 0
-                    self.cardFront?.cardLogo.image = paymentMethod.getImage()
+                if self.cardFront.cardLogo.image == ResourceManager.shared.getCardDefaultLogo() {
+                    self.cardFront.cardLogo.alpha = 0
+                    self.cardFront.cardLogo.image = paymentMethod.getImage()
                     UIView.animate(withDuration: 0.7, animations: { () -> Void in
                         self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
-                        self.cardFront?.cardLogo.alpha = 1
+                        self.cardFront.cardLogo.alpha = 1
                     })
-                } else if self.cardFront?.cardLogo.image == nil {
-                    self.cardFront?.cardLogo.image = paymentMethod.getImage()
+                } else if self.cardFront.cardLogo.image == nil {
+                    self.cardFront.cardLogo.image = paymentMethod.getImage()
                     self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                 }
                 let labelMask = paymentMethod.getLabelMask(bin: bin)
@@ -741,16 +741,16 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         }
         if self.cvvLabel == nil || self.cvvLabel!.text!.count == 0 {
             if (viewModel.guessedPMS != nil) && (!(viewModel.getGuessedPM()?.secCodeInBack())!) {
-                cvvLabel = cardFront?.cardCVV
-                cardBack?.cardCVV.text = ""
-                cardFront?.cardCVV.alpha = 1
-                cardFront?.cardCVV.text = "••••".localized
+                cvvLabel = cardFront.cardCVV
+                cardBack.cardCVV.text = ""
+                cardFront.cardCVV.alpha = 1
+                cardFront.cardCVV.text = "••••".localized
                 self.viewModel.cvvEmpty = true
             } else {
-                cvvLabel = cardBack?.cardCVV
-                cardFront?.cardCVV.text = ""
-                cardFront?.cardCVV.alpha = 0
-                cardBack?.cardCVV.text = "•••".localized
+                cvvLabel = cardBack.cardCVV
+                cardFront.cardCVV.text = ""
+                cardFront.cardCVV.alpha = 0
+                cardBack.cardCVV.text = "•••".localized
                 self.viewModel.cvvEmpty = true
             }
         }
@@ -884,8 +884,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         DispatchQueue.main.async {
             let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
             UIView.transition(with: self.cardView, duration: duration, options: transitionOptions, animations: {
-                self.cardBack?.isHidden = (visibleSide == .frontSide)
-                self.cardFront?.isHidden = (visibleSide == .backSide)
+                self.cardBack.isHidden = (visibleSide == .frontSide)
+                self.cardFront.isHidden = (visibleSide == .backSide)
             }, completion: { (_) in
                 if let completionBlock = completion {
                     completionBlock()
