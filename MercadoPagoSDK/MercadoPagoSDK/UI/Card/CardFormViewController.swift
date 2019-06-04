@@ -156,8 +156,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControl.Event.editingChanged)
         setupInputAccessoryView()
         textBox.delegate = self
-        cardFront = CardFrontView()
-        cardBack = CardBackView()
         self.cardView = UIView()
 
         let cardHeight = getCardHeight()
