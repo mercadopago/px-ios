@@ -102,7 +102,7 @@ extension PXPaymentMethod: Cellable {
         guard let setting = PXSetting.getSettingByBin(settings, bin: bin) else {
             return nil
         }
-        let paymentMethod: PXPaymentMethod = PXPaymentMethod(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: setting, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions, description: paymentMethodDescription)
+        let paymentMethod: PXPaymentMethod = PXPaymentMethod(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: setting, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions, description: paymentMethodDescription, processingModes: processingModes)
         paymentMethod.id = id
         paymentMethod.name = self.name
         paymentMethod.paymentTypeId = self.paymentTypeId

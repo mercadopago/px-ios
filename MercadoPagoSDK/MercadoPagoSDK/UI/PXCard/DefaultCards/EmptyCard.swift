@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MLCardDrawer
 
 class EmptyCard: NSObject, CardUI {
     var placeholderName = ""
@@ -15,7 +16,7 @@ class EmptyCard: NSObject, CardUI {
     var cardFontColor: UIColor = UIColor(red: 105 / 255, green: 105 / 255, blue: 105 / 255, alpha: 1)
     var cardLogoImage: UIImage?
     var cardBackgroundColor: UIColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 239 / 255, alpha: 1)
-    var securityCodeLocation: Location = .back
+    var securityCodeLocation: MLCardSecurityCodeLocation = .back
     var defaultUI = true
     var securityCodePattern = 3
     var fontType: String = "dark"

@@ -78,7 +78,7 @@ internal extension MPXTracker {
             if let flowName = flowName {
                 metadata["flow"] = flowName
             }
-            metadata[SessionService.SESSION_ID_KEY] = sessionService.getSessionId()
+            metadata[SessionService.SESSION_ID_KEY] = getSessionID()
             trackListenerInterfase.trackScreen(screenName: screenName, extraParams: metadata)
         }
     }
@@ -93,19 +93,19 @@ internal extension MPXTracker {
                 if let flowName = flowName {
                     metadata["flow"] = flowName
                 }
-                metadata[SessionService.SESSION_ID_KEY] = sessionService.getSessionId()
+                metadata[SessionService.SESSION_ID_KEY] = getSessionID()
             } else {
                 if let extraInfo = metadata["extra_info"] as? [String: Any] {
                     var frictionExtraInfo: [String: Any] = extraInfo
                     frictionExtraInfo["flow_detail"] = flowDetails
                     frictionExtraInfo["flow"] = flowName
-                    frictionExtraInfo[SessionService.SESSION_ID_KEY] = sessionService.getSessionId()
+                    frictionExtraInfo[SessionService.SESSION_ID_KEY] = getSessionID()
                     metadata["extra_info"] = frictionExtraInfo
                 } else {
                     var frictionExtraInfo: [String: Any] = [:]
                     frictionExtraInfo["flow_detail"] = flowDetails
                     frictionExtraInfo["flow"] = flowName
-                    frictionExtraInfo[SessionService.SESSION_ID_KEY] = sessionService.getSessionId()
+                    frictionExtraInfo[SessionService.SESSION_ID_KEY] = getSessionID()
                     metadata["extra_info"] = frictionExtraInfo
                 }
             }

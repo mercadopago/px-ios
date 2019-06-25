@@ -22,6 +22,9 @@ extension MercadoPagoCheckout {
         if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
             diffPricingString = String(describing: differentialPricing)
         }
+
+        //summary ammount service should be performed using the processing modes designated by the payment method
+        self.viewModel.mercadoPagoServicesAdapter.update(processingModes: paymentMethod.processingModes)
         self.viewModel.mercadoPagoServicesAdapter.getSummaryAmount(bin: bin, amount: self.viewModel.amountHelper.preferenceAmount, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.id, payment_type_id: paymentMethod.paymentTypeId, differentialPricingId: diffPricingString, siteId: self.viewModel.checkoutPreference.siteId, marketplace: self.viewModel.checkoutPreference.marketplace, discountParamsConfiguration: self.viewModel.getAdvancedConfiguration().discountParamsConfiguration, payer: self.viewModel.checkoutPreference.payer, defaultInstallments: self.viewModel.checkoutPreference.getDefaultInstallments(), charges: self.viewModel.amountHelper.chargeRules, maxInstallments: self.viewModel.checkoutPreference.getMaxAcceptedInstallments(), callback: { [weak self] (summaryAmount) in
 
             guard let strongSelf = self else {

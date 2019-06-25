@@ -303,6 +303,11 @@ extension PXCheckoutPreference {
             itemsDic.append(item.getItemForTracking())
         }
         checkoutPrefDic["items"] = itemsDic
+        checkoutPrefDic["binary_mode"] = binaryModeEnabled
+        checkoutPrefDic["marketplace"] = marketplace
+        checkoutPrefDic["site_id"] = siteId
+        checkoutPrefDic["expiration_date_from"] = expirationDateFrom
+        checkoutPrefDic["expiration_date_to"] = expirationDateTo
         checkoutPrefDic["payment_methods"] = paymentPreference.getPaymentPreferenceForTracking()
 
         return checkoutPrefDic
