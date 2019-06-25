@@ -58,16 +58,6 @@ import Foundation
     open var marketplace: String? = "NONE"
 
     /**
-     branch id
-     */
-    open var branchId: String?
-
-    /**
-     processing mode
-     */
-    open var processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
-
-    /**
      Additional info - json string.
      */
     open var additionalInfo: String? {
@@ -107,7 +97,7 @@ import Foundation
         self.payer = PXPayer(email: payerEmail)
     }
 
-    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES) {
+    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -119,9 +109,6 @@ import Foundation
         self.expirationDateFrom = expirationDateFrom
         self.site = site
         self.differentialPricing = differentialPricing
-        let sanitizedProcessingModes = processingModes.isEmpty ? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES : processingModes
-        self.processingModes = sanitizedProcessingModes
-        self.branchId = branchId
         self.marketplace = marketplace
     }
 
@@ -138,15 +125,11 @@ import Foundation
         case site
         case marketplace
         case additionalInfo = "additional_info"
-        case branchId = "branch_id"
-        case processingModes = "processing_modes"
     }
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCheckoutPreferenceKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let branchId: String? = try container.decodeIfPresent(String.self, forKey: .branchId)
-        let processingModes: [String] = try container.decodeIfPresent([String].self, forKey: .processingModes) ?? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
         let items: [PXItem] = try container.decodeIfPresent([PXItem].self, forKey: .items) ?? []
         let paymentPreference: PXPaymentPreference? = try container.decodeIfPresent(PXPaymentPreference.self, forKey: .paymentPreference)
         let payer: PXPayer = try container.decode(PXPayer.self, forKey: .payer)
@@ -156,7 +139,7 @@ import Foundation
         let site: PXSite? = try container.decodeIfPresent(PXSite.self, forKey: .site)
         let differentialPricing: PXDifferentialPricing? = try container.decodeIfPresent(PXDifferentialPricing.self, forKey: .differentialPricing)
         let marketplace: String? = try container.decodeIfPresent(String.self, forKey: .marketplace)
-        self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, branchId: branchId, processingModes: processingModes)
+        self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace)
         self.additionalInfo = try container.decodeIfPresent(String.self, forKey: .additionalInfo)
         populateAdditionalInfoModel()
     }
@@ -173,8 +156,6 @@ import Foundation
         try container.encodeIfPresent(self.differentialPricing, forKey: .differentialPricing)
         try container.encodeIfPresent(self.marketplace, forKey: .marketplace)
         try container.encodeIfPresent(self.additionalInfo, forKey: .additionalInfo)
-        try container.encodeIfPresent(self.branchId, forKey: .branchId)
-        try container.encodeIfPresent(self.processingModes, forKey: .processingModes)
     }
 
     /// :nodoc:

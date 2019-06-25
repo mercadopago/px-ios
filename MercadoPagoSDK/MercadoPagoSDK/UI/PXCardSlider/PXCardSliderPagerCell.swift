@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import MLCardDrawer
 
 class PXCardSliderPagerCell: FSPagerViewCell {
     static let identifier = "PXCardSliderPagerCell"
@@ -14,7 +13,7 @@ class PXCardSliderPagerCell: FSPagerViewCell {
     }
 
     private lazy var cornerRadius: CGFloat = 11
-    private var cardHeader: MLCardDrawerController?
+    private var cardHeader: CardHeaderController?
     private var warningBadgeIcon: UIView!
 
     @IBOutlet weak var containerView: UIView!
@@ -34,7 +33,7 @@ extension PXCardSliderPagerCell {
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
         containerView.backgroundColor = .clear
-        cardHeader = MLCardDrawerController(withCard, cardData, isDisabled)
+        cardHeader = CardHeaderController(withCard, cardData, isDisabled)
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: PXCardSliderSizeManager.getItemContainerSize())
         cardHeader?.animated(false)
         cardHeader?.show()
@@ -52,7 +51,7 @@ extension PXCardSliderPagerCell {
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
         containerView.backgroundColor = .clear
-        cardHeader = MLCardDrawerController(EmptyCard(), PXCardDataFactory(), false)
+        cardHeader = CardHeaderController(EmptyCard(), PXCardDataFactory(), false)
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: PXCardSliderSizeManager.getItemContainerSize())
         cardHeader?.animated(false)
         cardHeader?.show()
@@ -69,7 +68,7 @@ extension PXCardSliderPagerCell {
         containerView.backgroundColor = .clear
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
-        cardHeader = MLCardDrawerController(AccountMoneyCard(), PXCardDataFactory(), isDisabled)
+        cardHeader = CardHeaderController(AccountMoneyCard(), PXCardDataFactory(), isDisabled)
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: PXCardSliderSizeManager.getItemContainerSize())
         cardHeader?.animated(false)
         cardHeader?.show()

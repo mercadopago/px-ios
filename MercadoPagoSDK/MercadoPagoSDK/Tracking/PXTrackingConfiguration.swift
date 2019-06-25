@@ -14,7 +14,7 @@ open class PXTrackingConfiguration {
     let flowDetails: [String: Any]?
     let sessionId: String?
 
-    public init(trackListener: PXTrackerListener? = nil,
+    init(trackListener: PXTrackerListener? = nil,
          flowName: String? = nil,
          flowDetails: [String: Any]? = nil,
          sessionId: String?) {

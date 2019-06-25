@@ -32,14 +32,12 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
     let merchantPublicKey: String
     let payerAccessToken: String?
-    let processingModes: [String]
-    let branchId: String?
+    let processingMode: String
 
-    init(baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil, processingModes: [String], branchId: String?) {
+    init(baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil, processingMode: String) {
         self.merchantPublicKey = merchantPublicKey
         self.payerAccessToken = payerAccessToken
-        self.processingModes = processingModes
-        self.branchId = branchId
+        self.processingMode = processingMode
         super.init(baseURL: baseURL)
     }
 
@@ -78,6 +76,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         params.paramsAppend(key: ApiParams.CUSTOMER_ID, value: customerId)
         params.paramsAppend(key: ApiParams.SITE_ID, value: site.id)
         params.paramsAppend(key: ApiParams.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
+        params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: processingMode)
         params.paramsAppend(key: ApiParams.DIFFERENTIAL_PRICING_ID, value: differentialPricingId)
 
         if let cardsWithEscParams = cardsWithEsc?.map({ $0 }).joined(separator: ",") {
@@ -92,7 +91,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         params.paramsAppend(key: "split_payment_enabled", value: splitEnabled)
 
-        let body = PXPaymentMethodSearchBody(privateKey: payer.accessToken, email: payer.email, marketplace: marketplace, productId: discountParamsConfiguration?.productId, labels: discountParamsConfiguration?.labels, charges: charges, processingModes: processingModes, branchId: branchId)
+        let body = PXPaymentMethodSearchBody(privateKey: payer.accessToken, email: payer.email, marketplace: marketplace, productId: discountParamsConfiguration?.productId, labels: discountParamsConfiguration?.labels, charges: charges)
         let bodyJSON = try? body.toJSON()
 
         let headers = ["Accept-Language": language]

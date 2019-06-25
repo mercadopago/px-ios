@@ -49,7 +49,6 @@ internal class PXNavigationHandler: NSObject {
                 if self.countLoadings > 0 && self.currentLoadingView == nil {
                     self.createCurrentLoading()
                     self.currentLoadingView?.modalTransitionStyle = .crossDissolve
-                    self.currentLoadingView?.modalPresentationStyle = .fullScreen
                     self.navigationController.present(self.currentLoadingView!, animated: true, completion: completion)
                 }
             }
@@ -59,7 +58,6 @@ internal class PXNavigationHandler: NSObject {
     func presentInitLoading() {
         self.createCurrentLoading()
         self.currentLoadingView?.modalTransitionStyle = .crossDissolve
-        self.currentLoadingView?.modalPresentationStyle = .fullScreen
         self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
     }
 
@@ -86,8 +84,6 @@ internal class PXNavigationHandler: NSObject {
 
     internal func showErrorScreen(error: MPSDKError?, callbackCancel: (() -> Void)?, errorCallback: (() -> Void)?) {
         let errorVC = ErrorViewController(error: error, callback: nil, callbackCancel: callbackCancel)
-        errorVC.modalPresentationStyle = .fullScreen
-
         errorVC.callback = {
             self.navigationController.dismiss(animated: true, completion: {
                 errorCallback?()

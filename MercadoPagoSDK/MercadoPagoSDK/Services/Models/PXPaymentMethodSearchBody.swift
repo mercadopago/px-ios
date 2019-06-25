@@ -14,18 +14,14 @@ class PXPaymentMethodSearchBody: Codable {
     let productId: String?
     let labels: [String]?
     let charges: [PXPaymentTypeChargeRule]?
-    let processingModes: [String]
-    let branchId: String?
 
-    init(privateKey: String?, email: String?, marketplace: String?, productId: String?, labels: [String]?, charges: [PXPaymentTypeChargeRule]?, processingModes: [String], branchId: String?) {
+    init(privateKey: String?, email: String?, marketplace: String?, productId: String?, labels: [String]?, charges: [PXPaymentTypeChargeRule]?) {
         self.privateKey = privateKey
         self.email = email
         self.marketplace = marketplace
         self.productId = productId
         self.labels = labels
         self.charges = charges
-        self.processingModes = processingModes
-        self.branchId = branchId
     }
 
     public enum PXPaymentMethodSearchBodyKeys: String, CodingKey {
@@ -35,8 +31,6 @@ class PXPaymentMethodSearchBody: Codable {
         case productId = "product_id"
         case labels
         case charges
-        case processingModes = "processing_modes"
-        case branchId = "branch_id"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -49,8 +43,6 @@ class PXPaymentMethodSearchBody: Codable {
         try container.encodeIfPresent(self.productId, forKey: .productId)
         try container.encodeIfPresent(self.labels, forKey: .labels)
         try container.encodeIfPresent(self.charges, forKey: .charges)
-        try container.encodeIfPresent(self.processingModes, forKey: .processingModes)
-        try container.encodeIfPresent(self.branchId, forKey: .branchId)
     }
 
     open func toJSONString() throws -> String? {

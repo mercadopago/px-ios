@@ -132,8 +132,7 @@ extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
 
 extension PXPaymentMethodPlugin {
     internal func toPaymentMethod(financialInstitutions: [PXFinancialInstitution]? = nil) -> PXPaymentMethod {
-        //all PXPaymentMethodPlugin will only have aggregator processing mode available
-        let paymentMethod = PXPaymentMethod(additionalInfoNeeded: nil, id: self.getId(), name: self.getTitle(), paymentTypeId: PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID, status: nil, secureThumbnail: nil, thumbnail: nil, deferredCapture: nil, settings: [], minAllowedAmount: nil, maxAllowedAmount: nil, accreditationTime: nil, merchantAccountId: nil, financialInstitutions: financialInstitutions, description: self.paymentMethodPluginDescription, processingModes: PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES)
+        let paymentMethod = PXPaymentMethod(additionalInfoNeeded: nil, id: self.getId(), name: self.getTitle(), paymentTypeId: PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID, status: nil, secureThumbnail: nil, thumbnail: nil, deferredCapture: nil, settings: [], minAllowedAmount: nil, maxAllowedAmount: nil, accreditationTime: nil, merchantAccountId: nil, financialInstitutions: financialInstitutions, description: self.paymentMethodPluginDescription)
         paymentMethod.setExternalPaymentMethodImage(externalImage: self.getImage())
         return paymentMethod
     }

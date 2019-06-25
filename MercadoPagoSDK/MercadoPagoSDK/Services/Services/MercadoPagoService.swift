@@ -86,20 +86,12 @@ extension MercadoPagoService {
             return
         }
         #if DEBUG
-
-        let requestStr = response.request?.description ?? "no request"
-        print("--Request: \(requestStr)")
-
-        if let headers = response.request?.allHTTPHeaderFields {
-            print("--Request Headers: \(headers)")
-        }
-
+        print("--Request: \(String(describing: response.request))")
         if let body = response.request?.httpBody {
-            let bodyStr = String(data: body, encoding: .utf8) ?? "no body"
-            print("--Request Body: \(bodyStr)")
+            print("--Request Body: \(String(describing: String(data: body, encoding: .utf8)))")
         }
         if let data = response.result.value, let utf8Text = String(data: data, encoding: .utf8) {
-            print("--Response Data: \(utf8Text)")
+            print("--Data: \(utf8Text)")
         }
         print("--Error: \(String(describing: response.error))")
         #endif

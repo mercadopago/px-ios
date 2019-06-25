@@ -21,13 +21,6 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
-    typealias CompletionHandler = () -> Void
-
-    enum DisplayCardState {
-        case frontSide
-        case backSide
-    }
-
     let NAVIGATION_BAR_COLOR = ThemeManager.shared.navigationBar().backgroundColor
     let NAVIGATION_BAR_TEXT_COLOR = ThemeManager.shared.navigationBar().tintColor
 
@@ -55,7 +48,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     var errorLabel: MPLabel?
     var navItem: UINavigationItem?
     var viewModel: CardFormViewModel!
-    var displayCardState: DisplayCardState = .frontSide
 
     init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
@@ -167,8 +159,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
         let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
-
-
         self.cardView.frame = rectBackground
         cardFront?.frame = rect
         cardBack?.frame = rect
@@ -176,11 +166,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         self.cardView.layer.cornerRadius = 11
         self.cardView.layer.masksToBounds = true
         self.cardBackground.addSubview(self.cardView)
-
-        PXLayout.setWidth(owner: cardView, width: cardWidht).isActive = true
-        PXLayout.setHeight(owner: cardView, height: cardHeight).isActive = true
-        PXLayout.pinLeft(view: cardView, to: cardBackground, withMargin: xMargin)
-        PXLayout.pinTop(view: cardView, to: cardBackground, withMargin: yMargin)
 
         cardBack!.backgroundColor = UIColor.clear
 
@@ -198,18 +183,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         view.setNeedsUpdateConstraints()
         cardView.addSubview(cardFront!)
         textBox.placeholder = getTextboxPlaceholder()
-
-        PXLayout.setWidth(owner: cardFront!, width: cardWidht).isActive = true
-        PXLayout.setHeight(owner: cardFront!, height: cardHeight).isActive = true
-        PXLayout.centerVertically(view: cardFront!, to: cardView, withMargin: 0).isActive = true
-        PXLayout.centerHorizontally(view: cardFront!, to: cardView).isActive = true
-
-        cardView.addSubview(cardBack!)
-        PXLayout.setWidth(owner: cardBack!, width: cardWidht).isActive = true
-        PXLayout.setHeight(owner: cardBack!, height: cardHeight).isActive = true
-        PXLayout.centerVertically(view: cardBack!, to: cardView, withMargin: 0).isActive = true
-        PXLayout.centerHorizontally(view: cardBack!, to: cardView).isActive = true
-        cardBack!.isHidden = true
     }
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -352,9 +325,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.placeholder = getTextboxPlaceholder()
         self.trackScreen()
     }
-
     fileprivate func prepareExpirationLabelForEdit() {
-        //this function may be executed along with the showFrontCard action
         editingLabel = expirationDateLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.numberPad
@@ -363,13 +334,12 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.placeholder = getTextboxPlaceholder()
         self.trackScreen()
     }
-
     fileprivate func prepareCVVLabelForEdit() {
-        //this function may be executed along with the showBackCard action
+
         if !self.viewModel.isAmexCard(self.cardNumberLabel!.text!) {
-            showBackCardSideIfNeeded() {
+            UIView.transition(from: self.cardFront!, to: self.cardBack!, duration: viewModel.animationDuration, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: { (_) -> Void in
                 self.updateLabelsFontColors()
-            }
+            })
             cvvLabel = cardBack?.cardCVV
             cardFront?.cardCVV.text = "•••"
             cardFront?.cardCVV.alpha = 0
@@ -584,7 +554,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         case cvvLabel! :
             if (self.viewModel.getGuessedPM()?.secCodeInBack())! {
-                showFrontCardSideIfNeeded(duration: self.viewModel.animationDuration)
+                UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: viewModel.animationDuration, options: UIView.AnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
+                })
             }
 
             prepareExpirationLabelForEdit()
@@ -595,7 +566,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     @objc func reset() {
         if (self.viewModel.getGuessedPM()?.secCodeInBack())! {
-            showFrontCardSideIfNeeded(duration: 0)
+            UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 0, options: UIView.AnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
+            })
         }
         self.cardNumberLabel?.clearText()
         self.expirationDateLabel?.clearText()
@@ -851,47 +823,12 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                 let errorCVV = viewModel.cardToken!.validateSecurityCode()
                 if (errorCVV) != nil {
                     markErrorLabel(cvvLabel!)
-                    showFrontCardSideIfNeeded(duration: self.viewModel.animationDuration)
+                    UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: viewModel.animationDuration, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: nil)
                     return
                 }
             }
         }
         self.callback!(viewModel.guessedPMS!, self.viewModel.cardToken!)
-    }
-
-    func showFrontCardSideIfNeeded(duration: Double) {
-        //sanity check: the card will not be flipped if the front side is already visible
-        if self.displayCardState == .frontSide {
-            return
-        }
-        self.displayCardState = .frontSide
-        self.flip(visibleSide: .frontSide, duration: duration)
-    }
-
-    func showBackCardSideIfNeeded(completion: CompletionHandler?) {
-        //sanity check: the card will not be flipped if the back side is already visible
-        if self.displayCardState == .backSide {
-            return
-        }
-        self.displayCardState = .backSide
-        self.flip(visibleSide: .backSide,
-                  duration: self.viewModel.animationDuration,
-                  completion: completion)
-    }
-
-    func flip(visibleSide: DisplayCardState, duration: Double, completion: CompletionHandler? = nil) {
-        //all animations must be executed on main thread
-        DispatchQueue.main.async {
-            let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
-            UIView.transition(with: self.cardView, duration: duration, options: transitionOptions, animations: {
-                self.cardBack?.isHidden = (visibleSide == .frontSide)
-                self.cardFront?.isHidden = (visibleSide == .backSide)
-            }, completion: { (_) in
-                if let completionBlock = completion {
-                    completionBlock()
-                }
-            })
-        }
     }
 
     func addCvvDot() -> Bool {

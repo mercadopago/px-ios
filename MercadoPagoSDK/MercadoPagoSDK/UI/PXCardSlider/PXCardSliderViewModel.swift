@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MLCardDrawer
 
 final class PXCardSliderViewModel {
     let paymentMethodId: String
