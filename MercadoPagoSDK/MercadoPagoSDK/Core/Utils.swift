@@ -235,7 +235,7 @@ internal class Utils {
         return stringToWrite
     }
     class func getFont(size: CGFloat) -> UIFont {
-        return UIFont(name: ThemeManager.shared.getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+        return getFontWithSize(font: ThemeManager.shared.getFontName(), size: size)
     }
 
     class func getLightFont(size: CGFloat) -> UIFont {
@@ -248,9 +248,25 @@ internal class Utils {
 
     class func getSemiBoldFont(size: CGFloat) -> UIFont {
         if #available(iOS 8.2, *) {
-            return UIFont(name: ThemeManager.shared.getSemiBoldFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight.semibold)
+            return getFontWithSize(font: ThemeManager.shared.getSemiBoldFontName(), size: size, weight: UIFont.Weight.semibold)
         } else {
-            return UIFont(name: ThemeManager.shared.getSemiBoldFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+            return getFontWithSize(font: ThemeManager.shared.getSemiBoldFontName(), size: size)
+        }
+    }
+
+    private class func getFontWithSize(font: String, size: CGFloat, weight: UIFont.Weight? = nil) -> UIFont {
+        if let thisFont = UIFont(name: font, size: size) {
+            if thisFont.familyName != "Times New Roman" {
+                return thisFont
+            } else {
+                return UIFont(name: "Helvetica", size: size) ?? UIFont.systemFont(ofSize: size)
+            }
+        } else {
+            if let fontWeight = weight {
+                return UIFont.systemFont(ofSize: size, weight: fontWeight)
+            } else {
+                return UIFont.systemFont(ofSize: size)
+            }
         }
     }
 
