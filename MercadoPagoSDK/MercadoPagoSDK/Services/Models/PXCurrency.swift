@@ -32,7 +32,7 @@ open class PXCurrency: NSObject, Codable {
         case symbol
         case decimalPlaces = "decimal_places"
         case decimalSeparator = "decimal_separator"
-        case thousandSeparator = "thousand_separator"
+        case thousandSeparator = "thousands_separator"
     }
 
     required public convenience init(from decoder: Decoder) throws {
