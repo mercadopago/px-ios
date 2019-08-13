@@ -19,16 +19,12 @@ internal protocol InitFlowProtocol: NSObjectProtocol {
 final class InitFlowModel: NSObject, PXFlowModel {
     enum Steps: String {
         case ERROR = "Error"
-        case SERVICE_GET_PREFERENCE = "Obtener datos de preferencia"
-        case ACTION_VALIDATE_PREFERENCE = "Validación de preferencia"
-        case SERVICE_GET_PAYMENT_METHODS = "Obtener medios de pago"
-        case SERVICE_PAYMENT_METHOD_PLUGIN_INIT = "Iniciando plugin de pago"
+        case SERVICE_GET_INIT = "Obtener preferencia y medios de pago"
         case FINISH = "Finish step"
     }
 
     private var preferenceValidated: Bool = false
     private var needPaymentMethodPluginInit = true
-    private var loadPreferenceStatus: Bool
     private var directDiscountSearchStatus: Bool
     private var flowError: InitFlowError?
     private var pendingRetryStep: Steps?
@@ -43,7 +39,6 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     init(flowProperties: InitFlowProperties) {
         self.properties = flowProperties
-        self.loadPreferenceStatus = !String.isNullOrEmpty(flowProperties.checkoutPreference.id)
         self.directDiscountSearchStatus = flowProperties.paymentData.isComplete()
         super.init()
     }
@@ -73,9 +68,7 @@ extension InitFlowModel {
     }
 
     func setError(error: InitFlowError) {
-        if error.errorStep != .SERVICE_PAYMENT_METHOD_PLUGIN_INIT {
-            flowError = error
-        }
+        flowError = error
     }
 
     func resetError() {
@@ -136,49 +129,18 @@ extension InitFlowModel {
             pendingRetryStep = nil
             return retryStep
         }
-
         if hasError() {
             return .ERROR
         }
-
-        if needLoadPreference() {
-            loadPreferenceStatus = false
-            return .SERVICE_GET_PREFERENCE
-        }
-
-        if needValidatePreference() {
-            preferenceValidated = true
-            return .ACTION_VALIDATE_PREFERENCE
-        }
-
-        if needToInitPaymentMethodPlugins() {
-            return .SERVICE_PAYMENT_METHOD_PLUGIN_INIT
-        }
-
         if needSearch() {
-            return .SERVICE_GET_PAYMENT_METHODS
+            return .SERVICE_GET_INIT
         }
-
         return .FINISH
     }
 }
 
 // MARK: Needs methods
 extension InitFlowModel {
-    private func needLoadPreference() -> Bool {
-        return loadPreferenceStatus
-    }
-
-    private func needValidatePreference() -> Bool {
-        return !loadPreferenceStatus && !preferenceValidated
-    }
-
-    private func needToInitPaymentMethodPlugins() -> Bool {
-        if properties.paymentMethodPlugins.isEmpty {
-            return false
-        }
-        return needPaymentMethodPluginInit
-    }
 
     private func needSearch() -> Bool {
         return properties.paymentMethodSearchResult == nil

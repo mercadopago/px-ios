@@ -47,14 +47,8 @@ final class InitFlow: PXFlow {
     func executeNextStep() {
         let nextStep = model.nextStep()
         switch nextStep {
-        case .SERVICE_GET_PREFERENCE:
-            getCheckoutPreference()
-        case .ACTION_VALIDATE_PREFERENCE:
-            validatePreference()
-        case .SERVICE_GET_PAYMENT_METHODS:
-            getPaymentMethodSearch()
-        case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
-            initPaymentMethodPlugins()
+        case .SERVICE_GET_INIT:
+            getInitSearch()
         case .FINISH:
             finishFlow()
         case .ERROR:
