@@ -9,6 +9,10 @@
 import Foundation
 /// :nodoc:
 open class PXPaymentMethodSearch: NSObject, Codable {
+    open var preference: PXCheckoutPreference
+    open var site: PXSite
+    open var currency: PXCurrency
+    open var expressCho: [PXOneTapDto]?
     open var defaultAmountConfiguration: String
     open var discountConfigurations: [String: PXDiscountConfiguration]
     open var selectedDiscountConfiguration: PXDiscountConfiguration?
@@ -17,10 +21,12 @@ open class PXPaymentMethodSearch: NSObject, Codable {
     open var paymentMethods: [PXPaymentMethod] = []
     open var cards: [PXCard]?
     open var defaultOption: PXPaymentMethodSearchItem?
-    open var expressCho: [PXOneTapDto]?
 
-    public init(defaultAmountConfiguration: String, discountConfigurations: [String: PXDiscountConfiguration], paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?, oneTap: PXOneTapItem?, expressCho: [PXOneTapDto]?) {
+    public init(preference: PXCheckoutPreference, site: PXSite, currency: PXCurrency, expressCho: [PXOneTapDto]?, defaultAmountConfiguration: String, discountConfigurations: [String: PXDiscountConfiguration], paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?, oneTap: PXOneTapItem?) {
 
+        self.preference = preference
+        self.site = site
+        self.currency = currency
         self.defaultAmountConfiguration = defaultAmountConfiguration
         self.discountConfigurations = discountConfigurations
         self.paymentMethodSearchItem = paymentMethodSearchItem
@@ -29,16 +35,17 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         self.cards = cards
         self.defaultOption = defaultOption
         self.expressCho = expressCho
-
         if let selectedDiscountConfiguration = discountConfigurations[defaultAmountConfiguration] {
             self.selectedDiscountConfiguration = selectedDiscountConfiguration
         }
-
         super.init()
         self.populateAMDescription()
     }
 
     public enum PXPaymentMethodSearchKeys: String, CodingKey {
+        case preference
+        case site
+        case currency
         case paymentMethodSearchItem = "groups"
         case customOptionSearchItems = "custom_options"
         case paymentMethods = "payment_methods"
@@ -51,6 +58,9 @@ open class PXPaymentMethodSearch: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentMethodSearchKeys.self)
+        let preference: PXCheckoutPreference = try container.decode(PXCheckoutPreference.self, forKey: .preference)
+        let site: PXSite = try container.decode(PXSite.self, forKey: .site)
+        let currency: PXCurrency = try container.decode(PXCurrency.self, forKey: .currency)
         let paymentMethodSearchItem: [PXPaymentMethodSearchItem] = try container.decodeIfPresent([PXPaymentMethodSearchItem].self, forKey: .paymentMethodSearchItem) ?? []
         let customOptionSearchItems: [PXCustomOptionSearchItem] = try container.decodeIfPresent([PXCustomOptionSearchItem].self, forKey: .customOptionSearchItems) ?? []
         let paymentMethods: [PXPaymentMethod] = try container.decodeIfPresent([PXPaymentMethod].self, forKey: .paymentMethods) ?? []
@@ -59,11 +69,14 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         let defaultAmountConfiguration: String = try container.decode(String.self, forKey: .defaultAmountConfiguration)
         let discountConfigurations: [String: PXDiscountConfiguration] = try container.decode([String: PXDiscountConfiguration].self, forKey: .discountConfigurations)
 
-        self.init(defaultAmountConfiguration: defaultAmountConfiguration, discountConfigurations: discountConfigurations, paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: [], defaultOption: defaultOption, oneTap: nil, expressCho: expressCho)
+        self.init(preference: preference, site: site, currency: currency, expressCho: expressCho, defaultAmountConfiguration: defaultAmountConfiguration, discountConfigurations: discountConfigurations, paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: [], defaultOption: defaultOption, oneTap: nil)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXPaymentMethodSearchKeys.self)
+        try container.encodeIfPresent(self.preference, forKey: .preference)
+        try container.encodeIfPresent(self.site, forKey: .site)
+        try container.encodeIfPresent(self.currency, forKey: .currency)
         try container.encodeIfPresent(self.paymentMethodSearchItem, forKey: .paymentMethodSearchItem)
         try container.encodeIfPresent(self.customOptionSearchItems, forKey: .customOptionSearchItems)
         try container.encodeIfPresent(self.paymentMethods, forKey: .paymentMethods)
