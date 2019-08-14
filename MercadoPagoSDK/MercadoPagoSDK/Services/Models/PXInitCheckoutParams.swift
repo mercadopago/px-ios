@@ -9,9 +9,9 @@ import Foundation
 
 struct PXInitCheckoutParams: Codable {
 
-    let discountParamsConfiguration: PXInitDiscountParamsConfiguration
+    let discountParamsConfiguration: PXDiscountParamsConfiguration
     let cardsWithEsc: [String]
-    let charges: [String]
+    let charges: [PXPaymentTypeChargeRule]?
     let supportsSplit: Bool
     let supportsExpress: Bool
     let shouldSkipUserConfirmation: Bool
