@@ -192,7 +192,8 @@ import Foundation
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCheckoutPreferenceKeys.self)
-        let id: String = try container.decode(String.self, forKey: .id)
+        let id: String? = try container.decodeIfPresent(String.self, forKey: .id)
+        let prefId: String = id ?? ""
         let branchId: String? = try container.decodeIfPresent(String.self, forKey: .branchId)
         let processingModes: [String] = try container.decodeIfPresent([String].self, forKey: .processingModes) ?? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
         let items: [PXItem] = try container.decodeIfPresent([PXItem].self, forKey: .items) ?? []
@@ -213,7 +214,7 @@ import Foundation
         let marketplace: String? = try container.decodeIfPresent(String.self, forKey: .marketplace)
         let marketplaceFee: Int? = try container.decodeIfPresent(Int.self, forKey: .marketplaceFee)
 
-        self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, dateCreated: dateCreated, operationType: operationType, autoReturn: autoReturn, externalReference: externalReference, collectorId: collectorId, clientId: clientId, expires: expires, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, marketplaceFee: marketplaceFee, branchId: branchId, processingModes: processingModes)
+        self.init(id: prefId, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, dateCreated: dateCreated, operationType: operationType, autoReturn: autoReturn, externalReference: externalReference, collectorId: collectorId, clientId: clientId, expires: expires, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, marketplaceFee: marketplaceFee, branchId: branchId, processingModes: processingModes)
 
         self.additionalInfo = try container.decodeIfPresent(String.self, forKey: .additionalInfo)
         populateAdditionalInfoModel()

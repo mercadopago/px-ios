@@ -10,7 +10,7 @@ import UIKit
 
 class PXInitSearchBody: Codable {
 
-    let preferenceId: String
+    let preferenceId: String?
     let preference: PXCheckoutPreference?
     let merchantOrderId: String?
     let checkoutParams: PXInitCheckoutParams
@@ -22,7 +22,7 @@ class PXInitSearchBody: Codable {
         case checkoutParams = "checkout_params"
     }
 
-    init(preferenceId: String, preference: PXCheckoutPreference?, merchantOrderId: String?, checkoutParams: PXInitCheckoutParams) {
+    init(preferenceId: String?, preference: PXCheckoutPreference?, merchantOrderId: String?, checkoutParams: PXInitCheckoutParams) {
         self.preferenceId = preferenceId
         self.preference = preference
         self.merchantOrderId = merchantOrderId
