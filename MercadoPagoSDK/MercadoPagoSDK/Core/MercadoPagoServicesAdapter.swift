@@ -29,18 +29,6 @@ internal class MercadoPagoServicesAdapter {
         return 15.0
     }
 
-    func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { (pxCheckoutPreference) in
-            guard let siteId = pxCheckoutPreference.siteId else {
-                // TODO: faltal error?
-                return
-            }
-            SiteManager.shared.setSite(siteId: siteId)
-            callback(pxCheckoutPreference)
-            }, failure: failure)
-    }
-
     func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let int64PaymentId = Int64(paymentId) //TODO: FIX
@@ -54,21 +42,11 @@ internal class MercadoPagoServicesAdapter {
     typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
     typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: Bool, hasPaymentProcessor: Bool, splitEnabled: Bool, maxInstallments: String?)
 
-    func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getInitSearch(pref: PXCheckoutPreference, amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         payer.setAccessToken(accessToken: mercadoPagoServices.payerAccessToken)
-
-        let pxSite = getPXSiteFromId(site)
-
-        var expressValue: String = "false"
-        if let eParams = extraParams, eParams.expressEnabled {
-            expressValue = "true"
-        }
-
-        var splitValue: String = "false"
-        if let eParams = extraParams, eParams.splitEnabled {
-            splitValue = "true"
-        }
+        let expressEnabled: Bool = extraParams?.expressEnabled ?? false
+        let splitEnabled: Bool = extraParams?.splitEnabled ?? false
 
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
         if let eParams = extraParams, !eParams.hasPaymentProcessor {
@@ -77,7 +55,7 @@ internal class MercadoPagoServicesAdapter {
         excludedPaymentTypesIds.append(PXPaymentTypes.ACCOUNT_MONEY.rawValue)
         }
 
-        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, defaultInstallments: extraParams?.defaultInstallments, expressEnabled: expressValue, splitEnabled: splitValue, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, maxInstallments: extraParams?.maxInstallments, callback: { (pxPaymentMethodSearch) in
+        mercadoPagoServices.getInitSearch(pref: pref, amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, expressEnabled: expressEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
             callback(pxPaymentMethodSearch)
         }, failure: failure)
     }

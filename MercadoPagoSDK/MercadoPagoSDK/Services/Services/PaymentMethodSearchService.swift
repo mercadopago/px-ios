@@ -43,12 +43,10 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, splitEnabled: String, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, maxInstallments: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getInit(pref: PXCheckoutPreference, _ amount: Double, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, payer: PXPayer, language: String, expressEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         var params = MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
-        let roundedAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: amount)
-
-        params.paramsAppend(key: ApiParams.AMOUNT, value: roundedAmount.stringValue)
+        params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: payer.getAccessToken())
 
         let newExcludedPaymentTypesIds = excludedPaymentTypeIds
 
@@ -66,38 +64,20 @@ internal class PaymentMethodSearchService: MercadoPagoService {
             params.paramsAppend(key: ApiParams.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
         }
 
-        if let customDefaultInstallments = defaultInstallments {
-            params.paramsAppend(key: ApiParams.DEFAULT_INSTALLMENTS, value: customDefaultInstallments)
+        let checkoutParams = PXInitCheckoutParams(discountParamsConfiguration: PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? ""), cardsWithEsc: cardsWithEsc ?? [String](), charges: charges, supportsSplit: splitEnabled, supportsExpress: expressEnabled, shouldSkipUserConfirmation: false, dynamicDialogLocations: [String](), dynamicViewLocations: [String]())
+
+        var body: PXInitSearchBody
+        if let prefId = pref.id {
+            body = PXInitSearchBody(preferenceId: prefId, preference: nil, merchantOrderId: nil, checkoutParams: checkoutParams)
+        } else {
+            body = PXInitSearchBody(preferenceId: nil, preference: pref, merchantOrderId: nil, checkoutParams: checkoutParams)
         }
 
-        if let customMaxInstallments = maxInstallments {
-            params.paramsAppend(key: ApiParams.MAX_INSTALLMENTS, value: customMaxInstallments)
-        }
-
-        params.paramsAppend(key: ApiParams.EMAIL, value: customerEmail)
-        params.paramsAppend(key: ApiParams.CUSTOMER_ID, value: customerId)
-        params.paramsAppend(key: ApiParams.SITE_ID, value: site.id)
-        params.paramsAppend(key: ApiParams.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
-        params.paramsAppend(key: ApiParams.DIFFERENTIAL_PRICING_ID, value: differentialPricingId)
-
-        if let cardsWithEscParams = cardsWithEsc?.map({ $0 }).joined(separator: ",") {
-            params.paramsAppend(key: "cards_esc", value: cardsWithEscParams)
-        }
-
-        if let supportedPluginsParams = supportedPlugins?.map({ $0 }).joined(separator: ",") {
-            params.paramsAppend(key: "support_plugins", value: supportedPluginsParams)
-        }
-
-        params.paramsAppend(key: "express_enabled", value: expressEnabled)
-
-        params.paramsAppend(key: "split_payment_enabled", value: splitEnabled)
-
-        let body = PXPaymentMethodSearchBody(privateKey: payer.accessToken, email: payer.email, marketplace: marketplace, productId: discountParamsConfiguration?.productId, labels: discountParamsConfiguration?.labels, charges: charges, processingModes: processingModes, branchId: branchId)
         let bodyJSON = try? body.toJSON()
-
         let headers = ["Accept-Language": language]
 
-        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: bodyJSON, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_INIT_URI, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
+            headers, cache: false, success: { (data) -> Void in
             do {
 
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
