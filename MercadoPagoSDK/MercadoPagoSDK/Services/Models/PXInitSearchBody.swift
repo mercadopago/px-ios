@@ -47,8 +47,4 @@ class PXInitSearchBody: Codable {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
-
-    open class func fromJSON(data: Data) throws -> PXInitSearchBody {
-        return try JSONDecoder().decode(PXInitSearchBody.self, from: data)
-    }
 }
