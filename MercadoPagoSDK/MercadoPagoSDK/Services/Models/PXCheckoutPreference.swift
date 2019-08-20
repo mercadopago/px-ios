@@ -33,38 +33,6 @@ import Foundation
      */
     open var paymentPreference: PXPaymentPreference = PXPaymentPreference()
     /**
-        dateCreated
-    */
-    open var dateCreated: String?
-    /**
-        operationType
-    */
-    open var operationType: String?
-    /**
-        autoReturn
-     */
-    open var autoReturn: String?
-    /**
-        externalReference
-    */
-    open var externalReference: String?
-    /**
-        collectorId
-    */
-    open var collectorId: Int?
-    /**
-        clientId
-    */
-    open var clientId: Int?
-    /**
-        expires
-    */
-    open var expires: Bool?
-    /**
-        marketplaceFee
-     */
-    open var marketplaceFee: Int?
-    /**
         siteId
      */
     open var siteId: String!
@@ -129,15 +97,11 @@ import Foundation
      */
     public init(siteId: String, payerEmail: String, items: [PXItem]) {
         self.items = items
-
-        guard let site = SiteManager.shared.siteIdsSettings[siteId] else {
-            fatalError("Invalid site id")
-        }
         self.siteId = siteId
         self.payer = PXPayer(email: payerEmail)
     }
 
-    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, dateCreated: String?, operationType: String?, autoReturn: String?, externalReference: String?, collectorId: Int?, clientId: Int?, expires: Bool?, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, marketplaceFee: Int?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES) {
+    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES) {
 
         self.id = id
         self.items = items
@@ -153,15 +117,7 @@ import Foundation
         let sanitizedProcessingModes = processingModes.isEmpty ? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES : processingModes
         self.processingModes = sanitizedProcessingModes
         self.branchId = branchId
-        self.dateCreated = dateCreated
-        self.operationType = operationType
-        self.autoReturn = autoReturn
-        self.externalReference = externalReference
-        self.collectorId = collectorId
-        self.clientId = clientId
-        self.expires = expires
         self.marketplace = marketplace
-        self.marketplaceFee = marketplaceFee
     }
 
     /// :nodoc:
@@ -176,15 +132,7 @@ import Foundation
         case differentialPricing = "differential_pricing"
         case site
         case marketplace
-        case dateCreated = "date_created"
-        case operationType = "operation_type"
         case additionalInfo = "additional_info"
-        case autoReturn = "auto_return"
-        case externalReference = "external_reference"
-        case collectorId = "collector_id"
-        case clientId = "client_id"
-        case expires
-        case marketplaceFee = "marketplace_fee"
         case backUrls = "back_urls"
         case branchId = "branch_id"
         case processingModes = "processing_modes"
@@ -193,7 +141,6 @@ import Foundation
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCheckoutPreferenceKeys.self)
         let id: String? = try container.decodeIfPresent(String.self, forKey: .id)
-        let prefId: String = id ?? ""
         let branchId: String? = try container.decodeIfPresent(String.self, forKey: .branchId)
         let processingModes: [String] = try container.decodeIfPresent([String].self, forKey: .processingModes) ?? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
         let items: [PXItem] = try container.decodeIfPresent([PXItem].self, forKey: .items) ?? []
@@ -204,17 +151,9 @@ import Foundation
         let siteId: String = try container.decode(String.self, forKey: .siteId)
         let site: PXSite? = try container.decodeIfPresent(PXSite.self, forKey: .site)
         let differentialPricing: PXDifferentialPricing? = try container.decodeIfPresent(PXDifferentialPricing.self, forKey: .differentialPricing)
-        let dateCreated: String? = try container.decodeIfPresent(String.self, forKey: .dateCreated)
-        let operationType: String? = try container.decodeIfPresent(String.self, forKey: .operationType)
-        let autoReturn: String? = try container.decodeIfPresent(String.self, forKey: .autoReturn)
-        let externalReference: String? = try container.decodeIfPresent(String.self, forKey: .externalReference)
-        let collectorId: Int? = try container.decodeIfPresent(Int.self, forKey: .collectorId)
-        let clientId: Int? = try container.decodeIfPresent(Int.self, forKey: .collectorId)
-        let expires: Bool? = try container.decodeIfPresent(Bool.self, forKey: .expires)
         let marketplace: String? = try container.decodeIfPresent(String.self, forKey: .marketplace)
-        let marketplaceFee: Int? = try container.decodeIfPresent(Int.self, forKey: .marketplaceFee)
 
-        self.init(id: prefId, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, dateCreated: dateCreated, operationType: operationType, autoReturn: autoReturn, externalReference: externalReference, collectorId: collectorId, clientId: clientId, expires: expires, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, marketplaceFee: marketplaceFee, branchId: branchId, processingModes: processingModes)
+        self.init(id: PXCheckoutPreference.getIdOrDefaultValue(id), items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, branchId: branchId, processingModes: processingModes)
 
         self.additionalInfo = try container.decodeIfPresent(String.self, forKey: .additionalInfo)
         populateAdditionalInfoModel()
@@ -231,15 +170,7 @@ import Foundation
         try container.encodeIfPresent(self.siteId, forKey: .siteId)
         try container.encodeIfPresent(self.site, forKey: .site)
         try container.encodeIfPresent(self.differentialPricing, forKey: .differentialPricing)
-        try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
-        try container.encodeIfPresent(self.operationType, forKey: .operationType)
-        try container.encodeIfPresent(self.autoReturn, forKey: .autoReturn)
-        try container.encodeIfPresent(self.externalReference, forKey: .externalReference)
-        try container.encodeIfPresent(self.collectorId, forKey: .collectorId)
-        try container.encodeIfPresent(self.clientId, forKey: .clientId)
-        try container.encodeIfPresent(self.expires, forKey: .expires)
         try container.encodeIfPresent(self.additionalInfo, forKey: .additionalInfo)
-        try container.encodeIfPresent(self.marketplaceFee, forKey: .marketplaceFee)
         try container.encodeIfPresent(self.marketplace, forKey: .marketplace)
         try container.encodeIfPresent(self.additionalInfo, forKey: .additionalInfo)
         try container.encodeIfPresent(self.backUrls, forKey: .backUrls)
@@ -263,5 +194,12 @@ import Foundation
     /// :nodoc:
     open class func fromJSON(data: Data) throws -> PXCheckoutPreference {
         return try JSONDecoder().decode(PXCheckoutPreference.self, from: data)
+    }
+}
+
+internal extension PXCheckoutPreference {
+    static func getIdOrDefaultValue(_ targetId: String?) -> String {
+        guard let remoteId = targetId else { return "" }
+        return remoteId
     }
 }
