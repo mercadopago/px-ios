@@ -43,7 +43,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getInit(pref: PXCheckoutPreference, _ amount: Double, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, payer: PXPayer, language: String, expressEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getInit(pref: PXCheckoutPreference, _ amount: Double, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, shouldSkipUserConfirmation: Bool, payer: PXPayer, language: String, expressEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         var params = MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
         params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: payer.getAccessToken())
@@ -64,7 +64,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
             params.paramsAppend(key: ApiParams.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
         }
 
-        let checkoutParams = PXInitCheckoutParams(discountParamsConfiguration: PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? ""), cardsWithEsc: cardsWithEsc ?? [String](), charges: charges, supportsSplit: splitEnabled, supportsExpress: expressEnabled, shouldSkipUserConfirmation: false, dynamicDialogLocations: [String](), dynamicViewLocations: [String]())
+        let checkoutParams = PXInitCheckoutParams(discountParamsConfiguration: PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? ""), cardsWithEsc: cardsWithEsc ?? [String](), charges: charges, supportsSplit: splitEnabled, supportsExpress: expressEnabled, shouldSkipUserConfirmation: shouldSkipUserConfirmation, dynamicDialogLocations: [String](), dynamicViewLocations: [String]())
 
         var body: PXInitSearchBody
         if let prefId = pref.id {

@@ -142,6 +142,14 @@ extension InitFlowModel {
 // MARK: Needs methods
 extension InitFlowModel {
 
+    // Use this method for init property.
+    func needSkipRyC() -> Bool {
+        if let paymentProc = properties.paymentPlugin, let shouldSkip = paymentProc.shouldSkipUserConfirmation, shouldSkip() {
+            return true
+        }
+        return false
+    }
+
     private func needSearch() -> Bool {
         return properties.paymentMethodSearchResult == nil
     }
