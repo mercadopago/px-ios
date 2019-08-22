@@ -11,15 +11,9 @@ import Foundation
 extension InitFlow {
 
     func getInitSearch() {
-        let paymentMethodPluginsToShow = model.properties.paymentMethodPlugins.filter { $0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true }
-        var pluginIds = [String]()
-        for plugin in paymentMethodPluginsToShow {
-            pluginIds.append(plugin.getId())
-        }
 
         let cardIdsWithEsc = model.getESCService()?.getSavedCardIds()
         let exclusions: MercadoPagoServicesAdapter.PaymentSearchExclusions = (model.getExcludedPaymentTypesIds(), model.getExcludedPaymentMethodsIds())
-        let oneTapInfo: MercadoPagoServicesAdapter.PaymentSearchOneTapInfo = (cardIdsWithEsc, pluginIds)
 
         var differentialPricingString: String?
         if let diffPricing = model.properties.checkoutPreference.differentialPricing?.id {
@@ -45,7 +39,7 @@ extension InitFlow {
         //payment method search service should be performed using the processing modes designated by the preference object
         let pref = model.properties.checkoutPreference
         serviceAdapter.update(processingModes: pref.processingModes, branchId: pref.branchId)
-        serviceAdapter.getInitSearch(pref: pref, amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), shouldSkipUserConfirmation: model.needSkipRyC(), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
+        serviceAdapter.getInitSearch(pref: pref, amount: model.amountHelper.amountToPay, exclusions: exclusions, cardIdsWithEsc: cardIdsWithEsc, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), shouldSkipUserConfirmation: model.needSkipRyC(), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return
