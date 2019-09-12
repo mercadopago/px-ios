@@ -106,7 +106,6 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                     guard let self = self else { return }
                     self.superview?.layer.masksToBounds = false
                     self.animationDelegate?.expandAnimationInProgress()
-                    
                     UIView.animate(withDuration: 0.5, animations: {
                         animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
                     }, completion: { [weak self] _ in

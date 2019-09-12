@@ -1,5 +1,5 @@
 //
-//  PXActionTag.swift
+//  PXDisabledOption.swift
 //  MercadoPagoSDKV4
 //
 //  Created by Eden Torres on 27/08/2018.
