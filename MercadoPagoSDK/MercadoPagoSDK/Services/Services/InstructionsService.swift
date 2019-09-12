@@ -39,16 +39,16 @@ internal class InstructionsService: MercadoPagoService {
                 let error = jsonResult["error"] as? String
                 if error != nil && error!.count > 0 {
                     let apiException = try PXApiException.fromJSON(data: data)
-                    let e : PXError = PXError(domain: "com.mercadopago.sdk.getInstructions", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago", NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String], apiException: apiException)
+                    let e : PXError = PXError(domain: ApiDomains.GET_INSTRUCTIONS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago", NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String], apiException: apiException)
                     failure!(e)
                 } else {
                     success(try PXInstructions.fromJSON(data: data))
                 }
             } catch {
-                failure?(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las instrucciones"]))
+                failure?(PXError(domain: ApiDomains.GET_INSTRUCTIONS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las instrucciones"]))
             }
         }, failure: { (_) in
-            failure?(PXError(domain: "com.mercadopago.sdk.getInstructions", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+            failure?(PXError(domain: ApiDomains.GET_INSTRUCTIONS, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 }

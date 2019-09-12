@@ -38,7 +38,7 @@ internal class PaymentService: MercadoPagoService {
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
                         let apiException = try PXApiException.fromJSON(data: data)
-                        failure(PXError(domain: "mercadopago.sdk.paymentService.getSummaryAmount", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: errorDic["error"] as? String ?? "Unknowed Error"], apiException: apiException))
+                        failure(PXError(domain: ApiDomains.GET_SUMMARY_AMOUNT, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: errorDic["error"] as? String ?? "Unknowed Error"], apiException: apiException))
 
                     } else {
                         let summaryAmount = try PXSummaryAmount.fromJSON(data: data)
@@ -46,10 +46,10 @@ internal class PaymentService: MercadoPagoService {
                     }
                 }
             } catch {
-                failure(PXError(domain: "mercadopago.sdk.paymentService.getSummaryAmount", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las cuotas"]))
+                failure(PXError(domain: ApiDomains.GET_SUMMARY_AMOUNT, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las cuotas"]))
             }
         }, failure: { (error) in
-            failure(PXError(domain: "mercadopago.sdk.paymentService.getSummaryAmount", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+            failure(PXError(domain: ApiDomains.GET_SUMMARY_AMOUNT, code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
 
         })
     }
@@ -69,19 +69,11 @@ internal class PaymentService: MercadoPagoService {
             params.paramsAppend(key: ApiParams.PROCESSING_MODES, value: commaSeparatedModes)
         }
 
-        if bin != nil {
-            self.request(uri: uri, params: params, body: nil, method: HTTPMethod.get, success: success, failure: { (error) in
-                if let failure = failure {
-                    failure(PXError(domain: "mercadopago.sdk.paymentService.getIssuers", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
-                }
-            })
-        } else {
-            self.request(uri: uri, params: params, body: nil, method: HTTPMethod.get, success: success, failure: { (error) in
-                if let failure = failure {
-                    failure(PXError(domain: "mercadopago.sdk.paymentService.getIssuers", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
-                }
-            })
-        }
+        self.request(uri: uri, params: params, body: nil, method: HTTPMethod.get, success: success, failure: { (error) in
+            if let failure = failure {
+                failure(PXError(domain: ApiDomains.GET_ISSUERS, code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+            }
+        })
     }
 
 }

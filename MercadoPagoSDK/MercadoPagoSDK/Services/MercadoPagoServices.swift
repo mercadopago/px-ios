@@ -93,11 +93,11 @@ internal class MercadoPagoServices: NSObject {
                         callback(token)
                     } else {
                         let apiException = try PXApiException.fromJSON(data: data)
-                        failure(PXError(domain: "mercadopago.sdk.createToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+                        failure(PXError(domain: ApiDomains.GET_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
                     }
                 }
             } catch {
-                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido crear el token"]))
+                failure(PXError(domain: ApiDomains.GET_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido crear el token"]))
             }
         }, failure: failure)
     }
@@ -114,11 +114,11 @@ internal class MercadoPagoServices: NSObject {
                         callback(token)
                     } else {
                         let apiException = try PXApiException.fromJSON(data: data)
-                        failure(PXError(domain: "mercadopago.sdk.createToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+                        failure(PXError(domain: ApiDomains.CLONE_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
                     }
                 }
             } catch {
-                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
+                failure(PXError(domain: ApiDomains.CLONE_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
             }
         }, failure: failure)
     }
@@ -133,7 +133,7 @@ internal class MercadoPagoServices: NSObject {
                 }
                 callback(promos)
             } catch {
-                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las promociones"]))
+                failure(PXError(domain: ApiDomains.GET_PROMOS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las promociones"]))
             }
         }, failure: failure)
     }
@@ -146,10 +146,10 @@ internal class MercadoPagoServices: NSObject {
             if let error = jsonResult as? NSDictionary {
                 if (error["status"]! as? Int) == 404 {
                     let apiException = try PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: "mercadopago.sdk.getIdentificationTypes", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
+                    failure(PXError(domain: ApiDomains.GET_IDENTIFICATION_TYPES, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
                 } else if error["error"] != nil {
                     let apiException = try PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: "mercadopago.sdk.getIdentificationTypes", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
+                    failure(PXError(domain: ApiDomains.GET_IDENTIFICATION_TYPES, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
                 }
             } else {
                 var identificationTypes : [PXIdentificationType] = [PXIdentificationType]()
@@ -157,7 +157,7 @@ internal class MercadoPagoServices: NSObject {
                 callback(identificationTypes)
             }
         } catch {
-            failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los tipos de identificación"]))
+            failure(PXError(domain: ApiDomains.GET_IDENTIFICATION_TYPES, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los tipos de identificación"]))
             }
         }, failure: failure)
     }
@@ -177,7 +177,7 @@ internal class MercadoPagoServices: NSObject {
                 if let errorDic = jsonResponse as? NSDictionary {
                     if errorDic["error"] != nil {
                         let apiException = try PXApiException.fromJSON(data: data)
-                        failure(PXError(domain: "mercadopago.sdk.getIssuers", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: errorDic as? [String: Any], apiException: apiException))
+                        failure(PXError(domain: ApiDomains.GET_ISSUERS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: errorDic as? [String: Any], apiException: apiException))
                     }
                 } else {
                     var issuers : [PXIssuer] = [PXIssuer]()
@@ -185,7 +185,7 @@ internal class MercadoPagoServices: NSObject {
                     callback(issuers)
                 }
             } catch {
-                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los bancos"]))
+                failure(PXError(domain: ApiDomains.GET_ISSUERS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los bancos"]))
             }
         }, failure: failure)
     }

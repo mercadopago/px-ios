@@ -40,3 +40,20 @@ internal class ApiParams: NSObject {
     static let LABELS = "labels"
     static let CHARGES = "charges"
 }
+
+internal struct ApiDomains {
+    static let GET_CUSTOMER = "mercadopago.sdk.CustomService.getCustomer"
+    static let CREATE_PAYMENT = "mercadopago.sdk.CustomService.createPayment"
+    static let CREATE_PREFERENCE = "mercadopago.sdk.CustomService.createCheckoutPreference"
+    static let GET_DISCOUNT = "mercadopago.sdk.DiscountService.getDiscount"
+    static let GET_CAMPAIGNS = "mercadopago.sdk.DiscountService.getCampaigns"
+    static let GET_TOKEN = "mercadopago.sdk.GatewayService.getToken"
+    static let CLONE_TOKEN = "mercadopago.sdk.GatewayService.cloneToken"
+    static let GET_IDENTIFICATION_TYPES = "mercadopago.sdk.IdentificationService.getIdentificationTypes"
+    static let GET_INSTRUCTIONS = "mercadopago.sdk.InstructionsService.getInstructions"
+    static let GET_PAYMENT_METHODS = "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods"
+    static let GET_SUMMARY_AMOUNT = "mercadopago.sdk.PaymentService.getSummaryAmount"
+    static let GET_ISSUERS = "mercadopago.sdk.PaymentService.getIssuers"
+    static let GET_PREFERENCE = "mercadopago.sdk.PreferenceService.getPreference"
+    static let GET_PROMOS = "mercadopago.sdk.PromosService.getPromos"
+}
