@@ -209,6 +209,10 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return self.businessResult.getBottomCustomView()
     }
 
+    func buildImportantCustomView() -> UIView? {
+        return self.businessResult.getImportantCustomView()
+    }
+
     func getHeaderDefaultIcon() -> UIImage? {
         if let brIcon = businessResult.getIcon() {
              return brIcon

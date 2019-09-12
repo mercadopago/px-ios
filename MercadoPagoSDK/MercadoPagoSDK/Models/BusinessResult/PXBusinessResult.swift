@@ -59,6 +59,8 @@ import UIKit
     private let imageUrl: String?
     private let topCustomView: UIView?
     private let bottomCustomView: UIView?
+    // Above crossSeling backend drive box.
+    private var importantView: UIView?
     private var receiptId: String?
     private let paymentMethodId: String?
     private let paymentTypeId: String?
@@ -120,14 +122,15 @@ import UIKit
      - parameter showPaymentMethod: True if you want to show the cell of payment method in the result screen
      - parameter statementDescription: Statement description that will be displayed on the result screen
      - parameter imageUrl: Image url for the icon that will be displayed on the result screen
-     - parameter topCustomView: Custom view that will be displayed on the result screen on top
-     - parameter bottomCustomView: Custom view that will be displayed on the result screen on bottom
+     - parameter topCustomView: Custom view that will be displayed on the result screen at top of Payment Method
+     - parameter bottomCustomView: Custom view that will be displayed on the result screen at bottom of Payment Method
      - parameter paymentStatus: Payment status of the payment result
      - parameter paymentStatusDetail: Payment status detail of the payment result
      - parameter paymentMethodId: Payment method id
      - parameter paymentTypeId: Payment type id
+      - parameter importantView: Custom view that will be displayed above crossSeling backend drive box. (Below congrats header)
      */
-    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXAction? = nil, secondaryAction: PXAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil, paymentStatus: String, paymentStatusDetail: String, paymentMethodId: String, paymentTypeId: String) {
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXAction? = nil, secondaryAction: PXAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil, paymentStatus: String, paymentStatusDetail: String, paymentMethodId: String, paymentTypeId: String, importantView: UIView? = nil) {
         self.receiptId = receiptId
         self.status = status
         self.title = title
@@ -145,6 +148,7 @@ import UIKit
         self.paymentStatusDetail = paymentStatusDetail
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
+        self.importantView = importantView
         super.init()
     }
 }
@@ -166,6 +170,9 @@ internal extension PXBusinessResult {
     }
     func getBottomCustomView() -> UIView? {
         return self.bottomCustomView
+    }
+    func getImportantCustomView() -> UIView? {
+        return self.importantView
     }
     func getImageUrl() -> String? {
         return self.imageUrl

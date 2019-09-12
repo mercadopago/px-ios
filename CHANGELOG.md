@@ -1,3 +1,10 @@
+# v4.21
+🚀Private Release - 4.21 🚀
+MercadoPagoSDKV4 - Private Version
+- Add collector id to checkout pref
+- Add importantView to sign business result
+- FIX / One tap title label fix
+
 # v4.20.0
 🚀Private Release - 4.20.0 🚀
 MercadoPagoSDKV4 - Private Version
