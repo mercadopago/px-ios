@@ -92,8 +92,8 @@ extension PXSmallSummaryView {
         let colapseFrame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: 0)
         UIView.animate(withDuration: 0.4, animations: { [weak self] in
             self?.frame = colapseFrame
-        }, completion: { _ in
-            self.constraintForAnimation?.constant = 0
+        }, completion: { [weak self] _ in
+            self?.constraintForAnimation?.constant = 0
         })
     }
 }

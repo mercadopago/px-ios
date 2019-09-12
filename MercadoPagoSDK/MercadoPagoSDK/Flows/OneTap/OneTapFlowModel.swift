@@ -40,9 +40,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 
     // In order to ensure data updated create new instance for every usage
     internal var amountHelper: PXAmountHelper {
-        get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
-        }
+        return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
     }
 
     let escManager: MercadoPagoESC?

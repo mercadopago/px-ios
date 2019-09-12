@@ -150,7 +150,6 @@ extension OneTapFlow {
         return selectedPaymentOption
     }
 
-
     func getCustomerPaymentOption(forId: String) -> PaymentMethodOption? {
         guard let customerPaymentMethods = model.customerPaymentOptions else {
             return nil
