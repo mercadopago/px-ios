@@ -81,7 +81,7 @@ extension PXCheckoutStore {
 }
 
 internal extension PXCheckoutStore {
-    internal func clean() {
+    func clean() {
         removeAll()
         checkoutPreference = nil
         paymentDatas = []

@@ -15,20 +15,21 @@ internal class MPButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        if self.titleLabel != nil {
-            if self.titleLabel!.font != nil {
-                self.titleLabel!.font = Utils.getFont(size: self.titleLabel!.font.pointSize)
-            }
-        }
+        updateFonts()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        if self.titleLabel != nil {
-            if self.titleLabel!.font != nil {
-                self.titleLabel!.font = Utils.getFont(size: self.titleLabel!.font.pointSize)
-            }
-        }
+        updateFonts()
     }
 
+}
+
+// MARK: - Internals
+extension MPButton {
+    internal func updateFonts() {
+        if let titleLabel = titleLabel, let titleFont = titleLabel.font {
+            self.titleLabel?.font = Utils.getFont(size: titleFont.pointSize)
+        }
+    }
 }

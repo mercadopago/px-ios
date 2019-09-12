@@ -36,10 +36,13 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         super.viewDidLoad()
         self.loadMPStyles()
     }
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return ThemeManager.shared.statusBarStyle()
+    }
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = ThemeManager.shared.statusBarStyle()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.loadMPStyles()
 

@@ -95,7 +95,8 @@ import UIKit
 
     override open func animateViewsForTextEntry() {
         if text!.isEmpty {
-            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: .beginFromCurrentState, animations: ({
+            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: .beginFromCurrentState, animations: ({ [weak self] in
+                guard let self = self else { return }
                 self.placeholderLabel.frame.origin = CGPoint(x: 10, y: self.placeholderLabel.frame.origin.y)
                 self.placeholderLabel.alpha = 0
             }), completion: nil)
@@ -104,8 +105,8 @@ import UIKit
         layoutPlaceholderInTextRect()
         placeholderLabel.frame.origin = activePlaceholderPoint
 
-        UIView.animate(withDuration: 0.2, animations: {
-            self.placeholderLabel.alpha = 0.5
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.placeholderLabel.alpha = 0.5
         })
 
         activeBorderLayer.frame = self.rectForBorder(self.borderThickness.active, isFilled: true)
@@ -113,7 +114,8 @@ import UIKit
 
     override open func animateViewsForTextDisplay() {
         if text!.isEmpty {
-            UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 2.0, options: UIView.AnimationOptions.beginFromCurrentState, animations: ({
+            UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 2.0, options: UIView.AnimationOptions.beginFromCurrentState, animations: ({ [weak self] in
+                guard let self = self else { return }
                 self.layoutPlaceholderInTextRect()
                 self.placeholderLabel.alpha = 1
             }), completion: nil)

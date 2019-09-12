@@ -231,10 +231,10 @@ extension PXBusinessResult {
         return receiptId
     }
     public func getStatus() -> String {
-        return paymentStatus ?? ""
+        return paymentStatus 
     }
 
     public func getStatusDetail() -> String {
-        return paymentStatusDetail ?? ""
+        return paymentStatusDetail 
     }
 }

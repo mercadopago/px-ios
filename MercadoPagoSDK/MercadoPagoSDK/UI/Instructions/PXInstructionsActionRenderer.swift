@@ -65,7 +65,7 @@ class PXInstructionsActionRenderer: NSObject {
 
     func goToURL(_ url: String) {
         if let url = URL(string: url) {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 

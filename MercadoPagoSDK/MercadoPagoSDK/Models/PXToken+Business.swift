@@ -54,7 +54,7 @@ extension PXToken: PXCardInformationForm {
     }
 
     public func getCardLastForDigits() -> String {
-        return lastFourDigits ?? ""
+        return lastFourDigits
     }
 
     public func isIssuerRequired() -> Bool {

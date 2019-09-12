@@ -197,7 +197,7 @@ extension PXCheckoutPreference {
      getExcludedPaymentTypesIds
      */
     open func getExcludedPaymentTypesIds() -> [String] {
-        return paymentPreference.getExcludedPaymentTypesIds() ?? []
+        return paymentPreference.getExcludedPaymentTypesIds()
     }
 
     /**

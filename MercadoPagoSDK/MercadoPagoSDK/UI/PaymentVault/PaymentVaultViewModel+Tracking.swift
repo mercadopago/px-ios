@@ -18,10 +18,8 @@ extension PaymentVaultViewModel {
                 dic.append(pluginDic)
             }
             if let customerPaymentOptions = customerPaymentOptions {
-                for savedCard in customerPaymentOptions {
-                    if let customerPM = savedCard as? CustomerPaymentMethod {
-                        dic.append(customerPM.getCustomerPaymentMethodForTrancking())
-                    }
+                for savedCard: CustomerPaymentMethod in customerPaymentOptions {
+                    dic.append(savedCard.getCustomerPaymentMethodForTrancking())
                 }
             }
         }

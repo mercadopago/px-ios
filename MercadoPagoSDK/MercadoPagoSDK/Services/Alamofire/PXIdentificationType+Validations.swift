@@ -109,7 +109,7 @@ internal struct IdentificationTypeValidator: Validator {
 }
 
 fileprivate extension Validator {
-    fileprivate func isValid(_ string: String, options: ValidationOptions) -> Bool {
+    func isValid(_ string: String, options: ValidationOptions) -> Bool {
         guard !options.contains(.interpretOnlyNumbers) else { return true }
 
         let characters = string.map { String($0) }
@@ -121,9 +121,9 @@ fileprivate extension Validator {
         return charactersRemovingAllowedCharacters.count == 0
     }
 
-    fileprivate func clean(_ string: String, options: ValidationOptions, length: Int) -> [Int] {
+    func clean(_ string: String, options: ValidationOptions, length: Int) -> [Int] {
         let characters = string.map { String($0) }
-        let numbers = characters.map { Int($0) }.flatMap { $0 }
+        let numbers = characters.map { Int($0) }.compactMap { $0 }
 
         let count = numbers.count
 
@@ -138,18 +138,18 @@ fileprivate extension Validator {
         return numbers
     }
 
-    fileprivate func isRepeatedPattern(_ numbers: [Int]) -> Bool {
+    func isRepeatedPattern(_ numbers: [Int]) -> Bool {
         return Set(numbers).count <= 1
     }
 
-    fileprivate func isCommonNumber(_ numbers: [Int]) -> Bool {
+    func isCommonNumber(_ numbers: [Int]) -> Bool {
         let number = numbers.map { String($0) }.reduce("", +)
         let commonNumbers = ["12345678909"]
 
         return commonNumbers.contains(number)
     }
 
-    fileprivate func validate(_ numbers: [Int], kind: Kind) -> Bool {
+    func validate(_ numbers: [Int], kind: Kind) -> Bool {
         switch kind {
         case .CPF:
             guard numbers.count == 11 else { return false }

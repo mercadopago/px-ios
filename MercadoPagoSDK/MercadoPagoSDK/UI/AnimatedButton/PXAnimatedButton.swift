@@ -53,8 +53,8 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func finishAnimatingButton(color: UIColor, image: UIImage?) {
         status = .expanding
 
-        progressView?.doComplete(completion: { _ in
-
+        progressView?.doComplete(completion: { [weak self] _ in
+            guard let self = self else { return }
             self.animatedView = UIView(frame: self.frame)
             guard let animatedView = self.animatedView else { return }
             animatedView.backgroundColor = self.backgroundColor
@@ -69,8 +69,8 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                 animatedView.layer.cornerRadius = toCircleFrame.height / 2
             })
 
-            transitionAnimator.addCompletion({ (_) in
-                self.explosion(color: color, newFrame: toCircleFrame, image: image)
+            transitionAnimator.addCompletion({ [weak self] (_) in
+                self?.explosion(color: color, newFrame: toCircleFrame, image: image)
             })
 
             transitionAnimator.startAnimation()
@@ -80,8 +80,8 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     private func explosion(color: UIColor, newFrame: CGRect, image: UIImage?) {
         guard let animatedView = self.animatedView else { return }
 
-        UIView.animate(withDuration: 0.3, animations: {
-            self.progressView?.alpha = 0
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            self?.progressView?.alpha = 0
             animatedView.backgroundColor = color
         }, completion: { _ in
 
@@ -99,22 +99,21 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
             UIView.animate(withDuration: 0.6, animations: {
                 iconImage.alpha = 1
                 iconImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            }) { _ in
-
+            }, completion: { _ in
                 UIView.animate(withDuration: 0.4, animations: {
                     iconImage.alpha = 0
-                }, completion: { _ in
-
+                }, completion: { [weak self] _ in
+                    guard let self = self else { return }
                     self.superview?.layer.masksToBounds = false
                     self.animationDelegate?.expandAnimationInProgress()
-
+                    
                     UIView.animate(withDuration: 0.5, animations: {
                         animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
-                    }, completion: { _ in
-                        self.animationDelegate?.didFinishAnimation()
+                    }, completion: { [weak self] _ in
+                        self?.animationDelegate?.didFinishAnimation()
                     })
                 })
-            }
+            })
         })
     }
 

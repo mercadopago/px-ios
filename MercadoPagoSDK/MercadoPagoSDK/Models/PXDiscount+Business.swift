@@ -20,15 +20,15 @@ internal extension PXDiscount {
         }
     }
 
-    internal func getDiscountDescription() -> String {
+    func getDiscountDescription() -> String {
         return name ?? "discount_coupon_detail_default_concept".localized_beta
     }
 
-    internal func getDiscountAmount() -> Double? {
+    func getDiscountAmount() -> Double? {
         return self.couponAmount
     }
 
-    internal func hasPercentOff() -> Bool {
+    func hasPercentOff() -> Bool {
         return percentOff != 0
     }
 
@@ -38,13 +38,13 @@ internal extension PXDiscount {
         }
     }
 
-    internal func toJSONDictionary() -> [String: Any] {
+    func toJSONDictionary() -> [String: Any] {
 
         var obj: [String: Any] = [
             "id": self.id,
-            "percent_off": self.percentOff ?? 0,
-            "amount_off": self.amountOff ?? 0,
-            "coupon_amount": self.couponAmount ?? 0
+            "percent_off": self.percentOff ,
+            "amount_off": self.amountOff ,
+            "coupon_amount": self.couponAmount
         ]
 
         if let name = self.name {

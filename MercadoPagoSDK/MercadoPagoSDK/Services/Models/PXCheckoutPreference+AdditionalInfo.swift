@@ -8,13 +8,13 @@
 import Foundation
 
 internal extension PXCheckoutPreference {
-    internal func populateAdditionalInfoModel() {
+    func populateAdditionalInfoModel() {
         if let str = self.additionalInfo, let additionInfoData = str.data(using: .utf8) {
             self.pxAdditionalInfo = try? JSONDecoder().decode(PXAdditionalInfo.self, from: additionInfoData)
         }
     }
 
-    internal func getAdditionalInfoModel() -> PXAdditionalInfo? {
+    func getAdditionalInfoModel() -> PXAdditionalInfo? {
         return pxAdditionalInfo
     }
 }

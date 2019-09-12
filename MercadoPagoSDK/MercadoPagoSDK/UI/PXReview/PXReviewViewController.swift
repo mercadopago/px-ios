@@ -282,7 +282,8 @@ extension PXReviewViewController {
                 self?.trackEvent(path: TrackingPaths.Events.ReviewConfirm.getChangePaymentMethodPath())
                 if let callBackAction = self?.changePaymentMethodCallback {
                     PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
-                    PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
+                    // EE Por que estaba duplicada esta linea?
+                    //PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
                     callBackAction()
                 } else {
                     self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
@@ -406,10 +407,10 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
             DispatchQueue.main.async {
                 self?.doPayment(targetButton)
             }
-        }) { [weak self] error in
+        }, onError: { [weak self] _ in
             // User abort validation or validation fail.
             self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
-        }
+        })
     }
 
     private func doPayment(_ targetButton: PXAnimatedButton) {
