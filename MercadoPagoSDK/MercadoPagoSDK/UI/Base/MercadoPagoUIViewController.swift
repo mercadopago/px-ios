@@ -48,6 +48,8 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
 
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
+        } else {
+            navigationController?.setNavigationBarHidden(false, animated: false)
         }
 
         /**

@@ -1,21 +1,13 @@
 //
-//  PXApiUtil.swift
+//  ApiParam.swift
 //  MercadoPagoSDK
 //
-//  Created by Eden Torres on 10/20/17.
-//  Copyright © 2017 MercadoPago. All rights reserved.
+//  Created by Eric Ertl on 23/09/2019.
 //
 
 import Foundation
-internal class PXApitUtil: NSObject {
-    static let INTERNAL_SERVER_ERROR = 500
-    static let PROCESSING = 499
-    static let BAD_REQUEST = 400
-    static let NOT_FOUND = 404
-    static let OK = 200
-}
 
-internal class ApiParams: NSObject {
+internal struct ApiParam {
     static let PAYER_ACCESS_TOKEN = "access_token"
     static let PUBLIC_KEY = "public_key"
     static let BIN = "bin"

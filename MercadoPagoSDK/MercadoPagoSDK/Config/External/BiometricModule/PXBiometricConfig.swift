@@ -13,8 +13,8 @@ Check PXBiometricProtocol methods.
  */
 @objcMembers
 open class PXBiometricConfig: NSObject {
-    let flowIdentifier: String
-    var params: [String: Any] = [:]
+    public let flowIdentifier: String
+    public var params: [String: Any] = [:]
 
     internal enum ParamKey: String {
         case amount
