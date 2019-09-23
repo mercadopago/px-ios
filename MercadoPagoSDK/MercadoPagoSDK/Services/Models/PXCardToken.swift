@@ -26,7 +26,7 @@ open class PXCardToken: NSObject, Encodable {
         super.init()
         self.cardholder = PXCardHolder(name: cardholderName, identification: PXIdentification(number: docNumber, type: docType))
         self.cardholder?.name = cardholderName
-        self.cardNumber = normalizeCardNumber(cardNumber!.replacingOccurrences(of: " ", with: ""))
+        self.cardNumber = normalizeCardNumber(cardNumber?.replacingOccurrences(of: " ", with: ""))
         self.expirationMonth = expirationMonth
         self.expirationYear = 2000 + expirationYear
         self.securityCode = securityCode

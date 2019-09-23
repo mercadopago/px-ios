@@ -281,9 +281,7 @@ extension PXReviewViewController {
             if let reviewViewModel = self?.viewModel {
                 self?.trackEvent(path: TrackingPaths.Events.ReviewConfirm.getChangePaymentMethodPath())
                 if let callBackAction = self?.changePaymentMethodCallback {
-                    PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
-                    // EE Por que estaba duplicada esta linea?
-                    //PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
+                    PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout as Any)
                     callBackAction()
                 } else {
                     self?.callbackPaymentData(reviewViewModel.getClearPaymentData())

@@ -11,12 +11,10 @@ import Foundation
 internal extension PXDiscount {
     /// :nodoc:
     override open var description: String {
-        get {
-            if getDiscountDescription() != "" {
-                return getDiscountDescription() + "discount_coupon_detail_description".localized_beta
-            } else {
-                return ""
-            }
+        if getDiscountDescription() != "" {
+            return getDiscountDescription() + "discount_coupon_detail_description".localized_beta
+        } else {
+            return ""
         }
     }
 
@@ -33,9 +31,7 @@ internal extension PXDiscount {
     }
 
     var concept: String {
-        get {
-            return getDiscountDescription()
-        }
+        return getDiscountDescription()
     }
 
     func toJSONDictionary() -> [String: Any] {
