@@ -16,7 +16,7 @@ import UIKit
 @objcMembers
 public class AddCardFlow: NSObject, PXFlow {
 
-    public var delegate: AddCardFlowProtocol?
+    public weak var delegate: AddCardFlowProtocol?
 
     private var productId: String?
     private let accessToken: String
@@ -106,39 +106,43 @@ public class AddCardFlow: NSObject, PXFlow {
         self.navigationHandler.presentLoading()
         let service = PaymentMethodsUserService(accessToken: self.accessToken, productId: self.productId)
         service.getPaymentMethods(success: { [weak self] (paymentMethods) in
-            self?.model.paymentMethods = paymentMethods
-            self?.executeNextStep()
-        }) { [weak self] (error) in
-            self?.model.lastStepFailed = true
-            if error.code == ErrorTypes.NO_INTERNET_ERROR {
-                let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PAYMENT_METHODS.rawValue)
-                self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
-                    self?.finish()
-                }, errorCallback: nil)
-            } else {
-                self?.showErrorScreen()
-            }
-        }
+            guard let self = self else { return }
+            self.model.paymentMethods = paymentMethods
+            self.executeNextStep()
+            }, failure: { [weak self] (error) in
+                guard let self = self else { return }
+                self.model.lastStepFailed = true
+                if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                    let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PAYMENT_METHODS.rawValue)
+                    self.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: { [weak self] in
+                        self?.finish()
+                    }, errorCallback: nil)
+                } else {
+                    self.showErrorScreen()
+                }
+        })
     }
 
     private func getIdentificationTypes() {
         self.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] identificationTypes in
-            self?.model.identificationTypes = identificationTypes
-            self?.executeNextStep()
+            guard let self = self else { return }
+            self.model.identificationTypes = identificationTypes
+            self.executeNextStep()
         }, failure: { [weak self] error in
-            self?.model.lastStepFailed = true
+            guard let self = self else { return }
+            self.model.lastStepFailed = true
             if error.code == ErrorTypes.NO_INTERNET_ERROR {
                 let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue)
-                self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
+                self.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: { [weak self] in
                     self?.finish()
                 }, errorCallback: nil)
             } else {
                 if let status = error.userInfo["status"] as? Int, status == 404 {
-                    self?.model.identificationTypes = []
-                    self?.model.lastStepFailed = false
-                    self?.executeNextStep()
+                    self.model.identificationTypes = []
+                    self.model.lastStepFailed = false
+                    self.executeNextStep()
                 } else {
-                    self?.showErrorScreen()
+                    self.showErrorScreen()
                 }
             }
         })
@@ -149,10 +153,11 @@ public class AddCardFlow: NSObject, PXFlow {
             return
         }
         let cardFormViewModel = CardFormViewModel(paymentMethods: paymentMethods, guessedPaymentMethods: nil, customerCard: nil, token: nil, mercadoPagoServicesAdapter: nil, bankDealsEnabled: false)
-        let cardFormViewController = CardFormViewController(cardFormManager: cardFormViewModel, callback: { [weak self](paymentMethods, cardToken) in
-            self?.model.cardToken = cardToken
-            self?.model.selectedPaymentMethod = paymentMethods.first
-            self?.executeNextStep()
+        let cardFormViewController = CardFormViewController(cardFormManager: cardFormViewModel, callback: { [weak self] (paymentMethods, cardToken) in
+            guard let self = self else { return }
+            self.model.cardToken = cardToken
+            self.model.selectedPaymentMethod = paymentMethods.first
+            self.executeNextStep()
         })
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormViewController, animated: true)
     }
@@ -163,11 +168,12 @@ public class AddCardFlow: NSObject, PXFlow {
             return
         }
         let identificationViewController = IdentificationViewController(identificationTypes: identificationTypes, paymentMethod: model.selectedPaymentMethod, callback: { [weak self] (identification) in
-            self?.model.cardToken?.cardholder?.identification = identification
-            self?.executeNextStep()
-        }) { [weak self] in
-            self?.showErrorScreen()
-        }
+            guard let self = self else { return }
+            self.model.cardToken?.cardholder?.identification = identification
+            self.executeNextStep()
+            }, errorExitCallback: { [weak self] in
+                self?.showErrorScreen()
+        })
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: identificationViewController, animated: true)
     }
 
@@ -179,21 +185,23 @@ public class AddCardFlow: NSObject, PXFlow {
         self.navigationHandler.presentLoading()
 
         self.mercadoPagoServicesAdapter.createToken(cardToken: cardToken, callback: { [weak self] (token) in
-            self?.model.tokenizedCard = token
+            guard let self = self else { return }
+            self.model.tokenizedCard = token
             if let esc = token.esc {
-                self?.escManager.saveESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits, esc: esc)
+                self.escManager.saveESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits, esc: esc)
             }
-            self?.executeNextStep()
-            }, failure: {[weak self] (error) in
+            self.executeNextStep()
+            }, failure: { [weak self] (error) in
+                guard let self = self else { return }
                 let reachabilityManager = PXReach()
                 if reachabilityManager.connectionStatus().description == ReachabilityStatus.offline.description {
-                    self?.model.lastStepFailed = true
+                    self.model.lastStepFailed = true
                     let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-                    self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
+                    self.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: { [weak self] in
                         self?.finish()
                     }, errorCallback: nil)
                 } else {
-                    self?.showErrorScreen()
+                    self.showErrorScreen()
                 }
         })
     }
@@ -204,21 +212,22 @@ public class AddCardFlow: NSObject, PXFlow {
         }
         let associateCardService = AssociateCardService(accessToken: self.accessToken, productId: productId)
         associateCardService.associateCardToUser(paymentMethod: selectedPaymentMethod, cardToken: token, success: { [weak self] (json) in
-            print(json)
-            self?.navigationHandler.dismissLoading()
-            self?.model.associateCardResult = json
-            self?.executeNextStep()
-        }) { [weak self] (error) in
-            if error.code == ErrorTypes.NO_INTERNET_ERROR {
-                self?.model.lastStepFailed = true
-                let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.ASSOCIATE_TOKEN.rawValue)
-                self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
-                    self?.finish()
-                }, errorCallback: nil)
-            } else {
-                self?.showErrorScreen()
-            }
-        }
+            guard let self = self else { return }
+            self.navigationHandler.dismissLoading()
+            self.model.associateCardResult = json
+            self.executeNextStep()
+            }, failure: { [weak self] (error) in
+                guard let self = self else { return }
+                if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                    self.model.lastStepFailed = true
+                    let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.ASSOCIATE_TOKEN.rawValue)
+                    self.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: { [weak self] in
+                        self?.finish()
+                    }, errorCallback: nil)
+                } else {
+                    self.showErrorScreen()
+                }
+        })
     }
 
     private func showCongrats() {

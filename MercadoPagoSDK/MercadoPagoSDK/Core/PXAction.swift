@@ -9,7 +9,7 @@
 import UIKit
 
 /**
- This is for custom actionas. Label + clousure action. We need this object in certains scenarios. For example in `PXBusinessResult` custom button actions.
+ This is for custom actions. Label + clousure action. We need this object in certain scenarios. For example in `PXBusinessResult` custom button actions.
  */
 @objcMembers
 open class PXAction: NSObject {

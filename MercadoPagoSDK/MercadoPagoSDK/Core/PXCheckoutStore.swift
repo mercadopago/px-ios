@@ -1,5 +1,5 @@
 //
-//  PXHookStore.swift
+//  PXCheckoutStore.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 11/28/17.
