@@ -18,20 +18,20 @@ internal class PreferenceService: MercadoPagoService {
                 if let preferenceDic = jsonResult as? NSDictionary {
                     if preferenceDic["error"] != nil {
                         let apiException = try PXApiException.fromJSON(data: data)
-                        failure(PXError(domain: ApiDomains.GET_PREFERENCE, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia"], apiException: apiException))
+                        failure(PXError(domain: ApiDomain.GET_PREFERENCE, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia"], apiException: apiException))
                     } else {
                         if preferenceDic.allKeys.count > 0 {
                             let checkoutPreference = try PXCheckoutPreference.fromJSON(data: data)
                             success(checkoutPreference)
                         } else {
-                            failure(PXError(domain: ApiDomains.GET_PREFERENCE, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia"]))
+                            failure(PXError(domain: ApiDomain.GET_PREFERENCE, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia"]))
                         }
                     }
                 } } catch {
-                    failure(PXError(domain: ApiDomains.GET_PREFERENCE, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia"]))
+                    failure(PXError(domain: ApiDomain.GET_PREFERENCE, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener la preferencia"]))
             }
         }, failure: { (_) in
-            failure(PXError(domain: ApiDomains.GET_PREFERENCE, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+            failure(PXError(domain: ApiDomain.GET_PREFERENCE, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 

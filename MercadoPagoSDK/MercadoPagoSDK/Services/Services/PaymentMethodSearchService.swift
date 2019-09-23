@@ -48,37 +48,37 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         var params = MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
         let roundedAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: amount)
 
-        params.paramsAppend(key: ApiParams.AMOUNT, value: roundedAmount.stringValue)
+        params.paramsAppend(key: ApiParam.AMOUNT, value: roundedAmount.stringValue)
 
         let newExcludedPaymentTypesIds = excludedPaymentTypeIds
 
         if newExcludedPaymentTypesIds.count > 0 {
             let excludedPaymentTypesParams = newExcludedPaymentTypesIds.map({ $0 }).joined(separator: ",")
-            params.paramsAppend(key: ApiParams.EXCLUDED_PAYMET_TYPES, value: String(excludedPaymentTypesParams).trimSpaces())
+            params.paramsAppend(key: ApiParam.EXCLUDED_PAYMET_TYPES, value: String(excludedPaymentTypesParams).trimSpaces())
         }
 
         if excludedPaymentMethodIds.count > 0 {
             let excludedPaymentMethodsParams = excludedPaymentMethodIds.joined(separator: ",")
-            params.paramsAppend(key: ApiParams.EXCLUDED_PAYMENT_METHOD, value: excludedPaymentMethodsParams.trimSpaces())
+            params.paramsAppend(key: ApiParam.EXCLUDED_PAYMENT_METHOD, value: excludedPaymentMethodsParams.trimSpaces())
         }
 
         if let defaultPaymenMethodId = defaultPaymenMethodId {
-            params.paramsAppend(key: ApiParams.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
+            params.paramsAppend(key: ApiParam.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
         }
 
         if let customDefaultInstallments = defaultInstallments {
-            params.paramsAppend(key: ApiParams.DEFAULT_INSTALLMENTS, value: customDefaultInstallments)
+            params.paramsAppend(key: ApiParam.DEFAULT_INSTALLMENTS, value: customDefaultInstallments)
         }
 
         if let customMaxInstallments = maxInstallments {
-            params.paramsAppend(key: ApiParams.MAX_INSTALLMENTS, value: customMaxInstallments)
+            params.paramsAppend(key: ApiParam.MAX_INSTALLMENTS, value: customMaxInstallments)
         }
 
-        params.paramsAppend(key: ApiParams.EMAIL, value: customerEmail)
-        params.paramsAppend(key: ApiParams.CUSTOMER_ID, value: customerId)
-        params.paramsAppend(key: ApiParams.SITE_ID, value: site.id)
-        params.paramsAppend(key: ApiParams.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
-        params.paramsAppend(key: ApiParams.DIFFERENTIAL_PRICING_ID, value: differentialPricingId)
+        params.paramsAppend(key: ApiParam.EMAIL, value: customerEmail)
+        params.paramsAppend(key: ApiParam.CUSTOMER_ID, value: customerId)
+        params.paramsAppend(key: ApiParam.SITE_ID, value: site.id)
+        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
+        params.paramsAppend(key: ApiParam.DIFFERENTIAL_PRICING_ID, value: differentialPricingId)
 
         if let cardsWithEscParams = cardsWithEsc?.map({ $0 }).joined(separator: ",") {
             params.paramsAppend(key: "cards_esc", value: cardsWithEscParams)
@@ -104,23 +104,23 @@ internal class PaymentMethodSearchService: MercadoPagoService {
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
                     let apiException = try PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: ApiDomains.GET_PAYMENT_METHODS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"], apiException: apiException))
+                    failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"], apiException: apiException))
                 } else {
 
                     if paymentSearchDic.allKeys.count > 0 {
                         let paymentSearch = try PXPaymentMethodSearch.fromJSON(data: data)
                         success(paymentSearch)
                     } else {
-                        failure(PXError(domain: ApiDomains.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
+                        failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
                     }
                 }
                 }
             } catch {
-                failure(PXError(domain: ApiDomains.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
+                failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
             }
 
         }, failure: { (_) -> Void in
-            failure(PXError(domain: ApiDomains.GET_PAYMENT_METHODS, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+            failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 
