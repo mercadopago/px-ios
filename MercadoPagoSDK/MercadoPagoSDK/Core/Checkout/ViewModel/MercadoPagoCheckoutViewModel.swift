@@ -37,7 +37,6 @@ internal enum CheckoutStep: String {
 }
 
 internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
-
     var hookService: HookService = HookService()
 
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
@@ -50,9 +49,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
-        get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
+        guard let paymentData = self.paymentData.copy() as? PXPaymentData else {
+            fatalError("Cannot find payment data")
         }
+        return PXAmountHelper(preference: self.checkoutPreference, paymentData: paymentData, chargeRules: self.chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
     }
 
     var checkoutPreference: PXCheckoutPreference!
@@ -516,15 +516,18 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return
         }
 
+        var paymentOptionSelected: PaymentMethodOption?
+
         if !Array.isNullOrEmpty(search.paymentMethodSearchItem) && search.paymentMethodSearchItem.count == 1 {
-            self.updateCheckoutModel(paymentOptionSelected: search.paymentMethodSearchItem[0])
+            paymentOptionSelected = search.paymentMethodSearchItem.first
         } else if !Array.isNullOrEmpty(search.customOptionSearchItems) && search.customOptionSearchItems.count == 1 {
-            guard let customOption = search.customOptionSearchItems[0] as? PaymentMethodOption else {
-                fatalError("Cannot conver customerPaymentMethod to PaymentMethodOption")
-            }
-            self.updateCheckoutModel(paymentOptionSelected: customOption)
-        } else if  !Array.isNullOrEmpty(paymentMethodPluginsToShow) && paymentMethodPluginsToShow.count == 1 {
-            self.updateCheckoutModel(paymentOptionSelected: paymentMethodPluginsToShow[0])
+            paymentOptionSelected = search.customOptionSearchItems.first
+        } else if !Array.isNullOrEmpty(paymentMethodPluginsToShow) && paymentMethodPluginsToShow.count == 1 {
+             paymentOptionSelected = paymentMethodPluginsToShow.first
+        }
+
+        if let paymentOptionSelected = paymentOptionSelected {
+            self.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
         }
     }
 
@@ -645,15 +648,18 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func findAndCompletePaymentMethodFor(paymentMethodId: String) {
+        guard let availablePaymentMethods = availablePaymentMethods else {
+            fatalError("availablePaymentMethods cannot be nil")
+        }
         if paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
-            self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodId))
-        } else {
-            let cardInformation = (self.paymentOptionSelected as! PXCardInformation)
-            let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: cardInformation.getPaymentMethodId())
+            paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(availablePaymentMethods, paymentMethodId: paymentMethodId))
+        } else if let paymentOptionSelected = paymentOptionSelected as? PXCardInformation {
+            let cardInformation = paymentOptionSelected
+            let paymentMethod = Utils.findPaymentMethod(availablePaymentMethods, paymentMethodId: cardInformation.getPaymentMethodId())
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
-            self.paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
-            self.paymentData.updatePaymentDataWith(issuer: cardInformation.getIssuer())
+            paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
+            paymentData.updatePaymentDataWith(issuer: cardInformation.getIssuer())
         }
     }
 
@@ -662,17 +668,20 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func handleCustomerPaymentMethod() {
-        if self.paymentOptionSelected!.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
-            self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected!.getId()))
+        guard let availablePaymentMethods = availablePaymentMethods else {
+            fatalError("availablePaymentMethods cannot be nil")
+        }
+        if let paymentMethodId = self.paymentOptionSelected?.getId(), paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
+            paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(availablePaymentMethods, paymentMethodId: paymentMethodId))
         } else {
             // Se necesita completar información faltante de settings y pm para custom payment options
-            guard let cardInformation = self.paymentOptionSelected as? PXCardInformation else {
+            guard let cardInformation = paymentOptionSelected as? PXCardInformation else {
                 fatalError("Cannot convert paymentOptionSelected to CardInformation")
             }
-            let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: cardInformation.getPaymentMethodId())
+            let paymentMethod = Utils.findPaymentMethod(availablePaymentMethods, paymentMethodId: cardInformation.getPaymentMethodId())
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
-            self.paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
+            paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
         }
     }
 
