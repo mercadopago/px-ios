@@ -83,7 +83,12 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 
     func needToGetPointsAndDiscounts() -> Bool {
-        return shouldSearchPointsAndDiscounts
+        if let paymentResult = paymentResult, shouldSearchPointsAndDiscounts, (paymentResult.isApproved() || needToGetInstructions()) {
+            return true
+        } else if let businessResult = businessResult, shouldSearchPointsAndDiscounts, businessResult.isApproved() {
+            return true
+        }
+        return false
     }
 
     func needToGetInstructions() -> Bool {
