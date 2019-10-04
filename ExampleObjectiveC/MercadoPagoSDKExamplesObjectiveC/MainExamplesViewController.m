@@ -41,21 +41,6 @@
     // Setear una preferencia hecha a mano
     //[self setCheckoutPref_CardsNotExcluded];
 
-/*
-    DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
-    
-    NSNumber *externalDiscount = [NSNumber numberWithDouble:2.00];
-    
-    dc.name = @"Patito Off";
-    dc.coupon_amount = [externalDiscount stringValue];
-    dc.percent_off = @"10";
-    dc.currency_id = @"ARS";
-    dc.concept = @"Descuento de patito";
-    dc.amountWithoutDiscount = 50;
-    dc = nil;
-*/
-    
-
 
     // self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
     //Differential pricing
@@ -69,21 +54,18 @@
     [self setCheckoutPref_CreditCardNotExcluded];
     [self setCheckoutPrefAdditionalInfo];
 
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-ba2e6b8c-8b6d-4fc3-8a47-0ab241d0dba4" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-306aa86f-a3e7-40cf-b27b-64bb7cd9b1e7" preferenceId:@"443076095-ee615be2-e040-4baf-ace7-6940fdc096f7" paymentConfiguration:[self getPaymentConfiguration]];
+    //PROCESADORA
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-d1c95375-5137-4eb7-868e-da3ca8067d79" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
+    //PAGO NORMAL
+//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-c4f42ada-0fea-42a1-9b13-31e67096dcd3" preferenceId:@"272097319-a9040a88-5971-4fcd-92d5-6eeb4612abce"];
 
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243962506-63f1b044-c8bf-4d34-a800-f257a46628b8"];
-    NSDictionary *dict = @{ @"key" : @"value"};
+    //ACCESS TOKEN BRASIL
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-092415-b89a7cdcec6cc6c3916deab0c56c7136-472129472"];
 
-    [PXTracker setListener:self flowName:@"instore" flowDetails:dict];
-
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-2590709739431780-102916-f3a297acb7f392333d80ba71b736a700__LA_LD__-181794596"];
-
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-6519316523937252-070516-964fafa7e2c91a2c740155fcb5474280__LA_LD__-261748045"];
-    [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-7169122440478352-062213-d23fa9fb38e4b3e94feee29864f0fae2-443064294"];
-
+    //ACCESS TOKEN ARGENTINO
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636"];
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
@@ -92,6 +74,9 @@
 
     PXDiscountParamsConfiguration* disca = [[PXDiscountParamsConfiguration alloc] initWithLabels:[NSArray arrayWithObjects: @"1", @"2", nil] productId:@"bh31umv10flg01nmhg60"];
     [advancedConfig setDiscountParamsConfiguration: disca];
+
+    PXTrackingConfiguration *trackingConfig = [[PXTrackingConfiguration alloc] initWithTrackListener: self flowName:@"instore" flowDetails:nil sessionId:@"3783874"];
+    [self.checkoutBuilder setTrackingConfigurationWithConfig: trackingConfig];
 
     // Add theme to advanced config.
 //    MeliTheme *meliTheme = [[MeliTheme alloc] init];
@@ -107,9 +92,9 @@
     [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
 
     // Add ReviewConfirm Dynamic View Controller configuration to advanced config.
-    TestComponent *dynamicViewControllersConfigObject = [self getReviewScreenDynamicViewControllerConfigurationObject];
-    [advancedConfig setDynamicViewControllersConfiguration: [NSArray arrayWithObjects: dynamicViewControllersConfigObject, nil]];
-    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
+//    TestComponent *dynamicViewControllersConfigObject = [self getReviewScreenDynamicViewControllerConfigurationObject];
+//    [advancedConfig setDynamicViewControllersConfiguration: [NSArray arrayWithObjects: dynamicViewControllersConfigObject, nil]];
+//    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
 
     // Add PaymentResult configuration to advanced config.
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];

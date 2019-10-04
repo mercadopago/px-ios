@@ -534,7 +534,7 @@ internal class Utils {
         return environment["testing"] != nil
     }
 
-    static func getFormatedStringDate(_ date: Date) -> String {
+    static func getFormatedStringDate(_ date: Date, addTime: Bool = false) -> String {
         let formatterDay = DateFormatter()
         formatterDay.dateFormat = "dd"
         let formatterMonth = DateFormatter()
@@ -548,7 +548,14 @@ internal class Utils {
             dayString.removeFirst()
         }
 
-        return dayString + " de ".localized + formatterMonth.string(from: date).localized.lowercased() + " de ".localized + formatterYear.string(from: date)
+        var timeString = ""
+        if addTime {
+            let formatterTime = DateFormatter()
+            formatterTime.dateFormat = "HH:mm"
+            timeString = String.SPACE + "a las".localized + String.SPACE + formatterTime.string(from: date) + String.SPACE + "hs".localized
+        }
+
+        return dayString + " de ".localized + formatterMonth.string(from: date).localized.lowercased() + " de ".localized + formatterYear.string(from: date) + timeString
     }
 
     static func getShortFormatedStringDate(_ date: Date?) -> String? {

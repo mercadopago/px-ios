@@ -29,7 +29,7 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
     func buildLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.numberOfLines = 0
         label.attributedText = text
         label.lineBreakMode = .byWordWrapping

@@ -27,6 +27,7 @@ extension PXBusinessResultViewModel {
         properties[has_split] = amountHelper.isSplitPayment
         properties[currency_id] = SiteManager.shared.getCurrency().id
         properties[discount_coupon_amount] = amountHelper.getDiscountCouponAmountForTracking()
+        properties = PXCongratsTracking.getProperties(dataProtocol: self, properties: properties)
 
         if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
             properties[raw_amount] = rawAmount.decimalValue
@@ -85,5 +86,45 @@ extension PXBusinessResultViewModel {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorAbortPath()
         }
         return screenPath
+    }
+}
+
+// MARK: PXCongratsTrackingDataProtocol Implementation
+extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
+    func hasBottomView() -> Bool {
+        return buildBottomCustomView() != nil ? true : false
+    }
+
+    func hasTopView() -> Bool {
+        return buildTopCustomView() != nil ? true : false
+    }
+
+    func hasImportantView() -> Bool {
+        return buildImportantCustomView() != nil ? true : false
+    }
+
+    func getScoreLevel() -> Int? {
+        return PXNewResultUtil.getDataForPointsView(points: pointsAndDiscounts?.points)?.getRingNumber()
+    }
+
+    func getDiscountsCount() -> Int {
+        guard let numberOfDiscounts = PXNewResultUtil.getDataForDiscountsView(discounts: pointsAndDiscounts?.discounts)?.getItems().count else { return 0 }
+        return numberOfDiscounts
+    }
+
+    func getCampaignsIds() -> String? {
+        guard let discounts = PXNewResultUtil.getDataForDiscountsView(discounts: pointsAndDiscounts?.discounts) else { return nil }
+        var campaignsIdsArray: [String] = []
+        for item in discounts.getItems() {
+            if let id = item.trackIdForItem() {
+                campaignsIdsArray.append(id)
+            }
+        }
+        return campaignsIdsArray.isEmpty ? "" : campaignsIdsArray.joined(separator: ", ")
+    }
+
+    func getCampaignId() -> String? {
+        guard let campaignId = amountHelper.campaign?.id else { return nil }
+        return "\(campaignId)"
     }
 }

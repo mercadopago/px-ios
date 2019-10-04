@@ -39,4 +39,5 @@ internal class PXServicesURLConfigs: NSObject {
     static let MP_CAMPAIGNS_URI = "/campaigns/check_availability"
     static let MP_SUMMARY_AMOUNT_URI = "\(MP_SELECTED_ENV)/px_mobile_api/summary_amount"
     static let MP_PAYMENTS_URI = MP_SELECTED_ENV + "/px_mobile" + PAYMENTS
+    static let MP_POINTS_URI = MP_SELECTED_ENV + "/px_mobile" + "/congrats"
 }

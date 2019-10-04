@@ -125,7 +125,7 @@ extension ThemeManager {
     }
 
     func noTaxAndDiscountLabelTintColor() -> UIColor {
-        return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
+        return #colorLiteral(red: 0, green: 0.6509803922, blue: 0.3137254902, alpha: 1)
     }
 
     func disabledCardGray() -> UIColor {

@@ -176,6 +176,7 @@
 "Terminada en " = "Ending in ";
 " terminada en " = " ending in ";
 "Sin interés"="Interest free";
+"Sin\u{00a0}interés"="Interest\u{00a0}free";
 "Uy, no pudimos procesar el pago"="Oops, we could not process your payment";
 "Algún dato de tu %1$s es incorrecto."="Some data of your %1$s is incorect.";
 "El teléfono está al dorso de tu tarjeta"="The phone number is on the back of your card";
@@ -188,7 +189,6 @@
 
 "Total"="Total";
 "Medio de pago"="Payment method";
-"Operación"="Operación";
 "Fecha"="Date";
 
 // RyC
@@ -280,6 +280,8 @@
 // Receipt
 " de " = " of ";
 "Número de operación " = "Transaction number ";
+"a las" = "at";
+"hs" = "";
 
 //Months
 "January" = "January";

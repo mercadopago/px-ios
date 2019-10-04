@@ -25,8 +25,8 @@ import UIKit
         let textLabel = UILabel()
         textLabel.lineBreakMode = .byWordWrapping
         textLabel.numberOfLines = 0
-        textLabel.textAlignment = .center
-        textLabel.text = "Sumaste 150 Km YPF Serviclub con tu carga. ¡Ya tienes 2.500 km!"
+        textLabel.textAlignment = .left
+        textLabel.text = "Important view test. I'm a custom important view by BusinessResult."
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(textLabel)
         NSLayoutConstraint(item: textLabel, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.width, multiplier: 80 / 100, constant: 0).isActive = true

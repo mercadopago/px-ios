@@ -199,41 +199,55 @@ extension MercadoPagoCheckout {
         }
 
         var congratsViewController: MercadoPagoUIViewController
-
-        congratsViewController = PXResultViewController(viewModel: self.viewModel.resultViewModel(), callback: {[weak self] (state: PaymentResult.CongratsState) in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
-            if state == PaymentResult.CongratsState.call_FOR_AUTH {
-                strongSelf.viewModel.prepareForClone()
-                strongSelf.collectSecurityCodeForRetry()
-            } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
-                if let changePaymentMethodAction = strongSelf.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(), state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
-                    changePaymentMethodAction()
-                } else {
-                    strongSelf.viewModel.prepareForNewSelection()
-                    strongSelf.executeNextStep()
-                }
+        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = {[weak self] (state: PaymentResult.CongratsState) in
+        guard let strongSelf = self else {
+            return
+        }
+        strongSelf.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
+        if state == PaymentResult.CongratsState.call_FOR_AUTH {
+            strongSelf.viewModel.prepareForClone()
+            strongSelf.collectSecurityCodeForRetry()
+        } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
+            if let changePaymentMethodAction = strongSelf.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(), state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
+                changePaymentMethodAction()
             } else {
-                strongSelf.finish()
+                strongSelf.viewModel.prepareForNewSelection()
+                strongSelf.executeNextStep()
             }
-        })
+        } else {
+            strongSelf.finish()
+        }
+    }
+
+        let resultViewModel = self.viewModel.resultViewModel()
+        if self.viewModel.paymentResult?.isApproved() ?? false || viewModel.instructionsInfo != nil {
+            congratsViewController = PXNewResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
+        } else {
+            congratsViewController = PXResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
+        }
 
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
     func showBusinessResultScreen() {
+        var congratsViewController: MercadoPagoUIViewController
+        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = {[weak self] (_: PaymentResult.CongratsState) in
+            self?.finish()
+        }
 
         guard let businessResult = self.viewModel.businessResult else {
             return
         }
-        let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData, amountHelper: self.viewModel.amountHelper)
-        let congratsViewController = PXResultViewController(viewModel: viewModel) { [weak self] (_: PaymentResult.CongratsState) in
-            self?.finish()
-        }
-        self.viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
 
+        let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData, amountHelper: self.viewModel.amountHelper, pointsAndDiscounts: self.viewModel.pointsAndDiscounts)
+
+        if businessResult.isApproved() {
+            congratsViewController = PXNewResultViewController(viewModel: viewModel, callback: congratsViewControllerCallback)
+        } else {
+            congratsViewController = PXResultViewController(viewModel: viewModel, callback: congratsViewControllerCallback)
+        }
+
+        self.viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
     func showErrorScreen() {

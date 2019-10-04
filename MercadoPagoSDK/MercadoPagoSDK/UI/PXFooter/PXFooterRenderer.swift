@@ -75,7 +75,7 @@ final class PXFooterRenderer: NSObject {
             topView = linkButton
         }
         if topView != fooView, footer.props.pinLastSubviewToBottom { // Si hay al menos alguna vista dentro del footer, agrego un margen
-            PXLayout.pinBottom(view: topView, to: fooView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinBottom(view: topView, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
         }
         return fooView
     }

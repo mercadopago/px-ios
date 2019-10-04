@@ -39,7 +39,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
         let titleLabel = UILabel()
         let attributedText = Utils.getAccreditationTimeAttributedString(from: text, fontSize: textSize)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textAlignment = .center
+        titleLabel.textAlignment = .left
         titleLabel.numberOfLines = 0
         titleLabel.attributedText = attributedText
         titleLabel.lineBreakMode = .byWordWrapping

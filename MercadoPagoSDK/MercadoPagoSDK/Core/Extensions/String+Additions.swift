@@ -11,6 +11,7 @@ import Foundation
 internal extension String {
 
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
+    static let SPACE = " "
 
     static func isNullOrEmpty(_ value: String?) -> Bool {
         return value == nil || value!.isEmpty

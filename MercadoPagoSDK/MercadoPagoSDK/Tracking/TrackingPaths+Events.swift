@@ -67,3 +67,45 @@ extension TrackingPaths.Events {
         }
     }
 }
+
+// MARK: Congrats events paths.
+enum EventsPaths: String {
+    case tapScore = "/tap_score"
+    case tapDiscountItem = "/tap_discount_item"
+    case tapDownloadApp = "/tap_download_app"
+    case tapCrossSelling = "/tap_cross_selling"
+    case tapSeeAllDiscounts = "/tap_see_all_discounts"
+}
+
+// MARK: Congrats events.
+extension TrackingPaths.Events {
+    internal struct Congrats {
+
+        private static let success = "/success"
+        private static let result = TrackingPaths.pxTrack + "/result"
+
+        static func getSuccessPath() -> String {
+            return result + success
+        }
+
+        static func getSuccessTapScorePath() -> String {
+            return getSuccessPath() + EventsPaths.tapScore.rawValue
+        }
+
+        static func getSuccessTapDiscountItemPath() -> String {
+            return getSuccessPath() + EventsPaths.tapDiscountItem.rawValue
+        }
+
+        static func getSuccessTapDownloadAppPath() -> String {
+            return getSuccessPath() + EventsPaths.tapDownloadApp.rawValue
+        }
+
+        static func getSuccessTapCrossSellingPath() -> String {
+            return getSuccessPath() + EventsPaths.tapCrossSelling.rawValue
+        }
+
+        static func getSuccessTapSeeAllDiscountsPath() -> String {
+            return getSuccessPath() + EventsPaths.tapSeeAllDiscounts.rawValue
+        }
+    }
+}

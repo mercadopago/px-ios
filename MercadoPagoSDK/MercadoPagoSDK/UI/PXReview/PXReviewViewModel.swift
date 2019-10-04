@@ -13,26 +13,55 @@ class PXReviewViewModel: NSObject {
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
 
+    private weak var escProtocol: MercadoPagoESC?
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
     var advancedConfiguration: PXAdvancedConfiguration
     var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, escProtocol: MercadoPagoESC?) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
         self.advancedConfiguration = advancedConfig
         self.userLogged = userLogged
+        self.escProtocol = escProtocol
+    }
+
+    func shouldValidateWithBiometric(withCardId: String? = nil) -> Bool {
+        // Validation is mandatory for payment methods != (credit or debit card).
+        if !isPaymentMethodDebitOrCredit() { return true }
+
+        // If escProtocol implementation is null, ESC is not supported.
+        // We should´t validate with Biometric.
+        guard let escImplementation = escProtocol else { return false }
+
+        if escImplementation.hasESCEnable() {
+            let savedCardIds = escImplementation.getSavedCardIds()
+            // If we found cardId in ESC, we should validate with biometric.
+            if let targetCardId = withCardId {
+                return savedCardIds.contains(targetCardId)
+            } else if let currentCard = paymentOptionSelected as? PXCardInformation {
+                return savedCardIds.contains(currentCard.getCardId())
+            }
+        }
+
+        // ESC is not enabled or cardId not found.
+        // We should´t validate with Biometric.
+        return false
     }
 }
 
 // MARK: - Logic.
 extension PXReviewViewModel {
-
     // Logic.
     func isPaymentMethodSelectedCard() -> Bool {
         return self.amountHelper.getPaymentData().hasPaymentMethod() && self.amountHelper.getPaymentData().getPaymentMethod()!.isCard
+    }
+
+    func isPaymentMethodDebitOrCredit() -> Bool {
+        guard let pMethod = amountHelper.getPaymentData().getPaymentMethod() else { return false }
+        return pMethod.isDebitCard || pMethod.isCreditCard
     }
 
     func isPaymentMethodSelected() -> Bool {
@@ -104,7 +133,6 @@ extension PXReviewViewModel {
 
 // MARK: - Getters
 extension PXReviewViewModel {
-
     func getTotalAmount() -> Double {
         return self.amountHelper.amountToPay
     }

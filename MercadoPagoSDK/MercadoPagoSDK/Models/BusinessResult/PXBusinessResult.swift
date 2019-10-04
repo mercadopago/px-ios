@@ -67,6 +67,9 @@ import UIKit
     let paymentStatus: String
     let paymentStatusDetail: String
 
+    private var receiptIdList: [String]?
+    private var shouldShowReceipt: Bool = true
+
     // MARK: Initialization
     /**
      Creates a `PXBusinessResult` which represents Business Payment Result.
@@ -153,6 +156,23 @@ import UIKit
     }
 }
 
+// MARK: Optional Setters
+extension PXBusinessResult {
+    // Set the receipt list (payment ids) for split payments.
+    @discardableResult
+    @objc public func setReceiptIdList(_ receiptList: [String]) -> PXBusinessResult {
+        self.receiptIdList = receiptList
+        return self
+    }
+
+    // TRUE to show receipt in Congrats screen.
+    @discardableResult
+    @objc public func shouldShowReceipt(_ shouldShow: Bool) -> PXBusinessResult {
+        self.shouldShowReceipt = shouldShow
+        return self
+    }
+}
+
 // MARK: Getters
 internal extension PXBusinessResult {
 
@@ -178,7 +198,13 @@ internal extension PXBusinessResult {
         return self.imageUrl
     }
     func getReceiptId() -> String? {
+        if let list = self.receiptIdList {
+            return list.first
+        }
         return self.receiptId
+    }
+    func getReceiptIdList() -> [String]? {
+        return self.receiptIdList
     }
     func getSubTitle() -> String? {
         return self.subtitle
@@ -200,6 +226,9 @@ internal extension PXBusinessResult {
     }
     func isApproved() -> Bool {
         return self.paymentStatus == PXPaymentStatus.APPROVED.rawValue
+    }
+    func mustShowReceipt() -> Bool {
+        return self.shouldShowReceipt
     }
 }
 

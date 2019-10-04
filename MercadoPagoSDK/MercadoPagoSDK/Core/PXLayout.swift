@@ -43,17 +43,20 @@ class PXLayout: NSObject {
     }
 
     //Altura fija
+    @discardableResult
     static func setHeight(owner: UIView, height: CGFloat, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         owner.translatesAutoresizingMaskIntoConstraints = false
         return checkContraintActivation(NSLayoutConstraint(item: owner, attribute: .height, relatedBy: relation, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height))
     }
 
     //Ancho fijo
+    @discardableResult
     static func setWidth(owner: UIView, width: CGFloat, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(item: owner, attribute: .width, relatedBy: relation, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: width))
     }
 
     // Pin Left
+    @discardableResult
     static func pinLeft(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
@@ -64,6 +67,7 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: margin))
     }
     //Pin Right
+    @discardableResult
     static func pinRight(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
@@ -74,6 +78,7 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: -margin))
     }
     //Pin Top
+    @discardableResult
     static func pinTop(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
@@ -84,25 +89,46 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: margin))
     }
     //Pin Bottom
-    static func pinBottom(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+    @discardableResult
+    static func pinBottom(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
         } else {
             superView = otherView
         }
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: -margin))
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: relation, toItem: superView, attribute: .bottom, multiplier: 1, constant: -margin))
+    }
+
+    //Pin All Edges to Superview
+    @discardableResult
+    static func pinAllEdges(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> [NSLayoutConstraint] {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        } else {
+            superView = otherView
+        }
+
+        let topConstraint = checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: margin))
+        let bottomConstraint = checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: -margin))
+        let leftConstraint = checkContraintActivation(NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: margin))
+        let rightConstraint = checkContraintActivation(NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: superView, attribute: .right, multiplier: 1, constant: -margin))
+
+        return [topConstraint, bottomConstraint, leftConstraint, rightConstraint]
     }
 
     //Pin parent last subview to Bottom
-    static func pinLastSubviewToBottom(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
+    @discardableResult
+    static func pinLastSubviewToBottom(view: UIView, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint? {
         guard let lastView = view.subviews.last else {
             return nil
         }
-        return pinBottom(view: lastView, to: view, withMargin: margin)
+        return pinBottom(view: lastView, to: view, withMargin: margin, relation: relation)
     }
 
     //Pin parent first subview to Top
+    @discardableResult
     static func pinFirstSubviewToTop(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let firstView = view.subviews.first else {
             return nil
@@ -111,6 +137,7 @@ class PXLayout: NSObject {
     }
 
     //Vista 1 abajo de vista 2
+    @discardableResult
     static func put(view: UIView, onBottomOf view2: UIView, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = NSLayoutConstraint.Relation.equal) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(
             item: view,
@@ -123,6 +150,7 @@ class PXLayout: NSObject {
         ))
     }
     //Vista 1 abajo de la ultima vista
+    @discardableResult
     static func put(view: UIView, onBottomOfLastViewOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint? {
         if !view2.subviews.contains(view) {
             return nil
@@ -134,6 +162,7 @@ class PXLayout: NSObject {
     }
 
     //Vista 1 arriba de vista 2
+    @discardableResult
     static func put(view: UIView, aboveOf view2: UIView, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = NSLayoutConstraint.Relation.equal) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(
             item: view,
@@ -147,6 +176,7 @@ class PXLayout: NSObject {
     }
 
     //Vista 1 a la izquierda de vista 2
+    @discardableResult
     static func put(view: UIView, leftOf view2: UIView, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(
             item: view,
@@ -160,6 +190,7 @@ class PXLayout: NSObject {
     }
 
     //Vista 1 a la derecha de vista 2
+    @discardableResult
     static func put(view: UIView, rightOf view2: UIView, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(
             item: view,
@@ -173,6 +204,7 @@ class PXLayout: NSObject {
     }
 
     //Centrado horizontal
+    @discardableResult
     static func centerHorizontally(view: UIView, to container: UIView? = nil) -> NSLayoutConstraint {
         var superView: UIView!
         if container == nil {
@@ -184,6 +216,7 @@ class PXLayout: NSObject {
     }
 
     //Centrado Vertical
+    @discardableResult
     static func centerVertically(view: UIView, to container: UIView? = nil, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
         var superView: UIView!
         if container == nil {
@@ -194,6 +227,7 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: .equal, toItem: superView, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1.0, constant: margin))
     }
 
+    @discardableResult
     static func matchWidth(ofView view: UIView, toView otherView: UIView? = nil, withPercentage percent: CGFloat = 100, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
@@ -204,6 +238,7 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutConstraint.Attribute.width, relatedBy: relation, toItem: superView, attribute: NSLayoutConstraint.Attribute.width, multiplier: percent / 100, constant: 0))
     }
 
+    @discardableResult
     static func matchHeight(ofView view: UIView, toView otherView: UIView? = nil, withPercentage percent: CGFloat = 100, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
