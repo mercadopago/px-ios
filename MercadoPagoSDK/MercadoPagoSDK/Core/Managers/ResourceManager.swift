@@ -28,10 +28,22 @@ internal class ResourceManager {
 
 // MARK: Payment Method Resources
 extension ResourceManager {
+    func getBundlePathForPlistResource(named resource: String) -> String? {
+        guard let bundle = ResourceManager.shared.getBundle() else {
+            return nil
+        }
+        return bundle.path(forResource: resource, ofType: "plist")
+    }
+    
+    func getDictionaryForResource(named resource: String) -> NSDictionary? {
+        guard let path = getBundlePathForPlistResource(named: resource) else {
+            return nil
+        }
+        return NSDictionary(contentsOfFile: path)
+    }
+    
     func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
-
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethodSearch")
         var description = withDescription
         let tintColorForIcons = ThemeManager.shared.getTintColorForIcons()
 
@@ -78,8 +90,7 @@ extension ResourceManager {
     }
 
     func getColorFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?) -> UIColor {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethod")
 
         if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             if let stringColor = pmConfig.value(forKey: "first_color") as? String {
@@ -101,8 +112,7 @@ extension ResourceManager {
     }
 
     func getLabelMaskFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?, forCell: Bool? = false) -> String {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethod")
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
 
@@ -119,8 +129,7 @@ extension ResourceManager {
     }
 
     func getEditTextMaskFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?, forCell: Bool? = false) -> String {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethod")
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
 
@@ -137,8 +146,7 @@ extension ResourceManager {
     }
 
     func getFontColorFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?) -> UIColor {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethod")
         let defaultColor = MPLabel.defaultColorText
 
         if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
@@ -160,8 +168,7 @@ extension ResourceManager {
     }
 
     func getEditingFontColorFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?) -> UIColor {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethod")
         let defaultColor = MPLabel.highlightedColorText
 
         if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {

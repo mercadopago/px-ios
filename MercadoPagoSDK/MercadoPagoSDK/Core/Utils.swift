@@ -357,8 +357,7 @@ internal class Utils {
     }
 
     class func getMasks(inDictionary dictID: String, withKey key: String) -> [TextMaskFormater]? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
+        let dictionary = ResourceManager.shared.getDictionaryForResource(named: "IdentificationTypes")
 
         if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
             if let mask = IDtype.value(forKey: key) as? String, mask != ""{
@@ -524,8 +523,7 @@ internal class Utils {
     }
 
     internal static func getSetting<T>(identifier: String) -> T? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: Utils.kSdkSettingsFile)
         return dictPM![identifier] as? T
     }
 

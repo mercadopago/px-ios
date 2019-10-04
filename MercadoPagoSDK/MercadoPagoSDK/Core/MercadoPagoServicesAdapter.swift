@@ -33,7 +33,7 @@ internal class MercadoPagoServicesAdapter {
 
         mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { (pxCheckoutPreference) in
             guard let siteId = pxCheckoutPreference.siteId else {
-                // TODO: faltal error?
+                failure( NSError(domain:"mercadopago.sdk.MercadoPagoServicesAdapter", code:9999, userInfo:["message": "siteId is nil"]) )
                 return
             }
             SiteManager.shared.setSite(siteId: siteId)
@@ -72,9 +72,9 @@ internal class MercadoPagoServicesAdapter {
 
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
         if let eParams = extraParams, !eParams.hasPaymentProcessor {
-        // Only until our backend can pay with account money.
-        // Add exclusion for account money.
-        excludedPaymentTypesIds.append(PXPaymentTypes.ACCOUNT_MONEY.rawValue)
+            // Only until our backend can pay with account money.
+            // Add exclusion for account money.
+            excludedPaymentTypesIds.append(PXPaymentTypes.ACCOUNT_MONEY.rawValue)
         }
 
         mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, defaultInstallments: extraParams?.defaultInstallments, expressEnabled: expressValue, splitEnabled: splitValue, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, maxInstallments: extraParams?.maxInstallments, callback: { (pxPaymentMethodSearch) in

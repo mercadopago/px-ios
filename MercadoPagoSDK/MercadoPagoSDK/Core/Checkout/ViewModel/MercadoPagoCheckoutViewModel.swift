@@ -706,8 +706,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func getEntityTypes() -> [EntityType] {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
-        let dictET = NSDictionary(contentsOfFile: path!)
+        let dictET = ResourceManager.shared.getDictionaryForResource(named: "EntityTypes")
         let site = SiteManager.shared.getSiteId()
 
         if let siteETs = entityTypesFinder(inDict: dictET!, forKey: site) {

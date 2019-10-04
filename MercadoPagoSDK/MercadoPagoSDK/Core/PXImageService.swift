@@ -16,8 +16,7 @@ final class PXImageService: NSObject {
             return paymentMethod.getImageForExtenalPaymentMethod()
         }
 
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethodSearch")
 
         if let pm = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             return ResourceManager.shared.getImage(pm.object(forKey: "image_name") as? String)

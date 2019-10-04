@@ -45,7 +45,10 @@ final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
     }
 
     func buildHeaderComponent() -> PXHeaderComponent {
-        let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "add_card_congrats_title".localized_beta, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.successColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "ok_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil), closeAction: { [weak self] in
+        let productImage = ResourceManager.shared.getImage("card_icon")
+        let statusImage = ResourceManager.shared.getImage("ok_badge")
+        
+        let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "add_card_congrats_title".localized_beta, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.successColor(), productImage: productImage, statusImage: statusImage, closeAction: { [weak self] in
             if let callback = self?.callback {
                 callback(PaymentResult.CongratsState.cancel_EXIT)
             }

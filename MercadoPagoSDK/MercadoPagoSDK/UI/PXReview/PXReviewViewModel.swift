@@ -138,8 +138,7 @@ extension PXReviewViewModel {
     }
 
     func getUnlockLink() -> URL? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
+        let dictionary = ResourceManager.shared.getDictionaryForResource(named: "UnlockCardLinks")
         let site = SiteManager.shared.getSiteId()
         guard let issuerID = self.amountHelper.getPaymentData().getIssuer()?.id else {
             return nil
