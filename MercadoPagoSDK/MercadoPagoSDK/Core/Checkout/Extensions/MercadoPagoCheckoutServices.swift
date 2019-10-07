@@ -12,27 +12,26 @@ extension MercadoPagoCheckout {
 
     func getIssuers() {
         viewModel.pxNavigationHandler.presentLoading()
-        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
+        guard let paymentMethod = viewModel.paymentData.getPaymentMethod() else {
             return
         }
-        let bin = self.viewModel.cardToken?.getBin()
-        
+        let bin = viewModel.cardToken?.getBin()
+
         //issuers service should be performed using the processing modes designated by the payment method
-        self.viewModel.mercadoPagoServicesAdapter.update(processingModes: paymentMethod.processingModes)
-        self.viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod.id, bin: bin, callback: { [weak self] (issuers) in
-
-            self?.viewModel.issuers = issuers
+        viewModel.mercadoPagoServicesAdapter.update(processingModes: paymentMethod.processingModes)
+        viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod.id, bin: bin, callback: { [weak self] (issuers) in
+            guard let self = self else { return }
+            self.viewModel.issuers = issuers
             if issuers.count == 1 {
-                self?.viewModel.updateCheckoutModel(issuer: issuers[0])
+                self.viewModel.updateCheckoutModel(issuer: issuers[0])
             }
-            self?.executeNextStep()
-
+            self.executeNextStep()
             }, failure: { [weak self] (error) in
-
-                self?.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_ISSUERS.rawValue), errorCallback: { [weak self] () in
+                guard let self = self else { return }
+                self.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_ISSUERS.rawValue), errorCallback: { [weak self] () in
                     self?.getIssuers()
                 })
-                self?.executeNextStep()
+                self.executeNextStep()
         })
     }
 
@@ -45,17 +44,16 @@ extension MercadoPagoCheckout {
 
     func getIdentificationTypes() {
         viewModel.pxNavigationHandler.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] (identificationTypes) in
-
-            self?.viewModel.updateCheckoutModel(identificationTypes: identificationTypes)
-            self?.executeNextStep()
-
+        viewModel.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] (identificationTypes) in
+            guard let self = self else { return }
+            self.viewModel.updateCheckoutModel(identificationTypes: identificationTypes)
+            self.executeNextStep()
             }, failure: { [weak self] (error) in
-
-                self?.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] () in
+                guard let self = self else { return }
+                self.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue), errorCallback: { [weak self] () in
                     self?.getIdentificationTypes()
                 })
-                self?.executeNextStep()
+                self.executeNextStep()
         })
     }
 }

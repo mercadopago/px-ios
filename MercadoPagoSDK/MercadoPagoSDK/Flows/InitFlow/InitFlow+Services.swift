@@ -11,21 +11,19 @@ import Foundation
 extension InitFlow {
     func getCheckoutPreference() {
         model.getService().getCheckoutPreference(checkoutPreferenceId: model.properties.checkoutPreference.id, callback: { [weak self] (checkoutPreference) in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
-
-            strongSelf.model.properties.checkoutPreference = checkoutPreference
-            strongSelf.model.properties.paymentData.payer = checkoutPreference.getPayer()
-            strongSelf.executeNextStep()
-
+            self.model.properties.checkoutPreference = checkoutPreference
+            self.model.properties.paymentData.payer = checkoutPreference.getPayer()
+            self.executeNextStep()
             }, failure: { [weak self] (error) in
-                guard let strongSelf = self else {
+                guard let self = self else {
                     return
                 }
                 let customError = InitFlowError(errorStep: .SERVICE_GET_PREFERENCE, shouldRetry: true, requestOrigin: .GET_PREFERENCE, apiException: MPSDKError.getApiException(error))
-                strongSelf.model.setError(error: customError)
-                strongSelf.executeNextStep()
+                self.model.setError(error: customError)
+                self.executeNextStep()
         })
     }
 
@@ -96,22 +94,22 @@ extension InitFlow {
         //payment method search service should be performed using the processing modes designated by the preference object
         let pref = model.properties.checkoutPreference
         serviceAdapter.update(processingModes: pref.processingModes, branchId: pref.branchId)
-        serviceAdapter.getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
+        serviceAdapter.getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
 
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
 
-            strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
-            strongSelf.executeNextStep()
+            self.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
+            self.executeNextStep()
 
             }, failure: { [weak self] (error) in
-                guard let strongSelf = self else {
+                guard let self = self else {
                     return
                 }
                 let customError = InitFlowError(errorStep: .SERVICE_GET_PAYMENT_METHODS, shouldRetry: true, requestOrigin: .PAYMENT_METHOD_SEARCH, apiException: MPSDKError.getApiException(error))
-                strongSelf.model.setError(error: customError)
-                strongSelf.executeNextStep()
+                self.model.setError(error: customError)
+                self.executeNextStep()
         })
     }
 }

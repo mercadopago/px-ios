@@ -43,10 +43,10 @@ extension OneTapFlow {
         let viewModel = model.reviewConfirmViewModel()
         
         let reviewVC = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
-        
+
         pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
     }
-    
+
     func showSecurityCodeScreen() {
         let securityCodeVc = SecurityCodeViewController(viewModel: model.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
             self?.getTokenizationService().createCardToken(securityCode: securityCode)
