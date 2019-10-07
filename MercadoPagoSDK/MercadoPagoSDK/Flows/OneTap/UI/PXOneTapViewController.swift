@@ -267,10 +267,10 @@ extension PXOneTapViewController {
                 DispatchQueue.main.async {
                     self?.doPayment()
                 }
-            }) { [weak self] _ in
-                // User abort validation or validation fail.
-                self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
-            }
+                }, onError: { [weak self] _ in
+                    // User abort validation or validation fail.
+                    self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
+            })
         } else {
             doPayment()
         }
