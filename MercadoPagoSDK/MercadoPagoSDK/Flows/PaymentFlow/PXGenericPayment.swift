@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Use this object in order to notify you own custom payment using `PXPaymentProcessor`.
+ Use this object to notify your own custom payment using `PXPaymentProcessor`.
  */
 @objcMembers
 open class PXGenericPayment: NSObject, PXBasePayment {

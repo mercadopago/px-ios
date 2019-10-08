@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- * Model that represents the discount which will be applied to a payment.
+ * Model object that represents the discount which will be applied to a payment.
  */
 @objc
 open class PXDiscount: NSObject, Codable {

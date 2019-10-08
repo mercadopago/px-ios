@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- This object declare custom preferences (customizations) for "Review and Confirm" screen.
+ This object declares custom preferences (customizations) for "Review and Confirm" screen.
  */
 @objcMembers open class PXReviewConfirmConfiguration: NSObject {
     private static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized

@@ -8,7 +8,7 @@
 import Foundation
 
 /**
-  Shared public class to provide information about our Checkout. Like `PXPaymentData` or `PXCheckoutPreference`.
+  This class to provides information (like `PXPaymentData` or `PXCheckoutPreference`) about our Checkout.
  */
 @objcMembers
 open class PXCheckoutStore: NSObject {

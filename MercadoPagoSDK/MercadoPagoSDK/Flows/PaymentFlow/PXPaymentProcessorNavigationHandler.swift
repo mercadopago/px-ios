@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Navigation handler to manage communication between your Processor and our Checkout. You should use this navigation handler only with custom Processor view. When you use a custom `UIViewController` to present youur own view, you can use this Object in order to notify: `didFinishPayment`, `showLoading`, `hideLoading`.
+ Navigation handler to manage communication between your Processor and our Checkout. You should use this navigation handler only with custom Processor view. When you use a custom `UIViewController` to present your own view, you can use this Object in order to notify: `didFinishPayment`, `showLoading`, `hideLoading`.
  */
 @objcMembers
 open class PXPaymentProcessorNavigationHandler: NSObject {

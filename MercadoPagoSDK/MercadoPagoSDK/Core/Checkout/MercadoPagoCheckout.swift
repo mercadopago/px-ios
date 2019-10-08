@@ -10,7 +10,7 @@ import UIKit
 
 /**
  Main class of this project.
- It provides access to most of the checkout experience.
+ It provides access to most of the checkout experience. It takes a `MercadoPagoCheckoutBuilder` object.
  */
 @objcMembers
 open class MercadoPagoCheckout: NSObject {

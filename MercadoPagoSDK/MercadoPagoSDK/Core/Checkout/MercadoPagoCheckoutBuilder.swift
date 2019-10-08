@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Checkout builder allow you to create a `MercadoPagoCheckout`. This is the only way to create `MercadoPagoCheckout` object.
+ Checkout builder allows you to create a `MercadoPagoCheckout`. You'll need a publicKey from MercadoPago Developers Site.
  */
 @objcMembers
 open class MercadoPagoCheckoutBuilder: NSObject {
@@ -42,9 +42,8 @@ open class MercadoPagoCheckoutBuilder: NSObject {
      - parameter preferenceId: The preference id that represents the payment information.
      - parameter paymentConfiguration: The payment configuration object for this checkout.
      */
-    public init(publicKey: String, preferenceId: String, paymentConfiguration: PXPaymentConfiguration) {
-        self.publicKey = publicKey
-        self.preferenceId = preferenceId
+    public convenience init(publicKey: String, preferenceId: String, paymentConfiguration: PXPaymentConfiguration) {
+        self.init(publicKey: publicKey, preferenceId: preferenceId)
         self.paymentConfig = paymentConfiguration
     }
 
@@ -69,7 +68,7 @@ extension MercadoPagoCheckoutBuilder {
      */
     @discardableResult
     open func setPrivateKey(key: String) -> MercadoPagoCheckoutBuilder {
-        self.privateKey = key
+        privateKey = key
         return self
     }
 
@@ -80,7 +79,7 @@ extension MercadoPagoCheckoutBuilder {
      */
     @discardableResult
     open func setAdvancedConfiguration(config: PXAdvancedConfiguration) -> MercadoPagoCheckoutBuilder {
-        self.advancedConfig = config
+        advancedConfig = config
         return self
     }
 
@@ -90,7 +89,7 @@ extension MercadoPagoCheckoutBuilder {
      */
     @discardableResult
     open func setTrackingConfiguration(config: PXTrackingConfiguration) -> MercadoPagoCheckoutBuilder {
-        self.trackingConfig = config
+        trackingConfig = config
         return self
     }
 
@@ -100,7 +99,7 @@ extension MercadoPagoCheckoutBuilder {
      */
     @discardableResult
     open func setColor(checkoutColor: UIColor) -> MercadoPagoCheckoutBuilder {
-        self.defaultUIColor = checkoutColor
+        defaultUIColor = checkoutColor
         return self
     }
 

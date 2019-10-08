@@ -130,7 +130,6 @@ import UIKit
     }
 
     func isCard() -> Bool {
-
         return PXPaymentTypes.isCard(paymentTypeId: self.paymentMethodTypeId)
     }
 

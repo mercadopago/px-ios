@@ -32,7 +32,7 @@ internal class JSONHandler: NSObject {
         do {
             result = try JSONSerialization.jsonObject(with: data, options: [])
         } catch {
-            print("ERROR PARSIBNG JSON, ERROR = \(error)")
+            print("ERROR PARSING JSON, ERROR = \(error)")
         }
         return result
     }
