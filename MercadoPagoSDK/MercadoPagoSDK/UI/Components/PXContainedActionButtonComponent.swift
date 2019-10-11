@@ -28,7 +28,7 @@ internal class PXContainedActionButtonProps {
     let title: String
     let action : (() -> Void)
     let backgroundColor: UIColor
-    var animationDelegate: PXAnimatedButtonDelegate?
+    weak var animationDelegate: PXAnimatedButtonDelegate?
     let termsInfo: PXTermsDto?
     init(title: String, action:  @escaping (() -> Void), animationDelegate: PXAnimatedButtonDelegate? = nil, termsInfo: PXTermsDto? = nil) {
         self.title = title

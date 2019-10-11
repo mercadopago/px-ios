@@ -62,7 +62,7 @@ class PXInstructionsInfoRenderer: NSObject {
     func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false, isTitle: Bool = false, bottomDivider: Bool? = false, isFirstInfo: Bool = false) -> UILabel {
         let infoLabel = UILabel()
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.textAlignment = .center
+        infoLabel.textAlignment = .left
         infoLabel.numberOfLines = 0
         infoLabel.attributedText = text
         infoLabel.lineBreakMode = .byWordWrapping

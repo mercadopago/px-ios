@@ -9,7 +9,7 @@
 import UIKit
 
 /**
- This is for custom actionas. Label + clousure action. We need this object in certains scenarios. For example in `PXBusinessResult` custom button actions.
+ This object is for custom actions. It takes a label and a closure. Closures in Swift are similar to blocks in Objective-C. We need this object in certains scenarios, like in `PXBusinessResult` custom button actions.
  */
 @objcMembers
 open class PXAction: NSObject {

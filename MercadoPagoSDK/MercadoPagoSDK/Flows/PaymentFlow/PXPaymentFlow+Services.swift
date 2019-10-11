@@ -22,7 +22,7 @@ internal extension PXPaymentFlow {
     }
 
     func createPayment() {
-        guard let paymentData = model.amountHelper?.getPaymentData(), let checkoutPreference = model.checkoutPreference else {
+        guard let _ = model.amountHelper?.getPaymentData(), let _ = model.checkoutPreference else {
             return
         }
 
@@ -33,10 +33,10 @@ internal extension PXPaymentFlow {
 
         var headers: [String: String] = [:]
         if let productId = model.productId {
-            headers["X-Product-Id"] = productId
+            headers[MercadoPagoService.HeaderField.productId.rawValue] = productId
         }
 
-        headers["X-Idempotency-Key"] =  model.generateIdempotecyKey()
+        headers[MercadoPagoService.HeaderField.idempotencyKey.rawValue] =  model.generateIdempotecyKey()
 
         model.mercadoPagoServicesAdapter.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_PAYMENTS_URI, paymentDataJSON: paymentBody, query: nil, headers: headers, callback: { (payment) in
             self.handlePayment(payment: payment)
@@ -57,6 +57,34 @@ internal extension PXPaymentFlow {
                 self?.showError(error: mpError)
             }
 
+        })
+    }
+
+    func getPointsAndDiscounts() {
+
+        var paymentIds: [String]?
+        if let paymentResultId = model.paymentResult?.paymentId {
+            paymentIds?.append(paymentResultId)
+        } else if let businessResult = model.businessResult {
+            if let receiptLists = businessResult.getReceiptIdList() {
+                paymentIds = receiptLists
+            } else if let receiptId = businessResult.getReceiptId() {
+                paymentIds?.append(receiptId)
+            }
+        }
+
+        let campaignId: String? = model.amountHelper?.campaign?.id?.stringValue
+
+        model.shouldSearchPointsAndDiscounts = false
+        let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
+        model.mercadoPagoServicesAdapter.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_POINTS_URI, paymentIds: paymentIds, campaignId: campaignId, platform: platform, callback: { [weak self] (pointsAndBenef) in
+                guard let strongSelf = self else { return }
+                strongSelf.model.pointsAndDiscounts = pointsAndBenef
+                strongSelf.executeNextStep()
+            }, failure: { [weak self] () in
+                print("Fallo el endpoint de puntos y beneficios")
+                guard let strongSelf = self else { return }
+                strongSelf.executeNextStep()
         })
     }
 

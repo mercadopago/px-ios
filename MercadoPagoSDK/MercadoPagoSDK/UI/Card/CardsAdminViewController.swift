@@ -145,14 +145,10 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
 
     public func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell",
-
-                                                      for: indexPath) as! PaymentSearchCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell", for: indexPath) as! PaymentSearchCollectionViewCell
 
         if self.viewModel.isHeaderSection(section: indexPath.section) {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
-
-                                                          for: indexPath) as! PaymentVaultTitleCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell", for: indexPath) as! PaymentVaultTitleCollectionViewCell
             cell.title.text = self.viewModel.getScreenTitle()
             self.titleSectionReference = cell
             titleCell = cell

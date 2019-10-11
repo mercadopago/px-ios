@@ -13,17 +13,20 @@ internal class MPTextField: UITextField {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        if self.font != nil {
-            self.font = Utils.getFont(size: self.font!.pointSize)
-
-        }
+        updateFonts()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        if self.font != nil {
-            self.font = Utils.getFont(size: self.font!.pointSize)
+        updateFonts()
+    }
+}
 
+// MARK: - Internals
+extension MPTextField {
+    internal func updateFonts() {
+        if let textFieldFont = font {
+            self.font = Utils.getFont(size: textFieldFont.pointSize)
         }
     }
 }

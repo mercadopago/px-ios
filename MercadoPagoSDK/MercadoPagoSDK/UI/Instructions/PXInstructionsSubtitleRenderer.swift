@@ -25,7 +25,7 @@ class PXInstructionsSubtitleRenderer: NSObject {
     func buildSubtitleLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
         let subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.textAlignment = .center
+        subtitleLabel.textAlignment = .left
         subtitleLabel.textColor = .pxBrownishGray
         subtitleLabel.numberOfLines = 0
         subtitleLabel.attributedText = text

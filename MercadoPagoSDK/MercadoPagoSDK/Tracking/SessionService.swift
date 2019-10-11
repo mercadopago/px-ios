@@ -1,5 +1,5 @@
 //
-//  FlowService.swift
+//  SessionService.swift
 //  MercadoPagoPXTracking
 //
 //  Created by Juan sebastian Sanzone on 9/3/18.
@@ -36,7 +36,7 @@ final internal class SessionService {
 
 // MARK: - Internal functions.
 internal extension SessionService {
-    static internal func getUUID() -> String {
+    static func getUUID() -> String {
         return UUID().uuidString.lowercased()
     }
 }

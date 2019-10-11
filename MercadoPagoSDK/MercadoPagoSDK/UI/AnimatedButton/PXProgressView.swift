@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ProgressViewDelegate {
+protocol ProgressViewDelegate: AnyObject {
     func didFinishProgress()
     func progressTimeOut()
 }
@@ -28,7 +28,7 @@ final class ProgressView: UIView {
     private let timerInterval: TimeInterval = 0.6
     private var timerCounter = 0
 
-    var progressDelegate: ProgressViewDelegate?
+    weak var progressDelegate: ProgressViewDelegate?
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -59,14 +59,15 @@ final class ProgressView: UIView {
 
         let newFrame = CGRect(x: 0, y: 0, width: (newWidth), height: self.frame.height)
 
-        UIView.animate(withDuration: 0.3, animations: {
-            self.frame = newFrame
-        }) { _ in
-            if  Double(self.timerCounter) * self.timerInterval > self.timeOut {
-                self.stopTimer()
-                self.progressDelegate?.progressTimeOut()
-            }
-        }
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            self?.frame = newFrame
+            }, completion: { [weak self] _ in
+                guard let self = self else { return }
+                if  Double(self.timerCounter) * self.timerInterval > self.timeOut {
+                    self.stopTimer()
+                    self.progressDelegate?.progressTimeOut()
+                }
+        })
     }
 }
 
@@ -93,12 +94,13 @@ extension ProgressView {
 
     func doComplete(completion: @escaping (_ finish: Bool) -> Void) {
         let newFrame = CGRect(x: 0, y: 0, width: progressViewEndX, height: self.frame.height)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.frame = newFrame
-        }) { _ in
-            self.stopTimer()
-            self.progressDelegate?.didFinishProgress()
-            completion(true)
-        }
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.frame = newFrame
+            }, completion: { [weak self] _ in
+                guard let self = self else { return }
+                self.stopTimer()
+                self.progressDelegate?.didFinishProgress()
+                completion(true)
+        })
     }
 }

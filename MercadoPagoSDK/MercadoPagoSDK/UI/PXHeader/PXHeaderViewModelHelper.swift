@@ -84,19 +84,21 @@ internal extension PXResultViewModel {
         }
 
     }
-    func titleHeader() -> NSAttributedString {
+    func titleHeader(forNewResult: Bool = false) -> NSAttributedString {
+        let fontSize = forNewResult ? PXNewResultHeader.TITLE_FONT_SIZE : PXHeaderRenderer.TITLE_FONT_SIZE
+
         if self.instructionsInfo != nil {
             return titleForInstructions()
         }
         if paymentResult.isAccepted() {
             if self.paymentResult.isApproved() {
-                return NSMutableAttributedString(string: preference.getApprovedTitle(), attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+                return NSMutableAttributedString(string: preference.getApprovedTitle(), attributes: [NSAttributedString.Key.font: Utils.getFont(size: fontSize)])
             } else {
-                return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+                return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: fontSize)])
             }
         }
         if preference.rejectedTitleSetted {
-            return NSMutableAttributedString(string: preference.getRejectedTitle(), attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+            return NSMutableAttributedString(string: preference.getRejectedTitle(), attributes: [NSAttributedString.Key.font: Utils.getFont(size: fontSize)])
         }
         return titleForStatusDetail(statusDetail: self.paymentResult.statusDetail, paymentMethod: self.paymentResult.paymentData?.paymentMethod)
     }

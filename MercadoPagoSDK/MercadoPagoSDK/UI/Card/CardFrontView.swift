@@ -21,13 +21,12 @@ import UIKit
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        loadViewFromNib ()
+        loadViewFromNib()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
-        loadViewFromNib ()
+        loadViewFromNib()
     }
 
     func updateCard(token: PXCardInformationForm?, paymentMethod: PXPaymentMethod) {
@@ -56,11 +55,10 @@ import UIKit
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CardFrontView", bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-        view.frame = bounds
-
-        self.addSubview(view)
-
+        if let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
+            view.frame = bounds
+            self.addSubview(view)
+        }
         cardNumber.numberOfLines = 0
         cardName.numberOfLines = 0
         cardName.font = UIFont.systemFont(ofSize: cardName.font.pointSize)

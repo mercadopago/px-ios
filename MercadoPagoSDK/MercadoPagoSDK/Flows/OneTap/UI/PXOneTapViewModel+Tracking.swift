@@ -38,13 +38,14 @@ extension PXOneTapViewModel {
         return properties
     }
 
-    func getConfirmEventProperties(selectedCard: PXCardSliderViewModel) -> [String: Any] {
+    func getConfirmEventProperties(selectedCard: PXCardSliderViewModel, selectedIndex: Int) -> [String: Any] {
         guard let paymentMethod = amountHelper.getPaymentData().paymentMethod else {
             return [:]
         }
         let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
 
         var properties: [String: Any] = [:]
+        properties["payment_method_selected_index"] = selectedIndex
         if paymentMethod.isCard {
             properties["payment_method_type"] = paymentMethod.paymentTypeId
             properties["payment_method_id"] = paymentMethod.id
@@ -71,9 +72,12 @@ extension PXOneTapViewModel {
 
     func getOneTapScreenProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
-        properties["available_methods"] = getAvailablePaymentMethodForTracking()
+        let availablePaymentMethods = getAvailablePaymentMethodForTracking()
+        properties["available_methods"] = availablePaymentMethods
+        properties["available_methods_quantity"] = availablePaymentMethods.count
         properties["preference_amount"] = amountHelper.preferenceAmount
         properties["discount"] = amountHelper.getDiscountForTracking()
+
         var itemsDic: [Any] = []
         for item in amountHelper.preference.items {
             itemsDic.append(item.getItemForTracking())

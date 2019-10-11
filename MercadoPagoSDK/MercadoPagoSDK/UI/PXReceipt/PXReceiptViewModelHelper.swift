@@ -9,7 +9,7 @@
 import Foundation
 
 internal extension PXResultViewModel {
-    func getReceiptComponentProps() -> PXReceiptProps {
+    func getReceiptComponentProps() -> PXReceiptProps? {
         if hasReceiptComponent() {
             let date = Date()
             guard let paymentId = self.paymentResult.paymentId else {
@@ -17,7 +17,7 @@ internal extension PXResultViewModel {
             }
             return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + paymentId)
         } else {
-            return PXReceiptProps()
+            return nil
         }
     }
 
@@ -41,7 +41,9 @@ internal extension PXResultViewModel {
     }
 
     func buildReceiptComponent() -> PXReceiptComponent? {
-        let receiptProps = getReceiptComponentProps()
+        guard let receiptProps = getReceiptComponentProps() else {
+            return nil
+        }
         return PXReceiptComponent(props: receiptProps)
     }
 }

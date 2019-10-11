@@ -9,7 +9,7 @@
 import UIKit
 
 /**
-Use this object to make a charge related to any payment type. The relationship is by `paymentTypeId`. You can especify a default `amountCharge` for each payment method.
+Use this object to apply a charge related to a payment type. The relationship is by `paymentTypeId`. You can specify a default `amountCharge` for each payment method.
  */ 
 @objc
 public final class PXPaymentTypeChargeRule: NSObject, Codable {

@@ -10,7 +10,7 @@ import UIKit
 struct PXSummaryComposer {
 
     //returns the composed summary items
-    var summaryItems: [OneTapHeaderSummaryData] {
+    var summaryItems: [PXOneTapSummaryRowData] {
         return getSummaryItems()
     }
 
@@ -35,17 +35,17 @@ struct PXSummaryComposer {
         self.shouldDisplayChargesHelp = shouldDisplayChargesHelp
     }
 
-    private func getSummaryItems() -> [OneTapHeaderSummaryData] {
+    private func getSummaryItems() -> [PXOneTapSummaryRowData] {
         let summaryItems = generateSummaryItems()
         return summaryItems
     }
 
-    private func generateSummaryItems() -> [OneTapHeaderSummaryData] {
+    private func generateSummaryItems() -> [PXOneTapSummaryRowData] {
         if selectedCard == nil {
             return getMinimalSummary()
         }
 
-        var internalSummary = [OneTapHeaderSummaryData]()
+        var internalSummary = [PXOneTapSummaryRowData]()
 
         if shouldDisplayCharges() || shouldDisplayDiscount() {
             internalSummary.append(purchaseRow())
@@ -67,7 +67,7 @@ struct PXSummaryComposer {
         return internalSummary
     }
 
-    private func getMinimalSummary() -> [OneTapHeaderSummaryData] {
+    private func getMinimalSummary() -> [PXOneTapSummaryRowData] {
         return [totalToPayRow()]
     }
 }

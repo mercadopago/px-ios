@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- * Model that represents the Item.
+ * Model object representing the Item.
  */
 @objcMembers
 open class PXItem: NSObject, Codable {

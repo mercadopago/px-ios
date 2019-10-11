@@ -15,13 +15,13 @@ internal class IdentificationCardView: UIView, Updatable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        loadViewFromNib ()
+        loadViewFromNib()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        loadViewFromNib ()
+        loadViewFromNib()
     }
 
     func updateCard(token: PXCardInformationForm?, paymentMethod: PXPaymentMethod) {
@@ -35,8 +35,9 @@ internal class IdentificationCardView: UIView, Updatable {
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "IdentificationCardView", bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-        view.frame = bounds
-        self.addSubview(view)
+        if let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
+            view.frame = bounds
+            self.addSubview(view)
+        }
     }
 }

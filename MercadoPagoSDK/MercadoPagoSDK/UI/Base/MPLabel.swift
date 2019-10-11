@@ -16,20 +16,12 @@ internal class MPLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        if self.font != nil {
-            self.font = Utils.getFont(size: self.font!.pointSize)
-
-        }
+        updateFonts()
      }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
-        if self.font != nil {
-            self.font = Utils.getFont(size: self.font!.pointSize)
-
-        }
+        updateFonts()
     }
 
     func addCharactersSpacing(_ spacing: CGFloat) {
@@ -53,5 +45,14 @@ internal class MPLabel: UILabel {
         }
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         self.attributedText = attributedString
+    }
+}
+
+// MARK: - Internals
+extension MPLabel {
+    internal func updateFonts() {
+        if let labelFont = font {
+            self.font = Utils.getFont(size: labelFont.pointSize)
+        }
     }
 }

@@ -169,7 +169,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
         let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
 
-
         self.cardView.frame = rectBackground
         cardFront?.frame = rect
         cardBack?.frame = rect
@@ -180,8 +179,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         PXLayout.setWidth(owner: cardView, width: cardWidht).isActive = true
         PXLayout.setHeight(owner: cardView, height: cardHeight).isActive = true
-        PXLayout.pinLeft(view: cardView, to: cardBackground, withMargin: xMargin)
-        PXLayout.pinTop(view: cardView, to: cardBackground, withMargin: yMargin)
+        _ = PXLayout.pinLeft(view: cardView, to: cardBackground, withMargin: xMargin)
+        _ = PXLayout.pinTop(view: cardView, to: cardBackground, withMargin: yMargin)
 
         cardBack!.backgroundColor = UIColor.clear
 
@@ -368,13 +367,14 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     fileprivate func prepareCVVLabelForEdit() {
         //this function may be executed along with the showBackCard action
         if !self.viewModel.isAmexCard(self.cardNumberLabel!.text!) {
-            showBackCardSideIfNeeded() {
+            showBackCardSideIfNeeded(completion: { [weak self] in
+                guard let self = self else { return }
                 self.updateLabelsFontColors()
-            }
-            cvvLabel = cardBack?.cardCVV
-            cardFront?.cardCVV.text = "•••"
-            cardFront?.cardCVV.alpha = 0
-            cardBack?.cardCVV.alpha = 1
+                self.cvvLabel = self.cardBack?.cardCVV
+                self.cardFront?.cardCVV.text = "•••"
+                self.cardFront?.cardCVV.alpha = 0
+                self.cardBack?.cardCVV.alpha = 1
+            })
         } else {
             cvvLabel = cardFront?.cardCVV
             cardBack?.cardCVV.text = "••••"
@@ -668,7 +668,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         if self.cardFront?.cardLogo.image != nil, self.cardFront?.cardLogo.image != ResourceManager.shared.getCardDefaultLogo() {
             self.cardFront?.cardLogo.alpha = 0
             self.cardFront?.cardLogo.image = ResourceManager.shared.getCardDefaultLogo()
-            UIView.animate(withDuration: 0.7, animations: { () -> Void in
+            UIView.animate(withDuration: 0.7, animations: { [weak self] in
+                guard let self = self else { return }
                 self.cardView.backgroundColor = UIColor.cardDefaultColor()
                 self.cardFront?.cardLogo.alpha = 1
             })
@@ -711,7 +712,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                 if self.cardFront?.cardLogo.image == ResourceManager.shared.getCardDefaultLogo() {
                     self.cardFront?.cardLogo.alpha = 0
                     self.cardFront?.cardLogo.image = paymentMethod.getImage()
-                    UIView.animate(withDuration: 0.7, animations: { () -> Void in
+                    UIView.animate(withDuration: 0.7, animations: { [weak self] in
+                        guard let self = self else { return }
                         self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                         self.cardFront?.cardLogo.alpha = 1
                     })

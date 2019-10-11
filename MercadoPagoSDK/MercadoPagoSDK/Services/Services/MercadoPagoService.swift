@@ -9,12 +9,21 @@
 import Foundation
 
 internal class MercadoPagoService: NSObject {
+    enum HeaderField: String {
+        case productId = "X-Product-Id"
+        case userAgent = "User-Agent"
+        case contentType = "Content-Type"
+        case sessionId = "X-Session-Id"
+        case requestId = "X-Request-Id"
+        case idempotencyKey = "X-Idempotency-Key"
+        case density = "x-density"
+        case language = "Accept-Language"
+    }
 
     let MP_DEFAULT_TIME_OUT = 15.0
     let MP_DEFAULT_PRODUCT_ID = "BJEO9TFBF6RG01IIIOU0"
 
     var baseURL: String
-
 
     init (baseURL: String) {
         self.baseURL = baseURL
@@ -46,18 +55,24 @@ internal class MercadoPagoService: NSObject {
         request.cachePolicy = cachePolicy
         request.timeoutInterval = MP_DEFAULT_TIME_OUT
 
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: HeaderField.contentType.rawValue)
         if let sdkVersion = Bundle(for: MercadoPagoService.self).infoDictionary?["CFBundleShortVersionString"] as? String {
             let value = "PX/iOS/" + sdkVersion
-            request.setValue(value, forHTTPHeaderField: "User-Agent")
+            request.setValue(value, forHTTPHeaderField: HeaderField.userAgent.rawValue)
         }
 
         // Add session id
-        request.setValue(MPXTracker.sharedInstance.getRequestId(), forHTTPHeaderField: "X-Request-Id")
-        request.setValue(MPXTracker.sharedInstance.getSessionID(), forHTTPHeaderField: "X-Session-Id")
+        request.setValue(MPXTracker.sharedInstance.getRequestId(), forHTTPHeaderField: HeaderField.requestId.rawValue)
+        request.setValue(MPXTracker.sharedInstance.getSessionID(), forHTTPHeaderField: HeaderField.sessionId.rawValue)
 
-        if headers?["X-Product-Id"] == nil {
-            request.setValue(MP_DEFAULT_PRODUCT_ID, forHTTPHeaderField: "X-Product-Id")
+        // Language
+        request.setValue(Localizator.sharedInstance.getLanguage(), forHTTPHeaderField: HeaderField.language.rawValue)
+
+        //Density Header
+        request.setValue("xxxhdpi", forHTTPHeaderField: HeaderField.density.rawValue)
+
+        if headers?[HeaderField.productId.rawValue] == nil {
+            request.setValue(MP_DEFAULT_PRODUCT_ID, forHTTPHeaderField: HeaderField.productId.rawValue)
         }
 
         if let headers = headers {

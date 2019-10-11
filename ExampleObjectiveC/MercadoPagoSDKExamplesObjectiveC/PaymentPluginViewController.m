@@ -29,16 +29,20 @@
 
         [self.paymentNavigationHandler hideLoading];
 
-        CustomComponentText* component = [[CustomComponentText alloc] init];
+        // Custom component view
+        // CustomComponentText* component = [[CustomComponentText alloc] init];
+
+        /*
         PXAction* popeame = [[PXAction alloc] initWithLabel:@"Continuar" action:^{
             //[self.paymentNavigationHandler cancel];
-        }];
+        }]; */
 
-        PXAction* printeaEnConsola = [[PXAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
+        /*
+        PXAction* print = [[PXAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
             NSLog(@"print !!! action!!");
-        }];
+        }]; */
 
-        PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"1879867544" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: nil paymentStatus:@"" paymentStatusDetail:@""];
+        PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"1879867544" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF2" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:nil bottomCustomView: nil paymentStatus:@"" paymentStatusDetail:@""];
         [self.paymentNavigationHandler didFinishPaymentWithBusinessResult:businessResult];
     });
 }
@@ -57,18 +61,25 @@
 }
 
 -(void)startPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBasePayment:(void (^)(id<PXBasePayment> _Nonnull))successWithBasePayment {
+
     CustomComponentText* component = [[CustomComponentText alloc] init];
-    PXBusinessResult* result = [[PXBusinessResult alloc] initWithReceiptId:@"1879867544" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: nil paymentStatus:@"approved" paymentStatusDetail:@""];
 
-    NSLog(@"creditsLog: %@", [[[checkoutStore getPaymentData] getPaymentMethod ] getId]);
+    //PAYMENT ID ARGENTINO
+//    PXBusinessResult* result = [[PXBusinessResult alloc] initWithReceiptId:@"1879867544" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: nil paymentStatus:@"approved" paymentStatusDetail:@""];
 
-    //PXPayerCost * = [PXPayerCost
+    // PAYMENT ID BRASIL (Test New Congrats)
+    PXBusinessResult* result = [[[PXBusinessResult alloc] initWithReceiptId:@"5148665090" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: [component render] paymentStatus:@"approved" paymentStatusDetail:@"" paymentMethodId: [[[checkoutStore getPaymentData] getPaymentMethod] getId] paymentTypeId: [[[checkoutStore getPaymentData] getPaymentMethod] paymentTypeId] importantView: [component render]] shouldShowReceipt:YES];
 
+    /*
+     // Credits Log
+    NSLog(@"creditsLog: %@", [[[checkoutStore getPaymentData] getPaymentMethod] getId]);
     PXPayerCost* payerCost;
     payerCost = [[checkoutStore getPaymentData] getPayerCost];
     NSLog(@"creditsLog: %ld", (long)payerCost.installments);
+     */
 
-//    PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"rejected" statusDetail:@"" paymentId: @""];
+    // PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"rejected" statusDetail:@"" paymentId: @""];
+
     successWithBasePayment(result);
 }
 

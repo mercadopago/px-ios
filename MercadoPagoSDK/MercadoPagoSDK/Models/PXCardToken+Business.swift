@@ -9,8 +9,11 @@ import Foundation
 /// :nodoc:
 extension PXCardToken: PXCardInformationForm {
     func getCardLastForDigits() -> String {
-        let index = cardNumber?.count
-        return String(cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index! - 1)])
+        guard let cardNumber = cardNumber else {
+            return ""
+        }
+        let index = cardNumber.count
+        return String(cardNumber[cardNumber.index(cardNumber.startIndex, offsetBy: index-4)...cardNumber.index(cardNumber.startIndex, offsetBy: index - 1)])
     }
     func getCardBin() -> String? {
         return getBin()
@@ -27,10 +30,10 @@ extension PXCardToken: PXCardInformationForm {
 /// :nodoc:
 extension PXCardToken {
     func normalizeCardNumber(_ number: String?) -> String? {
-        if number == nil {
+        guard let number = number else {
             return nil
         }
-        return number!.trimmingCharacters(in: CharacterSet.whitespaces).replacingOccurrences(of: "\\s+|-", with: "")
+        return number.trimmingCharacters(in: CharacterSet.whitespaces).replacingOccurrences(of: "\\s+|-", with: "")
     }
 
     @objc func validate() -> Bool {

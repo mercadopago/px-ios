@@ -102,7 +102,6 @@ extension ConsumerCreditsCard {
 
 // MARK: UITextViewDelegate
 extension ConsumerCreditsCard: UITextViewDelegate {
-    @available(iOS 10.0, *)
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
             if let range = Range(characterRange, in: textView.text),
                 let text = textView.text?[range] {

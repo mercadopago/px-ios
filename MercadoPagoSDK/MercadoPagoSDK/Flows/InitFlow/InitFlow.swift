@@ -21,6 +21,7 @@ final class InitFlow: PXFlow {
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
         model = InitFlowModel(flowProperties: flowProperties)
+        PXTrackingStore.sharedInstance.cleanChoType()
     }
 
     func updateModel(paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin]?, chargeRules: [PXPaymentTypeChargeRule]?) {
@@ -59,6 +60,7 @@ final class InitFlow: PXFlow {
     func finishFlow() {
         status = .finished
         if let paymentMethodsSearch = model.getPaymentMethodSearch() {
+            setCheckoutTypeForTracking()
             finishInitCallback(model.properties.checkoutPreference, paymentMethodsSearch)
         } else {
             cancelFlow()
@@ -92,6 +94,15 @@ extension InitFlow {
     func restart() {
         if status != .running {
             status = .ready
+        }
+    }
+}
+
+// MARK: - Privates
+extension InitFlow {
+    private func setCheckoutTypeForTracking() {
+        if let paymentMethodsSearch = model.getPaymentMethodSearch() {
+            PXTrackingStore.sharedInstance.setChoType(paymentMethodsSearch.expressCho != nil ? .one_tap : .traditional)
         }
     }
 }

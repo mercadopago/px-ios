@@ -274,7 +274,7 @@ internal class CardFormViewModel {
 // MARK: Tracking
 extension CardFormViewModel {
     func trackRecognizeCardEvent() {
-        if let paymentTypeId = getPaymentMethodTypeId() {
+        if getPaymentMethodTypeId() != nil {
             var properties: [String: Any] = [:]
             properties["payment_method_id"] = paymentMethods.first?.id
             MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getRecognizedCardPath(), properties: properties)

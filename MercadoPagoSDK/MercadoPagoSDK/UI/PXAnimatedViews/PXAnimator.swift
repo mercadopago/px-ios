@@ -31,23 +31,19 @@ struct PXAnimator {
     }
 
     func animate() {
-        if #available(iOS 10.0, *) {
-            let transitionAnimator = UIViewPropertyAnimator(duration: self.duration, dampingRatio: self.dampingRatio, animations: nil)
+        let transitionAnimator = UIViewPropertyAnimator(duration: self.duration, dampingRatio: self.dampingRatio, animations: nil)
 
-            for animation in animations {
-                transitionAnimator.addAnimations(animation.animation, delayFactor: animation.delay)
-            }
-
-            for completion in completions {
-                transitionAnimator.addCompletion { (_) in
-                    completion()
-                }
-            }
-
-            transitionAnimator.startAnimation()
-        } else {
-            // TODO: Minimum version should be iOS 10.0
+        for animation in animations {
+            transitionAnimator.addAnimations(animation.animation, delayFactor: animation.delay)
         }
+
+        for completion in completions {
+            transitionAnimator.addCompletion { (_) in
+                completion()
+            }
+        }
+
+        transitionAnimator.startAnimation()
     }
 
 }

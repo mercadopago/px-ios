@@ -24,6 +24,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var readyToPay: Bool = false
     var paymentResult: PaymentResult?
     var instructionsInfo: PXInstructions?
+    var pointsAndDiscounts: PXPointsAndDiscounts?
     var businessResult: PXBusinessResult?
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var paymentMethodPlugins: [PXPaymentMethodPlugin]?
@@ -40,9 +41,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 
     // In order to ensure data updated create new instance for every usage
     internal var amountHelper: PXAmountHelper {
-        get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
-        }
+        return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
     }
 
     let escManager: MercadoPagoESC?
@@ -113,7 +112,7 @@ internal extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        let viewModel = PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption)
+        let viewModel = PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: self.escManager)
         viewModel.expressData = search.expressCho
         viewModel.paymentMethods = search.paymentMethods
         viewModel.items = checkoutPreference.items

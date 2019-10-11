@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import MLBusinessComponents
 
 class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     let businessResult: PXBusinessResult
+    let pointsAndDiscounts: PXPointsAndDiscounts?
     let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
     var callback: ((PaymentResult.CongratsState) -> Void)?
@@ -19,10 +21,11 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     private lazy var approvedIconName = "default_item_icon"
     private lazy var approvedIconBundle = ResourceManager.shared.getBundle()
 
-    init(businessResult: PXBusinessResult, paymentData: PXPaymentData, amountHelper: PXAmountHelper) {
+    init(businessResult: PXBusinessResult, paymentData: PXPaymentData, amountHelper: PXAmountHelper, pointsAndDiscounts: PXPointsAndDiscounts?) {
         self.businessResult = businessResult
         self.paymentData = paymentData
         self.amountHelper = amountHelper
+        self.pointsAndDiscounts = pointsAndDiscounts
         super.init()
     }
 
@@ -47,7 +50,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func getPaymentId() -> String? {
-       return  businessResult.getReceiptId()
+        guard let firstPaymentId = businessResult.getReceiptIdList()?.first  else { return businessResult.getReceiptId() }
+        return firstPaymentId
     }
 
     func isCallForAuth() -> Bool {
@@ -58,9 +62,10 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return ResourceManager.shared.getBadgeImageWith(status: self.businessResult.getBusinessStatus().getDescription())
     }
 
-    func getAttributedTitle() -> NSAttributedString {
+    func getAttributedTitle(forNewResult: Bool = false) -> NSAttributedString {
         let title = businessResult.getTitle()
-        let attributes = [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]
+        let fontSize = forNewResult ? PXNewResultHeader.TITLE_FONT_SIZE : PXHeaderRenderer.TITLE_FONT_SIZE
+        let attributes = [NSAttributedString.Key.font: Utils.getFont(size: fontSize)]
         let attributedString = NSAttributedString(string: title, attributes: attributes)
         return attributedString
     }
@@ -81,13 +86,20 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return PXFooterComponent(props: footerProps)
     }
 
-    func buildReceiptComponent() -> PXReceiptComponent? {
+    func getReceiptProps() -> PXReceiptProps? {
         guard let recieptId = businessResult.getReceiptId() else {
             return nil
         }
         let date = Date()
-        let recieptProps = PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + recieptId)
-        return PXReceiptComponent(props: recieptProps)
+        let receiptProps = PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Operación #".localized + recieptId)
+        return receiptProps
+    }
+
+    func buildReceiptComponent() -> PXReceiptComponent? {
+        guard let props = getReceiptProps() else {
+            return nil
+        }
+        return PXReceiptComponent(props: props)
     }
 
     func buildBodyComponent() -> PXComponentizable? {
@@ -209,6 +221,10 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return self.businessResult.getBottomCustomView()
     }
 
+    func buildImportantCustomView() -> UIView? {
+        return self.businessResult.getImportantCustomView()
+    }
+
     func getHeaderDefaultIcon() -> UIImage? {
         if let brIcon = businessResult.getIcon() {
              return brIcon
@@ -219,45 +235,130 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 }
 
-class PXBusinessResultBodyComponent: PXComponentizable {
-    var paymentMethodComponents: [PXComponentizable]
-    var helpMessageComponent: PXComponentizable?
-    var creditsExpectationView: UIView?
-
-    init(paymentMethodComponents: [PXComponentizable], helpMessageComponent: PXComponentizable?, creditsExpectationView: UIView?) {
-        self.paymentMethodComponents = paymentMethodComponents
-        self.helpMessageComponent = helpMessageComponent
-        self.creditsExpectationView = creditsExpectationView
+// MARK: New Result View Model Interface
+extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
+    func getHeaderColor() -> UIColor {
+        return primaryResultColor()
     }
 
-    func render() -> UIView {
-        let bodyView = UIView()
-        bodyView.translatesAutoresizingMaskIntoConstraints = false
-        if let helpMessage = self.helpMessageComponent {
-            let helpView = helpMessage.render()
-            bodyView.addSubview(helpView)
-            PXLayout.pinLeft(view: helpView).isActive = true
-            PXLayout.pinRight(view: helpView).isActive = true
-        }
+    func getHeaderTitle() -> String {
+        return getAttributedTitle().string
+    }
 
-        for paymentMethodComponent in paymentMethodComponents {
-            let pmView = paymentMethodComponent.render()
-            pmView.addSeparatorLineToTop(height: 1)
-            bodyView.addSubview(pmView)
-            PXLayout.put(view: pmView, onBottomOfLastViewOf: bodyView)?.isActive = true
-            PXLayout.pinLeft(view: pmView).isActive = true
-            PXLayout.pinRight(view: pmView).isActive = true
-        }
+    func getHeaderIcon() -> UIImage? {
+        return getHeaderDefaultIcon()
+    }
 
-        if let creditsView = self.creditsExpectationView {
-            bodyView.addSubview(creditsView)
-            PXLayout.pinLeft(view: creditsView).isActive = true
-            PXLayout.pinRight(view: creditsView).isActive = true
-            PXLayout.put(view: creditsView, onBottomOfLastViewOf: bodyView)?.isActive = true
-        }
+    func getHeaderURLIcon() -> String? {
+        return businessResult.getImageUrl()
+    }
 
-        PXLayout.pinFirstSubviewToTop(view: bodyView)?.isActive = true
-        PXLayout.pinLastSubviewToBottom(view: bodyView)?.isActive = true
-        return bodyView
+    func getHeaderBadgeImage() -> UIImage? {
+        return getBadgeImage()
+    }
+
+    func getHeaderCloseAction() -> (() -> Void)? {
+        let action = { [weak self] in
+            if let callback = self?.callback {
+                callback(PaymentResult.CongratsState.cancel_EXIT)
+            }
+        }
+        return action
+    }
+
+    func mustShowReceipt() -> Bool {
+        return businessResult.mustShowReceipt()
+    }
+
+    func getReceiptId() -> String? {
+        return businessResult.getReceiptId()
+    }
+
+    func getPoints() -> PXPoints? {
+        return pointsAndDiscounts?.points
+    }
+
+    func getPointsTapAction() -> ((String) -> Void)? {
+        let action: (String) -> Void = { (deepLink) in
+            //open deep link
+            PXDeepLinkManager.open(deepLink)
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapScorePath())
+        }
+        return action
+    }
+
+    func getDiscounts() -> PXDiscounts? {
+        return pointsAndDiscounts?.discounts
+    }
+
+    func getDiscountsTapAction() -> ((Int, String?, String?) -> Void)? {
+        let action: (Int, String?, String?) -> Void = { (index, deepLink, trackId) in
+            //open deep link
+            PXDeepLinkManager.open(deepLink)
+            PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
+        }
+        return action
+    }
+
+    func getCrossSellingItems() -> [PXCrossSellingItem]? {
+        return pointsAndDiscounts?.crossSelling
+    }
+
+    func getCrossSellingTapAction() -> ((String) -> Void)? {
+        let action: (String) -> Void = { (deepLink) in
+            //open deep link
+            PXDeepLinkManager.open(deepLink)
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapCrossSellingPath())
+        }
+        return action
+    }
+
+    func hasInstructions() -> Bool {
+        let bodyComponent = buildBodyComponent() as? PXBodyComponent
+        return bodyComponent?.hasInstructions() ?? false
+    }
+
+    func getInstructionsView() -> UIView? {
+        guard let bodyComponent = buildBodyComponent() as? PXBodyComponent, bodyComponent.hasInstructions() else {
+            return nil
+        }
+        return bodyComponent.render()
+    }
+
+    func getPaymentData() -> PXPaymentData? {
+        return paymentData
+    }
+
+    func getAmountHelper() -> PXAmountHelper? {
+        return amountHelper
+    }
+
+    func getSplitPaymentData() -> PXPaymentData? {
+        return amountHelper.splitAccountMoney
+    }
+
+    func getSplitAmountHelper() -> PXAmountHelper? {
+        return amountHelper
+    }
+
+    func getFooterMainAction() -> PXAction? {
+        return businessResult.getMainAction()
+    }
+
+    func getFooterSecondaryAction() -> PXAction? {
+        let linkAction = businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
+        return linkAction
+    }
+
+    func getImportantView() -> UIView? {
+        return self.businessResult.getImportantCustomView()
+    }
+
+    func getTopCustomView() -> UIView? {
+        return self.businessResult.getTopCustomView()
+    }
+
+    func getBottomCustomView() -> UIView? {
+        return self.businessResult.getBottomCustomView()
     }
 }

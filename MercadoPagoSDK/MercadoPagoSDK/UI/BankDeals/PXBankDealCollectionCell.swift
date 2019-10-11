@@ -17,9 +17,7 @@ class PXBankDealCollectionCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-        for miniView in self.contentView.subviews {
-            miniView.removeFromSuperview()
-        }
+        contentView.subviews.forEach({ $0.removeFromSuperview() })
     }
 
     required init?(coder aDecoder: NSCoder) {

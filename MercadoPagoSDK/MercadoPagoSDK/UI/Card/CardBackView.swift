@@ -16,21 +16,22 @@ import UIKit
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        loadViewFromNib ()
+        loadViewFromNib()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        loadViewFromNib ()
+        loadViewFromNib()
     }
 
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CardBackView", bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-        view.frame = bounds
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.addSubview(view)
+        if let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
+            view.frame = bounds
+            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            self.addSubview(view)
+        }
         cardCVV.numberOfLines = 0
         cardCVV.font = UIFont.systemFont(ofSize: cardCVV.font.pointSize)
     }

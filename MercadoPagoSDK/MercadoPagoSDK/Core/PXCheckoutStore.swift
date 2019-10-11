@@ -1,5 +1,5 @@
 //
-//  PXHookStore.swift
+//  PXCheckoutStore.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 11/28/17.
@@ -8,7 +8,7 @@
 import Foundation
 
 /**
-  Shared public class to provide information about our Checkout. Like `PXPaymentData` or `PXCheckoutPreference`.
+  This class to provides information (like `PXPaymentData` or `PXCheckoutPreference`) about our Checkout.
  */
 @objcMembers
 open class PXCheckoutStore: NSObject {
@@ -81,7 +81,7 @@ extension PXCheckoutStore {
 }
 
 internal extension PXCheckoutStore {
-    internal func clean() {
+    func clean() {
         removeAll()
         checkoutPreference = nil
         paymentDatas = []

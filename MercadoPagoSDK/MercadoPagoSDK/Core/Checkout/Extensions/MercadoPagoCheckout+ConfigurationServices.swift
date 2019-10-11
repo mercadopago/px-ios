@@ -12,48 +12,46 @@ extension MercadoPagoCheckout {
     func getPayerCostsConfiguration() {
         viewModel.pxNavigationHandler.presentLoading()
 
-        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
+        guard let paymentMethod = viewModel.paymentData.getPaymentMethod() else {
             return
         }
 
-        let bin = self.viewModel.cardToken?.getBin()
+        let bin = viewModel.cardToken?.getBin()
 
         var diffPricingString: String?
-        if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
+        if let differentialPricing = viewModel.checkoutPreference.differentialPricing?.id {
             diffPricingString = String(describing: differentialPricing)
         }
 
         //summary ammount service should be performed using the processing modes designated by the payment method
-        self.viewModel.mercadoPagoServicesAdapter.update(processingModes: paymentMethod.processingModes)
-        self.viewModel.mercadoPagoServicesAdapter.getSummaryAmount(bin: bin, amount: self.viewModel.amountHelper.preferenceAmount, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.id, payment_type_id: paymentMethod.paymentTypeId, differentialPricingId: diffPricingString, siteId: self.viewModel.checkoutPreference.siteId, marketplace: self.viewModel.checkoutPreference.marketplace, discountParamsConfiguration: self.viewModel.getAdvancedConfiguration().discountParamsConfiguration, payer: self.viewModel.checkoutPreference.payer, defaultInstallments: self.viewModel.checkoutPreference.getDefaultInstallments(), charges: self.viewModel.amountHelper.chargeRules, maxInstallments: self.viewModel.checkoutPreference.getMaxAcceptedInstallments(), callback: { [weak self] (summaryAmount) in
+        viewModel.mercadoPagoServicesAdapter.update(processingModes: paymentMethod.processingModes)
+        viewModel.mercadoPagoServicesAdapter.getSummaryAmount(bin: bin, amount: viewModel.amountHelper.preferenceAmount, issuer: viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.id, payment_type_id: paymentMethod.paymentTypeId, differentialPricingId: diffPricingString, siteId: viewModel.checkoutPreference.siteId, marketplace: viewModel.checkoutPreference.marketplace, discountParamsConfiguration: viewModel.getAdvancedConfiguration().discountParamsConfiguration, payer: viewModel.checkoutPreference.payer, defaultInstallments: viewModel.checkoutPreference.getDefaultInstallments(), charges: viewModel.amountHelper.chargeRules, maxInstallments: viewModel.checkoutPreference.getMaxAcceptedInstallments(), callback: { [weak self] (summaryAmount) in
 
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
-            strongSelf.viewModel.payerCosts = summaryAmount.selectedAmountConfiguration.amountConfiguration?.payerCosts
+            self.viewModel.payerCosts = summaryAmount.selectedAmountConfiguration.amountConfiguration?.payerCosts
             if let discountConfig = summaryAmount.selectedAmountConfiguration.discountConfiguration {
-                strongSelf.viewModel.attemptToApplyDiscount(discountConfig)
+                self.viewModel.attemptToApplyDiscount(discountConfig)
             }
-            if let payerCosts = strongSelf.viewModel.payerCosts {
-                let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(payerCosts)
+            if let payerCosts = self.viewModel.payerCosts {
+                let defaultPayerCost = self.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(payerCosts)
                 if let defaultPC = defaultPayerCost {
-                    strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
+                    self.viewModel.updateCheckoutModel(payerCost: defaultPC)
                 }
             }
 
-            strongSelf.executeNextStep()
+            self.executeNextStep()
 
-            }, failure: {[weak self] (error) in
+            }, failure: { [weak self] (error) in
 
-                guard let strongSelf = self else {
+                guard let self = self else {
                     return
                 }
-
-                strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] () in
+                self.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] () in
                     self?.getPayerCostsConfiguration()
                 })
-                strongSelf.executeNextStep()
-
+                self.executeNextStep()
         })
     }
 

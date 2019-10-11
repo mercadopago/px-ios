@@ -7,16 +7,14 @@
 
 import UIKit
 
-typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, alpha: CGFloat, isTotal: Bool, image: UIImage?, type: PXOneTapSummaryRowView.RowType?)
-
 class PXOneTapHeaderViewModel {
     let icon: UIImage
     let title: String
     let subTitle: String?
-    let data: [OneTapHeaderSummaryData]
+    let data: [PXOneTapSummaryRowData]
     let splitConfiguration: PXSplitConfiguration?
 
-    init(icon: UIImage, title: String, subTitle: String?, data: [OneTapHeaderSummaryData], splitConfiguration: PXSplitConfiguration?) {
+    init(icon: UIImage, title: String, subTitle: String?, data: [PXOneTapSummaryRowData], splitConfiguration: PXSplitConfiguration?) {
         self.icon = icon
         self.title = title
         self.subTitle = subTitle
@@ -52,7 +50,7 @@ class PXOneTapHeaderViewModel {
 
     private func isMediumSummaryOrLarger() -> Bool {
         for item in data {
-            if item.type == .charges || item.type == .discount  {
+            if item.type == .charges || item.type == .discount {
                 return true
             }
         }

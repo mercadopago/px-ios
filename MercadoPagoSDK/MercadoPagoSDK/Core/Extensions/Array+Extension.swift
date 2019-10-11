@@ -18,3 +18,9 @@ internal extension Array {
         }
     }
 }
+
+extension Collection {
+    subscript(optional index: Index) -> Iterator.Element? {
+        return self.indices.contains(index) ? self[index] : nil
+    }
+}

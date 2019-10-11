@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- This object declare custom preferences (customizations) for "Congrats" screen.
+ This object declares custom preferences (customizations) for "Congrats" screen.
  */
 @objcMembers open class PXPaymentResultConfiguration: NSObject {
     // V4 final.

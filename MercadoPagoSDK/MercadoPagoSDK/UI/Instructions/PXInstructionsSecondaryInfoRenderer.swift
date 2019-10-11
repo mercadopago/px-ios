@@ -34,7 +34,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
     func buildSecondaryInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let secondaryInfoLabel = UILabel()
         secondaryInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        secondaryInfoLabel.textAlignment = .center
+        secondaryInfoLabel.textAlignment = .left
         secondaryInfoLabel.textColor = .pxBrownishGray
         secondaryInfoLabel.numberOfLines = 0
         secondaryInfoLabel.attributedText = text

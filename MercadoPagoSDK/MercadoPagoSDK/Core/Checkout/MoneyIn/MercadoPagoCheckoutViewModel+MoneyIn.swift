@@ -17,7 +17,6 @@ extension MercadoPagoCheckoutViewModel {
 
         amountHelper.preference.clearCardId()
 
-
         if let options = self.paymentMethodOptions {
             let optionsFound = options.filter { (paymentMethodOption: PaymentMethodOption) -> Bool in
                 return paymentMethodOption.getId() == cardId

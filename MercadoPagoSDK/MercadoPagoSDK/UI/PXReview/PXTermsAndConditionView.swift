@@ -105,14 +105,12 @@ extension PXTermsAndConditionView {
 }
 
 extension PXTermsAndConditionView: UITextViewDelegate, UIGestureRecognizerDelegate {
-
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let url = URL(string: SiteManager.shared.getTermsAndConditionsURL()) {
             delegate?.shouldOpenTermsCondition(SCREEN_TITLE.localized, url: url)
         }
     }
 
-    @available(iOS 10.0, *)
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         if termsAndConditionsDto != nil {
             if let range = Range(characterRange, in: textView.text),

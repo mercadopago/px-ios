@@ -357,8 +357,7 @@ internal class Utils {
     }
 
     class func getMasks(inDictionary dictID: String, withKey key: String) -> [TextMaskFormater]? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
+        let dictionary = ResourceManager.shared.getDictionaryForResource(named: "IdentificationTypes")
 
         if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
             if let mask = IDtype.value(forKey: key) as? String, mask != ""{
@@ -524,8 +523,7 @@ internal class Utils {
     }
 
     internal static func getSetting<T>(identifier: String) -> T? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
+        let dictPM = ResourceManager.shared.getDictionaryForResource(named: Utils.kSdkSettingsFile)
         return dictPM![identifier] as? T
     }
 
@@ -534,7 +532,7 @@ internal class Utils {
         return environment["testing"] != nil
     }
 
-    static func getFormatedStringDate(_ date: Date) -> String {
+    static func getFormatedStringDate(_ date: Date, addTime: Bool = false) -> String {
         let formatterDay = DateFormatter()
         formatterDay.dateFormat = "dd"
         let formatterMonth = DateFormatter()
@@ -548,7 +546,14 @@ internal class Utils {
             dayString.removeFirst()
         }
 
-        return dayString + " de ".localized + formatterMonth.string(from: date).localized.lowercased() + " de ".localized + formatterYear.string(from: date)
+        var timeString = ""
+        if addTime {
+            let formatterTime = DateFormatter()
+            formatterTime.dateFormat = "HH:mm"
+            timeString = String.SPACE + "a las".localized + String.SPACE + formatterTime.string(from: date) + String.SPACE + "hs".localized
+        }
+
+        return dayString + " de ".localized + formatterMonth.string(from: date).localized.lowercased() + " de ".localized + formatterYear.string(from: date) + timeString
     }
 
     static func getShortFormatedStringDate(_ date: Date?) -> String? {

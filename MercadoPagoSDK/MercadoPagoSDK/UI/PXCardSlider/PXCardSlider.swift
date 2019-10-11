@@ -123,6 +123,10 @@ extension PXCardSlider {
         let targetWidth: CGFloat = containerView.bounds.width - PXCardSliderSizeManager.cardDeltaDecrease
         return PXCardSliderSizeManager.getGoldenRatioSize(targetWidth)
     }
+
+    func getSelectedIndex() -> Int {
+        return selectedIndex
+    }
 }
 
 // MARK: Privates

@@ -10,7 +10,6 @@ import Foundation
 
 internal final class PXPaymentFlow: NSObject, PXFlow {
     let model: PXPaymentFlowModel
-
     weak var resultHandler: PXPaymentResultHandlerProtocol?
     weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
 
@@ -57,6 +56,8 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
             createPaymentWithPlugin(plugin: model.paymentPlugin)
         case .createPaymentPluginScreen:
             showPaymentProcessor(paymentProcessor: model.paymentPlugin)
+        case .getPointsAndDiscounts:
+            getPointsAndDiscounts()
         case .getInstructions:
             getInstructions()
         case .finish:
@@ -83,10 +84,10 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     func finishFlow() {
         if let paymentResult = model.paymentResult {
-            self.resultHandler?.finishPaymentFlow(paymentResult: (paymentResult), instructionsInfo: model.instructionsInfo)
+            self.resultHandler?.finishPaymentFlow(paymentResult: (paymentResult), instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts)
             return
         } else if let businessResult = model.businessResult {
-            self.resultHandler?.finishPaymentFlow(businessResult: businessResult)
+            self.resultHandler?.finishPaymentFlow(businessResult: businessResult, pointsAndDiscounts: model.pointsAndDiscounts)
             return
         }
     }

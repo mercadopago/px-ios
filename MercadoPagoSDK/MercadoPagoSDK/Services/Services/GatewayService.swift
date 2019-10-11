@@ -24,7 +24,7 @@ internal class GatewayService: MercadoPagoService {
 
         self.request(uri: url, params: params, body: cardTokenJSON, method: HTTPMethod.post, success: success, failure: { (error) -> Void in
             if let failure = failure {
-                failure(PXError(domain: "mercadopago.sdk.GatewayService.getToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+                failure(PXError(domain: ApiDomain.GET_TOKEN, code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
             }
         })
     }
@@ -41,7 +41,7 @@ internal class GatewayService: MercadoPagoService {
                             token = try PXToken.fromJSON(data: data)
                         } else {
                             let apiException = try PXApiException.fromJSON(data: data)
-                            failure?(PXError(domain: "mercadopago.sdk.cloneToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+                            failure?(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
                             return
                         }
                     }
@@ -49,15 +49,15 @@ internal class GatewayService: MercadoPagoService {
                     let jsonData = try JSONSerialization.data(withJSONObject: secCodeDic, options: .prettyPrinted)
 
                     self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: jsonData, method: HTTPMethod.put, success: success, failure: { (_) in
-                        failure?(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+                        failure?(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
                     })
                 } catch {
-                    failure?(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
+                    failure?(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
                 }
 
             }, failure: { (error) -> Void in
                 if let failure = failure {
-                    failure(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+                    failure(PXError(domain: ApiDomain.CLONE_TOKEN, code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
                 }
             })
         }

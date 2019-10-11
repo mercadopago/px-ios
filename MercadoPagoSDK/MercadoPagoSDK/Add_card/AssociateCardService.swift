@@ -12,9 +12,11 @@ final class AssociateCardService: MercadoPagoService {
 
     let uri = "/v1/px_mobile_api/card-association"
     let accessToken: String
+    let productId: String?
 
-    init(accessToken: String) {
+    init(accessToken: String, productId: String?) {
         self.accessToken = accessToken
+        self.productId = productId
         super.init(baseURL: PXServicesURLConfigs.MP_API_BASE_URL)
     }
 
@@ -24,7 +26,12 @@ final class AssociateCardService: MercadoPagoService {
 
         let jsonData = try? JSONSerialization.data(withJSONObject: body, options: [])
 
-        self.request(uri: uri, params: "access_token=\(accessToken)", body: jsonData, method: .post, headers: nil, cache: false, success: { (data) in
+        var headers: [String: String] = [:]
+        if let prodId = self.productId {
+            headers[MercadoPagoService.HeaderField.productId.rawValue] = prodId
+        }
+
+        self.request(uri: uri, params: "access_token=\(accessToken)", body: jsonData, method: .post, headers: headers, cache: false, success: { (data) in
             let jsonResult = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let jsonResult = jsonResult as? [String: Any] {
                 do {

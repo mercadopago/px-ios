@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UIKit.UIGestureRecognizerSubclass
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
 

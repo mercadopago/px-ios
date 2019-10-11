@@ -25,6 +25,8 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.escManager = escManager
         initFlowProperties.privateKey = privateKey
 
+        configureBiometricModule()
+
         // Create init flow.
         initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse)  in
             self?.checkoutPreference = checkoutPreference
@@ -51,5 +53,10 @@ extension MercadoPagoCheckoutViewModel {
 
     func updateInitFlow() {
         initFlow?.updateModel(paymentPlugin: self.paymentPlugin, paymentMethodPlugins: self.paymentMethodPlugins, chargeRules: self.chargeRules)
+    }
+
+    func configureBiometricModule() {
+        // We use productId as unique identifier
+        PXConfiguratorManager.biometricConfig = PXBiometricConfig.createConfig(withFlowIdentifier: getAdvancedConfiguration().productId, andAmount: paymentData.getRawAmount())
     }
 }

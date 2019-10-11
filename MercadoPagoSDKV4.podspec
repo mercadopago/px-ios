@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.19.0"
+  s.version          = "4.24"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     s.dependency 'MLUI', '~> 5.0'
     s.dependency 'MLCardDrawer', '~> 1.0'
+    s.dependency 'MLBusinessComponents', '~> 1.0'
   end
   
   s.subspec 'ESC' do |esc|
@@ -29,7 +30,6 @@ Pod::Spec.new do |s|
       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D PX_PRIVATE_POD'
     }
   end
-
 
   #s.test_spec do |test_spec|
     #test_spec.source_files = 'MercadoPagoSDK/MercadoPagoSDKTests/*'

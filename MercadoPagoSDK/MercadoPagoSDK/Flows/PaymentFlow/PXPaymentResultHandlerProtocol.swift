@@ -9,7 +9,7 @@
 import Foundation
 
 internal protocol PXPaymentResultHandlerProtocol: NSObjectProtocol {
-    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?)
-    func finishPaymentFlow(businessResult: PXBusinessResult)
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?, pointsAndDiscounts: PXPointsAndDiscounts?)
+    func finishPaymentFlow(businessResult: PXBusinessResult, pointsAndDiscounts: PXPointsAndDiscounts?)
     func finishPaymentFlow(error: MPSDKError)
 }

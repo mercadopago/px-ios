@@ -57,6 +57,8 @@ extension PXOneTapHeaderMerchantLayout {
                                    PXLayout.centerHorizontally(view: titleLabel),
                                    PXLayout.put(view: titleLabel, onBottomOf: imageContainerView, withMargin: PXLayout.XXS_MARGIN),
                                    PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XXS_MARGIN),
+                                   PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN),
+                                   PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.L_MARGIN),
                                    PXLayout.setHeight(owner: imageContainerView, height: IMAGE_SIZE),
                                    PXLayout.setWidth(owner: imageContainerView, width: IMAGE_SIZE),
                                    PXLayout.matchWidth(ofView: containerView)]

@@ -9,7 +9,7 @@
 import Foundation
 
 internal extension KeyedDecodingContainer {
-    internal func decodeDateFromStringIfPresent(forKey key: K) throws -> Date? {
+    func decodeDateFromStringIfPresent(forKey key: K) throws -> Date? {
         let stringDate = try self.decodeIfPresent(String.self, forKey: key)
         let date = String.getDate(stringDate)
         return date

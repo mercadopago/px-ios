@@ -37,15 +37,9 @@ final class PXAnimatedImageView: UIView, PXAnimatedViewProtocol {
         PXLayout.setHeight(owner: imageView, height: size.height).isActive = true
         PXLayout.setWidth(owner: imageView, width: size.width).isActive = true
 
-        if #available(iOS 10.0, *) {
-            let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
-                self.imageView.layoutIfNeeded()
-            })
-            transitionAnimator.startAnimation()
-        } else {
-            UIView.animate(withDuration: duration) {
-                self.imageView.layoutIfNeeded()
-            }
-        }
+        let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
+            self.imageView.layoutIfNeeded()
+        })
+        transitionAnimator.startAnimation()
     }
 }

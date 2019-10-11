@@ -22,7 +22,6 @@ struct PXFeedbackGenerator {
     }
 
     // UINotificationFeedbackGenerator
-    @available(iOS 10.0, *)
     private static func executeNotificationFeedback(type: UINotificationFeedbackGenerator.FeedbackType) {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(type)
@@ -30,14 +29,11 @@ struct PXFeedbackGenerator {
 
     // UISelectionFeedbackGenerator
     private static func executeSelectionFeedback() {
-        if #available(iOS 10.0, *) {
-            let generator = UISelectionFeedbackGenerator()
-            generator.selectionChanged()
-        }
+        let generator = UISelectionFeedbackGenerator()
+        generator.selectionChanged()
     }
 
     // UIImpactFeedbackGenerator
-    @available(iOS 10.0, *)
     private static func executeImpactFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
@@ -48,25 +44,19 @@ struct PXFeedbackGenerator {
 extension PXFeedbackGenerator {
     static func successNotificationFeedback() {
         if shouldGiveFeedback() {
-            if #available(iOS 10.0, *) {
-                executeNotificationFeedback(type: .success)
-            }
+            executeNotificationFeedback(type: .success)
         }
     }
 
     static func warningNotificationFeedback() {
         if shouldGiveFeedback() {
-            if #available(iOS 10.0, *) {
-                executeNotificationFeedback(type: .warning)
-            }
+            executeNotificationFeedback(type: .warning)
         }
     }
 
     static func errorNotificationFeedback() {
         if shouldGiveFeedback() {
-            if #available(iOS 10.0, *) {
-                executeNotificationFeedback(type: .error)
-            }
+            executeNotificationFeedback(type: .error)
         }
     }
 }
@@ -84,25 +74,19 @@ extension PXFeedbackGenerator {
 extension PXFeedbackGenerator {
     static func lightImpactFeedback() {
         if shouldGiveFeedback() {
-            if #available(iOS 10.0, *) {
-                executeImpactFeedback(style: .light)
-            }
+            executeImpactFeedback(style: .light)
         }
     }
 
     static func mediumImpactFeedback() {
         if shouldGiveFeedback() {
-            if #available(iOS 10.0, *) {
-                executeImpactFeedback(style: .medium)
-            }
+            executeImpactFeedback(style: .medium)
         }
     }
 
     static func heavyImpactFeedback() {
         if shouldGiveFeedback() {
-            if #available(iOS 10.0, *) {
-                executeImpactFeedback(style: .heavy)
-            }
+            executeImpactFeedback(style: .heavy)
         }
     }
 }

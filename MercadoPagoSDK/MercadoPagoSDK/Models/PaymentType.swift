@@ -10,7 +10,7 @@ import UIKit
 
 internal class PaymentType {
 
-    open static let allPaymentIDs: Set<String> = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.CREDIT_CARD.rawValue, PXPaymentTypes.ACCOUNT_MONEY.rawValue, PXPaymentTypes.TICKET.rawValue, PXPaymentTypes.BANK_TRANSFER.rawValue, PXPaymentTypes.ATM.rawValue, PXPaymentTypes.DIGITAL_CURRENCY.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue, PXPaymentTypes.BOLBRADESCO.rawValue, PXPaymentTypes.PEC.rawValue]
+    public static let allPaymentIDs: Set<String> = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.CREDIT_CARD.rawValue, PXPaymentTypes.ACCOUNT_MONEY.rawValue, PXPaymentTypes.TICKET.rawValue, PXPaymentTypes.BANK_TRANSFER.rawValue, PXPaymentTypes.ATM.rawValue, PXPaymentTypes.DIGITAL_CURRENCY.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue, PXPaymentTypes.BOLBRADESCO.rawValue, PXPaymentTypes.PEC.rawValue]
 
     var paymentTypeId: PXPaymentTypes!
 

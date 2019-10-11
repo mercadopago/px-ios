@@ -11,8 +11,9 @@ import Foundation
 internal extension String {
 
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
+    static let SPACE = " "
 
-    static internal func isNullOrEmpty(_ value: String?) -> Bool {
+    static func isNullOrEmpty(_ value: String?) -> Bool {
         return value == nil || value!.isEmpty
     }
 
@@ -78,7 +79,7 @@ internal extension String {
         return "\n".toAttributedString()
     }
 
-    static internal func getDate(_ string: String?) -> Date? {
+    static func getDate(_ string: String?) -> Date? {
         guard let dateString = string else {
             return nil
         }

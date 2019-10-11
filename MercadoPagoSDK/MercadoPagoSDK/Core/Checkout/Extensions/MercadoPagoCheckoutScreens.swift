@@ -13,54 +13,47 @@ extension MercadoPagoCheckout {
     func showPaymentMethodsScreen() {
         viewModel.clearCollectedData()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
-
-            guard let strongSelf = self else {
-                return
-            }
-
+            guard let self = self else { return }
             // Clean account money paymentData on PaymentVault selection.
             // Because this flow doesn´t support split payments.
-            strongSelf.viewModel.splitAccountMoney = nil
+            self.viewModel.splitAccountMoney = nil
 
-            strongSelf.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
+            self.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
 
-            if let payerCosts = strongSelf.viewModel.paymentConfigurationService.getPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
-                strongSelf.viewModel.payerCosts = payerCosts
-                let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(payerCosts)
+            if let payerCosts = self.viewModel.paymentConfigurationService.getPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
+                self.viewModel.payerCosts = payerCosts
+                let defaultPayerCost = self.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(payerCosts)
                 if let defaultPC = defaultPayerCost {
-                    strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
+                    self.viewModel.updateCheckoutModel(payerCost: defaultPC)
                 }
             } else {
-                strongSelf.viewModel.payerCosts = nil
+                self.viewModel.payerCosts = nil
             }
-            if let discountConfiguration = strongSelf.viewModel.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOptionSelected.getId()) {
-                strongSelf.viewModel.attemptToApplyDiscount(discountConfiguration)
+            if let discountConfiguration = self.viewModel.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOptionSelected.getId()) {
+                self.viewModel.attemptToApplyDiscount(discountConfiguration)
             } else {
-                strongSelf.viewModel.applyDefaultDiscountOrClear()
+                self.viewModel.applyDefaultDiscountOrClear()
             }
 
-            strongSelf.viewModel.rootVC = false
-            strongSelf.executeNextStep()
+            self.viewModel.rootVC = false
+            self.executeNextStep()
         })
 
         viewModel.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep, animated: true)
     }
 
     func showCardForm() {
-        let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { [weak self](paymentMethods, cardToken) in
+        let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { [weak self] (paymentMethods, cardToken) in
+            guard let self = self else { return }
 
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.updateCheckoutModel(paymentMethods: paymentMethods, cardToken: cardToken)
-            strongSelf.executeNextStep()
+            self.viewModel.updateCheckoutModel(paymentMethods: paymentMethods, cardToken: cardToken)
+            self.executeNextStep()
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: cardFormStep, animated: true)
     }
 
     func showIdentificationScreen() {
-        guard let identificationTypes = self.viewModel.cardFlowSupportedIdentificationTypes() else {
+        guard let identificationTypes = viewModel.cardFlowSupportedIdentificationTypes() else {
             let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: false)
             MercadoPagoCheckoutViewModel.error = error
             showErrorScreen()
@@ -68,39 +61,34 @@ extension MercadoPagoCheckout {
         }
 
         let identificationStep = IdentificationViewController(identificationTypes: identificationTypes, paymentMethod: viewModel.paymentData.paymentMethod, callback: { [weak self] (identification : PXIdentification) in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let self = self else { return }
 
-            strongSelf.viewModel.updateCheckoutModel(identification: identification)
-            strongSelf.executeNextStep()
+            self.viewModel.updateCheckoutModel(identification: identification)
+            self.executeNextStep()
             }, errorExitCallback: { [weak self] in
                 self?.finish()
         })
 
-        identificationStep.callbackCancel = {[weak self] in
+        identificationStep.callbackCancel = { [weak self] in
             self?.viewModel.pxNavigationHandler.navigationController.popViewController(animated: true)
         }
         viewModel.pxNavigationHandler.pushViewController(viewController: identificationStep, animated: true)
     }
 
     func showPayerInfoFlow() {
-        let viewModel = self.viewModel.payerInfoFlow()
-        let vc = PayerInfoViewController(viewModel: viewModel) { [weak self] (payer) in
+        let payerInfoViewModel = self.viewModel.payerInfoFlow()
+        let vc = PayerInfoViewController(viewModel: payerInfoViewModel) { [weak self] (payer) in
+            guard let self = self else { return }
 
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.updateCheckoutModel(payer: payer)
-            strongSelf.executeNextStep()
+            self.viewModel.updateCheckoutModel(payer: payer)
+            self.executeNextStep()
         }
-        self.viewModel.pxNavigationHandler.pushViewController(viewController: vc, animated: true)
+        viewModel.pxNavigationHandler.pushViewController(viewController: vc, animated: true)
     }
 
     func showIssuersScreen() {
-        let issuerStep = AdditionalStepViewController(viewModel: self.viewModel.issuerViewModel(), callback: { [weak self](issuer) in
-
+        let issuerViewModel = viewModel.issuerViewModel()
+        let issuerStep = AdditionalStepViewController(viewModel: issuerViewModel, callback: { [weak self] (issuer) in
             guard let issuer = issuer as? PXIssuer else {
                 fatalError("Cannot convert issuer to type Issuer")
             }
@@ -112,17 +100,14 @@ extension MercadoPagoCheckout {
     }
 
     func showPayerCostScreen() {
-        let payerCostViewModel = self.viewModel.payerCostViewModel()
-
+        let payerCostViewModel = viewModel.payerCostViewModel()
         let payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
             guard let payerCost = payerCost as? PXPayerCost else {
                 fatalError("Cannot convert payerCost to type PayerCost")
             }
-
             self?.viewModel.updateCheckoutModel(payerCost: payerCost)
             self?.executeNextStep()
         })
-
         viewModel.pxNavigationHandler.pushViewController(viewController: payerCostStep, animated: true)
     }
 
@@ -131,33 +116,23 @@ extension MercadoPagoCheckout {
         let timeOut = paymentFlow.getPaymentTimeOut()
         let shouldShowAnimatedPayButton = !paymentFlow.needToShowPaymentPluginScreen()
 
-        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), timeOutPayButton: timeOut, shouldAnimatePayButton: shouldShowAnimatedPayButton, callbackPaymentData: { [weak self] (paymentData: PXPaymentData) in
-            guard let strongSelf = self else {
-                return
-            }
+        let reviewVC = PXReviewViewController(viewModel: viewModel.reviewConfirmViewModel(), timeOutPayButton: timeOut, shouldAnimatePayButton: shouldShowAnimatedPayButton, callbackPaymentData: { [weak self] (paymentData: PXPaymentData) in
+            guard let self = self else { return }
 
-            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-
-            strongSelf.executeNextStep()
-
+            self.viewModel.updateCheckoutModel(paymentData: paymentData)
+            self.executeNextStep()
         }, callbackConfirm: { [weak self] (paymentData: PXPaymentData) in
+            guard let self = self else { return }
 
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-            strongSelf.executeNextStep()
-
+            self.viewModel.updateCheckoutModel(paymentData: paymentData)
+            self.executeNextStep()
         }, finishButtonAnimation: {
             self.executeNextStep()
         }, changePayerInformation: { [weak self] (paymentData: PXPaymentData) in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let self = self else { return }
 
-            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-            strongSelf.executeNextStep()
+            self.viewModel.updateCheckoutModel(paymentData: paymentData)
+            self.executeNextStep()
         })
 
         if let changePaymentMethodAction = viewModel.lifecycleProtocol?.changePaymentMethodTapped?() {
@@ -170,15 +145,16 @@ extension MercadoPagoCheckout {
     }
 
     func showSecurityCodeScreen() {
-
-        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
+        let savedCardSecurityCodeViewModel = viewModel.savedCardSecurityCodeViewModel()
+        let securityCodeVc = SecurityCodeViewController(viewModel: savedCardSecurityCodeViewModel, collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
             self?.getTokenizationService().createCardToken(securityCode: securityCode)
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToFirstPaymentVault: true)
     }
 
     func collectSecurityCodeForRetry() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.cloneTokenSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: PXCardInformationForm, securityCode: String) -> Void in
+        let cloneTokenSecurityCodeViewModel = viewModel.cloneTokenSecurityCodeViewModel()
+        let securityCodeVc = SecurityCodeViewController(viewModel: cloneTokenSecurityCodeViewModel, collectSecurityCodeCallback: { [weak self] (cardInformation: PXCardInformationForm, securityCode: String) -> Void in
             guard let token = cardInformation as? PXToken else {
                 fatalError("Cannot convert cardInformation to Token")
             }
@@ -186,85 +162,94 @@ extension MercadoPagoCheckout {
 
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
-
     }
 
     func showPaymentResultScreen() {
-        if self.viewModel.businessResult != nil {
-            self.showBusinessResultScreen()
+        if viewModel.businessResult != nil {
+            showBusinessResultScreen()
             return
         }
-        if self.viewModel.paymentResult == nil {
-            self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
+        if viewModel.paymentResult == nil, let payment = viewModel.payment {
+            viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
-
+        
         var congratsViewController: MercadoPagoUIViewController
-
-        congratsViewController = PXResultViewController(viewModel: self.viewModel.resultViewModel(), callback: {[weak self] (state: PaymentResult.CongratsState) in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
-            if state == PaymentResult.CongratsState.call_FOR_AUTH {
-                strongSelf.viewModel.prepareForClone()
-                strongSelf.collectSecurityCodeForRetry()
-            } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
-                if let changePaymentMethodAction = strongSelf.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(), state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
+        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] (state: PaymentResult.CongratsState) in
+            guard let self = self else { return }
+            self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
+            if state == .call_FOR_AUTH {
+                self.viewModel.prepareForClone()
+                self.collectSecurityCodeForRetry()
+            } else if state == .cancel_RETRY || state == .cancel_SELECT_OTHER {
+                if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(), state == .cancel_SELECT_OTHER {
                     changePaymentMethodAction()
                 } else {
-                    strongSelf.viewModel.prepareForNewSelection()
-                    strongSelf.executeNextStep()
+                    self.viewModel.prepareForNewSelection()
+                    self.executeNextStep()
                 }
             } else {
-                strongSelf.finish()
+                self.finish()
             }
-        })
-
+        }
+        
+        let resultViewModel = viewModel.resultViewModel()
+        if viewModel.paymentResult?.isApproved() ?? false || viewModel.instructionsInfo != nil {
+            congratsViewController = PXNewResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
+        } else {
+            congratsViewController = PXResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
+        }
+        
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
     func showBusinessResultScreen() {
-
-        guard let businessResult = self.viewModel.businessResult else {
-            return
-        }
-        let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData, amountHelper: self.viewModel.amountHelper)
-        let congratsViewController = PXResultViewController(viewModel: viewModel) { [weak self] (_: PaymentResult.CongratsState) in
+        var congratsViewController: MercadoPagoUIViewController
+        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] (_: PaymentResult.CongratsState) in
             self?.finish()
         }
-        self.viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
 
+        guard let businessResult = viewModel.businessResult else {
+            return
+        }
+
+        let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+
+        if businessResult.isApproved() {
+            congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: congratsViewControllerCallback)
+        } else {
+            congratsViewController = PXResultViewController(viewModel: pxBusinessResultViewModel, callback: congratsViewControllerCallback)
+        }
+
+        viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
     func showErrorScreen() {
-        viewModel.pxNavigationHandler.showErrorScreen(error: MercadoPagoCheckoutViewModel.error, callbackCancel: finish, errorCallback: self.viewModel.errorCallback)
+        viewModel.pxNavigationHandler.showErrorScreen(error: MercadoPagoCheckoutViewModel.error, callbackCancel: finish, errorCallback: viewModel.errorCallback)
         MercadoPagoCheckoutViewModel.error = nil
     }
 
     func showFinancialInstitutionsScreen() {
-        if let financialInstitutions = self.viewModel.paymentData.getPaymentMethod()!.financialInstitutions {
-            self.viewModel.financialInstitutions = financialInstitutions
+        if let financialInstitutions = viewModel.paymentData.getPaymentMethod()?.financialInstitutions {
+            viewModel.financialInstitutions = financialInstitutions
 
             if financialInstitutions.count == 1 {
-                self.viewModel.updateCheckoutModel(financialInstitution: financialInstitutions[0])
-                self.executeNextStep()
+                viewModel.updateCheckoutModel(financialInstitution: financialInstitutions[0])
+                executeNextStep()
             } else {
-                let financialInstitutionStep = AdditionalStepViewController(viewModel:
-                    self.viewModel.financialInstitutionViewModel(), callback: { [weak self] (financialInstitution) in
-                        guard let financialInstitution = financialInstitution as? PXFinancialInstitution else {
-                            fatalError("Cannot convert entityType to type EntityType")
-                        }
-                        self?.viewModel.updateCheckoutModel(financialInstitution: financialInstitution)
-                        self?.executeNextStep()
+                let financialInstitutionViewModel = viewModel.financialInstitutionViewModel()
+                let financialInstitutionStep = AdditionalStepViewController(viewModel: financialInstitutionViewModel, callback: { [weak self] (financialInstitution) in
+                    guard let financialInstitution = financialInstitution as? PXFinancialInstitution else {
+                        fatalError("Cannot convert entityType to type EntityType")
+                    }
+                    self?.viewModel.updateCheckoutModel(financialInstitution: financialInstitution)
+                    self?.executeNextStep()
                 })
 
-                financialInstitutionStep.callbackCancel = {[weak self] in
-                    guard let object = self else {
-                        return
-                    }
-                    object.viewModel.financialInstitutions = nil
-                    object.viewModel.paymentData.transactionDetails?.financialInstitution = nil
-                    self?.viewModel.pxNavigationHandler.navigationController.popViewController(animated: true)
+                financialInstitutionStep.callbackCancel = { [weak self] in
+                    guard let self = self else { return }
+                    self.viewModel.financialInstitutions = nil
+                    self.viewModel.paymentData.transactionDetails?.financialInstitution = nil
+                    self.viewModel.pxNavigationHandler.navigationController.popViewController(animated: true)
                 }
 
                 viewModel.pxNavigationHandler.pushViewController(viewController: financialInstitutionStep, animated: true)
@@ -275,15 +260,15 @@ extension MercadoPagoCheckout {
     func showEntityTypesScreen() {
         let entityTypes = viewModel.getEntityTypes()
 
-        self.viewModel.entityTypes = entityTypes
+        viewModel.entityTypes = entityTypes
 
         if entityTypes.count == 1 {
-            self.viewModel.updateCheckoutModel(entityType: entityTypes[0])
-            self.executeNextStep()
+            viewModel.updateCheckoutModel(entityType: entityTypes[0])
+            executeNextStep()
         }
-
-        let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { [weak self]  (entityType) in
-
+        // Esto de aca abajo no deberia estar en un bloque de else del if de arriba, como en showFinancialInstitutionsScreen() ?
+        let entityTypeViewModel = viewModel.entityTypeViewModel()
+        let entityTypeStep = AdditionalStepViewController(viewModel: entityTypeViewModel, callback: { [weak self] (entityType) in
             guard let entityType = entityType as? EntityType else {
                 fatalError("Cannot convert entityType to type EntityType")
             }
@@ -293,12 +278,10 @@ extension MercadoPagoCheckout {
         })
 
         entityTypeStep.callbackCancel = {[weak self] in
-            guard let object = self else {
-                return
-            }
-            object.viewModel.entityTypes = nil
-            object.viewModel.paymentData.payer?.entityType = nil
-            self?.viewModel.pxNavigationHandler.navigationController.popViewController(animated: true)
+            guard let self = self else { return }
+            self.viewModel.entityTypes = nil
+            self.viewModel.paymentData.payer?.entityType = nil
+            self.viewModel.pxNavigationHandler.navigationController.popViewController(animated: true)
         }
 
         viewModel.pxNavigationHandler.pushViewController(viewController: entityTypeStep, animated: true)
@@ -311,7 +294,7 @@ extension MercadoPagoCheckout {
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
-        let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewConfirmConfiguration: viewModel.getAdvancedConfiguration().reviewConfirmConfiguration, chargeRules: viewModel.chargeRules, oneTapResultHandler: self, advancedConfiguration: viewModel.getAdvancedConfiguration(), mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentConfigurationService: self.viewModel.paymentConfigurationService, disabledOption: viewModel.disabledOption, escManager: viewModel.escManager)
+        let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewConfirmConfiguration: viewModel.getAdvancedConfiguration().reviewConfirmConfiguration, chargeRules: viewModel.chargeRules, oneTapResultHandler: self, advancedConfiguration: viewModel.getAdvancedConfiguration(), mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentConfigurationService: viewModel.paymentConfigurationService, disabledOption: viewModel.disabledOption, escManager: viewModel.escManager)
 
         onetapFlow.setCustomerPaymentMethods(viewModel.customPaymentOptions)
         onetapFlow.setPaymentMethodPlugins(viewModel.paymentMethodPlugins)

@@ -188,6 +188,7 @@
 
 "terminada en "="terminada en ";
 "Sin interés"="Sin interés";
+"Sin\u{00a0}interés"="Sin\u{00a0}interés";
 "Uy, no pudimos procesar el pago"="Uy, no pudimos procesar el pago";
 "Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
 "El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
@@ -260,6 +261,8 @@
 // Receipt
 " de " = " de ";
 "Número de operación " = "Número de operación ";
+"a las" = "a las";
+"hs" = "hs";
 
 //Months
 "January" = "Enero";

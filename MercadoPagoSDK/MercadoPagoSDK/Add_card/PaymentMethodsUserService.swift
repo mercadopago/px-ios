@@ -12,14 +12,22 @@ class PaymentMethodsUserService: MercadoPagoService {
 
     let uri = "/v1/px_mobile_api/payment_methods/cards"
     let accessToken: String
+    let productId: String?
 
-    init(accessToken: String) {
+    init(accessToken: String, productId: String?) {
         self.accessToken = accessToken
+        self.productId = productId
         super.init(baseURL: PXServicesURLConfigs.MP_API_BASE_URL)
     }
 
     func getPaymentMethods(success: @escaping ([PXPaymentMethod]) -> Void, failure: @escaping (PXError) -> Void) {
-        self.request(uri: uri, params: "access_token=\(accessToken)", body: nil, method: .get, success: { (data) in
+
+        var headers: [String: String] = [:]
+        if let prodId = self.productId {
+            headers[MercadoPagoService.HeaderField.productId.rawValue] = prodId
+        }
+
+        self.request(uri: uri, params: "access_token=\(accessToken)", body: nil, method: .get, headers: headers, success: { (data) in
             do {
                 let paymentMethods = try JSONDecoder().decode([PXPaymentMethod].self, from: data)
                 success(paymentMethods)

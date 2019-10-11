@@ -47,7 +47,10 @@ final class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
     }
 
     func buildHeaderComponent() -> PXHeaderComponent {
-        let props = PXHeaderProps(labelText: NSAttributedString(string: "add_card_failed_label_text".localized_beta), title: NSAttributedString(string: "add_card_failed_title".localized_beta, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.warningColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "need_action_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil), closeAction: { [weak self] in
+        let productImage = ResourceManager.shared.getImage("card_icon")
+        let statusImage = ResourceManager.shared.getImage("need_action_badge")
+        
+        let props = PXHeaderProps(labelText: NSAttributedString(string: "add_card_failed_label_text".localized_beta), title: NSAttributedString(string: "add_card_failed_title".localized_beta, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.warningColor(), productImage: productImage, statusImage: statusImage, closeAction: { [weak self] in
             if let callback = self?.callback {
                 callback(PaymentResult.CongratsState.cancel_EXIT)
             }

@@ -63,10 +63,10 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         self.imageView = imageView
         containerView.addSubview(imageContainerView)
 
-
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
+        titleLabel.numberOfLines = 2
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
         titleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()

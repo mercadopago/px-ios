@@ -7,20 +7,23 @@
 //
 
 import UIKit
+import MLBusinessComponents
 
-internal class PXResultViewModel: PXResultViewModelInterface {
+internal class PXResultViewModel: NSObject, PXResultViewModelInterface {
 
     var paymentResult: PaymentResult
     var instructionsInfo: PXInstructions?
+    var pointsAndDiscounts: PXPointsAndDiscounts?
     var preference: PXPaymentResultConfiguration
     var callback: ((PaymentResult.CongratsState) -> Void)?
     let amountHelper: PXAmountHelper
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.REJECTED_INVALID_INSTALLMENTS, PXRejectedStatusDetail.BAD_FILLED_OTHER]
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
+        self.pointsAndDiscounts = pointsAndDiscounts
         self.preference = resultConfiguration
         self.amountHelper = amountHelper
     }
@@ -53,6 +56,46 @@ internal class PXResultViewModel: PXResultViewModelInterface {
     }
 }
 
+// MARK: PXCongratsTrackingDataProtocol Implementation
+extension PXResultViewModel: PXCongratsTrackingDataProtocol {
+    func hasBottomView() -> Bool {
+        return buildBottomCustomView() != nil ? true : false
+    }
+
+    func hasTopView() -> Bool {
+        return buildTopCustomView() != nil ? true : false
+    }
+
+    func hasImportantView() -> Bool {
+        return false
+    }
+
+    func getScoreLevel() -> Int? {
+        return PXNewResultUtil.getDataForPointsView(points: pointsAndDiscounts?.points)?.getRingNumber()
+    }
+
+    func getDiscountsCount() -> Int {
+        guard let numberOfDiscounts = PXNewResultUtil.getDataForDiscountsView(discounts: pointsAndDiscounts?.discounts)?.getItems().count else { return 0 }
+        return numberOfDiscounts
+    }
+
+    func getCampaignsIds() -> String? {
+        guard let discounts = PXNewResultUtil.getDataForDiscountsView(discounts: pointsAndDiscounts?.discounts) else { return nil }
+        var campaignsIdsArray: [String] = []
+        for item in discounts.getItems() {
+            if let id = item.trackIdForItem() {
+                campaignsIdsArray.append(id)
+            }
+        }
+        return campaignsIdsArray.isEmpty ? "" : campaignsIdsArray.joined(separator: ", ")
+    }
+
+    func getCampaignId() -> String? {
+        guard let campaignId = amountHelper.campaign?.id else { return nil }
+        return "\(campaignId)"
+    }
+}
+
 // MARK: Tracking
 extension PXResultViewModel {
     func getTrackingProperties() -> [String: Any] {
@@ -72,6 +115,7 @@ extension PXResultViewModel {
         properties[has_split] = amountHelper.isSplitPayment
         properties[currency_id] = SiteManager.shared.getCurrency().id
         properties[discount_coupon_amount] = amountHelper.getDiscountCouponAmountForTracking()
+        properties = PXCongratsTracking.getProperties(dataProtocol: self, properties: properties)
 
         if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
             properties[raw_amount] = rawAmount.decimalValue
@@ -162,14 +206,148 @@ extension PXResultViewModel {
         }
 
         if UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: completionHandler)
-            } else {
-                UIApplication.shared.openURL(url)
-                completionHandler(true)
-            }
+            UIApplication.shared.open(url, options: [:], completionHandler: completionHandler)
         } else {
             success(false)
         }
+    }
+}
+
+// MARK: New Result View Model Interface
+extension PXResultViewModel: PXNewResultViewModelInterface {
+    func getHeaderColor() -> UIColor {
+        return primaryResultColor()
+    }
+
+    func getHeaderTitle() -> String {
+        return titleHeader(forNewResult: true).string
+    }
+
+    func getHeaderIcon() -> UIImage? {
+        return iconImageHeader()
+    }
+
+    func getHeaderURLIcon() -> String? {
+        return nil
+    }
+
+    func getHeaderBadgeImage() -> UIImage? {
+        return badgeImage()
+    }
+
+    func getHeaderCloseAction() -> (() -> Void)? {
+        let action = { [weak self] in
+            if let callback = self?.callback {
+                if let url = self?.getBackUrl() {
+                    self?.openURL(url: url, success: { (_) in
+                        callback(PaymentResult.CongratsState.cancel_EXIT)
+                    })
+                } else {
+                    callback(PaymentResult.CongratsState.cancel_EXIT)
+                }
+            }
+        }
+        return action
+    }
+
+    func mustShowReceipt() -> Bool {
+        return hasReceiptComponent()
+    }
+
+    func getReceiptId() -> String? {
+        return paymentResult.paymentId
+    }
+
+    func getPoints() -> PXPoints? {
+        return pointsAndDiscounts?.points
+    }
+
+    func getPointsTapAction() -> ((String) -> Void)? {
+        let action: (String) -> Void = { (deepLink) in
+            //open deep link
+            PXDeepLinkManager.open(deepLink)
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapScorePath())
+        }
+        return action
+    }
+
+    func getDiscounts() -> PXDiscounts? {
+        return pointsAndDiscounts?.discounts
+    }
+
+    func getDiscountsTapAction() -> ((Int, String?, String?) -> Void)? {
+        let action: (Int, String?, String?) -> Void = { (index, deepLink, trackId) in
+            //open deep link
+            PXDeepLinkManager.open(deepLink)
+            PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
+        }
+        return action
+    }
+
+    func getCrossSellingItems() -> [PXCrossSellingItem]? {
+        return pointsAndDiscounts?.crossSelling
+    }
+
+    func getCrossSellingTapAction() -> ((String) -> Void)? {
+        let action: (String) -> Void = { (deepLink) in
+            //open deep link
+            PXDeepLinkManager.open(deepLink)
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapCrossSellingPath())
+        }
+        return action
+    }
+
+    func hasInstructions() -> Bool {
+        let bodyComponent = buildBodyComponent() as? PXBodyComponent
+        return bodyComponent?.hasInstructions() ?? false
+    }
+
+    func getInstructionsView() -> UIView? {
+        guard let bodyComponent = buildBodyComponent() as? PXBodyComponent, bodyComponent.hasInstructions() else {
+            return nil
+        }
+        return bodyComponent.render()
+    }
+
+    func getPaymentData() -> PXPaymentData? {
+        return paymentResult.paymentData
+    }
+
+    func getAmountHelper() -> PXAmountHelper? {
+        return amountHelper
+    }
+
+    func getSplitPaymentData() -> PXPaymentData? {
+        return paymentResult.splitAccountMoney
+    }
+
+    func getSplitAmountHelper() -> PXAmountHelper? {
+        return amountHelper
+    }
+
+    func getFooterMainAction() -> PXAction? {
+        return getActionButton()
+    }
+
+    func getFooterSecondaryAction() -> PXAction? {
+        return getActionLink()
+    }
+
+    func getImportantView() -> UIView? {
+        return nil
+    }
+
+    func getTopCustomView() -> UIView? {
+        if paymentResult.isApproved() {
+            return preference.getTopCustomView()
+        }
+        return nil
+    }
+
+    func getBottomCustomView() -> UIView? {
+        if paymentResult.isApproved() {
+            return preference.getBottomCustomView()
+        }
+        return nil
     }
 }

@@ -11,7 +11,7 @@ import Foundation
 extension PXToken: PXCardInformationForm {
     func getBin() -> String? {
         var bin: String?
-        if firstSixDigits != nil && firstSixDigits.count > 0 {
+        if firstSixDigits.count > 0 {
             let range = firstSixDigits.startIndex ..< firstSixDigits.index(firstSixDigits.startIndex, offsetBy: 6)
             bin = firstSixDigits.count >= 6 ? String(firstSixDigits[range]) : nil
         }
@@ -54,7 +54,7 @@ extension PXToken: PXCardInformationForm {
     }
 
     public func getCardLastForDigits() -> String {
-        return lastFourDigits ?? ""
+        return lastFourDigits
     }
 
     public func isIssuerRequired() -> Bool {

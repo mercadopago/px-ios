@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- This object declare custom preferences (customizations) for "Review and Confirm" screen.
+ This object declares custom preferences (customizations) for "Review and Confirm" screen.
  */
 @objcMembers open class PXReviewConfirmConfiguration: NSObject {
     private static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
@@ -71,11 +71,11 @@ extension PXReviewConfirmConfiguration {
 // Payment method.
 // MARK: To deprecate post v4. SP integration.
 internal extension PXReviewConfirmConfiguration {
-    internal func isChangeMethodOptionEnabled() -> Bool {
+    func isChangeMethodOptionEnabled() -> Bool {
         return changePaymentMethodsEnabled
     }
 
-    internal func disableChangeMethodOption() {
+    func disableChangeMethodOption() {
         changePaymentMethodsEnabled = false
     }
 }
@@ -84,11 +84,11 @@ internal extension PXReviewConfirmConfiguration {
 // Amount.
 // MARK: To deprecate post v4. SP integration.
 internal extension PXReviewConfirmConfiguration {
-    internal func shouldShowAmountTitle() -> Bool {
+    func shouldShowAmountTitle() -> Bool {
         return true
     }
 
-    internal func getAmountTitle() -> String {
+    func getAmountTitle() -> String {
         return PXReviewConfirmConfiguration.DEFAULT_AMOUNT_TITLE
     }
 }
@@ -97,7 +97,7 @@ internal extension PXReviewConfirmConfiguration {
 // Collector icon.
 // MARK: To deprecate post v4. SP integration.
 internal extension PXReviewConfirmConfiguration {
-    internal func getCollectorIcon() -> UIImage? {
+    func getCollectorIcon() -> UIImage? {
         return nil
     }
 }
@@ -106,11 +106,11 @@ internal extension PXReviewConfirmConfiguration {
 // Quantity row.
 // MARK: To deprecate post v4. SP integration.
 internal extension PXReviewConfirmConfiguration {
-    internal func shouldShowQuantityRow() -> Bool {
+    func shouldShowQuantityRow() -> Bool {
         return true
     }
 
-    internal func getQuantityLabel() -> String {
+    func getQuantityLabel() -> String {
         return PXReviewConfirmConfiguration.DEFAULT_QUANTITY_TITLE
     }
 }
@@ -119,11 +119,11 @@ internal extension PXReviewConfirmConfiguration {
 // Disclaimer text.
 // MARK: To deprecate post v4. SP integration.
 internal extension PXReviewConfirmConfiguration {
-    internal func getDisclaimerText() -> String? {
+    func getDisclaimerText() -> String? {
         return nil
     }
 
-    internal func getDisclaimerTextColor() -> UIColor {
+    func getDisclaimerTextColor() -> UIColor {
         return ThemeManager.shared.noTaxAndDiscountLabelTintColor()
     }
 }
@@ -133,27 +133,27 @@ internal extension PXReviewConfirmConfiguration {
 // MARK: To deprecate post v4. SP integration.
 internal extension PXReviewConfirmConfiguration {
     // Not in Android.
-    internal func addSummaryProductDetail(amount: Double) {
+    func addSummaryProductDetail(amount: Double) {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.PRODUCT)
     }
 
-    internal func addSummaryDiscountDetail(amount: Double) {
+    func addSummaryDiscountDetail(amount: Double) {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.DISCOUNT)
     }
 
-    internal func addSummaryTaxesDetail(amount: Double) {
+    func addSummaryTaxesDetail(amount: Double) {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.TAXES)
     }
 
-    internal func addSummaryShippingDetail(amount: Double) {
+    func addSummaryShippingDetail(amount: Double) {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.SHIPPING)
     }
 
-    internal func addSummaryArrearsDetail(amount: Double) {
+    func addSummaryArrearsDetail(amount: Double) {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.ARREARS)
     }
 
-    internal func setSummaryProductTitle(productTitle: String) {
+    func setSummaryProductTitle(productTitle: String) {
         self.updateTitle(type: SummaryType.PRODUCT, title: productTitle)
     }
 
@@ -196,7 +196,7 @@ internal extension PXReviewConfirmConfiguration {
         }
     }
 
-    internal func getSummaryTotalAmount() -> Double {
+    func getSummaryTotalAmount() -> Double {
         var totalAmount = 0.0
         guard let productDetail = details[SummaryType.PRODUCT] else {
             return 0.0

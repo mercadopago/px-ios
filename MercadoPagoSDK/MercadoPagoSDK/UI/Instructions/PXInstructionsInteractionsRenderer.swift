@@ -40,7 +40,7 @@ class PXInstructionsInteractionsRenderer: NSObject {
     func buildTitleLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textAlignment = .center
+        titleLabel.textAlignment = .left
         titleLabel.numberOfLines = 0
         titleLabel.attributedText = text
         titleLabel.lineBreakMode = .byWordWrapping

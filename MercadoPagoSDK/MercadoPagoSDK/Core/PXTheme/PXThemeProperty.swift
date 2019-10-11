@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Use this object to create certains properties to define `PXTheme` implementation.
+ Use this object to create certain properties to define `PXTheme` implementation.
  */
 @objcMembers
 open class PXThemeProperty: NSObject {
