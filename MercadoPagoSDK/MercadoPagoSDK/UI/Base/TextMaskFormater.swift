@@ -43,7 +43,7 @@ internal class TextMaskFormater {
             for char: Character in text {
                 if charset.contains(char) {
                     ints.append(char)
-                } else if char.isLetter {
+                } else {
                     // Fix like verified digit RUT CL.
                     ints.append(char)
                 }
