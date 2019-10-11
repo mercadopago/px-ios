@@ -75,7 +75,12 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         let bodyJSON = try? body.toJSON()
         let headers = ["Accept-Language": language]
 
-        self.request(uri: PXServicesURLConfigs.MP_INIT_URI, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
+
+        self.baseURL = "https://private-22b696-newinit.apiary-mock.com"
+//        let uri = PXServicesURLConfigs.MP_INIT_URI
+        let uri = "/new_init"
+
+        self.request(uri: uri, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
             headers, cache: false, success: { (data) -> Void in
             do {
 
