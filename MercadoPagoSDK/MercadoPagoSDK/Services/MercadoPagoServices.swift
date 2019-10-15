@@ -40,6 +40,12 @@ internal class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
+    func getOpenPrefInitSearch(pref: PXCheckoutPreference, amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], cardsWithEsc: [String]?, defaultPaymentMethod: String?, shouldSkipUserConfirmation: Bool, payer: PXPayer, expressEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingModes: processingModes, branchId: branchId)
+
+        paymentMethodSearchService.getOpenPrefInit(pref: pref, amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, cardsWithEsc: cardsWithEsc, shouldSkipUserConfirmation: shouldSkipUserConfirmation, payer: payer, language: language, expressEnabled: expressEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, success: callback, failure: failure)
+    }
+
     func getInitSearch(pref: PXCheckoutPreference, amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], cardsWithEsc: [String]?, defaultPaymentMethod: String?, shouldSkipUserConfirmation: Bool, payer: PXPayer, expressEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingModes: processingModes, branchId: branchId)
 

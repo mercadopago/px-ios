@@ -123,3 +123,70 @@ extension PXPaymentMethodSearch {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+public struct SelectedDiscountConfiguration: Decodable {
+    let discountCampaignId: Int64
+    let discountToken: Int64
+
+    enum CodingKeys: String, CodingKey {
+        case discountCampaignId = "discount_campaign_id"
+        case discountToken = "discount_token"
+    }
+
+}
+
+/// :nodoc:
+open class PXOpenPrefInitDTO: NSObject, Decodable {
+    open var oneTap: [PXOneTapDto]?
+    open var currency: PXCurrency
+    open var generalDiscount: SelectedDiscountConfiguration
+    open var coupons: [PXDiscountConfiguration]
+    open var groups: [PXPaymentMethodSearchItem] = []
+    open var payerPaymentMethods: [PXCustomOptionSearchItem] = []
+    open var availablePaymentMethods: [PXPaymentMethod] = []
+
+    public init(oneTap: [PXOneTapDto]?, currency: PXCurrency, generalDiscount: SelectedDiscountConfiguration, coupons: [PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod]) {
+        self.oneTap = oneTap
+        self.currency = currency
+        self.generalDiscount = generalDiscount
+        self.coupons = coupons
+        self.groups = groups
+        self.payerPaymentMethods = payerPaymentMethods
+        self.availablePaymentMethods = availablePaymentMethods
+    }
+
+    public enum PXOpenPrefPaymentMethodSearchKeys: String, CodingKey {
+        case oneTap = "one_tap"
+        case currency
+        case generalDiscount = "general_discount"
+        case coupons
+        case groups = "groups"
+        case payerPaymentMethods = "payer_payment_methods"
+        case availablePaymentMethods = "available_payment_methods"
+    }
+
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PXOpenPrefPaymentMethodSearchKeys.self)
+        let oneTap: [PXOneTapDto]? = try container.decodeIfPresent([PXOneTapDto].self, forKey: .oneTap)
+        let currency: PXCurrency = try container.decode(PXCurrency.self, forKey: .currency)
+        let generalDiscount: SelectedDiscountConfiguration = try container.decode(SelectedDiscountConfiguration.self, forKey: .generalDiscount)
+        let coupons: [PXDiscountConfiguration] = try container.decode([PXDiscountConfiguration].self, forKey: .coupons)
+        let groups: [PXPaymentMethodSearchItem] = try container.decodeIfPresent([PXPaymentMethodSearchItem].self, forKey: .groups) ?? []
+        let payerPaymentMethods: [PXCustomOptionSearchItem] = try container.decodeIfPresent([PXCustomOptionSearchItem].self, forKey: .payerPaymentMethods) ?? []
+        let availablePaymentMethods: [PXPaymentMethod] = try container.decodeIfPresent([PXPaymentMethod].self, forKey: .availablePaymentMethods) ?? []
+
+        self.init(oneTap: oneTap, currency: currency, generalDiscount: generalDiscount, coupons: coupons, groups: groups, payerPaymentMethods: payerPaymentMethods, availablePaymentMethods: availablePaymentMethods)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXOpenPrefInitDTO {
+        return try JSONDecoder().decode(PXOpenPrefInitDTO.self, from: data)
+    }
+}

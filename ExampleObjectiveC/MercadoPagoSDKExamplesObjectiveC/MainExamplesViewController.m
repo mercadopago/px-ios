@@ -56,10 +56,10 @@
 
 
     //PROCESADORA
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-d1c95375-5137-4eb7-868e-da3ca8067d79" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-d1c95375-5137-4eb7-868e-da3ca8067d79" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
     //PAGO NORMAL
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-c4f42ada-0fea-42a1-9b13-31e67096dcd3" preferenceId:@"272097319-a9040a88-5971-4fcd-92d5-6eeb4612abce"];
+//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-c4f42ada-0fea-42a1-9b13-31e67096dcd3" preferenceId:@"272097319-a9040a88-5971-4fcd-92d5-6eeb4612abce"];
 
     //ACCESS TOKEN BRASIL
     [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-092415-b89a7cdcec6cc6c3916deab0c56c7136-472129472"];
