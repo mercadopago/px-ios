@@ -48,3 +48,35 @@ class PXInitSearchBody: Codable {
         return try encoder.encode(self)
     }
 }
+
+struct PXInitBody: Codable {
+    let preference: PXCheckoutPreference?
+    let publicKey: String
+    let accessToken: String?
+    let flowId: String
+    let cardsWithESC: [String]
+    let charges: [PXPaymentTypeChargeRule]?
+    let discountConfiguration: PXDiscountParamsConfiguration
+    let features: PXInitFeatures
+
+    enum CodingKeys: String, CodingKey {
+        case preference
+        case publicKey = "public_key"
+        case accessToken = "access_token"
+        case flowId = "flow_id"
+        case cardsWithESC = "cards_with_esc"
+        case charges
+        case discountConfiguration = "discount_configuration"
+        case features
+    }
+}
+
+struct PXInitFeatures: Codable {
+    let oneTap: Bool
+    let split: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case oneTap = "one_tap"
+        case split = "split"
+    }
+}
