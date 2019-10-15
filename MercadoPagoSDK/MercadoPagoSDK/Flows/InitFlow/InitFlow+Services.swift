@@ -39,7 +39,7 @@ extension InitFlow {
         let pref = model.properties.checkoutPreference
         serviceAdapter.update(processingModes: pref.processingModes, branchId: pref.branchId)
 
-        if pref.getId() != "" {
+        if let prefId = pref.id, prefId.isNotEmpty {
             serviceAdapter.getInitSearch(pref: pref, amount: model.amountHelper.amountToPay, exclusions: exclusions, cardIdsWithEsc: cardIdsWithEsc, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), shouldSkipUserConfirmation: model.needSkipRyC(), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
                     guard let strongSelf = self else {
                         return
