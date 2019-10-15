@@ -152,6 +152,7 @@ open class PXOpenPrefInitDTO: NSObject, Decodable {
     open var groups: [PXPaymentMethodSearchItem] = []
     open var payerPaymentMethods: [PXCustomOptionSearchItem] = []
     open var availablePaymentMethods: [PXPaymentMethod] = []
+    open var selectedDiscountConfiguration: PXDiscountConfiguration?
 
     public init(oneTap: [PXOneTapDto]?, currency: PXCurrency, generalDiscount: SelectedDiscountConfiguration, coupons: [PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod]) {
         self.oneTap = oneTap
@@ -161,6 +162,10 @@ open class PXOpenPrefInitDTO: NSObject, Decodable {
         self.groups = groups
         self.payerPaymentMethods = payerPaymentMethods
         self.availablePaymentMethods = availablePaymentMethods
+
+        if let selectedDiscountConfiguration = PXOpenPrefInitDTO.getSelectedDiscountConfiguration(coupons: coupons, generalDiscount: generalDiscount) {
+            self.selectedDiscountConfiguration = selectedDiscountConfiguration
+        }
     }
 
     public enum PXOpenPrefPaymentMethodSearchKeys: String, CodingKey {
@@ -188,5 +193,13 @@ open class PXOpenPrefInitDTO: NSObject, Decodable {
 
     open class func fromJSON(data: Data) throws -> PXOpenPrefInitDTO {
         return try JSONDecoder().decode(PXOpenPrefInitDTO.self, from: data)
+    }
+
+    static func getSelectedDiscountConfiguration(coupons: [PXDiscountConfiguration], generalDiscount: SelectedDiscountConfiguration) -> PXDiscountConfiguration? {
+        let filtered = coupons.filter({ (discountConfiguration) -> Bool in
+            return discountConfiguration.getDiscountConfiguration().campaign?.getId() == generalDiscount.discountCampaignId
+        })
+
+        return filtered.first ?? nil
     }
 }
