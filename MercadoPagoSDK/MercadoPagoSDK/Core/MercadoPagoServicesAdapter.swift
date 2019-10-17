@@ -51,24 +51,6 @@ internal class MercadoPagoServicesAdapter {
         }, failure: failure)
     }
 
-    func getInitSearch(pref: PXCheckoutPreference, amount: Double, exclusions: PaymentSearchExclusions, cardIdsWithEsc: [String]?, payer: PXPayer, site: String, extraParams: ExtraParams?, shouldSkipUserConfirmation: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        payer.setAccessToken(accessToken: mercadoPagoServices.payerAccessToken)
-        let expressEnabled: Bool = extraParams?.expressEnabled ?? false
-        let splitEnabled: Bool = extraParams?.splitEnabled ?? false
-
-        var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
-        if let eParams = extraParams, !eParams.hasPaymentProcessor {
-            // Only until our backend can pay with account money.
-            // Add exclusion for account money.
-            excludedPaymentTypesIds.append(PXPaymentTypes.ACCOUNT_MONEY.rawValue)
-        }
-
-        mercadoPagoServices.getInitSearch(pref: pref, amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: cardIdsWithEsc, defaultPaymentMethod: extraParams?.defaultPaymentMethod, shouldSkipUserConfirmation: shouldSkipUserConfirmation, payer: payer, expressEnabled: expressEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
-            callback(pxPaymentMethodSearch)
-        }, failure: failure)
-    }
-
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, headers: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentDataJSON: paymentDataJSON, query: query, headers: headers, callback: { (pxPayment) in
