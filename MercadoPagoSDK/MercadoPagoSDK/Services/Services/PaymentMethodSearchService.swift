@@ -43,45 +43,22 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getOpenPrefInit(pref: PXCheckoutPreference, _ amount: Double, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, shouldSkipUserConfirmation: Bool, payer: PXPayer, language: String, expressEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        var params = MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
-        params.paramsAppend(key: ApiParam.PAYER_ACCESS_TOKEN, value: payer.getAccessToken())
-        let newExcludedPaymentTypesIds = excludedPaymentTypeIds
+        let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
 
-        if newExcludedPaymentTypesIds.count > 0 {
-            let excludedPaymentTypesParams = newExcludedPaymentTypesIds.map({ $0 }).joined(separator: ",")
-            params.paramsAppend(key: ApiParam.EXCLUDED_PAYMET_TYPES, value: String(excludedPaymentTypesParams).trimSpaces())
-        }
-
-        if excludedPaymentMethodIds.count > 0 {
-            let excludedPaymentMethodsParams = excludedPaymentMethodIds.joined(separator: ",")
-            params.paramsAppend(key: ApiParam.EXCLUDED_PAYMENT_METHOD, value: excludedPaymentMethodsParams.trimSpaces())
-        }
-
-        if let defaultPaymenMethodId = defaultPaymenMethodId {
-            params.paramsAppend(key: ApiParam.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
-        }
-
-        let checkoutParams = PXInitCheckoutParams(discountParamsConfiguration: PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? ""), cardsWithEsc: cardsWithEsc ?? [String](), charges: charges, supportsSplit: splitEnabled, supportsExpress: expressEnabled, shouldSkipUserConfirmation: shouldSkipUserConfirmation, dynamicDialogLocations: [String](), dynamicViewLocations: [String]())
-
-        var body: PXInitSearchBody
-        if let prefId = pref.id {
-            body = PXInitSearchBody(preferenceId: prefId, preference: nil, merchantOrderId: nil, checkoutParams: checkoutParams)
-        } else {
-            body = PXInitSearchBody(preferenceId: nil, preference: pref, merchantOrderId: nil, checkoutParams: checkoutParams)
-        }
+        let bodyDiscountsConfiguration = PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? "")
+        let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
+        let body = PXInitBody(preference: pref, publicKey: merchantPublicKey, flowId: marketplace, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: bodyDiscountsConfiguration, features: bodyFeatures)
 
         let bodyJSON = try? body.toJSON()
-        let headers = ["Accept-Language": language]
-
 
         self.baseURL = "https://private-22b696-newinit.apiary-mock.com"
         //        let uri = PXServicesURLConfigs.MP_INIT_URI
         let uri = "/new_init"
 
         self.request(uri: uri, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
-            headers, cache: false, success: { (data) -> Void in
+            nil, cache: false, success: { (data) -> Void in
                 do {
 
                     let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)

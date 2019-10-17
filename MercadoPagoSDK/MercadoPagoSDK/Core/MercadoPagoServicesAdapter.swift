@@ -41,20 +41,12 @@ internal class MercadoPagoServicesAdapter {
     typealias PaymentSearchExclusions = (excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String])
     typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: Bool, hasPaymentProcessor: Bool, splitEnabled: Bool, maxInstallments: String?)
 
-    func getOpenPrefInitSearch(pref: PXCheckoutPreference, amount: Double, exclusions: PaymentSearchExclusions, cardIdsWithEsc: [String]?, payer: PXPayer, site: String, extraParams: ExtraParams?, shouldSkipUserConfirmation: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardIdsWithEsc: [String], site: String, extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        payer.setAccessToken(accessToken: mercadoPagoServices.payerAccessToken)
-        let expressEnabled: Bool = extraParams?.expressEnabled ?? false
+        let oneTapEnabled: Bool = extraParams?.expressEnabled ?? false
         let splitEnabled: Bool = extraParams?.splitEnabled ?? false
 
-        var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
-        if let eParams = extraParams, !eParams.hasPaymentProcessor {
-            // Only until our backend can pay with account money.
-            // Add exclusion for account money.
-            excludedPaymentTypesIds.append(PXPaymentTypes.ACCOUNT_MONEY.rawValue)
-        }
-
-        mercadoPagoServices.getOpenPrefInitSearch(pref: pref, amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: cardIdsWithEsc, defaultPaymentMethod: extraParams?.defaultPaymentMethod, shouldSkipUserConfirmation: shouldSkipUserConfirmation, payer: payer, expressEnabled: expressEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
+        mercadoPagoServices.getOpenPrefInitSearch(pref: pref, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
             callback(pxPaymentMethodSearch)
         }, failure: failure)
     }

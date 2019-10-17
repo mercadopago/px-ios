@@ -59,11 +59,15 @@ extension InitFlow {
                     strongSelf.executeNextStep()
             })
         } else {
-            serviceAdapter.getOpenPrefInitSearch(pref: pref, amount: model.amountHelper.amountToPay, exclusions: exclusions, cardIdsWithEsc: cardIdsWithEsc, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), shouldSkipUserConfirmation: model.needSkipRyC(), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
+            let extraParams = (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments)
+
+            let charges = self.model.amountHelper.chargeRules ?? []
+            let cardIdsWithEsc = cardIdsWithEsc ?? []
+            serviceAdapter.getOpenPrefInitSearch(pref: pref, cardIdsWithEsc: cardIdsWithEsc, site: SiteManager.shared.getSiteId(), extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { [weak self] (paymentMethodSearch) in
                 guard let strongSelf = self else {
                     return
                 }
-//                strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
+                //                strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
                 SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
                 strongSelf.executeNextStep()
                 }, failure: { [weak self] (error) in
