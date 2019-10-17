@@ -13,10 +13,10 @@ final class InitFlow: PXFlow {
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
-    private let finishInitCallback: ((PXCheckoutPreference, PXPaymentMethodSearch) -> Void)
+    private let finishInitCallback: ((PXCheckoutPreference, PXOpenPrefInitDTO) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
 
-    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXPaymentMethodSearch) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
+    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXOpenPrefInitDTO) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
         pxNavigationHandler = PXNavigationHandler.getDefault()
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
@@ -102,7 +102,7 @@ extension InitFlow {
 extension InitFlow {
     private func setCheckoutTypeForTracking() {
         if let paymentMethodsSearch = model.getPaymentMethodSearch() {
-            PXTrackingStore.sharedInstance.setChoType(paymentMethodsSearch.expressCho != nil ? .one_tap : .traditional)
+            PXTrackingStore.sharedInstance.setChoType(paymentMethodsSearch.oneTap != nil ? .one_tap : .traditional)
         }
     }
 }

@@ -40,34 +40,34 @@ extension InitFlow {
         serviceAdapter.update(processingModes: pref.processingModes, branchId: pref.branchId)
 
         if let prefId = pref.id, prefId.isNotEmpty {
-            serviceAdapter.getInitSearch(pref: pref, amount: model.amountHelper.amountToPay, exclusions: exclusions, cardIdsWithEsc: cardIdsWithEsc, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), shouldSkipUserConfirmation: model.needSkipRyC(), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
-                    strongSelf.model.properties.checkoutPreference = paymentMethodSearch.preference
-                    strongSelf.model.properties.paymentData.payer = paymentMethodSearch.preference.getPayer()
-                    SiteManager.shared.setSite(site: paymentMethodSearch.site)
-                    SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
-                    strongSelf.executeNextStep()
-                }, failure: { [weak self] (error) in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    let customError = InitFlowError(errorStep: .SERVICE_GET_INIT, shouldRetry: true, requestOrigin: .GET_INIT, apiException: MPSDKError.getApiException(error))
-                    strongSelf.model.setError(error: customError)
-                    strongSelf.executeNextStep()
-            })
+//            serviceAdapter.getInitSearch(pref: pref, amount: model.amountHelper.amountToPay, exclusions: exclusions, cardIdsWithEsc: cardIdsWithEsc, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments), shouldSkipUserConfirmation: model.needSkipRyC(), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
+//                    guard let strongSelf = self else {
+//                        return
+//                    }
+////                    strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
+//                    strongSelf.model.properties.checkoutPreference = paymentMethodSearch.preference
+//                    strongSelf.model.properties.paymentData.payer = paymentMethodSearch.preference.getPayer()
+//                    SiteManager.shared.setSite(site: paymentMethodSearch.site)
+//                    SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
+//                    strongSelf.executeNextStep()
+//                }, failure: { [weak self] (error) in
+//                    guard let strongSelf = self else {
+//                        return
+//                    }
+//                    let customError = InitFlowError(errorStep: .SERVICE_GET_INIT, shouldRetry: true, requestOrigin: .GET_INIT, apiException: MPSDKError.getApiException(error))
+//                    strongSelf.model.setError(error: customError)
+//                    strongSelf.executeNextStep()
+//            })
         } else {
             let extraParams = (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments)
 
             let charges = self.model.amountHelper.chargeRules ?? []
             let cardIdsWithEsc = cardIdsWithEsc ?? []
-            serviceAdapter.getOpenPrefInitSearch(pref: pref, cardIdsWithEsc: cardIdsWithEsc, site: SiteManager.shared.getSiteId(), extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { [weak self] (paymentMethodSearch) in
+            serviceAdapter.getOpenPrefInitSearch(preference: pref, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { [weak self] (paymentMethodSearch) in
                 guard let strongSelf = self else {
                     return
                 }
-                //                strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
+                strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
                 SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
                 strongSelf.executeNextStep()
                 }, failure: { [weak self] (error) in

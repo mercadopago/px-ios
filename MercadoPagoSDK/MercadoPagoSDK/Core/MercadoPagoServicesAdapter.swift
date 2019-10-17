@@ -41,12 +41,12 @@ internal class MercadoPagoServicesAdapter {
     typealias PaymentSearchExclusions = (excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String])
     typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: Bool, hasPaymentProcessor: Bool, splitEnabled: Bool, maxInstallments: String?)
 
-    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardIdsWithEsc: [String], site: String, extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getOpenPrefInitSearch(preference: PXCheckoutPreference, cardIdsWithEsc: [String], extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let oneTapEnabled: Bool = extraParams?.expressEnabled ?? false
         let splitEnabled: Bool = extraParams?.splitEnabled ?? false
 
-        mercadoPagoServices.getOpenPrefInitSearch(pref: pref, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
+        mercadoPagoServices.getOpenPrefInitSearch(pref: preference, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
             callback(pxPaymentMethodSearch)
         }, failure: failure)
     }

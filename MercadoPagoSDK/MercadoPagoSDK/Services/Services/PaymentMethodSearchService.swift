@@ -43,19 +43,17 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
-
-        let bodyDiscountsConfiguration = PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? "")
-        let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
-        let body = PXInitBody(preference: pref, publicKey: merchantPublicKey, flowId: marketplace, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: bodyDiscountsConfiguration, features: bodyFeatures)
-
-        let bodyJSON = try? body.toJSON()
+    internal func getInit(closedPref: Bool, prefId: String?, params: String, bodyJSON: Data?, success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         self.baseURL = "https://private-22b696-newinit.apiary-mock.com"
-        //        let uri = PXServicesURLConfigs.MP_INIT_URI
-        let uri = "/new_init"
+
+//        var uri = PXServicesURLConfigs.MP_INIT_URI    
+        var uri = "/new_init"
+        if closedPref, let prefId = prefId {
+            uri.append("/")
+            uri.append(prefId)
+        }
 
         self.request(uri: uri, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
             nil, cache: false, success: { (data) -> Void in
@@ -83,6 +81,21 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         }, failure: { (_) -> Void in
             failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
+    }
+
+
+
+    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+
+        let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
+
+        let bodyDiscountsConfiguration = PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? "")
+        let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
+        let body = PXInitBody(preference: pref, publicKey: merchantPublicKey, flowId: marketplace, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: bodyDiscountsConfiguration, features: bodyFeatures)
+
+        let bodyJSON = try? body.toJSON()
+
+        getInit(closedPref: false, prefId: nil, params: params, bodyJSON: bodyJSON, success: success, failure: failure)
     }
 
     internal func getInit(pref: PXCheckoutPreference, _ amount: Double, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, shouldSkipUserConfirmation: Bool, payer: PXPayer, language: String, expressEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
