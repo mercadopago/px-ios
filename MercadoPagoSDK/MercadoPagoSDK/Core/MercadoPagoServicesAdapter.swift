@@ -51,6 +51,16 @@ internal class MercadoPagoServicesAdapter {
         }, failure: failure)
     }
 
+    func getClosedPrefInitSearch(preferenceId: String, cardIdsWithEsc: [String], extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+
+        let oneTapEnabled: Bool = extraParams?.expressEnabled ?? false
+        let splitEnabled: Bool = extraParams?.splitEnabled ?? false
+
+        mercadoPagoServices.getClosedPrefInitSearch(preferenceId: preferenceId, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
+            callback(pxPaymentMethodSearch)
+        }, failure: failure)
+    }
+
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, headers: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentDataJSON: paymentDataJSON, query: query, headers: headers, callback: { (pxPayment) in
