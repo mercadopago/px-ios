@@ -171,4 +171,30 @@ open class PXOpenPrefInitDTO: NSObject, Decodable {
     open class func fromJSON(data: Data) throws -> PXOpenPrefInitDTO {
         return try JSONDecoder().decode(PXOpenPrefInitDTO.self, from: data)
     }
+
+    func getPaymentOptionsCount() -> Int {
+        let payerOptionsCount = payerPaymentMethods.count
+        let groupsOptionsCount = groups.count
+        return payerOptionsCount + groupsOptionsCount
+    }
+
+    func hasCheckoutDefaultOption() -> Bool {
+        return oneTap != nil
+    }
+
+    func deleteCheckoutDefaultOption() {
+        oneTap = nil
+    }
+
+    func getPaymentMethodInExpressCheckout(targetId: String) -> (found: Bool, expressNode: PXOneTapDto?) {
+        guard let expressResponse = oneTap else { return (false, nil) }
+        for expressNode in expressResponse {
+            let cardCaseCondition = expressNode.oneTapCard != nil && expressNode.oneTapCard?.cardId == targetId
+            let creditsCaseCondition = PXPaymentTypes(rawValue:expressNode.paymentMethodId) == PXPaymentTypes.CONSUMER_CREDITS
+            if cardCaseCondition || creditsCaseCondition {
+                return (true, expressNode)
+            }
+        }
+        return (false, nil)
+    }
 }
