@@ -116,6 +116,11 @@ internal class PXNavigationHandler: NSObject {
         self.dismissLoading()
     }
 
+    internal func pushViewControllerWithTransition(viewController: UIViewController, transition: UIViewControllerTransitioningDelegate?) {
+        self.navigationController.transitioningDelegate = transition
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+
     func pushViewController(cleanCompletedCheckouts: Bool = true, targetVC: UIViewController,
                             animated: Bool) {
         targetVC.hidesBottomBarWhenPushed = true

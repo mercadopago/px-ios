@@ -270,6 +270,10 @@ extension PXOneTapViewModel {
         return false
     }
 
+    func updateCardSliderViewModel(pxCardSliderViewModel: [PXCardSliderViewModel]) {
+        self.cardSliderViewModel = pxCardSliderViewModel
+    }
+
     func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
         if let plugins = paymentMethodPlugins, let pluginsPms = plugins.filter({ return $0.getId() == targetId }).first {
             return pluginsPms.toPaymentMethod()
@@ -291,6 +295,10 @@ extension PXOneTapViewModel {
         })
         let vc = filterRules.first?.detailModal
         return vc
+    }
+
+    func shouldUseOldCardForm() -> Bool {
+        return false
     }
 }
 

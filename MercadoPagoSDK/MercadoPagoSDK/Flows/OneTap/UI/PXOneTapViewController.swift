@@ -36,8 +36,12 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var cardSliderMarginConstraint: NSLayoutConstraint?
     private var navigationBarTapGesture: UITapGestureRecognizer?
 
+    private var cardFormController: NewCardAssociationViewController?
+    private let pxNavigationHandler: PXNavigationHandler
+
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(pxNavigationHandler: PXNavigationHandler, viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+        self.pxNavigationHandler = pxNavigationHandler
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
@@ -430,7 +434,15 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     func addPaymentMethodCardDidTap() {
-        shouldChangePaymentMethod()
+        if viewModel.shouldUseOldCardForm() {
+            shouldChangePaymentMethod()
+        } else {
+            cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
+            cardFormController?.delegate = self
+            if let cardFormController = cardFormController {
+                pxNavigationHandler.pushViewControllerWithTransition(viewController: cardFormController, transition: nil)
+            }
+        }
     }
 
     func didScroll(offset: CGPoint) {
@@ -439,6 +451,29 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func didEndDecelerating() {
         installmentInfoRow?.didEndDecelerating()
+    }
+}
+
+extension PXOneTapViewController: PXAddCardProtocol {
+    internal func didAddCard(cardInfo: [String: String]) {
+        var cardSliderViewModel = viewModel.getCardSliderViewModel()
+        cardSliderViewModel.insert(createNewMockedCard(), at: cardSliderViewModel.count - 1)
+        slider.update(cardSliderViewModel)
+        viewModel.updateCardSliderViewModel(pxCardSliderViewModel: cardSliderViewModel)
+        pxNavigationHandler.popViewController()
+    }
+}
+
+// MARK: Mocked Data
+private extension PXOneTapViewController {
+    func createNewMockedCard() -> PXCardSliderViewModel {
+        let payerCost = PXPayerCost(installmentRate: 0, labels: [String](), minAllowedAmount: 0, maxAllowedAmount: 60000, recommendedMessage: "1 Parcela de R$ 100", installmentAmount: 100, totalAmount: 100, installments: 1, processingMode: "aggregator", paymentMethodOptionId: nil)
+        var payerCostArray = [PXPayerCost]()
+        payerCostArray.append(payerCost)
+        let amountConfig = PXAmountConfiguration(selectedPayerCostIndex: 0, payerCosts: payerCostArray, splitConfiguration: nil, discountToken: nil, amount: nil)
+        let cardData = PXCardDataFactory().create(cardName: "APRO BADO", cardNumber: "************5682", cardCode: "", cardExpiration: "2/24")
+        let mockedCard = PXCardSliderViewModel("visa", "credit_card", "25", TemplateCard(), cardData, payerCostArray, payerCost, "8755873036", true, amountConfiguration: amountConfig, creditsViewModel: nil, isDisabled: false)
+        return mockedCard
     }
 }
 
