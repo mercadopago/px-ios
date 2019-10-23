@@ -460,6 +460,7 @@ extension PXOneTapViewController: PXAddCardProtocol {
         cardSliderViewModel.insert(createNewMockedCard(), at: cardSliderViewModel.count - 1)
         slider.update(cardSliderViewModel)
         viewModel.updateCardSliderViewModel(pxCardSliderViewModel: cardSliderViewModel)
+        loadingButtonComponent?.setEnabled()
         pxNavigationHandler.popViewController()
     }
 }
