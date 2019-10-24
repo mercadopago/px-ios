@@ -46,10 +46,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
     internal func getInit(closedPref: Bool, prefId: String?, params: String, bodyJSON: Data?, success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        self.baseURL = "https://private-22b696-newinit.apiary-mock.com"
-
-//        var uri = PXServicesURLConfigs.MP_INIT_URI    
-        var uri = "/new_init"
+        var uri = PXServicesURLConfigs.MP_INIT_URI
         if closedPref, let prefId = prefId {
             uri.append("/")
             uri.append(prefId)

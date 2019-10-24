@@ -12,6 +12,11 @@ internal class PXServicesURLConfigs: NSObject {
     static var MP_TEST_ENV = "/beta"
     static var MP_PROD_ENV = "/v1"
     static var MP_SELECTED_ENV = MP_TEST_ENV
+
+    static let NEW_API_TEST_ENV = "/beta"
+    static let NEW_API_PROD_ENV = "/production"
+    static var NEW_API_SELECTED_ENV = NEW_API_TEST_ENV
+    
     static var API_VERSION = "2.0"
     static let MP_API_BASE_URL_PROD: String =  "https://api.mercadopago.com"
     static let MP_API_BASE_URL: String = MP_API_BASE_URL_PROD
@@ -37,6 +42,6 @@ internal class PXServicesURLConfigs: NSObject {
     static let MP_CAMPAIGNS_URI = "/campaigns/check_availability"
     static let MP_SUMMARY_AMOUNT_URI = "\(MP_SELECTED_ENV)/px_mobile_api/summary_amount"
     static let MP_PAYMENTS_URI = MP_SELECTED_ENV + "/px_mobile" + PAYMENTS
-    static let MP_INIT_URI = MP_SELECTED_ENV + "/px_mobile_api/init/checkout"
+    static let MP_INIT_URI = NEW_API_SELECTED_ENV + "/px_mobile/v1/checkout"
     static let MP_POINTS_URI = MP_SELECTED_ENV + "/px_mobile" + "/congrats"
 }
