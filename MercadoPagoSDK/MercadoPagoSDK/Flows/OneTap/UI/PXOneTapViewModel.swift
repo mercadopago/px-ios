@@ -275,9 +275,6 @@ extension PXOneTapViewModel {
     }
 
     func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
-        if let plugins = paymentMethodPlugins, let pluginsPms = plugins.filter({ return $0.getId() == targetId }).first {
-            return pluginsPms.toPaymentMethod()
-        }
         return paymentMethods.filter({ return $0.id == targetId }).first
     }
 
