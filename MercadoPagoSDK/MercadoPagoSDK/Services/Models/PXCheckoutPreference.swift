@@ -154,7 +154,7 @@ import Foundation
         let payer: PXPayer = try container.decode(PXPayer.self, forKey: .payer)
         let expirationDateTo: Date? = try container.decodeDateFromStringIfPresent(forKey: .expirationDateTo)
         let expirationDateFrom: Date? = try container.decodeDateFromStringIfPresent(forKey: .expirationDateFrom)
-        let siteId: String = try container.decode(String.self, forKey: .siteId)
+        let siteId: String = try container.decodeIfPresent(String.self, forKey: .siteId) ?? ""
         let site: PXSite? = try container.decodeIfPresent(PXSite.self, forKey: .site)
         let differentialPricing: PXDifferentialPricing? = try container.decodeIfPresent(PXDifferentialPricing.self, forKey: .differentialPricing)
         let marketplace: String? = try container.decodeIfPresent(String.self, forKey: .marketplace)

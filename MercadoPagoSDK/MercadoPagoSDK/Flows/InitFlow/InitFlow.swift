@@ -61,7 +61,10 @@ final class InitFlow: PXFlow {
         status = .finished
         if let paymentMethodsSearch = model.getPaymentMethodSearch() {
             setCheckoutTypeForTracking()
-            finishInitCallback(model.properties.checkoutPreference, paymentMethodsSearch)
+
+            //Return the preference we retrieved or the one the integrator created
+            let preference = paymentMethodsSearch.preference ?? model.properties.checkoutPreference
+            finishInitCallback(preference, paymentMethodsSearch)
         } else {
             cancelFlow()
         }

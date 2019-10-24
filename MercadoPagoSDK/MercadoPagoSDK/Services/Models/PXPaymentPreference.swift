@@ -10,7 +10,7 @@ import Foundation
 /// :nodoc:
 open class PXPaymentPreference: NSObject, Codable {
 
-    open var maxAcceptedInstallments: Int = 0
+    open var maxAcceptedInstallments: Int = 1
     open var defaultInstallments: Int?
     open var excludedPaymentMethodIds: [String] = []
     open var excludedPaymentTypeIds: [String] = []
