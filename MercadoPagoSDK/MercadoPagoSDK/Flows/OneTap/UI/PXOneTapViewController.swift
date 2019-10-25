@@ -456,12 +456,13 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
 extension PXOneTapViewController: PXAddCardProtocol {
     internal func didAddCard(cardInfo: [String: String]) {
-        var cardSliderViewModel = viewModel.getCardSliderViewModel()
         let pxCardSliderViewModel = createNewMockedCard()
+        var cardSliderViewModel = viewModel.getCardSliderViewModel()
         cardSliderViewModel.insert(pxCardSliderViewModel, at: cardSliderViewModel.count - 1)
         slider.update(cardSliderViewModel)
         viewModel.updateCardSliderViewModel(pxCardSliderViewModel: cardSliderViewModel)
         newCardDidSelected(targetModel: pxCardSliderViewModel)
+        installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
         pxNavigationHandler.popViewController()
     }
 }
