@@ -35,7 +35,7 @@ import Foundation
     /**
         siteId
      */
-    open var siteId: String!
+    open var siteId: String = ""
     /**
      expirationDateTo
      */
