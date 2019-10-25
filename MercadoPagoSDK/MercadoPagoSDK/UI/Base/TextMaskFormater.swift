@@ -41,7 +41,7 @@ internal class TextMaskFormater {
             let charset: Set<Character> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
             var ints: String = ""
             for char: Character in text {
-                if charset.contains(char) {
+                if charset.contains(char) || isLetter(char)  {
                     ints.append(char)
                 } else {
                     // Fix like verified digit RUT CL.
@@ -50,6 +50,10 @@ internal class TextMaskFormater {
             }
             return ints
         }
+    }
+
+    private func isLetter(_ char: Character) -> Bool {
+        return (char >= "a" && char <= "z") || (char >= "A" && char <= "Z") ? true : false
     }
 
     private func emptyTextMasked() -> String! {

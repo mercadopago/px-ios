@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import WebKit
 
-class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
+class WebViewController: MercadoPagoUIViewController {
 
     var url: URL
     var navBarTitle: String
-    let webView: UIWebView
+    let webView: WKWebView
     let forceAddNavBar: Bool
     private var loadingVC: PXLoadingViewController
 
@@ -21,7 +22,8 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         self.navBarTitle = navigationBarTitle
         self.forceAddNavBar = forceAddNavBar
         self.loadingVC = PXLoadingViewController()
-        self.webView = UIWebView(frame: .zero)
+        let webConfiguration = WKWebViewConfiguration()
+        self.webView = WKWebView(frame: .zero, configuration: webConfiguration)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -35,12 +37,11 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadUrl(url)
-
-        self.webView.delegate = self
-        self.webView.translatesAutoresizingMaskIntoConstraints = false
-        self.webView.backgroundColor = .white
-        self.view.addSubview(webView)
+        webView.navigationDelegate = self
+        loadUrl(url)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.backgroundColor = .white
+        view.addSubview(webView)
         PXLayout.pinLeft(view: webView).isActive = true
         PXLayout.pinRight(view: webView).isActive = true
         PXLayout.pinBottom(view: webView).isActive = true
@@ -51,9 +52,9 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
             PXLayout.pinTop(view: webView).isActive = true
         }
 
-        self.view.backgroundColor = ThemeManager.shared.getMainColor()
+        view.backgroundColor = ThemeManager.shared.getMainColor()
         loadingVC.modalPresentationStyle = .fullScreen
-        self.present(loadingVC, animated: false, completion: nil)
+        present(loadingVC, animated: false, completion: nil)
     }
 
     func addNavigationBar() {
@@ -93,12 +94,14 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
             loadingVC.dismiss(animated: false, completion: nil)
         } else {
             let requestObj = URLRequest(url: url)
-            webView.loadRequest(requestObj)
+            webView.load(requestObj)
         }
     }
+}
 
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        self.loadingVC.dismiss(animated: false, completion: nil)
+extension WebViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        loadingVC.dismiss(animated: false, completion: nil)
     }
 }
 
