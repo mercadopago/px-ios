@@ -12,7 +12,7 @@ open class PXOpenPrefInitDTO: NSObject, Decodable {
     open var preference: PXCheckoutPreference?
     open var oneTap: [PXOneTapDto]?
     open var currency: PXCurrency
-    open var site: PXSite?
+    open var site: PXSite
     open var generalCoupon: String
     open var coupons: [String: PXDiscountConfiguration]
     open var groups: [PXPaymentMethodSearchItem] = []
@@ -20,7 +20,7 @@ open class PXOpenPrefInitDTO: NSObject, Decodable {
     open var availablePaymentMethods: [PXPaymentMethod] = []
     open var selectedDiscountConfiguration: PXDiscountConfiguration?
 
-    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite?, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod]) {
+    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod]) {
         self.preference = preference
         self.oneTap = oneTap
         self.currency = currency

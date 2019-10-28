@@ -43,7 +43,6 @@ extension InitFlow {
 
         let charges = self.model.amountHelper.chargeRules ?? []
 
-        SiteManager.shared.setSiteId(pref.getSiteId())
         if let prefId = pref.id, prefId.isNotEmpty {
             // CLOSED PREFERENCE
             serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { [weak self] (paymentMethodSearch) in
@@ -51,10 +50,11 @@ extension InitFlow {
                     return
                 }
                 strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
+
+                //Set site
                 SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
-                if let site = paymentMethodSearch.site {
-                    SiteManager.shared.setSite(site: site)
-                }
+                SiteManager.shared.setSite(site: paymentMethodSearch.site)
+
                 strongSelf.executeNextStep()
                 }, failure: { [weak self] (error) in
                     guard let strongSelf = self else {
@@ -71,10 +71,11 @@ extension InitFlow {
                     return
                 }
                 strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
+
+                //Set site
                 SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
-                if let site = paymentMethodSearch.site {
-                    SiteManager.shared.setSite(site: site)
-                }
+                SiteManager.shared.setSite(site: paymentMethodSearch.site)
+
                 strongSelf.executeNextStep()
                 }, failure: { [weak self] (error) in
                     guard let strongSelf = self else {

@@ -19,10 +19,6 @@ internal class SiteManager {
         self.site = site
     }
 
-    func setSiteId(_ id: String) {
-        self.site = PXSite(id: id, currencyId: "", termsAndConditionsUrl: "", shouldWarnAboutBankInterests: nil)
-    }
-
     func getTermsAndConditionsURL() -> String {
         return site?.termsAndConditionsUrl ?? ""
     }
