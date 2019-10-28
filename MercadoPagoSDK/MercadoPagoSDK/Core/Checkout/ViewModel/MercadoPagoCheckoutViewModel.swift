@@ -72,7 +72,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var customPaymentOptions: [CustomerPaymentMethod]?
     var identificationTypes: [PXIdentificationType]?
 
-    var search: PXOpenPrefInitDTO?
+    var search: PXInitDTO?
 
     var rootVC = true
 
@@ -531,7 +531,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    func getPaymentOptionConfigurations(paymentMethodSearch: PXOpenPrefInitDTO) -> Set<PXPaymentMethodConfiguration> {
+    func getPaymentOptionConfigurations(paymentMethodSearch: PXInitDTO) -> Set<PXPaymentMethodConfiguration> {
         let discountConfigurationsKeys = paymentMethodSearch.coupons.keys
         var configurations = Set<PXPaymentMethodConfiguration>()
         for customOption in paymentMethodSearch.payerPaymentMethods {
@@ -549,7 +549,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return configurations
     }
 
-    public func updateCheckoutModel(paymentMethodSearch: PXOpenPrefInitDTO) {
+    public func updateCheckoutModel(paymentMethodSearch: PXInitDTO) {
 
         let configurations = getPaymentOptionConfigurations(paymentMethodSearch: paymentMethodSearch)
         self.paymentConfigurationService.setConfigurations(configurations)

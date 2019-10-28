@@ -387,7 +387,7 @@ internal class Utils {
         }
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXOpenPrefInitDTO, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXInitDTO, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
         guard paymentMethodSearch.groups != nil
             else { return nil }
 

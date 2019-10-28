@@ -44,7 +44,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
     }
 
 
-    internal func getInit(closedPref: Bool, prefId: String?, params: String, bodyJSON: Data?, success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getInit(closedPref: Bool, prefId: String?, params: String, bodyJSON: Data?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         var uri = PXServicesURLConfigs.MP_INIT_URI
         if closedPref, let prefId = prefId {
@@ -64,7 +64,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
                         } else {
 
                             if paymentSearchDic.allKeys.count > 0 {
-                                let openPrefInit = try PXOpenPrefInitDTO.fromJSON(data: data)
+                                let openPrefInit = try PXInitDTO.fromJSON(data: data)
                                 success(openPrefInit)
                             } else {
                                 failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
@@ -82,7 +82,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
 
 
-    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
 
@@ -95,7 +95,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         getInit(closedPref: false, prefId: nil, params: params, bodyJSON: bodyJSON, success: success, failure: failure)
     }
 
-    internal func getClosedPrefInit(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], success: @escaping (_ paymentMethodSearch: PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getClosedPrefInit(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
 

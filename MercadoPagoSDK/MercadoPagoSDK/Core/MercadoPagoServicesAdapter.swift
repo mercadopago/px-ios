@@ -41,7 +41,7 @@ internal class MercadoPagoServicesAdapter {
     typealias PaymentSearchExclusions = (excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String])
     typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: Bool, hasPaymentProcessor: Bool, splitEnabled: Bool, maxInstallments: String?)
 
-    func getOpenPrefInitSearch(preference: PXCheckoutPreference, cardIdsWithEsc: [String], extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getOpenPrefInitSearch(preference: PXCheckoutPreference, cardIdsWithEsc: [String], extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let oneTapEnabled: Bool = extraParams?.expressEnabled ?? false
         let splitEnabled: Bool = extraParams?.splitEnabled ?? false
@@ -51,7 +51,7 @@ internal class MercadoPagoServicesAdapter {
         }, failure: failure)
     }
 
-    func getClosedPrefInitSearch(preferenceId: String, cardIdsWithEsc: [String], extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXOpenPrefInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getClosedPrefInitSearch(preferenceId: String, cardIdsWithEsc: [String], extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let oneTapEnabled: Bool = extraParams?.expressEnabled ?? false
         let splitEnabled: Bool = extraParams?.splitEnabled ?? false

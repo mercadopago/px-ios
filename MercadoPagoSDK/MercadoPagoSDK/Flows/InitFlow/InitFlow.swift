@@ -13,10 +13,10 @@ final class InitFlow: PXFlow {
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
-    private let finishInitCallback: ((PXCheckoutPreference, PXOpenPrefInitDTO) -> Void)
+    private let finishInitCallback: ((PXCheckoutPreference, PXInitDTO) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
 
-    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXOpenPrefInitDTO) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
+    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXInitDTO) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
         pxNavigationHandler = PXNavigationHandler.getDefault()
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback

@@ -1,5 +1,5 @@
 //
-//  PXOpenPrefInitDTO.swift
+//  PXInitDTO.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 18/10/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 /// :nodoc:
-open class PXOpenPrefInitDTO: NSObject, Decodable {
+open class PXInitDTO: NSObject, Decodable {
     open var preference: PXCheckoutPreference?
     open var oneTap: [PXOneTapDto]?
     open var currency: PXCurrency
@@ -48,8 +48,8 @@ open class PXOpenPrefInitDTO: NSObject, Decodable {
         case availablePaymentMethods = "available_payment_methods"
     }
 
-    open class func fromJSON(data: Data) throws -> PXOpenPrefInitDTO {
-        return try JSONDecoder().decode(PXOpenPrefInitDTO.self, from: data)
+    open class func fromJSON(data: Data) throws -> PXInitDTO {
+        return try JSONDecoder().decode(PXInitDTO.self, from: data)
     }
 
     func getPaymentOptionsCount() -> Int {

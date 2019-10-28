@@ -20,7 +20,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption
-    let search: PXOpenPrefInitDTO
+    let search: PXInitDTO
     var readyToPay: Bool = false
     var paymentResult: PaymentResult?
     var instructionsInfo: PXInstructions?
@@ -49,7 +49,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
     let paymentConfigurationService: PXPaymentConfigurationServices
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXOpenPrefInitDTO, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, disabledOption: PXDisabledOption?, escManager: MercadoPagoESC?) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, disabledOption: PXDisabledOption?, escManager: MercadoPagoESC?) {
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
