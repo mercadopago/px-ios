@@ -42,7 +42,7 @@ extension OneTapFlow {
         }
         let viewModel = model.reviewConfirmViewModel()
         
-        let reviewVC = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
+        let reviewVC = PXOneTapViewController(viewModel: viewModel, pxNavigationHandler: pxNavigationHandler, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
 
         pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
     }
