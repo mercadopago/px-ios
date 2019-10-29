@@ -35,8 +35,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
     private var navigationBarTapGesture: UITapGestureRecognizer?
-
-    private var cardFormController: NewCardAssociationViewController?
     private let pxNavigationHandler: PXNavigationHandler
 
     // MARK: Lifecycle/Publics
@@ -437,11 +435,9 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             shouldChangePaymentMethod()
         } else {
-            cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
-            cardFormController?.delegate = self
-            if let cardFormController = cardFormController {
-                pxNavigationHandler.pushViewControllerWithTransition(viewController: cardFormController, transition: nil)
-            }
+            let cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
+            cardFormController.delegate = self
+            pxNavigationHandler.pushViewControllerWithTransition(viewController: cardFormController, transition: nil)
         }
     }
 
@@ -473,10 +469,25 @@ private extension PXOneTapViewController {
         let payerCost = PXPayerCost(installmentRate: 0, labels: [String](), minAllowedAmount: 0, maxAllowedAmount: 60000, recommendedMessage: "1 Parcela de R$ 100", installmentAmount: 100, totalAmount: 100, installments: 1, processingMode: "aggregator", paymentMethodOptionId: nil)
         var payerCostArray = [PXPayerCost]()
         payerCostArray.append(payerCost)
-        let amountConfig = PXAmountConfiguration(selectedPayerCostIndex: 0, payerCosts: payerCostArray, splitConfiguration: nil, discountToken: nil, amount: nil)
+        /************ SPLIT CONFIGURATION MOCKED ***********/
+        let splitConfig = getMockedSplitConfiguration()
+        /*******************************/
+        let amountConfig = PXAmountConfiguration(selectedPayerCostIndex: 0, payerCosts: payerCostArray, splitConfiguration: splitConfig, discountToken: nil, amount: nil)
         let cardData = PXCardDataFactory().create(cardName: "APRO BADO", cardNumber: "************5682", cardCode: "", cardExpiration: "2/24")
         let mockedCard = PXCardSliderViewModel("visa", "credit_card", "25", TemplateCard(), cardData, payerCostArray, payerCost, "8755873036", true, amountConfiguration: amountConfig, creditsViewModel: nil, isDisabled: false)
         return mockedCard
+    }
+
+    func getMockedSplitConfiguration() -> PXSplitConfiguration {
+        var splitPayerCostArray = [PXPayerCost]()
+        let firstPayerCost = PXPayerCost(installmentRate: 0, labels: [String](), minAllowedAmount: 1, maxAllowedAmount: 700000, recommendedMessage: "1 cuota de $ 2342.,47 ($ 2.342,47)", installmentAmount: 2342.4699999, totalAmount: 2342.4699999, installments: 1, processingMode: "aggregator", paymentMethodOptionId: nil, agreements: [PXAgreement]())
+        splitPayerCostArray.append(firstPayerCost)
+
+        let primarySplitPaymentMethod = PXSplitPaymentMethod(amount: 2342.469999, id: "", discount: nil, message: nil, selectedPayerCostIndex: 0, payerCosts: splitPayerCostArray)
+        let secondarySplitPaymentMethod = PXSplitPaymentMethod(amount: 1157.53, id: "account_money", discount: nil, message: "en Mercado Pago", selectedPayerCostIndex: nil, payerCosts: nil)
+
+        let splitConfiguration = PXSplitConfiguration(primaryPaymentMethod: primarySplitPaymentMethod, secondaryPaymentMethod: secondarySplitPaymentMethod, splitEnabled: false)
+        return splitConfiguration
     }
 
     func createNewMockedCard2() -> PXCardSliderViewModel {
