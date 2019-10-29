@@ -35,12 +35,10 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
     private var navigationBarTapGesture: UITapGestureRecognizer?
-    private let pxNavigationHandler: PXNavigationHandler
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, pxNavigationHandler: PXNavigationHandler, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
-        self.pxNavigationHandler = pxNavigationHandler
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
@@ -459,7 +457,7 @@ extension PXOneTapViewController: MLCardFormAddCardProtocol {
         viewModel.updateCardSliderViewModel(pxCardSliderViewModel: cardSliderViewModel)
         newCardDidSelected(targetModel: pxCardSliderViewModel)
         installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
-        pxNavigationHandler.popViewController()
+        navigationController?.popViewController(animated: true)
     }
 
     internal func didFailAddCard() {
