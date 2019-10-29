@@ -62,14 +62,14 @@ internal extension PXPaymentFlow {
 
     func getPointsAndDiscounts() {
 
-        var paymentIds: [String]?
+        var paymentIds = [String]()
         if let paymentResultId = model.paymentResult?.paymentId {
-            paymentIds?.append(paymentResultId)
+            paymentIds.append(paymentResultId)
         } else if let businessResult = model.businessResult {
             if let receiptLists = businessResult.getReceiptIdList() {
                 paymentIds = receiptLists
             } else if let receiptId = businessResult.getReceiptId() {
-                paymentIds?.append(receiptId)
+                paymentIds.append(receiptId)
             }
         }
 
