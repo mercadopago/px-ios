@@ -437,7 +437,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         } else {
             let cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
             cardFormController.delegate = self
-            pxNavigationHandler.pushViewControllerWithTransition(viewController: cardFormController, transition: nil)
+            pxNavigationHandler.pushViewController(viewController: cardFormController, animated: true)
         }
     }
 
@@ -450,7 +450,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 }
 
-extension PXOneTapViewController: PXAddCardProtocol {
+extension PXOneTapViewController: MLCardFormAddCardProtocol {
     internal func didAddCard(cardInfo: [String: String]) {
         let pxCardSliderViewModel = createNewMockedCard()
         var cardSliderViewModel = viewModel.getCardSliderViewModel()
@@ -460,6 +460,10 @@ extension PXOneTapViewController: PXAddCardProtocol {
         newCardDidSelected(targetModel: pxCardSliderViewModel)
         installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
         pxNavigationHandler.popViewController()
+    }
+
+    internal func didFailAddCard() {
+        print("Fallo el alta de tarjeta")
     }
 }
 

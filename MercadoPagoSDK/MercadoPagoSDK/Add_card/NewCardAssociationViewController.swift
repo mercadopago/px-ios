@@ -8,16 +8,16 @@
 import Foundation
 import UIKit
 
-protocol PXAddCardProtocol: NSObjectProtocol {
+protocol MLCardFormAddCardProtocol: NSObjectProtocol {
     func didAddCard(cardInfo: [String: String])
+    func didFailAddCard()
 }
 
 class NewCardAssociationViewController: MercadoPagoUIViewController {
 
     private let model: String
     private var callback: (([String: String]) -> Void)?
-    weak var delegate: PXAddCardProtocol?
-
+    weak var delegate: MLCardFormAddCardProtocol?
 
     init(model: String, callback: @escaping ([String: String]) -> Void) {
         self.model = model
@@ -32,6 +32,10 @@ class NewCardAssociationViewController: MercadoPagoUIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        print("CardForm controller se esta desalocando")
     }
 
     override func viewDidLoad() {
@@ -68,9 +72,6 @@ extension NewCardAssociationViewController {
         print("Estoy agregando la tarjeta")
         var cardInfo = [String: String]()
         cardInfo["cardId"] = "123456"
-        //        if let callback = callback {
-        //            callback(cardInfo)
-        //        }
         delegate?.didAddCard(cardInfo: cardInfo)
     }
 }
