@@ -119,8 +119,8 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
             pxAnimator.addCompletion(completion: {
                 var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1.0)
                 pxAnimator.addAnimation(animation: {
-//                    topView.frame = topView.frame.offsetBy(dx: 0, dy: headerFrame.size.height)
-//                    topView.alpha = 1
+                    topView.frame = topView.frame.offsetBy(dx: 0, dy: headerFrame.size.height)
+                    topView.alpha = 1
                 })
 
                 pxAnimator.addCompletion(completion: {
