@@ -1,5 +1,5 @@
 //
-//  CreditsViewModel.swift
+//  PXCreditsViewModel.swift
 //  MercadoPagoSDK
 //
 //  Created by Esteban Adrian Boffa on 10/07/2019.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CreditsViewModel {
+struct PXCreditsViewModel {
 
     let displayInfo: PXDisplayInfoDto
 
@@ -16,7 +16,7 @@ struct CreditsViewModel {
     }
 }
 
-extension CreditsViewModel {
+extension PXCreditsViewModel {
     func getCardColors() -> [CGColor] {
         let defaultColor: CGColor = UIColor.gray.cgColor
         guard let gradients = displayInfo.gradientColors else { return [defaultColor, defaultColor] }

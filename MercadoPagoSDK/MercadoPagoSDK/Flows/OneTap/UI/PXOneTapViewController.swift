@@ -13,7 +13,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Definitions
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
-    private lazy var footerView: UIView = UIView()
+    fileprivate var navigationHandler: PXNavigationHandler
     private var discountTermsConditionView: PXTermsAndConditionView?
 
     let slider = PXCardSlider()
@@ -29,6 +29,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var installmentInfoRow: PXOneTapInstallmentInfoView?
     var installmentsSelectorView: PXOneTapInstallmentsSelectorView?
     var headerView: PXOneTapHeaderView?
+    var whiteView: UIView?
     var selectedCard: PXCardSliderViewModel?
 
     let timeOutPayButton: TimeInterval
@@ -37,8 +38,9 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     private var navigationBarTapGesture: UITapGestureRecognizer?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, navigationHandler: PXNavigationHandler, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
+        self.navigationHandler = navigationHandler
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
@@ -73,6 +75,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        navigationController?.delegate = self
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
 
@@ -121,19 +124,17 @@ extension PXOneTapViewController {
 
         // Center white View
         let whiteView = getWhiteView()
+        self.whiteView  = whiteView
         contentView.addSubviewToBottom(whiteView)
         PXLayout.setHeight(owner: whiteView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)).isActive = true
-        PXLayout.centerHorizontally(view: whiteView).isActive = true
         PXLayout.pinLeft(view: whiteView, withMargin: 0).isActive = true
         PXLayout.pinRight(view: whiteView, withMargin: 0).isActive = true
 
         // Add installment row
         let installmentRow = getInstallmentInfoView()
         whiteView.addSubview(installmentRow)
-        PXLayout.centerHorizontally(view: installmentRow).isActive = true
         PXLayout.pinLeft(view: installmentRow).isActive = true
         PXLayout.pinRight(view: installmentRow).isActive = true
-        PXLayout.matchWidth(ofView: installmentRow).isActive = true
         PXLayout.pinTop(view: installmentRow, withMargin: PXLayout.XXXS_MARGIN).isActive = true
 
         // Add card slider
@@ -154,7 +155,6 @@ extension PXOneTapViewController {
         // Add footer payment button.
         if let footerView = getFooterView() {
             whiteView.addSubview(footerView)
-            PXLayout.centerHorizontally(view: footerView).isActive = true
             PXLayout.pinLeft(view: footerView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: footerView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.setHeight(owner: footerView, height: PXLayout.XXL_MARGIN).isActive = true
@@ -254,10 +254,6 @@ extension PXOneTapViewController {
 extension PXOneTapViewController {
     @objc func didTapOnNavigationbar() {
         didTapMerchantHeader()
-    }
-
-    @objc func shouldChangePaymentMethod() {
-        callbackPaymentData(viewModel.getClearPaymentData())
     }
 
     private func confirmPayment() {
@@ -431,11 +427,13 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func addPaymentMethodCardDidTap() {
         if viewModel.shouldUseOldCardForm() {
-            shouldChangePaymentMethod()
+            callbackPaymentData(viewModel.getClearPaymentData())
         } else {
             let cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
             cardFormController.delegate = self
-            navigationController?.pushViewController(cardFormController, animated: true)
+            navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormController,
+                                                 animated: true)
+            //navigationController?.pushViewController(cardFormController, animated: true)
         }
     }
 
@@ -638,5 +636,16 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
         let webVC = WebViewController(url: url, navigationBarTitle: title)
         webVC.title = title
         self.navigationController?.pushViewController(webVC, animated: true)
+    }
+}
+
+extension PXOneTapViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
+        //if fromVC is PaymentVaultViewController || toVC is PaymentVaultViewController {
+        if fromVC is NewCardAssociationViewController || toVC is NewCardAssociationViewController {
+            return PXOneTapViewControllerTransition()
+        }
+        return nil
     }
 }

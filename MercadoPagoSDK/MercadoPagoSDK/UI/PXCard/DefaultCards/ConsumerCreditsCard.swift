@@ -27,10 +27,10 @@ class ConsumerCreditsCard: NSObject, CustomCardDrawerUI {
     var ownOverlayImage: UIImage? = ResourceManager.shared.getImage("creditsOverlayMask")
     var ownGradient: CAGradientLayer = CAGradientLayer()
 
-    init(_ creditsViewModel: CreditsViewModel) {
+    init(_ creditsViewModel: PXCreditsViewModel) {
         ownGradient = ConsumerCreditsCard.getCustomGradient(creditsViewModel)
     }
-    static func getCustomGradient(_ creditsViewModel: CreditsViewModel) -> CAGradientLayer {
+    static func getCustomGradient(_ creditsViewModel: PXCreditsViewModel) -> CAGradientLayer {
         let gradient = CAGradientLayer()
         gradient.colors = creditsViewModel.getCardColors()
         gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
@@ -41,7 +41,7 @@ class ConsumerCreditsCard: NSObject, CustomCardDrawerUI {
 
 // MARK: Render
 extension ConsumerCreditsCard {
-    func render(containerView: UIView, creditsViewModel: CreditsViewModel, isDisabled: Bool, size: CGSize) {
+    func render(containerView: UIView, creditsViewModel: PXCreditsViewModel, isDisabled: Bool, size: CGSize) {
         let creditsImageHeight: CGFloat = size.height * 0.35
         let creditsImageWidth: CGFloat = size.height * 0.60
         let margins: CGFloat = 16
@@ -124,7 +124,7 @@ extension ConsumerCreditsCard {
         return consumerCreditsImage
     }
 
-    private func getTitleLabel(creditsViewModel: CreditsViewModel) -> UILabel {
+    private func getTitleLabel(creditsViewModel: PXCreditsViewModel) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.text = creditsViewModel.displayInfo.topText.text
         titleLabel.textColor = .white
