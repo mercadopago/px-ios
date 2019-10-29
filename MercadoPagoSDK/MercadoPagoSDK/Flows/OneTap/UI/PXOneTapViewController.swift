@@ -437,7 +437,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         } else {
             let cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
             cardFormController.delegate = self
-            pxNavigationHandler.pushViewController(viewController: cardFormController, animated: true)
+            navigationController?.pushViewController(cardFormController, animated: true)
         }
     }
 

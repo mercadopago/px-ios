@@ -126,10 +126,6 @@ internal class PXNavigationHandler: NSObject {
         self.dismissLoading()
     }
 
-    internal func pushViewController(viewController: UIViewController, animated: Bool) {
-        self.navigationController.pushViewController(viewController, animated: animated)
-    }
-
     func popViewController(animated: Bool = true) {
         navigationController.popViewController(animated: animated)
     }
