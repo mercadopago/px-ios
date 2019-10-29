@@ -269,7 +269,7 @@ internal class MercadoPagoServices: NSObject {
             params.paramsAppend(key: ApiParam.PAYER_ACCESS_TOKEN, value: payerAccessToken)
         }
 
-        if let paymentIds = paymentIds {
+        if let paymentIds = paymentIds, !paymentIds.isEmpty {
             var paymentIdsString = ""
             for (index, paymentId) in paymentIds.enumerated() {
                 if index != 0 {
