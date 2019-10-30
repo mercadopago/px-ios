@@ -85,7 +85,7 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
             headerSnapshot.frame = headerFrame
             footerSnapshot.frame = footerFrame
 
-            let navigationSnapshot = toVC.view.resizableSnapshotView(from: navigationFrame, afterScreenUpdates: true, withCapInsets: .zero)
+            let navigationSnapshot = toVCSnapshot.resizableSnapshotView(from: navigationFrame, afterScreenUpdates: true, withCapInsets: .zero)
             // topView is a view containing a snapshot of the navigationbar and a snapshot of the headerView
             let topView = buildTopView(containerView: containerView, navigationSnapshot: navigationSnapshot, headerSnapshot: headerSnapshot, footerSnapshot: footerSnapshot)
             // backgroundView is a white placeholder background using the entire view area
@@ -152,32 +152,5 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
         topViewOverlay.backgroundColor = backgroundColor
         topViewOverlay.alpha = 0
         topView.addSubview(topViewOverlay)
-    }
-
-    private func fixLayout(fromVCView: UIView, toVCView: UIView, containerView: UIView, headerSnapshot: UIView, footerSnapshot: UIView) -> UIView? {
-        // Header Overlay
-        let headerOverlay = UIView(frame: headerSnapshot.frame)
-        headerOverlay.backgroundColor = fromVCView.backgroundColor
-        headerOverlay.alpha = 0
-        headerSnapshot.addSubview(headerOverlay)
-
-        var frame = footerSnapshot.frame
-        frame.origin.y = containerView.frame.size.height - frame.size.height
-        footerSnapshot.frame = frame
-
-        frame = headerSnapshot.frame
-        frame.origin.y = containerView.frame.size.height - (frame.size.height + footerSnapshot.frame.size.height)
-        headerSnapshot.frame = frame
-
-        frame = fromVCView.frame
-        frame.size.height -= (headerSnapshot.frame.size.height + footerSnapshot.frame.size.height)
-        let navigationSnapshot = fromVCView.resizableSnapshotView(from: frame, afterScreenUpdates: false, withCapInsets: .zero)
-
-        containerView.addSubview(toVCView)
-        if let navigationSnapshot = navigationSnapshot { containerView.addSubview(navigationSnapshot) }
-        containerView.addSubview(headerSnapshot)
-        containerView.addSubview(footerSnapshot)
-
-        return navigationSnapshot
     }
 }
