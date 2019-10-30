@@ -70,7 +70,7 @@ class NewCardAssociationViewController: MercadoPagoUIViewController {
         super.viewWillAppear(animated)
 
         hideNavBar()
-        navigationController!.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.shadowImage = nil
         extendedLayoutIncludesOpaqueBars = true
 
         hideLoading()
