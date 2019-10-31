@@ -7,7 +7,7 @@
 
 import UIKit
 
-public enum OneTapHeaderAnimationDirection: Int {
+enum OneTapHeaderAnimationDirection: Int {
     case horizontal
     case vertical
 }
