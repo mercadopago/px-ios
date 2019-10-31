@@ -45,52 +45,29 @@ extension InitFlow {
 
         if let prefId = pref.id, prefId.isNotEmpty {
             // CLOSED PREFERENCE
-            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { [weak self] (paymentMethodSearch) in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
-
-                //Set site
-                SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
-                SiteManager.shared.setSite(site: paymentMethodSearch.site)
-
-                //Tracking Experiments
-                MPXTracker.sharedInstance.setExperiments(paymentMethodSearch.experiments)
-
-                strongSelf.executeNextStep()
-                }, failure: { [weak self] (error) in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    let customError = InitFlowError(errorStep: .SERVICE_GET_INIT, shouldRetry: true, requestOrigin: .GET_INIT, apiException: MPSDKError.getApiException(error))
-                    strongSelf.model.setError(error: customError)
-                    strongSelf.executeNextStep()
-            })
+            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: callback(_:), failure: failure(_:))
         } else {
             // OPEN PREFERENCE
-            serviceAdapter.getOpenPrefInitSearch(preference: pref, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { [weak self] (paymentMethodSearch) in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
-
-                //Set site
-                SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
-                SiteManager.shared.setSite(site: paymentMethodSearch.site)
-
-                //Tracking Experiments
-                MPXTracker.sharedInstance.setExperiments(paymentMethodSearch.experiments)
-
-                strongSelf.executeNextStep()
-                }, failure: { [weak self] (error) in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    let customError = InitFlowError(errorStep: .SERVICE_GET_INIT, shouldRetry: true, requestOrigin: .GET_INIT, apiException: MPSDKError.getApiException(error))
-                    strongSelf.model.setError(error: customError)
-                    strongSelf.executeNextStep()
-            })
+            serviceAdapter.getOpenPrefInitSearch(preference: pref, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: callback(_:), failure: failure(_:))
         }
+    }
+
+    func callback(_ search: PXInitDTO) {
+        self.model.updateInitModel(paymentMethodsResponse: search)
+
+        //Tracking Experiments
+        MPXTracker.sharedInstance.setExperiments(search.experiments)
+
+        //Set site
+        SiteManager.shared.setCurrency(currency: search.currency)
+        SiteManager.shared.setSite(site: search.site)
+
+        self.executeNextStep()
+    }
+
+    func failure(_ error: NSError) {
+        let customError = InitFlowError(errorStep: .SERVICE_GET_INIT, shouldRetry: true, requestOrigin: .GET_INIT, apiException: MPSDKError.getApiException(error))
+        self.model.setError(error: customError)
+        self.executeNextStep()
     }
 }
