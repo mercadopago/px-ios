@@ -55,6 +55,9 @@ extension InitFlow {
                 SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
                 SiteManager.shared.setSite(site: paymentMethodSearch.site)
 
+                //Tracking Experiments
+                MPXTracker.sharedInstance.setExperiments(paymentMethodSearch.experiments)
+
                 strongSelf.executeNextStep()
                 }, failure: { [weak self] (error) in
                     guard let strongSelf = self else {
@@ -75,6 +78,9 @@ extension InitFlow {
                 //Set site
                 SiteManager.shared.setCurrency(currency: paymentMethodSearch.currency)
                 SiteManager.shared.setSite(site: paymentMethodSearch.site)
+
+                //Tracking Experiments
+                MPXTracker.sharedInstance.setExperiments(paymentMethodSearch.experiments)
 
                 strongSelf.executeNextStep()
                 }, failure: { [weak self] (error) in
