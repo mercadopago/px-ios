@@ -65,6 +65,16 @@ class NewCardAssociationViewController: MercadoPagoUIViewController {
             labelOK.widthAnchor.constraint(equalToConstant: 300)
             ])
     }
+
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        hideNavBar()
+        navigationController?.navigationBar.shadowImage = nil
+        extendedLayoutIncludesOpaqueBars = true
+
+        hideLoading()
+    }
 }
 
 extension NewCardAssociationViewController {

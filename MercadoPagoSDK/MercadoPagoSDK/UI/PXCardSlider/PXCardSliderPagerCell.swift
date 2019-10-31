@@ -87,7 +87,7 @@ extension PXCardSliderPagerCell {
     }
 
 
-    func renderConsumerCreditsCard(creditsViewModel: CreditsViewModel, isDisabled: Bool, cardSize: CGSize) {
+    func renderConsumerCreditsCard(creditsViewModel: PXCreditsViewModel, isDisabled: Bool, cardSize: CGSize) {
         consumerCreditCard = ConsumerCreditsCard(creditsViewModel)
         guard let consumerCreditCard = consumerCreditCard else { return }
 
