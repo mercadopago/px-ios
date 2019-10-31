@@ -11,16 +11,16 @@ import UIKit
 struct PXInitBody: Codable {
     let preference: PXCheckoutPreference?
     let publicKey: String
-    let flowId: String?
+    let flow: String?
     let cardsWithESC: [String]
     let charges: [PXPaymentTypeChargeRule]
     let discountConfiguration: PXDiscountParamsConfiguration
     let features: PXInitFeatures
 
-    init(preference: PXCheckoutPreference?, publicKey: String, flowId: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], discountConfiguration: PXDiscountParamsConfiguration, features: PXInitFeatures) {
+    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], discountConfiguration: PXDiscountParamsConfiguration, features: PXInitFeatures) {
         self.preference = preference
         self.publicKey = publicKey
-        self.flowId = flowId
+        self.flow = flow
         self.cardsWithESC = cardsWithESC
         self.charges = charges
         self.discountConfiguration = discountConfiguration
@@ -30,7 +30,7 @@ struct PXInitBody: Codable {
     enum CodingKeys: String, CodingKey {
         case preference
         case publicKey = "public_key"
-        case flowId = "flow_id"
+        case flow = "flow"
         case cardsWithESC = "cards_with_esc"
         case charges
         case discountConfiguration = "discount_configuration"
