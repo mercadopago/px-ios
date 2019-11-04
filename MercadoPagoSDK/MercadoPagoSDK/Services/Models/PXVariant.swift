@@ -18,20 +18,3 @@ struct PXVariant: Decodable {
         case availableFeatures = "available_features"
     }
 }
-
-// MARK: Tracking
-extension PXVariant {
-    func getDictionary() -> [String: Any] {
-        var dic = [String: Any]()
-        dic["id"] = id
-        dic["name"] = name
-
-        var availableFeaturesDics = [Any]()
-        for feature in availableFeatures {
-            availableFeaturesDics.append(feature.getDictionary())
-        }
-        dic["available_features"] = availableFeaturesDics
-        
-        return dic
-    }
-}

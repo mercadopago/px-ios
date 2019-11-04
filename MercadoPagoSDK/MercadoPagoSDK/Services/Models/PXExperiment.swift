@@ -15,19 +15,19 @@ struct PXExperiment: Decodable {
 
 // MARK: Tracking
 extension PXExperiment {
-    func getDictionary() -> [String: Any] {
-        var dic = [String: Any]()
-        dic["id"] = id
-        dic["name"] = name
-        dic["variant"] = variant.getDictionary()
-        return dic
+    func getTrackingData() -> String {
+        return "\(name) - \(variant.name)"
     }
 
-    static func getExperimentsForTracking(_ experiments: [PXExperiment]) -> [Any] {
-        var dic = [Any]()
-        for exp in experiments {
-            dic.append(exp.getDictionary())
+    static func getExperimentsForTracking(_ experiments: [PXExperiment]) -> String {
+        var experimentsString = ""
+        for (index, exp) in experiments.enumerated() {
+            experimentsString.append(exp.getTrackingData())
+
+            if index != experiments.count - 1 {
+                experimentsString.append(",")
+            }
         }
-        return dic
+        return experimentsString
     }
 }
