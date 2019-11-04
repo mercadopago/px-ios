@@ -20,6 +20,7 @@ import UIKit
     private var flowName: String?
     private var customSessionId: String?
     private var sessionService: SessionService = SessionService()
+    private var experiments: [PXExperiment]?
 }
 
 // MARK: Getters/setters.
@@ -60,10 +61,15 @@ internal extension MPXTracker {
     func clean() {
         MPXTracker.sharedInstance.flowDetails = [:]
         MPXTracker.sharedInstance.trackListener = nil
+        MPXTracker.sharedInstance.experiments = nil
     }
 
     func getFlowName() -> String? {
         return flowName
+    }
+
+    func setExperiments(_ experiments: [PXExperiment]?) {
+        MPXTracker.sharedInstance.experiments = experiments
     }
 }
 
@@ -77,6 +83,9 @@ internal extension MPXTracker {
             }
             if let flowName = flowName {
                 metadata["flow"] = flowName
+            }
+            if let experiments = experiments {
+                metadata["experiments"] = PXExperiment.getExperimentsForTracking(experiments)
             }
             metadata[SessionService.SESSION_ID_KEY] = getSessionID()
             metadata["security_enabled"] = PXConfiguratorManager.hasSecurityValidation()
@@ -118,6 +127,9 @@ internal extension MPXTracker {
                     frictionExtraInfo["checkout_type"] = checkoutType
                     metadata["extra_info"] = frictionExtraInfo
                 }
+            }
+            if let experiments = experiments {
+                metadata["experiments"] = PXExperiment.getExperimentsForTracking(experiments)
             }
             metadata["security_enabled"] = PXConfiguratorManager.hasSecurityValidation()
             metadata["session_time"] = PXTrackingStore.sharedInstance.getSecondsAfterInit()

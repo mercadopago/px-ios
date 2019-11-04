@@ -55,6 +55,9 @@ extension InitFlow {
     func callback(_ search: PXInitDTO) {
         self.model.updateInitModel(paymentMethodsResponse: search)
 
+        //Tracking Experiments
+        MPXTracker.sharedInstance.setExperiments(search.experiments)
+
         //Set site
         SiteManager.shared.setCurrency(currency: search.currency)
         SiteManager.shared.setSite(site: search.site)
