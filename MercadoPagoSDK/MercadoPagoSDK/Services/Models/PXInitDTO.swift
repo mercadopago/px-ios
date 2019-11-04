@@ -8,18 +8,18 @@
 
 import Foundation
 /// :nodoc:
-class PXInitDTO: NSObject, Decodable {
-    open var preference: PXCheckoutPreference?
-    open var oneTap: [PXOneTapDto]?
-    open var currency: PXCurrency
-    open var site: PXSite
-    open var generalCoupon: String
-    open var coupons: [String: PXDiscountConfiguration]
-    open var groups: [PXPaymentMethodSearchItem] = []
-    open var payerPaymentMethods: [PXCustomOptionSearchItem] = []
-    open var availablePaymentMethods: [PXPaymentMethod] = []
-    open var selectedDiscountConfiguration: PXDiscountConfiguration?
-    open var experiments: [PXExperiment]?
+final class PXInitDTO: NSObject, Decodable {
+    public var preference: PXCheckoutPreference?
+    public var oneTap: [PXOneTapDto]?
+    public var currency: PXCurrency
+    public var site: PXSite
+    public var generalCoupon: String
+    public var coupons: [String: PXDiscountConfiguration]
+    public var groups: [PXPaymentMethodSearchItem] = []
+    public var payerPaymentMethods: [PXCustomOptionSearchItem] = []
+    public var availablePaymentMethods: [PXPaymentMethod] = []
+    public var selectedDiscountConfiguration: PXDiscountConfiguration?
+    public var experiments: [PXExperiment]?
 
     public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod], experiments: [PXExperiment]?) {
         self.preference = preference
@@ -51,7 +51,7 @@ class PXInitDTO: NSObject, Decodable {
         case experiments
     }
 
-    open class func fromJSON(data: Data) throws -> PXInitDTO {
+    public class func fromJSON(data: Data) throws -> PXInitDTO {
         return try JSONDecoder().decode(PXInitDTO.self, from: data)
     }
 

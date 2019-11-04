@@ -24,7 +24,7 @@ extension PXExperiment {
         for (index, exp) in experiments.enumerated() {
             experimentsString.append(exp.getTrackingData())
 
-            if index != experiments.count - 1 {
+            if index != experiments.endIndex - 1 {
                 experimentsString.append(",")
             }
         }
