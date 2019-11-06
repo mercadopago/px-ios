@@ -8,10 +8,6 @@
 
 import Foundation
 
-public struct PXExcludedPaymentMethod: Codable {
-    let id: String
-}
-
 /// :nodoc:
 open class PXPaymentPreference: NSObject, Codable {
 
