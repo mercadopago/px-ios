@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct PXExcludedPaymentMethod: Codable {
+struct PXExcludedPaymentMethod: Codable {
     let id: String
 }
