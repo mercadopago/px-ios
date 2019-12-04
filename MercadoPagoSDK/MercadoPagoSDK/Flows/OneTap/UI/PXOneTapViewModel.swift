@@ -43,6 +43,10 @@ extension PXOneTapViewModel {
         var sliderModel: [PXCardSliderViewModel] = []
         guard let expressNode = expressData else { return }
         for targetNode in expressNode {
+
+            //Charge rule message when amount is zero
+            let chargeRuleMessage = getChargeRuleBottomMessage(targetNode.paymentTypeId)
+
             //  Account money
             if let accountMoney = targetNode.accountMoney {
                 let displayTitle = accountMoney.cardTitle ?? ""
@@ -50,7 +54,7 @@ extension PXOneTapViewModel {
                 let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(accountMoney.getId())
 
                 let isDisabled = self.disabledOption?.isAccountMoneyDisabled() ?? false
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, isDisabled: isDisabled)
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, isDisabled: isDisabled, bottomMessage: chargeRuleMessage)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
                 let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 viewModelCard.displayMessage = NSAttributedString(string: accountMoney.sliderTitle ?? "", attributes: attributes)
@@ -111,7 +115,7 @@ extension PXOneTapViewModel {
                     let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment)
 
                     let isDisabled = self.disabledOption?.getDisabledCardId() == targetCardData.cardId
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, isDisabled: isDisabled)
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, isDisabled: isDisabled, bottomMessage: chargeRuleMessage)
 
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
@@ -122,7 +126,7 @@ extension PXOneTapViewModel {
 
                 let creditsViewModel = CreditsViewModel(consumerCredits)
 
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", ConsumerCreditsCard(creditsViewModel), cardData, amountConfiguration.payerCosts ?? [], amountConfiguration.selectedPayerCost, "", true, amountConfiguration: amountConfiguration, creditsViewModel: creditsViewModel, isDisabled: false)
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", ConsumerCreditsCard(creditsViewModel), cardData, amountConfiguration.payerCosts ?? [], amountConfiguration.selectedPayerCost, "", true, amountConfiguration: amountConfiguration, creditsViewModel: creditsViewModel, isDisabled: false, bottomMessage: chargeRuleMessage)
 
                 sliderModel.append(viewModelCard)
             }
@@ -289,16 +293,25 @@ extension PXOneTapViewModel {
         return getChargeRuleViewController() != nil
     }
 
+    func getChargeRuleBottomMessage(_ paymentTypeId: String?) -> String? {
+        let chargeRule = getChargeRule(paymentTypeId: paymentTypeId)
+        return chargeRule?.message
+    }
+
     func getChargeRuleViewController() -> UIViewController? {
-        guard let rules = amountHelper.chargeRules else {
+        let chargeRule = getChargeRule(paymentTypeId: amountHelper.getPaymentData().paymentMethod?.paymentTypeId)
+        let vc = chargeRule?.detailModal
+        return vc
+    }
+
+    func getChargeRule(paymentTypeId: String?) -> PXPaymentTypeChargeRule? {
+        guard let rules = amountHelper.chargeRules, let paymentTypeId = paymentTypeId else {
             return nil
         }
-        let paymentTypeId = amountHelper.getPaymentData().paymentMethod?.paymentTypeId
-        let filterRules = rules.filter({
+        let filteredRules = rules.filter({
             $0.paymentTypeId == paymentTypeId
         })
-        let vc = filterRules.first?.detailModal
-        return vc
+        return filteredRules.first
     }
 }
 

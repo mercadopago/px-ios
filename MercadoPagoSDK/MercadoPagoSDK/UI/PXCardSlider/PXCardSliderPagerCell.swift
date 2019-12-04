@@ -32,7 +32,7 @@ class PXCardSliderPagerCell: FSPagerViewCell {
 
 // MARK: Publics.
 extension PXCardSliderPagerCell {
-    func render(withCard: CardUI, cardData: CardData, isDisabled: Bool, cardSize: CGSize) {
+    func render(withCard: CardUI, cardData: CardData, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
         containerView.layer.masksToBounds = false
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
@@ -47,7 +47,44 @@ extension PXCardSliderPagerCell {
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
+        addBottomMessageView(message: bottomMessage)
         addWarningBadge(isDisabled)
+    }
+
+    func addBottomMessageView(message: String?) {
+        guard let message = message else {return}
+        let messageView = UIView()
+        messageView.translatesAutoresizingMaskIntoConstraints = false
+        messageView.backgroundColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = message
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = Utils.getSemiBoldFont(size: PXLayout.XXXS_FONT)
+
+        messageView.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: messageView.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: messageView.trailingAnchor),
+            label.topAnchor.constraint(equalTo: messageView.topAnchor),
+            label.bottomAnchor.constraint(equalTo: messageView.bottomAnchor)
+        ])
+
+        self.containerView.clipsToBounds = true
+        self.containerView.addSubview(messageView)
+
+        NSLayoutConstraint.activate([
+            messageView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+            messageView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
+            messageView.heightAnchor.constraint(equalToConstant: 24),
+            messageView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor)
+        ])
+
+        self.layoutIfNeeded()
     }
 
     func renderEmptyCard(cardSize: CGSize) {
@@ -67,7 +104,7 @@ extension PXCardSliderPagerCell {
         }
     }
 
-    func renderAccountMoneyCard(balanceText: String, isDisabled: Bool, cardSize: CGSize) {
+    func renderAccountMoneyCard(balanceText: String, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
         containerView.layer.masksToBounds = false
         containerView.backgroundColor = .clear
         containerView.removeAllSubviews()
@@ -83,11 +120,12 @@ extension PXCardSliderPagerCell {
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
+        addBottomMessageView(message: bottomMessage)
         addWarningBadge(isDisabled)
     }
 
 
-    func renderConsumerCreditsCard(creditsViewModel: CreditsViewModel, isDisabled: Bool, cardSize: CGSize) {
+    func renderConsumerCreditsCard(creditsViewModel: CreditsViewModel, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
         consumerCreditCard = ConsumerCreditsCard(creditsViewModel)
         guard let consumerCreditCard = consumerCreditCard else { return }
 
@@ -109,6 +147,7 @@ extension PXCardSliderPagerCell {
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
+        addBottomMessageView(message: bottomMessage)
         addWarningBadge(isDisabled)
     }
 

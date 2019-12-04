@@ -26,8 +26,9 @@ final class PXCardSliderViewModel {
     var isCredits: Bool {
         return self.paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue
     }
+    var bottomMessage: String?
 
-    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: CreditsViewModel? = nil, isDisabled: Bool) {
+    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: CreditsViewModel? = nil, isDisabled: Bool, bottomMessage: String? = nil) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.issuerId = issuerId
@@ -40,6 +41,7 @@ final class PXCardSliderViewModel {
         self.amountConfiguration = amountConfiguration
         self.creditsViewModel = creditsViewModel
         self.isDisabled = isDisabled
+        self.bottomMessage = bottomMessage
     }
 }
 

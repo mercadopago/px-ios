@@ -25,6 +25,7 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
     internal var paymentTypeId: String
     let amountCharge: Double
     internal let detailModal: UIViewController?
+    let message: String?
 
     // MARK: Init.
     /**
@@ -42,10 +43,11 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
      - parameter amountCharge: Amount charge for the assigned payment type.
      - parameter detailModal: Optional screen intended to be shown modally in order to give further details on why this charge applies to the current payment. This screen will pop up when the charges row is pressed.
      */
-   @objc public init(paymentTypeId: String, amountCharge: Double, detailModal: UIViewController? = nil) {
+    @objc public init(paymentTypeId: String, amountCharge: Double, detailModal: UIViewController? = nil, message: String? = nil) {
         self.paymentTypeId = paymentTypeId
         self.amountCharge = amountCharge
         self.detailModal = detailModal
+        self.message = amountCharge == 0 ? message : nil
         super.init()
     }
 
@@ -54,17 +56,20 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
         paymentTypeId = try values.decode(String.self, forKey: .paymentTypeId)
         amountCharge = try values.decode(Double.self, forKey: .amountCharge)
         detailModal = nil
+        message = try values.decodeIfPresent(String.self, forKey: .message)
     }
 
     public enum PXPaymentTypeChargeRuleKeys: String, CodingKey {
         case paymentTypeId = "payment_type_id"
         case amountCharge = "charge"
+        case message
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXPaymentTypeChargeRuleKeys.self)
         try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
         try container.encodeIfPresent(self.amountCharge, forKey: .amountCharge)
+        try container.encodeIfPresent(self.message, forKey: .message)
     }
 
     public func toJSONString() throws -> String? {
