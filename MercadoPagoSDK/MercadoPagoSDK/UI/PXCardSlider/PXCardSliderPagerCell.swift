@@ -49,43 +49,7 @@ extension PXCardSliderPagerCell {
         addBottomMessageView(message: bottomMessage)
     }
 
-    func addBottomMessageView(message: String?) {
-        guard let message = message else {return}
-        let messageView = UIView()
-        messageView.translatesAutoresizingMaskIntoConstraints = false
-        messageView.backgroundColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
-
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = message
-        label.numberOfLines = 1
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = Utils.getSemiBoldFont(size: PXLayout.XXXS_FONT)
-
-        messageView.addSubview(label)
-
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: messageView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: messageView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: messageView.topAnchor),
-            label.bottomAnchor.constraint(equalTo: messageView.bottomAnchor)
-        ])
-
-        self.containerView.clipsToBounds = true
-        self.containerView.addSubview(messageView)
-
-        NSLayoutConstraint.activate([
-            messageView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            messageView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-            messageView.heightAnchor.constraint(equalToConstant: 24),
-            messageView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor)
-        ])
-
-        self.layoutIfNeeded()
-    }
-
-    func renderEmptyCard(cardSize: CGSize) {
+    func renderEmptyCard(title: PXText? = nil, cardSize: CGSize) {
         containerView.layer.masksToBounds = false
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
@@ -103,7 +67,7 @@ extension PXCardSliderPagerCell {
         }
     }
 
-    func renderAccountMoneyCard(balanceText: String, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
+    func renderAccountMoneyCard(isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
         containerView.layer.masksToBounds = false
         containerView.backgroundColor = .clear
         containerView.removeAllSubviews()
@@ -122,7 +86,7 @@ extension PXCardSliderPagerCell {
         addBottomMessageView(message: bottomMessage)
     }
 
-    func renderConsumerCreditsCard(creditsViewModel: CreditsViewModel, isDisabled: Bool, cardSize: CGSize) {
+    func renderConsumerCreditsCard(creditsViewModel: CreditsViewModel, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
         consumerCreditCard = ConsumerCreditsCard(creditsViewModel, isDisabled: isDisabled)
         guard let consumerCreditCard = consumerCreditCard else { return }
 
@@ -145,6 +109,42 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
+    }
+
+    func addBottomMessageView(message: String?) {
+        guard let message = message else {return}
+        let messageView = UIView()
+        messageView.translatesAutoresizingMaskIntoConstraints = false
+        messageView.backgroundColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = message
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = Utils.getSemiBoldFont(size: PXLayout.XXXS_FONT)
+
+        messageView.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: messageView.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: messageView.trailingAnchor),
+            label.topAnchor.constraint(equalTo: messageView.topAnchor),
+            label.bottomAnchor.constraint(equalTo: messageView.bottomAnchor)
+            ])
+
+        self.containerView.clipsToBounds = true
+        self.containerView.addSubview(messageView)
+
+        NSLayoutConstraint.activate([
+            messageView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+            messageView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
+            messageView.heightAnchor.constraint(equalToConstant: 24),
+            messageView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor)
+            ])
+
+        self.layoutIfNeeded()
     }
 
     func flipToBack() {
