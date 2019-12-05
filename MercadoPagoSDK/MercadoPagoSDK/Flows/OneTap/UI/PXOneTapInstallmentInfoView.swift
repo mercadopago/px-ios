@@ -75,14 +75,27 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         cell.removeAllSubviews()
 
         let label = UILabel()
+        label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = itemModel.text
         label.textAlignment = .left
         cell.addSubview(label)
         PXLayout.pinLeft(view: label, withMargin: PXLayout.XXXS_MARGIN).isActive = true
-        PXLayout.pinRight(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.centerVertically(view: label).isActive = true
         PXLayout.matchHeight(ofView: label).isActive = true
+
+        if !itemModel.status.enabled {
+            let helperIcon = ResourceManager.shared.getImage("helper_ico_blue")
+            let helperImageView = UIImageView(image: helperIcon)
+            helperImageView.contentMode = .scaleAspectFit
+            cell.addSubview(helperImageView)
+            PXLayout.centerVertically(view: helperImageView).isActive = true
+            PXLayout.setWidth(owner: helperImageView, width: 24).isActive = true
+            PXLayout.setHeight(owner: helperImageView, height: 24).isActive = true
+            PXLayout.pinRight(view: helperImageView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+            PXLayout.put(view: helperImageView, rightOf: label, withMargin: PXLayout.XXXS_MARGIN, relation: .greaterThanOrEqual).isActive = true
+        }
+
         return cell
     }
 }
@@ -147,11 +160,12 @@ extension PXOneTapInstallmentInfoView {
     private func setupChevron() {
         addSubview(arrowImage)
         arrowImage.contentMode = UIView.ContentMode.scaleAspectFit
-        arrowImage.image = ResourceManager.shared.getImage("oneTapDownArrow")
+        arrowImage.image = ResourceManager.shared.getImage("one-tap-installments-info-chevron")
         PXLayout.centerVertically(view: arrowImage).isActive = true
-        PXLayout.setWidth(owner: arrowImage, width: 14).isActive = true
-        PXLayout.setHeight(owner: arrowImage, height: 14).isActive = true
-        PXLayout.pinRight(view: arrowImage, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
+        PXLayout.pinTop(view: arrowImage).isActive = true
+        PXLayout.pinBottom(view: arrowImage).isActive = true
+        PXLayout.setWidth(owner: arrowImage, width: 72).isActive = true
+        PXLayout.pinRight(view: arrowImage, withMargin: 0).isActive = true
         arrowImage.tag = colapsedTag
 
         if let targetModel = model?.first, !targetModel.shouldShowArrow {
@@ -173,11 +187,12 @@ extension PXOneTapInstallmentInfoView {
         let rightImage = ResourceManager.shared.getImage("one-tap-installments-info-right")
         let rightImageView = UIImageView(image: rightImage)
         rightImageView.translatesAutoresizingMaskIntoConstraints = false
+        rightImageView.contentMode = .scaleAspectFill
         addSubview(rightImageView)
         PXLayout.pinTop(view: rightImageView).isActive = true
         PXLayout.pinBottom(view: rightImageView).isActive = true
         PXLayout.pinRight(view: rightImageView).isActive = true
-        PXLayout.setWidth(owner: rightImageView, width: 60).isActive = true
+        PXLayout.setWidth(owner: rightImageView, width: 30).isActive = true
     }
 
     func showArrow(duration: Double = 0.5) {
@@ -202,24 +217,30 @@ extension PXOneTapInstallmentInfoView {
     }
 
     @objc func toggleInstallments() {
-        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex), currentModel[currentIndex].shouldShowArrow {
-            if let installmentData = currentModel[currentIndex].installmentData {
-                if arrowImage.tag != colapsedTag {
-                    delegate?.hideInstallments()
-                    UIView.animate(withDuration: 0.3) { [weak self] in
-                        self?.arrowImage.transform = CGAffineTransform.identity
-                        self?.pagerView.alpha = 1
-                        self?.titleLabel.alpha = 0
+        if let currentIndex = getCurrentIndex(), let currentModel = model, currentModel.indices.contains(currentIndex) {
+            let cardStatus = currentModel[currentIndex].status
+            if !cardStatus.enabled {
+                delegate?.disabledCardTapped(status: cardStatus)
+            } else if currentModel[currentIndex].shouldShowArrow, tapEnabled {
+                if let installmentData = currentModel[currentIndex].installmentData {
+                    if arrowImage.tag != colapsedTag {
+                        delegate?.hideInstallments()
+                        UIView.animate(withDuration: 0.3) { [weak self] in
+                            self?.arrowImage.layer.transform = CATransform3DIdentity
+                            self?.pagerView.alpha = 1
+                            self?.titleLabel.alpha = 0
+                        }
+                        arrowImage.tag = colapsedTag
+                    } else {
+                        delegate?.showInstallments(installmentData: installmentData, selectedPayerCost: currentModel[currentIndex].selectedPayerCost)
+                        UIView.animate(withDuration: 0.3) { [weak self] in
+                            let rotationAngle = (180.0 * CGFloat(Double.pi)) / 180.0
+                            self?.arrowImage.layer.transform = CATransform3DRotate(CATransform3DIdentity, rotationAngle, 1.0, 0.0, 0.0)
+                            self?.pagerView.alpha = 0
+                            self?.titleLabel.alpha = 1
+                        }
+                        arrowImage.tag = 1
                     }
-                    arrowImage.tag = colapsedTag
-                } else {
-                    delegate?.showInstallments(installmentData: installmentData, selectedPayerCost: currentModel[currentIndex].selectedPayerCost)
-                    UIView.animate(withDuration: 0.3) { [weak self] in
-                        self?.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
-                        self?.pagerView.alpha = 0
-                        self?.titleLabel.alpha = 1
-                    }
-                    arrowImage.tag = 1
                 }
             }
         }

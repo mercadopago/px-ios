@@ -71,6 +71,7 @@ internal class MercadoPagoService: NSObject {
         //Density Header
         request.setValue("xxxhdpi", forHTTPHeaderField: HeaderField.density.rawValue)
 
+        //Product ID Header
         if headers?[HeaderField.productId.rawValue] == nil {
             request.setValue(MP_DEFAULT_PRODUCT_ID, forHTTPHeaderField: HeaderField.productId.rawValue)
         }

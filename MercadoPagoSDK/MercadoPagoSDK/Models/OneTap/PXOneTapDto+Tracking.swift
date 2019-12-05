@@ -21,6 +21,13 @@ extension PXOneTapDto {
         return accountMoneyDic
     }
 
+    func getPaymentMethodForTracking() -> [String: Any] {
+        var paymentMethodDic: [String: Any] = [:]
+        paymentMethodDic["payment_method_type"] = paymentTypeId
+        paymentMethodDic["payment_method_id"] = paymentMethodId
+        return paymentMethodDic
+    }
+
     func getCardForTracking(amountHelper: PXAmountHelper) -> [String: Any] {
         var savedCardDic: [String: Any] = [:]
         savedCardDic["payment_method_type"] = paymentTypeId

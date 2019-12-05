@@ -27,7 +27,10 @@ class ConsumerCreditsCard: NSObject, CustomCardDrawerUI {
     var ownOverlayImage: UIImage? = ResourceManager.shared.getImage("creditsOverlayMask")
     var ownGradient: CAGradientLayer = CAGradientLayer()
 
-    init(_ creditsViewModel: CreditsViewModel) {
+    init(_ creditsViewModel: CreditsViewModel, isDisabled: Bool) {
+        if isDisabled {
+            ownOverlayImage = ResourceManager.shared.getImage("Overlay")
+        }
         ownGradient = ConsumerCreditsCard.getCustomGradient(creditsViewModel)
     }
     static func getCustomGradient(_ creditsViewModel: CreditsViewModel) -> CAGradientLayer {
@@ -49,54 +52,35 @@ extension ConsumerCreditsCard {
 
         let consumerCreditsImage = getConsumerCreditsImageView(isDisabled: isDisabled)
         containerView.addSubview(consumerCreditsImage)
+        let vertialMargin = isDisabled ? 0 : -creditsImageHeight/2
         NSLayoutConstraint.activate([
             PXLayout.setWidth(owner: consumerCreditsImage, width: creditsImageWidth),
             PXLayout.setHeight(owner: consumerCreditsImage, height: creditsImageHeight),
             PXLayout.centerHorizontally(view: consumerCreditsImage),
-            PXLayout.centerVertically(view: consumerCreditsImage, to: containerView, withMargin: -creditsImageHeight/2)
+            PXLayout.centerVertically(view: consumerCreditsImage, to: containerView, withMargin: vertialMargin)
         ])
 
-        let titleLabel = getTitleLabel(creditsViewModel: creditsViewModel)
-        containerView.addSubview(titleLabel)
-        NSLayoutConstraint.activate([
-            PXLayout.pinLeft(view: titleLabel, to: containerView, withMargin: margins),
-            PXLayout.pinRight(view: titleLabel, to: containerView, withMargin: margins),
-            PXLayout.put(view: titleLabel, onBottomOf: consumerCreditsImage)
-        ])
+        if !isDisabled {
+            //TITLE LABEL
+            let titleLabel = getTitleLabel(creditsViewModel: creditsViewModel)
+            containerView.addSubview(titleLabel)
+            NSLayoutConstraint.activate([
+                PXLayout.pinLeft(view: titleLabel, to: containerView, withMargin: margins),
+                PXLayout.pinRight(view: titleLabel, to: containerView, withMargin: margins),
+                PXLayout.put(view: titleLabel, onBottomOf: consumerCreditsImage)
+            ])
 
-        let termsAndConditionsText = getTermsAndConditionsTextView()
-        containerView.addSubview(termsAndConditionsText)
-        NSLayoutConstraint.activate([
-            PXLayout.pinBottom(view: termsAndConditionsText, to: containerView, withMargin: margins - PXLayout.XXXS_MARGIN),
-            PXLayout.pinLeft(view: termsAndConditionsText, to: containerView, withMargin: margins),
-            PXLayout.pinRight(view: termsAndConditionsText, to: containerView, withMargin: margins)
-        ])
+            //TERMS AND CONDITIONS LABEL
+            let termsAndConditionsText = getTermsAndConditionsTextView(terms: creditsViewModel.displayInfo.bottomText)
+            containerView.addSubview(termsAndConditionsText)
+            NSLayoutConstraint.activate([
+                PXLayout.pinBottom(view: termsAndConditionsText, to: containerView, withMargin: margins - PXLayout.XXXS_MARGIN),
+                PXLayout.pinLeft(view: termsAndConditionsText, to: containerView, withMargin: margins),
+                PXLayout.pinRight(view: termsAndConditionsText, to: containerView, withMargin: margins)
+                ])
 
-        PXLayout.setHeight(owner: termsAndConditionsText, height: termsAndConditionsTextHeight).isActive = true
-        let tycText = creditsViewModel.displayInfo.bottomText.text
-        let attributedString = NSMutableAttributedString(string: tycText)
-
-        var phrases: [PXLinkablePhraseDto] = [PXLinkablePhraseDto]()
-        if let remotePhrases = creditsViewModel.displayInfo.bottomText.linkablePhrases {
-            phrases = remotePhrases
+            PXLayout.setHeight(owner: termsAndConditionsText, height: termsAndConditionsTextHeight).isActive = true
         }
-
-        for linkablePhrase in phrases {
-            if let customLink = linkablePhrase.link {
-                let tycLinkRange = (tycText as NSString).range(of: linkablePhrase.phrase)
-                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: tycLinkRange)
-                attributedString.addAttribute(NSAttributedString.Key.link, value: customLink, range: tycLinkRange)
-            } else if let customHtml = linkablePhrase.html {
-                let customLink = HtmlStorage.shared.set(customHtml)
-                let tycLinkRange = (tycText as NSString).range(of: linkablePhrase.phrase)
-                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: tycLinkRange)
-                attributedString.addAttribute(NSAttributedString.Key.link, value: customLink, range: tycLinkRange)
-            }
-        }
-
-        termsAndConditionsText.attributedText = attributedString
-        termsAndConditionsText.textAlignment = .center
-        termsAndConditionsText.textColor = .white
     }
 }
 
@@ -136,7 +120,7 @@ extension ConsumerCreditsCard {
         return titleLabel
     }
 
-    private func getTermsAndConditionsTextView() -> UITextView {
+    private func getTermsAndConditionsTextView(terms: PXTermsDto) -> UITextView {
         let termsAndConditionsText = UITextView()
         termsAndConditionsText.linkTextAttributes = [.foregroundColor: UIColor.white]
         termsAndConditionsText.delegate = self
@@ -144,6 +128,37 @@ extension ConsumerCreditsCard {
         termsAndConditionsText.isEditable = false
         termsAndConditionsText.backgroundColor = .clear
         termsAndConditionsText.translatesAutoresizingMaskIntoConstraints = false
+
+        let attributedString = getTermsAndConditionsText(terms: terms)
+        termsAndConditionsText.attributedText = attributedString
+        termsAndConditionsText.textAlignment = .center
+        termsAndConditionsText.textColor = .white
+
         return termsAndConditionsText
+    }
+
+    private func getTermsAndConditionsText(terms: PXTermsDto) -> NSAttributedString {
+        let tycText = terms.text
+        let attributedString = NSMutableAttributedString(string: tycText)
+
+        var phrases: [PXLinkablePhraseDto] = [PXLinkablePhraseDto]()
+        if let remotePhrases = terms.linkablePhrases {
+            phrases = remotePhrases
+        }
+
+        for linkablePhrase in phrases {
+            var customLink = linkablePhrase.link
+            if customLink == nil, let customHtml = linkablePhrase.html {
+                let htmlLink = HtmlStorage.shared.set(customHtml)
+                customLink = htmlLink
+            }
+            if let customLink = customLink {
+                let tycLinkRange = (tycText as NSString).range(of: linkablePhrase.phrase)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: tycLinkRange)
+                attributedString.addAttribute(NSAttributedString.Key.link, value: customLink, range: tycLinkRange)
+            }
+        }
+
+        return attributedString
     }
 }

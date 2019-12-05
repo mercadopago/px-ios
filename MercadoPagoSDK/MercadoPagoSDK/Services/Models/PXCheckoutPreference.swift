@@ -79,6 +79,15 @@ import Foundation
     open var collectorId: String?
 
     open var backUrls: PXBackUrls?
+    /**
+     Order id
+     */
+    open var orderId: String?
+    /**
+     Merchant Order id
+     */
+    open var merchantOrderId: String?
+
     internal var binaryModeEnabled: Bool = false
     internal var pxAdditionalInfo: PXAdditionalInfo?
 
@@ -106,7 +115,7 @@ import Foundation
         self.payer = PXPayer(email: payerEmail)
     }
 
-    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?) {
+    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?, orderId: String? = nil, merchantOrderId: String? = nil) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -123,6 +132,8 @@ import Foundation
         self.branchId = branchId
         self.marketplace = marketplace
         self.collectorId = collectorId
+        self.orderId = orderId
+        self.merchantOrderId = merchantOrderId
     }
 
     /// :nodoc:
@@ -142,6 +153,8 @@ import Foundation
         case branchId = "branch_id"
         case processingModes = "processing_modes"
         case collectorId = "collector_id"
+        case orderId = "order_id"
+        case merchantOrderId = "merchant_order_id"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -160,8 +173,10 @@ import Foundation
         let marketplace: String? = try container.decodeIfPresent(String.self, forKey: .marketplace)
         let collectorIdNumber: Int? = try container.decodeIfPresent(Int.self, forKey: .collectorId)
         let collectorIdString: String? = collectorIdNumber?.stringValue
+        let orderId: String? = try container.decodeIfPresent(String.self, forKey: .orderId)
+        let merchantOrderId: String? = try container.decodeIfPresent(String.self, forKey: .merchantOrderId)
 
-        self.init(id: PXCheckoutPreference.getIdOrDefaultValue(id), items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, branchId: branchId, processingModes: processingModes, collectorId: collectorIdString)
+        self.init(id: PXCheckoutPreference.getIdOrDefaultValue(id), items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, branchId: branchId, processingModes: processingModes, collectorId: collectorIdString, orderId: orderId, merchantOrderId: merchantOrderId)
 
         self.additionalInfo = try container.decodeIfPresent(String.self, forKey: .additionalInfo)
         populateAdditionalInfoModel()
@@ -185,6 +200,8 @@ import Foundation
         try container.encodeIfPresent(self.branchId, forKey: .branchId)
         try container.encodeIfPresent(self.processingModes, forKey: .processingModes)
         try container.encodeIfPresent(self.collectorId, forKey: .collectorId)
+        try container.encodeIfPresent(self.orderId, forKey: .orderId)
+        try container.encodeIfPresent(self.merchantOrderId, forKey: .merchantOrderId)
     }
 
     /// :nodoc:

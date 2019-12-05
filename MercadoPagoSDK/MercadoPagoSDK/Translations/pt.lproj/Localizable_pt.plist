@@ -640,13 +640,6 @@
 		<key>value</key>
 		<string>Não se preocupe, você pode usar outro meio para concluir o pagamento.</string>
 	</dict>
-	<key>disabled_screen_change_method_action</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Pagar com outro meio</string>
-	</dict>
 	<key>disabled_disclaimer_am</key>
 	<dict>
 		<key>comment</key>

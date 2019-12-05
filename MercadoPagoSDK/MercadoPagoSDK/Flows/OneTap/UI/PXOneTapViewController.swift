@@ -162,7 +162,7 @@ extension PXOneTapViewController {
             PXLayout.pinBottom(view: footerView, withMargin: bottomMargin).isActive = true
         }
 
-        if let selectedCard = selectedCard, selectedCard.isDisabled {
+        if let selectedCard = selectedCard, !selectedCard.status.enabled {
             loadingButtonComponent?.setDisabled()
         }
 
@@ -389,9 +389,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
         // Add card. - card o credits payment method selected
         let validData = targetModel.cardData != nil || targetModel.isCredits
-        let shouldDisplay = validData && !targetModel.isDisabled
+        let shouldDisplay = validData && targetModel.status.enabled
         if shouldDisplay {
             displayCard(targetModel: targetModel)
+            loadingButtonComponent?.setEnabled()
         } else {
             loadingButtonComponent?.setDisabled()
             headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: nil))
@@ -424,9 +425,23 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         }
     }
 
-    func disabledCardDidTap(isAccountMoney: Bool) {
-        let vc = PXDisabledViewController(isAccountMoney: isAccountMoney)
-        PXComponentFactory.Modal.show(viewController: vc, title: nil)
+    func disabledCardDidTap(status: PXStatus) {
+        showDisabledCardModal(status: status)
+    }
+
+    func showDisabledCardModal(status: PXStatus) {
+        guard let message = status.secondaryMessage?.message else {return}
+        let vc = PXOneTapDisabledViewController(text: message)
+        let buttonTitle = "px_dialog_detail_payment_method_disable_link".localized
+        PXComponentFactory.Modal.show(viewController: vc, title: nil, actionTitle: buttonTitle, actionBlock: {
+            //Select first item
+            self.slider.goToItemAt(index: 0, animated: false)
+            if let card = self.viewModel.getCardSliderViewModel().first {
+                self.newCardDidSelected(targetModel: card)
+            }
+        })
+
+        trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapDisabledModalPath(), treatAsViewController: false)
     }
 
     func addPaymentMethodCardDidTap() {
@@ -444,6 +459,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
 // MARK: Installment Row Info delegate.
 extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapInstallmentsSelectorProtocol {
+    func disabledCardTapped(status: PXStatus) {
+        showDisabledCardModal(status: status)
+    }
+
     func payerCostSelected(_ payerCost: PXPayerCost) {
         // Update cardSliderViewModel
         if let infoRow = installmentInfoRow, viewModel.updateCardSliderViewModel(newPayerCost: payerCost, forIndex: infoRow.getActiveRowIndex()) {

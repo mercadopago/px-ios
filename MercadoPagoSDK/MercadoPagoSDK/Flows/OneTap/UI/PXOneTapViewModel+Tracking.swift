@@ -11,15 +11,27 @@ extension PXOneTapViewModel {
     func getAvailablePaymentMethodForTracking() -> [Any] {
         var dic: [Any] = []
         if let expressData = expressData {
-            for expressItem in expressData {
+            for expressItem in expressData where expressItem.newCard == nil {
                 if expressItem.oneTapCard != nil {
                     dic.append(expressItem.getCardForTracking(amountHelper: amountHelper))
                 } else if expressItem.accountMoney != nil {
                     dic.append(expressItem.getAccountMoneyForTracking())
+                } else {
+                    dic.append(expressItem.getPaymentMethodForTracking())
                 }
             }
         }
         return dic
+    }
+
+    func getPaymentMethodsQuantityForTracking(enabled: Bool) -> Int {
+        var availablePMQuantity = 0
+        if let expressData = expressData {
+            for expressItem in expressData where expressItem.status.enabled == enabled && expressItem.newCard == nil {
+                availablePMQuantity += 1
+            }
+        }
+        return availablePMQuantity
     }
 
     func getInstallmentsScreenProperties(installmentData: PXInstallment, selectedCard: PXCardSliderViewModel) -> [String: Any] {
@@ -73,8 +85,11 @@ extension PXOneTapViewModel {
     func getOneTapScreenProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
         let availablePaymentMethods = getAvailablePaymentMethodForTracking()
+        let availablePMQuantity = getPaymentMethodsQuantityForTracking(enabled: true)
+        let disabledPMQuantity = getPaymentMethodsQuantityForTracking(enabled: false)
         properties["available_methods"] = availablePaymentMethods
-        properties["available_methods_quantity"] = availablePaymentMethods.count
+        properties["available_methods_quantity"] = availablePMQuantity
+        properties["disabled_methods_quantity"] = disabledPMQuantity
         properties["preference_amount"] = amountHelper.preferenceAmount
         properties["discount"] = amountHelper.getDiscountForTracking()
 

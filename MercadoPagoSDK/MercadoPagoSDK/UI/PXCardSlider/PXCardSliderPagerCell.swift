@@ -15,7 +15,6 @@ class PXCardSliderPagerCell: FSPagerViewCell {
 
     private lazy var cornerRadius: CGFloat = 11
     private var cardHeader: MLCardDrawerController?
-    private var warningBadgeIcon: UIView!
 
     @IBOutlet weak var containerView: UIView!
 
@@ -48,7 +47,6 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
-        addWarningBadge(isDisabled)
     }
 
     func addBottomMessageView(message: String?) {
@@ -92,13 +90,14 @@ extension PXCardSliderPagerCell {
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
         containerView.backgroundColor = .clear
-        cardHeader = MLCardDrawerController(EmptyCard(), PXCardDataFactory(), false)
+        let emptyCard = EmptyCard(title: title)
+        cardHeader = MLCardDrawerController(emptyCard, PXCardDataFactory(), false)
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: cardSize)
         cardHeader?.animated(false)
         cardHeader?.show()
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
-            EmptyCard.render(containerView: containerView)
+            emptyCard.render(containerView: containerView)
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
@@ -116,17 +115,15 @@ extension PXCardSliderPagerCell {
 
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
-            AccountMoneyCard.render(containerView: containerView, balanceText: balanceText, isDisabled: isDisabled, size: cardSize)
+            AccountMoneyCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
-        addWarningBadge(isDisabled)
     }
 
-
-    func renderConsumerCreditsCard(creditsViewModel: CreditsViewModel, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
-        consumerCreditCard = ConsumerCreditsCard(creditsViewModel)
+    func renderConsumerCreditsCard(creditsViewModel: CreditsViewModel, isDisabled: Bool, cardSize: CGSize) {
+        consumerCreditCard = ConsumerCreditsCard(creditsViewModel, isDisabled: isDisabled)
         guard let consumerCreditCard = consumerCreditCard else { return }
 
         containerView.layer.masksToBounds = false
@@ -148,19 +145,6 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
-        addWarningBadge(isDisabled)
-    }
-
-    func addWarningBadge(_ isDisabled: Bool) {
-        if isDisabled {
-            let image = ResourceManager.shared.getImage("warning_badge")
-            warningBadgeIcon = UIImageView(image: image)
-            containerView.insertSubview(warningBadgeIcon, at: 10)
-            PXLayout.setHeight(owner: warningBadgeIcon, height: 60).isActive = true
-            PXLayout.setWidth(owner: warningBadgeIcon, width: 60).isActive = true
-            PXLayout.pinTop(view: warningBadgeIcon, withMargin: -28).isActive = true
-            PXLayout.pinRight(view: warningBadgeIcon, withMargin: PXLayout.S_MARGIN).isActive = true
-        }
     }
 
     func flipToBack() {

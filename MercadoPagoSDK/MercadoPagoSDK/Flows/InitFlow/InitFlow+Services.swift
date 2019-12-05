@@ -43,12 +43,18 @@ extension InitFlow {
 
         let charges = self.model.amountHelper.chargeRules ?? []
 
+        //Add headers
+        var headers: [String: String] = [:]
+        if let prodId = model.properties.productId {
+            headers[MercadoPagoService.HeaderField.productId.rawValue] = prodId
+        }
+
         if let prefId = pref.id, prefId.isNotEmpty {
             // CLOSED PREFERENCE
-            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, headers: headers, callback: callback(_:), failure: failure(_:))
         } else {
             // OPEN PREFERENCE
-            serviceAdapter.getOpenPrefInitSearch(preference: pref, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getOpenPrefInitSearch(preference: pref, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, headers: headers, callback: callback(_:), failure: failure(_:))
         }
     }
 

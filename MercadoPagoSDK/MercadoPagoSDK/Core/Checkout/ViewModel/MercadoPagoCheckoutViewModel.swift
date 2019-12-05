@@ -238,17 +238,14 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         populateCheckoutStore()
-        let paymentMethodPluginsToShow = paymentMethodPlugins.filter { $0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true }
-
+        
         var customerOptions: [CustomerPaymentMethod]?
-        var pluginOptions: [PXPaymentMethodPlugin] = []
 
         if inRootGroupSelection() { // Solo se muestran las opciones custom y los plugines en root
             customerOptions = self.customPaymentOptions
-            pluginOptions = paymentMethodPluginsToShow
         }
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.availablePaymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig, disabledOption: disabledOption)
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethods: search?.availablePaymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig, disabledOption: disabledOption)
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {

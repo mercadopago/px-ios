@@ -1,3 +1,8 @@
+# v4.27
+🚀Private Release - 4.27 🚀
+MercadoPagoSDKV4 - Private Version
+- Disabled payment methods support
+
 # v4.26.1
 🚀Private Release - 4.26.1 🚀
 MercadoPagoSDKV4 - Private Version
