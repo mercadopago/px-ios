@@ -43,15 +43,27 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
      - parameter amountCharge: Amount charge for the assigned payment type.
      - parameter detailModal: Optional screen intended to be shown modally in order to give further details on why this charge applies to the current payment. This screen will pop up when the charges row is pressed.
      */
-    @objc public init(paymentTypeId: String, amountCharge: Double, detailModal: UIViewController? = nil, message: String? = nil) {
+    @objc public init(paymentTypeId: String, amountCharge: Double, detailModal: UIViewController? = nil) {
         self.paymentTypeId = paymentTypeId
         self.amountCharge = amountCharge
         self.detailModal = detailModal
-        self.message = amountCharge == 0 ? message : nil
+        self.message = nil
         super.init()
     }
 
-    required public init(from decoder:Decoder) throws {
+    /**
+     - parameter paymentTypeId: paymentTypeId for which the currrent charge applies.
+     - parameter message: Message that is shown whenever the amount is set to zero.
+     */
+    @objc public init(paymentTypeId: String, message: String) {
+        self.paymentTypeId = paymentTypeId
+        self.amountCharge = 0.0
+        self.detailModal = nil
+        self.message = message
+        super.init()
+    }
+
+    required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: PXPaymentTypeChargeRuleKeys.self)
         paymentTypeId = try values.decode(String.self, forKey: .paymentTypeId)
         amountCharge = try values.decode(Double.self, forKey: .amountCharge)
