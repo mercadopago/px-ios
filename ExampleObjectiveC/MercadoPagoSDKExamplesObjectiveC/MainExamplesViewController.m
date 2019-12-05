@@ -192,7 +192,7 @@
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
     PXPaymentTypeChargeRule* chargeAccountMoney = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"account_money" amountCharge:20];
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
-    PXPaymentTypeChargeRule* chargeZeroCreditCard = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"credit_card" amountCharge:0.0 detailModal:nil message:@"Ahorro con tu banco"];
+    PXPaymentTypeChargeRule* chargeZeroCreditCard = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"credit_card" message:@"Ahorro con tu banco"];
 
     [chargesArray addObject:chargeAccountMoney];
     [chargesArray addObject:chargeDebit];
