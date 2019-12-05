@@ -51,6 +51,7 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
         super.init()
     }
 
+    //Amount zero init with message
     /**
      - parameter paymentTypeId: paymentTypeId for which the currrent charge applies.
      - parameter message: Message that is shown whenever the amount is set to zero.
