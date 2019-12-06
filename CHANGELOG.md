@@ -1,3 +1,8 @@
+# v4.27.2
+🚀Private Release - 4.27.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Order ID & Merchant Order ID fix
+
 # v4.27.1
 🚀Private Release - 4.27.1 🚀
 MercadoPagoSDKV4 - Private Version
