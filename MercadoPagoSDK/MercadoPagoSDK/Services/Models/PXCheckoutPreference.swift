@@ -82,11 +82,11 @@ import Foundation
     /**
      Order id
      */
-    open var orderId: String?
+    open var orderId: Int?
     /**
      Merchant Order id
      */
-    open var merchantOrderId: String?
+    open var merchantOrderId: Int?
 
     internal var binaryModeEnabled: Bool = false
     internal var pxAdditionalInfo: PXAdditionalInfo?
@@ -115,7 +115,7 @@ import Foundation
         self.payer = PXPayer(email: payerEmail)
     }
 
-    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?, orderId: String? = nil, merchantOrderId: String? = nil) {
+    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?, orderId: Int? = nil, merchantOrderId: Int? = nil) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -173,8 +173,8 @@ import Foundation
         let marketplace: String? = try container.decodeIfPresent(String.self, forKey: .marketplace)
         let collectorIdNumber: Int? = try container.decodeIfPresent(Int.self, forKey: .collectorId)
         let collectorIdString: String? = collectorIdNumber?.stringValue
-        let orderId: String? = try container.decodeIfPresent(String.self, forKey: .orderId)
-        let merchantOrderId: String? = try container.decodeIfPresent(String.self, forKey: .merchantOrderId)
+        let orderId: Int? = try container.decodeIfPresent(Int.self, forKey: .orderId)
+        let merchantOrderId: Int? = try container.decodeIfPresent(Int.self, forKey: .merchantOrderId)
 
         self.init(id: PXCheckoutPreference.getIdOrDefaultValue(id), items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, branchId: branchId, processingModes: processingModes, collectorId: collectorIdString, orderId: orderId, merchantOrderId: merchantOrderId)
 
