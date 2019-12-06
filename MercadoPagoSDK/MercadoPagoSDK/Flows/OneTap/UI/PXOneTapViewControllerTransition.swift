@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MLCardForm
 
 class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
@@ -16,9 +17,9 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         if let fromVC = transitionContext.viewController(forKey: .from) as? PXOneTapViewController,
-            let toVC = transitionContext.viewController(forKey: .to) as? NewCardAssociationViewController {
+            let toVC = transitionContext.viewController(forKey: .to) as? MLCardFormViewController {
             animateFromOneTap(transitionContext: transitionContext, oneTapVC: fromVC, addCardVC: toVC)
-        } else if let fromVC = transitionContext.viewController(forKey: .from) as? NewCardAssociationViewController,
+        } else if let fromVC = transitionContext.viewController(forKey: .from) as? MLCardFormViewController,
             let toVC = transitionContext.viewController(forKey: .to) as? PXOneTapViewController {
             animateToOneTap(transitionContext: transitionContext, oneTapVC: toVC, addCardVC: fromVC)
         } else {

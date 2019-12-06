@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MLCardForm
 
 final class PXOneTapViewController: PXComponentContainerViewController {
 
@@ -429,10 +430,21 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
-            let cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
-            cardFormController.delegate = self
-            navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormController,
-                                                 animated: true)
+            let trackingConfiguration = MLCardFormTrackerConfiguration(delegate: self, flowName: nil, flowDetails: nil, sessionId: nil)
+            let builder = MLCardFormBuilder(publicKey: "APP_USR-ba2e6b8c-8b6d-4fc3-8a47-0ab241d0dba4", lifeCycleDelegate: self)
+            builder.setPrivateKey(privateKey: "APP_USR-6519316523937252-070516-964fafa7e2c91a2c740155fcb5474280__LA_LD__-261748045")
+            builder.setSiteId(siteId: "MLA")
+            builder.setLanguage(language: Localizator.sharedInstance.getLanguage())
+            builder.setExcludedPaymentTypes(excludedPaymentTypes: ["ticket"])
+            builder.setTrackingConfiguration(trackingConfiguration: trackingConfiguration)
+
+            let cardFormVC = MLCardForm(builder: builder).setupController()
+            navigationController?.pushViewController(cardFormVC, animated: true)
+
+//            let cardFormController = NewCardAssociationViewController(model: "modelo de prueba")
+//            cardFormController.delegate = self
+//            navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormController,
+//                                                 animated: true)
             //navigationController?.pushViewController(cardFormController, animated: true)
         }
     }
@@ -639,11 +651,30 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     }
 }
 
+extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
+    func didAddCard(cardID: String) {
+        if let navigationController = navigationController {
+            navigationController.popViewController(animated: true)
+        }
+    }
+}
+
+extension PXOneTapViewController: MLCardFormTrackerDelegate {
+    func trackScreen(screenName: String, extraParams: [String: Any]?) {
+        // Track screen
+    }
+
+    func trackEvent(screenName: String?, action: String, result: String?, extraParams: [String: Any]?) {
+        // Track event
+    }
+}
+
 extension PXOneTapViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
         //if fromVC is PaymentVaultViewController || toVC is PaymentVaultViewController {
-        if fromVC is NewCardAssociationViewController || toVC is NewCardAssociationViewController {
+        //if fromVC is NewCardAssociationViewController || toVC is NewCardAssociationViewController {
+        if fromVC is MLCardFormViewController || toVC is MLCardFormViewController {
             return PXOneTapViewControllerTransition()
         }
         return nil
