@@ -436,6 +436,7 @@
 				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
 				"${BUILT_PRODUCTS_DIR}/MLBusinessComponents/MLBusinessComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/MLCardDrawer/MLCardDrawer.framework",
+				"${BUILT_PRODUCTS_DIR}/MLCardForm/MLCardForm.framework",
 				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/MercadoPagoSDK/MercadoPagoSDK.framework",
 			);
@@ -445,6 +446,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLBusinessComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLCardDrawer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLCardForm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoSDK.framework",
 			);
