@@ -657,7 +657,7 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     func shouldOpenTermsCondition(_ title: String, url: URL) {
         let webVC = WebViewController(url: url, navigationBarTitle: title)
         webVC.title = title
-        self.navigationController?.pushViewController(webVC, animated: true)
+        navigationController?.pushViewController(webVC, animated: true)
     }
 }
 
@@ -672,10 +672,12 @@ extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
 extension PXOneTapViewController: MLCardFormTrackerDelegate {
     func trackScreen(screenName: String, extraParams: [String: Any]?) {
         // Track screen
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: extraParams ?? [:])
     }
 
     func trackEvent(screenName: String?, action: String, result: String?, extraParams: [String: Any]?) {
         // Track event
+        MPXTracker.sharedInstance.trackEvent(path: screenName ?? "", properties: extraParams ?? [:])
     }
 }
 
