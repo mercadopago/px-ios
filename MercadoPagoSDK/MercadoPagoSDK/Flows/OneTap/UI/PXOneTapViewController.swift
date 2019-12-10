@@ -431,12 +431,11 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
             let trackingConfiguration = MLCardFormTrackerConfiguration(delegate: self, flowName: nil, flowDetails: nil, sessionId: nil)
-            let builder = MLCardFormBuilder(publicKey: "APP_USR-ba2e6b8c-8b6d-4fc3-8a47-0ab241d0dba4", lifeCycleDelegate: self)
-            builder.setPrivateKey(privateKey: "APP_USR-6519316523937252-070516-964fafa7e2c91a2c740155fcb5474280__LA_LD__-261748045")
-            builder.setSiteId(siteId: "MLA")
-            builder.setLanguage(language: Localizator.sharedInstance.getLanguage())
-            builder.setExcludedPaymentTypes(excludedPaymentTypes: ["ticket"])
-            builder.setTrackingConfiguration(trackingConfiguration: trackingConfiguration)
+            let builder = MLCardFormBuilder(publicKey: "APP_USR-ba2e6b8c-8b6d-4fc3-8a47-0ab241d0dba4", siteId: "MLA", lifeCycleDelegate: self)
+            //builder.setPrivateKey(privateKey: "APP_USR-6519316523937252-070516-964fafa7e2c91a2c740155fcb5474280__LA_LD__-261748045")
+            builder.setLanguage(Localizator.sharedInstance.getLanguage())
+            builder.setExcludedPaymentTypes(["ticket"])
+            builder.setTrackingConfiguration(trackingConfiguration)
 
             let cardFormVC = MLCardForm(builder: builder).setupController()
             navigationController?.pushViewController(cardFormVC, animated: true)
