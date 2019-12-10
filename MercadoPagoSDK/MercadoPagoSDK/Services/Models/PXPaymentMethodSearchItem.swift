@@ -16,8 +16,9 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
     open var children: [PXPaymentMethodSearchItem] = []
     open var childrenHeader: String?
     open var showIcon: Bool?
+    open var icon: Int?
 
-    public init(id: String, type: String?, description: String?, comment: String?, children: [PXPaymentMethodSearchItem], childrenHeader: String?, showIcon: Bool?) {
+    public init(id: String, type: String?, description: String?, comment: String?, children: [PXPaymentMethodSearchItem], childrenHeader: String?, showIcon: Bool?, icon: Int?) {
         self.id = id
         self.type = type
         self._description = description
@@ -25,6 +26,7 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
         self.children = children
         self.childrenHeader = childrenHeader
         self.showIcon = showIcon
+        self.icon = icon
     }
 
     public enum PXPaymentMethodSearchItemKeys: String, CodingKey {
@@ -35,6 +37,7 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
         case children
         case childrenHeader = "children_header"
         case showIcon = "show_icon"
+        case icon
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -46,8 +49,9 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
         let children: [PXPaymentMethodSearchItem] = try container.decodeIfPresent([PXPaymentMethodSearchItem].self, forKey: .children) ?? []
         let childrenHeader: String? = try container.decodeIfPresent(String.self, forKey: .childrenHeader)
         let showIcon: Bool? = try container.decodeIfPresent(Bool.self, forKey: .showIcon)
+        let icon: Int? = try container.decodeIfPresent(Int.self, forKey: .icon)
 
-        self.init(id: id, type: type, description: description, comment: comment, children: children, childrenHeader: childrenHeader, showIcon: showIcon)
+        self.init(id: id, type: type, description: description, comment: comment, children: children, childrenHeader: childrenHeader, showIcon: showIcon, icon: icon)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -59,7 +63,7 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
         try container.encodeIfPresent(self.children, forKey: .children)
         try container.encodeIfPresent(self.childrenHeader, forKey: .childrenHeader)
         try container.encodeIfPresent(self.showIcon, forKey: .showIcon)
-
+        try container.encodeIfPresent(self.icon, forKey: .icon)
     }
 
     open func toJSONString() throws -> String? {

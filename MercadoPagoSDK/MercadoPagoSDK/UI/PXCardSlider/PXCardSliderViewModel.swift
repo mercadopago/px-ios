@@ -22,12 +22,13 @@ final class PXCardSliderViewModel {
     var displayMessage: NSAttributedString?
     var amountConfiguration: PXAmountConfiguration?
     let creditsViewModel: PXCreditsViewModel?
-    var isDisabled: Bool
+    let status: PXStatus
     var isCredits: Bool {
         return self.paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue
     }
+    var bottomMessage: String?
 
-    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: PXCreditsViewModel? = nil, isDisabled: Bool) {
+    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: PXCreditsViewModel? = nil, status: PXStatus, bottomMessage: String? = nil) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.issuerId = issuerId
@@ -36,10 +37,11 @@ final class PXCardSliderViewModel {
         self.payerCost = payerCost
         self.selectedPayerCost = selectedPayerCost
         self.cardId = cardId
-        self.shouldShowArrow = isDisabled ? false : shouldShowArrow
+        self.shouldShowArrow = !status.enabled ? false : shouldShowArrow
         self.amountConfiguration = amountConfiguration
         self.creditsViewModel = creditsViewModel
-        self.isDisabled = isDisabled
+        self.status = status
+        self.bottomMessage = bottomMessage
     }
 }
 

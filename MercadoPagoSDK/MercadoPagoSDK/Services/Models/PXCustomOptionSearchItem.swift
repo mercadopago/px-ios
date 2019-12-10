@@ -14,9 +14,9 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var paymentMethodId: String?
     open var paymentTypeId: String?
     open var discountInfo: String?
-    open var defaultAmountConfiguration: String?
-    open var selectedAmountConfiguration: PXAmountConfiguration?
-    open var amountConfigurations: [String: PXAmountConfiguration]?
+    open var couponToApply: String?
+    open var selectedPaymentOption: PXAmountConfiguration?
+    open var paymentOptions: [String: PXAmountConfiguration]?
     open var comment: String?
     open var issuer: PXIssuer?
     open var firstSixDigits: String
@@ -28,15 +28,15 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.discountInfo = discountInfo
-        self.defaultAmountConfiguration = defaultAmountConfiguration
-        self.amountConfigurations = amountConfigurations
+        self.couponToApply = defaultAmountConfiguration
+        self.paymentOptions = amountConfigurations
         self.comment = comment
         self.issuer = issuer
         self.firstSixDigits = firstSixDigits
         self.lastFourDigits = lastFourDigits
 
         if let defaultAmountConfiguration = defaultAmountConfiguration, let selectedPayerCostConfiguration = amountConfigurations?[defaultAmountConfiguration] {
-            self.selectedAmountConfiguration = selectedPayerCostConfiguration
+            self.selectedPaymentOption = selectedPayerCostConfiguration
         }
     }
 
@@ -46,8 +46,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         case paymentMethodId = "payment_method_id"
         case paymentTypeId = "payment_type_id"
         case discountInfo = "discount_info"
-        case defaultAmountConfiguration = "default_amount_configuration"
-        case amountConfigurations = "amount_configurations"
+        case couponToApply = "coupon_to_apply"
+        case paymentOptions = "payment_options"
         case comment = "comment"
         case firstSixDigits = "first_six_digits"
         case lastFourDigits = "last_four_digits"
@@ -62,8 +62,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
         let comment: String? = try container.decodeIfPresent(String.self, forKey: .comment)
         let discountInfo: String? = try container.decodeIfPresent(String.self, forKey: .discountInfo)
-        let defaultAmountConfiguration: String? = try container.decodeIfPresent(String.self, forKey: .defaultAmountConfiguration)
-        let amountConfigurations: [String: PXAmountConfiguration]? = try container.decodeIfPresent([String: PXAmountConfiguration].self, forKey: .amountConfigurations)
+        let defaultAmountConfiguration: String? = try container.decodeIfPresent(String.self, forKey: .couponToApply)
+        let amountConfigurations: [String: PXAmountConfiguration]? = try container.decodeIfPresent([String: PXAmountConfiguration].self, forKey: .paymentOptions)
         let issuer: PXIssuer? = try container.decodeIfPresent(PXIssuer.self, forKey: .issuer)
         let lastFourDigits: String = try container.decodeIfPresent(String.self, forKey: .lastFourDigits) ?? ""
         let firstSixDigits: String = try container.decodeIfPresent(String.self, forKey: .firstSixDigits) ?? ""
@@ -78,8 +78,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         try container.encodeIfPresent(self.paymentMethodId, forKey: .paymentMethodId)
         try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
         try container.encodeIfPresent(self.discountInfo, forKey: .discountInfo)
-        try container.encodeIfPresent(self.defaultAmountConfiguration, forKey: .defaultAmountConfiguration)
-        try container.encodeIfPresent(self.amountConfigurations, forKey: .amountConfigurations)
+        try container.encodeIfPresent(self.couponToApply, forKey: .couponToApply)
+        try container.encodeIfPresent(self.paymentOptions, forKey: .paymentOptions)
         try container.encodeIfPresent(self.comment, forKey: .comment)
         try container.encodeIfPresent(self.issuer, forKey: .issuer)
         try container.encodeIfPresent(self.firstSixDigits, forKey: .firstSixDigits)

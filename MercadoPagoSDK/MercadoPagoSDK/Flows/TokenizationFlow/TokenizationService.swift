@@ -125,16 +125,10 @@ internal class TokenizationService {
             self.resultHandler?.finishFlow(token: token)
 
         }, failure: { (error) in
-
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-
-            if let apiException = error.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) || apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
-                self.trackInvalidESC(error: error, cardId: savedESCCardToken.cardId, esc_length: savedESCCardToken.esc?.count)
-                self.escManager?.deleteESC(cardId: savedESCCardToken.cardId)
-                self.resultHandler?.finishWithESCError()
-            } else {
-                self.resultHandler?.finishWithError(error: error, securityCode: nil)
-            }
+            self.trackInvalidESC(error: error, cardId: savedESCCardToken.cardId, esc_length: savedESCCardToken.esc?.count)
+            self.escManager?.deleteESC(cardId: savedESCCardToken.cardId)
+            self.resultHandler?.finishWithESCError()
         })
     }
 

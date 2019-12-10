@@ -304,3 +304,12 @@
 "días hábiles" = "business days";
 "hora" = "hour";
 "horas" = "hours";
+
+// Disabled payment methods
+"px_disabled_main_message" = "You can not use this payment method";
+"px_dialog_detail_payment_method_disable_link" = "Pay with a different method";
+"px_dialog_detail_payment_method_disable_high_risk" = "We rejected your payment.\n\nTry paying with a different payment method.";
+"px_dialog_detail_payment_method_disable_black_list" = "We rejected the payment with this card.\n\nTry paying with a different payment method.";
+"px_dialog_detail_payment_method_disable_insufficient_amount" = "Your funds are insufficient or you exceeded the purchase limit.\n\nTry paying with a different payment method.";
+"px_payment_method_disable_title" = "You can not use this payment method";
+

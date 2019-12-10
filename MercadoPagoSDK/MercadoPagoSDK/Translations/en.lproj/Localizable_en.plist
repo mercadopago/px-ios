@@ -401,13 +401,6 @@
 		<key>value</key>
 		<string>Don’t worry, you can use another method to complete the payment.</string>
 	</dict>
-	<key>disabled_screen_change_method_action</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Pay with a different method</string>
-	</dict>
 	<key>disabled_disclaimer_am</key>
 	<dict>
 		<key>comment</key>

@@ -9,6 +9,7 @@ import Foundation
 import MLCardDrawer
 
 class EmptyCard: NSObject, CardUI {
+    let title: PXText?
     var placeholderName = ""
     var placeholderExpiration = ""
     var bankImage: UIImage?
@@ -20,10 +21,14 @@ class EmptyCard: NSObject, CardUI {
     var defaultUI = true
     var securityCodePattern = 3
     var fontType: String = "dark"
+
+    init(title: PXText? = nil) {
+        self.title = title
+    }
 }
 
 extension EmptyCard {
-    static func render(containerView: UIView) {
+    func render(containerView: UIView) {
         let circleView = UIView()
         let circleSize: CGFloat = 60
         containerView.addSubview(circleView)
@@ -36,9 +41,8 @@ extension EmptyCard {
         PXLayout.centerHorizontally(view: circleView).isActive = true
 
         let label = UILabel()
-        label.text = "onetap_add_new_card_title".localized_beta
-        label.font = Utils.getFont(size: PXLayout.XXS_FONT)
-        label.textColor = ThemeManager.shared.getAccentColor()
+        let textColor = ThemeManager.shared.getAccentColor()
+        label.attributedText = title?.getAttributedString(fontSize: PXLayout.XXS_FONT, textColor: textColor, backgroundColor: .clear)
         label.textAlignment = .center
         containerView.addSubview(label)
         PXLayout.pinLeft(view: label, withMargin: 0).isActive = true

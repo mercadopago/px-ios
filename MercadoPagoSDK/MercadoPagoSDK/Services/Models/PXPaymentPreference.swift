@@ -7,10 +7,11 @@
 //
 
 import Foundation
+
 /// :nodoc:
 open class PXPaymentPreference: NSObject, Codable {
 
-    open var maxAcceptedInstallments: Int = 0
+    open var maxAcceptedInstallments: Int = 1
     open var defaultInstallments: Int?
     open var excludedPaymentMethodIds: [String] = []
     open var excludedPaymentTypeIds: [String] = []
@@ -80,11 +81,19 @@ open class PXPaymentPreference: NSObject, Codable {
         var container = encoder.container(keyedBy: PXPaymentPreferenceKeys.self)
         try container.encodeIfPresent(self.defaultInstallments, forKey: .defaultInstallments)
         try container.encodeIfPresent(self.maxAcceptedInstallments, forKey: .maxAcceptedInstallments)
-        try container.encodeIfPresent(self.excludedPaymentMethodIds, forKey: .excludedPaymentMethodIds)
-        try container.encodeIfPresent(self.excludedPaymentTypeIds, forKey: .excludedPaymentTypeIds)
+        try container.encodeIfPresent(getExclusionsFormatted(exclusions: self.excludedPaymentMethodIds), forKey: .excludedPaymentMethodIds)
+        try container.encodeIfPresent(getExclusionsFormatted(exclusions: self.excludedPaymentTypeIds), forKey: .excludedPaymentTypeIds)
         try container.encodeIfPresent(self.defaultPaymentMethodId, forKey: .defaultPaymentMethodId)
         try container.encodeIfPresent(self.defaultPaymentTypeId, forKey: .defaultPaymentTypeId)
 
+    }
+
+    private func getExclusionsFormatted(exclusions: [String]) -> [PXExcludedPaymentMethod] {
+        var formattedExlusions = [PXExcludedPaymentMethod]()
+        for exclusionId in exclusions {
+            formattedExlusions.append(PXExcludedPaymentMethod(id: exclusionId))
+        }
+        return formattedExlusions
     }
 
     open func toJSONString() throws -> String? {

@@ -1,3 +1,33 @@
+# v4.27.2
+🚀Private Release - 4.27.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Order ID & Merchant Order ID fix 
+
+# v4.27.1
+🚀Private Release - 4.27.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Charge rule message support
+
+# v4.27
+🚀Private Release - 4.27 🚀
+MercadoPagoSDKV4 - Private Version
+- Disabled payment methods support
+
+# v4.26.1
+🚀Private Release - 4.26.1 🚀
+MercadoPagoSDKV4 - Private Version
+- PXExperiments ID fix
+
+# v4.26
+🚀Private Release - 4.26 🚀
+MercadoPagoSDKV4 - Private Version
+- New init endpoint
+
+# v4.24.3
+🚀Private Release - 4.24.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Payment IDs fix
+
 # v4.24.2
 🚀Private Release - 4.24.2 🚀
 MercadoPagoSDKV4 - Private Version

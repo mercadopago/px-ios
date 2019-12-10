@@ -101,7 +101,7 @@ internal struct IdentificationTypeValidator: Validator {
         guard let identificationTypes = identificationTypes else {
             return nil
         }
-        if let site = SiteManager.shared.getSite(), site == .MLB {
+        if let site = SiteManager.shared.getSite(), site.id == "MLB" {
             return identificationTypes.filter { $0.id == BoletoType.cpf.rawValue }
         }
         return identificationTypes

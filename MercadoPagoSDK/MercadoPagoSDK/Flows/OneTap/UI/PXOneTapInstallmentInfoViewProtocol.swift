@@ -10,4 +10,5 @@ import Foundation
 protocol PXOneTapInstallmentInfoViewProtocol: NSObjectProtocol {
     func hideInstallments()
     func showInstallments(installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?)
+    func disabledCardTapped(status: PXStatus)
 }

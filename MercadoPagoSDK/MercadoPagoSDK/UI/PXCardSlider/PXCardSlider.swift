@@ -32,22 +32,28 @@ extension PXCardSlider: FSPagerViewDataSource {
         if model.indices.contains(index) {
             let targetModel = model[index]
             if let cardData = targetModel.cardData, let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
+                let bottomMessage = targetModel.bottomMessage
+
                 if targetModel.cardUI is AccountMoneyCard {
                     // AM card.
-                    cell.renderAccountMoneyCard(balanceText: cardData.name, isDisabled: targetModel.isDisabled, cardSize: pagerView.itemSize)
-
-                  } else if let oneTapCreditsInfo = targetModel.creditsViewModel, targetModel.cardUI is ConsumerCreditsCard {
+                    cell.renderAccountMoneyCard(isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage)
+                } else if let oneTapCreditsInfo = targetModel.creditsViewModel, targetModel.cardUI is ConsumerCreditsCard {
                     cell.delegate = self
-                    cell.renderConsumerCreditsCard(creditsViewModel: oneTapCreditsInfo, isDisabled: targetModel.isDisabled, cardSize: pagerView.itemSize)
+                    cell.renderConsumerCreditsCard(creditsViewModel: oneTapCreditsInfo, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage)
                 } else {
                     // Other cards.
-                    cell.render(withCard: targetModel.cardUI, cardData: cardData, isDisabled: targetModel.isDisabled, cardSize: pagerView.itemSize)
+                    cell.render(withCard: targetModel.cardUI, cardData: cardData, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage)
                 }
                 return cell
             } else {
                 // Add new card scenario.
                 if let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
-                    cell.renderEmptyCard(cardSize: pagerView.itemSize)
+
+                    var title: PXText?
+                    if let emptyCard = targetModel.cardUI as? EmptyCard {
+                        title = emptyCard.title
+                    }
+                    cell.renderEmptyCard(title: title, cardSize: pagerView.itemSize)
                     return cell
                 }
             }
@@ -82,8 +88,8 @@ extension PXCardSlider: FSPagerViewDelegate {
         if model.indices.contains(index) {
             let modelData = model[index]
 
-            if modelData.isDisabled {
-                delegate?.disabledCardDidTap(isAccountMoney: !modelData.isCard())
+            if !modelData.status.enabled {
+                delegate?.disabledCardDidTap(status: modelData.status)
             }
 
             if modelData.cardData == nil {
@@ -173,5 +179,10 @@ extension PXCardSlider {
 extension PXCardSlider: PXTermsAndConditionViewDelegate {
     func shouldOpenTermsCondition(_ title: String, url: URL) {
         termsAndCondDelegate?.shouldOpenTermsCondition(title, url: url)
+    }
+
+    func goToItemAt(index: Int, animated: Bool) {
+        pagerView.scrollToItem(at: index, animated: animated)
+        pageControl.currentPage = index
     }
 }

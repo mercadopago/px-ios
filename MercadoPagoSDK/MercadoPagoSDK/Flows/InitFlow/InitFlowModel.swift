@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PXPaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, escManager: MercadoPagoESC?, privateKey: String?)
+internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PXInitDTO?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, escManager: MercadoPagoESC?, privateKey: String?, productId: String?)
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?, apiException: ApiException?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
@@ -19,16 +19,12 @@ internal protocol InitFlowProtocol: NSObjectProtocol {
 final class InitFlowModel: NSObject, PXFlowModel {
     enum Steps: String {
         case ERROR = "Error"
-        case SERVICE_GET_PREFERENCE = "Obtener datos de preferencia"
-        case ACTION_VALIDATE_PREFERENCE = "Validación de preferencia"
-        case SERVICE_GET_PAYMENT_METHODS = "Obtener medios de pago"
-        case SERVICE_PAYMENT_METHOD_PLUGIN_INIT = "Iniciando plugin de pago"
+        case SERVICE_GET_INIT = "Obtener preferencia y medios de pago"
         case FINISH = "Finish step"
     }
 
     private var preferenceValidated: Bool = false
     private var needPaymentMethodPluginInit = true
-    private var loadPreferenceStatus: Bool
     private var directDiscountSearchStatus: Bool
     private var flowError: InitFlowError?
     private var pendingRetryStep: Steps?
@@ -43,7 +39,6 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     init(flowProperties: InitFlowProperties) {
         self.properties = flowProperties
-        self.loadPreferenceStatus = !String.isNullOrEmpty(flowProperties.checkoutPreference.id)
         self.directDiscountSearchStatus = flowProperties.paymentData.isComplete()
         super.init()
     }
@@ -73,9 +68,7 @@ extension InitFlowModel {
     }
 
     func setError(error: InitFlowError) {
-        if error.errorStep != .SERVICE_PAYMENT_METHOD_PLUGIN_INIT {
-            flowError = error
-        }
+        flowError = error
     }
 
     func resetError() {
@@ -112,11 +105,11 @@ extension InitFlowModel {
         return properties.checkoutPreference.getExcludedPaymentMethodsIds()
     }
 
-    func updateInitModel(paymentMethodsResponse: PXPaymentMethodSearch?) {
+    func updateInitModel(paymentMethodsResponse: PXInitDTO?) {
         properties.paymentMethodSearchResult = paymentMethodsResponse
     }
 
-    func getPaymentMethodSearch() -> PXPaymentMethodSearch? {
+    func getPaymentMethodSearch() -> PXInitDTO? {
         return properties.paymentMethodSearchResult
     }
 
@@ -136,48 +129,25 @@ extension InitFlowModel {
             pendingRetryStep = nil
             return retryStep
         }
-
         if hasError() {
             return .ERROR
         }
-
-        if needLoadPreference() {
-            loadPreferenceStatus = false
-            return .SERVICE_GET_PREFERENCE
-        }
-
-        if needValidatePreference() {
-            preferenceValidated = true
-            return .ACTION_VALIDATE_PREFERENCE
-        }
-
-        if needToInitPaymentMethodPlugins() {
-            return .SERVICE_PAYMENT_METHOD_PLUGIN_INIT
-        }
-
         if needSearch() {
-            return .SERVICE_GET_PAYMENT_METHODS
+            return .SERVICE_GET_INIT
         }
-
         return .FINISH
     }
 }
 
 // MARK: Needs methods
 extension InitFlowModel {
-    private func needLoadPreference() -> Bool {
-        return loadPreferenceStatus
-    }
 
-    private func needValidatePreference() -> Bool {
-        return !loadPreferenceStatus && !preferenceValidated
-    }
-
-    private func needToInitPaymentMethodPlugins() -> Bool {
-        if properties.paymentMethodPlugins.isEmpty {
-            return false
+    // Use this method for init property.
+    func needSkipRyC() -> Bool {
+        if let paymentProc = properties.paymentPlugin, let shouldSkip = paymentProc.shouldSkipUserConfirmation, shouldSkip() {
+            return true
         }
-        return needPaymentMethodPluginInit
+        return false
     }
 
     private func needSearch() -> Bool {

@@ -43,83 +43,68 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, splitEnabled: String, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, maxInstallments: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        var params = MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
-        let roundedAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: amount)
+    internal func getInit(closedPref: Bool, prefId: String?, params: String, bodyJSON: Data?, headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        params.paramsAppend(key: ApiParam.AMOUNT, value: roundedAmount.stringValue)
-
-        let newExcludedPaymentTypesIds = excludedPaymentTypeIds
-
-        if newExcludedPaymentTypesIds.count > 0 {
-            let excludedPaymentTypesParams = newExcludedPaymentTypesIds.map({ $0 }).joined(separator: ",")
-            params.paramsAppend(key: ApiParam.EXCLUDED_PAYMET_TYPES, value: String(excludedPaymentTypesParams).trimSpaces())
+        var uri = PXServicesURLConfigs.MP_INIT_URI
+        if closedPref, let prefId = prefId {
+            uri.append("/")
+            uri.append(prefId)
         }
 
-        if excludedPaymentMethodIds.count > 0 {
-            let excludedPaymentMethodsParams = excludedPaymentMethodIds.joined(separator: ",")
-            params.paramsAppend(key: ApiParam.EXCLUDED_PAYMENT_METHOD, value: excludedPaymentMethodsParams.trimSpaces())
-        }
+        self.request(uri: uri, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
+            headers, cache: false, success: { (data) -> Void in
+                do {
 
-        if let defaultPaymenMethodId = defaultPaymenMethodId {
-            params.paramsAppend(key: ApiParam.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
-        }
+                    let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                    if let paymentSearchDic = jsonResult as? NSDictionary {
+                        if paymentSearchDic["error"] != nil {
+                            let apiException = try PXApiException.fromJSON(data: data)
+                            failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"], apiException: apiException))
+                        } else {
 
-        if let customDefaultInstallments = defaultInstallments {
-            params.paramsAppend(key: ApiParam.DEFAULT_INSTALLMENTS, value: customDefaultInstallments)
-        }
-
-        if let customMaxInstallments = maxInstallments {
-            params.paramsAppend(key: ApiParam.MAX_INSTALLMENTS, value: customMaxInstallments)
-        }
-
-        params.paramsAppend(key: ApiParam.EMAIL, value: customerEmail)
-        params.paramsAppend(key: ApiParam.CUSTOMER_ID, value: customerId)
-        params.paramsAppend(key: ApiParam.SITE_ID, value: site.id)
-        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
-        params.paramsAppend(key: ApiParam.DIFFERENTIAL_PRICING_ID, value: differentialPricingId)
-
-        if let cardsWithEscParams = cardsWithEsc?.map({ $0 }).joined(separator: ",") {
-            params.paramsAppend(key: "cards_esc", value: cardsWithEscParams)
-        }
-
-        if let supportedPluginsParams = supportedPlugins?.map({ $0 }).joined(separator: ",") {
-            params.paramsAppend(key: "support_plugins", value: supportedPluginsParams)
-        }
-
-        params.paramsAppend(key: "express_enabled", value: expressEnabled)
-
-        params.paramsAppend(key: "split_payment_enabled", value: splitEnabled)
-
-        let body = PXPaymentMethodSearchBody(privateKey: payer.accessToken, email: payer.email, marketplace: marketplace, productId: discountParamsConfiguration?.productId, labels: discountParamsConfiguration?.labels, charges: charges, processingModes: processingModes, branchId: branchId)
-        let bodyJSON = try? body.toJSON()
-
-        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: bodyJSON, method: HTTPMethod.post, cache: false, success: { (data) -> Void in
-            do {
-
-            let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-            if let paymentSearchDic = jsonResult as? NSDictionary {
-                if paymentSearchDic["error"] != nil {
-                    let apiException = try PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"], apiException: apiException))
-                } else {
-
-                    if paymentSearchDic.allKeys.count > 0 {
-                        let paymentSearch = try PXPaymentMethodSearch.fromJSON(data: data)
-                        success(paymentSearch)
-                    } else {
-                        failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
+                            if paymentSearchDic.allKeys.count > 0 {
+                                let openPrefInit = try PXInitDTO.fromJSON(data: data)
+                                success(openPrefInit)
+                            } else {
+                                failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
+                            }
+                        }
                     }
+                } catch {
+                    failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
                 }
-                }
-            } catch {
-                failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
-            }
 
         }, failure: { (_) -> Void in
             failure(PXError(domain: ApiDomain.GET_PAYMENT_METHODS, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 
+
+
+    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+
+        let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
+
+        let bodyDiscountsConfiguration = PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? "")
+        let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
+        let body = PXInitBody(preference: pref, publicKey: merchantPublicKey, flow: marketplace, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: bodyDiscountsConfiguration, features: bodyFeatures)
+
+        let bodyJSON = try? body.toJSON()
+
+        getInit(closedPref: false, prefId: nil, params: params, bodyJSON: bodyJSON, headers: headers, success: success, failure: failure)
+    }
+
+    internal func getClosedPrefInit(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+
+        let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
+
+        let bodyDiscountsConfiguration = PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? "")
+        let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
+        let body = PXInitBody(preference: nil, publicKey: merchantPublicKey, flow: marketplace, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: bodyDiscountsConfiguration, features: bodyFeatures)
+
+        let bodyJSON = try? body.toJSON()
+
+        getInit(closedPref: true, prefId: preferenceId, params: params, bodyJSON: bodyJSON, headers: headers, success: success, failure: failure)
+    }
 }

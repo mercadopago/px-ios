@@ -209,10 +209,12 @@ extension PXAnimatedButton {
     }
 
     func setDisabled() {
-        buttonColor = backgroundColor
-        isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.backgroundColor = ThemeManager.shared.greyColor()
+        if backgroundColor != ThemeManager.shared.greyColor() {
+            buttonColor = backgroundColor
+            isUserInteractionEnabled = false
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.backgroundColor = ThemeManager.shared.greyColor()
+            }
         }
     }
 }

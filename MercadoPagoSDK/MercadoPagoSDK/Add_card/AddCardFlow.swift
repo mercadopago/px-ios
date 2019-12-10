@@ -47,7 +47,8 @@ public class AddCardFlow: NSObject, PXFlow {
     }
 
     public func setSiteId(_ siteId: String) {
-        SiteManager.shared.setSite(siteId: siteId)
+        let siteFactory = AddCardFlowSiteFactory()
+        SiteManager.shared.setSite(site: siteFactory.createSite(siteId))
     }
 
     /**

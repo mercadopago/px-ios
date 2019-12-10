@@ -304,7 +304,7 @@ extension MercadoPagoCheckoutViewModel {
         } else {
             // Tarjetas, efectivo, crédito, debito
             if let paymentTypeId = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) {
-                self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.paymentMethodSearchItem, paymentTypeId: paymentTypeId)
+                self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
             }
         }
     }

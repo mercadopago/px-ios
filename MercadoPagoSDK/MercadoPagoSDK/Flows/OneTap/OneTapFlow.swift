@@ -16,11 +16,13 @@ final class OneTapFlow: NSObject, PXFlow {
 
     let advancedConfig: PXAdvancedConfiguration
 
-    init(navigationController: PXNavigationHandler, paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentConfigurationService: PXPaymentConfigurationServices, disabledOption: PXDisabledOption? = nil, escManager: MercadoPagoESC?) {
+    init(navigationController: PXNavigationHandler, paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentConfigurationService: PXPaymentConfigurationServices, disabledOption: PXDisabledOption? = nil, escManager: MercadoPagoESC?) {
         pxNavigationHandler = navigationController
         resultHandler = oneTapResultHandler
         advancedConfig = advancedConfiguration
         model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, chargeRules: chargeRules, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfiguration, paymentConfigurationService: paymentConfigurationService, disabledOption: disabledOption, escManager: escManager)
+        super.init()
+        model.oneTapFlow = self
     }
 
     deinit {
@@ -87,6 +89,11 @@ final class OneTapFlow: NSObject, PXFlow {
     func setPaymentMethodPlugins(_ plugins: [PXPaymentMethodPlugin]?) {
         model.paymentMethodPlugins = plugins
     }
+
+    func needSecurityCodeValidation() -> Bool {
+        model.readyToPay = true
+        return model.nextStep() == .screenSecurityCode
+    }
 }
 
 extension OneTapFlow {
@@ -96,12 +103,12 @@ extension OneTapFlow {
     ///   - search: payment method search item
     ///   - paymentMethodPlugins: payment Methods plugins that can be show
     /// - Returns: selected payment option if possible
-    static func autoSelectOneTapOption(search: PXPaymentMethodSearch, customPaymentOptions: [CustomerPaymentMethod]?, paymentMethodPlugins: [PXPaymentMethodPlugin], amountHelper: PXAmountHelper) -> PaymentMethodOption? {
+    static func autoSelectOneTapOption(search: PXInitDTO, customPaymentOptions: [CustomerPaymentMethod]?, paymentMethodPlugins: [PXPaymentMethodPlugin], amountHelper: PXAmountHelper) -> PaymentMethodOption? {
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
             // Check if can autoselect plugin
             let paymentMethodPluginsFound = paymentMethodPlugins.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
-                return paymentMethodPlugin.getId() == search.expressCho?.first?.paymentMethodId
+                return paymentMethodPlugin.getId() == search.oneTap?.first?.paymentMethodId
             }
             if let paymentMethodPlugin = paymentMethodPluginsFound.first {
                 selectedPaymentOption = paymentMethodPlugin
@@ -112,9 +119,9 @@ extension OneTapFlow {
                     return nil
                 }
 
-                if let suggestedAccountMoney = search.expressCho?.first?.accountMoney {
+                if let suggestedAccountMoney = search.oneTap?.first?.accountMoney {
                     selectedPaymentOption = suggestedAccountMoney
-                } else if let firstPaymentMethodId = search.expressCho?.first?.paymentMethodId {
+                } else if let firstPaymentMethodId = search.oneTap?.first?.paymentMethodId {
                     let customOptionsFound = customerPaymentMethods.filter { return $0.getPaymentMethodId() == firstPaymentMethodId }
                     if let customerPaymentMethod = customOptionsFound.first {
                         // Check if one tap response has payer costs

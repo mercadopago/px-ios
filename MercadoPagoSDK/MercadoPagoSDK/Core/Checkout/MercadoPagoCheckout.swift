@@ -36,7 +36,6 @@ open class MercadoPagoCheckout: NSObject {
             choPref = PXCheckoutPreference(preferenceId: preferenceId)
         } else if let preference = builder.checkoutPreference {
             choPref = preference
-            SiteManager.shared.setSite(siteId: choPref.getSiteId())
         } else {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
@@ -51,14 +50,10 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         if let paymentConfiguration = builder.paymentConfig {
-            let (chargeRules, paymentPlugin, paymentMethodPlugins) = paymentConfiguration.getPaymentConfiguration()
+            let (chargeRules, paymentPlugin) = paymentConfiguration.getPaymentConfiguration()
 
             // Set charge rules
             viewModel.chargeRules = chargeRules
-
-            // Payment method plugins.
-            viewModel.paymentMethodPlugins = paymentMethodPlugins
-            viewModel.paymentMethodPluginsToShow = paymentMethodPlugins
 
             // Payment plugin (paymentProcessor).
             viewModel.paymentPlugin = paymentPlugin

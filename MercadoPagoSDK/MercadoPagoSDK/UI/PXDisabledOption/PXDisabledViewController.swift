@@ -17,7 +17,7 @@ class PXDisabledViewController: UIViewController {
         let cardTitle = "disabled_title_card"
         let amDescription = "disabled_description_am"
         let cardDescription = "disabled_description_card"
-        let buttonText = "disabled_screen_change_method_action"
+        let buttonText = "px_dialog_detail_payment_method_disable_link"
 
         title.text = isAccountMoney ? amTitle.localized_beta : cardTitle.localized_beta
         view.addSubview(title)
@@ -44,7 +44,7 @@ class PXDisabledViewController: UIViewController {
 
         let dismissButton = PXSecondaryButton()
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
-        dismissButton.buttonTitle = buttonText.localized_beta
+        dismissButton.buttonTitle = buttonText.localized
         view.addSubview(dismissButton)
         _ = PXLayout.put(view: dismissButton, onBottomOf: description, withMargin: PXLayout.S_MARGIN, relation: .equal)
         _ = PXLayout.pinLeft(view: dismissButton, to: view, withMargin: PXLayout.S_MARGIN).isActive = true

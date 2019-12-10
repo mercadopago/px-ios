@@ -57,36 +57,36 @@ class PXLayout: NSObject {
 
     // Pin Left
     @discardableResult
-    static func pinLeft(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+    static func pinLeft(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
         } else {
             superView = otherView
         }
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: margin))
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: relation, toItem: superView, attribute: .leading, multiplier: 1, constant: margin))
     }
     //Pin Right
     @discardableResult
-    static func pinRight(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+    static func pinRight(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
         } else {
             superView = otherView
         }
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: -margin))
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: relation, toItem: superView, attribute: .trailing, multiplier: 1, constant: -margin))
     }
     //Pin Top
     @discardableResult
-    static func pinTop(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+    static func pinTop(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0, relation: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
         var superView: UIView!
         if otherView == nil {
             superView = view.superview
         } else {
             superView = otherView
         }
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: margin))
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: relation, toItem: superView, attribute: .top, multiplier: 1, constant: margin))
     }
     //Pin Bottom
     @discardableResult

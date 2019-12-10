@@ -26,7 +26,7 @@ internal class ApiUtil {
 
     enum RequestOrigin: String {
         case GET_PREFERENCE
-        case PAYMENT_METHOD_SEARCH
+        case GET_INIT
         case GET_INSTALLMENTS
         case GET_ISSUERS
         case GET_DIRECT_DISCOUNT
