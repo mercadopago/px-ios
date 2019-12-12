@@ -12,6 +12,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
     internal var publicKey: String = ""
     internal var privateKey: String?
     internal var siteId: String = ""
+    internal var excludedPaymentTypeIds: [String] = []
     // Privates
     private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
     private let installmentsRowMessageFontSize = PXLayout.XS_FONT
@@ -28,9 +29,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
     // Current flow.
     weak var currentFlow: OneTapFlow?
 
-    public init(publicKey: String, privateKey: String?, siteId: String, amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, escProtocol: MercadoPagoESC?, currentFlow: OneTapFlow?) {
-        self.publicKey = publicKey
-        self.privateKey = privateKey
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, escProtocol: MercadoPagoESC?, currentFlow: OneTapFlow?) {
         self.disabledOption = disabledOption
         self.currentFlow = currentFlow
         super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged, escProtocol: escProtocol)

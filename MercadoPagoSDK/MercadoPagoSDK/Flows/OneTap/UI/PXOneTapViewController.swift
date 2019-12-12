@@ -447,7 +447,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             let builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: viewModel.siteId, lifeCycleDelegate: self)
             //builder.setPrivateKey(privateKey: "APP_USR-6519316523937252-070516-964fafa7e2c91a2c740155fcb5474280__LA_LD__-261748045")
             builder.setLanguage(Localizator.sharedInstance.getLanguage())
-            builder.setExcludedPaymentTypes(["ticket"])
+            builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
             builder.setTrackingConfiguration(trackingConfiguration)
 
             let cardFormVC = MLCardForm(builder: builder).setupController()
