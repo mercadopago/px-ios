@@ -294,7 +294,7 @@ extension MercadoPagoCheckout {
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
-        let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewConfirmConfiguration: viewModel.getAdvancedConfiguration().reviewConfirmConfiguration, chargeRules: viewModel.chargeRules, oneTapResultHandler: self, advancedConfiguration: viewModel.getAdvancedConfiguration(), mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentConfigurationService: viewModel.paymentConfigurationService, disabledOption: viewModel.disabledOption, escManager: viewModel.escManager)
+        let onetapFlow = OneTapFlow(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOtionSelected, oneTapResultHandler: self)
 
         onetapFlow.setCustomerPaymentMethods(viewModel.customPaymentOptions)
         onetapFlow.setPaymentMethodPlugins(viewModel.paymentMethodPlugins)
