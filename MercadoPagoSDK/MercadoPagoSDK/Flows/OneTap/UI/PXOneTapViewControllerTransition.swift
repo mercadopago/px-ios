@@ -12,7 +12,7 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
 
     //make this zero for now and see if it matters when it comes time to make it interactive
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 2.0
+        return 0.5
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -52,19 +52,17 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
         containerView.addSubview(topView)
         containerView.addSubview(footerSnapshot)
 
-        var pxAnimator = PXAnimator(duration: 1.25, dampingRatio: 0.8)
+        topView.addSubview(buildTopViewOverlayColor(color: oneTapVC.view.backgroundColor, topView: topView))
+
+        var pxAnimator = PXAnimator(duration: 0.8, dampingRatio: 0.8)
         pxAnimator.addAnimation(animation: {
             topView.frame = topView.frame.offsetBy(dx: 0, dy: -fixedFrames.headerFrame.size.height)
-            topView.alpha = 0
-            topView.subviews.forEach({ $0.alpha = 1 })
             footerSnapshot.frame = footerSnapshot.frame.offsetBy(dx: 0, dy: footerSnapshot.frame.size.height)
-            footerSnapshot.alpha = 0
         })
 
         pxAnimator.addCompletion(completion: {
             topView.removeFromSuperview()
             footerSnapshot.removeFromSuperview()
-
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
 
@@ -78,6 +76,8 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
                 transitionContext.completeTransition(false)
                 return
         }
+
+        addCardVC.title = nil
 
         let containerView = transitionContext.containerView
         let fixedFrames = buildFrames(oneTapVC: oneTapVC, containerView: containerView)
@@ -142,6 +142,12 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
         if let navigationSnapshot = navigationSnapshot { topView.addSubview(navigationSnapshot) }
         topView.addSubview(headerSnapshot)
         return topView
+    }
+
+    private func buildTopViewOverlayColor(color: UIColor?, topView: UIView) -> UIView {
+        let topViewOverlay = UIView(frame: topView.frame)
+        topViewOverlay.backgroundColor = color
+        return topViewOverlay
     }
 
     private func addTopViewOverlay(topView: UIView, backgroundColor: UIColor?) {

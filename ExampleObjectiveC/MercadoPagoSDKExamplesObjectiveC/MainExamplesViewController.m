@@ -79,11 +79,9 @@
     [self.checkoutBuilder setTrackingConfigurationWithConfig: trackingConfig];
 
     // Add theme to advanced config.
-//    MeliTheme *meliTheme = [[MeliTheme alloc] init];
-//    [advancedConfig setTheme:meliTheme];
-
-    MPTheme *mpTheme = [[MPTheme alloc] init];
-    [advancedConfig setTheme:mpTheme];
+    MeliTheme *meliTheme = [[MeliTheme alloc] init];
+    // MPTheme *mpTheme = [[MPTheme alloc] init];
+    [advancedConfig setTheme:meliTheme];
 
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];

@@ -449,7 +449,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             builder.setLanguage(Localizator.sharedInstance.getLanguage())
             builder.setExcludedPaymentTypes(["ticket"])
             builder.setTrackingConfiguration(trackingConfiguration)
-
+            builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
             let cardFormVC = MLCardForm(builder: builder).setupController()
             navigationController?.pushViewController(cardFormVC, animated: true)
         }
