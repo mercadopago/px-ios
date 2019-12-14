@@ -12,7 +12,7 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
 
     //make this zero for now and see if it matters when it comes time to make it interactive
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5
+        return 1.0
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
