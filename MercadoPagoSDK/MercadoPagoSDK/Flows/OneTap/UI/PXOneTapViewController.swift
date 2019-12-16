@@ -450,7 +450,8 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             builder.setLanguage(Localizator.sharedInstance.getLanguage())
             builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
             builder.setTrackingConfiguration(trackingConfiguration)
-
+            builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
+            builder.setAnimated(true)
             let cardFormVC = MLCardForm(builder: builder).setupController()
             navigationController?.pushViewController(cardFormVC, animated: true)
         }
@@ -692,9 +693,6 @@ extension PXOneTapViewController: MLCardFormTrackerDelegate {
 
 extension PXOneTapViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
-        //if fromVC is PaymentVaultViewController || toVC is PaymentVaultViewController {
-        //if fromVC is NewCardAssociationViewController || toVC is NewCardAssociationViewController {
         if fromVC is MLCardFormViewController || toVC is MLCardFormViewController {
             return PXOneTapViewControllerTransition()
         }
