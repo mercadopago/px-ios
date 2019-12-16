@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PXText: Codable {
+public struct PXText: Codable {
     let message: String?
     let backgroundColor: String?
     let textColor: String?
@@ -20,7 +20,7 @@ struct PXText: Codable {
         case weight
     }
 
-    func getAttributedString(fontSize: CGFloat = PXLayout.XS_FONT, textColor: UIColor? = nil, backgroundColor: UIColor? = nil) -> NSAttributedString? {
+    internal func getAttributedString(fontSize: CGFloat = PXLayout.XS_FONT, textColor: UIColor? = nil, backgroundColor: UIColor? = nil) -> NSAttributedString? {
         guard let message = message else {return nil}
 
         var attributes: [NSAttributedString.Key: AnyObject] = [:]

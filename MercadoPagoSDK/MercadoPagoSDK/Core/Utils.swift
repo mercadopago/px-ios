@@ -114,7 +114,11 @@ internal class Utils {
         attributedSymbol.append(space)
         attributedSymbol.append(attributedAmount)
         if cents != "00" {
-            attributedSymbol.append(space)
+            if decimalSeparator.isNotEmpty {
+                attributedSymbol.append(decimalSeparator.toAttributedString())
+            } else {
+                attributedSymbol.append(space)
+            }
             attributedSymbol.append(attributedCents)
         }
         return attributedSymbol

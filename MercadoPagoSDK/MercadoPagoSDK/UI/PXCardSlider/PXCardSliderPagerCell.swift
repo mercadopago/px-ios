@@ -13,13 +13,15 @@ class PXCardSliderPagerCell: FSPagerViewCell {
         return UINib(nibName: PXCardSliderPagerCell.identifier, bundle: ResourceManager.shared.getBundle())
     }
 
+    private lazy var bottomMessageViewHeight: CGFloat = 24
     private lazy var cornerRadius: CGFloat = 11
     private var cardHeader: MLCardDrawerController?
-
-    @IBOutlet weak var containerView: UIView!
-
+    private weak var messageViewBottomConstraint: NSLayoutConstraint?
+    private weak var messageLabelCenterConstraint: NSLayoutConstraint?
     private var consumerCreditCard: ConsumerCreditsCard?
+
     weak var delegate: PXTermsAndConditionViewDelegate?
+    @IBOutlet weak var containerView: UIView!
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -112,7 +114,8 @@ extension PXCardSliderPagerCell {
     }
 
     func addBottomMessageView(message: String?) {
-        guard let message = message else {return}
+        guard let message = message else { return }
+
         let messageView = UIView()
         messageView.translatesAutoresizingMaskIntoConstraints = false
         messageView.backgroundColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
@@ -130,21 +133,22 @@ extension PXCardSliderPagerCell {
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: messageView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: messageView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: messageView.topAnchor),
-            label.bottomAnchor.constraint(equalTo: messageView.bottomAnchor)
-            ])
+        ])
 
-        self.containerView.clipsToBounds = true
-        self.containerView.addSubview(messageView)
+        messageLabelCenterConstraint = label.centerYAnchor.constraint(equalTo: messageView.centerYAnchor, constant: bottomMessageViewHeight)
+        messageLabelCenterConstraint?.isActive = true
+
+        containerView.clipsToBounds = true
+        containerView.addSubview(messageView)
 
         NSLayoutConstraint.activate([
-            messageView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            messageView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-            messageView.heightAnchor.constraint(equalToConstant: 24),
-            messageView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor)
-            ])
+            messageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            messageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            messageView.heightAnchor.constraint(equalToConstant: bottomMessageViewHeight),
+        ])
 
-        self.layoutIfNeeded()
+        messageViewBottomConstraint = messageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: bottomMessageViewHeight)
+        messageViewBottomConstraint?.isActive = true
     }
 
     func flipToBack() {
@@ -157,6 +161,15 @@ extension PXCardSliderPagerCell {
         cardHeader?.animated(true)
         cardHeader?.show()
         cardHeader?.animated(false)
+    }
+
+    func showBottomMessageView(_ shouldShow: Bool) {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let heightValue = self?.bottomMessageViewHeight else { return }
+            self?.messageViewBottomConstraint?.constant = shouldShow ? 0 : heightValue
+            self?.messageLabelCenterConstraint?.constant = shouldShow ? 0 : heightValue
+            self?.layoutIfNeeded()
+        })
     }
 }
 

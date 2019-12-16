@@ -9,6 +9,7 @@ import UIKit
 
 final class PXOneTapInstallmentInfoView: PXComponentView {
     static let DEFAULT_ROW_HEIGHT: CGFloat = 50
+    static let HIGH_ROW_HEIGHT: CGFloat = 78
     private let titleLabel = UILabel()
     private let colapsedTag: Int = 2
     private var arrowImage: UIImageView = UIImageView()
@@ -74,6 +75,20 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         let itemModel = model[index]
         cell.removeAllSubviews()
 
+        var benefitsLabel: UILabel?
+        if itemModel.shouldShowInstallmentsHeader, let benefitText = itemModel.benefits?.installmentsHeader?.getAttributedString(fontSize: PXLayout.XXXS_FONT) {
+            let label = UILabel()
+            benefitsLabel = label
+            label.numberOfLines = 1
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.attributedText = benefitText
+            label.textAlignment = .right
+            cell.addSubview(label)
+            PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.centerVertically(view: label).isActive = true
+            PXLayout.matchHeight(ofView: label).isActive = true
+        }
+
         let label = UILabel()
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +98,13 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         PXLayout.pinLeft(view: label, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         PXLayout.centerVertically(view: label).isActive = true
         PXLayout.matchHeight(ofView: label).isActive = true
+
+        if let benefitsLabel = benefitsLabel {
+            PXLayout.put(view: label, leftOf: benefitsLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        } else {
+            PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+        }
+
 
         if !itemModel.status.enabled {
             let helperIcon = ResourceManager.shared.getImage("helper_ico_blue")
@@ -154,7 +176,12 @@ extension PXOneTapInstallmentInfoView {
         setupChevron()
         setupTitleLabel()
         PXLayout.setHeight(owner: self, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallmentsWrapper)))
+    }
+
+    @objc
+    func toggleInstallmentsWrapper() {
+        toggleInstallments()
     }
 
     private func setupChevron() {
@@ -164,7 +191,7 @@ extension PXOneTapInstallmentInfoView {
         PXLayout.centerVertically(view: arrowImage).isActive = true
         PXLayout.pinTop(view: arrowImage).isActive = true
         PXLayout.pinBottom(view: arrowImage).isActive = true
-        PXLayout.setWidth(owner: arrowImage, width: 72).isActive = true
+        PXLayout.setWidth(owner: arrowImage, width: 56).isActive = true
         PXLayout.pinRight(view: arrowImage, withMargin: 0).isActive = true
         arrowImage.tag = colapsedTag
 
@@ -216,29 +243,30 @@ extension PXOneTapInstallmentInfoView {
         pagerView.scrollToOffset(offset, animated: false)
     }
 
-    @objc func toggleInstallments() {
+    @objc func toggleInstallments(completion: ((Bool) -> Void)? = nil) {
         if let currentIndex = getCurrentIndex(), let currentModel = model, currentModel.indices.contains(currentIndex) {
             let cardStatus = currentModel[currentIndex].status
             if !cardStatus.enabled {
                 delegate?.disabledCardTapped(status: cardStatus)
             } else if currentModel[currentIndex].shouldShowArrow, tapEnabled {
-                if let installmentData = currentModel[currentIndex].installmentData {
+                let selectedModel = currentModel[currentIndex]
+                if let installmentData = selectedModel.installmentData {
                     if arrowImage.tag != colapsedTag {
                         delegate?.hideInstallments()
-                        UIView.animate(withDuration: 0.3) { [weak self] in
+                        UIView.animate(withDuration: 0.3, animations: { [weak self] in
                             self?.arrowImage.layer.transform = CATransform3DIdentity
                             self?.pagerView.alpha = 1
                             self?.titleLabel.alpha = 0
-                        }
+                        }, completion: completion)
                         arrowImage.tag = colapsedTag
                     } else {
-                        delegate?.showInstallments(installmentData: installmentData, selectedPayerCost: currentModel[currentIndex].selectedPayerCost)
-                        UIView.animate(withDuration: 0.3) { [weak self] in
+                        delegate?.showInstallments(installmentData: installmentData, selectedPayerCost: selectedModel.selectedPayerCost, interest: selectedModel.benefits?.interestFree, reimbursement: selectedModel.benefits?.reimbursement)
+                        UIView.animate(withDuration: 0.3, animations: { [weak self] in
                             let rotationAngle = (180.0 * CGFloat(Double.pi)) / 180.0
                             self?.arrowImage.layer.transform = CATransform3DRotate(CATransform3DIdentity, rotationAngle, 1.0, 0.0, 0.0)
                             self?.pagerView.alpha = 0
                             self?.titleLabel.alpha = 1
-                        }
+                        }, completion: completion)
                         arrowImage.tag = 1
                     }
                 }

@@ -26,13 +26,30 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
         PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerVertically(view: titleLabel).isActive = true
 
-        let valueLabel = UILabel()
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        valueLabel.attributedText = data.value
-        valueLabel.textAlignment = .right
-        contentView.addSubview(valueLabel)
-        PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.centerVertically(view: valueLabel).isActive = true
+        let valueLabelsContainer = UIStackView()
+        valueLabelsContainer.translatesAutoresizingMaskIntoConstraints = false
+        valueLabelsContainer.axis = .vertical
+
+        let topValueLabel = UILabel()
+        topValueLabel.translatesAutoresizingMaskIntoConstraints = false
+        topValueLabel.numberOfLines = 1
+        topValueLabel.attributedText = data.topValue
+        topValueLabel.textAlignment = .right
+        valueLabelsContainer.addArrangedSubview(topValueLabel)
+
+        let bottomValueLabel = UILabel()
+        bottomValueLabel.translatesAutoresizingMaskIntoConstraints = false
+        bottomValueLabel.numberOfLines = 1
+        bottomValueLabel.attributedText = data.bottomValue
+        bottomValueLabel.textAlignment = .right
+        valueLabelsContainer.addArrangedSubview(bottomValueLabel)
+
+        //Value labels content view layout
+        contentView.addSubview(valueLabelsContainer)
+        PXLayout.pinRight(view: valueLabelsContainer, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.centerVertically(view: valueLabelsContainer).isActive = true
+        PXLayout.setHeight(owner: valueLabelsContainer, height: 39).isActive = true
+        PXLayout.put(view: valueLabelsContainer, rightOf: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
 
         if data.isSelected {
             let selectedIndicatorView = UIView()

@@ -75,6 +75,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.delegate = self
+        slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
 
@@ -528,6 +529,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     }
 
     func payerCostSelected(_ payerCost: PXPayerCost) {
+        let selectedIndex = slider.getSelectedIndex()
         // Update cardSliderViewModel
         if let infoRow = installmentInfoRow, viewModel.updateCardSliderViewModel(newPayerCost: payerCost, forIndex: infoRow.getActiveRowIndex()) {
             // Update selected payer cost.
@@ -536,8 +538,15 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             // Update installmentInfoRow viewModel
             installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
             PXFeedbackGenerator.heavyImpactFeedback()
+
+            //Update card bottom message
+            let bottomMessage = viewModel.getCardBottomMessage(paymentTypeId: selectedCard?.paymentTypeId, benefits: selectedCard?.benefits)
+            viewModel.updateCardSliderModel(at: selectedIndex, bottomMessage: bottomMessage)
+            slider.update(viewModel.getCardSliderViewModel())
         }
-        installmentInfoRow?.toggleInstallments()
+        installmentInfoRow?.toggleInstallments(completion: { [weak self] (_) in
+            self?.slider.showBottomMessageIfNeeded(index: selectedIndex, targetIndex: selectedIndex)
+        })
     }
 
     func hideInstallments() {
@@ -564,7 +573,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         })
     }
 
-    func showInstallments(installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?) {
+    func showInstallments(installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, interest: PXInstallmentsConfiguration?, reimbursement: PXInstallmentsConfiguration?) {
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
         }
@@ -578,7 +587,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 
         self.installmentsSelectorView?.removeFromSuperview()
         self.installmentsSelectorView?.layoutIfNeeded()
-        let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData, selectedPayerCost: selectedPayerCost)
+        let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData, selectedPayerCost: selectedPayerCost, interest: interest, reimbursement: reimbursement)
         let installmentsSelectorView = PXOneTapInstallmentsSelectorView(viewModel: viewModel)
         installmentsSelectorView.delegate = self
         self.installmentsSelectorView = installmentsSelectorView

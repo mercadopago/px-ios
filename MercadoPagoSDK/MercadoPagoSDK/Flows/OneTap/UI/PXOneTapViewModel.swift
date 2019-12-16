@@ -70,13 +70,14 @@ extension PXOneTapViewModel {
         for targetNode in reArrangedNodes {
 
             //Charge rule message when amount is zero
-            let chargeRuleMessage = getChargeRuleBottomMessage(targetNode.paymentTypeId)
+            let chargeRuleMessage = getCardBottomMessage(paymentTypeId: targetNode.paymentTypeId, benefits: targetNode.benefits)
+            let benefits = targetNode.benefits
 
             let statusConfig = getStatusConfig(currentStatus: targetNode.status, cardId: targetNode.oneTapCard?.cardId, paymentMethodId: targetNode.paymentMethodId)
 
             // Add New Card
             if let newCard = targetNode.newCard {
-                sliderModel.append(PXCardSliderViewModel("", "", "", EmptyCard(title: newCard.label), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig))
+                sliderModel.append(PXCardSliderViewModel("", "", "", EmptyCard(title: newCard.label), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
             }
 
             //  Account money
@@ -85,7 +86,7 @@ extension PXOneTapViewModel {
                 let cardData = PXCardDataFactory().create(cardName: displayTitle, cardNumber: "", cardCode: "", cardExpiration: "")
                 let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(accountMoney.getId())
 
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage)
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
                 let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 viewModelCard.displayMessage = NSAttributedString(string: accountMoney.sliderTitle ?? "", attributes: attributes)
@@ -145,7 +146,7 @@ extension PXOneTapViewModel {
 
                     let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment)
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage)
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
 
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
@@ -156,7 +157,7 @@ extension PXOneTapViewModel {
 
                 let creditsViewModel = PXCreditsViewModel(consumerCredits)
 
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", ConsumerCreditsCard(creditsViewModel, isDisabled: !targetNode.status.enabled), cardData, amountConfiguration.payerCosts ?? [], amountConfiguration.selectedPayerCost, "", true, amountConfiguration: amountConfiguration, creditsViewModel: creditsViewModel, status: statusConfig, bottomMessage: chargeRuleMessage)
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", ConsumerCreditsCard(creditsViewModel, isDisabled: !targetNode.status.enabled), cardData, amountConfiguration.payerCosts ?? [], amountConfiguration.selectedPayerCost, "", true, amountConfiguration: amountConfiguration, creditsViewModel: creditsViewModel, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
 
                 sliderModel.append(viewModelCard)
             }
@@ -173,28 +174,27 @@ extension PXOneTapViewModel {
             let installment = PXInstallment(issuer: nil, payerCosts: payerCost, paymentMethodId: nil, paymentTypeId: nil)
 
             let disabledMessage: NSAttributedString = sliderNode.status.mainMessage?.getAttributedString(fontSize: installmentsRowMessageFontSize, textColor: ThemeManager.shared.getAccentColor()) ?? "".toAttributedString()
+
+            let shouldShowInstallmentsHeader = sliderNode.shouldShowInstallmentsHeader()
+
             if !sliderNode.status.enabled {
-                let disabledInfoModel = PXOneTapInstallmentInfoViewModel(text: disabledMessage,
-                                                                         installmentData: nil,
-                                                                         selectedPayerCost: nil,
-                                                                         shouldShowArrow: false,
-                                                                         status: sliderNode.status)
+                let disabledInfoModel = PXOneTapInstallmentInfoViewModel(text: disabledMessage, installmentData: nil, selectedPayerCost: nil, shouldShowArrow: false, status: sliderNode.status, benefits: sliderNode.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
                 model.append(disabledInfoModel)
             } else if sliderNode.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
                 // If it's debit and has split, update split message
                 if let amountToPay = sliderNode.selectedPayerCost?.totalAmount {
                     let displayMessage = getSplitMessageForDebit(amountToPay: amountToPay)
-                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow, status: sliderNode.status)
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow, status: sliderNode.status, benefits: sliderNode.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
                     model.append(installmentInfoModel)
                 }
 
             } else {
                 if let displayMessage = sliderNode.displayMessage {
-                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow, status: sliderNode.status)
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow, status: sliderNode.status, benefits: sliderNode.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
                     model.append(installmentInfoModel)
                 } else {
                     let isDigitalCurrency: Bool = sliderNode.creditsViewModel != nil
-                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost, isDigitalCurrency), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow, status: sliderNode.status)
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost, isDigitalCurrency, interestFreeConfig: sliderNode.benefits?.interestFree), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow, status: sliderNode.status, benefits: sliderNode.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
                     model.append(installmentInfoModel)
                 }
             }
@@ -268,6 +268,12 @@ extension PXOneTapViewModel {
         return cardSliderViewModel
     }
 
+    func updateCardSliderModel(at index: Int, bottomMessage: String?) {
+        if cardSliderViewModel.indices.contains(index) {
+            cardSliderViewModel[index].bottomMessage = bottomMessage
+        }
+    }
+
     func updateAllCardSliderModels(splitPaymentEnabled: Bool) {
         for index in cardSliderViewModel.indices {
             _ = updateCardSliderSplitPaymentPreference(splitPaymentEnabled: splitPaymentEnabled, forIndex: index)
@@ -308,6 +314,7 @@ extension PXOneTapViewModel {
     func updateCardSliderViewModel(newPayerCost: PXPayerCost?, forIndex: Int) -> Bool {
         if cardSliderViewModel.indices.contains(forIndex) {
             cardSliderViewModel[forIndex].selectedPayerCost = newPayerCost
+            cardSliderViewModel[forIndex].userDidSelectPayerCost = true
             return true
         }
         return false
@@ -323,6 +330,26 @@ extension PXOneTapViewModel {
 
     func shouldDisplayChargesHelp() -> Bool {
         return getChargeRuleViewController() != nil
+    }
+
+    func getCardBottomMessage(paymentTypeId: String?, benefits: PXBenefits?) -> String? {
+        if let chargeRuleMessage = getChargeRuleBottomMessage(paymentTypeId) {
+            return chargeRuleMessage
+        }
+
+        guard let selectedInstallments = amountHelper.getPaymentData().payerCost?.installments else {
+            return nil
+        }
+
+        guard let reimbursementAppliedInstallments = benefits?.reimbursement?.appliedInstallments else {
+            return nil
+        }
+
+        if reimbursementAppliedInstallments.contains(selectedInstallments) {
+            return benefits?.reimbursement?.card?.message
+        }
+
+        return nil
     }
 
     func getChargeRuleBottomMessage(_ paymentTypeId: String?) -> String? {
@@ -354,7 +381,7 @@ extension PXOneTapViewModel {
 // MARK: Privates.
 extension PXOneTapViewModel {
 
-    private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?, _ isDigitalCurrency: Bool = false) -> NSMutableAttributedString {
+    private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?, _ isDigitalCurrency: Bool = false, interestFreeConfig: PXInstallmentsConfiguration?) -> NSMutableAttributedString {
         let text: NSMutableAttributedString = NSMutableAttributedString(string: "")
 
         if let payerCostData = payerCost {
@@ -367,11 +394,9 @@ extension PXOneTapViewModel {
             text.append(firstAttributedString)
 
             // Second attr
-            if payerCostData.installmentRate == 0, payerCostData.installments != 1 {
-                let secondAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
-                let secondText = " Sin interés".localized
-                let secondAttributedString = NSAttributedString(string: secondText, attributes: secondAttributes)
-                text.append(secondAttributedString)
+            if let interestFreeConfig = interestFreeConfig, interestFreeConfig.appliedInstallments.contains(payerCostData.installments), let rowMessage = interestFreeConfig.installmentRow?.getAttributedString(fontSize: installmentsRowMessageFontSize) {
+                text.append(String.SPACE.toAttributedString())
+                text.append(rowMessage)
             }
 
             // Third attr
