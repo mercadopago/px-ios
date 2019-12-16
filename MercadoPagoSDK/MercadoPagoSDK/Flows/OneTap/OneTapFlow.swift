@@ -53,6 +53,10 @@ final class OneTapFlow: NSObject, PXFlow {
             self.finishFlow()
         }
     }
+    
+    func refreshInitFlow() {
+        resultHandler?.refreshInitFlow()
+    }
 
     // Cancel one tap and go to checkout
     func cancelFlow() {
