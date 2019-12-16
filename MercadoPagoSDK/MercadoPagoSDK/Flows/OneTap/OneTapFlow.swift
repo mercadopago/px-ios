@@ -16,11 +16,11 @@ final class OneTapFlow: NSObject, PXFlow {
 
     let advancedConfig: PXAdvancedConfiguration
 
-    init(navigationController: PXNavigationHandler, paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentConfigurationService: PXPaymentConfigurationServices, disabledOption: PXDisabledOption? = nil, escManager: MercadoPagoESC?) {
-        pxNavigationHandler = navigationController
+    init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption, oneTapResultHandler: PXOneTapResultHandlerProtocol) {
+        pxNavigationHandler = checkoutViewModel.pxNavigationHandler
         resultHandler = oneTapResultHandler
-        advancedConfig = advancedConfiguration
-        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, chargeRules: chargeRules, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfiguration, paymentConfigurationService: paymentConfigurationService, disabledOption: disabledOption, escManager: escManager)
+        advancedConfig = checkoutViewModel.getAdvancedConfiguration()
+        model = OneTapFlowModel(checkoutViewModel: checkoutViewModel, search: search, paymentOptionSelected: paymentOptionSelected)
         super.init()
         model.oneTapFlow = self
     }

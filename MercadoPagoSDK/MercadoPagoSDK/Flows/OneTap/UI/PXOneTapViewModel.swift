@@ -9,6 +9,10 @@
 import Foundation
 
 final class PXOneTapViewModel: PXReviewViewModel {
+    internal var publicKey: String = ""
+    internal var privateKey: String?
+    internal var siteId: String = ""
+    internal var excludedPaymentTypeIds: [String] = []
     // Privates
     private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
     private let installmentsRowMessageFontSize = PXLayout.XS_FONT
