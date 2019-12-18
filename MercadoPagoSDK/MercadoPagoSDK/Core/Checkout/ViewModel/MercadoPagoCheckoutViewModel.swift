@@ -120,6 +120,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var initFlow: InitFlow?
     weak var initFlowProtocol: InitFlowProtocol?
 
+    // OneTap Flow
+    var onetapFlow: OneTapFlow?
+
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
     init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?, advancedConfig: PXAdvancedConfiguration? = nil, trackingConfig: PXTrackingConfiguration? = nil) {
@@ -895,5 +898,11 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func keepDisabledOptionIfNeeded() {
         disabledOption = PXDisabledOption(paymentResult: self.paymentResult)
+    }
+    
+    func clean() {
+        paymentFlow = nil
+        initFlow = nil
+        onetapFlow = nil
     }
 }

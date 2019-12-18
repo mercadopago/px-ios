@@ -29,7 +29,7 @@ extension MercadoPagoCheckoutViewModel {
         configureBiometricModule()
 
         // Create init flow.
-        initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, initSearch)  in
+        initFlow = InitFlow(flowProperties: initFlowProperties, finishInitCallback: { [weak self] (checkoutPreference, initSearch)  in
             guard let self = self else { return }
             self.checkoutPreference = checkoutPreference
             self.updateCheckoutModel(paymentMethodSearch: initSearch)
@@ -39,7 +39,7 @@ extension MercadoPagoCheckoutViewModel {
             self.attemptToApplyDiscount(selectedDiscountConfigurartion)
 
             self.initFlowProtocol?.didFinishInitFlow()
-        }, errorCallback: { [weak self] initFlowError in
+        }, errorInitCallback: { [weak self] initFlowError in
             self?.initFlowProtocol?.didFailInitFlow(flowError: initFlowError)
         })
     }
@@ -52,7 +52,7 @@ extension MercadoPagoCheckoutViewModel {
         trackingConfig?.updateTracker()
         initFlow?.start()
     }
-    
+
     func refreshInitFlow() {
         initFlow?.initFlowModel.updateInitModel(paymentMethodsResponse: nil)
         initFlow?.start()

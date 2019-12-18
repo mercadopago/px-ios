@@ -83,6 +83,11 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
+        self.viewModel.createCardSliderViewModel()
+        slider.update(self.viewModel.getCardSliderViewModel())
+        if let navigationController = navigationController, navigationController.visibleViewController is MLCardFormViewController {
+            navigationController.popViewController(animated: true)
+        }
     }
 }
 
@@ -447,8 +452,12 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
             let trackingConfiguration = MLCardFormTrackerConfiguration(delegate: self, flowName: nil, flowDetails: nil, sessionId: nil)
-            let builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: viewModel.siteId, lifeCycleDelegate: self)
-            //builder.setPrivateKey(privateKey: "APP_USR-6519316523937252-070516-964fafa7e2c91a2c740155fcb5474280__LA_LD__-261748045")
+            let builder: MLCardFormBuilder
+            if let privateKey = viewModel.privateKey {
+                builder = MLCardFormBuilder(privateKey: privateKey, siteId: viewModel.siteId, lifeCycleDelegate: self)
+            } else {
+                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: viewModel.siteId, lifeCycleDelegate: self)
+            }
             builder.setLanguage(Localizator.sharedInstance.getLanguage())
             builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
             builder.setTrackingConfiguration(trackingConfiguration)
@@ -465,16 +474,6 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func didEndDecelerating() {
         installmentInfoRow?.didEndDecelerating()
-    }
-}
-
-extension PXOneTapViewController: MLCardFormAddCardProtocol {
-    internal func didAddCard(cardInfo: [String: String]) {
-        navigationController?.popViewController(animated: true)
-    }
-
-    internal func didFailAddCard() {
-        print("Fallo el alta de tarjeta")
     }
 }
 
@@ -628,10 +627,10 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 
 extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
     func didAddCard(cardID: String) {
-        callbackRefreshInit()   
-//        if let navigationController = navigationController {
-//            navigationController.popViewController(animated: true)
-//        }
+        callbackRefreshInit()
+    }
+
+    func didFailAddCard() {
     }
 }
 

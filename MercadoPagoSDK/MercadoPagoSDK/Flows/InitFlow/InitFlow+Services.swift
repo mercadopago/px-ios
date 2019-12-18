@@ -58,7 +58,7 @@ extension InitFlow {
     }
 
     func callback(_ search: PXInitDTO) {
-        self.initFlowModel.updateInitModel(paymentMethodsResponse: search)
+        initFlowModel.updateInitModel(paymentMethodsResponse: search)
 
         //Tracking Experiments
         MPXTracker.sharedInstance.setExperiments(search.experiments)
@@ -67,12 +67,12 @@ extension InitFlow {
         SiteManager.shared.setCurrency(currency: search.currency)
         SiteManager.shared.setSite(site: search.site)
 
-        self.executeNextStep()
+        executeNextStep()
     }
 
     func failure(_ error: NSError) {
         let customError = InitFlowError(errorStep: .SERVICE_GET_INIT, shouldRetry: true, requestOrigin: .GET_INIT, apiException: MPSDKError.getApiException(error))
-        self.initFlowModel.setError(error: customError)
-        self.executeNextStep()
+        initFlowModel.setError(error: customError)
+        executeNextStep()
     }
 }

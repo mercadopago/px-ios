@@ -9,7 +9,7 @@
 import Foundation
 
 final class OneTapFlow: NSObject, PXFlow {
-    let model: OneTapFlowModel
+    var model: OneTapFlowModel
     let pxNavigationHandler: PXNavigationHandler
 
     weak var resultHandler: PXOneTapResultHandlerProtocol?
@@ -22,6 +22,11 @@ final class OneTapFlow: NSObject, PXFlow {
         advancedConfig = checkoutViewModel.getAdvancedConfiguration()
         model = OneTapFlowModel(checkoutViewModel: checkoutViewModel, search: search, paymentOptionSelected: paymentOptionSelected)
         super.init()
+        model.oneTapFlow = self
+    }
+
+    func update(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption) {
+        model = OneTapFlowModel(checkoutViewModel: checkoutViewModel, search: search, paymentOptionSelected: paymentOptionSelected)
         model.oneTapFlow = self
     }
 
@@ -39,6 +44,14 @@ final class OneTapFlow: NSObject, PXFlow {
         executeNextStep()
     }
 
+    func updateOneTapViewModel() {
+        let viewControllers = pxNavigationHandler.navigationController.viewControllers.filter { $0 is PXOneTapViewController }
+        if let oneTapViewController = viewControllers.first as? PXOneTapViewController {
+            let viewModel = model.oneTapViewModel()
+            oneTapViewController.update(viewModel: viewModel)
+        }
+    }
+
     func executeNextStep() {
         switch self.model.nextStep() {
         case .screenReviewOneTap:
@@ -52,8 +65,9 @@ final class OneTapFlow: NSObject, PXFlow {
         case .finish:
             self.finishFlow()
         }
+        print("")
     }
-    
+
     func refreshInitFlow() {
         resultHandler?.refreshInitFlow()
     }

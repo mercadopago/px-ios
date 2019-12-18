@@ -40,9 +40,8 @@ extension OneTapFlow {
             self?.cancelFlow()
         }
         let finishButtonAnimation: (() -> Void) = {
-            //[weak self] in
-            // WARNING: Keep strong ref here (or any other block for this initializer) or it'll release the object after creating it
-            self.executeNextStep()
+            [weak self] in
+            self?.executeNextStep()
         }
         let viewModel = model.oneTapViewModel()
         let reviewVC = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)

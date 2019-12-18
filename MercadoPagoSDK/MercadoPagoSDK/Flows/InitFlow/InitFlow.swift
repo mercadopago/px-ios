@@ -15,9 +15,9 @@ final class InitFlow {
     private let finishInitCallback: ((PXCheckoutPreference, PXInitDTO) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
 
-    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXInitDTO) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
-        finishInitCallback = finishCallback
-        errorInitCallback = errorCallback
+    init(flowProperties: InitFlowProperties, finishInitCallback: @escaping ((PXCheckoutPreference, PXInitDTO) -> Void), errorInitCallback: @escaping ((InitFlowError) -> Void)) {
+        self.finishInitCallback = finishInitCallback
+        self.errorInitCallback = errorInitCallback
         initFlowModel = InitFlowModel(flowProperties: flowProperties)
         PXTrackingStore.sharedInstance.cleanChoType()
     }
@@ -44,7 +44,7 @@ extension InitFlow: PXFlow {
             executeNextStep()
         }
     }
-    
+
     func executeNextStep() {
         let nextStep = initFlowModel.nextStep()
         switch nextStep {
