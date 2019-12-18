@@ -73,6 +73,13 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        if let offlineMethods = viewModel.expressData?[8].offlineMethods?.paymentTypes {
+            let vc = PXOfflineMethodsViewController(paymentTypes: offlineMethods)
+            vc.modalPresentationStyle = .formSheet
+            self.present(vc, animated: true, completion: nil)
+        }
+
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
