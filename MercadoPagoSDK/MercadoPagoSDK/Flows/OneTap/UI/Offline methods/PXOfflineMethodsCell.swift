@@ -10,11 +10,7 @@ import Foundation
 internal typealias PXOfflineMethodsCellData = (title: PXText?, subtitle: PXText?, imageUrl: String?, isSelected: Bool)
 
 final class PXOfflineMethodsCell: UITableViewCell {
-
     static let identifier = "PXOfflineMethodsCell"
-    static func getCell() -> UINib {
-        return UINib(nibName: PXOfflineMethodsCell.identifier, bundle: ResourceManager.shared.getBundle())
-    }
 
     //Selection Indicator
     let INDICATOR_IMAGE_SIZE: CGFloat = 16.0

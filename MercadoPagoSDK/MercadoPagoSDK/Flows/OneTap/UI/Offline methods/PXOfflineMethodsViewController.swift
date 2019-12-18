@@ -22,7 +22,6 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     }
 
     override func viewDidLoad() {
-        self.view.backgroundColor = .red
         render()
     }
 
