@@ -17,9 +17,10 @@ open class PXOneTapDto: NSObject, Codable {
     open var newCard: PXOneTapNewCardDto?
     open var benefits: PXBenefits?
     open var status: PXStatus
+    open var offlineMethods: PXOfflineMethods?
 
-    public init(paymentMethodId: String?, paymentTypeId: String?, oneTapCard: PXOneTapCardDto?, oneTapCreditsInfo: PXOneTapCreditsDto?, accountMoney: PXAccountMoneyDto?, newCard: PXOneTapNewCardDto?, status: PXStatus, benefits: PXBenefits? = nil) {
         self.paymentMethodId = paymentMethodId ?? ""
+    public init(paymentMethodId: String?, paymentTypeId: String?, oneTapCard: PXOneTapCardDto?, oneTapCreditsInfo: PXOneTapCreditsDto?, accountMoney: PXAccountMoneyDto?, newCard: PXOneTapNewCardDto?, status: PXStatus, benefits: PXBenefits? = nil, offlineMethods: PXOfflineMethods?) {
         self.paymentTypeId = paymentTypeId
         self.oneTapCard = oneTapCard
         self.oneTapCreditsInfo = oneTapCreditsInfo
@@ -27,6 +28,7 @@ open class PXOneTapDto: NSObject, Codable {
         self.newCard = newCard
         self.status = status
         self.benefits = benefits
+        self.offlineMethods = offlineMethods
     }
 
     public enum PXOneTapDtoKeys: String, CodingKey {
@@ -78,5 +80,6 @@ open class PXOneTapDto: NSObject, Codable {
 
     open class func fromJSON(data: Data) throws -> PXOneTapDto {
         return try JSONDecoder().decode(PXOneTapDto.self, from: data)
+        case offlineMethods = "offline_methods"
     }
 }
