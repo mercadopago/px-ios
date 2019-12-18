@@ -32,6 +32,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var headerView: PXOneTapHeaderView?
     var whiteView: UIView?
     var selectedCard: PXCardSliderViewModel?
+    var newCardId: String?
 
     let timeOutPayButton: TimeInterval
 
@@ -84,7 +85,16 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
         self.viewModel.createCardSliderViewModel()
-        slider.update(self.viewModel.getCardSliderViewModel())
+        slider.update(viewModel.getCardSliderViewModel())
+        //Select first item
+        slider.goToItemAt(index: 0, animated: false)
+        if let index = viewModel.getCardSliderViewModel().firstIndex(where: { $0.cardId == newCardId }) {
+            newCardId = nil
+            let card = viewModel.getCardSliderViewModel()[index]
+            newCardDidSelected(targetModel: card)
+        } else if let card = viewModel.getCardSliderViewModel().first {
+            newCardDidSelected(targetModel: card)
+        }
         if let navigationController = navigationController, navigationController.visibleViewController is MLCardFormViewController {
             navigationController.popViewController(animated: true)
         }
@@ -627,6 +637,7 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 
 extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
     func didAddCard(cardID: String) {
+        newCardId = cardID
         callbackRefreshInit()
     }
 
