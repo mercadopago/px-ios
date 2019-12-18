@@ -72,8 +72,11 @@ final class PXInitDTO: NSObject, Decodable {
     func getPaymentMethodInExpressCheckout(targetId: String) -> (found: Bool, expressNode: PXOneTapDto?) {
         guard let expressResponse = oneTap else { return (false, nil) }
         for expressNode in expressResponse {
+            guard let paymentMethodId = expressNode.paymentMethodId else {
+                return (false, nil)
+            }
             let cardCaseCondition = expressNode.oneTapCard != nil && expressNode.oneTapCard?.cardId == targetId
-            let creditsCaseCondition = PXPaymentTypes(rawValue:expressNode.paymentMethodId) == PXPaymentTypes.CONSUMER_CREDITS
+            let creditsCaseCondition = PXPaymentTypes(rawValue:paymentMethodId) == PXPaymentTypes.CONSUMER_CREDITS
             if cardCaseCondition || creditsCaseCondition {
                 return (true, expressNode)
             }
