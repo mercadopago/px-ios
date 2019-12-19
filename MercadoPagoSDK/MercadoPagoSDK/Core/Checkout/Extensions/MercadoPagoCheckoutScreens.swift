@@ -172,7 +172,7 @@ extension MercadoPagoCheckout {
         if viewModel.paymentResult == nil, let payment = viewModel.payment {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
-        
+
         var congratsViewController: MercadoPagoUIViewController
         let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] (state: PaymentResult.CongratsState) in
             guard let self = self else { return }
@@ -191,14 +191,14 @@ extension MercadoPagoCheckout {
                 self.finish()
             }
         }
-        
+
         let resultViewModel = viewModel.resultViewModel()
         if viewModel.paymentResult?.isApproved() ?? false || viewModel.instructionsInfo != nil {
             congratsViewController = PXNewResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
         } else {
             congratsViewController = PXResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
         }
-        
+
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
@@ -288,17 +288,27 @@ extension MercadoPagoCheckout {
     }
 
     func startOneTapFlow() {
-        guard let search = viewModel.search, let paymentOtionSelected = viewModel.paymentOptionSelected else {
+        guard let search = viewModel.search, let paymentOptionSelected = viewModel.paymentOptionSelected else {
             return
         }
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
-        let onetapFlow = OneTapFlow(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOtionSelected, oneTapResultHandler: self)
+        if viewModel.onetapFlow != nil, shouldRefreshInitFlow {
+            viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected)
+        } else {
+            viewModel.onetapFlow = OneTapFlow(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected, oneTapResultHandler: self)
+        }
 
-        onetapFlow.setCustomerPaymentMethods(viewModel.customPaymentOptions)
-        onetapFlow.setPaymentMethodPlugins(viewModel.paymentMethodPlugins)
-        onetapFlow.setPaymentFlow(paymentFlow: paymentFlow)
-        onetapFlow.start()
+        viewModel.onetapFlow?.setCustomerPaymentMethods(viewModel.customPaymentOptions)
+        viewModel.onetapFlow?.setPaymentMethodPlugins(viewModel.paymentMethodPlugins)
+        viewModel.onetapFlow?.setPaymentFlow(paymentFlow: paymentFlow)
+
+        if viewModel.onetapFlow != nil, shouldRefreshInitFlow {
+            shouldRefreshInitFlow = false
+            viewModel.onetapFlow?.updateOneTapViewModel()
+        } else {
+            viewModel.onetapFlow?.start()
+        }
     }
 }

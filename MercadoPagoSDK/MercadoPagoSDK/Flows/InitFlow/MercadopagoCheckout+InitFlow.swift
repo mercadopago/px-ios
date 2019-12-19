@@ -37,7 +37,7 @@ extension MercadoPagoCheckout: InitFlowProtocol {
     }
 
     func didFinishInitFlow() {
-        if initMode == .lazy {
+        if initMode == .lazy && shouldRefreshInitFlow == false {
             initProtocol?.didFinish(checkout: self)
         } else {
             executeNextStep()
