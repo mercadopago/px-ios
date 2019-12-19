@@ -44,14 +44,6 @@ final class OneTapFlow: NSObject, PXFlow {
         executeNextStep()
     }
 
-    func updateOneTapViewModel() {
-        let viewControllers = pxNavigationHandler.navigationController.viewControllers.filter { $0 is PXOneTapViewController }
-        if let oneTapViewController = viewControllers.first as? PXOneTapViewController {
-            let viewModel = model.oneTapViewModel()
-            oneTapViewController.update(viewModel: viewModel)
-        }
-    }
-
     func executeNextStep() {
         switch self.model.nextStep() {
         case .screenReviewOneTap:
