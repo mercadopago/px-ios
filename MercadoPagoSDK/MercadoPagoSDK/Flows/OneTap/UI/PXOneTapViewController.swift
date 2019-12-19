@@ -84,16 +84,15 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
-        self.viewModel.createCardSliderViewModel()
-        slider.update(viewModel.getCardSliderViewModel())
-        //Select first item
-        slider.goToItemAt(index: 0, animated: false)
-        if let index = viewModel.getCardSliderViewModel().firstIndex(where: { $0.cardId == newCardId }) {
+        viewModel.createCardSliderViewModel()
+        let cardSliderViewModel = viewModel.getCardSliderViewModel()
+        slider.update(cardSliderViewModel)
+        if let index = cardSliderViewModel.firstIndex(where: { $0.cardId == newCardId }) {
             newCardId = nil
-            let card = viewModel.getCardSliderViewModel()[index]
-            newCardDidSelected(targetModel: card)
-        } else if let card = viewModel.getCardSliderViewModel().first {
-            newCardDidSelected(targetModel: card)
+            selectCardInSliderAtIndex(index)
+        } else {
+            //Select first item
+            selectFirstCardInSlider()
         }
         if let navigationController = navigationController, navigationController.visibleViewController is MLCardFormViewController {
             navigationController.popViewController(animated: true)
@@ -437,6 +436,19 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             targetModel.displayMessage = viewModel.getSplitMessageForDebit(amountToPay: totalAmount)
         }
     }
+    
+    func selectFirstCardInSlider() {
+        selectCardInSliderAtIndex(0)
+    }
+    
+    func selectCardInSliderAtIndex(_ index: Int) {
+        let cardSliderViewModel = viewModel.getCardSliderViewModel()
+        if cardSliderViewModel.count - 1 >= index && index >= 0 {
+            slider.goToItemAt(index: index, animated: false)
+            let card = cardSliderViewModel[index]
+            newCardDidSelected(targetModel: card)
+        }
+    }
 
     func disabledCardDidTap(status: PXStatus) {
         showDisabledCardModal(status: status)
@@ -446,12 +458,9 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         guard let message = status.secondaryMessage?.message else {return}
         let vc = PXOneTapDisabledViewController(text: message)
         let buttonTitle = "px_dialog_detail_payment_method_disable_link".localized
-        PXComponentFactory.Modal.show(viewController: vc, title: nil, actionTitle: buttonTitle, actionBlock: {
+        PXComponentFactory.Modal.show(viewController: vc, title: nil, actionTitle: buttonTitle, actionBlock: { [weak self] in
             //Select first item
-            self.slider.goToItemAt(index: 0, animated: false)
-            if let card = self.viewModel.getCardSliderViewModel().first {
-                self.newCardDidSelected(targetModel: card)
-            }
+            self?.selectFirstCardInSlider()
         })
 
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapDisabledModalPath(), treatAsViewController: false)
