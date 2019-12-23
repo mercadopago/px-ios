@@ -295,7 +295,16 @@ extension MercadoPagoCheckout {
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
         if shouldUpdateOnetapFlow() {
-            viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected)
+            if let cardId = shouldRefreshFlowWithCardId {
+                if viewModel.customPaymentOptions?.first(where: { $0.getCardId() == cardId }) != nil {
+                    viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected)
+                } else {
+                    // New card didn't return. Refresh Init again
+                    // TODO: check if this can be done better
+                    refreshInitFlow(cardId: cardId)
+                    return
+                }
+            }
         } else {
             viewModel.onetapFlow = OneTapFlow(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected, oneTapResultHandler: self)
         }
