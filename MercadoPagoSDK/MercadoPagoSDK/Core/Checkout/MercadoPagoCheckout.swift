@@ -23,7 +23,7 @@ open class MercadoPagoCheckout: NSObject {
     internal var initProtocol: PXLazyInitProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
-    internal var shouldRefreshInitFlow: Bool = false
+    internal var shouldRefreshFlowWithCardId: String?
 
     // MARK: Initialization
     /**

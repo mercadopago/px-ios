@@ -31,9 +31,9 @@ extension OneTapFlow {
                 self?.model.paymentOptionSelected = newPaymentOption
             }
         }
-        let callbackRefreshInit: (() -> Void) = {
-            [weak self] in
-            self?.refreshInitFlow()
+        let callbackRefreshInit: ((String) -> Void) = {
+            [weak self] cardId in
+            self?.refreshInitFlow(cardId: cardId)
         }
         let callbackExit: (() -> Void) = {
             [weak self] in
@@ -48,11 +48,11 @@ extension OneTapFlow {
 
         pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
     }
-    
-    func updateOneTapViewModel() {
+
+    func updateOneTapViewModel(cardId: String) {
         if let oneTapViewController = pxNavigationHandler.navigationController.viewControllers.first(where: { $0 is PXOneTapViewController }) as? PXOneTapViewController {
             let viewModel = model.oneTapViewModel()
-            oneTapViewController.update(viewModel: viewModel)
+            oneTapViewController.update(viewModel: viewModel, cardId: cardId)
         }
     }
 
