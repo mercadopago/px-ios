@@ -23,7 +23,9 @@ open class MercadoPagoCheckout: NSObject {
     internal var initProtocol: PXLazyInitProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
-    internal var shouldRefreshInitFlow: Bool = false
+    // This var will hold the value of the new card added by MLCardForm
+    // until the init flow is refreshed with this new payment method
+    internal var cardIdForInitFlowRefresh: String?
 
     // MARK: Initialization
     /**

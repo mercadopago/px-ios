@@ -22,7 +22,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var callbackPaymentData: ((PXPaymentData) -> Void)
     var callbackConfirm: ((PXPaymentData, Bool) -> Void)
     var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
-    var callbackRefreshInit: (() -> Void)
+    var callbackRefreshInit: ((String) -> Void)
     var callbackExit: (() -> Void)
     var finishButtonAnimation: (() -> Void)
 
@@ -32,7 +32,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var headerView: PXOneTapHeaderView?
     var whiteView: UIView?
     var selectedCard: PXCardSliderViewModel?
-    var newCardId: String?
 
     let timeOutPayButton: TimeInterval
 
@@ -40,7 +39,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     private var navigationBarTapGesture: UITapGestureRecognizer?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping (() -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
@@ -82,20 +81,20 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
 
-    func update(viewModel: PXOneTapViewModel) {
+    func update(viewModel: PXOneTapViewModel, cardId: String) {
         self.viewModel = viewModel
         viewModel.createCardSliderViewModel()
         let cardSliderViewModel = viewModel.getCardSliderViewModel()
         slider.update(cardSliderViewModel)
-        if let index = cardSliderViewModel.firstIndex(where: { $0.cardId == newCardId }) {
-            newCardId = nil
+        if let index = cardSliderViewModel.firstIndex(where: { $0.cardId == cardId }) {
             selectCardInSliderAtIndex(index)
         } else {
             //Select first item
             selectFirstCardInSlider()
         }
-        if let navigationController = navigationController, navigationController.visibleViewController is MLCardFormViewController {
-            navigationController.popViewController(animated: true)
+        if let navigationController = navigationController,
+            let cardFormViewController = navigationController.viewControllers.first(where: { $0 is MLCardFormViewController }) as? MLCardFormViewController {
+            cardFormViewController.dismissLoadingAndPop()
         }
     }
 }
@@ -436,11 +435,11 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             targetModel.displayMessage = viewModel.getSplitMessageForDebit(amountToPay: totalAmount)
         }
     }
-    
+
     func selectFirstCardInSlider() {
         selectCardInSliderAtIndex(0)
     }
-    
+
     func selectCardInSliderAtIndex(_ index: Int) {
         let cardSliderViewModel = viewModel.getCardSliderViewModel()
         if cardSliderViewModel.count - 1 >= index && index >= 0 {
@@ -646,8 +645,7 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 
 extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
     func didAddCard(cardID: String) {
-        newCardId = cardID
-        callbackRefreshInit()
+        callbackRefreshInit(cardID)
     }
 
     func didFailAddCard() {

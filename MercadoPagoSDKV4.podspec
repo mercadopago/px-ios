@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     s.dependency 'MLUI', '~> 5.0'
     s.dependency 'MLCardDrawer', '~> 1.0'
     s.dependency 'MLBusinessComponents', '~> 1.0'
-    s.dependency 'MLCardForm', '~> 1.0'
+    s.dependency 'MLCardForm', '~> 0.1'
   end
 
 
