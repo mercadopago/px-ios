@@ -295,7 +295,7 @@ extension MercadoPagoCheckout {
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
         if shouldUpdateOnetapFlow() {
-            if let cardId = shouldRefreshFlowWithCardId {
+            if let cardId = cardIdForInitFlowRefresh {
                 if viewModel.customPaymentOptions?.first(where: { $0.getCardId() == cardId }) != nil {
                     viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected)
                 } else {
@@ -314,8 +314,8 @@ extension MercadoPagoCheckout {
         viewModel.onetapFlow?.setPaymentFlow(paymentFlow: paymentFlow)
 
         if shouldUpdateOnetapFlow() {
-            viewModel.onetapFlow?.updateOneTapViewModel(cardId: shouldRefreshFlowWithCardId ?? "")
-            shouldRefreshFlowWithCardId = nil
+            viewModel.onetapFlow?.updateOneTapViewModel(cardId: cardIdForInitFlowRefresh ?? "")
+            cardIdForInitFlowRefresh = nil
         } else {
             viewModel.onetapFlow?.start()
         }
@@ -323,7 +323,7 @@ extension MercadoPagoCheckout {
 
     func shouldUpdateOnetapFlow() -> Bool {
         if viewModel.onetapFlow != nil,
-            let cardId = shouldRefreshFlowWithCardId,
+            let cardId = cardIdForInitFlowRefresh,
             cardId.count > 0 {
             return true
         }
