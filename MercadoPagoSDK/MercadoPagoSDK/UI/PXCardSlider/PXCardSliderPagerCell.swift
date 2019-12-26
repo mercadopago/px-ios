@@ -21,6 +21,7 @@ class PXCardSliderPagerCell: FSPagerViewCell {
     private var consumerCreditCard: ConsumerCreditsCard?
 
     weak var delegate: PXTermsAndConditionViewDelegate?
+    weak var addNewMethodDelegate: AddNewMethodCardDelegate?
     @IBOutlet weak var containerView: UIView!
 
     override func prepareForReuse() {
@@ -29,6 +30,11 @@ class PXCardSliderPagerCell: FSPagerViewCell {
         containerView.removeAllSubviews()
         containerView.layer.masksToBounds = false
     }
+}
+
+protocol AddNewMethodCardDelegate: NSObjectProtocol {
+    func addNewCard()
+    func addNewOfflineMethod()
 }
 
 // MARK: Publics.
@@ -51,22 +57,61 @@ extension PXCardSliderPagerCell {
         addBottomMessageView(message: bottomMessage)
     }
 
-    func renderEmptyCard(title: PXText? = nil, cardSize: CGSize) {
-        containerView.layer.masksToBounds = false
+    func renderEmptyCard(addCardTitle: PXText?, addOfflineTitle: PXText?, cardSize: CGSize, delegate: AddNewMethodCardDelegate) {
+        self.addNewMethodDelegate = delegate
+
+        containerView.layer.masksToBounds = true
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
-        containerView.backgroundColor = .clear
-        let emptyCard = EmptyCard(title: title)
-        cardHeader = MLCardDrawerController(emptyCard, PXCardDataFactory(), false)
-        cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: cardSize)
-        cardHeader?.animated(false)
-        cardHeader?.show()
-        if let headerView = cardHeader?.view {
-            containerView.addSubview(headerView)
-            emptyCard.render(containerView: containerView)
-            PXLayout.centerHorizontally(view: headerView).isActive = true
-            PXLayout.centerVertically(view: headerView).isActive = true
+
+        if let addCardTitle = addCardTitle {
+            let icon = ResourceManager.shared.getImage("add_new_card")
+            let newCardData = PXAddMethodData(title: addCardTitle, subtitle: nil, icon: icon)
+            let newCardView = PXAddMethodView(data: newCardData)
+            newCardView.translatesAutoresizingMaskIntoConstraints = false
+            newCardView.layer.cornerRadius = cornerRadius
+            containerView.addSubview(newCardView)
+
+            let newCardTap = UITapGestureRecognizer(target: self, action: #selector(addNewCardTapped))
+            newCardView.addGestureRecognizer(newCardTap)
+
+            NSLayoutConstraint.activate([
+                newCardView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                newCardView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                newCardView.topAnchor.constraint(equalTo: containerView.topAnchor),
+                newCardView.heightAnchor.constraint(equalToConstant: cardSize.height/2)
+            ])
         }
+
+        if let addOfflineTitle = addOfflineTitle {
+            let icon = ResourceManager.shared.getImage("add_new_offline")
+            let newOfflineData = PXAddMethodData(title: addOfflineTitle, subtitle: nil, icon: icon)
+            let newOfflineView = PXAddMethodView(data: newOfflineData)
+            newOfflineView.translatesAutoresizingMaskIntoConstraints = false
+            newOfflineView.layer.cornerRadius = cornerRadius
+
+            let newOfflineMethodTap = UITapGestureRecognizer(target: self, action: #selector(addNewOfflineMethodTapped))
+            newOfflineView.addGestureRecognizer(newOfflineMethodTap)
+
+            containerView.addSubview(newOfflineView)
+
+            NSLayoutConstraint.activate([
+                newOfflineView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                newOfflineView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                newOfflineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                newOfflineView.heightAnchor.constraint(equalToConstant: cardSize.height/2)
+            ])
+        }
+    }
+
+    @objc
+    func addNewCardTapped() {
+        addNewMethodDelegate?.addNewCard()
+    }
+
+    @objc
+    func addNewOfflineMethodTapped() {
+        addNewMethodDelegate?.addNewOfflineMethod()
     }
 
     func renderAccountMoneyCard(isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
@@ -176,5 +221,81 @@ extension PXCardSliderPagerCell {
 extension PXCardSliderPagerCell: PXTermsAndConditionViewDelegate {
     func shouldOpenTermsCondition(_ title: String, url: URL) {
         delegate?.shouldOpenTermsCondition(title, url: url)
+    }
+}
+
+typealias PXAddMethodData = (title: PXText?, subtitle: PXText?, icon: UIImage?)
+
+class PXAddMethodView: UIView {
+    //Icon
+    let ICON_SIZE: CGFloat = 48.0
+
+    let data: PXAddMethodData
+
+    init(data: PXAddMethodData) {
+        self.data = data
+        super.init(frame: .zero)
+        render()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func render() {
+        self.removeAllSubviews()
+        self.backgroundColor = .white
+
+        let iconImageView = buildCircleImage(with: data.icon)
+        addSubview(iconImageView)
+
+        NSLayoutConstraint.activate([
+            iconImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: PXLayout.S_MARGIN),
+            iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+
+        let labelsContainerView = UIStackView()
+        labelsContainerView.translatesAutoresizingMaskIntoConstraints = false
+        labelsContainerView.axis = .vertical
+
+        if let title = data.title {
+            let titleLabel = UILabel()
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.attributedText = title.getAttributedString(fontSize: PXLayout.XS_FONT)
+            labelsContainerView.addArrangedSubview(titleLabel)
+        }
+
+        if let subtitle = data.subtitle {
+            let subtitleLabel = UILabel()
+            subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+            subtitleLabel.attributedText = subtitle.getAttributedString(fontSize: PXLayout.XXS_FONT)
+            labelsContainerView.addArrangedSubview(subtitleLabel)
+        }
+
+        addSubview(labelsContainerView)
+        NSLayoutConstraint.activate([
+            labelsContainerView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: PXLayout.S_MARGIN),
+            labelsContainerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 53),
+            labelsContainerView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            labelsContainerView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+
+    }
+
+    func buildCircleImage(with image: UIImage?) -> PXUIImageView {
+        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: ICON_SIZE, height: ICON_SIZE))
+        circleImage.layer.masksToBounds = false
+        circleImage.layer.cornerRadius = circleImage.frame.height / 2
+        circleImage.layer.borderWidth = 1
+        circleImage.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+        circleImage.clipsToBounds = true
+        circleImage.translatesAutoresizingMaskIntoConstraints = false
+        circleImage.enableFadeIn()
+        circleImage.contentMode = .scaleAspectFit
+        circleImage.image = image
+        circleImage.backgroundColor = .clear
+        PXLayout.setHeight(owner: circleImage, height: ICON_SIZE).isActive = true
+        PXLayout.setWidth(owner: circleImage, width: ICON_SIZE).isActive = true
+        return circleImage
     }
 }

@@ -9,7 +9,8 @@ import Foundation
 import MLCardDrawer
 
 class EmptyCard: NSObject, CardUI {
-    let title: PXText?
+    let newCardTitle: PXText?
+    let newOfflineTitle: PXText?
     var placeholderName = ""
     var placeholderExpiration = ""
     var bankImage: UIImage?
@@ -22,8 +23,9 @@ class EmptyCard: NSObject, CardUI {
     var securityCodePattern = 3
     var fontType: String = "dark"
 
-    init(title: PXText? = nil) {
-        self.title = title
+    init(newCardTitle: PXText?, newOfflineTitle: PXText?) {
+        self.newCardTitle = newCardTitle
+        self.newOfflineTitle = newOfflineTitle
     }
 }
 
@@ -42,7 +44,7 @@ extension EmptyCard {
 
         let label = UILabel()
         let textColor = ThemeManager.shared.getAccentColor()
-        label.attributedText = title?.getAttributedString(fontSize: PXLayout.XXS_FONT, textColor: textColor, backgroundColor: .clear)
+        label.attributedText = newCardTitle?.getAttributedString(fontSize: PXLayout.XXS_FONT, textColor: textColor, backgroundColor: .clear)
         label.textAlignment = .center
         containerView.addSubview(label)
         PXLayout.pinLeft(view: label, withMargin: 0).isActive = true

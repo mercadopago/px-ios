@@ -73,13 +73,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        if let offlineMethods = viewModel.expressData?[8].offlineMethods?.paymentTypes {
-            let vc = PXOfflineMethodsViewController(paymentTypes: offlineMethods)
-            vc.modalPresentationStyle = .formSheet
-            self.present(vc, animated: true, completion: nil)
-        }
-
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
@@ -268,6 +261,14 @@ extension PXOneTapViewController {
         callbackPaymentData(viewModel.getClearPaymentData())
     }
 
+    func shouldAddNewOfflineMethod() {
+        if let offlineMethods = viewModel.getOfflineMethods() {
+            let vc = PXOfflineMethodsViewController(paymentTypes: offlineMethods.paymentTypes)
+            vc.modalPresentationStyle = .formSheet
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+
     private func confirmPayment() {
         if viewModel.shouldValidateWithBiometric() {
             let biometricModule = PXConfiguratorManager.biometricProtocol
@@ -452,8 +453,14 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapDisabledModalPath(), treatAsViewController: false)
     }
 
-    func addPaymentMethodCardDidTap() {
+    func addNewCardDidTap() {
         shouldChangePaymentMethod()
+        print("hola aca card")
+    }
+
+    func addNewOfflineDidTap() {
+        shouldAddNewOfflineMethod()
+        print("hola aca offline")
     }
 
     func didScroll(offset: CGPoint) {

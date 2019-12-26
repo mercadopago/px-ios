@@ -34,4 +34,8 @@ final class PXOfflineMethodsViewModel {
         let model = paymentTypes[indexPath.section].paymentMethods[indexPath.row]
         return PXOfflineMethodsCellData(title: model.name, subtitle: model.description, imageUrl: model.imageUrl, isSelected: isSelected)
     }
+
+    func headerTitleForSection(_ section: Int) -> PXText? {
+        return paymentTypes[section].name
+    }
 }

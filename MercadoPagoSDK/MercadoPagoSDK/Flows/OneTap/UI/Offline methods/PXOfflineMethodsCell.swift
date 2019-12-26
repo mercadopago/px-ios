@@ -15,8 +15,8 @@ final class PXOfflineMethodsCell: UITableViewCell {
     //Selection Indicator
     let INDICATOR_IMAGE_SIZE: CGFloat = 16.0
 
-    //Image
-    let IMAGE_SIZE: CGFloat = 48.0
+    //Icon
+    let ICON_SIZE: CGFloat = 48.0
 
     func render(data: PXOfflineMethodsCellData) {
         contentView.removeAllSubviews()
@@ -34,8 +34,8 @@ final class PXOfflineMethodsCell: UITableViewCell {
             indicatorImageView.widthAnchor.constraint(equalToConstant: INDICATOR_IMAGE_SIZE)
         ])
 
-        let pximage = PXUIImage(url: data.imageUrl)
-        let iconImageView = buildCircleImage(with: pximage)
+        let pxImage = PXUIImage(url: data.imageUrl)
+        let iconImageView = buildCircleImage(with: pxImage)
         contentView.addSubview(iconImageView)
 
         NSLayoutConstraint.activate([
@@ -71,7 +71,7 @@ final class PXOfflineMethodsCell: UITableViewCell {
     }
 
     func buildCircleImage(with image: UIImage?) -> PXUIImageView {
-        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: IMAGE_SIZE, height: IMAGE_SIZE))
+        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: ICON_SIZE, height: ICON_SIZE))
         circleImage.layer.masksToBounds = false
         circleImage.layer.cornerRadius = circleImage.frame.height / 2
         circleImage.layer.borderWidth = 1
@@ -79,11 +79,11 @@ final class PXOfflineMethodsCell: UITableViewCell {
         circleImage.clipsToBounds = true
         circleImage.translatesAutoresizingMaskIntoConstraints = false
         circleImage.enableFadeIn()
-        circleImage.contentMode = .scaleAspectFill
+        circleImage.contentMode = .scaleAspectFit
         circleImage.image = image
         circleImage.backgroundColor = .clear
-        PXLayout.setHeight(owner: circleImage, height: IMAGE_SIZE).isActive = true
-        PXLayout.setWidth(owner: circleImage, width: IMAGE_SIZE).isActive = true
+        PXLayout.setHeight(owner: circleImage, height: ICON_SIZE).isActive = true
+        PXLayout.setWidth(owner: circleImage, width: ICON_SIZE).isActive = true
         return circleImage
     }
 

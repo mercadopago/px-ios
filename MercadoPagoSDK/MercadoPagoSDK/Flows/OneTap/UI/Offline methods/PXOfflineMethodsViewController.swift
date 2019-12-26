@@ -26,6 +26,34 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     }
 
     func render() {
+        let totalView = UIView()
+        totalView.translatesAutoresizingMaskIntoConstraints = false
+        totalView.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
+        view.addSubview(totalView)
+
+        NSLayoutConstraint.activate([
+            totalView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            totalView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            totalView.topAnchor.constraint(equalTo: view.topAnchor),
+            totalView.heightAnchor.constraint(equalToConstant: 54)
+        ])
+
+        let totalLabel = UILabel()
+        totalLabel.translatesAutoresizingMaskIntoConstraints = false
+        totalLabel.text = "Total: $1000"
+        totalLabel.textColor = .white
+        totalLabel.textAlignment = .right
+
+        totalView.addSubview(totalLabel)
+
+        NSLayoutConstraint.activate([
+            totalLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 16),
+            totalLabel.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -16),
+            totalLabel.topAnchor.constraint(equalTo: totalView.topAnchor, constant: 16),
+            totalLabel.bottomAnchor.constraint(equalTo: totalView.bottomAnchor, constant: -16)
+        ])
+
+        tableView.sectionHeaderHeight = 40
         tableView.register(PXOfflineMethodsCell.self, forCellReuseIdentifier: PXOfflineMethodsCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -35,7 +63,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.topAnchor.constraint(equalTo: totalView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         tableView.reloadData()
@@ -60,6 +88,24 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
             return cell
         }
         return UITableViewCell()
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let title = viewModel.headerTitleForSection(section)
+        let view = UIView()
+        view.backgroundColor = .white
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = title?.getAttributedString(fontSize: PXLayout.XXS_FONT)
+        view.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.S_MARGIN),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: PXLayout.S_MARGIN),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
+        return view
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

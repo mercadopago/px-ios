@@ -73,7 +73,8 @@ extension PXOneTapViewModel {
 
             // Add New Card
             if let newCard = targetNode.newCard {
-                sliderModel.append(PXCardSliderViewModel("", "", "", EmptyCard(title: newCard.label), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
+                let emptyCard = EmptyCard(newCardTitle: newCard.label, newOfflineTitle: targetNode.offlineMethods?.label)
+                sliderModel.append(PXCardSliderViewModel("", "", "", emptyCard, nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
             }
 
             //  Account money
@@ -423,5 +424,17 @@ extension PXOneTapViewModel {
         return advancedConfiguration.dynamicViewControllersConfiguration.filter({
             $0.position(store: PXCheckoutStore.sharedInstance) == .DID_TAP_ONETAP_HEADER
         }).first?.viewController(store: PXCheckoutStore.sharedInstance)
+    }
+
+    func getOfflineMethods() -> PXOfflineMethods? {
+        guard let expressData = expressData else {
+            return nil
+        }
+        for node in expressData {
+            if let offlineMethods = node.offlineMethods {
+                return offlineMethods
+            }
+        }
+        return nil
     }
 }
