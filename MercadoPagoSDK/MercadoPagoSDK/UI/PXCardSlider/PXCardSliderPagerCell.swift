@@ -57,16 +57,19 @@ extension PXCardSliderPagerCell {
         addBottomMessageView(message: bottomMessage)
     }
 
-    func renderEmptyCard(addCardTitle: PXText?, addOfflineTitle: PXText?, cardSize: CGSize, delegate: AddNewMethodCardDelegate) {
+    func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: AddNewMethodCardDelegate) {
         self.addNewMethodDelegate = delegate
 
         containerView.layer.masksToBounds = true
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
 
-        if let addCardTitle = addCardTitle {
+        let bigSize = cardSize.height
+        let smallSize = (cardSize.height - PXLayout.XS_MARGIN) / 2
+
+        if let newCardData = newCardData {
             let icon = ResourceManager.shared.getImage("add_new_card")
-            let newCardData = PXAddMethodData(title: addCardTitle, subtitle: nil, icon: icon)
+            let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon)
             let newCardView = PXAddMethodView(data: newCardData)
             newCardView.translatesAutoresizingMaskIntoConstraints = false
             newCardView.layer.cornerRadius = cornerRadius
@@ -75,17 +78,19 @@ extension PXCardSliderPagerCell {
             let newCardTap = UITapGestureRecognizer(target: self, action: #selector(addNewCardTapped))
             newCardView.addGestureRecognizer(newCardTap)
 
+            let newCardViewHeight = newOfflineData == nil ? bigSize : smallSize
+
             NSLayoutConstraint.activate([
                 newCardView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 newCardView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
                 newCardView.topAnchor.constraint(equalTo: containerView.topAnchor),
-                newCardView.heightAnchor.constraint(equalToConstant: cardSize.height/2)
+                newCardView.heightAnchor.constraint(equalToConstant: newCardViewHeight)
             ])
         }
 
-        if let addOfflineTitle = addOfflineTitle {
+        if let newOfflineData = newOfflineData {
             let icon = ResourceManager.shared.getImage("add_new_offline")
-            let newOfflineData = PXAddMethodData(title: addOfflineTitle, subtitle: nil, icon: icon)
+            let newOfflineData = PXAddMethodData(title: newOfflineData.title, subtitle: newOfflineData.subtitle, icon: icon)
             let newOfflineView = PXAddMethodView(data: newOfflineData)
             newOfflineView.translatesAutoresizingMaskIntoConstraints = false
             newOfflineView.layer.cornerRadius = cornerRadius
@@ -99,7 +104,7 @@ extension PXCardSliderPagerCell {
                 newOfflineView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 newOfflineView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
                 newOfflineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-                newOfflineView.heightAnchor.constraint(equalToConstant: cardSize.height/2)
+                newOfflineView.heightAnchor.constraint(equalToConstant: smallSize)
             ])
         }
     }

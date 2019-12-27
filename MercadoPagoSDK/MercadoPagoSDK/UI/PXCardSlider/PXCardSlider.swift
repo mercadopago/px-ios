@@ -49,13 +49,13 @@ extension PXCardSlider: FSPagerViewDataSource {
                 // Add new card scenario.
                 if let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
 
-                    var newCardTitle: PXText?
-                    var newOfflineTitle: PXText?
+                    var newCardData: PXAddNewMethodData?
+                    var newOfflineData: PXAddNewMethodData?
                     if let emptyCard = targetModel.cardUI as? EmptyCard {
-                        newCardTitle = emptyCard.newCardTitle
-                        newOfflineTitle = emptyCard.newOfflineTitle
+                        newCardData = emptyCard.newCardData
+                        newOfflineData = emptyCard.newOfflineData
                     }
-                    cell.renderEmptyCard(addCardTitle: newCardTitle, addOfflineTitle: newOfflineTitle, cardSize: pagerView.itemSize, delegate: self)
+                    cell.renderEmptyCard(newCardData: newCardData, newOfflineData: newOfflineData, cardSize: pagerView.itemSize, delegate: self)
                     return cell
                 }
             }

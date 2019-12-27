@@ -9,4 +9,10 @@ import Foundation
 
 open class PXOneTapNewCardDto: NSObject, Codable {
     let label: PXText
+    let descriptionText: PXText?
+
+    enum CodingKeys: String, CodingKey {
+        case label
+        case descriptionText = "description"
+    }
 }

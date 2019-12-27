@@ -12,8 +12,13 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     let tableView = UITableView()
     let viewModel: PXOfflineMethodsViewModel
 
-    init(paymentTypes: [PXOfflinePaymentType]) {
-        viewModel = PXOfflineMethodsViewModel(paymentTypes: paymentTypes)
+    var totalLabelConstraint: NSLayoutConstraint?
+
+    let totalViewHeight: CGFloat = 54
+    let totalViewMargin: CGFloat = PXLayout.S_MARGIN
+
+    init(paymentTypes: [PXOfflinePaymentType], totalAmount: Double) {
+        viewModel = PXOfflineMethodsViewModel(paymentTypes: paymentTypes, totalAmount: totalAmount)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -23,6 +28,19 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
     override func viewDidLoad() {
         render()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animateTotalLabel()
+    }
+
+    func animateTotalLabel() {
+        let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1) { [weak self] in
+            self?.totalLabelConstraint?.constant = self?.totalViewMargin ?? PXLayout.S_MARGIN
+            self?.view.layoutIfNeeded()
+        }
+        animator.startAnimation()
     }
 
     func render() {
@@ -35,36 +53,39 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
             totalView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             totalView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             totalView.topAnchor.constraint(equalTo: view.topAnchor),
-            totalView.heightAnchor.constraint(equalToConstant: 54)
+            totalView.heightAnchor.constraint(equalToConstant: totalViewHeight)
         ])
 
         let totalLabel = UILabel()
         totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.text = "Total: $1000"
-        totalLabel.textColor = .white
+        totalLabel.attributedText = viewModel.getTotalTitle().getAttributedString(fontSize: PXLayout.M_FONT, textColor: .white)
         totalLabel.textAlignment = .right
 
         totalView.addSubview(totalLabel)
 
         NSLayoutConstraint.activate([
-            totalLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 16),
-            totalLabel.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -16),
-            totalLabel.topAnchor.constraint(equalTo: totalView.topAnchor, constant: 16),
-            totalLabel.bottomAnchor.constraint(equalTo: totalView.bottomAnchor, constant: -16)
+            totalLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: totalViewMargin),
+            totalLabel.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -totalViewMargin),
+            totalLabel.heightAnchor.constraint(equalToConstant: totalViewHeight - (totalViewMargin*2))
         ])
+
+        totalLabelConstraint = totalLabel.topAnchor.constraint(equalTo: totalView.topAnchor, constant: totalViewMargin + totalViewHeight)
+        totalLabelConstraint?.isActive = true
 
         tableView.sectionHeaderHeight = 40
         tableView.register(PXOfflineMethodsCell.self, forCellReuseIdentifier: PXOfflineMethodsCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorInset = .init(top: 0, left: PXLayout.S_MARGIN, bottom: 0, right: PXLayout.S_MARGIN)
+        tableView.separatorColor = UIColor.black.withAlphaComponent(0.1)
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: totalView.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -112)
         ])
         tableView.reloadData()
     }

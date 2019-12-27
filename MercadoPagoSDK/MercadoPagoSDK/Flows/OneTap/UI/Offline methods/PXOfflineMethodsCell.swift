@@ -7,7 +7,7 @@
 
 import Foundation
 
-internal typealias PXOfflineMethodsCellData = (title: PXText?, subtitle: PXText?, imageUrl: String?, isSelected: Bool)
+internal typealias PXOfflineMethodsCellData = (title: PXText?, subtitle: PXText?, image: UIImage?, isSelected: Bool)
 
 final class PXOfflineMethodsCell: UITableViewCell {
     static let identifier = "PXOfflineMethodsCell"
@@ -34,8 +34,7 @@ final class PXOfflineMethodsCell: UITableViewCell {
             indicatorImageView.widthAnchor.constraint(equalToConstant: INDICATOR_IMAGE_SIZE)
         ])
 
-        let pxImage = PXUIImage(url: data.imageUrl)
-        let iconImageView = buildCircleImage(with: pxImage)
+        let iconImageView = buildCircleImage(with: data.image)
         contentView.addSubview(iconImageView)
 
         NSLayoutConstraint.activate([

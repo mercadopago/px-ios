@@ -73,7 +73,14 @@ extension PXOneTapViewModel {
 
             // Add New Card
             if let newCard = targetNode.newCard {
-                let emptyCard = EmptyCard(newCardTitle: newCard.label, newOfflineTitle: targetNode.offlineMethods?.label)
+                let newCardData = PXAddNewMethodData(title: newCard.label, subtitle: newCard.descriptionText)
+
+                var newOfflineData: PXAddNewMethodData?
+                if let offlineMethods = targetNode.offlineMethods {
+                    newOfflineData = PXAddNewMethodData(title: offlineMethods.label, subtitle: offlineMethods.descriptionText)
+                }
+
+                let emptyCard = EmptyCard(newCardData: newCardData, newOfflineData: newOfflineData)
                 sliderModel.append(PXCardSliderViewModel("", "", "", emptyCard, nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
             }
 

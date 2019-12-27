@@ -263,7 +263,7 @@ extension PXOneTapViewController {
 
     func shouldAddNewOfflineMethod() {
         if let offlineMethods = viewModel.getOfflineMethods() {
-            let vc = PXOfflineMethodsViewController(paymentTypes: offlineMethods.paymentTypes)
+            let vc = PXOfflineMethodsViewController(paymentTypes: offlineMethods.paymentTypes, totalAmount: viewModel.amountHelper.amountToPay)
             vc.modalPresentationStyle = .formSheet
             self.present(vc, animated: true, completion: nil)
         }
@@ -403,6 +403,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             displayCard(targetModel: targetModel)
             loadingButtonComponent?.setEnabled()
         } else {
+            displayCard(targetModel: targetModel)
             loadingButtonComponent?.setDisabled()
             headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: nil))
         }
@@ -413,15 +414,18 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         let newPaymentMethodId: String = targetModel.paymentMethodId
         let newPayerCost: PXPayerCost? = targetModel.selectedPayerCost
 
+        let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
+
         if let newPaymentMethod = viewModel.getPaymentMethod(targetId: newPaymentMethodId) {
-            let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
             currentPaymentData.payerCost = newPayerCost
             currentPaymentData.paymentMethod = newPaymentMethod
             currentPaymentData.issuer = PXIssuer(id: targetModel.issuerId, name: nil)
             callbackUpdatePaymentOption(targetModel)
             loadingButtonComponent?.setEnabled()
-
         } else {
+            currentPaymentData.payerCost = nil
+            currentPaymentData.paymentMethod = nil
+            currentPaymentData.issuer = nil
             loadingButtonComponent?.setDisabled()
         }
         headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
@@ -455,12 +459,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func addNewCardDidTap() {
         shouldChangePaymentMethod()
-        print("hola aca card")
     }
 
     func addNewOfflineDidTap() {
         shouldAddNewOfflineMethod()
-        print("hola aca offline")
     }
 
     func didScroll(offset: CGPoint) {
