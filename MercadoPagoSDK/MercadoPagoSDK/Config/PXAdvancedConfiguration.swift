@@ -67,7 +67,11 @@ open class PXAdvancedConfiguration: NSObject {
     /**
      Set additional data to get discounts
      */
-    open var discountParamsConfiguration: PXDiscountParamsConfiguration?
+    open var discountParamsConfiguration: PXDiscountParamsConfiguration? {
+        didSet {
+            productId = discountParamsConfiguration?.productId
+        }
+    }
 
     /**
      Set product id

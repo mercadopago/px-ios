@@ -73,6 +73,10 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         titleLabel.textAlignment = .center
         titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         containerView.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: PXLayout.S_MARGIN),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -PXLayout.S_MARGIN)
+        ])
 
         addSubviewToBottom(containerView)
 

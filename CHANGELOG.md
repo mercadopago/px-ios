@@ -1,3 +1,10 @@
+# v4.28.2
+🚀Private Release - 4.28.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Max installments fix
+- Double rounded fix
+- One Tap header UI fix
+
 # v4.28.1
 🚀Private Release - 4.28.1 🚀
 MercadoPagoSDKV4 - Private Version
