@@ -157,6 +157,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
         loadingButtonComponent?.accessibilityIdentifier = "pay_button"
+        loadingButtonComponent?.setDisabled()
         return loadingButtonComponent!
     }
 }
@@ -233,5 +234,11 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
         viewModel.selectedIndexPath = indexPath
         tableView.reloadData()
         PXFeedbackGenerator.selectionFeedback()
+
+        if viewModel.selectedIndexPath != nil {
+            loadingButtonComponent?.setEnabled()
+        } else {
+            loadingButtonComponent?.setDisabled()
+        }
     }
 }
