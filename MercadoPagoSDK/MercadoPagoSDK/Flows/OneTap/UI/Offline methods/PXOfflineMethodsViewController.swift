@@ -17,6 +17,8 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     let totalViewHeight: CGFloat = 54
     let totalViewMargin: CGFloat = PXLayout.S_MARGIN
 
+    var loadingButtonComponent: PXAnimatedButton?
+
     init(paymentTypes: [PXOfflinePaymentType], totalAmount: Double) {
         viewModel = PXOfflineMethodsViewModel(paymentTypes: paymentTypes, totalAmount: totalAmount)
         super.init(nibName: nil, bundle: nil)
@@ -44,17 +46,55 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     }
 
     func render() {
-        let totalView = UIView()
-        totalView.translatesAutoresizingMaskIntoConstraints = false
-        totalView.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
+        view.backgroundColor = .white
+
+        let totalView = renderTotalView()
         view.addSubview(totalView)
 
+        //Total view layout
         NSLayoutConstraint.activate([
             totalView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             totalView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             totalView.topAnchor.constraint(equalTo: view.topAnchor),
             totalView.heightAnchor.constraint(equalToConstant: totalViewHeight)
         ])
+
+        let footerView = getFooterView()
+        view.addSubview(footerView)
+
+        //Footer view layout
+        NSLayoutConstraint.activate([
+            footerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.M_MARGIN),
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN),
+//            footerView.heightAnchor.constraint(equalToConstant: PXLayout.XXL_MARGIN),
+            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -getBottomPayButtonMargin())
+        ])
+        PXLayout.setHeight(owner: footerView, height: PXLayout.XXL_MARGIN).isActive = true
+
+        tableView.sectionHeaderHeight = 40
+        tableView.register(PXOfflineMethodsCell.self, forCellReuseIdentifier: PXOfflineMethodsCell.identifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorInset = .init(top: 0, left: PXLayout.S_MARGIN, bottom: 0, right: PXLayout.S_MARGIN)
+        tableView.separatorColor = UIColor.black.withAlphaComponent(0.1)
+        view.addSubview(tableView)
+
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: totalView.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: footerView.topAnchor)
+        ])
+        tableView.reloadData()
+
+    }
+
+    func renderTotalView() -> UIView {
+        let totalView = UIView()
+        totalView.translatesAutoresizingMaskIntoConstraints = false
+        totalView.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
 
         let totalLabel = UILabel()
         totalLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -72,22 +112,77 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         totalLabelConstraint = totalLabel.topAnchor.constraint(equalTo: totalView.topAnchor, constant: totalViewMargin + totalViewHeight)
         totalLabelConstraint?.isActive = true
 
-        tableView.sectionHeaderHeight = 40
-        tableView.register(PXOfflineMethodsCell.self, forCellReuseIdentifier: PXOfflineMethodsCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorInset = .init(top: 0, left: PXLayout.S_MARGIN, bottom: 0, right: PXLayout.S_MARGIN)
-        tableView.separatorColor = UIColor.black.withAlphaComponent(0.1)
-        view.addSubview(tableView)
+        //Close button
+        let closeButton = UIButton()
+        let closeImage = ResourceManager.shared.getImage("result-close-button")
+        closeButton.setImage(closeImage, for: .normal)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.add(for: .touchUpInside) { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }
+
+        totalView.addSubview(closeButton)
 
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: totalView.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -112)
+            closeButton.leadingAnchor.constraint(equalTo: totalView.leadingAnchor),
+            closeButton.heightAnchor.constraint(equalToConstant: totalViewHeight),
+            closeButton.widthAnchor.constraint(equalToConstant: totalViewHeight),
+            closeButton.centerYAnchor.constraint(equalTo: totalView.centerYAnchor)
         ])
-        tableView.reloadData()
+
+        return totalView
+    }
+
+    private func getBottomPayButtonMargin() -> CGFloat {
+        let safeAreaBottomHeight = PXLayout.getSafeAreaBottomInset()
+        if safeAreaBottomHeight > 0 {
+            return PXLayout.XXS_MARGIN + safeAreaBottomHeight
+        }
+
+        if UIDevice.isSmallDevice() {
+            return PXLayout.XS_MARGIN
+        }
+
+        return PXLayout.M_MARGIN
+    }
+
+    private func getFooterView() -> UIView {
+        loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
+        loadingButtonComponent?.animationDelegate = self
+        loadingButtonComponent?.layer.cornerRadius = 4
+        loadingButtonComponent?.add(for: .touchUpInside, {
+//            self.confirmPayment()
+        })
+        loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
+        loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+        loadingButtonComponent?.accessibilityIdentifier = "pay_button"
+        return loadingButtonComponent!
+    }
+}
+
+// MARK: Payment Button animation delegate
+@available(iOS 9.0, *)
+extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
+    func shakeDidFinish() {
+        displayBackButton()
+//        scrollView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
+//        unsubscribeFromNotifications()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+        })
+    }
+
+    func expandAnimationInProgress() {
+    }
+
+    func didFinishAnimation() {
+//        self.finishButtonAnimation()
+    }
+
+    func progressButtonAnimationTimeOut() {
+        loadingButtonComponent?.resetButton()
+        loadingButtonComponent?.showErrorToast()
     }
 }
 

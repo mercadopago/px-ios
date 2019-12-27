@@ -294,7 +294,7 @@ class PXAddMethodView: UIView {
                 iconImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: PXLayout.S_MARGIN),
                 iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 labelsContainerView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: PXLayout.S_MARGIN),
-                labelsContainerView.trailingAnchor.constraint(equalTo: chevronImageView.leadingAnchor, constant: PXLayout.S_MARGIN),
+                labelsContainerView.trailingAnchor.constraint(equalTo: chevronImageView.leadingAnchor, constant: -PXLayout.S_MARGIN),
                 labelsContainerView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 labelsContainerView.heightAnchor.constraint(equalToConstant: 40)
             ])
