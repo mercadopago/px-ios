@@ -23,7 +23,7 @@ final class PXOfflineMethodsViewModel {
         let amountString = Utils.getAmountFormated(amount: totalAmount, forCurrency: SiteManager.shared.getCurrency())
         let totalString = "Total".localized + " \(amountString)"
 
-        return PXText(message: totalString, backgroundColor: nil, textColor: nil, weight: nil)
+        return PXText(message: totalString, backgroundColor: nil, textColor: nil, weight: "semi_bold")
     }
 
     func numberOfSections() -> Int {

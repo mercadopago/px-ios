@@ -67,9 +67,12 @@ extension PXCardSliderPagerCell {
         let bigSize = cardSize.height
         let smallSize = (cardSize.height - PXLayout.XS_MARGIN) / 2
 
+        let shouldApplyCompactMode = newCardData != nil && newOfflineData != nil
+        let newMethodViewHeight = shouldApplyCompactMode ? smallSize : bigSize
+
         if let newCardData = newCardData {
             let icon = ResourceManager.shared.getImage("add_new_card")
-            let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon)
+            let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon, compactMode: shouldApplyCompactMode)
             let newCardView = PXAddMethodView(data: newCardData)
             newCardView.translatesAutoresizingMaskIntoConstraints = false
             newCardView.layer.cornerRadius = cornerRadius
@@ -78,19 +81,17 @@ extension PXCardSliderPagerCell {
             let newCardTap = UITapGestureRecognizer(target: self, action: #selector(addNewCardTapped))
             newCardView.addGestureRecognizer(newCardTap)
 
-            let newCardViewHeight = newOfflineData == nil ? bigSize : smallSize
-
             NSLayoutConstraint.activate([
                 newCardView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 newCardView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
                 newCardView.topAnchor.constraint(equalTo: containerView.topAnchor),
-                newCardView.heightAnchor.constraint(equalToConstant: newCardViewHeight)
+                newCardView.heightAnchor.constraint(equalToConstant: newMethodViewHeight)
             ])
         }
 
         if let newOfflineData = newOfflineData {
             let icon = ResourceManager.shared.getImage("add_new_offline")
-            let newOfflineData = PXAddMethodData(title: newOfflineData.title, subtitle: newOfflineData.subtitle, icon: icon)
+            let newOfflineData = PXAddMethodData(title: newOfflineData.title, subtitle: newOfflineData.subtitle, icon: icon, compactMode: shouldApplyCompactMode)
             let newOfflineView = PXAddMethodView(data: newOfflineData)
             newOfflineView.translatesAutoresizingMaskIntoConstraints = false
             newOfflineView.layer.cornerRadius = cornerRadius
@@ -104,7 +105,7 @@ extension PXCardSliderPagerCell {
                 newOfflineView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 newOfflineView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
                 newOfflineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-                newOfflineView.heightAnchor.constraint(equalToConstant: smallSize)
+                newOfflineView.heightAnchor.constraint(equalToConstant: newMethodViewHeight)
             ])
         }
     }
@@ -229,11 +230,12 @@ extension PXCardSliderPagerCell: PXTermsAndConditionViewDelegate {
     }
 }
 
-typealias PXAddMethodData = (title: PXText?, subtitle: PXText?, icon: UIImage?)
+typealias PXAddMethodData = (title: PXText?, subtitle: PXText?, icon: UIImage?, compactMode: Bool)
 
 class PXAddMethodView: UIView {
-    //Icon
-    let ICON_SIZE: CGFloat = 48.0
+    //Icon sizes
+    let COMPACT_ICON_SIZE: CGFloat = 48.0
+    let DEFAULT_ICON_SIZE: CGFloat = 64.0
 
     let data: PXAddMethodData
 
@@ -254,41 +256,64 @@ class PXAddMethodView: UIView {
         let iconImageView = buildCircleImage(with: data.icon)
         addSubview(iconImageView)
 
-        NSLayoutConstraint.activate([
-            iconImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: PXLayout.S_MARGIN),
-            iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        ])
-
         let labelsContainerView = UIStackView()
         labelsContainerView.translatesAutoresizingMaskIntoConstraints = false
         labelsContainerView.axis = .vertical
 
         if let title = data.title {
             let titleLabel = UILabel()
+            titleLabel.numberOfLines = 1
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.attributedText = title.getAttributedString(fontSize: PXLayout.XS_FONT)
+            titleLabel.textAlignment = data.compactMode ? .left : .center
             labelsContainerView.addArrangedSubview(titleLabel)
         }
 
         if let subtitle = data.subtitle {
             let subtitleLabel = UILabel()
+            subtitleLabel.numberOfLines = 1
             subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
             subtitleLabel.attributedText = subtitle.getAttributedString(fontSize: PXLayout.XXS_FONT)
+            subtitleLabel.textAlignment = data.compactMode ? .left : .center
             labelsContainerView.addArrangedSubview(subtitleLabel)
         }
 
         addSubview(labelsContainerView)
-        NSLayoutConstraint.activate([
-            labelsContainerView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: PXLayout.S_MARGIN),
-            labelsContainerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 53),
-            labelsContainerView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            labelsContainerView.heightAnchor.constraint(equalToConstant: 40)
-        ])
 
+        if data.compactMode {
+            let chevronImage = ResourceManager.shared.getImage("oneTapArrow_color")
+            let chevronImageView = UIImageView(image: chevronImage)
+            chevronImageView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(chevronImageView)
+
+            NSLayoutConstraint.activate([
+                chevronImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+                chevronImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -PXLayout.M_MARGIN),
+                chevronImageView.heightAnchor.constraint(equalToConstant: 13),
+                chevronImageView.widthAnchor.constraint(equalToConstant: 8),
+                iconImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: PXLayout.S_MARGIN),
+                iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+                labelsContainerView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: PXLayout.S_MARGIN),
+                labelsContainerView.trailingAnchor.constraint(equalTo: chevronImageView.leadingAnchor, constant: PXLayout.S_MARGIN),
+                labelsContainerView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+                labelsContainerView.heightAnchor.constraint(equalToConstant: 40)
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                iconImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: PXLayout.XL_MARGIN),
+                iconImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                labelsContainerView.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: PXLayout.S_MARGIN),
+                labelsContainerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: PXLayout.S_MARGIN),
+                labelsContainerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -PXLayout.S_MARGIN),
+                labelsContainerView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                labelsContainerView.heightAnchor.constraint(equalToConstant: 40)
+            ])
+        }
     }
 
     func buildCircleImage(with image: UIImage?) -> PXUIImageView {
-        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: ICON_SIZE, height: ICON_SIZE))
+        let iconSize = data.compactMode ? COMPACT_ICON_SIZE : DEFAULT_ICON_SIZE
+        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: iconSize, height: iconSize))
         circleImage.layer.masksToBounds = false
         circleImage.layer.cornerRadius = circleImage.frame.height / 2
         circleImage.layer.borderWidth = 1
@@ -299,8 +324,8 @@ class PXAddMethodView: UIView {
         circleImage.contentMode = .scaleAspectFit
         circleImage.image = image
         circleImage.backgroundColor = .clear
-        PXLayout.setHeight(owner: circleImage, height: ICON_SIZE).isActive = true
-        PXLayout.setWidth(owner: circleImage, width: ICON_SIZE).isActive = true
+        PXLayout.setHeight(owner: circleImage, height: iconSize).isActive = true
+        PXLayout.setWidth(owner: circleImage, width: iconSize).isActive = true
         return circleImage
     }
 }
