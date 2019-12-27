@@ -117,6 +117,7 @@ extension PXCardSliderPagerCell {
 
     @objc
     func addNewOfflineMethodTapped() {
+        PXFeedbackGenerator.selectionFeedback()
         addNewMethodDelegate?.addNewOfflineMethod()
     }
 

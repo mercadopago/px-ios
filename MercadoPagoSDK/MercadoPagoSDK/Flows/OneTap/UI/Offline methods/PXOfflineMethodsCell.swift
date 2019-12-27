@@ -63,7 +63,7 @@ final class PXOfflineMethodsCell: UITableViewCell {
         contentView.addSubview(labelsContainerView)
         NSLayoutConstraint.activate([
             labelsContainerView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: PXLayout.XS_MARGIN),
-            labelsContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: PXLayout.XXS_MARGIN),
+            labelsContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -PXLayout.XXS_MARGIN),
             labelsContainerView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             labelsContainerView.heightAnchor.constraint(equalToConstant: 40)
         ])

@@ -38,6 +38,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     }
 
     func animateTotalLabel() {
+        view.layoutIfNeeded()
         let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1) { [weak self] in
             self?.totalLabelConstraint?.constant = self?.totalViewMargin ?? PXLayout.S_MARGIN
             self?.view.layoutIfNeeded()
@@ -67,7 +68,6 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
             footerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.M_MARGIN),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN),
-//            footerView.heightAnchor.constraint(equalToConstant: PXLayout.XXL_MARGIN),
             footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -getBottomPayButtonMargin())
         ])
         PXLayout.setHeight(owner: footerView, height: PXLayout.XXL_MARGIN).isActive = true
@@ -119,6 +119,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.add(for: .touchUpInside) { [weak self] in
             self?.dismiss(animated: true, completion: nil)
+            PXFeedbackGenerator.mediumImpactFeedback()
         }
 
         totalView.addSubview(closeButton)
@@ -231,5 +232,6 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.selectedIndexPath = indexPath
         tableView.reloadData()
+        PXFeedbackGenerator.selectionFeedback()
     }
 }
