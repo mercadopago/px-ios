@@ -86,10 +86,6 @@ final class OneTapFlow: NSObject, PXFlow {
         model.customerPaymentOptions = customPaymentMethods
     }
 
-    func setPaymentMethodPlugins(_ plugins: [PXPaymentMethodPlugin]?) {
-        model.paymentMethodPlugins = plugins
-    }
-
     func needSecurityCodeValidation() -> Bool {
         model.readyToPay = true
         return model.nextStep() == .screenSecurityCode

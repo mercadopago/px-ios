@@ -9,18 +9,24 @@ import Foundation
 
 final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
-    let tableView = UITableView()
     let viewModel: PXOfflineMethodsViewModel
+    var callbackConfirm: ((PXPaymentData, Bool) -> Void)
+    var finishButtonAnimation: (() -> Void)
+    var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
+    let timeOutPayButton: TimeInterval
 
+    let tableView = UITableView()
     var totalLabelConstraint: NSLayoutConstraint?
-
     let totalViewHeight: CGFloat = 54
     let totalViewMargin: CGFloat = PXLayout.S_MARGIN
-
     var loadingButtonComponent: PXAnimatedButton?
 
-    init(paymentTypes: [PXOfflinePaymentType], totalAmount: Double) {
-        viewModel = PXOfflineMethodsViewModel(paymentTypes: paymentTypes, totalAmount: totalAmount)
+    init(viewModel: PXOfflineMethodsViewModel, callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+        self.viewModel = viewModel
+        self.callbackConfirm = callbackConfirm
+        self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
+        self.finishButtonAnimation = finishButtonAnimation
+        self.timeOutPayButton = 15
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -152,39 +158,13 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         loadingButtonComponent?.animationDelegate = self
         loadingButtonComponent?.layer.cornerRadius = 4
         loadingButtonComponent?.add(for: .touchUpInside, {
-//            self.confirmPayment()
+            self.confirmPayment()
         })
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
         loadingButtonComponent?.accessibilityIdentifier = "pay_button"
         loadingButtonComponent?.setDisabled()
         return loadingButtonComponent!
-    }
-}
-
-// MARK: Payment Button animation delegate
-@available(iOS 9.0, *)
-extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
-    func shakeDidFinish() {
-        displayBackButton()
-//        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
-//        unsubscribeFromNotifications()
-        UIView.animate(withDuration: 0.3, animations: {
-            self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
-        })
-    }
-
-    func expandAnimationInProgress() {
-    }
-
-    func didFinishAnimation() {
-//        self.finishButtonAnimation()
-    }
-
-    func progressButtonAnimationTimeOut() {
-        loadingButtonComponent?.resetButton()
-        loadingButtonComponent?.showErrorToast()
     }
 }
 
@@ -240,5 +220,90 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
         } else {
             loadingButtonComponent?.setDisabled()
         }
+
+        if let selectedPaymentOption = viewModel.getSelectedOfflineMethod() {
+            callbackUpdatePaymentOption(selectedPaymentOption)
+        }
+    }
+}
+
+// MARK: Payment Button animation delegate
+@available(iOS 9.0, *)
+extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
+    func shakeDidFinish() {
+        displayBackButton()
+        tableView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
+        unsubscribeFromNotifications()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+        })
+    }
+
+    func expandAnimationInProgress() {
+    }
+
+    func didFinishAnimation() {
+        self.dismiss(animated: false, completion: nil)
+        self.finishButtonAnimation()
+    }
+
+    func progressButtonAnimationTimeOut() {
+        loadingButtonComponent?.resetButton()
+        loadingButtonComponent?.showErrorToast()
+    }
+
+    private func confirmPayment() {
+        if viewModel.shouldValidateWithBiometric() {
+            let biometricModule = PXConfiguratorManager.biometricProtocol
+            biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
+                DispatchQueue.main.async {
+                    self?.doPayment()
+                }
+                }, onError: { [weak self] _ in
+                    // User abort validation or validation fail.
+                    self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
+            })
+        } else {
+            doPayment()
+        }
+    }
+
+    private func doPayment() {
+        self.subscribeLoadingButtonToNotifications()
+        self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
+        tableView.isScrollEnabled = false
+        view.isUserInteractionEnabled = false
+
+        if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), let newPaymentMethod = viewModel.getPaymentMethod(targetId: selectedOfflineMethod.id) {
+            let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
+            currentPaymentData.payerCost = nil
+            currentPaymentData.paymentMethod = newPaymentMethod
+            currentPaymentData.issuer = nil
+        }
+
+//        if let selectedCardItem = selectedCard {
+//            viewModel.amountHelper.getPaymentData().payerCost = selectedCardItem.selectedPayerCost
+//            let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem, selectedIndex: slider.getSelectedIndex())
+//            trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
+//        }
+        let splitPayment = false
+        self.hideBackButton()
+        self.hideNavBar()
+        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment)
+    }
+}
+
+// MARK: Notifications
+extension PXOfflineMethodsViewController {
+    func subscribeLoadingButtonToNotifications() {
+        guard let loadingButton = loadingButtonComponent else {
+            return
+        }
+        PXNotificationManager.SuscribeTo.animateButton(loadingButton, selector: #selector(loadingButton.animateFinish))
+    }
+
+    func unsubscribeFromNotifications() {
+        PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
     }
 }

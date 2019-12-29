@@ -263,7 +263,11 @@ extension PXOneTapViewController {
 
     func shouldAddNewOfflineMethod() {
         if let offlineMethods = viewModel.getOfflineMethods() {
-            let vc = PXOfflineMethodsViewController(paymentTypes: offlineMethods.paymentTypes, totalAmount: viewModel.amountHelper.amountToPay)
+
+            let offlineViewModel = PXOfflineMethodsViewModel(offlinePaymentTypes: offlineMethods.paymentTypes, paymentMethods: viewModel.paymentMethods, amountHelper: viewModel.amountHelper, paymentOptionSelected: viewModel.paymentOptionSelected, advancedConfig: viewModel.advancedConfiguration, userLogged: viewModel.userLogged, disabledOption: viewModel.disabledOption)
+
+            let vc = PXOfflineMethodsViewController(viewModel: offlineViewModel, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, finishButtonAnimation: finishButtonAnimation)
+
             vc.modalPresentationStyle = .formSheet
             self.present(vc, animated: true, completion: nil)
         }

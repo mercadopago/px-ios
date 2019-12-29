@@ -29,6 +29,8 @@ extension OneTapFlow {
                 newPaymentOption.getId() == PXPaymentTypes.CONSUMER_CREDITS.rawValue {
                 // AM
                 self?.model.paymentOptionSelected = newPaymentOption
+            } else {
+                self?.model.paymentOptionSelected = newPaymentOption
             }
         }
         let callbackExit: (() -> Void) = {

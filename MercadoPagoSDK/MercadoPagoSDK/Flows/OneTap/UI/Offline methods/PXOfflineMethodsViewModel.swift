@@ -7,20 +7,21 @@
 
 import Foundation
 
-final class PXOfflineMethodsViewModel {
+final class PXOfflineMethodsViewModel: PXReviewViewModel {
 
     let paymentTypes: [PXOfflinePaymentType]
-    let totalAmount: Double
+    var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
 
     var selectedIndexPath: IndexPath?
 
-    init(paymentTypes: [PXOfflinePaymentType], totalAmount: Double) {
-        self.paymentTypes = paymentTypes
-        self.totalAmount = totalAmount
+    public init(offlinePaymentTypes: [PXOfflinePaymentType], paymentMethods: [PXPaymentMethod], amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil) {
+        self.paymentTypes = offlinePaymentTypes
+        self.paymentMethods = paymentMethods
+        super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged, escProtocol: nil)
     }
 
     func getTotalTitle() -> PXText {
-        let amountString = Utils.getAmountFormated(amount: totalAmount, forCurrency: SiteManager.shared.getCurrency())
+        let amountString = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: SiteManager.shared.getCurrency())
         let totalString = "Total".localized + " \(amountString)"
 
         return PXText(message: totalString, backgroundColor: nil, textColor: nil, weight: "semi_bold")
@@ -47,5 +48,17 @@ final class PXOfflineMethodsViewModel {
 
     func headerTitleForSection(_ section: Int) -> PXText? {
         return paymentTypes[section].name
+    }
+
+    func getSelectedOfflineMethod() -> PXOfflinePaymentMethod? {
+        guard let selectedIndex = selectedIndexPath else {
+            return nil
+        }
+
+        return paymentTypes[selectedIndex.section].paymentMethods[selectedIndex.row]
+    }
+
+    func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
+        return paymentMethods.filter({ return $0.id == targetId }).first
     }
 }
