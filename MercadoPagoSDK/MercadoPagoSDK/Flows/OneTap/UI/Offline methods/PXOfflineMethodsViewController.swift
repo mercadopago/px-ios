@@ -244,7 +244,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
     }
 
     func didFinishAnimation() {
-        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         self.finishButtonAnimation()
     }
 
