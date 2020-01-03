@@ -8,5 +8,6 @@
 import Foundation
 
 open class PXOneTapNewCardDto: NSObject, Codable {
+    let version: String?
     let label: PXText
 }
