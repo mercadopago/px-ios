@@ -374,8 +374,7 @@ extension PXOneTapViewModel {
     }
 
     func shouldUseOldCardForm() -> Bool {
-        guard let remoteExpressData = expressData else { return false }
-        if let newCardVersion = remoteExpressData.filter({$0.newCard != nil}).first?.newCard?.version {
+        if let newCardVersion = expressData?.filter({$0.newCard != nil}).first?.newCard?.version {
             return newCardVersion == "v1"
         }
         return false
