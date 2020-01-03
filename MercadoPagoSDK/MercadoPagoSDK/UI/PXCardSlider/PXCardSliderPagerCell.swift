@@ -60,6 +60,7 @@ extension PXCardSliderPagerCell {
     func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: AddNewMethodCardDelegate) {
         self.addNewMethodDelegate = delegate
 
+        containerView.backgroundColor = .clear
         containerView.layer.masksToBounds = true
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius

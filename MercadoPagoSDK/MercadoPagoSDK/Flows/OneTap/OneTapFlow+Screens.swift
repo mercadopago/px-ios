@@ -25,10 +25,6 @@ extension OneTapFlow {
             if let card = newPaymentOption as? PXCardSliderViewModel, let newPaymentOptionSelected = self?.getCustomerPaymentOption(forId: card.cardId ?? "") {
                 // Customer card.
                 self?.model.paymentOptionSelected = newPaymentOptionSelected
-            } else if newPaymentOption.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue ||
-                newPaymentOption.getId() == PXPaymentTypes.CONSUMER_CREDITS.rawValue {
-                // AM
-                self?.model.paymentOptionSelected = newPaymentOption
             } else {
                 self?.model.paymentOptionSelected = newPaymentOption
             }
