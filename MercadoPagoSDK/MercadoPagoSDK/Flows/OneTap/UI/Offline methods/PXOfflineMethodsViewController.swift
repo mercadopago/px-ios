@@ -20,6 +20,8 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     let totalViewHeight: CGFloat = 54
     let totalViewMargin: CGFloat = PXLayout.S_MARGIN
     var loadingButtonComponent: PXAnimatedButton?
+    var inactivityView: UIView?
+    var inactivityViewAnimationConstraint: NSLayoutConstraint?
 
     init(viewModel: PXOfflineMethodsViewModel, callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
@@ -41,6 +43,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateTotalLabel()
+        showInactivityView()
     }
 
     func animateTotalLabel() {
@@ -95,6 +98,29 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         ])
         tableView.reloadData()
 
+        renderInactivityView(text: "Hola")
+
+        view.bringSubviewToFront(footerView)
+    }
+
+    func showInactivityView(animated: Bool = true) {
+        let animator = UIViewPropertyAnimator(duration: animated ? 0.3 : 0, dampingRatio: 1) {
+            self.inactivityViewAnimationConstraint?.constant = -PXLayout.XS_MARGIN
+            self.inactivityView?.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+
+        animator.startAnimation()
+    }
+
+    func hideInactivityView(animated: Bool = true) {
+        let animator = UIViewPropertyAnimator(duration: animated ? 0.3 : 0, dampingRatio: 1) {
+            self.inactivityViewAnimationConstraint?.constant = PXLayout.M_MARGIN
+            self.inactivityView?.alpha = 0
+            self.view.layoutIfNeeded()
+        }
+
+        animator.startAnimation()
     }
 
     func renderTotalView() -> UIView {
@@ -104,7 +130,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
         let totalLabel = UILabel()
         totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.attributedText = viewModel.getTotalTitle().getAttributedString(fontSize: PXLayout.M_FONT, textColor: .white)
+        totalLabel.attributedText = viewModel.getTotalTitle().getAttributedString(fontSize: PXLayout.M_FONT, textColor: ThemeManager.shared.navigationBar().getTintColor())
         totalLabel.textAlignment = .right
 
         totalView.addSubview(totalLabel)
@@ -120,7 +146,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
         //Close button
         let closeButton = UIButton()
-        let closeImage = ResourceManager.shared.getImage("result-close-button")
+        let closeImage = ResourceManager.shared.getImage("result-close-button")?.imageWithOverlayTint(tintColor: ThemeManager.shared.navigationBar().getTintColor())
         closeButton.setImage(closeImage, for: .normal)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.add(for: .touchUpInside) { [weak self] in
@@ -138,6 +164,55 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         ])
 
         return totalView
+    }
+
+    func renderInactivityView(text: String) {
+        let viewHeight: CGFloat = 28
+        let imageSize: CGFloat = 16
+        let inactivityView = UIView()
+        inactivityView.translatesAutoresizingMaskIntoConstraints = false
+        inactivityView.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
+        inactivityView.layer.cornerRadius = viewHeight/2
+
+        view.addSubview(inactivityView)
+        NSLayoutConstraint.activate([
+            inactivityView.heightAnchor.constraint(equalToConstant: viewHeight),
+            inactivityView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+
+        let bottomConstraint = inactivityView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: -PXLayout.XS_MARGIN)
+        bottomConstraint.isActive = true
+
+        self.inactivityView = inactivityView
+        self.inactivityViewAnimationConstraint = bottomConstraint
+
+        let arrowImage = ResourceManager.shared.getImage("inactivity_indicator")?.imageWithOverlayTint(tintColor: ThemeManager.shared.navigationBar().getTintColor())
+        let imageView = UIImageView(image: arrowImage)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: inactivityView.leadingAnchor, constant: PXLayout.XS_MARGIN),
+            imageView.centerYAnchor.constraint(equalTo: inactivityView.centerYAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: imageSize),
+            imageView.widthAnchor.constraint(equalToConstant: imageSize)
+        ])
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = ThemeManager.shared.navigationBar().getTintColor()
+        label.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT)
+        label.text = text
+
+        inactivityView.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: PXLayout.XXS_MARGIN),
+            label.trailingAnchor.constraint(equalTo: inactivityView.trailingAnchor, constant: -PXLayout.XS_MARGIN),
+            label.topAnchor.constraint(equalTo: inactivityView.topAnchor, constant: PXLayout.XXS_MARGIN),
+            label.bottomAnchor.constraint(equalTo: inactivityView.bottomAnchor, constant: -PXLayout.XXS_MARGIN)
+        ])
+
+        hideInactivityView(animated: false)
     }
 
     private func getBottomPayButtonMargin() -> CGFloat {
