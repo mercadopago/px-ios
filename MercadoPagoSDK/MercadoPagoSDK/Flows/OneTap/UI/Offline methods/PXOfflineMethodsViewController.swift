@@ -114,48 +114,6 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         view.bringSubviewToFront(footerView)
     }
 
-    func showInactivityViewIfNecessary() {
-        if let inactivityView = inactivityView, inactivityView.isHidden, !userDidScroll, hasHiddenPaymentTypes() {
-            showInactivityView()
-        }
-    }
-
-    func hideInactivityViewIfNecessary() {
-        if let inactivityView = inactivityView, !inactivityView.isHidden, userDidScroll, !hasHiddenPaymentTypes() {
-            hideInactivityView()
-        }
-    }
-
-    func hasHiddenPaymentTypes() -> Bool {
-        guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {return false}
-
-        let visibleRowsLastSection = indexPathsForVisibleRows.filter { (indexPath) -> Bool in
-            return indexPath.section == viewModel.numberOfSections() - 1
-        }
-
-        return visibleRowsLastSection.isEmpty
-    }
-
-    func showInactivityView(animated: Bool = true) {
-        self.inactivityView?.isHidden = false
-        let animator = UIViewPropertyAnimator(duration: animated ? 0.3 : 0, dampingRatio: 1) {
-            self.inactivityViewAnimationConstraint?.constant = -PXLayout.XS_MARGIN
-            self.inactivityView?.alpha = 1
-            self.view.layoutIfNeeded()
-        }
-        animator.startAnimation()
-    }
-
-    func hideInactivityView(animated: Bool = true) {
-        let animator = UIViewPropertyAnimator(duration: animated ? 0.3 : 0, dampingRatio: 1) {
-            self.inactivityViewAnimationConstraint?.constant = PXLayout.M_MARGIN
-            self.inactivityView?.alpha = 0
-            self.view.layoutIfNeeded()
-        }
-        self.inactivityView?.isHidden = true
-        animator.startAnimation()
-    }
-
     func renderTotalView() -> UIView {
         let totalView = UIView()
         totalView.translatesAutoresizingMaskIntoConstraints = false
@@ -197,6 +155,97 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         ])
 
         return totalView
+    }
+
+    private func getBottomPayButtonMargin() -> CGFloat {
+        let safeAreaBottomHeight = PXLayout.getSafeAreaBottomInset()
+        if safeAreaBottomHeight > 0 {
+            return PXLayout.XXS_MARGIN + safeAreaBottomHeight
+        }
+
+        if UIDevice.isSmallDevice() {
+            return PXLayout.XS_MARGIN
+        }
+
+        return PXLayout.M_MARGIN
+    }
+
+    private func getFooterView() -> UIView {
+        let footerContainer = UIView()
+        footerContainer.translatesAutoresizingMaskIntoConstraints = false
+        footerContainer.backgroundColor = .white
+
+        let loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
+        self.loadingButtonComponent = loadingButtonComponent
+        loadingButtonComponent.animationDelegate = self
+        loadingButtonComponent.layer.cornerRadius = 4
+        loadingButtonComponent.add(for: .touchUpInside, {
+            self.confirmPayment()
+        })
+        loadingButtonComponent.setTitle("Pagar".localized, for: .normal)
+        loadingButtonComponent.backgroundColor = ThemeManager.shared.getAccentColor()
+        loadingButtonComponent.accessibilityIdentifier = "pay_button"
+        loadingButtonComponent.setDisabled()
+
+        footerContainer.addSubview(loadingButtonComponent)
+
+        NSLayoutConstraint.activate([
+            loadingButtonComponent.topAnchor.constraint(equalTo: footerContainer.topAnchor, constant: PXLayout.S_MARGIN),
+            loadingButtonComponent.bottomAnchor.constraint(greaterThanOrEqualTo: footerContainer.bottomAnchor, constant: -getBottomPayButtonMargin()),
+            loadingButtonComponent.leadingAnchor.constraint(equalTo: footerContainer.leadingAnchor, constant: PXLayout.M_MARGIN),
+            loadingButtonComponent.trailingAnchor.constraint(equalTo: footerContainer.trailingAnchor, constant: -PXLayout.M_MARGIN)
+        ])
+
+        PXLayout.setHeight(owner: loadingButtonComponent, height: PXLayout.XXL_MARGIN).isActive = true
+
+        footerContainer.dropShadow()
+
+        return footerContainer
+    }
+}
+
+// MARK: Inactivity view methods
+extension PXOfflineMethodsViewController {
+    func showInactivityView(animated: Bool = true) {
+        self.inactivityView?.isHidden = false
+        let animator = UIViewPropertyAnimator(duration: animated ? 0.3 : 0, dampingRatio: 1) {
+            self.inactivityViewAnimationConstraint?.constant = -PXLayout.XS_MARGIN
+            self.inactivityView?.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+        animator.startAnimation()
+    }
+
+    func hideInactivityView(animated: Bool = true) {
+        let animator = UIViewPropertyAnimator(duration: animated ? 0.3 : 0, dampingRatio: 1) {
+            self.inactivityViewAnimationConstraint?.constant = PXLayout.M_MARGIN
+            self.inactivityView?.alpha = 0
+            self.view.layoutIfNeeded()
+        }
+        self.inactivityView?.isHidden = true
+        animator.startAnimation()
+    }
+
+    func showInactivityViewIfNecessary() {
+        if let inactivityView = inactivityView, inactivityView.isHidden, !userDidScroll, hasHiddenPaymentTypes() {
+            showInactivityView()
+        }
+    }
+
+    func hideInactivityViewIfNecessary() {
+        if let inactivityView = inactivityView, !inactivityView.isHidden, userDidScroll, !hasHiddenPaymentTypes() {
+            hideInactivityView()
+        }
+    }
+
+    func hasHiddenPaymentTypes() -> Bool {
+        guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {return false}
+
+        let visibleRowsLastSection = indexPathsForVisibleRows.filter { (indexPath) -> Bool in
+            return indexPath.section == viewModel.numberOfSections() - 1
+        }
+
+        return visibleRowsLastSection.isEmpty
     }
 
     func renderInactivityView(text: String?) {
@@ -246,52 +295,6 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         ])
 
         hideInactivityView(animated: false)
-    }
-
-    private func getBottomPayButtonMargin() -> CGFloat {
-        let safeAreaBottomHeight = PXLayout.getSafeAreaBottomInset()
-        if safeAreaBottomHeight > 0 {
-            return PXLayout.XXS_MARGIN + safeAreaBottomHeight
-        }
-
-        if UIDevice.isSmallDevice() {
-            return PXLayout.XS_MARGIN
-        }
-
-        return PXLayout.M_MARGIN
-    }
-
-    private func getFooterView() -> UIView {
-        let footerContainer = UIView()
-        footerContainer.translatesAutoresizingMaskIntoConstraints = false
-        footerContainer.backgroundColor = .white
-
-        let loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
-        self.loadingButtonComponent = loadingButtonComponent
-        loadingButtonComponent.animationDelegate = self
-        loadingButtonComponent.layer.cornerRadius = 4
-        loadingButtonComponent.add(for: .touchUpInside, {
-            self.confirmPayment()
-        })
-        loadingButtonComponent.setTitle("Pagar".localized, for: .normal)
-        loadingButtonComponent.backgroundColor = ThemeManager.shared.getAccentColor()
-        loadingButtonComponent.accessibilityIdentifier = "pay_button"
-        loadingButtonComponent.setDisabled()
-
-        footerContainer.addSubview(loadingButtonComponent)
-
-        NSLayoutConstraint.activate([
-            loadingButtonComponent.topAnchor.constraint(equalTo: footerContainer.topAnchor, constant: PXLayout.S_MARGIN),
-            loadingButtonComponent.bottomAnchor.constraint(greaterThanOrEqualTo: footerContainer.bottomAnchor, constant: -getBottomPayButtonMargin()),
-            loadingButtonComponent.leadingAnchor.constraint(equalTo: footerContainer.leadingAnchor, constant: PXLayout.M_MARGIN),
-            loadingButtonComponent.trailingAnchor.constraint(equalTo: footerContainer.trailingAnchor, constant: -PXLayout.M_MARGIN)
-        ])
-
-        PXLayout.setHeight(owner: loadingButtonComponent, height: PXLayout.XXL_MARGIN).isActive = true
-
-        footerContainer.dropShadow()
-
-        return footerContainer
     }
 }
 
