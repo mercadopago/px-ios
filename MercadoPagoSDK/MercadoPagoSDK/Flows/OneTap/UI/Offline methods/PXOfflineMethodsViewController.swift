@@ -23,6 +23,8 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     var inactivityView: UIView?
     var inactivityViewAnimationConstraint: NSLayoutConstraint?
 
+    var userDidScroll = false
+
     init(viewModel: PXOfflineMethodsViewModel, callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackConfirm = callbackConfirm
@@ -38,12 +40,15 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
     override func viewDidLoad() {
         render()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.showInactivityViewIfNecessary()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateTotalLabel()
-        showInactivityView()
     }
 
     func animateTotalLabel() {
@@ -55,8 +60,16 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         animator.startAnimation()
     }
 
+    func getTopInset() -> CGFloat {
+        if #available(iOS 13.0, *) {
+            return 0
+        } else {
+            return PXLayout.getStatusBarHeight()
+        }
+    }
+
     func render() {
-        view.backgroundColor = .white
+        view.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
 
         let totalView = renderTotalView()
         view.addSubview(totalView)
@@ -65,7 +78,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         NSLayoutConstraint.activate([
             totalView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             totalView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            totalView.topAnchor.constraint(equalTo: view.topAnchor),
+            totalView.topAnchor.constraint(equalTo: view.topAnchor, constant: getTopInset()),
             totalView.heightAnchor.constraint(equalToConstant: totalViewHeight)
         ])
 
@@ -74,12 +87,10 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
         //Footer view layout
         NSLayoutConstraint.activate([
-            footerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.M_MARGIN),
-            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -getBottomPayButtonMargin())
+            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        PXLayout.setHeight(owner: footerView, height: PXLayout.XXL_MARGIN).isActive = true
 
         tableView.sectionHeaderHeight = 40
         tableView.register(PXOfflineMethodsCell.self, forCellReuseIdentifier: PXOfflineMethodsCell.identifier)
@@ -98,18 +109,40 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         ])
         tableView.reloadData()
 
-        renderInactivityView(text: "Hola")
-
+        //Inactivity View - rendered but hidden
+        renderInactivityView(text: viewModel.getTitleForLastSection())
         view.bringSubviewToFront(footerView)
     }
 
+    func showInactivityViewIfNecessary() {
+        if let inactivityView = inactivityView, inactivityView.isHidden, !userDidScroll, hasHiddenPaymentTypes() {
+            showInactivityView()
+        }
+    }
+
+    func hideInactivityViewIfNecessary() {
+        if let inactivityView = inactivityView, !inactivityView.isHidden, userDidScroll, !hasHiddenPaymentTypes() {
+            hideInactivityView()
+        }
+    }
+
+    func hasHiddenPaymentTypes() -> Bool {
+        guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {return false}
+
+        let visibleRowsLastSection = indexPathsForVisibleRows.filter { (indexPath) -> Bool in
+            return indexPath.section == viewModel.numberOfSections() - 1
+        }
+
+        return visibleRowsLastSection.isEmpty
+    }
+
     func showInactivityView(animated: Bool = true) {
+        self.inactivityView?.isHidden = false
         let animator = UIViewPropertyAnimator(duration: animated ? 0.3 : 0, dampingRatio: 1) {
             self.inactivityViewAnimationConstraint?.constant = -PXLayout.XS_MARGIN
             self.inactivityView?.alpha = 1
             self.view.layoutIfNeeded()
         }
-
         animator.startAnimation()
     }
 
@@ -119,7 +152,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
             self.inactivityView?.alpha = 0
             self.view.layoutIfNeeded()
         }
-
+        self.inactivityView?.isHidden = true
         animator.startAnimation()
     }
 
@@ -166,7 +199,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         return totalView
     }
 
-    func renderInactivityView(text: String) {
+    func renderInactivityView(text: String?) {
         let viewHeight: CGFloat = 28
         let imageSize: CGFloat = 16
         let inactivityView = UIView()
@@ -229,22 +262,41 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     }
 
     private func getFooterView() -> UIView {
-        loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
-        loadingButtonComponent?.animationDelegate = self
-        loadingButtonComponent?.layer.cornerRadius = 4
-        loadingButtonComponent?.add(for: .touchUpInside, {
+        let footerContainer = UIView()
+        footerContainer.translatesAutoresizingMaskIntoConstraints = false
+        footerContainer.backgroundColor = .white
+
+        let loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
+        self.loadingButtonComponent = loadingButtonComponent
+        loadingButtonComponent.animationDelegate = self
+        loadingButtonComponent.layer.cornerRadius = 4
+        loadingButtonComponent.add(for: .touchUpInside, {
             self.confirmPayment()
         })
-        loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
-        loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
-        loadingButtonComponent?.accessibilityIdentifier = "pay_button"
-        loadingButtonComponent?.setDisabled()
-        return loadingButtonComponent!
+        loadingButtonComponent.setTitle("Pagar".localized, for: .normal)
+        loadingButtonComponent.backgroundColor = ThemeManager.shared.getAccentColor()
+        loadingButtonComponent.accessibilityIdentifier = "pay_button"
+        loadingButtonComponent.setDisabled()
+
+        footerContainer.addSubview(loadingButtonComponent)
+
+        NSLayoutConstraint.activate([
+            loadingButtonComponent.topAnchor.constraint(equalTo: footerContainer.topAnchor, constant: PXLayout.S_MARGIN),
+            loadingButtonComponent.bottomAnchor.constraint(greaterThanOrEqualTo: footerContainer.bottomAnchor, constant: -getBottomPayButtonMargin()),
+            loadingButtonComponent.leadingAnchor.constraint(equalTo: footerContainer.leadingAnchor, constant: PXLayout.M_MARGIN),
+            loadingButtonComponent.trailingAnchor.constraint(equalTo: footerContainer.trailingAnchor, constant: -PXLayout.M_MARGIN)
+        ])
+
+        PXLayout.setHeight(owner: loadingButtonComponent, height: PXLayout.XXL_MARGIN).isActive = true
+
+        footerContainer.dropShadow()
+
+        return footerContainer
     }
 }
 
 // MARK: UITableViewDelegate & DataSource
-extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSource {
+extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections()
@@ -299,6 +351,11 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
         if let selectedPaymentOption = viewModel.getSelectedOfflineMethod() {
             callbackUpdatePaymentOption(selectedPaymentOption)
         }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        userDidScroll = true
+        hideInactivityViewIfNecessary()
     }
 }
 

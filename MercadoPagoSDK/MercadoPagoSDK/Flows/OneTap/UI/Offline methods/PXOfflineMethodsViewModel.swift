@@ -50,6 +50,10 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
         return paymentTypes[section].name
     }
 
+    func getTitleForLastSection() -> String? {
+        return paymentTypes.last?.name?.message
+    }
+
     func getSelectedOfflineMethod() -> PXOfflinePaymentMethod? {
         guard let selectedIndex = selectedIndexPath else {
             return nil
