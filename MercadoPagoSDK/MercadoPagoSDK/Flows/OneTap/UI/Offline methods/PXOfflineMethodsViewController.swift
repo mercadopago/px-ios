@@ -15,7 +15,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
     let timeOutPayButton: TimeInterval
 
-    let tableView = UITableView()
+    let tableView = UITableView(frame: .zero, style: .grouped)
     var totalLabelConstraint: NSLayoutConstraint?
     let totalViewHeight: CGFloat = 54
     let totalViewMargin: CGFloat = PXLayout.S_MARGIN
@@ -92,7 +92,6 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        tableView.sectionHeaderHeight = 40
         tableView.register(PXOfflineMethodsCell.self, forCellReuseIdentifier: PXOfflineMethodsCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -330,10 +329,22 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.S_MARGIN),
             label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: PXLayout.S_MARGIN),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -PXLayout.XS_MARGIN)
         ])
 
         return view
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 55
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView(frame: .zero)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
