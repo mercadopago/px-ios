@@ -29,7 +29,7 @@ extension PXOneTapInstallmentInfoView {
     private func setupTitleLabel() {
         titleLabel.alpha = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "onetap_select_installment_title".localized_beta
+        titleLabel.text = "onetap_select_installment_title".localized
         titleLabel.textAlignment = .left
         titleLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
         titleLabel.textColor = ThemeManager.shared.greyColor()

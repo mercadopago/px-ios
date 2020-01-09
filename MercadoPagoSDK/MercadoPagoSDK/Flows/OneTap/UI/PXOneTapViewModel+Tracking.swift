@@ -106,7 +106,7 @@ extension PXOneTapViewModel {
         properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()
         properties["style"] = Tracking.Style.snackbar
         properties["id"] = Tracking.Error.Id.genericError
-        properties["message"] = "review_and_confirm_toast_error".localized_beta
+        properties["message"] = "review_and_confirm_toast_error".localized
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
         var extraDic: [String: Any] = [:]
         extraDic["api_url"] =  error.requestOrigin

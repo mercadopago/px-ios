@@ -53,7 +53,7 @@ extension PXSummaryComposer {
     }
     
     func yourPurchaseSummaryTitle() -> String {
-        return additionalInfoSummary?.purpose ?? "onetap_purchase_summary_title".localized_beta
+        return additionalInfoSummary?.purpose ?? "onetap_purchase_summary_title".localized
     }
 
     func yourPurchaseToShow() -> String {

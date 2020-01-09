@@ -42,7 +42,7 @@ internal extension PXResultViewModel {
         if paymentResult.isAccepted() {
             return nil
         } else if paymentResult.isError() {
-            return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
         } else if paymentResult.isWarning() {
             return getWarningButtonLabel()
         }
@@ -51,25 +51,25 @@ internal extension PXResultViewModel {
 
     private func getWarningButtonLabel() -> String? {
         if self.paymentResult.isCallForAuth() {
-            return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
         } else if self.paymentResult.isBadFilled() {
-            return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized
         } else if self.paymentResult.isDuplicatedPayment() {
-            return PXFooterResultConstants.DUPLICATED_PAYMENT_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.DUPLICATED_PAYMENT_BUTTON_TEXT.localized
         } else if self.paymentResult.isCardDisabled() {
-            return PXFooterResultConstants.CARD_DISABLE_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.CARD_DISABLE_BUTTON_TEXT.localized
         } else if self.paymentResult.isFraudPayment() {
-            return PXFooterResultConstants.FRAUD_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.FRAUD_BUTTON_TEXT.localized
         } else {
-            return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
         }
     }
 
     private func getLinkLabel() -> String? {
         if paymentResult.hasSecondaryButton() {
-            return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized_beta
+            return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
         } else if paymentResult.isAccepted() {
-            return PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta
+            return PXFooterResultConstants.APPROVED_LINK_TEXT.localized
         }
         return nil
     }

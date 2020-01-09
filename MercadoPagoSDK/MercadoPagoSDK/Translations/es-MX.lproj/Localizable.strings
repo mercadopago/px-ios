@@ -1,282 +1,145 @@
-/*
- Localizable.strings
- MercadoPagoSDK
- 
- Created by Matias Gualino on 26/4/15.
- Copyright (c) 2015 MercadoPago. All rights reserved.
- */
-
-
-"invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
-"invalid_field" = "Revisa este dato";
-"invalid_card_length" = "Ingresa los %1$s números de la tarjeta";
-"invalid_card_length_general" = "Ingresa todos los números de la tarjeta";
-"security_code" = "Código de seguridad";
-"cod_seg_desc" = "Últimos %1$s números al dorso de la tarjeta";
-"cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
-"NOT_INSTALLMENTS_FOUND" = "No se encontraron mensualidades disponibles para un monto de $";
+"Si" = "Si";
+"No" = "No";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
 "No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
-
-"visa"="Visa";
-"master"="Mastercard";
-"amex"="Amex";
 "Salir" = "Salir";
 "Reintentar" = "Reintentar";
 "Hubo un error" = "Hubo un error";
-
-//INSTRUCCIONES
-
-
-//CONGRATS
-
-"Cancelar pago y seguir comprando" = "Cancelar pago y seguir comprando";
-
-// -- CallForAuth
-
-"Debes autorizar ante %p el pago de %t a Mercado Pago" = "Debes autorizar ante %p el pago de %t a Mercado Pago";
-"Ya hable con %0 y me autorizó" = "Ya hable con %0 y me autorizó";
-
-// -- Approved
+"Continuar" = "Continuar";
 "¡Listo! Se acreditó tu pago" = "¡Listo! Se acreditó tu pago";
-"También enviamos el código a tu email" = "También enviamos el código a tu email";
-"Te enviaremos este comprobante a %0" = "Te enviaremos este comprobante a %0";
-"Dinero en cuenta de MercadoPago" = "Dinero en cuenta de MercadoPago";
-"Terminada en " = "Terminada en ";
-"En tu estado de cuenta verás el cargo como %0" = "En tu estado de cuenta verás el cargo como %0";
-"Comprobante" = "Comprobante";
-
-// -- Pending
+"En tu estado de cuenta verás el cargo como {0}" = "En tu estado de cuenta verás el cargo como {0}";
 "Estamos procesando el pago" = "Estamos procesando el pago";
-"En menos de 1 hora te enviaremos por e-mail el resultado." = "En menos de 1 hora te enviaremos por e-mail el resultado.";
-"En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información." = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.";
-
-// -- Rejected
-"¿Que puedo hacer?" = "¿Que puedo hacer?";
-"rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
-"cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
-"cc_rejected_other_reason_title"="%0 no procesó el pago";
-"cc_rejected_max_attempts_title"= "Llegaste al límite de intentos permitidos";
-"cc_rejected_duplicated_payment_title"="%0 no procesó el pago";
-"cc_rejected_card_disabled_title"="Llama a %0 para que active tu tarjeta";
-"cc_rejected_bad_filled_other_title"="Algún dato de tu %0 es incorrecto";
-"cc_rejected_bad_filled_card_number_title"="Algún dato de tu %0 es incorrecto";
-"cc_rejected_bad_filled_security_code_title"="Algún dato de tu %0 es incorrecto";
-"cc_rejected_bad_filled_date_title"="Algún dato de tu %0 es incorrecto";
-"cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
-"cc_rejected_plugin_pm_title" = "%0 no procesó el pago";
-
-
-"rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. \n\nO si prefieres, puedes elegir otro medio de pago.";
-"cc_rejected_insufficient_amount_subtitle_credit_card" = "¡No te desanimes! Puedes elegir otro medio de pago.";
-"cc_rejected_other_reason_subtitle_credit_card"="Usa otra tarjeta u otro medio de pago.";
-"cc_rejected_max_attempts_subtitle_credit_card"= "Elige otra tarjeta u otro medio de pago.";
-"cc_rejected_duplicated_payment_subtitle_credit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
-"cc_rejected_card_disabled_subtitle_credit_card"="El teléfono está al dorso de tu tarjeta.";
-"cc_rejected_call_for_authorize_subtitle_credit_card" = "";
-
-
-
-"rejected_high_risk_subtitle_debit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";
-"cc_rejected_insufficient_amount_subtitle_debit_card" = "¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. O si prefieres, puedes elegir otro medio de pago.";
-"cc_rejected_other_reason_subtitle_debit_card"="Usa otra tarjeta u otro medio de pago.";
-"cc_rejected_max_attempts_subtitle_debit_card"= "Elige otra tarjeta u otro medio de pago.";
-"cc_rejected_duplicated_payment_subtitle_debit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
-"cc_rejected_card_disabled_subtitle_debit_card"="El teléfono está al dorso de tu tarjeta.";
-"cc_rejected_bad_filled_card_number_subtitle_debit_card"="El número de tu %0 es incorrecto.";
-"cc_rejected_bad_filled_security_code_subtitle_debit_card"="El código de seguridad no es el correcto.";
-"cc_rejected_bad_filled_date_subtitle_debit_card"="La fecha de vencimiento no es la correcta.";
-"cc_rejected_call_for_authorize_subtitle_debit_card" = "";
-"rejected_insufficient_data_title" = "No fue posible procesar su pago";
-"rejected_by_bank_title" = "No fue posible procesar su pago";
-
-
-"Ingresalo nuevamente" = "Ingresalo nuevamente";
-"Algo salió mal..." = "Algo salió mal...";
+"¿Qué puedo hacer?" = "¿Qué puedo hacer?";
+"Cancelar pago" = "Cancelar pago";
 "El número de identificación es inválido" = "El número de identificación es inválido";
-
-
-
-//---- Formulario de tarjeta
-"Ver promociones"="Ver promociones";
-"Número de tarjeta"="Número de tarjeta";
-"NOMBRE APELLIDO"="NOMBRE APELLIDO";
-"MM/AA"="MM/AA";
-"Fecha de expiración"="Fecha de expiración";
-"Código de seguridad"="Código de seguridad";
-"Continuar"="Continuar";
-"Anterior"="Anterior";
-"Siguiente"="Siguiente";
-"Ingresa el número de la tarjeta de crédito"="Ingresa el número de la tarjeta de crédito";
-"Revisa este dato"="Revisa este dato";
-"Ingresa el nombre y apellido impreso en la tarjeta"="Ingresa el nombre y apellido impreso en la tarjeta";
-"Ingresa los %1$s números del código de seguridad"="Ingresa los %1$s números del código de seguridad";
-"Método de pago no soportado"="Método de pago no soportado";
-"Solo puedes pagar con "="Solo puedes pagar con ";
-"No puedes pagar con esta tarjeta"="No puedes pagar con esta tarjeta";
-"MAS INFO"="MÁS INFO";
-"Ingresar tarjeta"="Ingresar tarjeta";
-"No te preocupes, aún puedes terminar tu pago con:"="No te preocupes, aún puedes terminar tu pago con:";
-"Nombre y apellido"="Nombre y apellido";
-
-//---Identification
-"OK"="OK";
-"DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DEL TITULAR DE LA TARJETA";
-"Número"="Número";
-"Tipo"="Tipo";
-
-
-
-//ADDITIONAL STEP
-
-//-- Payer Cost
-" Sin interés"=" Sin interés";//--
+"Ingresalo nuevamente" = "Ingrésalo nuevamente";
+"invalid_cvv_length" = "Ingresa los {0} números del código de seguridad";
+"invalid_field" = "Revisa este dato";
+"invalid_card_length" = "Ingresa los {0} números de la tarjeta";
+"invalid_card_length_general" = "Ingresa todos los números de la tarjeta";
+"security_code" = "Código de seguridad";
+"Ver promociones" = "Ver promociones";
+"Número de tarjeta" = "Número de tarjeta";
+"NOMBRE APELLIDO" = "NOMBRE APELLIDO";
+"MM/AA" = "MM/AA";
+"Fecha de expiración" = "Fecha de expiración";
+"Ingresa el número de la tarjeta de crédito" = "Ingresa el número de la tarjeta de crédito";
+"Ingresa el nombre y apellido impreso en la tarjeta" = "Ingresa el nombre y apellido impreso en la tarjeta";
+"Método de pago no soportado" = "Método de pago no soportado";
+"Solo puedes pagar con {0}" = "Solo puedes pagar con {0}";
+"No puedes pagar con esta tarjeta" = "No puedes pagar con esta tarjeta";
+"MAS INFO" = "MÁS INFO";
+"Ingresar otra tarjeta" = "Ingresar otra tarjeta";
+"No te preocupes" = "No te preocupes, aún puedes terminar tu pago con:";
+"Nombre y apellido" = "Nombre y apellido";
+"OK" = "OK";
+"DOCUMENTO DEL TITULAR DE LA TARJETA" = "DOCUMENTO DEL TITULAR DE LA TARJETA";
+"Número" = "Número exterior";
+"Tipo" = "Tipo";
+"Sin interés" = "Sin intereses";
 "¿En cuántas cuotas?" = "¿En cuántas mensualidades?";
 "No incluye intereses bancarios" = "No incluye intereses bancarios";
-
-//-- Issuers
 "¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
-
-//-- Card Type
-"¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
 "Crédito" = "Crédito";
 "Débito" = "Débito";
-
-//-- EntityType
 "¿Cuál es el tipo de persona?" = "¿Cuál es el tipo de persona?";
-//-----EntityTypes
-"Natural"="Natural";
-"Jurídica"="Jurídica";
-
-//-- Financial Institutions
 "¿Cuál es tu banco?" = "¿Cuál es tu banco?";
-
-
-
-//Instructions
-
-"Seguir comprando"= "Seguir comprando";//--
-"Continuar"= "Continuar";
-
-
-//--
-"¡Felicitaciones!"="¡Felicitaciones!";
-"Se aprobó tu pago."="Se aprobó tu pago.";
-"Estamos procesando el pago"="Estamos procesando el pago";
-"¡Ups! Ocurrió un problema"="¡Ups! Ocurrió un problema";
-"Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles."="Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.";
-"En unos minutos te enviaremos por e-mail el resultado."="En unos minutos te enviaremos por e-mail el resultado.";
-"No se pudo realizar el pago."="No se pudo realizar el pago.";
-//--
-
-
-
-//CONGRATS
-
-"Comprobante"="Comprobante";
-
-"terminada en "="terminada en ";
-"Sin interés"="Sin interés";
-"Sin\u{00a0}interés"="Sin\u{00a0}interés";
-"Uy, no pudimos procesar el pago"="Uy, no pudimos procesar el pago";
-"Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
-"El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
-"Debes autorizar el pago ante tu tarjeta"="Debes autorizar el pago ante tu tarjeta";
-"Debes autorizar ante %1$s el pago de " = "Debes autorizar ante %1$s el pago de ";
-" a Mercado Pago" = " a Mercado Pago";
-"Ya hablé con %1$s y me autorizó" = "Ya hablé con %1$s y me autorizó";
-
-"En menos de 1 hora te enviaremos por e-mail el resultado."="En menos de 1 hora te enviaremos por e-mail el resultado.";
-"En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.";
-"Total"="Total";
-"Medio de pago"="Medio de pago";
-"Operación"="Operación";
-"Fecha"="Fecha";
-
-
-"Revisa si está todo bien..." = "Revisa si está todo bien...";
-"Total a pagar " = "Total a pagar ";
-
-"¿Cómo quieres pagar?"="¿Cómo quieres pagar?";
-"Cancelar Pago"="Cancelar Pago";
-"Términos y Condiciones"="Términos y Condiciones";
-"Con dinero en cuenta" = "Con dinero en cuenta";
-
-// PaymentTypes para RyC
-"ryc_title_default"=" en un ";
-"ryc_title_cargavirtual"=" en ";
-"ryc_title_redlink_bank_transfer"=" en tu ";
-"ryc_title_bancomer_bank_transfer"=" en tu ";
-"ryc_title_serfin_bank_transfer"=" en tu ";
-"ryc_title_banamex_bank_transfer"=" en tu ";
-
-"ryc_complementary_bancomer_bank_transfer"="Home Banking de ";
-"ryc_complementary_serfin_bank_transfer"="Home Banking de ";
-"ryc_complementary_redlink_bank_transfer"="Home Banking de ";
-"ryc_complementary_banamex_bank_transfer"="Home Banking de ";
-"ryc_complementary_banamex_atm"="cajero automático de ";
-"ryc_complementary_redlink_atm"="cajero automático de ";
-
-"ryc_payment_method_redlink_atm" = "Red Link";
-"ryc_payment_method_redlink_bank_transfer" = "Red Link";
-
-//Discount
-"Código de descuento"="Código de descuento";
-"Canejar"="Canejar";
-"Código inválido"="Código inválido";
-"de descuento"="de descuento";
-"Tengo un descuento"="Tengo un descuento";
-"Total: "="Total: ";
-"Vendedor sin descuento disponible"="Vendedor sin descuento disponible";
-"Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
-"Importe fuera del alcance"="Importe fuera del alcance";
-"La campaña expiró"="La campaña expiró";
-
-// Unlock Card
-"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Recuerda desbloquear tu tarjeta antes de confirmar el pago.";
-"desbloquear tu tarjeta"="desbloquear tu tarjeta";
-"Desbloqueo de Tarjeta"="Desbloqueo de Tarjeta";
-
-//Administrador de tarjetas
-"¿Con qué tarjeta?"="¿Con qué tarjeta?";
-
-
-// components - congrats
+"Pagar con otro medio" = "Pagar con otro medio";
+"terminada en" = "terminada en";
+"Total" = "Total";
+"¿Cómo quieres pagar?" = "¿Cómo quieres pagar?";
+"Procesando tu pago" = "Procesando tu pago";
+"Producto" = "Producto";
+"Mora" = "Mora";
+"Cargos" = "Cargos";
+"Impuestos" = "Impuestos";
+"Envío" = "Envío";
 "¡Apúrate a pagar!" = "¡Apúrate a pagar!";
-"Algo salió mal..." = "Algo salió mal...";
-
-// Receipt
-" de " = " de ";
-"Número de operación " = "Número de operación ";
-"a las" = "a las";
-"hs" = "hs";
-
-//Months
-"January" = "Enero";
-"February" = "Febrero";
-"March" = "Marzo";
-"April" = "Abril";
-"May" = "Mayo";
-"June" = "Junio";
-"July" = "Julio";
-"August" = "Agosto";
-"September" = "Septiembre";
-"October" = "Octubre";
-"November" = "Noviembre";
-"December" = "Diciembre";
-
-// Accreditation
+"de" = "de ";
+"Operación #{0}" = "Operación #{0}";
 "Se acreditará instantáneamente" = "Se acreditará instantáneamente";
 "Se acreditará en" = "Se acreditará en";
 "día hábil" = "día hábil";
 "días hábiles" = "días hábiles";
-"hora" = "hora";
-"horas" = "horas";
-
-// Disabled payment methods
-"px_disabled_main_message" = "No puedes usar este medio de pago";
-"px_dialog_detail_payment_method_disable_link" = "Pagar con otro medio";
-"px_dialog_detail_payment_method_disable_high_risk" = "Rechazamos tu pago.\n\nIntenta pagar con otro medio.";
-"px_dialog_detail_payment_method_disable_black_list" = "Rechazamos tu pago con esta tarjeta.\n\nIntenta pagar con otro medio.";
-"px_dialog_detail_payment_method_disable_insufficient_amount" = "Tus fondos son insuficientes o superaste el límite de compra.\n\nIntenta pagar con otro medio.";
+"Revisa si está todo bien" = "Revisa que esté todo bien";
+"error_body_title_call_for_authorize" = "¿Cómo lo autorizo?";
+"error_body_description_" = "Por favor, intente pagar de otra forma.";
+"error_body_description_pending_contingency" = "En unas horas te avisaremos por e-mail si se acreditó.";
+"error_body_description_pending_review_manual" = "Dentro de las próximas 24 horas te avisaremos por e-mail si se acreditó.";
+"error_body_description_cc_rejected_call_for_authorize" = "1- Llama al teléfono que está al reverso de tu tarjeta para autorizar el pago de {0} a Mercado Pago.";
+"error_body_description_cc_rejected_notify_us" = "2- Avísanos para que podamos acreditarlo.";
+"error_body_description_cc_rejected_card_disabled" = "Llama a {0} para activar tu tarjeta o usa otro medio de pago.";
+"error_body_description_cc_rejected_insufficient_amount" = "Tus fondos son insuficientes o superaste el límite de compra.";
+"error_body_description_cc_rejected_duplicated_payment" = "No te preocupes, tu pago anterior se efectuó con éxito.";
+"error_body_description_cc_rejected_max_attempts" = "Como llegaste al límite de intentos con esta tarjeta, usa otro medio de pago.";
+"error_body_description_rejected_by_regulations" = "Para pagar con dinero en cuenta debes completar los datos faltantes.";
+"error_body_description_cc_rejected_invalid_installments" = "Elige otra cantidad de mensualidades o usa otro medio de pago.";
+"error_body_action_text_" = "Ya hablé y me autorizó";
+"error_body_action_text_cc_rejected_call_for_authorize" = "Ya hablé con {0} y me autorizó";
+"error_body_secondary_title_" = "¿No pudiste autorizarlo?";
+"cc_rejected_call_for_authorize_title" = "Tu tarjeta no autorizó el pago";
+"cc_rejected_card_disabled_button" = "Ya activé mi tarjeta";
+"cc_rejected_bad_filled_button" = "Reingresar los datos de la tarjeta";
+"cc_rejected_call_for_authorize_button" = "Ya autoricé el pago";
+"cc_rejected_duplicated_payment_button" = "Entendido";
+"cc_rejected_card_disabled_title" = "Tu tarjeta no está activada";
+"cc_rejected_insufficient_amount_title" = "Tu tarjeta rechazó el pago";
+"cc_rejected_duplicated_payment_title" = "Lo sentimos, el pago se hizo dos veces y rechazamos el segundo";
+"cc_rejected_max_attempts_title" = "Rechazamos tu pago porque llegaste al límite de intentos";
+"cc_rejected_blacklist_title" = "Rechazamos tu pago con esta tarjeta";
+"cc_rejected_fraud_title" = "Estás suspendido para pagar";
+"cc_rejected_high_risk_title" = "Rechazamos tu pago";
+"cc_rejected_bad_filled_title" = "Algún dato de la tarjeta es inválido";
+"rejected_high_risk_title" = "No puedes usar tu dinero en Mercado Pago para este pago";
+"cc_rejected_invalid_installments_title" = "Tu tarjeta no acepta esta cantidad de meses";
+"error_body_description_rejected_high_risk" = "Intenta pagar con otro medio.";
+"rejected_default_title" = "No pudimos procesar tu pago";
+"discount_coupon_detail_description" = "{0} de descuento";
+"payment_result_screen_congrats_copy_button" = "¡Listo! Copiado.";
+"card_form_previous_button" = "Anterior";
+"payer_info_name" = "Nombre";
+"payer_info_legal" = "Razón Social";
+"payer_info_surname" = "Apellido";
+"payer_info_placeholder_cpf" = "NOMBRE Y APELLIDO";
+"payer_info_placeholder_cnpj" = "RAZÓN SOCIAL";
+"review_change_payment_method_action" = "Cambiar medio de pago";
+"review_change_payer_action" = "Modificar";
+"bank_deal_details_title" = "Condiciones";
+"bank_deal_details_date_format" = "Hasta el {0}";
+"bank_deals_screen_title" = "Promociones";
+"review_terms_and_conditions" = "Al pagar, declaro que soy mayor de edad y acepto los Términos y Condiciones.";
+"review_discount_terms_and_conditions" = "Descuento exclusivo de Mercado Libre y Mercado Pago.";
+"review_discount_terms_and_conditions_link" = "Ver condiciones";
+"discount_detail_modal_title" = "Tu descuento";
+"discount_detail_modal_footer" = "Los descuentos no son acumulables. Te damos el más alto para este pago.";
+"discount_detail_modal_disclaimer" = "Tope de descuento: {0}";
+"discount_end_date" = "Válido hasta el {0}.";
+"unique_discount_detail_modal_footer" = "Tope disponible para consumir en un único pago.";
+"multiple_discount_detail_modal_footer" = "Con cada pago en esta marca vas a consumir el tope hasta agotarlo.";
+"total_row_disclaimer" = "Con tope de descuento";
+"one_tap_discount_disclaimer" = "con tope de descuento";
+"total_row_title_percent_off" = "{0} OFF";
+"total_row_title_amount_off" = "{0} OFF";
+"total_row_title_default" = "Total a pagar";
+"total_row_consumed_discount" = "Alcanzaste el tope de descuento";
+"modal_title_consumed_discount" = "Alcanzaste el tope";
+"modal_content_consumed_discount" = "Este descuento ya no aplica porque consumiste el tope máximo.";
+"review_and_confirm_toast_error" = "Algo salió mal";
+"add_card_congrats_title" = "¡Listo! Tu tarjeta quedó guardada";
+"add_card_go_to_my_cards" = "Ir a Mis tarjetas";
+"add_card_failed_title" = "No pudimos cargar los datos de tu tarjeta";
+"add_card_try_again" = "Intentar de nuevo";
+"onetap_add_new_card_title" = "Agregar una tarjeta nueva";
+"onetap_purchase_summary_title" = "Tu compra";
+"onetap_select_installment_title" = "Selecciona la cuota";
+"terms_and_conditions_title" = "Términos y condiciones";
+"disabled_title_am" = "Tu dinero en Mercado Pago no está disponible ahora";
+"disabled_title_card" = "Esta tarjeta no está disponible ahora";
+"other_payment_method" = "No te preocupes, puedes usar otro medio para completar el pago.";
+"disabled_disclaimer_am" = "Medio no disponible para este pago";
+"disabled_disclaimer_card" = "Tarjeta no disponible para este pago";
+"a las" = "a las";
+"hs" = "hs";
+"px_dialog_detail_payment_method_disable_high_risk" = "Rechazamos tu pago.";
+"px_dialog_detail_payment_method_disable_black_list" = "Rechazamos tu pago con esta tarjeta.";
 "px_payment_method_disable_title" = "No puedes usar este medio de pago";

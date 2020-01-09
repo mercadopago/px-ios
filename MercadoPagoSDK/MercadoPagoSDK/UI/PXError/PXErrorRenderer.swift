@@ -51,10 +51,10 @@ class PXErrorRenderer: NSObject {
 
     func buildTitleLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
         let label = UILabel()
-        let font = Utils.getFont(size: TITLE_FONT_SIZE)
+        let font = UIFont.ml_semiboldSystemFont(ofSize: TITLE_FONT_SIZE) ?? Utils.getSemiBoldFont(size: TITLE_FONT_SIZE)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.textColor = .pxBlack
+        label.textAlignment = .left
+        label.textColor = UIColor.black.withAlphaComponent(0.8)
         label.numberOfLines = 0
         label.attributedText = text
         label.font = font
@@ -73,10 +73,10 @@ class PXErrorRenderer: NSObject {
 
     func buildDescriptionLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let label = UILabel()
-        let font = Utils.getFont(size: DESCRIPTION_FONT_SIZE)
+        let font = UIFont.ml_regularSystemFont(ofSize: DESCRIPTION_FONT_SIZE) ?? Utils.getFont(size: DESCRIPTION_FONT_SIZE)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.textColor = .pxBrownishGray
+        label.textAlignment = .left
+        label.textColor = UIColor.black.withAlphaComponent(0.45)
         label.numberOfLines = 0
         label.attributedText = text
         label.font = font
@@ -85,8 +85,6 @@ class PXErrorRenderer: NSObject {
 
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
 
-        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: DESCRIPTION_FONT_SIZE), inWidth: screenWidth)
-        PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true
         if let upperView = upperView {
@@ -105,7 +103,7 @@ class PXErrorRenderer: NSObject {
         button.titleLabel?.font = Utils.getFont(size: ACTION_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
         button.titleLabel?.numberOfLines = 0
-        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.textAlignment = .left
         button.add(for: .touchUpInside) {
             action.action()
         }
@@ -126,10 +124,10 @@ class PXErrorRenderer: NSObject {
 
     func buildSecondaryTitleLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let label = UILabel()
-        let font = Utils.getFont(size: TITLE_FONT_SIZE)
+        let font = UIFont.ml_semiboldSystemFont(ofSize: TITLE_FONT_SIZE) ?? Utils.getSemiBoldFont(size: TITLE_FONT_SIZE)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.textColor = .pxBlack
+        label.textAlignment = .left
+        label.textColor = UIColor.black.withAlphaComponent(0.8)
         label.numberOfLines = 0
         label.attributedText = text
         label.font = font

@@ -29,7 +29,7 @@ extension PXCard: PXCardInformation {
     }
 
     internal func getCardDescription() -> String {
-        return "terminada en " + lastFourDigits! //TODO: Make it localizable
+        return "terminada en".localized + " " + lastFourDigits!
     }
 
     internal func getPaymentMethod() -> PXPaymentMethod? {

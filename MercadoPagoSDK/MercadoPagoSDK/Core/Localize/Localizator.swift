@@ -135,13 +135,6 @@ extension Localizator {
 
 // MARK: localized capability for Strings.
 internal extension String {
-    var localized_beta: String {
-        if let customTrans = Localizator.sharedInstance.getCustomTrans(self) {
-            return customTrans
-        }
-        return Localizator.sharedInstance.localize(string: self)
-    }
-
     var localized: String {
         if let customTrans = Localizator.sharedInstance.getCustomTrans(self) {
             return customTrans

@@ -206,7 +206,7 @@ extension PXNewResultUtil {
 
         if paymentMethod.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
-                pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+                pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
             }
         } else {
             pmDescription = paymentMethodName

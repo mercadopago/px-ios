@@ -10,7 +10,7 @@ import Foundation
 extension MercadoPagoCheckout: TokenizationServiceResultHandler {
     func finishInvalidIdentificationNumber() {
         if let identificationViewController = viewModel.pxNavigationHandler.navigationController.viewControllers.last as? IdentificationViewController {
-            identificationViewController.showErrorMessage("Revisa este dato".localized)
+            identificationViewController.showErrorMessage("invalid_field".localized)
         }
     }
 

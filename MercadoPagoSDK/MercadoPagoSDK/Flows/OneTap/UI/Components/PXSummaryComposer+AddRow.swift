@@ -13,7 +13,7 @@ extension PXSummaryComposer {
         let shouldDisplayHelper = shouldDisplayChargesHelp
         let helperImage = shouldDisplayHelper ? helpIcon(color: summaryColor()) : nil
         let amountToShow = Utils.getAmountFormated(amount: amount, forCurrency: currency)
-        let defaultChargeText = "onetap_purchase_summary_charges".localized_beta
+        let defaultChargeText = "Cargos".localized
         let chargeText = additionalInfoSummary?.charges ?? defaultChargeText
         let row = PXOneTapSummaryRowData(title: chargeText, value: amountToShow, highlightedColor: summaryColor(), alpha: textTransparency, isTotal: false, image: helperImage, type: .charges)
         return row
@@ -21,7 +21,7 @@ extension PXSummaryComposer {
 
     func consumedDiscountRow() -> PXOneTapSummaryRowData {
         let helperImage = helpIcon(color: summaryColor())
-        let row = PXOneTapSummaryRowData(title: "total_row_consumed_discount".localized_beta, value: "", highlightedColor: summaryColor(), alpha: textTransparency, isTotal: false, image: helperImage, type: .discount)
+        let row = PXOneTapSummaryRowData(title: "total_row_consumed_discount".localized, value: "", highlightedColor: summaryColor(), alpha: textTransparency, isTotal: false, image: helperImage, type: .discount)
         return row
     }
 
@@ -56,7 +56,7 @@ extension PXSummaryComposer {
 
     func totalToPayRow() -> PXOneTapSummaryRowData {
         let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.getAmountToPayWithoutPayerCost(selectedCard?.cardId), forCurrency: currency)
-        let text = "onetap_purchase_summary_total".localized_beta
+        let text = "total_row_title_default".localized
         let row = PXOneTapSummaryRowData(title: text,
                                           value: totalAmountToShow,
                                           highlightedColor: summaryColor(),
@@ -66,5 +66,4 @@ extension PXSummaryComposer {
                                           type: .generic)
         return row
     }
-
 }
