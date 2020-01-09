@@ -469,16 +469,14 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
-            let trackingConfiguration = MLCardFormTrackerConfiguration(delegate: self, flowName: nil, flowDetails: nil, sessionId: nil)
             let builder: MLCardFormBuilder
             if let privateKey = viewModel.privateKey {
-                builder = MLCardFormBuilder(privateKey: privateKey, siteId: viewModel.siteId, lifeCycleDelegate: self)
+                builder = MLCardFormBuilder(privateKey: privateKey, siteId: viewModel.siteId, flowId: PXConfiguratorManager.biometricConfig.flowIdentifier, lifeCycleDelegate: self)
             } else {
-                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: viewModel.siteId, lifeCycleDelegate: self)
+                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: viewModel.siteId, flowId: PXConfiguratorManager.biometricConfig.flowIdentifier, lifeCycleDelegate: self)
             }
             builder.setLanguage(Localizator.sharedInstance.getLanguage())
             builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
-            builder.setTrackingConfiguration(trackingConfiguration)
             builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
             builder.setAnimated(true)
             let cardFormVC = MLCardForm(builder: builder).setupController()
@@ -649,18 +647,6 @@ extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
     }
 
     func didFailAddCard() {
-    }
-}
-
-extension PXOneTapViewController: MLCardFormTrackerDelegate {
-    func trackScreen(screenName: String, extraParams: [String: Any]?) {
-        // Track screen
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: extraParams ?? [:])
-    }
-
-    func trackEvent(screenName: String?, action: String, result: String?, extraParams: [String: Any]?) {
-        // Track event
-        MPXTracker.sharedInstance.trackEvent(path: screenName ?? "", properties: extraParams ?? [:])
     }
 }
 
