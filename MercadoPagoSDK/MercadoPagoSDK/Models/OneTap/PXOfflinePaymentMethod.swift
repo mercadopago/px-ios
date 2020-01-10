@@ -53,6 +53,6 @@ extension PXOfflinePaymentMethod: PaymentMethodOption {
     }
 
     func getPaymentType() -> String {
-        return "ticket"
+        return ""
     }
 }
