@@ -1,3 +1,10 @@
+# v4.29.1
+🚀Private Release - 4.29.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Babel support
+- Error result screen layout updated
+- Payment method pre selection fix
+
 # v4.29
 🚀Private Release - 4.29 🚀
 MercadoPagoSDKV4 - Private Version
