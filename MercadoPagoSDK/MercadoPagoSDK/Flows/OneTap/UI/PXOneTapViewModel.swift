@@ -82,8 +82,13 @@ extension PXOneTapViewModel {
 
                 let emptyCard = EmptyCard(newCardData: newCardData, newOfflineData: newOfflineData)
                 sliderModel.append(PXCardSliderViewModel("", "", "", emptyCard, nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
-            }
 
+            } else if let offlineMethods = targetNode.offlineMethods {
+                var newOfflineData: PXAddNewMethodData?
+                newOfflineData = PXAddNewMethodData(title: offlineMethods.label, subtitle: offlineMethods.descriptionText)
+                let emptyCard = EmptyCard(newCardData: nil, newOfflineData: newOfflineData)
+                sliderModel.append(PXCardSliderViewModel("", "", "", emptyCard, nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
+            }
             //  Account money
             if let accountMoney = targetNode.accountMoney, let paymentMethodId = targetNode.paymentMethodId {
                 let displayTitle = accountMoney.cardTitle ?? ""
