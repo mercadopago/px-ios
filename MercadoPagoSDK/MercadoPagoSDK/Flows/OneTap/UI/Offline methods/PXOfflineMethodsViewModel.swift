@@ -51,7 +51,10 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
     }
 
     func getTitleForLastSection() -> String? {
-        return paymentTypes.last?.name?.message
+        if let message = paymentTypes.last?.name?.message {
+            return message.lowercased().firstCapitalized
+        }
+        return nil
     }
 
     func getSelectedOfflineMethod() -> PXOfflinePaymentMethod? {
