@@ -21,6 +21,7 @@ final class PXOfflineMethodsCell: UITableViewCell {
     func render(data: PXOfflineMethodsCellData) {
         contentView.removeAllSubviews()
         selectionStyle = .none
+        backgroundColor = .white
 
         let indicatorImage = ResourceManager.shared.getImage(data.isSelected ? "indicator_selected" : "indicator_unselected")
         let indicatorImageView = UIImageView(image: indicatorImage)

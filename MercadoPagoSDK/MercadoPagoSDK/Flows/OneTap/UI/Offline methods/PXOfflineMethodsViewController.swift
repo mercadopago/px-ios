@@ -98,6 +98,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         tableView.dataSource = self
         tableView.separatorInset = .init(top: 0, left: PXLayout.S_MARGIN, bottom: 0, right: PXLayout.S_MARGIN)
         tableView.separatorColor = UIColor.black.withAlphaComponent(0.1)
+        tableView.backgroundColor = .white
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
