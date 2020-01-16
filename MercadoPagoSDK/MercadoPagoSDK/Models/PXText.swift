@@ -20,14 +20,18 @@ public struct PXText: Codable {
         case weight
     }
 
-    internal func getAttributedString(fontSize: CGFloat = PXLayout.XS_FONT, textColor: UIColor? = nil, backgroundColor: UIColor? = nil) -> NSAttributedString? {
+    internal func getAttributedString(fontSize: CGFloat = PXLayout.XS_FONT, textColor: UIColor? = nil, backgroundColor: UIColor? = nil, alpha: CGFloat? = nil) -> NSAttributedString? {
         guard let message = message else {return nil}
 
         var attributes: [NSAttributedString.Key: AnyObject] = [:]
 
         // Add text color attribute
         if let defaultTextColor = self.textColor {
-            attributes[.foregroundColor] = UIColor.fromHex(defaultTextColor)
+            if let alpha = alpha {
+                attributes[.foregroundColor] = UIColor.fromHex(defaultTextColor).withAlphaComponent(alpha)
+            } else {
+                attributes[.foregroundColor] = UIColor.fromHex(defaultTextColor)
+            }
         }
         // Override text color
         if let overrideTextColor = textColor {

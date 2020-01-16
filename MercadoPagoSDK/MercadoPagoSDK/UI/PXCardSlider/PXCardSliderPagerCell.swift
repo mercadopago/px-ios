@@ -275,7 +275,7 @@ class PXAddMethodView: UIView {
             let subtitleLabel = UILabel()
             subtitleLabel.numberOfLines = 1
             subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-            subtitleLabel.attributedText = subtitle.getAttributedString(fontSize: PXLayout.XXS_FONT)
+            subtitleLabel.attributedText = subtitle.getAttributedString(fontSize: PXLayout.XXS_FONT, alpha: 0.73)
             subtitleLabel.textAlignment = data.compactMode ? .left : .center
             labelsContainerView.addArrangedSubview(subtitleLabel)
         }
