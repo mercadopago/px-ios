@@ -42,11 +42,7 @@
 //    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-092415-b89a7cdcec6cc6c3916deab0c56c7136-472129472"];
 
     //  Argentina
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636"];
-
-    //  Cardform
-    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1693017181771849-122314-ca3f7a64d90060a8573b7c2df9215af3-502374722"];
-
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636"];
 
     PXTrackingConfiguration *trackingConfig = [[PXTrackingConfiguration alloc] initWithTrackListener: self flowName:@"instore" flowDetails:nil sessionId:@"3783874"];
     [self.checkoutBuilder setTrackingConfigurationWithConfig: trackingConfig];
