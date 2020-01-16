@@ -141,7 +141,7 @@ extension PXDiscountDetailViewController {
     func getHeader() -> NSAttributedString {
         let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
         if amountHelper.consumedDiscount {
-            return NSAttributedString(string: "modal_title_consumed_discount".localized_beta, attributes: attributes)
+            return NSAttributedString(string: "modal_title_consumed_discount".localized, attributes: attributes)
         } else {
             return NSAttributedString(string: amountHelper.discount!.getDiscountDescription(), attributes: attributes)
         }
@@ -151,7 +151,7 @@ extension PXDiscountDetailViewController {
         if let maxCouponAmount = amountHelper.maxCouponAmount, !amountHelper.consumedDiscount {
             let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)
-            let string: String = ("discount_detail_modal_disclaimer".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
+            let string: String = ("discount_detail_modal_disclaimer".localized as NSString).replacingOccurrences(of: "{0}", with: amountAttributedString.string)
             let attributedString = NSMutableAttributedString(string: string, attributes: attributes)
 
             return attributedString
@@ -162,16 +162,16 @@ extension PXDiscountDetailViewController {
     func getDisclaimer() -> NSAttributedString? {
         let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
         if amountHelper.consumedDiscount {
-            return NSAttributedString(string: "modal_content_consumed_discount".localized_beta, attributes: attributes)
+            return NSAttributedString(string: "modal_content_consumed_discount".localized, attributes: attributes)
         } else if amountHelper.campaign?.maxRedeemPerUser == 1 {
-            var message = "unique_discount_detail_modal_footer".localized_beta
+            var message = "unique_discount_detail_modal_footer".localized
             if let expirationDate = amountHelper.campaign?.endDate {
-                let messageDate = "discount_end_date".localized_beta
-                message.append(messageDate.replacingOccurrences(of: "%1s", with: Utils.getFormatedStringDate(expirationDate)))
+                let messageDate = "discount_end_date".localized
+                message.append(messageDate.replacingOccurrences(of: "{0}", with: Utils.getFormatedStringDate(expirationDate)))
             }
             return NSAttributedString(string: message, attributes: attributes)
         } else if let maxRedeemPerUser = amountHelper.campaign?.maxRedeemPerUser, maxRedeemPerUser > 1 {
-            return NSAttributedString(string: "multiple_discount_detail_modal_footer".localized_beta, attributes: attributes)
+            return NSAttributedString(string: "multiple_discount_detail_modal_footer".localized, attributes: attributes)
         }
         return nil
     }
@@ -186,7 +186,7 @@ extension PXDiscountDetailViewController {
             return nil
         }
         let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
-        let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
+        let string = NSAttributedString(string: "discount_detail_modal_footer".localized, attributes: attributes)
         return string
     }
 
@@ -195,7 +195,7 @@ extension PXDiscountDetailViewController {
             return nil
         }
         let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.getAccentColor()]
-        let string = NSAttributedString(string: "terms_and_conditions_title".localized_beta, attributes: attributes)
+        let string = NSAttributedString(string: "terms_and_conditions_title".localized, attributes: attributes)
         return string
     }
 }
@@ -203,7 +203,7 @@ extension PXDiscountDetailViewController {
 // MARK: Accions
 extension PXDiscountDetailViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        let SCREEN_TITLE = "terms_and_conditions_title".localized_beta
+        let SCREEN_TITLE = "terms_and_conditions_title".localized
 
         if let legalTermsURLString = amountHelper.campaign?.legalTermsUrl, let url = URL(string: legalTermsURLString) {
             let webVC = WebViewController(url: url, navigationBarTitle: SCREEN_TITLE, forceAddNavBar: true)

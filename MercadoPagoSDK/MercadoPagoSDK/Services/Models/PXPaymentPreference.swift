@@ -11,7 +11,7 @@ import Foundation
 /// :nodoc:
 open class PXPaymentPreference: NSObject, Codable {
 
-    open var maxAcceptedInstallments: Int = 1
+    open var maxAcceptedInstallments: Int = 0
     open var defaultInstallments: Int?
     open var excludedPaymentMethodIds: [String] = []
     open var excludedPaymentTypeIds: [String] = []
@@ -32,7 +32,7 @@ open class PXPaymentPreference: NSObject, Codable {
         self.defaultPaymentTypeId = defaultPaymentTypeId
     }
 
-    init(maxAcceptedInstallments: Int, defaultInstallments: Int?, excludedPaymentMethods: [PXPaymentMethod], excludedPaymentTypes: [PXPaymentType], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
+    init(maxAcceptedInstallments: Int, defaultInstallments: Int?, excludedPaymentMethods: [PXPaymentMethod], excludedPaymentTypes: [PXPaymentType], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?, defaultCardId: String?) {
 
         var excludedPaymentTypeIds: [String] = []
         for paymentType in excludedPaymentTypes {
@@ -54,6 +54,7 @@ open class PXPaymentPreference: NSObject, Codable {
         self.excludedPaymentTypeIds = excludedPaymentTypeIds
         self.defaultPaymentMethodId = defaultPaymentMethodId
         self.defaultPaymentTypeId = defaultPaymentTypeId
+        self.cardId = defaultCardId
     }
 
     public enum PXPaymentPreferenceKeys: String, CodingKey {
@@ -63,6 +64,7 @@ open class PXPaymentPreference: NSObject, Codable {
         case excludedPaymentTypeIds = "excluded_payment_types"
         case defaultPaymentMethodId = "default_payment_method_id"
         case defaultPaymentTypeId = "default_payment_type_id"
+        case defaultCardId = "default_card_id"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -73,19 +75,22 @@ open class PXPaymentPreference: NSObject, Codable {
         let excludedPaymentTypes: [PXPaymentType] = try container.decodeIfPresent([PXPaymentType].self, forKey: .excludedPaymentTypeIds) ?? []
         let defaultPaymentMethodId: String? = try container.decodeIfPresent(String.self, forKey: .defaultPaymentMethodId)
         let defaultPaymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .defaultPaymentTypeId)
+        let defaultCardId: String? = try container.decodeIfPresent(String.self, forKey: .defaultCardId)
 
-        self.init(maxAcceptedInstallments: maxAcceptedInstallments, defaultInstallments: defaultInstallments, excludedPaymentMethods: excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, defaultPaymentTypeId: defaultPaymentTypeId)
+        self.init(maxAcceptedInstallments: maxAcceptedInstallments, defaultInstallments: defaultInstallments, excludedPaymentMethods: excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, defaultPaymentTypeId: defaultPaymentTypeId, defaultCardId: defaultCardId)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXPaymentPreferenceKeys.self)
         try container.encodeIfPresent(self.defaultInstallments, forKey: .defaultInstallments)
-        try container.encodeIfPresent(self.maxAcceptedInstallments, forKey: .maxAcceptedInstallments)
+        if maxAcceptedInstallments > 0 {
+            try container.encode(maxAcceptedInstallments, forKey: .maxAcceptedInstallments)
+        }
         try container.encodeIfPresent(getExclusionsFormatted(exclusions: self.excludedPaymentMethodIds), forKey: .excludedPaymentMethodIds)
         try container.encodeIfPresent(getExclusionsFormatted(exclusions: self.excludedPaymentTypeIds), forKey: .excludedPaymentTypeIds)
         try container.encodeIfPresent(self.defaultPaymentMethodId, forKey: .defaultPaymentMethodId)
         try container.encodeIfPresent(self.defaultPaymentTypeId, forKey: .defaultPaymentTypeId)
-
+        try container.encodeIfPresent(self.cardId, forKey: .defaultCardId)
     }
 
     private func getExclusionsFormatted(exclusions: [String]) -> [PXExcludedPaymentMethod] {

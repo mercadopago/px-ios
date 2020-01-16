@@ -69,7 +69,7 @@ class BoletoComponent: UIView, PXComponent {
         self.nameTF.textAlignment = .left
         self.nameTF.font = Utils.getFont(size: 13.0)
         self.nameTF.textColor = UIColor.px_grayDark()
-        self.nameTF.placeholder = "payer_info_placeholder_cpf".localized_beta
+        self.nameTF.placeholder = "payer_info_placeholder_cpf".localized
         self.nameTF.isEnabled = false
 
         self.boletoView.addSubview(titleLabel)
@@ -84,9 +84,9 @@ class BoletoComponent: UIView, PXComponent {
     func updateBoletoType() {
         switch self.boletoType {
         case BoletoType.cpf:
-            self.setNamePlaceholder(text: "payer_info_placeholder_cpf".localized_beta)
+            self.setNamePlaceholder(text: "payer_info_placeholder_cpf".localized)
         case BoletoType.cnpj:
-            self.setNamePlaceholder(text: "payer_info_placeholder_cnpj".localized_beta)
+            self.setNamePlaceholder(text: "payer_info_placeholder_cnpj".localized)
         }
     }
 

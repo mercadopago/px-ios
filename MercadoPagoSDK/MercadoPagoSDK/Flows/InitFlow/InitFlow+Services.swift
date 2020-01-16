@@ -30,7 +30,7 @@ extension InitFlow {
 
         let hasPaymentProcessor: Bool = initFlowModel.properties.paymentPlugin != nil ? true : false
         let discountParamsConfiguration = initFlowModel.properties.advancedConfig.discountParamsConfiguration
-        let marketplace = initFlowModel.amountHelper.preference.marketplace
+        let flowName: String? = MPXTracker.sharedInstance.getFlowName() ?? nil
         let splitEnabled: Bool = initFlowModel.properties.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
         let serviceAdapter = initFlowModel.getService()
 
@@ -50,10 +50,10 @@ extension InitFlow {
 
         if let prefId = pref.id, prefId.isNotEmpty {
             // CLOSED PREFERENCE
-            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, headers: headers, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, headers: headers, callback: callback(_:), failure: failure(_:))
         } else {
             // OPEN PREFERENCE
-            serviceAdapter.getOpenPrefInitSearch(preference: pref, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, headers: headers, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getOpenPrefInitSearch(preference: pref, cardIdsWithEsc: cardIdsWithEsc, extraParams: extraParams, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, headers: headers, callback: callback(_:), failure: failure(_:))
         }
     }
 

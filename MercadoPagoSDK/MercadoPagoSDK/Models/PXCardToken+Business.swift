@@ -85,7 +85,7 @@ extension PXCardToken {
                 if cardSettings.count > 1 {
                     return "invalid_card_length_general".localized
                 } else {
-                    return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardSettings[0].cardNumber?.length ?? 0)")
+                    return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "{0}", with: "\(cardSettings[0].cardNumber?.length ?? 0)")
                 }
             }
             // Validate luhn
@@ -141,7 +141,7 @@ extension PXCardToken {
         if let settings = setting {
             let cvvLength = settings[0].securityCode?.length ?? 3
             if (cvvLength != 0) && (securityCode.count != cvvLength) {
-                return ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
+                return ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "{0}", with: "\(cvvLength)")
             } else {
                 return nil
             }

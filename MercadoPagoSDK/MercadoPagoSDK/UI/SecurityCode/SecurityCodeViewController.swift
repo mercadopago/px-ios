@@ -91,7 +91,7 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     @objc func continueAction() {
         securityCodeTextField.resignFirstResponder()
         guard securityCodeTextField.text?.count == viewModel.secCodeLenght() else {
-            let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
+            let errorMessage: String = ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "{0}", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
             showErrorMessage(errorMessage)
             return
         }
@@ -114,8 +114,8 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         toolbar.barStyle = UIBarStyle.default
         toolbar.isUserInteractionEnabled = true
 
-        let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(self.continueAction))
-        let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(self.backAction))
+        let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(self.continueAction))
+        let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized, style: .plain, target: self, action: #selector(self.backAction))
 
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 

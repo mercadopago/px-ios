@@ -56,12 +56,12 @@ class PXNewCustomView: UIView {
 
     //Attributes
     static let titleAttributes: [NSAttributedString.Key: Any] = [
-        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.font: UIFont.ml_semiboldSystemFont(ofSize: PXLayout.XS_FONT),
         NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.8)
     ]
 
     static let subtitleAttributes: [NSAttributedString.Key: Any] = [
-        NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
+        NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: PXLayout.XXS_FONT),
         NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
     ]
 

@@ -44,12 +44,17 @@ protocol PXNewResultViewModelInterface {
     func getInstructionsView() -> UIView?
 
     //PAYMENT METHOD
+    func shouldShowPaymentMethod() -> Bool
     func getPaymentData() -> PXPaymentData?
     func getAmountHelper() -> PXAmountHelper?
 
     //SPLIT PAYMENT METHOD
     func getSplitPaymentData() -> PXPaymentData?
     func getSplitAmountHelper() -> PXAmountHelper?
+
+    //REJECTED BODY
+    func shouldShowErrorBody() -> Bool
+    func getErrorBodyView() -> UIView?
 
     //FOOTER
     func getFooterMainAction() -> PXAction?

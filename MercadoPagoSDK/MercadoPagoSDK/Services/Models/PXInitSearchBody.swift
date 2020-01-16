@@ -14,10 +14,10 @@ struct PXInitBody: Codable {
     let flow: String?
     let cardsWithESC: [String]
     let charges: [PXPaymentTypeChargeRule]
-    let discountConfiguration: PXDiscountParamsConfiguration
+    let discountConfiguration: PXDiscountParamsConfiguration?
     let features: PXInitFeatures
 
-    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], discountConfiguration: PXDiscountParamsConfiguration, features: PXInitFeatures) {
+    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], discountConfiguration: PXDiscountParamsConfiguration?, features: PXInitFeatures) {
         self.preference = preference
         self.publicKey = publicKey
         self.flow = flow

@@ -277,7 +277,7 @@ extension PXReviewViewController {
     }
 
     private func getPaymentMethodComponentView() -> UIView? {
-        let action = PXAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
+        let action = PXAction(label: "review_change_payment_method_action".localized, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
                 self?.trackEvent(path: TrackingPaths.Events.ReviewConfirm.getChangePaymentMethodPath())
                 if let callBackAction = self?.changePaymentMethodCallback {
@@ -302,7 +302,7 @@ extension PXReviewViewController {
 
     fileprivate func getPayerComponentView() -> UIView? {
 
-        let action = PXAction(label: "review_change_payer_action".localized_beta, action: {
+        let action = PXAction(label: "review_change_payer_action".localized, action: {
             if let reviewViewModel = self.viewModel {
                 self.changePayerInformation(reviewViewModel.getClearPayerData())
             }

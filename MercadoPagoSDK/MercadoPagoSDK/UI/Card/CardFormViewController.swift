@@ -489,8 +489,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
             toolbar.barStyle = UIBarStyle.default
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-            let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
 
             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
@@ -617,7 +617,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                     if cardNumberLabel?.text?.count == 0 {
                         showMessage("Ingresa el número de la tarjeta de crédito".localized)
                     } else {
-                        showMessage("Revisa este dato".localized)
+                        showMessage("invalid_field".localized)
                     }
                 }
                 return
@@ -650,7 +650,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         case cvvLabel! :
             if !self.validateCvv() {
 
-                showMessage(("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((viewModel.getGuessedPM()?.secCodeLenght())! as NSNumber).stringValue))
+                showMessage(("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "{0}", with: ((viewModel.getGuessedPM()?.secCodeLenght())! as NSNumber).stringValue))
                 return
             }
             self.confirmPaymentMethod()
@@ -801,7 +801,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         } else if editingLabel == expirationDateLabel {
             return "Fecha de expiración".localized
         } else if editingLabel == cvvLabel {
-            return "Código de seguridad".localized
+            return "security_code".localized
         }
         return ""
     }

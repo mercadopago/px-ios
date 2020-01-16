@@ -12,14 +12,14 @@ internal extension PXDiscount {
     /// :nodoc:
     override open var description: String {
         if getDiscountDescription() != "" {
-            return getDiscountDescription() + "discount_coupon_detail_description".localized_beta
+            return ("discount_coupon_detail_description".localized as NSString).replacingOccurrences(of: "{0}", with: getDiscountDescription())
         } else {
             return ""
         }
     }
 
     func getDiscountDescription() -> String {
-        return name ?? "discount_coupon_detail_default_concept".localized_beta
+        return name ?? String(format: "discount".localized, 1)
     }
 
     func getDiscountAmount() -> Double? {

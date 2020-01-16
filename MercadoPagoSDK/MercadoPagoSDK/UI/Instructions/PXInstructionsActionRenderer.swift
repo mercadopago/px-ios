@@ -71,7 +71,7 @@ class PXInstructionsActionRenderer: NSObject {
 
     func copyContent(_ content: String) {
         UIPasteboard.general.string = content
-        MLSnackbar.show(withTitle: "payment_result_screen_congrats_copy_button".localized_beta, type: MLSnackbarType.success(), duration: .short)
+        MLSnackbar.show(withTitle: "payment_result_screen_congrats_copy_button".localized, type: MLSnackbarType.success(), duration: .short)
     }
 }
 

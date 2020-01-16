@@ -15,7 +15,7 @@ internal extension PXResultViewModel {
             guard let paymentId = self.paymentResult.paymentId else {
                 return PXReceiptProps()
             }
-            return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + paymentId)
+            return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: String(format: "Operación #{0}".localized, paymentId).replacingOccurrences(of: "{0}", with: paymentId))
         } else {
             return nil
         }

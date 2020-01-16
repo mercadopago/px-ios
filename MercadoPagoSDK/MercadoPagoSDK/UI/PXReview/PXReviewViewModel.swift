@@ -275,7 +275,7 @@ extension PXReviewViewModel {
             accreditationTime = nil
         } else if pm.isCard {
             if let lastFourDigits = (self.amountHelper.getPaymentData().token?.lastFourDigits) {
-                let text = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+                let text = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
                 title = text.toAttributedString()
             }
         } else {

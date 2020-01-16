@@ -84,7 +84,7 @@ import Foundation
     // MARK: Rejected
     // To deprecate post v4. SP integration.
     private var disableRejectedLabelText = false
-    internal lazy var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized_beta
+    internal lazy var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
     internal var rejectedSubtitle = ""
     internal var rejectedTitleSetted = false
     internal lazy var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized

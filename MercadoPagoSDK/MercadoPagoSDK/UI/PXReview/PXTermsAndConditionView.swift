@@ -13,7 +13,7 @@ protocol PXTermsAndConditionViewDelegate: NSObjectProtocol {
 }
 
 class PXTermsAndConditionView: PXComponentView {
-    var SCREEN_TITLE = "Términos y Condiciones"
+    var SCREEN_TITLE = "terms_and_conditions_title"
     internal let DEFAULT_CREDITS_HEIGHT = CGFloat(80)
 
     private let termsAndConditionsText: MPTextView = MPTextView()
@@ -74,7 +74,7 @@ class PXTermsAndConditionView: PXComponentView {
 extension PXTermsAndConditionView {
 
     func getTyCText() -> NSMutableAttributedString {
-        let termsAndConditionsText = termsAndConditionsDto?.text ?? "review_terms_and_conditions".localized_beta
+        let termsAndConditionsText = termsAndConditionsDto?.text ?? "review_terms_and_conditions".localized
 
         let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
 

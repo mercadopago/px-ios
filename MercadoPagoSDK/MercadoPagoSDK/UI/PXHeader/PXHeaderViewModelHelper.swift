@@ -80,7 +80,7 @@ internal extension PXResultViewModel {
         if !preference.showLabelText {
             return nil
         } else {
-            return NSMutableAttributedString(string: "Algo salió mal...".localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
+            return NSMutableAttributedString(string: "review_and_confirm_toast_error".localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
         }
 
     }
@@ -114,13 +114,9 @@ internal extension PXResultViewModel {
             statusDetail = badFilledKey
         }
 
-        let title = statusDetail + "_title"
+        let title = PXResourceProvider.getErrorTitleKey(statusDetail: statusDetail).localized
 
-        if title.existsLocalizedBeta() {
-            return getTitleForRejected(paymentMethod, title)
-        } else {
-            return getDefaultRejectedTitle()
-        }
+        return getTitleForRejected(paymentMethod, title)
     }
 
     func titleForInstructions() -> NSMutableAttributedString {
@@ -159,10 +155,10 @@ internal extension PXResultViewModel {
             return getDefaultRejectedTitle()
         }
 
-        return NSMutableAttributedString(string: (title.localized_beta as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+        return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "{0}", with: "\(paymentMethodName)"), attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
     }
 
     func getDefaultRejectedTitle() -> NSAttributedString {
-        return NSMutableAttributedString(string: PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized_beta, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+        return NSMutableAttributedString(string: PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
     }
 }

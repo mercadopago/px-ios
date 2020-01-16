@@ -150,7 +150,7 @@ class PXNewResultHeader: UIView {
 
     func buildTitleLabel(with text: String) -> UILabel {
         let titleLabel = UILabel()
-        titleLabel.font = Utils.getSemiBoldFont(size: 20)
+        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.M_FONT)
         titleLabel.textAlignment = .left
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = text

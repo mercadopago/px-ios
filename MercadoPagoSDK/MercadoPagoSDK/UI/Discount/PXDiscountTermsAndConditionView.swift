@@ -15,7 +15,7 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     init(amountHelper: PXAmountHelper, shouldAddMargins: Bool = true) {
         self.amountHelper = amountHelper
         super.init(shouldAddMargins: shouldAddMargins)
-        self.SCREEN_TITLE = "Términos y Condiciones"
+        self.SCREEN_TITLE = "terms_and_conditions_title"
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -23,9 +23,8 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     }
 
     override func getTyCText() -> NSMutableAttributedString {
-        let termsAndConditionsText = "review_discount_terms_and_conditions".localized_beta
-        let highlightedText = "review_discount_terms_and_conditions_link".localized_beta
-
+        let highlightedText = "review_discount_terms_and_conditions_link".localized
+        let termsAndConditionsText = "review_discount_terms_and_conditions".localized + " \(highlightedText)"
         let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)

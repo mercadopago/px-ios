@@ -92,7 +92,7 @@ open class PXItem: NSObject, Codable {
         try container.encodeIfPresent(self.id, forKey: .id)
         try container.encodeIfPresent(self.pictureUrl, forKey: .pictureUrl)
         try container.encodeIfPresent(self.title, forKey: .title)
-        try container.encodeIfPresent(self.unitPrice, forKey: .unitPrice)
+        try container.encodeIfPresent(PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: self.unitPrice, forInit: true).decimalValue, forKey: .unitPrice)
         try container.encodeIfPresent(self.quantity, forKey: .quantity)
     }
 

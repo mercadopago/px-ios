@@ -303,24 +303,10 @@ extension PXPaymentMethod: Cellable {
             if accreditationMinutes == 0 {
                 accreditationMessage = "Se acreditará instantáneamente".localized
             } else {
-                let accreditationLocalized = "Se acreditará en".localized
-                let accreditationDay = "día hábil".localized
-                let accreditationDays = "días hábiles".localized
-                let accreditationHour = "hora".localized
-                let accreditationHours = "horas".localized
-
                 let hours = accreditationMinutes / 60
                 let days = accreditationMinutes / (60 * 24)
 
-                if accreditationMinutes >= 1440 && accreditationMinutes < 2880 {
-                    accreditationMessage = "\(accreditationLocalized) 1 \(accreditationDay)"
-                } else if accreditationMinutes == 60 {
-                    accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHour)"
-                } else if accreditationMinutes < 1440 {
-                    accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHours)"
-                } else {
-                    accreditationMessage = "\(accreditationLocalized) \(days) \(accreditationDays)"
-                }
+                accreditationMessage = days < 1 ? String(format: "px_accreditation_time_hour".localized, hours).replacingOccurrences(of: "{0}", with: "\(hours)") : String(format: "px_accreditation_time_working_day".localized, days).replacingOccurrences(of: "{0}", with: "\(days)")
             }
 
             return accreditationMessage

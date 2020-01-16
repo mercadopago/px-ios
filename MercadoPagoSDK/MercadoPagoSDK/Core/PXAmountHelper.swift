@@ -133,13 +133,13 @@ internal struct PXAmountHelper {
 }
 
 internal extension PXAmountHelper {
-    static func getRoundedAmountAsNsDecimalNumber(amount: Double?) -> NSDecimalNumber {
-        guard let targetAmount = amount else { return 0 }
-        let decimalPlaces: Double = Double(SiteManager.shared.getCurrency().getDecimalPlacesOrDefault())
-        let amountRounded: Double = Double(round(pow(10, decimalPlaces) * Double(targetAmount)) / pow(10, decimalPlaces))
-        let amountString = String(format: "%\(decimalPlaces / 10)f", amountRounded)
-        return NSDecimalNumber(string: amountString)
-    }
+    static func getRoundedAmountAsNsDecimalNumber(amount: Double?, forInit: Bool = false) -> NSDecimalNumber {
+         guard let targetAmount = amount else { return 0 }
+         let decimalPlaces: Double = forInit ? 2 : Double(SiteManager.shared.getCurrency().getDecimalPlacesOrDefault())
+         let amountRounded: Double = Double(round(pow(10, decimalPlaces) * Double(targetAmount)) / pow(10, decimalPlaces))
+         let amountString = String(format: "%\(decimalPlaces / 10)f", amountRounded)
+         return NSDecimalNumber(string: amountString)
+     }
 }
 
 // MARK: Tracking usage,.

@@ -48,7 +48,7 @@ final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
         let productImage = ResourceManager.shared.getImage("card_icon")
         let statusImage = ResourceManager.shared.getImage("ok_badge")
         
-        let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "add_card_congrats_title".localized_beta, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.successColor(), productImage: productImage, statusImage: statusImage, closeAction: { [weak self] in
+        let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "add_card_congrats_title".localized, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.successColor(), productImage: productImage, statusImage: statusImage, closeAction: { [weak self] in
             if let callback = self?.callback {
                 callback(PaymentResult.CongratsState.cancel_EXIT)
             }
@@ -58,7 +58,7 @@ final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
     }
 
     func buildFooterComponent() -> PXFooterComponent {
-        let buttonAction = PXAction(label: "add_card_go_to_my_cards".localized_beta, action: self.buttonCallback)
+        let buttonAction = PXAction(label: "add_card_go_to_my_cards".localized, action: self.buttonCallback)
         let props = PXFooterProps(buttonAction: buttonAction, linkAction: nil, primaryColor: UIColor.ml_meli_blue(), animationDelegate: nil)
         let footer = PXFooterComponent(props: props)
         return footer

@@ -1,0 +1,12 @@
+app_name: px-ios
+project_name: mp-apps-px
+
+source_directories:
+  - module: px-checkout
+    base_translation: MercadoPagoSDK/MercadoPagoSDK/Translations/es.lproj
+    translations:
+      - MercadoPagoSDK/MercadoPagoSDK/Translations/en.lproj
+      - MercadoPagoSDK/MercadoPagoSDK/Translations/es-AR.lproj
+      - MercadoPagoSDK/MercadoPagoSDK/Translations/es-MX.lproj
+      - MercadoPagoSDK/MercadoPagoSDK/Translations/es-VE.lproj
+      - MercadoPagoSDK/MercadoPagoSDK/Translations/pt-BR.lproj

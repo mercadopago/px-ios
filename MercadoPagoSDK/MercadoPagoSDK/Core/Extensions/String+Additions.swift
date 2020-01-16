@@ -22,11 +22,6 @@ internal extension String {
         return localizedString != self
     }
 
-    func existsLocalizedBeta() -> Bool {
-        let localizedString = self.localized_beta
-        return localizedString != self
-    }
-
     static func isDigitsOnly(_ number: String) -> Bool {
 		if Regex("^[0-9]*$").test(number) {
 			return true

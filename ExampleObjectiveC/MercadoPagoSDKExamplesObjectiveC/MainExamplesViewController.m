@@ -24,121 +24,87 @@
 
 - (IBAction)checkoutFlow:(id)sender {
 
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.opaque = YES;
-
-
-
-    self.pref = nil;
-
-    ///  PASO 1: SETEAR PREFERENCIAS
-
-    // Setear ServicePreference
-    // [self setServicePreference];
-
-    ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
-
-    // Setear una preferencia hecha a mano
-    //[self setCheckoutPref_CardsNotExcluded];
-
-
-    // self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
-    //Differential pricing
-    // self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
-    /* self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
-                                                         accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController]; */
-
-//    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
-//
-
-    [self setCheckoutPref_CreditCardNotExcluded];
+    //CHECKOUT PREFERENCE
+    [self setCheckoutPref];
     [self setCheckoutPrefAdditionalInfo];
 
 
-    //PROCESADORA
+    //BUILDER
+    //  Procesadora
     self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-d1c95375-5137-4eb7-868e-da3ca8067d79" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
-    //PAGO NORMAL
+    //  Pago normal
 //    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-c4f42ada-0fea-42a1-9b13-31e67096dcd3" preferenceId:@"272097319-a9040a88-5971-4fcd-92d5-6eeb4612abce"];
 
-    //ACCESS TOKEN BRASIL
-    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-092415-b89a7cdcec6cc6c3916deab0c56c7136-472129472"];
 
-    //ACCESS TOKEN ARGENTINO
-    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636"];
+    //ACCESS TOKENS
+    //  Brasil
+//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-092415-b89a7cdcec6cc6c3916deab0c56c7136-472129472"];
 
-    // AdvancedConfig
-    PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
-    [advancedConfig setExpressEnabled:YES];
-//    [advancedConfig setProductIdWithId:@"bh31umv10flg01nmhg60"];
+    //  Argentina
+//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636"];
 
-    PXDiscountParamsConfiguration* disca = [[PXDiscountParamsConfiguration alloc] initWithLabels:[NSArray arrayWithObjects: @"1", @"2", nil] productId:@"bh31umv10flg01nmhg60"];
-    [advancedConfig setDiscountParamsConfiguration: disca];
+    //  Cardform
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1693017181771849-122314-ca3f7a64d90060a8573b7c2df9215af3-502374722"];
+
 
     PXTrackingConfiguration *trackingConfig = [[PXTrackingConfiguration alloc] initWithTrackListener: self flowName:@"instore" flowDetails:nil sessionId:@"3783874"];
     [self.checkoutBuilder setTrackingConfigurationWithConfig: trackingConfig];
 
-    // Add theme to advanced config.
-    MeliTheme *meliTheme = [[MeliTheme alloc] init];
-    // MPTheme *mpTheme = [[MPTheme alloc] init];
-    [advancedConfig setTheme:meliTheme];
+    //ADVANCED CONFIG
+    [self.checkoutBuilder setAdvancedConfigurationWithConfig: [self getAdvancedConfiguration]];
 
-    // Add ReviewConfirm configuration to advanced config.
+    //LANGUAGE CONFIG
+    [self.checkoutBuilder setLanguage:@"es"];
+
+    //CUSTOM TRANSLATIONS
+    [self setCustomTranslations];
+
+    //CREATE CHECKOUT
+    MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
+
+    //LAZY INIT
+    [mpCheckout startWithLazyInitProtocol:self];
+}
+
+-(PXAdvancedConfiguration *)getAdvancedConfiguration {
+    PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
+
+    //ONE TAP
+    [advancedConfig setExpressEnabled:YES];
+
+    //PRODUCT ID
+    [advancedConfig setProductIdWithId:@"bh31umv10flg01nmhg60"];
+
+    //DISCOUNT PARAMS
+    PXDiscountParamsConfiguration* discountParamsConfig = [[PXDiscountParamsConfiguration alloc] initWithLabels:[NSArray arrayWithObjects: @"1", @"2", nil] productId:@"bh31umv10flg01nmhg60"];
+    [advancedConfig setDiscountParamsConfiguration: discountParamsConfig];
+
+    //THEME
+    //  mercado libre
+//    MeliTheme *meliTheme = [[MeliTheme alloc] init];
+//    [advancedConfig setTheme:meliTheme];
+
+    //  mercado pago
+    MPTheme *mpTheme = [[MPTheme alloc] init];
+    [advancedConfig setTheme:mpTheme];
+
+    //REVIEW CONFIGURATION
+    //  Review screen
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
 
-    // Add ReviewConfirm Dynamic views configuration to advanced config.
+    //  Dynamic Views
     [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
 
-    // Add ReviewConfirm Dynamic View Controller configuration to advanced config.
+    //  Dynamic View Controller
 //    TestComponent *dynamicViewControllersConfigObject = [self getReviewScreenDynamicViewControllerConfigurationObject];
 //    [advancedConfig setDynamicViewControllersConfiguration: [NSArray arrayWithObjects: dynamicViewControllersConfigObject, nil]];
 //    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
 
-    // Add PaymentResult configuration to advanced config.
+    //PAYMENT RESULT
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
 
-    // Disable bank deals
-    //[advancedConfig setBankDealsEnabled:NO];
-
-    // Set advanced comnfig
-    [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
-
-    // Enable to test one tap
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-1458038826212807-062020-ff9273c67bc567320eae1a07d1c2d5b5-246046416"];
-    // CDP color.
-    // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
-
-    // [self.mpCheckout discountNotAvailable];
-
-
-
-    // [self.mpCheckout setDiscount:discount withCampaign:campaign];
-
-    // CDP color.
-    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
-
-    //[self setHooks];
-    
-    //[self setPaymentMethodPlugins];
-
-    //[self setPaymentPlugin];
-
-    // [self.mpCheckout discountNotAvailable];
-
-    [self.checkoutBuilder setLanguage:@"es"];
-
-    // Add custom translation objc-compatible example.
-
-    [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyTotal_to_pay_onetap withTranslation:@"Total row en onetap"];
-
-    [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyPay_button withTranslation:@"Enviar dinero"];
-
-    [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyPay_button_progress withTranslation:@"Enviado dinero"];
-
-    MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
-
-    //[mpCheckout startWithLazyInitProtocol:self];
-    [mpCheckout startWithLazyInitProtocol:self];
+    return advancedConfig;
 }
 
 // ReviewConfirm
@@ -172,52 +138,49 @@
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
     PaymentPluginViewController *paymentProcessorPlugin = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
     self.paymentConfig = [[PXPaymentConfiguration alloc] initWithSplitPaymentProcessor:paymentProcessorPlugin];
-    [self addPaymentMethodPluginToPaymentConfig];
     [self addCharges];
     return self.paymentConfig;
 }
 
--(void)addPaymentMethodPluginToPaymentConfig {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
+// Custom translations
+-(void)setCustomTranslations {
+    [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyTotal_to_pay_onetap withTranslation:@"Total row en onetap"];
 
-    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"account_money" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"Estas usando dinero invertido"];
+    [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyPay_button withTranslation:@"Enviar dinero"];
 
-    [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
+    [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyPay_button_progress withTranslation:@"Enviado dinero"];
 }
 
+// Payment Type charges
 -(void)addCharges {
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
-    PXPaymentTypeChargeRule* chargeAccountMoney = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"account_money" amountCharge:20];
-    PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
+    PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"debit_card" amountCharge:8 detailModal:nil];
     PXPaymentTypeChargeRule* chargeZeroCreditCard = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"credit_card" message:@"Ahorro con tu banco"];
+
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Test charge view"
+                                      message:@"This is a test account money charge with VC"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+    PXPaymentTypeChargeRule* chargeAccountMoney = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"account_money" amountCharge:20 detailModal: controller];
 
     [chargesArray addObject:chargeAccountMoney];
     [chargesArray addObject:chargeDebit];
-    [chargesArray addObject:chargeZeroCreditCard];
+//    [chargesArray addObject:chargeZeroCreditCard];
     [self.paymentConfig addChargeRulesWithCharges:chargesArray];
 }
 
--(void)setCheckoutPref_CreditCardNotExcluded {
+-(void)setCheckoutPref {
     PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:1 unitPrice:3500.0];
 
     NSArray *items = [NSArray arrayWithObjects:item, nil];
 
     self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
-//    [self.pref addExcludedPaymentType:@"ticket"];
+    [self.pref setGatewayProcessingModes: [NSArray arrayWithObjects: @"gateway", @"aggregator", nil]];
 }
 
 -(void)setCheckoutPrefAdditionalInfo {
     // Example SP support for custom additional info.
     self.pref.additionalInfo = @"{\"px_summary\":{\"title\":\"Recarga Claro\",\"image_url\":\"https://www.rondachile.cl/wordpress/wp-content/uploads/2018/03/Logo-Claro-1.jpg\",\"subtitle\":\"Celular 1159199234\",\"purpose\":\"Tu recarga\"}}";
 }
-
--(void)setCheckoutPref_WithId {
-    self.pref = [[PXCheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
-}
-
-
--(IBAction)startCardManager:(id)sender  {}
 
 - (void)didFinishWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
     [checkout startWithNavigationController:self.navigationController lifeCycleProtocol:self];

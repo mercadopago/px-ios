@@ -97,8 +97,8 @@ final class PXOneTapInstallmentsSelectorViewModel {
         let totalAmount = getTotalAmountFormetted(payerCost: payerCost, currency: currency, showDescription: MercadoPagoCheckout.showPayerCostDescription())
 
         //Top & Bottom value
-        let topValue = getInterestText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XS_FONT) ?? totalAmount
-        let bottomValue = getReimbursementText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XXS_FONT)
+        let topValue = getInterestText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XS_FONT, backgroundColor: .clear) ?? totalAmount
+        let bottomValue = getReimbursementText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XXS_FONT, backgroundColor: .clear)
 
         return PXOneTapInstallmentsSelectorData(title, topValue, bottomValue, isSelected)
     }

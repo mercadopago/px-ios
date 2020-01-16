@@ -27,9 +27,9 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
             title = attributedString
         } else {
-            var defaultTitleString = "total_row_title_default".localized_beta
+            var defaultTitleString = "total_row_title_default".localized
             if amountHelper.consumedDiscount {
-                defaultTitleString = "total_row_consumed_discount".localized_beta
+                defaultTitleString = "total_row_consumed_discount".localized
             }
             let defaultAttributes = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                      NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
@@ -43,7 +43,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let attributes = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
                               NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
 
-            let string = NSAttributedString(string: "total_row_disclaimer".localized_beta, attributes: attributes)
+            let string = NSAttributedString(string: "total_row_disclaimer".localized, attributes: attributes)
             disclaimer = string
         }
 
@@ -89,7 +89,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         if amountHelper.discount != nil {
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: amountHelper.discount?.getDiscountDescription())
         } else if amountHelper.consumedDiscount {
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".localized_beta)
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".localized)
         }
     }
 }

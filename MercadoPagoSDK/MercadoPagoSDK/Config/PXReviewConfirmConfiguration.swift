@@ -43,7 +43,7 @@ import Foundation
             return [SummaryType.PRODUCT: "Producto".localized,
                     SummaryType.ARREARS: "Mora".localized,
                     SummaryType.CHARGE: "Cargos".localized,
-                    SummaryType.DISCOUNT: "Descuentos".localized,
+                    SummaryType.DISCOUNT: String(format: "discount".localized, 2),
                     SummaryType.TAXES: "Impuestos".localized,
                     SummaryType.SHIPPING: "Envío".localized]
         }

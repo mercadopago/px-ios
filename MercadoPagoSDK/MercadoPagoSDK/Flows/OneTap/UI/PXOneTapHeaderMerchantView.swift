@@ -84,6 +84,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         titleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
         titleLabel.textAlignment = .center
         titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+
         return titleLabel
     }
 

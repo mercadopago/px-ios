@@ -45,14 +45,15 @@ internal struct PXDisabledOption {
         case PXPayment.StatusDetails.REJECTED_BLACKLIST:
             secondaryString = "px_dialog_detail_payment_method_disable_black_list".localized
         case PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT:
-            secondaryString = "px_dialog_detail_payment_method_disable_insufficient_amount".localized
+            secondaryString = "error_body_description_cc_rejected_insufficient_amount".localized
         default:
             return nil
         }
 
         let secondaryMessage = secondaryString.replacingOccurrences(of: "\\n", with: "\n")
-        let secondaryText = PXText(message: secondaryMessage, backgroundColor: nil, textColor: nil, weight: nil)
-
+        let thirdMessage = "error_body_description_rejected_high_risk".localized
+        let message = secondaryMessage + "\n\n" + thirdMessage
+        let secondaryText = PXText(message: message, backgroundColor: nil, textColor: nil, weight: nil)
         return PXStatus(mainMessage: mainText, secondaryMessage: secondaryText, enabled: false)
     }
 }

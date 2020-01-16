@@ -33,7 +33,7 @@ internal class AvailableCardsViewModel {
     }
 
     func getEnterCardMessage() -> String {
-        return "Ingresar tarjeta".localized
+        return "Ingresar otra tarjeta".localized
     }
 
     func getAvailableCardsViewTotalHeight(headerHeight: CGFloat, paymentMethodsHeight: CGFloat, paymentMethodsCount: CGFloat) -> CGFloat {

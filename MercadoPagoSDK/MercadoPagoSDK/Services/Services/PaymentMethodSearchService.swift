@@ -82,26 +82,24 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
 
 
-    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getOpenPrefInit(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
 
-        let bodyDiscountsConfiguration = PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? "")
         let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
-        let body = PXInitBody(preference: pref, publicKey: merchantPublicKey, flow: marketplace, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: bodyDiscountsConfiguration, features: bodyFeatures)
+        let body = PXInitBody(preference: pref, publicKey: merchantPublicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: discountParamsConfiguration, features: bodyFeatures)
 
         let bodyJSON = try? body.toJSON()
 
         getInit(closedPref: false, prefId: nil, params: params, bodyJSON: bodyJSON, headers: headers, success: success, failure: failure)
     }
 
-    internal func getClosedPrefInit(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getClosedPrefInit(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
 
-        let bodyDiscountsConfiguration = PXDiscountParamsConfiguration(labels: discountParamsConfiguration?.labels ?? [String](), productId: discountParamsConfiguration?.productId ?? "")
         let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
-        let body = PXInitBody(preference: nil, publicKey: merchantPublicKey, flow: marketplace, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: bodyDiscountsConfiguration, features: bodyFeatures)
+        let body = PXInitBody(preference: nil, publicKey: merchantPublicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: discountParamsConfiguration, features: bodyFeatures)
 
         let bodyJSON = try? body.toJSON()
 
