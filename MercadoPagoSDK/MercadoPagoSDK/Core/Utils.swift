@@ -503,7 +503,7 @@ internal class Utils {
         var paymentTypeSelected = ""
         let paymentMethod = paymentMethods.filter({ (paymentMethod: PXPaymentMethod) -> Bool in
             if offlinePaymentMethod.getId().lowercased() == paymentMethod.id.lowercased() {
-                paymentTypeSelected = offlinePaymentMethod.getInstructionId()
+                paymentTypeSelected = offlinePaymentMethod.instructionId
                 return true
             }
             return false
