@@ -27,6 +27,9 @@ jobs:
       - add_ssh_keys
       - restore_cache:
           key: gem-cache-{{ checksum "Gemfile.lock" }}-v2
+      - run:
+        name: Set Ruby Version
+        command:  echo "ruby-2.4.6" > ~/.ruby-version
       - run: bundle check || bundle install --path vendor/bundle
       - run:
           name: Get cocoapods master repo
