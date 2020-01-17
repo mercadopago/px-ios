@@ -12,9 +12,9 @@ if [ ${#booted[@]} != 0 ]; then
     fi
 else
     if `gem list xcpretty -i`; then
-        xcodebuild -workspace MercadoPagoSDK.xcworkspace -scheme MercadoPagoSDKTests -destination 'platform=iOS Simulator,name=iPhone SE,OS=10.3.1' clean test| grep error | xcpretty -t
+        xcodebuild -workspace MercadoPagoSDK.xcworkspace -scheme MercadoPagoSDKTests -destination 'platform=iOS Simulator,name=iPhone SE,OS=11.4' clean test| grep error | xcpretty -t
     else 
-        xcodebuild -workspace MercadoPagoSDK.xcworkspace -scheme MercadoPagoSDKTests -destination 'platform=iOS Simulator,name=iPhone SE,OS=10.3.1' clean test| grep error
+        xcodebuild -workspace MercadoPagoSDK.xcworkspace -scheme MercadoPagoSDKTests -destination 'platform=iOS Simulator,name=iPhone SE,OS=11.4' clean test| grep error
     fi
 fi
 exit ${PIPESTATUS[0]}
