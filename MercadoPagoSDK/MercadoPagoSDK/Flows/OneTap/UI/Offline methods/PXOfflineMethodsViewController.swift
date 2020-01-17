@@ -422,7 +422,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
         tableView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
 
-        if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), let newPaymentMethod = viewModel.getPaymentMethod(targetId: selectedOfflineMethod.id) {
+        if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), let newPaymentMethod = viewModel.getOfflinePaymentMethod(targetOfflinePaymentMethod: selectedOfflineMethod) {
             let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
             currentPaymentData.payerCost = nil
             currentPaymentData.paymentMethod = newPaymentMethod

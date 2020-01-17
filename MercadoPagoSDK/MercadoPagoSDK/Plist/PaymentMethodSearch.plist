@@ -117,6 +117,11 @@
 		<key>image_name</key>
 		<string>mediosIconoLink</string>
 	</dict>
+    <key>redlink</key>
+    <dict>
+        <key>image_name</key>
+        <string>mediosIconoLink</string>
+    </dict>
 	<key>visa</key>
 	<dict>
 		<key>image_name</key>

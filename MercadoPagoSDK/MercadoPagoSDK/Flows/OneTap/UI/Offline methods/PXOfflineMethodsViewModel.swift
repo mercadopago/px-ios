@@ -42,7 +42,10 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
     func dataForCellAt(_ indexPath: IndexPath) -> PXOfflineMethodsCellData {
         let isSelected: Bool = selectedIndexPath == indexPath
         let model = paymentTypes[indexPath.section].paymentMethods[indexPath.row]
-        let image = ResourceManager.shared.getImageForPaymentMethod(withDescription: model.id)
+
+        let paymentTypeId = paymentTypes[indexPath.section].id
+        let imageKey = model.instructionId != paymentTypeId ? model.id + "_" + model.instructionId : model.id
+        let image = ResourceManager.shared.getImageForPaymentMethod(withDescription: imageKey)
         return PXOfflineMethodsCellData(title: model.name, subtitle: model.description, image: image, isSelected: isSelected)
     }
 
@@ -67,5 +70,9 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
 
     func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
         return Utils.findPaymentMethod(paymentMethods, paymentMethodId: targetId)
+    }
+
+    func getOfflinePaymentMethod(targetOfflinePaymentMethod: PXOfflinePaymentMethod) -> PXPaymentMethod? {
+        return Utils.findOfflinePaymentMethod(paymentMethods, offlinePaymentMethod: targetOfflinePaymentMethod)
     }
 }

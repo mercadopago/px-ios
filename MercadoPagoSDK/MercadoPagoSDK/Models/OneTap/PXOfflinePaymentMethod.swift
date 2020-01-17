@@ -7,14 +7,16 @@
 
 import Foundation
 
-public class PXOfflinePaymentMethod: Codable {
+final class PXOfflinePaymentMethod: Codable {
     let id: String
+    let instructionId: String
     let name: PXText?
     let description: PXText?
     let hasAdditionalInfoNeeded: Bool
 
     enum CodingKeys: String, CodingKey {
         case id
+        case instructionId = "instruction_id"
         case name
         case description
         case hasAdditionalInfoNeeded = "has_additional_info_needed"
