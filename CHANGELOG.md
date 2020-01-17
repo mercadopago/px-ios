@@ -1,7 +1,7 @@
 # v4.30
 🚀Private Release - 4.30 🚀
 MercadoPagoSDKV4 - Private Version
-- MLCardForm support 
+- MLCardForm support
 
 # v4.29.1
 🚀Private Release - 4.29.1 🚀
