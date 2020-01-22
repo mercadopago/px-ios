@@ -11,6 +11,7 @@ import Foundation
 final class PXInitDTO: NSObject, Decodable {
     public var preference: PXCheckoutPreference?
     public var oneTap: [PXOneTapDto]?
+    public var payerCompliance: PXPayerCompliance
     public var currency: PXCurrency
     public var site: PXSite
     public var generalCoupon: String
@@ -21,9 +22,10 @@ final class PXInitDTO: NSObject, Decodable {
     public var selectedDiscountConfiguration: PXDiscountConfiguration?
     public var experiments: [PXExperiment]?
 
-    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod], experiments: [PXExperiment]?) {
+    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, payerCompliance: PXPayerCompliance, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod], experiments: [PXExperiment]?) {
         self.preference = preference
         self.oneTap = oneTap
+        self.payerCompliance = payerCompliance
         self.currency = currency
         self.site = site
         self.generalCoupon = generalCoupon
@@ -41,6 +43,7 @@ final class PXInitDTO: NSObject, Decodable {
     enum CodingKeys: String, CodingKey {
         case preference
         case oneTap = "one_tap"
+        case payerCompliance = "payer_compliance"
         case currency
         case site
         case generalCoupon = "general_coupon"
