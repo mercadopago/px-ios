@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class PXOfflinePaymentMethod: Codable {
+public class PXOfflinePaymentMethod: Codable {
     let id: String
     let instructionId: String
     let name: PXText?
@@ -54,5 +54,9 @@ extension PXOfflinePaymentMethod: PaymentMethodOption {
 
     func getPaymentType() -> String {
         return ""
+    }
+
+    func additionalInfoNeeded() -> Bool {
+        return hasAdditionalInfoNeeded
     }
 }

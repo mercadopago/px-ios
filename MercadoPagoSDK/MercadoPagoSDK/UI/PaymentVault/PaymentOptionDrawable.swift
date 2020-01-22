@@ -38,4 +38,6 @@ internal protocol PaymentMethodOption {
     func isCustomerPaymentMethod() -> Bool
 
     func getPaymentType() -> String
+
+    @objc optional func additionalInfoNeeded() -> Bool
 }
