@@ -26,6 +26,8 @@ open class MercadoPagoCheckout: NSObject {
     // This var will hold the value of the new card added by MLCardForm
     // until the init flow is refreshed with this new payment method
     internal var cardIdForInitFlowRefresh: String?
+    internal var countInitFlowRefreshRetries: Int = 0
+    internal let maxInitFlowRefreshRetries: Int = 3
 
     // MARK: Initialization
     /**

@@ -9,7 +9,7 @@
 import Foundation
 
 extension MercadoPagoCheckout {
-
+    
     func showPaymentMethodsScreen() {
         viewModel.clearCollectedData()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
@@ -290,7 +290,6 @@ extension MercadoPagoCheckout {
                     viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected)
                 } else {
                     // New card didn't return. Refresh Init again
-                    // TODO: check if this can be done better
                     refreshInitFlow(cardId: cardId)
                     return
                 }
@@ -314,9 +313,14 @@ extension MercadoPagoCheckout {
     func shouldUpdateOnetapFlow() -> Bool {
         if viewModel.onetapFlow != nil,
             let cardId = cardIdForInitFlowRefresh,
-            cardId.count > 0 {
+            cardId.isNotEmpty,
+            countInitFlowRefreshRetries <= maxInitFlowRefreshRetries {
+            countInitFlowRefreshRetries += 1
             return true
         }
+        // Card should not be updated or number of retries has reached max number
+        cardIdForInitFlowRefresh = nil
+        countInitFlowRefreshRetries = 0
         return false
     }
 }
