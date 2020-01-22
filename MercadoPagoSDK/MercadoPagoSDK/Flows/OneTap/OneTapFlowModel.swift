@@ -14,6 +14,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         case screenReviewOneTap
         case screenSecurityCode
         case serviceCreateESCCardToken
+        case screenKyC
         case payment
     }
 
@@ -86,6 +87,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         if needCreateESCToken() {
             return .serviceCreateESCCardToken
         }
+        if needKyC() {
+            return .screenKyC
+        }
         if needCreatePayment() {
             return .payment
         }
@@ -116,6 +120,7 @@ internal extension OneTapFlowModel {
     func oneTapViewModel() -> PXOneTapViewModel {
         let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: escManager, currentFlow: oneTapFlow)
         viewModel.expressData = search.oneTap
+        viewModel.payerCompliance = search.payerCompliance
         viewModel.paymentMethods = search.availablePaymentMethods
         viewModel.items = checkoutPreference.items
         viewModel.additionalInfoSummary = checkoutPreference.pxAdditionalInfo?.pxSummary
@@ -216,6 +221,10 @@ internal extension OneTapFlowModel {
         return savedCardWithESC
     }
 
+    func needKyC() -> Bool {
+        return !search.payerCompliance.offlineMethods.isCompliant && paymentOptionSelected.additionalInfoNeeded?() ?? false
+    }
+
     func needCreatePayment() -> Bool {
         if !readyToPay {
             return false
@@ -250,4 +259,7 @@ internal extension OneTapFlowModel {
         return 0
     }
 
+    func getKyCDeepLink() -> String {
+        return search.payerCompliance.offlineMethods.turnComplianceDeepLink
+    }
 }

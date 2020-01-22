@@ -50,4 +50,8 @@ extension OneTapFlow {
         })
         pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }
+
+    func showKyCScreen() {
+        PXDeepLinkManager.open(model.getKyCDeepLink())
+    }
 }
