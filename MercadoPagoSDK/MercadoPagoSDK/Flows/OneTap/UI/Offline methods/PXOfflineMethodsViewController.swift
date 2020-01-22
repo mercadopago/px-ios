@@ -417,27 +417,36 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
     }
 
     private func doPayment() {
-        self.subscribeLoadingButtonToNotifications()
-        self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
-        tableView.isScrollEnabled = false
-        view.isUserInteractionEnabled = false
+        if shouldAnimateButton() {
+            self.subscribeLoadingButtonToNotifications()
+            self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
+            tableView.isScrollEnabled = false
+            view.isUserInteractionEnabled = false
+        }
 
         if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), let newPaymentMethod = viewModel.getOfflinePaymentMethod(targetOfflinePaymentMethod: selectedOfflineMethod) {
             let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
             currentPaymentData.payerCost = nil
             currentPaymentData.paymentMethod = newPaymentMethod
             currentPaymentData.issuer = nil
+            if let payerCompliance = viewModel.getPayerCompliance(), payerCompliance.offlineMethods.isCompliant {
+                currentPaymentData.payer?.firstName = viewModel.getPayerFirstName()
+                currentPaymentData.payer?.lastName = viewModel.getPayerLastName()
+                currentPaymentData.payer?.identification = viewModel.getPayerIdentification()
+            }
         }
 
-//        if let selectedCardItem = selectedCard {
-//            viewModel.amountHelper.getPaymentData().payerCost = selectedCardItem.selectedPayerCost
-//            let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem, selectedIndex: slider.getSelectedIndex())
-//            trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
-//        }
         let splitPayment = false
         self.hideBackButton()
         self.hideNavBar()
         self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment)
+    }
+
+    private func shouldAnimateButton() -> Bool {
+        if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), !selectedOfflineMethod.hasAdditionalInfoNeeded {
+            return true
+        }
+        return false
     }
 }
 
