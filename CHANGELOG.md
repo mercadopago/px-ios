@@ -1,3 +1,9 @@
+# v4.30.1
+🚀Private Release - 4.30.1 🚀
+MercadoPagoSDKV4 - Private Version
+- MLCardForm update
+- Added max retries for Init refresh 
+
 # v4.30
 🚀Private Release - 4.30 🚀
 MercadoPagoSDKV4 - Private Version
