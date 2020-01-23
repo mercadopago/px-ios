@@ -29,19 +29,29 @@ extension OneTapFlow {
                 self?.model.paymentOptionSelected = newPaymentOption
             }
         }
+        let callbackRefreshInit: ((String) -> Void) = {
+            [weak self] cardId in
+            self?.refreshInitFlow(cardId: cardId)
+        }
         let callbackExit: (() -> Void) = {
             [weak self] in
             self?.cancelFlow()
         }
         let finishButtonAnimation: (() -> Void) = {
-            //[weak self] in
-            // WARNING: Keep strong ref here (or any other block for this initializer) or it'll release the object after creating it
-            self.executeNextStep()
+            [weak self] in
+            self?.executeNextStep()
         }
         let viewModel = model.oneTapViewModel()
-        let reviewVC = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
+        let reviewVC = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
 
         pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
+    }
+
+    func updateOneTapViewModel(cardId: String) {
+        if let oneTapViewController = pxNavigationHandler.navigationController.viewControllers.first(where: { $0 is PXOneTapViewController }) as? PXOneTapViewController {
+            let viewModel = model.oneTapViewModel()
+            oneTapViewController.update(viewModel: viewModel, cardId: cardId)
+        }
     }
 
     func showSecurityCodeScreen() {

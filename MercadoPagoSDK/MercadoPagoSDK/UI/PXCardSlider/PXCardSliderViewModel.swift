@@ -21,7 +21,7 @@ final class PXCardSliderViewModel {
     var cardId: String?
     var displayMessage: NSAttributedString?
     var amountConfiguration: PXAmountConfiguration?
-    let creditsViewModel: CreditsViewModel?
+    let creditsViewModel: PXCreditsViewModel?
     let status: PXStatus
     var isCredits: Bool {
         return self.paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue
@@ -30,7 +30,7 @@ final class PXCardSliderViewModel {
     var benefits: PXBenefits?
     var userDidSelectPayerCost: Bool = false
 
-    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: CreditsViewModel? = nil, status: PXStatus, bottomMessage: String? = nil, benefits: PXBenefits?) {
+    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: PXCreditsViewModel? = nil, status: PXStatus, bottomMessage: String? = nil, benefits: PXBenefits?) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.issuerId = issuerId

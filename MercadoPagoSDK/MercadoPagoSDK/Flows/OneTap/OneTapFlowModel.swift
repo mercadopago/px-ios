@@ -17,7 +17,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         case screenKyC
         case payment
     }
-
+    internal var publicKey: String = ""
+    internal var privateKey: String?
+    internal var siteId: String = ""
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption
@@ -52,17 +54,20 @@ final internal class OneTapFlowModel: PXFlowModel {
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
     let paymentConfigurationService: PXPaymentConfigurationServices
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, disabledOption: PXDisabledOption?, escManager: MercadoPagoESC?) {
-        self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
-        self.checkoutPreference = checkoutPreference
+    init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption) {
+        publicKey = checkoutViewModel.publicKey
+        privateKey = checkoutViewModel.privateKey
+        siteId = checkoutViewModel.checkoutPreference.siteId
+        paymentData = checkoutViewModel.paymentData.copy() as? PXPaymentData ?? checkoutViewModel.paymentData
+        checkoutPreference = checkoutViewModel.checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
-        self.advancedConfiguration = advancedConfiguration
-        self.chargeRules = chargeRules
-        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
-        self.escManager = escManager
-        self.paymentConfigurationService = paymentConfigurationService
-        self.disabledOption = disabledOption
+        advancedConfiguration = checkoutViewModel.getAdvancedConfiguration()
+        chargeRules = checkoutViewModel.chargeRules
+        mercadoPagoServicesAdapter = checkoutViewModel.mercadoPagoServicesAdapter
+        escManager = checkoutViewModel.escManager
+        paymentConfigurationService = checkoutViewModel.paymentConfigurationService
+        disabledOption = checkoutViewModel.disabledOption
 
         // Payer cost pre selection.
         let paymentMethodId = search.oneTap?.first?.paymentMethodId
@@ -119,6 +124,10 @@ internal extension OneTapFlowModel {
 
     func oneTapViewModel() -> PXOneTapViewModel {
         let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: escManager, currentFlow: oneTapFlow)
+        viewModel.publicKey = publicKey
+        viewModel.privateKey = privateKey
+        viewModel.siteId = siteId
+        viewModel.excludedPaymentTypeIds = checkoutPreference.getExcludedPaymentTypesIds()
         viewModel.expressData = search.oneTap
         viewModel.payerCompliance = search.payerCompliance
         viewModel.paymentMethods = search.availablePaymentMethods

@@ -10,39 +10,46 @@ import Foundation
 
 extension MercadoPagoCheckout: PXOneTapResultHandlerProtocol {
     func finishOneTap(paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, pointsAndDiscounts: PXPointsAndDiscounts?) {
-        self.viewModel.updateCheckoutModel(paymentData: paymentData)
-        self.viewModel.splitAccountMoney = splitAccountMoney
-        self.viewModel.pointsAndDiscounts = pointsAndDiscounts
-        self.executeNextStep()
+        viewModel.updateCheckoutModel(paymentData: paymentData)
+        viewModel.splitAccountMoney = splitAccountMoney
+        viewModel.pointsAndDiscounts = pointsAndDiscounts
+        executeNextStep()
+    }
+
+    func refreshInitFlow(cardId: String) {
+        cardIdForInitFlowRefresh = cardId
+        viewModel.checkoutPreference.setCardId(cardId: "cards")
+        viewModel.prepareForNewSelection()
+        viewModel.refreshInitFlow()
     }
 
     func cancelOneTap() {
-        self.viewModel.prepareForNewSelection()
-        self.executeNextStep()
+        viewModel.prepareForNewSelection()
+        executeNextStep()
     }
 
     func cancelOneTapForNewPaymentMethodSelection() {
-        self.viewModel.checkoutPreference.setCardId(cardId: "cards")
-        self.viewModel.prepareForNewSelection()
-        self.executeNextStep()
+        viewModel.checkoutPreference.setCardId(cardId: "cards")
+        viewModel.prepareForNewSelection()
+        executeNextStep()
     }
 
     func exitCheckout() {
-        self.finish()
+        finish()
     }
 
     func finishOneTap(paymentResult: PaymentResult, instructionsInfo: PXInstructions?, pointsAndDiscounts: PXPointsAndDiscounts?) {
-        self.setPaymentResult(paymentResult: paymentResult)
-        self.viewModel.instructionsInfo = instructionsInfo
-        self.viewModel.pointsAndDiscounts = pointsAndDiscounts
-        self.executeNextStep()
+        setPaymentResult(paymentResult: paymentResult)
+        viewModel.instructionsInfo = instructionsInfo
+        viewModel.pointsAndDiscounts = pointsAndDiscounts
+        executeNextStep()
     }
 
     func finishOneTap(businessResult: PXBusinessResult, paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, pointsAndDiscounts: PXPointsAndDiscounts?) {
-        self.viewModel.businessResult = businessResult
-        self.viewModel.paymentData = paymentData
-        self.viewModel.splitAccountMoney = splitAccountMoney
-        self.viewModel.pointsAndDiscounts = pointsAndDiscounts
-        self.executeNextStep()
+        viewModel.businessResult = businessResult
+        viewModel.paymentData = paymentData
+        viewModel.splitAccountMoney = splitAccountMoney
+        viewModel.pointsAndDiscounts = pointsAndDiscounts
+        executeNextStep()
     }
 }

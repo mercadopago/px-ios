@@ -11,41 +11,40 @@ import Foundation
 extension InitFlow {
 
     func getInitSearch() {
-        let cardIdsWithEsc = model.getESCService()?.getSavedCardIds() ?? []
-        let exclusions: MercadoPagoServicesAdapter.PaymentSearchExclusions = (model.getExcludedPaymentTypesIds(), model.getExcludedPaymentMethodsIds())
+        let cardIdsWithEsc = initFlowModel.getESCService()?.getSavedCardIds() ?? []
 
         var differentialPricingString: String?
-        if let diffPricing = model.properties.checkoutPreference.differentialPricing?.id {
+        if let diffPricing = initFlowModel.properties.checkoutPreference.differentialPricing?.id {
             differentialPricingString = String(describing: diffPricing)
         }
 
         var defaultInstallments: String?
-        let dInstallments = model.properties.checkoutPreference.getDefaultInstallments()
+        let dInstallments = initFlowModel.properties.checkoutPreference.getDefaultInstallments()
         if let dInstallments = dInstallments {
             defaultInstallments = String(dInstallments)
         }
 
         var maxInstallments: String?
-        let mInstallments = model.properties.checkoutPreference.getMaxAcceptedInstallments()
+        let mInstallments = initFlowModel.properties.checkoutPreference.getMaxAcceptedInstallments()
         maxInstallments = String(mInstallments)
 
-        let hasPaymentProcessor: Bool = model.properties.paymentPlugin != nil ? true : false
-        let discountParamsConfiguration = model.properties.advancedConfig.discountParamsConfiguration
+        let hasPaymentProcessor: Bool = initFlowModel.properties.paymentPlugin != nil ? true : false
+        let discountParamsConfiguration = initFlowModel.properties.advancedConfig.discountParamsConfiguration
         let flowName: String? = MPXTracker.sharedInstance.getFlowName() ?? nil
-        let splitEnabled: Bool = model.properties.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
-        let serviceAdapter = model.getService()
+        let splitEnabled: Bool = initFlowModel.properties.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
+        let serviceAdapter = initFlowModel.getService()
 
         //payment method search service should be performed using the processing modes designated by the preference object
-        let pref = model.properties.checkoutPreference
+        let pref = initFlowModel.properties.checkoutPreference
         serviceAdapter.update(processingModes: pref.processingModes, branchId: pref.branchId)
 
-        let extraParams = (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments)
+        let extraParams = (defaultPaymentMethod: initFlowModel.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: initFlowModel.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor, splitEnabled: splitEnabled, maxInstallments: maxInstallments)
 
-        let charges = self.model.amountHelper.chargeRules ?? []
+        let charges = self.initFlowModel.amountHelper.chargeRules ?? []
 
         //Add headers
         var headers: [String: String] = [:]
-        if let prodId = model.properties.productId {
+        if let prodId = initFlowModel.properties.productId {
             headers[MercadoPagoService.HeaderField.productId.rawValue] = prodId
         }
 
@@ -59,7 +58,7 @@ extension InitFlow {
     }
 
     func callback(_ search: PXInitDTO) {
-        self.model.updateInitModel(paymentMethodsResponse: search)
+        initFlowModel.updateInitModel(paymentMethodsResponse: search)
 
         //Tracking Experiments
         MPXTracker.sharedInstance.setExperiments(search.experiments)
@@ -68,12 +67,12 @@ extension InitFlow {
         SiteManager.shared.setCurrency(currency: search.currency)
         SiteManager.shared.setSite(site: search.site)
 
-        self.executeNextStep()
+        executeNextStep()
     }
 
     func failure(_ error: NSError) {
         let customError = InitFlowError(errorStep: .SERVICE_GET_INIT, shouldRetry: true, requestOrigin: .GET_INIT, apiException: MPSDKError.getApiException(error))
-        self.model.setError(error: customError)
-        self.executeNextStep()
+        initFlowModel.setError(error: customError)
+        executeNextStep()
     }
 }

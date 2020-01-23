@@ -8,7 +8,7 @@
 import Foundation
 
 extension PXSummaryComposer {
-    //MARK: business
+    // MARK: business
     func isConsumedDiscount() -> Bool {
         if let discountData = getDiscountData() {
             return discountData.discountConfiguration.getDiscountConfiguration().isNotAvailable
@@ -47,11 +47,11 @@ extension PXSummaryComposer {
         return nil
     }
 
-    //MARK: style
+    // MARK: style
     func summaryColor() -> UIColor {
         return isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
     }
-    
+
     func yourPurchaseSummaryTitle() -> String {
         return additionalInfoSummary?.purpose ?? "onetap_purchase_summary_title".localized
     }

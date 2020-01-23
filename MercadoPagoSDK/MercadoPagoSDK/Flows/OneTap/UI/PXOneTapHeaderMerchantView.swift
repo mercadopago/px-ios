@@ -14,16 +14,6 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     private var showHorizontally: Bool
     private var layout: PXOneTapHeaderMerchantLayout
     private var imageView: PXUIImageView?
-    internal let IMAGE_NAV_SIZE: CGFloat = 40
-    internal var IMAGE_SIZE: CGFloat {
-        if UIDevice.isSmallDevice() {
-            return IMAGE_NAV_SIZE
-        } else if UIDevice.isLargeDevice() || UIDevice.isExtraLargeDevice() {
-            return 65
-        } else {
-            return 55
-        }
-    }
 
     init(image: UIImage, title: String, subTitle: String? = nil, showHorizontally: Bool) {
         self.image = image
@@ -40,76 +30,82 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     }
 
     private func render() {
+        PXLayout.setHeight(owner: self, height: layout.IMAGE_SIZE, relation: .greaterThanOrEqual).isActive = true
+
         let containerView = UIView()
+        // The image of the merchant
+        let imageContainerView = buildImageContainerView(image: image)
+        containerView.addSubview(imageContainerView)
+        // The title
+        let titleLabel = buildTitleLabel(text: title)
+        containerView.addSubview(titleLabel)
+        addSubviewToBottom(containerView)
+
+        if layout.getLayoutType() == .onlyTitle {
+            layout.makeConstraints(containerView, imageContainerView, titleLabel)
+        } else {
+            // The subTitle
+            let subTitleLabel = buildSubTitleLabel(text: subTitle)
+            containerView.addSubview(subTitleLabel)
+            layout.makeConstraints(containerView, imageContainerView, titleLabel, subTitleLabel)
+        }
+        
+        let direction: OneTapHeaderAnimationDirection = showHorizontally ? .horizontal : .vertical
+        animateHeaderLayout(direction: direction)
+
+        isUserInteractionEnabled = true
+    }
+
+    private func buildImageContainerView(image: UIImage) -> UIView {
         let imageContainerView = UIView()
         imageContainerView.translatesAutoresizingMaskIntoConstraints = false
         imageContainerView.dropShadow(radius: 2, opacity: 0.15)
-
-        PXLayout.setHeight(owner: self, height: IMAGE_SIZE, relation: .greaterThanOrEqual).isActive = true
-
         let imageView = PXUIImageView()
         imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = IMAGE_SIZE / 2
+        imageView.layer.cornerRadius = layout.IMAGE_SIZE / 2
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.enableFadeIn()
         imageView.backgroundColor = .white
         imageView.image = image
         imageContainerView.addSubview(imageView)
-        PXLayout.pinBottom(view: imageView).isActive = true
-        PXLayout.pinLeft(view: imageView).isActive = true
-        PXLayout.pinRight(view: imageView).isActive = true
-        PXLayout.pinTop(view: imageView).isActive = true
+        _ = PXLayout.pinAllEdges(view: imageView).map { $0.isActive = true }
         self.imageView = imageView
-        containerView.addSubview(imageContainerView)
+        return imageContainerView
+    }
 
+    private func buildTitleLabel(text: String) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = title
+        titleLabel.text = text
         titleLabel.numberOfLines = 2
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
         titleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
         titleLabel.textAlignment = .center
         titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        containerView.addSubview(titleLabel)
-        NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: PXLayout.S_MARGIN),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -PXLayout.S_MARGIN)
-        ])
 
-        addSubviewToBottom(containerView)
+        return titleLabel
+    }
 
-        if layout.getLayoutType() == .onlyTitle {
-            layout.makeConstraints(containerView, imageContainerView, titleLabel)
-        } else {
-            let subTitleLabel = UILabel()
-            subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-            subTitleLabel.text = subTitle
-            subTitleLabel.numberOfLines = 1
-            subTitleLabel.lineBreakMode = .byTruncatingTail
-            subTitleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-            subTitleLabel.font = Utils.getFont(size: PXLayout.XXXS_FONT)
-            subTitleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
-            subTitleLabel.textAlignment = .center
-            containerView.addSubview(subTitleLabel)
-            layout.makeConstraints(containerView, imageContainerView, titleLabel, subTitleLabel)
-        }
-
-        if showHorizontally {
-            animateToHorizontal()
-        } else {
-            animateToVertical()
-        }
-
-        isUserInteractionEnabled = true
+    private func buildSubTitleLabel(text: String?) -> UILabel {
+        let subTitleLabel = UILabel()
+        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subTitleLabel.text = text ?? ""
+        subTitleLabel.numberOfLines = 1
+        subTitleLabel.lineBreakMode = .byTruncatingTail
+        subTitleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        subTitleLabel.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        subTitleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
+        subTitleLabel.textAlignment = .center
+        return subTitleLabel
     }
 }
 
 // MARK: Publics
 extension PXOneTapHeaderMerchantView {
     func updateContentViewLayout(margin: CGFloat = PXLayout.M_MARGIN) {
-        self.layoutIfNeeded()
+        layoutIfNeeded()
         if UIDevice.isLargeDevice() || UIDevice.isExtraLargeDevice() {
             self.pinContentViewToTop(margin: margin)
         } else if !UIDevice.isSmallDevice() {
@@ -117,49 +113,25 @@ extension PXOneTapHeaderMerchantView {
         }
     }
 
-    func animateToVertical(duration: Double = 0) {
-        self.layoutIfNeeded()
+    func animateHeaderLayout(direction: OneTapHeaderAnimationDirection, duration: Double = 0) {
+        layoutIfNeeded()
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
         pxAnimator.addAnimation(animation: { [weak self] in
-            guard let strongSelf = self else {
-                return
+            guard let self = self else { return }
+
+            self.layoutIfNeeded()
+            if direction == .horizontal {
+                self.pinContentViewToTop()
+            }
+            for constraint in self.layout.getHorizontalContrainsts() {
+                constraint.isActive = (direction == .horizontal)
             }
 
-            strongSelf.layoutIfNeeded()
-
-            for constraint in strongSelf.layout.getHorizontalContrainsts() {
-                constraint.isActive = false
+            for constraint in self.layout.getVerticalContrainsts() {
+                constraint.isActive = (direction == .vertical)
             }
-
-            for constraint in strongSelf.layout.getVerticalContrainsts() {
-                constraint.isActive = true
-            }
-            strongSelf.imageView?.layer.cornerRadius = strongSelf.layout.IMAGE_SIZE / 2
-            strongSelf.layoutIfNeeded()
-        })
-
-        pxAnimator.animate()
-    }
-
-    func animateToHorizontal(duration: Double = 0) {
-        self.layoutIfNeeded()
-        var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
-        pxAnimator.addAnimation(animation: { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.layoutIfNeeded()
-            strongSelf.pinContentViewToTop()
-            for constraint in strongSelf.layout.getHorizontalContrainsts() {
-                constraint.isActive = true
-            }
-
-            for constraint in strongSelf.layout.getVerticalContrainsts() {
-                constraint.isActive = false
-            }
-            strongSelf.imageView?.layer.cornerRadius = strongSelf.layout.IMAGE_NAV_SIZE / 2
-            strongSelf.layoutIfNeeded()
+            self.imageView?.layer.cornerRadius = (direction == .vertical) ? self.layout.IMAGE_SIZE / 2 :  self.layout.IMAGE_NAV_SIZE / 2
+            self.layoutIfNeeded()
         })
 
         pxAnimator.animate()

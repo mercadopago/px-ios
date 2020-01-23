@@ -120,6 +120,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var initFlow: InitFlow?
     weak var initFlowProtocol: InitFlowProtocol?
 
+    // OneTap Flow
+    var onetapFlow: OneTapFlow?
+
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
     init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?, advancedConfig: PXAdvancedConfiguration? = nil, trackingConfig: PXTrackingConfiguration? = nil) {
@@ -127,8 +130,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.privateKey = privateKey
         self.checkoutPreference = checkoutPreference
 
-        if let advConfig = advancedConfig {
-            self.advancedConfig = advConfig
+        if let advancedConfig = advancedConfig {
+            self.advancedConfig = advancedConfig
         }
         self.trackingConfig = trackingConfig
 
@@ -238,7 +241,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         populateCheckoutStore()
-        
+
         var customerOptions: [CustomerPaymentMethod]?
 
         if inRootGroupSelection() { // Solo se muestran las opciones custom y los plugines en root
@@ -406,105 +409,80 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func nextStep() -> CheckoutStep {
-
         if needToInitFlow() {
             return .START
         }
-
         if hasError() {
             return .SCREEN_ERROR
         }
-
         if shouldExitCheckout() {
             return .ACTION_FINISH
         }
-
         if shouldShowCongrats() {
             return .SCREEN_PAYMENT_RESULT
         }
-
         if needOneTapFlow() {
             return .FLOW_ONE_TAP
         }
-
         if !isPaymentTypeSelected() {
             return .SCREEN_PAYMENT_METHOD_SELECTION
         }
-
         if shouldShowHook(hookStep: .BEFORE_PAYMENT_METHOD_CONFIG) {
             return .SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
         }
-
         if needToShowPaymentMethodConfigPlugin() {
             willShowPaymentMethodConfigPlugin()
             return .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
         }
-
         if shouldShowHook(hookStep: .AFTER_PAYMENT_METHOD_CONFIG) {
             return .SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
         }
-
         if shouldShowHook(hookStep: .BEFORE_PAYMENT) {
             return .SCREEN_HOOK_BEFORE_PAYMENT
         }
-
         if needToCreatePayment() || shouldSkipReviewAndConfirm() {
             readyToPay = false
             return .SERVICE_POST_PAYMENT
         }
-
         if needReviewAndConfirm() {
             return .SCREEN_REVIEW_AND_CONFIRM
         }
-
         if needCompleteCard() {
             return .SCREEN_CARD_FORM
         }
-
         if needToGetIdentificationTypes() {
             return .SERVICE_GET_IDENTIFICATION_TYPES
         }
-
         if needToGetPayerInfo() {
             return .SCREEN_PAYER_INFO_FLOW
         }
-
         if needGetIdentification() {
             return .SCREEN_IDENTIFICATION
         }
-
         if needSecurityCode() {
             return .SCREEN_SECURITY_CODE
         }
-
         if needCreateToken() {
             return .SERVICE_CREATE_CARD_TOKEN
         }
-
         if needGetEntityTypes() {
             return .SCREEN_ENTITY_TYPE
         }
-
         if needGetFinancialInstitutions() {
             return .SCREEN_FINANCIAL_INSTITUTIONS
         }
-
         if needGetIssuers() {
             return .SERVICE_GET_ISSUERS
         }
-
         if needIssuerSelectionScreen() {
             return .SCREEN_ISSUERS
         }
-
         if needChosePayerCost() {
             return .SERVICE_GET_PAYER_COSTS
         }
-
         if needPayerCostSelectionScreen() {
             return .SCREEN_PAYER_COST
         }
-
         return .ACTION_FINISH
     }
 
@@ -547,7 +525,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updateCheckoutModel(paymentMethodSearch: PXInitDTO) {
-
         let configurations = getPaymentOptionConfigurations(paymentMethodSearch: paymentMethodSearch)
         self.paymentConfigurationService.setConfigurations(configurations)
         self.paymentConfigurationService.setDefaultDiscountConfiguration(paymentMethodSearch.selectedDiscountConfiguration)
@@ -695,10 +672,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
                     entityTypes.append(entityType)
                 }
             }
-
             return entityTypes
         }
-
         return nil
     }
 
@@ -923,5 +898,11 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func keepDisabledOptionIfNeeded() {
         disabledOption = PXDisabledOption(paymentResult: self.paymentResult)
+    }
+    
+    func clean() {
+        paymentFlow = nil
+        initFlow = nil
+        onetapFlow = nil
     }
 }

@@ -23,6 +23,11 @@ open class MercadoPagoCheckout: NSObject {
     internal var initProtocol: PXLazyInitProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
+    // This var will hold the value of the new card added by MLCardForm
+    // until the init flow is refreshed with this new payment method
+    internal var cardIdForInitFlowRefresh: String?
+    internal var countInitFlowRefreshRetries: Int = 0
+    internal let maxInitFlowRefreshRetries: Int = 3
 
     // MARK: Initialization
     /**
@@ -73,7 +78,7 @@ extension MercadoPagoCheckout {
      */
     public func start(navigationController: UINavigationController, lifeCycleProtocol: PXLifeCycleProtocol?=nil) {
         viewModel.lifecycleProtocol = lifeCycleProtocol
-        commondInit()
+        commonInit()
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
@@ -103,7 +108,7 @@ extension MercadoPagoCheckout {
         viewModel.initFlow?.restart()
         initProtocol = lazyInitProtocol
         initMode = .lazy
-        commondInit()
+        commonInit()
         executeNextStep()
     }
 }
@@ -189,19 +194,18 @@ extension MercadoPagoCheckout {
     }
 
     internal func finish() {
-        MPXTracker.sharedInstance.clean()
+        commonFinish()
         viewModel.pxNavigationHandler.removeRootLoading()
-        ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
-        PXCheckoutStore.sharedInstance.clean()
         HtmlStorage.shared.clean()
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by state machine next)
-        let result = viewModel.getResult()
-        if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout() {
+        if let result = viewModel.getResult(),
+            let finishCallback = viewModel.lifecycleProtocol?.finishCheckout() {
             finishCallback(result)
-            return
+        } else {
+            // Default exit.
+            defaultExitAction()
         }
-        defaultExitAction()
     }
 
     internal func cancelCheckout() {
@@ -210,11 +214,7 @@ extension MercadoPagoCheckout {
 
     /// :nodoc:
     @objc func closeCheckout() {
-        MPXTracker.sharedInstance.clean()
-        PXNotificationManager.UnsuscribeTo.attemptToClose(self)
-        PXCheckoutStore.sharedInstance.clean()
-        ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
-
+        commonFinish()
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by closeAction)
         if viewModel.getGenericPayment() != nil {
@@ -259,7 +259,7 @@ extension MercadoPagoCheckout {
         viewModel.escManager = PXESCManager(enabled: viewModel.getAdvancedConfiguration().escEnabled, sessionId: MPXTracker.sharedInstance.getSessionID(), flow: MPXTracker.sharedInstance.getFlowName() ?? "PX")
     }
 
-    private func commondInit() {
+    private func commonInit() {
         PXTrackingStore.sharedInstance.initializeInitDate()
         viewModel.setInitFlowProtocol(flowInitProtocol: self)
         if !viewModel.shouldApplyDiscount() {
@@ -267,8 +267,16 @@ extension MercadoPagoCheckout {
         }
     }
 
+    private func commonFinish() {
+        MPXTracker.sharedInstance.clean()
+        PXCheckoutStore.sharedInstance.clean()
+        PXNotificationManager.UnsuscribeTo.attemptToClose(self)
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
+        viewModel.clean()
+    }
+
     private func removeDiscount() {
-        self.viewModel.clearDiscount()
+        viewModel.clearDiscount()
     }
 
     private func defaultExitAction() {

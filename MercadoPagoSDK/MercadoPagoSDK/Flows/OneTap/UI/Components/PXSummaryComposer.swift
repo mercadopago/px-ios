@@ -14,12 +14,12 @@ struct PXSummaryComposer {
         return getSummaryItems()
     }
 
-    //MARK: constants
+    // MARK: constants
     let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
     let currency = SiteManager.shared.getCurrency()
     let textTransparency: CGFloat = 1
 
-    //MARK: initialization properties
+    // MARK: initialization properties
     let amountHelper: PXAmountHelper
     let additionalInfoSummary: PXAdditionalInfoSummary?
     let selectedCard: PXCardSliderViewModel?
