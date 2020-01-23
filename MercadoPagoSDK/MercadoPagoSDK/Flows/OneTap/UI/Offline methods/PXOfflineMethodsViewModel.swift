@@ -16,7 +16,7 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
     var selectedIndexPath: IndexPath?
 
     public init(offlinePaymentTypes: [PXOfflinePaymentType], paymentMethods: [PXPaymentMethod], amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, payerCompliance: PXPayerCompliance?) {
-        self.paymentTypes = offlinePaymentTypes
+        self.paymentTypes = PXOfflineMethodsViewModel.filterPaymentTypes(offlinePaymentTypes: offlinePaymentTypes)
         self.paymentMethods = paymentMethods
         self.payerCompliance = payerCompliance
         super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged, escProtocol: nil)
@@ -92,5 +92,53 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
 
     func getPayerIdentification() -> PXIdentification? {
         return payerCompliance?.offlineMethods.sensitiveInformation?.identification
+    }
+}
+
+// MARK: Privates
+private extension PXOfflineMethodsViewModel {
+    class func filterPaymentTypes(offlinePaymentTypes: [PXOfflinePaymentType]) -> [PXOfflinePaymentType] {
+        var filteredOfflinePaymentTypes: [PXOfflinePaymentType] = [PXOfflinePaymentType]()
+        var filteredPaymentMethods: [PXOfflinePaymentMethod] = [PXOfflinePaymentMethod]()
+
+        for paymentType in offlinePaymentTypes {
+            for paymentMethod in paymentType.paymentMethods where paymentMethod.status.enabled {
+                filteredPaymentMethods.append(paymentMethod)
+            }
+            let offlinePaymentType = PXOfflinePaymentType(id: paymentType.id, name: paymentType.name, paymentMethods: filteredPaymentMethods)
+            filteredOfflinePaymentTypes.append(offlinePaymentType)
+            filteredPaymentMethods.removeAll()
+        }
+        return filteredOfflinePaymentTypes
+    }
+}
+
+// MARK: Tracking OfflineMethods
+extension PXOfflineMethodsViewModel {
+    func getScreenTrackingProperties() -> [String: Any] {
+        var infoArray: [[String: Any]] = [[String: Any]]()
+        for paymentType in paymentTypes {
+            for paymentMethod in paymentType.paymentMethods {
+                var info: [String: Any] = [:]
+                info["payment_method_type"] = paymentType.id
+                info["payment_method_id"] = paymentMethod.id
+                infoArray.append(info)
+            }
+        }
+        var availableMethods: [String: Any] = [String: Any]()
+        availableMethods["available_methods"] = infoArray
+        return availableMethods
+    }
+
+    func getEventTrackingProperties(_ selectedOfflineMethod: PXOfflinePaymentMethod) -> [String: Any] {
+        var properties: [String: Any] = [String: Any]()
+        properties["payment_method_type"] = selectedOfflineMethod.instructionId
+        properties["payment_method_id"] = selectedOfflineMethod.id
+        properties["review_type"] = "one_tap"
+        var info: [String: Any] = [:]
+        info["has_payer_information"] = getPayerCompliance()?.offlineMethods.isCompliant
+        info["additional_information_needed"] = selectedOfflineMethod.hasAdditionalInfoNeeded
+        properties["extra_info"] = info
+        return properties
     }
 }

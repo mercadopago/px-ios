@@ -49,6 +49,12 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateTotalLabel()
+        trackScreen(path: TrackingPaths.Screens.OneTap.getOfflineMethodsPath(), properties: viewModel.getScreenTrackingProperties())
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        trackAbortEvent()
     }
 
     func animateTotalLabel() {
@@ -179,7 +185,8 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         self.loadingButtonComponent = loadingButtonComponent
         loadingButtonComponent.animationDelegate = self
         loadingButtonComponent.layer.cornerRadius = 4
-        loadingButtonComponent.add(for: .touchUpInside, {
+        loadingButtonComponent.add(for: .touchUpInside, { [weak self] in
+            guard let self = self else { return }
             self.confirmPayment()
         })
         loadingButtonComponent.setTitle("Pagar".localized, for: .normal)
@@ -429,6 +436,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
             currentPaymentData.payerCost = nil
             currentPaymentData.paymentMethod = newPaymentMethod
             currentPaymentData.issuer = nil
+            trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: viewModel.getEventTrackingProperties(selectedOfflineMethod))
             if let payerCompliance = viewModel.getPayerCompliance(), payerCompliance.offlineMethods.isCompliant {
                 currentPaymentData.payer?.firstName = viewModel.getPayerFirstName()
                 currentPaymentData.payer?.lastName = viewModel.getPayerLastName()
