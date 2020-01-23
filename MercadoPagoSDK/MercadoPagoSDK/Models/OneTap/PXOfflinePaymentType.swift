@@ -17,4 +17,10 @@ public struct PXOfflinePaymentType: Codable {
         case name
         case paymentMethods = "payment_methods"
     }
+
+    public init(id: String, name: PXText?, paymentMethods: [PXOfflinePaymentMethod]) {
+        self.id = id
+        self.name = name
+        self.paymentMethods = paymentMethods
+    }
 }
