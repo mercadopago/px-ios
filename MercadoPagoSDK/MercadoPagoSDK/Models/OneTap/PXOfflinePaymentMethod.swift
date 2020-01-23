@@ -13,6 +13,7 @@ public class PXOfflinePaymentMethod: Codable {
     let name: PXText?
     let description: PXText?
     let hasAdditionalInfoNeeded: Bool
+    let status: PXStatus
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -20,6 +21,7 @@ public class PXOfflinePaymentMethod: Codable {
         case name
         case description
         case hasAdditionalInfoNeeded = "has_additional_info_needed"
+        case status
     }
 }
 
