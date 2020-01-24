@@ -266,7 +266,8 @@ class PXAddMethodView: UIView {
             let titleLabel = UILabel()
             titleLabel.numberOfLines = 1
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            titleLabel.attributedText = title.getAttributedString(fontSize: PXLayout.XS_FONT)
+            let defaultTextColor = UIColor(red:0, green:0, blue:0, alpha:0.8)
+            titleLabel.attributedText = title.getAttributedString(fontSize: PXLayout.XS_FONT, textColor: defaultTextColor)
             titleLabel.textAlignment = data.compactMode ? .left : .center
             labelsContainerView.addArrangedSubview(titleLabel)
         }
@@ -275,7 +276,8 @@ class PXAddMethodView: UIView {
             let subtitleLabel = UILabel()
             subtitleLabel.numberOfLines = 1
             subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-            subtitleLabel.attributedText = subtitle.getAttributedString(fontSize: PXLayout.XXS_FONT, alpha: 0.73)
+            let defaultTextColor = UIColor(red:0, green:0, blue:0, alpha:0.45)
+            subtitleLabel.attributedText = subtitle.getAttributedString(fontSize: PXLayout.XXS_FONT, textColor: defaultTextColor)
             subtitleLabel.textAlignment = data.compactMode ? .left : .center
             labelsContainerView.addArrangedSubview(subtitleLabel)
         }
