@@ -563,18 +563,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updateCheckoutModel(token: PXToken) {
-        if !token.cardId.isEmpty {
-            if let esc = token.esc {
-                escManager?.saveESC(cardId: token.cardId, esc: esc)
-            } else {
-                escManager?.deleteESC(cardId: token.cardId)
-            }
+        if let esc = token.esc, !String.isNullOrEmpty(esc) {
+            escManager?.saveESC(token: token, esc: esc)
         } else {
-            if let esc = token.esc {
-                escManager?.saveESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits, esc: esc)
-            } else {
-                escManager?.deleteESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits)
-            }
+            escManager?.deleteESC(token: token)
         }
         self.paymentData.updatePaymentDataWith(token: token)
     }
@@ -692,27 +684,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func errorInputs(error: MPSDKError, errorCallback: (() -> Void)?) {
         MercadoPagoCheckoutViewModel.error = error
         self.errorCallback = errorCallback
-    }
-
-    func saveOrDeleteESC() -> Bool {
-        guard let token = paymentData.getToken() else {
-            return false
-        }
-        var isApprovedPayment: Bool = true
-        if self.paymentResult != nil {
-            isApprovedPayment = self.paymentResult!.isApproved()
-        } else if self.businessResult != nil {
-            isApprovedPayment = self.businessResult!.isApproved()
-        } else {
-            return false
-        }
-        if token.hasCardId() {
-            if !isApprovedPayment {
-                escManager?.deleteESC(cardId: token.cardId)
-                return false
-            }
-        }
-        return false
     }
 
     func populateCheckoutStore() {
@@ -841,8 +812,10 @@ extension MercadoPagoCheckoutViewModel {
     func prepareForInvalidPaymentWithESC() {
         if self.paymentData.isComplete() {
             readyToPay = true
-            self.savedESCCardToken = PXSavedESCCardToken(cardId: self.paymentData.getToken()!.cardId, esc: nil, requireESC: advancedConfig.escEnabled)
-            escManager?.deleteESC(cardId: self.paymentData.getToken()!.cardId)
+            if let cardId = paymentData.getToken()?.cardId, cardId.isNotEmpty {
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardId, esc: nil, requireESC: advancedConfig.escEnabled)
+                escManager?.deleteESC(cardId: cardId)
+            }
         }
         self.paymentData.cleanToken()
     }
