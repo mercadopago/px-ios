@@ -8,17 +8,24 @@
 
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
-
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
 #import "MLMyMPPXTrackListener.h"
 
 #ifdef PX_PRIVATE_POD
-    @import MercadoPagoSDKV4;
+@import MercadoPagoSDKV4;
 #else
-    @import MercadoPagoSDK;
+@import MercadoPagoSDK;
 #endif
+
+@interface MainExamplesViewController() <PXLazyInitProtocol, PXLifeCycleProtocol, PXTrackerListener>
+
+@property MercadoPagoCheckoutBuilder *checkoutBuilder;
+@property PXCheckoutPreference *pref;
+@property PXPaymentConfiguration *paymentConfig;
+
+@end
 
 @implementation MainExamplesViewController
 
@@ -77,13 +84,10 @@
     [advancedConfig setDiscountParamsConfiguration: discountParamsConfig];
 
     //THEME
-    //  mercado libre
-//    MeliTheme *meliTheme = [[MeliTheme alloc] init];
-//    [advancedConfig setTheme:meliTheme];
-
+//    //  mercado libre
+//    [advancedConfig setTheme:[MeliTheme new]];
     //  mercado pago
-    MPTheme *mpTheme = [[MPTheme alloc] init];
-    [advancedConfig setTheme:mpTheme];
+    [advancedConfig setTheme:[MPTheme new]];
 
     //REVIEW CONFIGURATION
     //  Review screen
@@ -141,9 +145,7 @@
 // Custom translations
 -(void)setCustomTranslations {
     [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyTotal_to_pay_onetap withTranslation:@"Total row en onetap"];
-
     [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyPay_button withTranslation:@"Enviar dinero"];
-
     [self.checkoutBuilder addCustomTranslation:PXCustomTranslationKeyPay_button_progress withTranslation:@"Enviado dinero"];
 }
 
@@ -151,7 +153,7 @@
 -(void)addCharges {
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"debit_card" amountCharge:8 detailModal:nil];
-    PXPaymentTypeChargeRule* chargeZeroCreditCard = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"credit_card" message:@"Ahorro con tu banco"];
+//    PXPaymentTypeChargeRule* chargeZeroCreditCard = [[PXPaymentTypeChargeRule alloc] initWithPaymentTypeId:@"credit_card" message:@"Ahorro con tu banco"];
 
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Test charge view"
                                       message:@"This is a test account money charge with VC"
@@ -161,7 +163,7 @@
     [chargesArray addObject:chargeAccountMoney];
     [chargesArray addObject:chargeDebit];
 //    [chargesArray addObject:chargeZeroCreditCard];
-    [self.paymentConfig addChargeRulesWithCharges:chargesArray];
+    (void)[self.paymentConfig addChargeRulesWithCharges:chargesArray];
 }
 
 -(void)setCheckoutPref {
