@@ -21,11 +21,19 @@ internal extension UIColor {
     }
 
     class func fromHex(_ hexValue: String) -> UIColor {
-        var hexInt: UInt32 = 0
-        let scanner: Scanner = Scanner(string: hexValue)
-        scanner.charactersToBeSkipped = CharacterSet(charactersIn: "#")
-        scanner.scanHexInt32(&hexInt)
-        return UIColorFromRGB(UInt(hexInt))
+        let hexAlphabet = "0123456789abcdefABCDEF"
+        let hex = hexValue.trimmingCharacters(in: CharacterSet(charactersIn: hexAlphabet).inverted)
+        var hexInt = UInt32()
+        Scanner(string: hex).scanHexInt32(&hexInt)
+
+        let alpha, red, green, blue: UInt32
+        switch hex.count {
+        case 3: (alpha, red, green, blue) = (255, (hexInt >> 8) * 17, (hexInt >> 4 & 0xF) * 17, (hexInt & 0xF) * 17) // RGB
+        case 6: (alpha, red, green, blue) = (255, hexInt >> 16, hexInt >> 8 & 0xFF, hexInt & 0xFF) // RRGGBB
+        case 8: (alpha, red, green, blue) = (hexInt >> 24, hexInt >> 16 & 0xFF, hexInt >> 8 & 0xFF, hexInt & 0xFF) // AARRGGBB
+        default: return UIColor.black
+        }
+        return UIColor(red: CGFloat(red)/255, green: CGFloat(green)/255, blue: CGFloat(blue)/255, alpha: CGFloat(alpha)/255)
     }
 
     convenience init(red: Int, green: Int, blue: Int) {
@@ -87,10 +95,6 @@ internal extension UIColor {
     }
     class func px_backgroundColor() -> UIColor {
         return UIColorFromRGB(0xEBEBF0)
-    }
-
-    class func px_white() -> UIColor {
-        return UIColorFromRGB(0xFFFFFF)
     }
 
     class func installments() -> UIColor {
@@ -160,10 +164,6 @@ internal extension UIColor {
         return UIColor(white: 102.0 / 255.0, alpha: 1.0)
     }
 
-    class var pxBlack: UIColor {
-        return UIColor(white: 51.0 / 255.0, alpha: 1.0)
-    }
-
     class var pxBlueMp: UIColor {
         return UIColor(red: 0.0, green: 156.0 / 255.0, blue: 238.0 / 255.0, alpha: 1.0)
     }
@@ -178,10 +178,6 @@ internal extension UIColor {
 
     class var pxOrangeMp: UIColor {
         return UIColor(red: 255.0 / 255.0, green: 166.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
-    }
-
-    class var pxWhite: UIColor {
-        return UIColor(white: 255.0 / 255.0, alpha: 1.0)
     }
 
     class var pxLightGray: UIColor {
