@@ -10,7 +10,7 @@ import Foundation
 class PXInstructionsInteractionsRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.M_FONT
-    let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
+    let TITLE_LABEL_FONT_COLOR: UIColor = .black
 
     func render(_ instructionsInteractions: PXInstructionsInteractionsComponent) -> PXInstructionsInteractionsView {
         let instructionsInteractionsView = PXInstructionsInteractionsView()

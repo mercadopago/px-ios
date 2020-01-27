@@ -22,7 +22,7 @@ final class PXFooterRenderer: NSObject {
         var topView: UIView = fooView
         var termsView: PXTermsAndConditionView?
         fooView.translatesAutoresizingMaskIntoConstraints = false
-        fooView.backgroundColor = .pxWhite
+        fooView.backgroundColor = .white
 
         if footer.props.termsInfo != nil {
             termsView = PXTermsAndConditionView(termsDto: footer.props.termsInfo, delegate: termsDelegate)

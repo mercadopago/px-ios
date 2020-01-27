@@ -15,7 +15,7 @@ class PXInstructionsSubtitleRenderer: NSObject {
     func render(_ instructionsSubtitle: PXInstructionsSubtitleComponent) -> PXInstructionsSubtitleView {
         let instructionsSubtitleView = PXInstructionsSubtitleView()
         instructionsSubtitleView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsSubtitleView.backgroundColor = .pxWhite
+        instructionsSubtitleView.backgroundColor = .white
         let attributes = [NSAttributedString.Key.font: Utils.getFont(size: LABEL_FONT_SIZE)]
         let attributedString = NSAttributedString(string: instructionsSubtitle.props.subtitle, attributes: attributes)
         instructionsSubtitleView.subtitleLabel = buildSubtitleLabel(with: attributedString, in: instructionsSubtitleView)

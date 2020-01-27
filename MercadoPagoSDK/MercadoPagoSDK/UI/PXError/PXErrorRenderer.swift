@@ -18,7 +18,7 @@ class PXErrorRenderer: NSObject {
 
     func render(component: PXErrorComponent) -> PXErrorView {
         let errorBodyView = PXErrorView()
-        errorBodyView.backgroundColor = .pxWhite
+        errorBodyView.backgroundColor = .white
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
 
         //Title Label

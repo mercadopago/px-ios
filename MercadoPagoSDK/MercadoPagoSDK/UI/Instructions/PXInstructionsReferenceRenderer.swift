@@ -13,7 +13,7 @@ class PXInstructionsReferenceRenderer: NSObject {
     let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     let REFERENCE_LABEL_FONT_SIZE: CGFloat = PXLayout.M_FONT
-    let REFERENCE_LABEL_FONT_COLOR: UIColor = .pxBlack
+    let REFERENCE_LABEL_FONT_COLOR: UIColor = .black
 
     func render(_ instructionReference: PXInstructionsReferenceComponent) -> PXInstructionsReferenceView {
         let instructionReferenceView = PXInstructionsReferenceView()
