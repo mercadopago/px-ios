@@ -43,7 +43,7 @@ public class PXText: Codable {
         var attributes: [NSAttributedString.Key: AnyObject] = [:]
 
         // Add text color attribute or default
-        if let defaultTextColor = self.textColor {
+        if let defaultTextColor = self.textColor, defaultTextColor.isNotEmpty {
             attributes[.foregroundColor] = UIColor.fromHex(defaultTextColor)
         } else {
             attributes[.foregroundColor] = defaultTextColor
@@ -54,7 +54,7 @@ public class PXText: Codable {
         }
 
         // Add background color attribute or default
-        if let defaultBackgroundColor = self.backgroundColor {
+        if let defaultBackgroundColor = self.backgroundColor, defaultBackgroundColor.isNotEmpty {
             attributes[.backgroundColor] = UIColor.fromHex(defaultBackgroundColor)
         } else {
             attributes[.backgroundColor] = defaultBackgroundColor

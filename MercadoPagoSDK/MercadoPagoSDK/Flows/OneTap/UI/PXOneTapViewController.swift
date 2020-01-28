@@ -368,7 +368,14 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
     }
 
     func didTapDiscount() {
-        let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper)
+        var discountReason: PXDiscountReason?
+
+        if let discountConfiguration = viewModel.amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(selectedCard?.cardId),
+            let reason = discountConfiguration.getDiscountConfiguration().reason {
+            discountReason = reason
+        }
+
+        let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper, discountReason: discountReason)
 
         if let discount = viewModel.amountHelper.discount {
             PXComponentFactory.Modal.show(viewController: discountViewController, title: discount.getDiscountDescription()) {

@@ -16,6 +16,13 @@ extension PXSummaryComposer {
         return false
     }
 
+    func getConsumedDiscountReason() -> String? {
+        guard let discountData = getDiscountData() else {
+            return nil
+        }
+        return discountData.discountConfiguration.getDiscountConfiguration().reason?.summary?.message
+    }
+
     func shouldDisplayChargeHelpIcon() -> Bool {
         return shouldDisplayChargesHelp
     }

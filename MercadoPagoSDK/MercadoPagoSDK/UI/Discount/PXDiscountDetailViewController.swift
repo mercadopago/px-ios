@@ -17,11 +17,13 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
     private let shouldShowTitle: Bool
     private let currency = SiteManager.shared.getCurrency()
+    private let discountReason: PXDiscountReason?
     let contentView: PXComponentView = PXComponentView()
 
-    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
+    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false, discountReason: PXDiscountReason? = nil) {
         self.amountHelper = amountHelper
         self.shouldShowTitle = shouldShowTitle
+        self.discountReason = discountReason
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -139,7 +141,12 @@ extension PXDiscountDetailViewController {
     }
 
     func getHeader() -> NSAttributedString {
-        let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
+        let fontSize = PXLayout.XXS_FONT
+        let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: fontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
+
+        if let discountReasonTitle = discountReason?.title?.getAttributedString(fontSize: fontSize) {
+            return discountReasonTitle
+        }
         if amountHelper.consumedDiscount {
             return NSAttributedString(string: "modal_title_consumed_discount".localized, attributes: attributes)
         } else {
@@ -148,8 +155,11 @@ extension PXDiscountDetailViewController {
     }
 
     func getTitle() -> NSAttributedString? {
-        if let maxCouponAmount = amountHelper.maxCouponAmount, !amountHelper.consumedDiscount {
-            let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+        let fontSize = PXLayout.XS_FONT
+        if amountHelper.consumedDiscount, let discountReasonTitle = discountReason?.title?.getAttributedString(fontSize: fontSize) {
+            return discountReasonTitle
+        } else if let maxCouponAmount = amountHelper.maxCouponAmount, !amountHelper.consumedDiscount {
+            let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: fontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)
             let string: String = ("discount_detail_modal_disclaimer".localized as NSString).replacingOccurrences(of: "{0}", with: amountAttributedString.string)
             let attributedString = NSMutableAttributedString(string: string, attributes: attributes)
@@ -160,9 +170,14 @@ extension PXDiscountDetailViewController {
     }
 
     func getDisclaimer() -> NSAttributedString? {
-        let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
+        let fontSize = PXLayout.XXS_FONT
+        let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: fontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
         if amountHelper.consumedDiscount {
-            return NSAttributedString(string: "modal_content_consumed_discount".localized, attributes: attributes)
+            if let discountReasonDescription = discountReason?.description?.getAttributedString(fontSize: fontSize) {
+                return discountReasonDescription
+            } else {
+                return NSAttributedString(string: "modal_content_consumed_discount".localized, attributes: attributes)
+            }
         } else if amountHelper.campaign?.maxRedeemPerUser == 1 {
             var message = "unique_discount_detail_modal_footer".localized
             if let expirationDate = amountHelper.campaign?.endDate {
