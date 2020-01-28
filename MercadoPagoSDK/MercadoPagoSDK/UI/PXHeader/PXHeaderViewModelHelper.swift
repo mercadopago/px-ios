@@ -136,7 +136,7 @@ internal extension PXResultViewModel {
         if let range = amountRange {
             let lowerBoundTitle = String(instructionsInfo.instructions[0].title[..<range.lowerBound])
             let attributedTitle = NSMutableAttributedString(string: lowerBoundTitle, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
-            let attributedAmount = Utils.getAttributedAmount(amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize: PXHeaderRenderer.TITLE_FONT_SIZE / 2, smallSymbol: true)
+            let attributedAmount = Utils.getAttributedAmount(amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .white, fontSize: PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize: PXHeaderRenderer.TITLE_FONT_SIZE / 2, smallSymbol: true)
             attributedTitle.append(attributedAmount)
             let upperBoundTitle = String(instructionsInfo.instructions[0].title[range.upperBound...])
             let endingTitle = NSAttributedString(string: upperBoundTitle, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])

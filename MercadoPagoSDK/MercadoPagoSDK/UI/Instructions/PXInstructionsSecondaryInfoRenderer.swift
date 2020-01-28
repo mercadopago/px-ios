@@ -15,7 +15,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
     func render(instructionsSecondaryInfo: PXInstructionsSecondaryInfoComponent) -> PXInstructionsSecondaryInfoView {
         let instructionsSecondaryInfoView = PXInstructionsSecondaryInfoView()
         instructionsSecondaryInfoView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsSecondaryInfoView.backgroundColor = .pxWhite
+        instructionsSecondaryInfoView.backgroundColor = .white
 
         var lastLabel: UILabel?
         for string in instructionsSecondaryInfo.props.secondaryInfo {

@@ -72,7 +72,7 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
         self.addCallbackCancel()
 
         self.addTopHeader()
-        self.collectionSearch.backgroundColor = UIColor.px_white()
+        self.collectionSearch.backgroundColor = .white
         self.setTitle()
         self.registerAllCells()
 
