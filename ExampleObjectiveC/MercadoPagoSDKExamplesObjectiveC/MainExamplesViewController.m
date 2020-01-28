@@ -14,12 +14,6 @@
 #import "PaymentPluginViewController.h"
 #import "MLMyMPPXTrackListener.h"
 
-#ifdef PX_PRIVATE_POD
-    @import MercadoPagoSDKV4;
-#else
-    @import MercadoPagoSDK;
-#endif
-
 @implementation MainExamplesViewController
 
 - (IBAction)checkoutFlow:(id)sender {

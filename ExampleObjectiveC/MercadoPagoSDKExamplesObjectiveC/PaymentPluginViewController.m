@@ -9,7 +9,7 @@
 #import "PaymentPluginViewController.h"
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 
-@interface PaymentPluginViewController ()
+@interface PaymentPluginViewController() <PXSplitPaymentProcessor>
 
 @property (strong, nonatomic) PXPaymentProcessorNavigationHandler * paymentNavigationHandler;
 @end

@@ -7,11 +7,5 @@
 
 #import <Foundation/Foundation.h>
 
-#ifdef PX_PRIVATE_POD
-    @import MercadoPagoSDKV4;
-#else
-    @import MercadoPagoSDK;
-#endif
-
 @interface MLMyMPPXTrackListener : NSObject 
 @end

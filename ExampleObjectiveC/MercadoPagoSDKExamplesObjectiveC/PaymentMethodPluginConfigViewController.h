@@ -8,11 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-#ifdef PX_PRIVATE_POD
-    @import MercadoPagoSDKV4;
-#else
-    @import MercadoPagoSDK;
-#endif
-
-@interface PaymentMethodPluginConfigViewController : UIViewController <PXPaymentMethodConfigProtocol>
+@interface PaymentMethodPluginConfigViewController : UIViewController 
 @end
