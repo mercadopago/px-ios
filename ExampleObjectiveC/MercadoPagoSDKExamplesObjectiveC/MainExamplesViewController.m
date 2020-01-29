@@ -12,14 +12,6 @@
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
 #import "MLMyMPPXTrackListener.h"
-
-@interface MainExamplesViewController() <PXLazyInitProtocol, PXLifeCycleProtocol, PXTrackerListener>
-
-@property MercadoPagoCheckoutBuilder *checkoutBuilder;
-@property PXCheckoutPreference *pref;
-@property PXPaymentConfiguration *paymentConfig;
-
-@end
   
 @implementation MainExamplesViewController
 
