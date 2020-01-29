@@ -15,14 +15,12 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let baselineOffSet: Int = 6
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
-    private let shouldShowTitle: Bool
     private let currency = SiteManager.shared.getCurrency()
     private let discountReason: PXDiscountReason?
     let contentView: PXComponentView = PXComponentView()
 
-    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false, discountReason: PXDiscountReason? = nil) {
+    init(amountHelper: PXAmountHelper, discountReason: PXDiscountReason? = nil) {
         self.amountHelper = amountHelper
-        self.shouldShowTitle = shouldShowTitle
         self.discountReason = discountReason
         super.init(nibName: nil, bundle: nil)
     }
@@ -56,27 +54,6 @@ extension PXDiscountDetailViewController {
 extension PXDiscountDetailViewController {
 
     private func renderViews() {
-
-        if shouldShowTitle {
-            let headerText = getHeader()
-            let headerView = UIView()
-            headerView.translatesAutoresizingMaskIntoConstraints = false
-            headerView.backgroundColor = UIColor.UIColorFromRGB(0xf5f5f5)
-            self.contentView.addSubviewToBottom(headerView)
-            PXLayout.setHeight(owner: headerView, height: 40).isActive = true
-            PXLayout.pinLeft(view: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
-            PXLayout.pinRight(view: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
-
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.numberOfLines = 0
-            label.attributedText = headerText
-            headerView.addSubview(label)
-            PXLayout.setHeight(owner: label, height: 16).isActive = true
-            PXLayout.centerVertically(view: label).isActive = true
-            PXLayout.pinLeft(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
-        }
 
         if let title = getTitle() {
             buildAndAddLabel(to: self.contentView, margin: PXLayout.M_MARGIN, with: title, height: 20, accessibilityIdentifier: "discount_detail_title_label")
@@ -140,23 +117,9 @@ extension PXDiscountDetailViewController {
         line.backgroundColor = ThemeManager.shared.greyColor()
     }
 
-    func getHeader() -> NSAttributedString {
-        let fontSize = PXLayout.XXS_FONT
-        let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: fontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
-
-        if let discountReasonTitle = discountReason?.title?.getAttributedString(fontSize: fontSize) {
-            return discountReasonTitle
-        }
-        if amountHelper.consumedDiscount {
-            return NSAttributedString(string: "modal_title_consumed_discount".localized, attributes: attributes)
-        } else {
-            return NSAttributedString(string: amountHelper.discount!.getDiscountDescription(), attributes: attributes)
-        }
-    }
-
     func getTitle() -> NSAttributedString? {
         let fontSize = PXLayout.XS_FONT
-        if amountHelper.consumedDiscount, let discountReasonTitle = discountReason?.title?.getAttributedString(fontSize: fontSize) {
+        if amountHelper.consumedDiscount, discountReason?.title?.message?.isNotEmpty ?? false {
             return nil
         } else if let maxCouponAmount = amountHelper.maxCouponAmount, !amountHelper.consumedDiscount {
             let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: fontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
