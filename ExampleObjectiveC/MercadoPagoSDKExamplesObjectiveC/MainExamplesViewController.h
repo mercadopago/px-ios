@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainExamplesViewController : UITableViewController
+@interface MainExamplesViewController : UITableViewController <PXLazyInitProtocol, PXLifeCycleProtocol, PXTrackerListener>
+
+@property MercadoPagoCheckoutBuilder *checkoutBuilder;
+
+@property PXCheckoutPreference *pref;
+@property PXPaymentConfiguration *paymentConfig;
+
++(void)setPaymentDataCallback;
 
 @end
