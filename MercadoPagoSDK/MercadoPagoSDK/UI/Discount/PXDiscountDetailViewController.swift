@@ -157,7 +157,7 @@ extension PXDiscountDetailViewController {
     func getTitle() -> NSAttributedString? {
         let fontSize = PXLayout.XS_FONT
         if amountHelper.consumedDiscount, let discountReasonTitle = discountReason?.title?.getAttributedString(fontSize: fontSize) {
-            return discountReasonTitle
+            return nil
         } else if let maxCouponAmount = amountHelper.maxCouponAmount, !amountHelper.consumedDiscount {
             let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: fontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)

@@ -382,7 +382,8 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
                 self.setupNavigationBar()
             }
         } else if viewModel.amountHelper.consumedDiscount {
-            PXComponentFactory.Modal.show(viewController: discountViewController, title: "modal_title_consumed_discount".localized) {
+            let modalTitle = discountReason?.title?.message ?? "modal_title_consumed_discount".localized
+            PXComponentFactory.Modal.show(viewController: discountViewController, title: modalTitle) {
                 self.setupNavigationBar()
             }
         }
