@@ -11,7 +11,7 @@ import Foundation
 class PXInstructionsTertiaryInfoRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.M_FONT
-    let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
+    let TITLE_LABEL_FONT_COLOR: UIColor = .black
     let INFO_LABEL_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 

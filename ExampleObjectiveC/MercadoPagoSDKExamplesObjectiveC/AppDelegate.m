@@ -9,12 +9,6 @@
 #import "AppDelegate.h"
 #import "ExampleUtils.h"
 
-#ifdef PX_PRIVATE_POD
-    @import MercadoPagoSDKV4;
-#else
-    @import MercadoPagoSDK;
-#endif
-
 
 @interface AppDelegate ()
 

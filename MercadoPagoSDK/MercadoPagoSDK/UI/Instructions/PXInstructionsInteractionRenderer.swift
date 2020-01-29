@@ -12,7 +12,7 @@ class PXInstructionsInteractionRenderer: NSObject {
     let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     let INTERACTION_LABEL_FONT_SIZE: CGFloat = PXLayout.M_FONT
-    let INTERACTION_LABEL_FONT_COLOR: UIColor = .pxBlack
+    let INTERACTION_LABEL_FONT_COLOR: UIColor = .black
 
     func render(_ instructionInteraction: PXInstructionsInteractionComponent) -> PXInstructionsInteractionView {
         let instructionInteractionView = PXInstructionsInteractionView()

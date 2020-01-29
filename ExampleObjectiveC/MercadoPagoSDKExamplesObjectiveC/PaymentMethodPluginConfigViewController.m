@@ -11,7 +11,7 @@
 #import <MLUI/MLButton.h>
 #import <MLUI/MLButtonStylesFactory.h>
 
-@interface PaymentMethodPluginConfigViewController ()
+@interface PaymentMethodPluginConfigViewController() <PXPaymentMethodConfigProtocol>
 
 @property (strong, nonatomic) PXPluginNavigationHandler * pluginNavigationHandler;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
@@ -67,5 +67,6 @@
 - (UIViewController * _Nullable)configViewController {
     return self;
 }
+
 
 @end

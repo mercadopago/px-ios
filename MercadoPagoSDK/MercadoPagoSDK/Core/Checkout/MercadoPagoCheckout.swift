@@ -246,17 +246,10 @@ extension MercadoPagoCheckout {
         startTracking()
         MercadoPagoCheckout.currentCheckout = self
 
-        initializeEscManager()
-
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
         viewModel.startInitFlow()
-    }
-
-    // Chnage in Q2 when esc info comes in the init flow
-    private func initializeEscManager() {
-        viewModel.escManager = PXESCManager(enabled: viewModel.getAdvancedConfiguration().escEnabled, sessionId: MPXTracker.sharedInstance.getSessionID(), flow: MPXTracker.sharedInstance.getFlowName() ?? "PX")
     }
 
     private func commonInit() {

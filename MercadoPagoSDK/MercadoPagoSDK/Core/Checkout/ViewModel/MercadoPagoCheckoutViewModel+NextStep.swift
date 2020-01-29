@@ -166,7 +166,6 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needSecurityCode() -> Bool {
-
         guard let pmSelected = self.paymentOptionSelected else {
             return false
         }
@@ -176,10 +175,17 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !(pm.isCreditCard || pm.isDebitCard)
-        let isCustomerCard = pmSelected.isCustomerPaymentMethod() && pmSelected.getId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue && pmSelected.getId() != PXPaymentTypes.CONSUMER_CREDITS.rawValue
+        let paymentOptionSelectedId = pmSelected.getId()
+        let isCustomerCard = pmSelected.isCustomerPaymentMethod() &&
+            paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue &&
+            paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
-            return true
+            if let customOptionSearchItem = search?.payerPaymentMethods.first(where: { $0.id == paymentOptionSelectedId}) {
+                return customOptionSearchItem.invalidateEsc
+            } else {
+                return true
+            }
         }
 
         return false

@@ -38,7 +38,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         topContentConstraint?.isActive = true
         PXLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
         PXLayout.matchWidth(ofView: contentView, toView: scrollView).isActive = true
-        contentView.backgroundColor = .pxWhite
+        contentView.backgroundColor = .white
         super.init(nibName: nil, bundle: nil)
 
         if adjustInsets {

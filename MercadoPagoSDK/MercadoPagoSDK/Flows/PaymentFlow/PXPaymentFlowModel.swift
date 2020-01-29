@@ -152,35 +152,34 @@ internal extension PXPaymentFlowModel {
         guard let token = amountHelper?.getPaymentData().getToken() else {
             return
         }
-        let isApprovedPayment: Bool = status == PXPaymentStatus.APPROVED.rawValue
-
-        if !isApprovedPayment {
-            if token.hasCardId() {
-                guard let errorPaymentType = errorPaymentType else {
-                    escManager?.deleteESC(cardId: token.cardId)
-                    return
-                }
-                // If it has error Payment Type, check if the error was from a card
-                if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
-                    escManager?.deleteESC(cardId: token.cardId)
-                }
-            } else {
-                // Case if it's a new card
-                guard let errorPaymentType = errorPaymentType else {
-                    escManager?.deleteESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits)
-                    return
-                }
-                // If it has error Payment Type, check if the error was from a card
-                if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
-                    escManager?.deleteESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits)
-                }
-            }
-        } else if let esc = token.esc {
+        if let paymentStatus = PXPaymentStatus(rawValue: status),
+            paymentStatus == PXPaymentStatus.APPROVED {
             // If payment was approved
-            if token.hasCardId() {
-                escManager?.saveESC(cardId: token.cardId, esc: esc)
-            } else {
-                escManager?.saveESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits, esc: esc)
+            if let esc = token.esc {
+                escManager?.saveESC(token: token, esc: esc)
+            }
+        } else {
+            guard let errorPaymentType = errorPaymentType else {
+                escManager?.deleteESC(token: token)
+                return
+            }
+
+            // If it has error Payment Type, check if the error was from a card
+            if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
+                if let rejectedStatusDetail = PXRejectedStatusDetail(rawValue: statusDetails) {
+                    switch rejectedStatusDetail {
+                    case PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE,
+                         PXRejectedStatusDetail.BAD_FILLED_OTHER,
+                         PXRejectedStatusDetail.HIGH_RISK,
+                         PXRejectedStatusDetail.CALL_FOR_AUTH,
+                         PXRejectedStatusDetail.MAX_ATTEMPTS:
+                        escManager?.deleteESC(token: token)
+                    default:
+                        return
+                    }
+                } else {
+                    escManager?.deleteESC(token: token)
+                }
             }
         }
     }

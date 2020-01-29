@@ -21,8 +21,9 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var issuer: PXIssuer?
     open var firstSixDigits: String
     open var lastFourDigits: String
+    open var invalidateEsc: Bool = false
 
-    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, defaultAmountConfiguration: String?, amountConfigurations: [String: PXAmountConfiguration]?, comment: String?, issuer: PXIssuer?, firstSixDigits: String, lastFourDigits: String) {
+    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, defaultAmountConfiguration: String?, amountConfigurations: [String: PXAmountConfiguration]?, comment: String?, issuer: PXIssuer?, firstSixDigits: String, lastFourDigits: String, invalidateEsc: Bool) {
         self.id = id
         self._description = description
         self.paymentMethodId = paymentMethodId
@@ -34,6 +35,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.issuer = issuer
         self.firstSixDigits = firstSixDigits
         self.lastFourDigits = lastFourDigits
+        self.invalidateEsc = invalidateEsc
 
         if let defaultAmountConfiguration = defaultAmountConfiguration, let selectedPayerCostConfiguration = amountConfigurations?[defaultAmountConfiguration] {
             self.selectedPaymentOption = selectedPayerCostConfiguration
@@ -52,6 +54,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         case firstSixDigits = "first_six_digits"
         case lastFourDigits = "last_four_digits"
         case issuer
+        case invalidateEsc = "invalidate_esc"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -67,8 +70,9 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         let issuer: PXIssuer? = try container.decodeIfPresent(PXIssuer.self, forKey: .issuer)
         let lastFourDigits: String = try container.decodeIfPresent(String.self, forKey: .lastFourDigits) ?? ""
         let firstSixDigits: String = try container.decodeIfPresent(String.self, forKey: .firstSixDigits) ?? ""
+        let invalidateEsc: Bool = try container.decodeIfPresent(Bool.self, forKey: .invalidateEsc) ?? false
 
-        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, discountInfo: discountInfo, defaultAmountConfiguration: defaultAmountConfiguration, amountConfigurations: amountConfigurations, comment: comment, issuer: issuer, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits)
+        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, discountInfo: discountInfo, defaultAmountConfiguration: defaultAmountConfiguration, amountConfigurations: amountConfigurations, comment: comment, issuer: issuer, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, invalidateEsc: invalidateEsc)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -84,13 +88,14 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         try container.encodeIfPresent(self.issuer, forKey: .issuer)
         try container.encodeIfPresent(self.firstSixDigits, forKey: .firstSixDigits)
         try container.encodeIfPresent(self.lastFourDigits, forKey: .lastFourDigits)
+        try container.encodeIfPresent(self.invalidateEsc, forKey: .invalidateEsc)
     }
 
-    open func toJSONString() throws -> String? {
-        let encoder = JSONEncoder()
-        let data = try encoder.encode(self)
-        return String(data: data, encoding: .utf8)
-    }
+//    open func toJSONString() throws -> String? {
+//        let encoder = JSONEncoder()
+//        let data = try encoder.encode(self)
+//        return String(data: data, encoding: .utf8)
+//    }
 
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()

@@ -60,7 +60,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         view.removeAllSubviews()
         view.addSubview(scrollView)
         view.backgroundColor = viewModel.getHeaderColor()
-        scrollView.backgroundColor = .pxWhite
+        scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -81,7 +81,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     func renderContentView() {
         //CONTENT VIEW
         let contentView = UIView()
-        contentView.backgroundColor = .pxWhite
+        contentView.backgroundColor = .white
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
 
