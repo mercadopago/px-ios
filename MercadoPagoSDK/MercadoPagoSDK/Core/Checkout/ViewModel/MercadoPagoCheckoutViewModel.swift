@@ -143,6 +143,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if !isPreferenceLoaded() {
             self.paymentData.payer = self.checkoutPreference.getPayer()
         }
+        
+        escManager = PXESCManager(enabled: getAdvancedConfiguration().escEnabled, sessionId: MPXTracker.sharedInstance.getSessionID(), flow: MPXTracker.sharedInstance.getFlowName() ?? "PX")
 
         // Create Init Flow
         createInitFlow()

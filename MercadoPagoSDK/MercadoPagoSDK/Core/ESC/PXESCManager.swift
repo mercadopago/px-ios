@@ -122,7 +122,7 @@ internal class PXESCManager: NSObject, MercadoPagoESC {
     func getSavedCardIds() -> [String] {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
-               mLESCManager.getSavedCardIds()
+               return mLESCManager.getSavedCardIds()
             #endif
         }
         return []
