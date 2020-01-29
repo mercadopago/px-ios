@@ -62,6 +62,9 @@
 
     //ONE TAP
     [advancedConfig setExpressEnabled:YES];
+    
+    //ESC
+    [advancedConfig setEscEnabled:YES];
 
     //PRODUCT ID
     [advancedConfig setProductIdWithId:@"bh31umv10flg01nmhg60"];
