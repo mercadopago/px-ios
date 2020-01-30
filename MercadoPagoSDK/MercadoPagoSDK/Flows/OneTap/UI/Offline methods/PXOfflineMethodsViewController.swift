@@ -451,10 +451,11 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
     }
 
     private func shouldAnimateButton() -> Bool {
-        if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), !selectedOfflineMethod.hasAdditionalInfoNeeded {
-            return true
+        if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), selectedOfflineMethod.hasAdditionalInfoNeeded,
+            let compliant = viewModel.getPayerCompliance()?.offlineMethods.isCompliant, !compliant {
+                return false
         }
-        return false
+        return true
     }
 }
 
