@@ -105,15 +105,15 @@ extension PXBusinessResultViewModel {
 // MARK: PXCongratsTrackingDataProtocol Implementation
 extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
     func hasBottomView() -> Bool {
-        return buildBottomCustomView() != nil ? true : false
+        return getBottomCustomView() != nil
     }
 
     func hasTopView() -> Bool {
-        return buildTopCustomView() != nil ? true : false
+        return getTopCustomView() != nil
     }
 
     func hasImportantView() -> Bool {
-        return buildImportantCustomView() != nil ? true : false
+        return getImportantView() != nil
     }
 
     func getScoreLevel() -> Int? {
