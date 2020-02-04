@@ -278,7 +278,7 @@ extension MercadoPagoCheckout {
     }
 
     func startOneTapFlow() {
-        guard let search = viewModel.search, let paymentOptionSelected = viewModel.paymentOptionSelected else {
+        guard let search = viewModel.search else {
             return
         }
 
@@ -287,7 +287,7 @@ extension MercadoPagoCheckout {
         if shouldUpdateOnetapFlow() {
             if let cardId = cardIdForInitFlowRefresh {
                 if viewModel.customPaymentOptions?.first(where: { $0.getCardId() == cardId }) != nil {
-                    viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected)
+                    viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: viewModel.paymentOptionSelected)
                 } else {
                     // New card didn't return. Refresh Init again
                     refreshInitFlow(cardId: cardId)
@@ -295,7 +295,7 @@ extension MercadoPagoCheckout {
                 }
             }
         } else {
-            viewModel.onetapFlow = OneTapFlow(checkoutViewModel: viewModel, search: search, paymentOptionSelected: paymentOptionSelected, oneTapResultHandler: self)
+            viewModel.onetapFlow = OneTapFlow(checkoutViewModel: viewModel, search: search, paymentOptionSelected: viewModel.paymentOptionSelected, oneTapResultHandler: self)
         }
 
         viewModel.onetapFlow?.setCustomerPaymentMethods(viewModel.customPaymentOptions)

@@ -16,7 +16,7 @@ final class OneTapFlow: NSObject, PXFlow {
 
     let advancedConfig: PXAdvancedConfiguration
 
-    init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption, oneTapResultHandler: PXOneTapResultHandlerProtocol) {
+    init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?, oneTapResultHandler: PXOneTapResultHandlerProtocol) {
         pxNavigationHandler = checkoutViewModel.pxNavigationHandler
         resultHandler = oneTapResultHandler
         advancedConfig = checkoutViewModel.getAdvancedConfiguration()
@@ -25,7 +25,7 @@ final class OneTapFlow: NSObject, PXFlow {
         model.oneTapFlow = self
     }
 
-    func update(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption) {
+    func update(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
         model = OneTapFlowModel(checkoutViewModel: checkoutViewModel, search: search, paymentOptionSelected: paymentOptionSelected)
         model.oneTapFlow = self
     }

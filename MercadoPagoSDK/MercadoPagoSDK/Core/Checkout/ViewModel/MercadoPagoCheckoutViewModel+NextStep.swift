@@ -265,6 +265,11 @@ extension MercadoPagoCheckoutViewModel {
             updateCheckoutModel(paymentOptionSelected: paymentMethodSelected)
             return true
         }
+
+        if let oneTap = search.oneTap, !oneTap.isEmpty {
+            return true
+        }
+
         return false
     }
 

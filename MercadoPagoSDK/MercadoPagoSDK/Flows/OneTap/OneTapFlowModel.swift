@@ -21,7 +21,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     internal var siteId: String = ""
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
-    var paymentOptionSelected: PaymentMethodOption
+    var paymentOptionSelected: PaymentMethodOption?
     let search: PXInitDTO
     var readyToPay: Bool = false
     var paymentResult: PaymentResult?
@@ -54,7 +54,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
     let paymentConfigurationService: PXPaymentConfigurationServices
 
-    init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption) {
+    init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
         publicKey = checkoutViewModel.publicKey
         privateKey = checkoutViewModel.privateKey
         siteId = checkoutViewModel.checkoutPreference.siteId
@@ -138,7 +138,7 @@ internal extension OneTapFlowModel {
     func updateCheckoutModel(paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) {
         self.paymentData = paymentData
 
-        if splitAccountMoneyEnabled {
+        if splitAccountMoneyEnabled, let paymentOptionSelected = paymentOptionSelected {
             let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionSelected.getId())
 
             // Set total amount to pay with card without discount
@@ -174,6 +174,9 @@ internal extension OneTapFlowModel {
     }
 
     func updateCheckoutModel(payerCost: PXPayerCost) {
+        guard let paymentOptionSelected = paymentOptionSelected else {
+            return
+        }
 
         let isCredits = paymentOptionSelected.getId() == PXPaymentTypes.CONSUMER_CREDITS.rawValue
         if paymentOptionSelected.isCard() || isCredits {
@@ -199,6 +202,10 @@ internal extension OneTapFlowModel {
 
     func needSecurityCode() -> Bool {
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
+            return false
+        }
+
+        guard let paymentOptionSelected = paymentOptionSelected else {
             return false
         }
 

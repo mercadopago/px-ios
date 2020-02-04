@@ -15,11 +15,11 @@ class PXReviewViewModel: NSObject {
 
     private weak var escProtocol: MercadoPagoESC?
     internal var amountHelper: PXAmountHelper
-    var paymentOptionSelected: PaymentMethodOption
+    var paymentOptionSelected: PaymentMethodOption?
     var advancedConfiguration: PXAdvancedConfiguration
     var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, escProtocol: MercadoPagoESC?) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption?, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, escProtocol: MercadoPagoESC?) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
