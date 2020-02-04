@@ -177,8 +177,8 @@ extension PXOneTapViewController {
             PXLayout.pinBottom(view: footerView, withMargin: bottomMargin).isActive = true
         }
 
-        if let selectedCard = selectedCard, !selectedCard.status.enabled {
-            loadingButtonComponent?.setDisabled()
+        if let selectedCard = selectedCard, (!selectedCard.status.enabled || selectedCard.cardId == nil) {
+            loadingButtonComponent?.setDisabled(animated: false)
         }
 
         view.layoutIfNeeded()
