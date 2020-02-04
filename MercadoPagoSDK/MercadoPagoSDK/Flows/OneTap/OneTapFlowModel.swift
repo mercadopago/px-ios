@@ -193,11 +193,7 @@ internal extension OneTapFlowModel {
             return false
         }
 
-        if paymentData.isComplete(shouldCheckForToken: false) {
-            return true
-        }
-
-        return false
+        return true
     }
 
     func needSecurityCode() -> Bool {
