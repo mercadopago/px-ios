@@ -448,14 +448,22 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
         self.hideBackButton()
         self.hideNavBar()
         self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment)
+
+        if shouldShowKyC() {
+            dismiss(animated: false, completion: nil)
+        }
     }
 
     private func shouldAnimateButton() -> Bool {
+        return !shouldShowKyC()
+    }
+
+    private func shouldShowKyC() -> Bool {
         if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), selectedOfflineMethod.hasAdditionalInfoNeeded,
             let compliant = viewModel.getPayerCompliance()?.offlineMethods.isCompliant, !compliant {
-                return false
+            return true
         }
-        return true
+        return false
     }
 }
 
