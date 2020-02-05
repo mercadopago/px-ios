@@ -8,11 +8,6 @@
 
 #import "MediosOffTableViewController.h"
 
-#ifdef PX_PRIVATE_POD
-    @import MercadoPagoSDKV4;
-#else
-    @import MercadoPagoSDK;
-#endif
 
 @implementation MediosOffTableViewController
 

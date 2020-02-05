@@ -80,7 +80,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         titleLabel.text = text
         titleLabel.numberOfLines = 2
         titleLabel.lineBreakMode = .byTruncatingTail
-        titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
+        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.M_FONT)
         titleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
         titleLabel.textAlignment = .center
         titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -95,7 +95,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         subTitleLabel.numberOfLines = 1
         subTitleLabel.lineBreakMode = .byTruncatingTail
         subTitleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        subTitleLabel.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        subTitleLabel.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT)
         subTitleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
         subTitleLabel.textAlignment = .center
         return subTitleLabel

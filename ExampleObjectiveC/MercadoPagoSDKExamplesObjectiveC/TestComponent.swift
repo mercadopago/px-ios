@@ -8,12 +8,6 @@
 
 import UIKit
 
-#if PX_PRIVATE_POD
-    import MercadoPagoSDKV4
-#else
-    import MercadoPagoSDK
-#endif
-
 @objcMembers public class TestComponent: NSObject {
     public func getView(text: String = "Custom Component", color: UIColor = .white) -> UIView {
         let frame = CGRect(x: 0, y: 0, width: 500, height: 100)

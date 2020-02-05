@@ -9,13 +9,6 @@
 #import "SimpleVaultViewController.h"
 #import "SimpleVaultFormViewController.h"
 
-
-#ifdef PX_PRIVATE_POD
-    @import MercadoPagoSDKV4;
-#else
-    @import MercadoPagoSDK;
-#endif
-
 @interface SimpleVaultViewController ()
 
 @end
@@ -47,12 +40,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPPaymentMethodSelection"];
-    
-    UIImageView* pmIcon = [cell viewWithTag:1];
-    
-    UILabel *pmTitle = [cell viewWithTag:2];
     
     return cell;
 }
@@ -70,11 +58,6 @@
     // Pass the selected object to the new view controller.
     SimpleVaultFormViewController *simpleFormVc= (SimpleVaultFormViewController*) [segue destinationViewController];
     simpleFormVc.allowInstallmentsSelection = self.allowInstallmentsSelection;
-    
-
 }
-
-
-
 
 @end

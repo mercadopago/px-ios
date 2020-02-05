@@ -103,26 +103,11 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildBodyComponent() -> PXComponentizable? {
-        var pmComponents: [PXComponentizable] = []
-        var helpComponent: PXComponentizable?
-
-        if self.businessResult.mustShowPaymentMethod() {
-            pmComponents = getPaymentMethodComponents()
+        guard let helpComponent = getHelpMessageComponent() else {
+            return nil
         }
 
-        if self.businessResult.getHelpMessage() != nil {
-            helpComponent = getHelpMessageComponent()
-        }
-
-        return PXBusinessResultBodyComponent(paymentMethodComponents: pmComponents, helpMessageComponent: helpComponent, creditsExpectationView: getCreditsExpectationView())
-    }
-
-    func getCreditsExpectationView() -> PXCreditsExpectationView? {
-        if let resultInfo = self.amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo, self.businessResult.isApproved() {
-            let props = PXCreditsExpectationProps(title: resultInfo.title, subtitle: resultInfo.subtitle)
-            return PXCreditsExpectationView(props: props)
-        }
-        return nil
+        return PXBusinessResultBodyComponent(helpMessageComponent: helpComponent)
     }
 
     func getHelpMessageComponent() -> PXErrorComponent? {
@@ -314,15 +299,11 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func hasInstructions() -> Bool {
-        let bodyComponent = buildBodyComponent() as? PXBodyComponent
-        return bodyComponent?.hasInstructions() ?? false
+        return false
     }
 
     func getInstructionsView() -> UIView? {
-        guard let bodyComponent = buildBodyComponent() as? PXBodyComponent, bodyComponent.hasInstructions() else {
-            return nil
-        }
-        return bodyComponent.render()
+        return nil
     }
 
     func shouldShowPaymentMethod() -> Bool {
@@ -347,8 +328,8 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func shouldShowErrorBody() -> Bool {
-        let bodyComponent = buildBodyComponent() as? PXBodyComponent
-        return bodyComponent?.hasBodyError() ?? false
+        let bodyComponent = buildBodyComponent()
+        return bodyComponent != nil
     }
 
     func getErrorBodyView() -> UIView? {
@@ -369,6 +350,13 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
 
     func getImportantView() -> UIView? {
         return self.businessResult.getImportantCustomView()
+    }
+
+    func getCreditsExpectationView() -> UIView? {
+        if let resultInfo = self.amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo, self.businessResult.isApproved() {
+            return PXCreditsExpectationView(title: resultInfo.title, subtitle: resultInfo.subtitle)
+        }
+        return nil
     }
 
     func getTopCustomView() -> UIView? {

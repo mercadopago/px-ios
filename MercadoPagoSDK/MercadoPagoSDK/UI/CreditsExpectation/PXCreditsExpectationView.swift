@@ -8,56 +8,78 @@
 
 import Foundation
 
-final class PXCreditsExpectationView: PXBodyView {
+final class PXCreditsExpectationView: UIView {
 
-    let TITLE_FONT_SIZE: CGFloat = PXLayout.M_FONT
-    let SUBTITLE_FONT_SIZE: CGFloat = PXLayout.XS_FONT
+    let title: String
+    let subtitle: String
 
+    // Constants
+    let TITLE_FONT_SIZE: CGFloat = PXLayout.XS_FONT
+    let SUBTITLE_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
+
+    // Variables
     var titleLabel: UILabel?
     var subtitleLabel: UILabel?
-    let props: PXCreditsExpectationProps
 
-    init(props: PXCreditsExpectationProps) {
-        self.props = props
-        super.init()
-        createSubviews()
+    init(title: String, subtitle: String) {
+        self.title = title
+        self.subtitle = subtitle
+        super.init(frame: .zero)
+        render()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
-    func createSubviews() {
-        self.backgroundColor = .white
-        self.translatesAutoresizingMaskIntoConstraints = false
+// MARK: Privates
+private extension PXCreditsExpectationView {
+    func render() {
+        backgroundColor = .white
+        translatesAutoresizingMaskIntoConstraints = false
 
         // Title
-        let title = UILabel()
-        title.translatesAutoresizingMaskIntoConstraints = false
-        self.titleLabel = title
-        self.addSubview(title)
-        title.font = Utils.getLightFont(size: TITLE_FONT_SIZE)
-        title.text = props.title
-        title.textColor = .px_grayDark()
-        title.textAlignment = .center
-        title.numberOfLines = 0
-        self.pinFirstSubviewToTop(withMargin: PXLayout.L_MARGIN)?.isActive = true
-        PXLayout.matchWidth(ofView: title, toView: self, withPercentage: CGFloat(60), relation: .equal).isActive = true
-        PXLayout.centerHorizontally(view: title).isActive = true
+        let titleLabel = buildTitle()
+        addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
 
-        //Subtitle
-        let detailLabel = UILabel()
-        detailLabel.numberOfLines = 0
-        detailLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(detailLabel)
-        self.subtitleLabel = detailLabel
-        detailLabel.font = Utils.getLightFont(size: SUBTITLE_FONT_SIZE)
-        detailLabel.text = props.subtitle
-        detailLabel.textColor = .px_grayDark()
-        detailLabel.textAlignment = .center
-        self.putOnBottomOfLastView(view: detailLabel, withMargin: PXLayout.S_MARGIN)?.isActive = true
-        PXLayout.matchWidth(ofView: detailLabel, toView: self, withPercentage: CGFloat(80), relation: .equal).isActive = true
-        PXLayout.centerHorizontally(view: detailLabel).isActive = true
-        self.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
+        // Subtitle
+        let subtitleLabel = buildSubtitle()
+        addSubview(subtitleLabel)
+        NSLayoutConstraint.activate([
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: PXLayout.XXXS_MARGIN),
+            subtitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            subtitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+
+    func buildTitle() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel = label
+        label.font = UIFont.ml_regularSystemFont(ofSize: TITLE_FONT_SIZE)
+        label.text = title
+        label.textColor = UIColor.black.withAlphaComponent(0.8)
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }
+
+    func buildSubtitle() -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel = label
+        label.font = UIFont.ml_regularSystemFont(ofSize: SUBTITLE_FONT_SIZE)
+        label.text = subtitle
+        label.textColor = UIColor.black.withAlphaComponent(0.45)
+        label.textAlignment = .left
+        return label
     }
 }

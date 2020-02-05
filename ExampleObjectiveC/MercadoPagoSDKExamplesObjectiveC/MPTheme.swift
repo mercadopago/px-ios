@@ -8,12 +8,6 @@
 
 import Foundation
 
-#if PX_PRIVATE_POD
-    import MercadoPagoSDKV4
-#else
-    import MercadoPagoSDK
-#endif
-
 @objc final class MPTheme: NSObject, PXTheme {
 
     let primaryColor: UIColor = #colorLiteral(red: 0, green: 0.6117647059, blue: 0.9333333333, alpha: 1)

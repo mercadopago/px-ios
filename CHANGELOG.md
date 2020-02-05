@@ -1,3 +1,10 @@
+# v4.30.2
+🚀Private Release - 4.30.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Business Result help message fix
+- MLFonts fixed on One Tap
+- Discounts dynamic modal
+
 # v4.30.1
 🚀Private Release - 4.30.1 🚀
 MercadoPagoSDKV4 - Private Version
