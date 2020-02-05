@@ -11,6 +11,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
     let viewModel: PXOfflineMethodsViewModel
     var callbackConfirm: ((PXPaymentData, Bool) -> Void)
+    let callbackFinishCheckout: (() -> Void)
     var finishButtonAnimation: (() -> Void)
     var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
     let timeOutPayButton: TimeInterval
@@ -25,11 +26,12 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
     var userDidScroll = false
 
-    init(viewModel: PXOfflineMethodsViewModel, callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOfflineMethodsViewModel, callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), finishButtonAnimation: @escaping (() -> Void), callbackFinishCheckout: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackConfirm = callbackConfirm
         self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
         self.finishButtonAnimation = finishButtonAnimation
+        self.callbackFinishCheckout = callbackFinishCheckout
         self.timeOutPayButton = 15
         super.init(nibName: nil, bundle: nil)
     }
@@ -451,6 +453,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
 
         if shouldShowKyC() {
             dismiss(animated: false, completion: nil)
+            callbackFinishCheckout()
         }
     }
 

@@ -232,8 +232,8 @@ extension PXOneTapViewController {
         loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
         loadingButtonComponent?.animationDelegate = self
         loadingButtonComponent?.layer.cornerRadius = 4
-        loadingButtonComponent?.add(for: .touchUpInside, {
-            self.confirmPayment()
+        loadingButtonComponent?.add(for: .touchUpInside, { [weak self] in
+            self?.confirmPayment()
         })
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
@@ -276,7 +276,9 @@ extension PXOneTapViewController {
 
             let offlineViewModel = PXOfflineMethodsViewModel(offlinePaymentTypes: offlineMethods.paymentTypes, paymentMethods: viewModel.paymentMethods, amountHelper: viewModel.amountHelper, paymentOptionSelected: viewModel.paymentOptionSelected, advancedConfig: viewModel.advancedConfiguration, userLogged: viewModel.userLogged, disabledOption: viewModel.disabledOption, payerCompliance: viewModel.payerCompliance)
 
-            let vc = PXOfflineMethodsViewController(viewModel: offlineViewModel, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, finishButtonAnimation: finishButtonAnimation)
+            let vc = PXOfflineMethodsViewController(viewModel: offlineViewModel, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, finishButtonAnimation: finishButtonAnimation) { [weak self] in
+                    self?.navigationController?.popViewController(animated: false)
+            }
 
             vc.modalPresentationStyle = .formSheet
             self.present(vc, animated: true, completion: nil)
@@ -287,7 +289,7 @@ extension PXOneTapViewController {
         if viewModel.shouldValidateWithBiometric() {
             let biometricModule = PXConfiguratorManager.biometricProtocol
             biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     self?.doPayment()
                 }
                 }, onError: { [weak self] _ in
@@ -371,9 +373,9 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
         if let vc = viewModel.getChargeRuleViewController() {
             let defaultTitle = "Cargos".localized
             let title = vc.title ?? defaultTitle
-            PXComponentFactory.Modal.show(viewController: vc, title: title) {
+            PXComponentFactory.Modal.show(viewController: vc, title: title) { [weak self] in
                 if UIDevice.isSmallDevice() {
-                    self.setupNavigationBar()
+                    self?.setupNavigationBar()
                 }
             }
         }
@@ -559,7 +561,8 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             self?.contentView.layoutIfNeeded()
         })
 
-        self.installmentsSelectorView?.collapse(animator: pxAnimator, completion: {
+        self.installmentsSelectorView?.collapse(animator: pxAnimator, completion: { [weak self] in
+            guard let self = self else { return }
             self.installmentInfoRow?.enableTap()
             self.installmentsSelectorView?.removeFromSuperview()
             self.installmentsSelectorView?.layoutIfNeeded()
