@@ -1,3 +1,9 @@
+# v4.31
+🚀Private Release - 4.31 🚀
+MercadoPagoSDKV4 - Private Version
+- Offline payment methods
+- Consumer credits view in Congrats
+
 # v4.30.2
 🚀Private Release - 4.30.2 🚀
 MercadoPagoSDKV4 - Private Version
