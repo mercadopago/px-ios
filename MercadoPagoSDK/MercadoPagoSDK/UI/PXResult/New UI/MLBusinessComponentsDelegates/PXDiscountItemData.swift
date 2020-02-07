@@ -36,14 +36,7 @@ class PXDiscountItemData: NSObject, MLBusinessSingleItemProtocol {
     }
     
     func eventDataForItem() -> [String : Any]? {
-        var eventData: [String : Any] = [ : ]
-        
-        eventData["title"] = item.title
-        eventData["subtitle"] = item.subtitle
-        eventData["icon"] = item.icon
-        if let target = item.target { eventData["target"] = target }
-        if let campaignId = item.campaingId { eventData["campaignId"] = campaignId }
-
-        return eventData
+        guard let campaignId = item.campaingId else { return nil }
+        return ["tracking_id" : campaignId ]
     }
 }
