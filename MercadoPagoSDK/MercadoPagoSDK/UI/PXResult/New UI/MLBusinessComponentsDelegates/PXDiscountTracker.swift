@@ -17,17 +17,9 @@ public class PXDiscountTracker: NSObject, MLBusinessDiscountTrackerProtocol {
         self.touchPointId = touchPointId
     }
     
-    public func track(action: String, eventData: [[String : Any]]) {
+    public func track(action: String, eventData: [String : Any]) {
         let path = "\(basePath)/\(touchPointId)/\(action)"
-        var properties: [String: Any] = [:]
-        
-        for dictionary in eventData {
-            for item in dictionary {
-                properties[item.key] = item.value
-            }
-        }
-        
-        MPXTracker.sharedInstance.trackEvent(path: path, properties: properties)
+        MPXTracker.sharedInstance.trackEvent(path: path, properties: eventData)
     }
     
 }
