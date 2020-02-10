@@ -239,7 +239,7 @@ internal extension OneTapFlowModel {
     }
 
     func needKyC() -> Bool {
-        return !(search.payerCompliance?.offlineMethods.isCompliant ?? true) && paymentOptionSelected.additionalInfoNeeded?() ?? false
+        return !(search.payerCompliance?.offlineMethods.isCompliant ?? true) && paymentOptionSelected?.additionalInfoNeeded?() ?? false
     }
 
     func needCreatePayment() -> Bool {
