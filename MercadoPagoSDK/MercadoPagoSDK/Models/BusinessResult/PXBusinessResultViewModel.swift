@@ -110,14 +110,6 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return PXBusinessResultBodyComponent(helpMessageComponent: helpComponent)
     }
 
-    func getCreditsExpectationView() -> PXCreditsExpectationView? {
-        if let resultInfo = self.amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo, self.businessResult.isApproved() {
-            let props = PXCreditsExpectationProps(title: resultInfo.title, subtitle: resultInfo.subtitle)
-            return PXCreditsExpectationView(props: props)
-        }
-        return nil
-    }
-
     func getHelpMessageComponent() -> PXErrorComponent? {
         guard let labelInstruction = self.businessResult.getHelpMessage() else {
             return nil
@@ -358,6 +350,13 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
 
     func getImportantView() -> UIView? {
         return self.businessResult.getImportantCustomView()
+    }
+
+    func getCreditsExpectationView() -> UIView? {
+        if let resultInfo = self.amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo, self.businessResult.isApproved() {
+            return PXCreditsExpectationView(title: resultInfo.title, subtitle: resultInfo.subtitle)
+        }
+        return nil
     }
 
     func getTopCustomView() -> UIView? {

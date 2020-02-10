@@ -499,6 +499,20 @@ internal class Utils {
         return paymentMethod[0]
     }
 
+    internal static func findOfflinePaymentMethod(_ paymentMethods: [PXPaymentMethod], offlinePaymentMethod: PXOfflinePaymentMethod) -> PXPaymentMethod {
+        var paymentTypeSelected = ""
+        let paymentMethod = paymentMethods.filter({ (paymentMethod: PXPaymentMethod) -> Bool in
+            if offlinePaymentMethod.getId().lowercased() == paymentMethod.id.lowercased() {
+                paymentTypeSelected = offlinePaymentMethod.instructionId
+                return true
+            }
+            return false
+        })
+
+        paymentMethod[0].paymentTypeId = paymentTypeSelected
+        return paymentMethod[0]
+    }
+
     internal static func getExpirationYearFromLabelText(_ mmyy: String) -> Int {
         let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
         let validInt = Int(stringMMYY)

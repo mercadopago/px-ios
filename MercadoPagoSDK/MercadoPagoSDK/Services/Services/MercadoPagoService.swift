@@ -18,6 +18,7 @@ internal class MercadoPagoService: NSObject {
         case idempotencyKey = "X-Idempotency-Key"
         case density = "x-density"
         case language = "Accept-Language"
+        case platform = "x-platform"
     }
 
     let MP_DEFAULT_TIME_OUT = 15.0
@@ -75,6 +76,9 @@ internal class MercadoPagoService: NSObject {
         if headers?[HeaderField.productId.rawValue] == nil {
             request.setValue(MP_DEFAULT_PRODUCT_ID, forHTTPHeaderField: HeaderField.productId.rawValue)
         }
+
+        // Add platform
+        request.setValue(MLBusinessAppDataService().getAppIdentifier().rawValue, forHTTPHeaderField: HeaderField.platform.rawValue)
 
         if let headers = headers {
             for header in headers {

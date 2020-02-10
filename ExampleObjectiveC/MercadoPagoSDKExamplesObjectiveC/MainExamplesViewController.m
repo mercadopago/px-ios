@@ -23,11 +23,14 @@
 
 
     //BUILDER
-    //  Procesadora
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-d1c95375-5137-4eb7-868e-da3ca8067d79" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+    //  PREF ABIERTA - Procesadora
+//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
-    //  Pago normal
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-c4f42ada-0fea-42a1-9b13-31e67096dcd3" preferenceId:@"272097319-a9040a88-5971-4fcd-92d5-6eeb4612abce"];
+    //  PREF CERRADA - Procesadora
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" preferenceId:@"181794596-79127f41-cf23-4aff-952e-7d8f75121084" paymentConfiguration:[self getPaymentConfiguration]];
+
+    //  PREF CERRADA - SIN PROCESADORA
+//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" preferenceId:@"181794596-79127f41-cf23-4aff-952e-7d8f75121084"];
 
 
     //ACCESS TOKENS

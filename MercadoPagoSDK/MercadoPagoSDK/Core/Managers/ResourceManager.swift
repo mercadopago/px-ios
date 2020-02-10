@@ -34,7 +34,7 @@ extension ResourceManager {
         }
         return bundle.path(forResource: resource, ofType: "plist")
     }
-    
+
     func getDictionaryForResource(named resource: String) -> NSDictionary? {
         guard let path = getBundlePathForPlistResource(named: resource) else {
             return nil

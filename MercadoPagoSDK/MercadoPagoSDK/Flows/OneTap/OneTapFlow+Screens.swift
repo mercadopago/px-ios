@@ -25,9 +25,7 @@ extension OneTapFlow {
             if let card = newPaymentOption as? PXCardSliderViewModel, let newPaymentOptionSelected = self?.getCustomerPaymentOption(forId: card.cardId ?? "") {
                 // Customer card.
                 self?.model.paymentOptionSelected = newPaymentOptionSelected
-            } else if newPaymentOption.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue ||
-                newPaymentOption.getId() == PXPaymentTypes.CONSUMER_CREDITS.rawValue {
-                // AM
+            } else {
                 self?.model.paymentOptionSelected = newPaymentOption
             }
         }
@@ -61,5 +59,9 @@ extension OneTapFlow {
             self?.getTokenizationService().createCardToken(securityCode: securityCode)
         })
         pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
+    }
+
+    func showKyCScreen() {
+        PXDeepLinkManager.open(model.getKyCDeepLink())
     }
 }

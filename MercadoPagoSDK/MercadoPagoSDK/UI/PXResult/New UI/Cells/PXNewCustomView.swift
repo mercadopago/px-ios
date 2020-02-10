@@ -44,10 +44,10 @@ class PXNewCustomView: UIView {
         return PXNewCustomViewData(firstString: nil, secondString: nil, thirdString: nil, icon: nil, iconURL: nil, action: nil, color: nil)
     }
 
-    init(data: PXNewCustomViewData) {
+    init(data: PXNewCustomViewData, bottomView: UIView? = nil) {
         self.data = data
         super.init(frame: .zero)
-        render()
+        render(with: bottomView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -65,7 +65,7 @@ class PXNewCustomView: UIView {
         NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
     ]
 
-    func render() {
+    func render(with bottomView: UIView?) {
         removeAllSubviews()
         let pxContentView = UIView()
         pxContentView.backgroundColor = .clear
@@ -103,7 +103,6 @@ class PXNewCustomView: UIView {
         }
         PXLayout.pinRight(view: labelsView, withMargin: PXLayout.L_MARGIN)
         PXLayout.pinTop(view: labelsView, withMargin: PXLayout.S_MARGIN)
-        PXLayout.pinBottom(view: labelsView, withMargin: PXLayout.S_MARGIN)
 
         // First Label
         if let firstString = data.firstString {
@@ -139,6 +138,22 @@ class PXNewCustomView: UIView {
         }
 
         labelsView.pinLastSubviewToBottom()
+
+        if let expectationView = bottomView {
+            pxContentView.addSubview(expectationView)
+            NSLayoutConstraint.activate([
+                expectationView.leadingAnchor.constraint(equalTo: pxContentView.leadingAnchor, constant: PXLayout.L_MARGIN),
+                expectationView.trailingAnchor.constraint(equalTo: pxContentView.trailingAnchor, constant: -PXLayout.L_MARGIN)
+            ])
+
+            if let iconView = iconView {
+                expectationView.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: PXLayout.S_MARGIN).isActive = true
+            } else {
+                expectationView.topAnchor.constraint(equalTo: labelsView.bottomAnchor, constant: PXLayout.S_MARGIN).isActive = true
+            }
+
+        }
+        PXLayout.pinLastSubviewToBottom(view: pxContentView, withMargin: PXLayout.S_MARGIN)
     }
 
     @objc func actionTapped() {

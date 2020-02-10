@@ -20,6 +20,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
     var expressData: [PXOneTapDto]?
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     var items: [PXItem] = [PXItem]()
+    var payerCompliance: PXPayerCompliance?
 
     var splitPaymentEnabled: Bool = false
     var splitPaymentSelectionByUser: Bool?
@@ -77,22 +78,35 @@ extension PXOneTapViewModel {
 
             // Add New Card
             if let newCard = targetNode.newCard {
-                sliderModel.append(PXCardSliderViewModel("", "", "", EmptyCard(title: newCard.label), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
-            }
+                let newCardData = PXAddNewMethodData(title: newCard.label, subtitle: newCard.descriptionText)
 
+                var newOfflineData: PXAddNewMethodData?
+                if let offlineMethods = targetNode.offlineMethods {
+                    newOfflineData = PXAddNewMethodData(title: offlineMethods.label, subtitle: offlineMethods.descriptionText)
+                }
+
+                let emptyCard = EmptyCard(newCardData: newCardData, newOfflineData: newOfflineData)
+                sliderModel.append(PXCardSliderViewModel("", "", "", emptyCard, nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
+
+            } else if let offlineMethods = targetNode.offlineMethods {
+                var newOfflineData: PXAddNewMethodData?
+                newOfflineData = PXAddNewMethodData(title: offlineMethods.label, subtitle: offlineMethods.descriptionText)
+                let emptyCard = EmptyCard(newCardData: nil, newOfflineData: newOfflineData)
+                sliderModel.append(PXCardSliderViewModel("", "", "", emptyCard, nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil, status: statusConfig, benefits: benefits))
+            }
             //  Account money
-            if let accountMoney = targetNode.accountMoney {
+            if let accountMoney = targetNode.accountMoney, let paymentMethodId = targetNode.paymentMethodId {
                 let displayTitle = accountMoney.cardTitle ?? ""
                 let cardData = PXCardDataFactory().create(cardName: displayTitle, cardNumber: "", cardCode: "", cardExpiration: "")
                 let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(accountMoney.getId())
 
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
+                let viewModelCard = PXCardSliderViewModel(paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
                 let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 viewModelCard.displayMessage = NSAttributedString(string: accountMoney.sliderTitle ?? "", attributes: attributes)
                 sliderModel.append(viewModelCard)
             } else if let targetCardData = targetNode.oneTapCard {
-                if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
+                if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration, let paymentMethodId = targetNode.paymentMethodId {
 
                     let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: targetCardData.cardUI?.cardPattern)
 
@@ -109,7 +123,7 @@ extension PXOneTapViewModel {
                         templateCard.cardFontColor = cardFontColor.hexToUIColor()
                     }
 
-                    if let paymentMethodImage = ResourceManager.shared.getPaymentMethodCardImage(paymentMethodId: targetNode.paymentMethodId.lowercased()) {
+                    if let paymentMethodId = targetNode.paymentMethodId, let paymentMethodImage = ResourceManager.shared.getPaymentMethodCardImage(paymentMethodId: paymentMethodId.lowercased()) {
                         templateCard.cardLogoImage = paymentMethodImage
                     }
 
@@ -146,18 +160,18 @@ extension PXOneTapViewModel {
 
                     let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment)
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
+                    let viewModelCard = PXCardSliderViewModel(paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
 
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
-            } else if let consumerCredits = targetNode.oneTapCreditsInfo, let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(targetNode.paymentMethodId) {
+            } else if let consumerCredits = targetNode.oneTapCreditsInfo, let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(targetNode.paymentMethodId), let paymentMethodId = targetNode.paymentMethodId {
 
                 let cardData = PXCardDataFactory().create(cardName: "", cardNumber: "", cardCode: "", cardExpiration: "")
 
                 let creditsViewModel = PXCreditsViewModel(consumerCredits)
 
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", ConsumerCreditsCard(creditsViewModel, isDisabled: !targetNode.status.enabled), cardData, amountConfiguration.payerCosts ?? [], amountConfiguration.selectedPayerCost, "", true, amountConfiguration: amountConfiguration, creditsViewModel: creditsViewModel, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
+                let viewModelCard = PXCardSliderViewModel(paymentMethodId, targetNode.paymentTypeId, "", ConsumerCreditsCard(creditsViewModel, isDisabled: !targetNode.status.enabled), cardData, amountConfiguration.payerCosts ?? [], amountConfiguration.selectedPayerCost, "", true, amountConfiguration: amountConfiguration, creditsViewModel: creditsViewModel, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
 
                 sliderModel.append(viewModelCard)
             }
@@ -438,5 +452,17 @@ extension PXOneTapViewModel {
         return advancedConfiguration.dynamicViewControllersConfiguration.filter({
             $0.position(store: PXCheckoutStore.sharedInstance) == .DID_TAP_ONETAP_HEADER
         }).first?.viewController(store: PXCheckoutStore.sharedInstance)
+    }
+
+    func getOfflineMethods() -> PXOfflineMethods? {
+        guard let expressData = expressData else {
+            return nil
+        }
+        for node in expressData {
+            if let offlineMethods = node.offlineMethods {
+                return offlineMethods
+            }
+        }
+        return nil
     }
 }

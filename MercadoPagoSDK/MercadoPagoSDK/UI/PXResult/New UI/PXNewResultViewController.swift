@@ -370,8 +370,11 @@ extension PXNewResultViewController {
             return nil
         }
 
-        let view = PXNewCustomView(data: data)
-        return view
+        if paymentData.paymentMethod?.id == "consumer_credits", let creditsExpectationView = viewModel.getCreditsExpectationView() {
+            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
+        }
+
+        return PXNewCustomView(data: data)
     }
 
     //SPLIT PAYMENT METHOD

@@ -20,10 +20,12 @@ final class PXInitDTO: NSObject, Decodable {
     public var availablePaymentMethods: [PXPaymentMethod] = []
     public var selectedDiscountConfiguration: PXDiscountConfiguration?
     public var experiments: [PXExperiment]?
+    public var payerCompliance: PXPayerCompliance?
 
-    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod], experiments: [PXExperiment]?) {
+    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod], experiments: [PXExperiment]?, payerCompliance: PXPayerCompliance?) {
         self.preference = preference
         self.oneTap = oneTap
+        self.payerCompliance = payerCompliance
         self.currency = currency
         self.site = site
         self.generalCoupon = generalCoupon
@@ -41,6 +43,7 @@ final class PXInitDTO: NSObject, Decodable {
     enum CodingKeys: String, CodingKey {
         case preference
         case oneTap = "one_tap"
+        case payerCompliance = "payer_compliance"
         case currency
         case site
         case generalCoupon = "general_coupon"
@@ -72,8 +75,11 @@ final class PXInitDTO: NSObject, Decodable {
     func getPaymentMethodInExpressCheckout(targetId: String) -> (found: Bool, expressNode: PXOneTapDto?) {
         guard let expressResponse = oneTap else { return (false, nil) }
         for expressNode in expressResponse {
+            guard let paymentMethodId = expressNode.paymentMethodId else {
+                return (false, nil)
+            }
             let cardCaseCondition = expressNode.oneTapCard != nil && expressNode.oneTapCard?.cardId == targetId
-            let creditsCaseCondition = PXPaymentTypes(rawValue:expressNode.paymentMethodId) == PXPaymentTypes.CONSUMER_CREDITS
+            let creditsCaseCondition = PXPaymentTypes(rawValue:paymentMethodId) == PXPaymentTypes.CONSUMER_CREDITS
             if cardCaseCondition || creditsCaseCondition {
                 return (true, expressNode)
             }

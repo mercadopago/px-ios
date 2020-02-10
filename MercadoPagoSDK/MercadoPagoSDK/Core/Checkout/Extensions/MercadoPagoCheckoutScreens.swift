@@ -299,7 +299,6 @@ extension MercadoPagoCheckout {
         }
 
         viewModel.onetapFlow?.setCustomerPaymentMethods(viewModel.customPaymentOptions)
-        viewModel.onetapFlow?.setPaymentMethodPlugins(viewModel.paymentMethodPlugins)
         viewModel.onetapFlow?.setPaymentFlow(paymentFlow: paymentFlow)
 
         if shouldUpdateOnetapFlow() {

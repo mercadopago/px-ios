@@ -64,6 +64,9 @@ protocol PXNewResultViewModelInterface {
     ////IMPORTANT
     func getImportantView() -> UIView?
 
+    //CONSUMER CREDITS EXPECTATION VIEW
+    func getCreditsExpectationView() -> UIView?
+
     ////TOP CUSTOM
     func getTopCustomView() -> UIView?
 

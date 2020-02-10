@@ -49,11 +49,13 @@ extension PXCardSlider: FSPagerViewDataSource {
                 // Add new card scenario.
                 if let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
 
-                    var title: PXText?
+                    var newCardData: PXAddNewMethodData?
+                    var newOfflineData: PXAddNewMethodData?
                     if let emptyCard = targetModel.cardUI as? EmptyCard {
-                        title = emptyCard.title
+                        newCardData = emptyCard.newCardData
+                        newOfflineData = emptyCard.newOfflineData
                     }
-                    cell.renderEmptyCard(title: title, cardSize: pagerView.itemSize)
+                    cell.renderEmptyCard(newCardData: newCardData, newOfflineData: newOfflineData, cardSize: pagerView.itemSize, delegate: self)
                     return cell
                 }
             }
@@ -65,6 +67,17 @@ extension PXCardSlider: FSPagerViewDataSource {
         if let currentCell = pagerView.cellForItem(at: index) as? PXCardSliderPagerCell {
             currentCell.showBottomMessageView(index == targetIndex)
         }
+    }
+}
+
+// MARK: Add new methods delegate
+extension PXCardSlider: AddNewMethodCardDelegate {
+    func addNewCard() {
+        delegate?.addNewCardDidTap()
+    }
+
+    func addNewOfflineMethod() {
+        delegate?.addNewOfflineDidTap()
     }
 }
 
@@ -100,10 +113,6 @@ extension PXCardSlider: FSPagerViewDelegate {
 
             if !modelData.status.enabled {
                 delegate?.disabledCardDidTap(status: modelData.status)
-            }
-
-            if modelData.cardData == nil {
-                delegate?.addPaymentMethodCardDidTap()
             }
         }
     }

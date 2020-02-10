@@ -14,6 +14,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         case screenReviewOneTap
         case screenSecurityCode
         case serviceCreateESCCardToken
+        case screenKyC
         case payment
     }
     internal var publicKey: String = ""
@@ -29,7 +30,6 @@ final internal class OneTapFlowModel: PXFlowModel {
     var pointsAndDiscounts: PXPointsAndDiscounts?
     var businessResult: PXBusinessResult?
     var customerPaymentOptions: [CustomerPaymentMethod]?
-    var paymentMethodPlugins: [PXPaymentMethodPlugin]?
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
 
@@ -57,7 +57,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
         publicKey = checkoutViewModel.publicKey
         privateKey = checkoutViewModel.privateKey
-        siteId = checkoutViewModel.checkoutPreference.siteId
+        siteId = checkoutViewModel.search?.site.id ?? ""
         paymentData = checkoutViewModel.paymentData.copy() as? PXPaymentData ?? checkoutViewModel.paymentData
         checkoutPreference = checkoutViewModel.checkoutPreference
         self.search = search
@@ -91,6 +91,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
         if needCreateESCToken() {
             return .serviceCreateESCCardToken
+        }
+        if needKyC() {
+            return .screenKyC
         }
         if needCreatePayment() {
             return .payment
@@ -126,6 +129,7 @@ internal extension OneTapFlowModel {
         viewModel.siteId = siteId
         viewModel.excludedPaymentTypeIds = checkoutPreference.getExcludedPaymentTypesIds()
         viewModel.expressData = search.oneTap
+        viewModel.payerCompliance = search.payerCompliance
         viewModel.paymentMethods = search.availablePaymentMethods
         viewModel.items = checkoutPreference.items
         viewModel.additionalInfoSummary = checkoutPreference.pxAdditionalInfo?.pxSummary
@@ -234,6 +238,10 @@ internal extension OneTapFlowModel {
         return savedCardWithESC
     }
 
+    func needKyC() -> Bool {
+        return !(search.payerCompliance?.offlineMethods.isCompliant ?? true) && paymentOptionSelected.additionalInfoNeeded?() ?? false
+    }
+
     func needCreatePayment() -> Bool {
         if !readyToPay {
             return false
@@ -268,4 +276,7 @@ internal extension OneTapFlowModel {
         return 0
     }
 
+    func getKyCDeepLink() -> String? {
+        return search.payerCompliance?.offlineMethods.turnComplianceDeepLink
+    }
 }

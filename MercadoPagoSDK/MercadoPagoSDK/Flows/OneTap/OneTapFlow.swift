@@ -52,6 +52,8 @@ final class OneTapFlow: NSObject, PXFlow {
             self.showSecurityCodeScreen()
         case .serviceCreateESCCardToken:
             self.getTokenizationService().createCardToken()
+        case .screenKyC:
+            self.showKyCScreen()
         case .payment:
             self.startPaymentFlow()
         case .finish:
@@ -94,10 +96,6 @@ final class OneTapFlow: NSObject, PXFlow {
 
     func setCustomerPaymentMethods(_ customPaymentMethods: [CustomerPaymentMethod]?) {
         model.customerPaymentOptions = customPaymentMethods
-    }
-
-    func setPaymentMethodPlugins(_ plugins: [PXPaymentMethodPlugin]?) {
-        model.paymentMethodPlugins = plugins
     }
 
     func needSecurityCodeValidation() -> Bool {

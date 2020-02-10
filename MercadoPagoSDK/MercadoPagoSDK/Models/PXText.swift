@@ -67,13 +67,13 @@ public class PXText: Codable {
         // Add font attribute
         switch weight {
         case "regular":
-            attributes[.font] = Utils.getFont(size: fontSize)
+            attributes[.font] = UIFont.ml_regularSystemFont(ofSize: fontSize)
         case "semi_bold":
-            attributes[.font] = Utils.getSemiBoldFont(size: fontSize)
+            attributes[.font] = UIFont.ml_semiboldSystemFont(ofSize: fontSize)
         case "light":
-            attributes[.font] = Utils.getLightFont(size: fontSize)
+            attributes[.font] = UIFont.ml_lightSystemFont(ofSize: fontSize)
         default:
-            attributes[.font] = Utils.getFont(size: fontSize)
+            attributes[.font] = UIFont.ml_regularSystemFont(ofSize: fontSize)
         }
 
         return NSAttributedString(string: message, attributes: attributes)
