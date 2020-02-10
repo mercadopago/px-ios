@@ -261,7 +261,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, customPaymentOptions: customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, amountHelper: amountHelper) {
+        if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, customPaymentOptions: customPaymentOptions, amountHelper: amountHelper) {
             updateCheckoutModel(paymentOptionSelected: paymentMethodSelected)
             return true
         }

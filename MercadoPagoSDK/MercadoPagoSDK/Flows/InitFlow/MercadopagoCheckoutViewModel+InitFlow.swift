@@ -15,7 +15,6 @@ extension MercadoPagoCheckoutViewModel {
         let initFlowProperties: InitFlowProperties
         initFlowProperties.checkoutPreference = checkoutPreference
         initFlowProperties.paymentData = paymentData
-        initFlowProperties.paymentMethodPlugins = paymentMethodPlugins
         initFlowProperties.paymentPlugin = paymentPlugin
         initFlowProperties.paymentMethodSearchResult = search
         initFlowProperties.chargeRules = chargeRules
@@ -59,7 +58,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func updateInitFlow() {
-        initFlow?.updateModel(paymentPlugin: self.paymentPlugin, paymentMethodPlugins: self.paymentMethodPlugins, chargeRules: self.chargeRules)
+        initFlow?.updateModel(paymentPlugin: self.paymentPlugin, chargeRules: self.chargeRules)
     }
 
     func configureBiometricModule() {

@@ -22,12 +22,8 @@ final class InitFlow {
         PXTrackingStore.sharedInstance.cleanChoType()
     }
 
-    func updateModel(paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin]?, chargeRules: [PXPaymentTypeChargeRule]?) {
-        var pmPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
-        if let targetPlugins = paymentMethodPlugins {
-            pmPlugins = targetPlugins
-        }
-        initFlowModel.update(paymentPlugin: paymentPlugin, paymentMethodPlugins: pmPlugins, chargeRules: chargeRules)
+    func updateModel(paymentPlugin: PXSplitPaymentProcessor?, chargeRules: [PXPaymentTypeChargeRule]?) {
+        initFlowModel.update(paymentPlugin: paymentPlugin, chargeRules: chargeRules)
     }
 
     deinit {

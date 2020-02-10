@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PXInitDTO?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, escManager: MercadoPagoESC?, privateKey: String?, productId: String?)
+internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodSearchResult: PXInitDTO?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, escManager: MercadoPagoESC?, privateKey: String?, productId: String?)
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?, apiException: ApiException?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
@@ -24,7 +24,6 @@ final class InitFlowModel: NSObject, PXFlowModel {
     }
 
     private var preferenceValidated: Bool = false
-    private var needPaymentMethodPluginInit = true
     private var directDiscountSearchStatus: Bool
     private var flowError: InitFlowError?
     private var pendingRetryStep: Steps?
@@ -41,9 +40,8 @@ final class InitFlowModel: NSObject, PXFlowModel {
         super.init()
     }
 
-    func update(paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], chargeRules: [PXPaymentTypeChargeRule]?) {
+    func update(paymentPlugin: PXSplitPaymentProcessor?, chargeRules: [PXPaymentTypeChargeRule]?) {
         properties.paymentPlugin = paymentPlugin
-        properties.paymentMethodPlugins = paymentMethodPlugins
         properties.chargeRules = chargeRules
     }
 }
@@ -79,10 +77,6 @@ extension InitFlowModel {
 
     func removePendingRetry() {
         pendingRetryStep = nil
-    }
-
-    func paymentMethodPluginDidLoaded() {
-        needPaymentMethodPluginInit = false
     }
 
     func getExcludedPaymentTypesIds() -> [String] {

@@ -109,34 +109,24 @@ extension OneTapFlow {
     ///
     /// - Parameters:
     ///   - search: payment method search item
-    ///   - paymentMethodPlugins: payment Methods plugins that can be show
     /// - Returns: selected payment option if possible
-    static func autoSelectOneTapOption(search: PXInitDTO, customPaymentOptions: [CustomerPaymentMethod]?, paymentMethodPlugins: [PXPaymentMethodPlugin], amountHelper: PXAmountHelper) -> PaymentMethodOption? {
+    static func autoSelectOneTapOption(search: PXInitDTO, customPaymentOptions: [CustomerPaymentMethod]?, amountHelper: PXAmountHelper) -> PaymentMethodOption? {
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
-            // Check if can autoselect plugin
-            let paymentMethodPluginsFound = paymentMethodPlugins.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
-                return paymentMethodPlugin.getId() == search.oneTap?.first?.paymentMethodId
+            // Check if can autoselect customer card
+            guard let customerPaymentMethods = customPaymentOptions else {
+                return nil
             }
-            if let paymentMethodPlugin = paymentMethodPluginsFound.first {
-                selectedPaymentOption = paymentMethodPlugin
-            } else {
 
-                // Check if can autoselect customer card
-                guard let customerPaymentMethods = customPaymentOptions else {
-                    return nil
-                }
-
-                if let suggestedAccountMoney = search.oneTap?.first?.accountMoney {
-                    selectedPaymentOption = suggestedAccountMoney
-                } else if let firstPaymentMethodId = search.oneTap?.first?.paymentMethodId {
-                    let customOptionsFound = customerPaymentMethods.filter { return $0.getPaymentMethodId() == firstPaymentMethodId }
-                    if let customerPaymentMethod = customOptionsFound.first {
-                        // Check if one tap response has payer costs
-                        if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode,
-                            let selected = selectPaymentMethod(expressNode: expressNode, customerPaymentMethod: customerPaymentMethod, amountHelper: amountHelper) {
-                            selectedPaymentOption = selected
-                        }
+            if let suggestedAccountMoney = search.oneTap?.first?.accountMoney {
+                selectedPaymentOption = suggestedAccountMoney
+            } else if let firstPaymentMethodId = search.oneTap?.first?.paymentMethodId {
+                let customOptionsFound = customerPaymentMethods.filter { return $0.getPaymentMethodId() == firstPaymentMethodId }
+                if let customerPaymentMethod = customOptionsFound.first {
+                    // Check if one tap response has payer costs
+                    if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode,
+                        let selected = selectPaymentMethod(expressNode: expressNode, customerPaymentMethod: customerPaymentMethod, amountHelper: amountHelper) {
+                        selectedPaymentOption = selected
                     }
                 }
             }
