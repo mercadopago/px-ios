@@ -139,19 +139,14 @@ extension PXResultViewModel {
     }
 
     func getFlowBehaviourResult() -> PXResultKey {
-        switch paymentResult.status {
-        case PXPayment.Status.APPROVED:
+        let isApprovedOfflinePayment = PXPayment.Status.PENDING.elementsEqual(paymentResult.status) && PXPayment.StatusDetails.PENDING_WAITING_PAYMENT.elementsEqual(paymentResult.statusDetail)
+
+        if paymentResult.isApproved() || isApprovedOfflinePayment {
             return .SUCCESS
-        case PXPayment.Status.REJECTED:
+        } else if paymentResult.isRejected() {
             return .FAILURE
-        case PXPayment.Status.PENDING:
+        } else {
             return .PENDING
-        case PXPayment.Status.IN_PROCESS:
-            return .PENDING
-        case PXPayment.Status.RECOVERY:
-            return .PENDING
-        default:
-            return .SUCCESS
         }
     }
 
