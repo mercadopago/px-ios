@@ -49,6 +49,19 @@ extension PXBusinessResultViewModel {
         return screenPath
     }
 
+    func getFlowBehaviourResult() -> PXResultKey {
+        switch businessResult.getBusinessStatus() {
+        case .APPROVED:
+            return .SUCCESS
+        case .REJECTED:
+            return .FAILURE
+        case .PENDING:
+            return .PENDING
+        case .IN_PROGRESS:
+            return .PENDING
+        }
+    }
+
     func getFooterPrimaryActionTrackingPath() -> String {
         let paymentStatus = businessResult.paymentStatus
         var screenPath = ""
