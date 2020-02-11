@@ -140,7 +140,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.paymentData.payer = self.checkoutPreference.getPayer()
         }
 
-        escManager = PXESCManager(enabled: getAdvancedConfiguration().escEnabled, sessionId: MPXTracker.sharedInstance.getSessionID(), flow: MPXTracker.sharedInstance.getFlowName() ?? "PX")
+        escManager = PXESCManager(enabled: getAdvancedConfiguration().isESCEnabled(), sessionId: MPXTracker.sharedInstance.getSessionID(), flow: MPXTracker.sharedInstance.getFlowName() ?? "PX")
 
         // Create Init Flow
         createInitFlow()
@@ -310,7 +310,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethods[0])
         self.cardToken = cardToken
         // Sets if esc is enabled to card token
-        self.cardToken?.setRequireESC(escEnabled: advancedConfig.escEnabled)
+        self.cardToken?.setRequireESC(escEnabled: getAdvancedConfiguration().isESCEnabled())
     }
 
     //CREDIT_DEBIT
@@ -802,7 +802,7 @@ extension MercadoPagoCheckoutViewModel {
         if self.paymentData.isComplete() {
             readyToPay = true
             if let cardId = paymentData.getToken()?.cardId, cardId.isNotEmpty {
-                savedESCCardToken = PXSavedESCCardToken(cardId: cardId, esc: nil, requireESC: advancedConfig.escEnabled)
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardId, esc: nil, requireESC: getAdvancedConfiguration().isESCEnabled())
                 escManager?.deleteESC(cardId: cardId)
             }
         }

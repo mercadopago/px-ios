@@ -27,7 +27,8 @@ open class PXAdvancedConfiguration: NSObject {
      If set as true, then saved cards will try to use ESC feature.
      If set as false, then security code will be always asked.
      */
-    open var escEnabled: Bool = false
+    @available(*, deprecated)
+    open var escEnabled: Bool = true
 
     /**
      Add the possibility to enabled/disabled express checkout.
@@ -78,5 +79,9 @@ open class PXAdvancedConfiguration: NSObject {
      */
     open func setProductId(id: String) {
         self.productId = id
+    }
+
+    internal func isESCEnabled() -> Bool {
+        return true
     }
 }

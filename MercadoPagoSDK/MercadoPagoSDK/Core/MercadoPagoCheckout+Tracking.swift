@@ -21,7 +21,7 @@ extension MercadoPagoCheckout {
         properties["checkout_preference"] = viewModel.checkoutPreference.getCheckoutPrefForTracking()
         }
 
-        properties["esc_enabled"] = viewModel.getAdvancedConfiguration().escEnabled
+        properties["esc_enabled"] = viewModel.getAdvancedConfiguration().isESCEnabled()
         properties["express_enabled"] = viewModel.getAdvancedConfiguration().expressEnabled
 
         viewModel.populateCheckoutStore()
