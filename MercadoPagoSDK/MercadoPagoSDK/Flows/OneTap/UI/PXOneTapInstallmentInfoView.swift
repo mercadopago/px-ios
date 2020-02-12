@@ -17,11 +17,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     private var tapEnabled = true
 
     weak var delegate: PXOneTapInstallmentInfoViewProtocol?
-    var model: [PXOneTapInstallmentInfoViewModel]? {
-        didSet {
-            pagerView.reloadData()
-        }
-    }
+    private var model: [PXOneTapInstallmentInfoViewModel]?
 }
 
 // MARK: Privates
@@ -105,7 +101,6 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
             PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
         }
 
-
         if !itemModel.status.enabled {
             let helperIcon = ResourceManager.shared.getImage("helper_ico_blue")
             let helperImageView = UIImageView(image: helperIcon)
@@ -153,6 +148,11 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
 
 // MARK: Publics
 extension PXOneTapInstallmentInfoView {
+    func update(model: [PXOneTapInstallmentInfoViewModel]?) {
+        self.model = model
+        pagerView.reloadData()
+    }
+
     func isExpanded() -> Bool {
         return arrowImage.tag != colapsedTag
     }
