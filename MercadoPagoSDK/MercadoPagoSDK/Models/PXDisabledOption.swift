@@ -33,7 +33,7 @@ internal struct PXDisabledOption {
     }
 
     func getStatusFor(statusDetail: String) -> PXStatus? {
-        let mainText = PXText(message: "px_disabled_main_message".localized, backgroundColor: nil, textColor: nil, weight: nil)
+        let mainText = PXText(message: "px_payment_method_disable_title".localized, backgroundColor: nil, textColor: nil, weight: nil)
 
         var secondaryString = ""
 
