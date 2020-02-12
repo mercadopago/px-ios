@@ -23,7 +23,7 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
         titleLabel.attributedText = data.title
         titleLabel.textAlignment = .left
         contentView.addSubview(titleLabel)
-        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         PXLayout.centerVertically(view: titleLabel).isActive = true
 
         let valueLabelsContainer = UIStackView()
