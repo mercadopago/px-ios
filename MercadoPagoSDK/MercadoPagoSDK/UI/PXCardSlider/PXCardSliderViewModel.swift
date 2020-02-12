@@ -82,7 +82,7 @@ extension PXCardSliderViewModel: PaymentMethodOption {
     }
 
     func shouldShowInstallmentsHeader() -> Bool {
-        return !userDidSelectPayerCost
+        return !userDidSelectPayerCost && status.enabled
     }
 
     func getReimbursement() -> PXInstallmentsConfiguration? {
