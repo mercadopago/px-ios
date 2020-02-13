@@ -1,5 +1,5 @@
-# v4.32
-🚀Private Release - 4.32 🚀
+# v4.32.0
+🚀Private Release - 4.32.0 🚀
 MercadoPagoSDKV4 - Private Version
 - ESC Always on
 - One Tap for new and white label users
