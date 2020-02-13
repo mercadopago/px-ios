@@ -1,3 +1,8 @@
+# v4.32.1
+🚀Private Release - 4.32.1 🚀
+MercadoPagoSDKV4 - Private Version
+- MLBusiness Discount Tracker disabled
+
 # v4.32.0
 🚀Private Release - 4.32.0 🚀
 MercadoPagoSDKV4 - Private Version
