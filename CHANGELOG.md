@@ -1,3 +1,14 @@
+# v4.32
+🚀Private Release - 4.32 🚀
+MercadoPagoSDKV4 - Private Version
+- ESC Always on
+- One Tap for new and white label users
+- Consumer credits terms and conditions for MLB
+- MLBusiness Discount Tracker
+- Congrats tracking protocol
+- Translations fixes
+- Minor UI Fixes
+
 # v4.31.1
 🚀Private Release - 4.31.1 🚀
 MercadoPagoSDKV4 - Private Version
