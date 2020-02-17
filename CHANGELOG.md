@@ -1,3 +1,12 @@
+
+# v4.32.2
+🚀Public Release - 4.32.2 🚀
+MercadoPagoSDK - Public Version
+- One Tap for new and white label users
+- ESC Always on
+- Translations fixes
+- Minor UI Fixes
+
 # v4.32.1
 🚀Private Release - 4.32.1 🚀
 MercadoPagoSDKV4 - Private Version
