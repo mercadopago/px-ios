@@ -322,7 +322,7 @@ extension PXReviewViewModel {
         return PXReviewTitleComponent(props: props)
     }
 
-    func buildPayerComponent(action: PXAction) -> PXPayerComponent? {
+    func buildPayerComponent() -> PXPayerComponent? {
 
         if let payer = self.amountHelper.getPaymentData().payer,
             let payerIdType = payer.identification?.type,
@@ -334,7 +334,7 @@ extension PXReviewViewModel {
                         let fulltName = NSAttributedString(string: payerDisplayText)
 
                         let payerIcon = ResourceManager.shared.getImage("MPSDK_review_iconoPayer")
-                        let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor(), separatorColor: ThemeManager.shared.lightTintColor())
+                        let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor(), separatorColor: ThemeManager.shared.lightTintColor())
                         return PXPayerComponent(props: props)
         }
 

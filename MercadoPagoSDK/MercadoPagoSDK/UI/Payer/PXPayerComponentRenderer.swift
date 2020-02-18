@@ -30,7 +30,6 @@ class PXPayerComponentRenderer: NSObject {
         addPayerIcon(component: component)
         addFullName(component: component)
         addIdentification(component: component)
-        addActionButton(component: component)
         addSeparator(component: component)
         return payerView
     }
@@ -76,19 +75,6 @@ class PXPayerComponentRenderer: NSObject {
         payerView.putOnBottomOfLastView(view: identification, withMargin: PXLayout.S_MARGIN)?.isActive = true
         PXLayout.pinLeft(view: identification, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinRight(view: identification, withMargin: PXLayout.S_MARGIN).isActive = true
-    }
-
-    func addActionButton(component: PXPayerComponent) {
-        let actionButton = PXSecondaryButton()
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.buttonTitle = component.props.action.label
-        actionButton.add(for: .touchUpInside, component.props.action.action)
-        payerView.actionButton = actionButton
-        payerView.addSubview(actionButton)
-        payerView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.M_MARGIN)?.isActive = true
-        PXLayout.pinLeft(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
-        PXLayout.pinRight(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
-        actionButton.accessibilityIdentifier = "review_change_payer_action"
     }
 
     func addSeparator(component: PXPayerComponent) {
