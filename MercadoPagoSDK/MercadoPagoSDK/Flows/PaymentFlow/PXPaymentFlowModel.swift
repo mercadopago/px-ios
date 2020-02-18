@@ -160,7 +160,7 @@ internal extension PXPaymentFlowModel {
             }
         } else {
             guard let errorPaymentType = errorPaymentType else {
-                escManager?.deleteESC(token: token)
+                escManager?.deleteESC(token: token, reason: .DEFAULT, detail: nil)
                 return
             }
 
@@ -173,12 +173,12 @@ internal extension PXPaymentFlowModel {
                          PXRejectedStatusDetail.HIGH_RISK,
                          PXRejectedStatusDetail.CALL_FOR_AUTH,
                          PXRejectedStatusDetail.MAX_ATTEMPTS:
-                        escManager?.deleteESC(token: token)
+                        escManager?.deleteESC(token: token, reason: .DEFAULT, detail: nil)
                     default:
                         return
                     }
                 } else {
-                    escManager?.deleteESC(token: token)
+                    escManager?.deleteESC(token: token, reason: .DEFAULT, detail: nil)
                 }
             }
         }

@@ -8,8 +8,29 @@
 
 import Foundation
 
+@objc enum PXESCErrorReason: Int {
+    case INVALID_ESC
+    case INVALID_FINGERPRINT
+    case UNEXPECTED_TOKENIZATION_ERROR
+    case ESC_CAP
+    case REJECTED_PAYMENT
+    // TODO: DELETE
+    case DEFAULT
+
+    func rawReason() -> String {
+        switch self {
+        case .INVALID_ESC: return  "invalid_esc"
+        case .INVALID_FINGERPRINT: return  "invalid_fingerprint"
+        case .UNEXPECTED_TOKENIZATION_ERROR: return  "unexpected_tokenization_error"
+        case .ESC_CAP: return  "esc_cap"
+        case .REJECTED_PAYMENT: return  "rejected_payment"
+        case .DEFAULT: return  "defualt"
+        }
+    }
+}
+
 @objc internal protocol PXPaymentErrorHandlerProtocol: NSObjectProtocol {
-    func escError()
+    func escError(reason: PXESCErrorReason)
     func exitCheckout()
     @objc optional func identificationError()
 }

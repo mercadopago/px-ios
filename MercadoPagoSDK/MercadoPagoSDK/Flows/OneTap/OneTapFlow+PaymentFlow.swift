@@ -58,11 +58,21 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
 }
 
 extension OneTapFlow: PXPaymentErrorHandlerProtocol {
+    func escError(reason: PXESCErrorReason) {
+        model.readyToPay = true
+        model.invalidESC = true
+        if let token = model.paymentData.getToken() {
+            model.escManager?.deleteESC(token: token, reason: .DEFAULT, detail: nil)
+        }
+        model.paymentData.cleanToken()
+        executeNextStep()
+    }
+
     func escError() {
         model.readyToPay = true
         model.invalidESC = true
         if let token = model.paymentData.getToken() {
-            model.escManager?.deleteESC(token: token)
+            model.escManager?.deleteESC(token: token, reason: .DEFAULT, detail: nil)
         }
         model.paymentData.cleanToken()
         executeNextStep()

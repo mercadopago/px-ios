@@ -43,6 +43,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var chargeRules: [PXPaymentTypeChargeRule]?
 
     var invalidESC: Bool = false
+    var invalidESCReason: PXESCErrorReason?
 
     // In order to ensure data updated create new instance for every usage
     internal var amountHelper: PXAmountHelper {

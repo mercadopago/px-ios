@@ -83,7 +83,7 @@ internal class PXESCManager: NSObject, MercadoPagoESC {
         return false
     }
 
-    func deleteESC(cardId: String) {
+    func deleteESC(cardId: String, reason: PXESCErrorReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
                 mLESCManager.deleteESC(cardId: cardId)
@@ -91,7 +91,7 @@ internal class PXESCManager: NSObject, MercadoPagoESC {
         }
     }
 
-    func deleteESC(firstSixDigits: String, lastFourDigits: String) {
+    func deleteESC(firstSixDigits: String, lastFourDigits: String, reason: PXESCErrorReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
             mLESCManager.deleteESC(firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits)
@@ -99,7 +99,7 @@ internal class PXESCManager: NSObject, MercadoPagoESC {
         }
     }
 
-    func deleteESC(token: PXToken) {
+    func deleteESC(token: PXToken, reason: PXESCErrorReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
             if token.hasCardId() {

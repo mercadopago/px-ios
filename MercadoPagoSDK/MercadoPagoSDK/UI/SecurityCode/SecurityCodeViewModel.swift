@@ -63,11 +63,17 @@ internal class SecurityCodeViewModel {
 
     internal enum Reason: String {
         case INVALID_ESC = "invalid_esc"
-        case SAVED_CARD = "saved_card"
         case INVALID_FINGERPRINT = "invalid_fingerprint"
         case UNEXPECTED_TOKENIZATION_ERROR = "unexpected_tokenization_error"
-        case ESC_DISABLED = "esc_disabled"
         case ESC_CAP = "esc_cap"
+        case SAVED_CARD = "saved_card"
+        case ESC_DISABLED = "esc_disabled"
+
+
+
+
+
+        case CALL_FOR_AUTH = "call_for_auth"
     }
 }
 

@@ -47,7 +47,7 @@ internal extension PXPaymentFlow {
 
             // ESC error
             if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
-                self?.paymentErrorHandler?.escError()
+                self?.paymentErrorHandler?.escError(reason: .DEFAULT)
 
                 // Identification number error
             } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
