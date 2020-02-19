@@ -15,7 +15,7 @@ import Foundation
     case ESC_CAP
     case REJECTED_PAYMENT
     // TODO: DELETE
-    case DEFAULT
+    case DEFAULT_REASON
 
     func rawReason() -> String {
         switch self {
@@ -24,7 +24,7 @@ import Foundation
         case .UNEXPECTED_TOKENIZATION_ERROR: return  "unexpected_tokenization_error"
         case .ESC_CAP: return  "esc_cap"
         case .REJECTED_PAYMENT: return  "rejected_payment"
-        case .DEFAULT: return  "defualt"
+        case .DEFAULT_REASON: return  "defualt"
         }
     }
 }
