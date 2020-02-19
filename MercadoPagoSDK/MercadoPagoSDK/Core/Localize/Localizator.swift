@@ -42,12 +42,20 @@ internal extension Localizator {
 // MARK: Getters/ Setters
 internal extension Localizator {
     func setLanguage(language: PXLanguages) {
-        self.language = language.rawValue
+        if language == PXLanguages.PORTUGUESE {
+            self.language = PXLanguages.PORTUGUESE_BRAZIL.rawValue
+        } else {
+            self.language = language.rawValue
+        }
         self.customTrans = nil
     }
 
     func setLanguage(string: String) {
-        self.language = string
+        if string == PXLanguages.PORTUGUESE.rawValue {
+            self.language = PXLanguages.PORTUGUESE_BRAZIL.rawValue
+        } else {
+            self.language = string
+        }
         self.customTrans = nil
     }
 
