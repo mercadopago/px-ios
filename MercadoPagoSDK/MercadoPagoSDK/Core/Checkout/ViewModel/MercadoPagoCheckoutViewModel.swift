@@ -101,7 +101,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var escManager: MercadoPagoESC?
     var invalidESC: Bool = false
-    var invalidESCReason: PXESCErrorReason?
+    var invalidESCReason: PXESCDeleteReason?
 
     // Discounts bussines service.
     var paymentConfigurationService = PXPaymentConfigurationServices()
@@ -799,7 +799,7 @@ extension MercadoPagoCheckoutViewModel {
         hookService.resetHooksToShow()
     }
 
-    func prepareForInvalidPaymentWithESC(reason: PXESCErrorReason) {
+    func prepareForInvalidPaymentWithESC(reason: PXESCDeleteReason) {
         if self.paymentData.isComplete() {
             readyToPay = true
             if let cardId = paymentData.getToken()?.cardId, cardId.isNotEmpty {

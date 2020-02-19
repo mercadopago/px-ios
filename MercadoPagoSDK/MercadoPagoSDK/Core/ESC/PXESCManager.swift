@@ -83,28 +83,28 @@ internal class PXESCManager: NSObject, MercadoPagoESC {
         return false
     }
 
-    func deleteESC(cardId: String, reason: PXESCErrorReason, detail: String?) {
+    func deleteESC(cardId: String, reason: PXESCDeleteReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
-                let deleteESCReason = mlESCManager.MLESCDeleteReason(rawValue: reason.rawReason()) ?? MLESCDeleteReason.DEFAULT
+                let deleteESCReason = mlESCManager.MLESCDeleteReason(rawValue: reason.rawValue) ?? MLESCDeleteReason.DEFAULT
                 mLESCManager.deleteESC(cardId: cardId, reason: deleteESCReason, detail: detail)
             #endif
         }
     }
 
-    func deleteESC(firstSixDigits: String, lastFourDigits: String, reason: PXESCErrorReason, detail: String?) {
+    func deleteESC(firstSixDigits: String, lastFourDigits: String, reason: PXESCDeleteReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
-            let deleteESCReason = mlESCManager.MLESCDeleteReason(rawValue: reason.rawReason()) ?? MLESCDeleteReason.DEFAULT
+            let deleteESCReason = mlESCManager.MLESCDeleteReason(rawValue: reason.rawValue) ?? MLESCDeleteReason.DEFAULT
             mLESCManager.deleteESC(firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, reason: deleteESCReason, detail: detail)
             #endif
         }
     }
 
-    func deleteESC(token: PXToken, reason: PXESCErrorReason, detail: String?) {
+    func deleteESC(token: PXToken, reason: PXESCDeleteReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
-            let deleteESCReason = mlESCManager.MLESCDeleteReason(rawValue: reason.rawReason()) ?? MLESCDeleteReason.DEFAULT
+            let deleteESCReason = mlESCManager.MLESCDeleteReason(rawValue: reason.rawValue) ?? MLESCDeleteReason.DEFAULT
             if token.hasCardId() {
                 mLESCManager.deleteESC(cardId: cardId, reason: deleteESCReason, detail: detail)
             } else {
