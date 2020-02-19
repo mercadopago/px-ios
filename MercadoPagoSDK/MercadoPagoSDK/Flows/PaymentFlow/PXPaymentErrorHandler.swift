@@ -24,7 +24,8 @@ import Foundation
         case .UNEXPECTED_TOKENIZATION_ERROR: return  "unexpected_tokenization_error"
         case .ESC_CAP: return  "esc_cap"
         case .REJECTED_PAYMENT: return  "rejected_payment"
-        case .DEFAULT_REASON: return  "defualt"
+        //DELETE
+        case .DEFAULT_REASON: return  "default"
         }
     }
 }

@@ -68,11 +68,6 @@ internal class SecurityCodeViewModel {
         case ESC_CAP = "esc_cap"
         case SAVED_CARD = "saved_card"
         case ESC_DISABLED = "esc_disabled"
-
-
-
-
-
         case CALL_FOR_AUTH = "call_for_auth"
     }
 }
