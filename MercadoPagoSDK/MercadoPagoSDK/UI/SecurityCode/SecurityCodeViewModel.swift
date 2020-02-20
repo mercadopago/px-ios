@@ -69,10 +69,6 @@ internal class SecurityCodeViewModel {
         case SAVED_CARD = "saved_card"
         case ESC_DISABLED = "esc_disabled"
         case CALL_FOR_AUTH = "call_for_auth"
-
-
-        //DELETE
-        case DEFAULT_REASON = "default_reason"
     }
 }
 
@@ -84,9 +80,9 @@ extension SecurityCodeViewModel {
         }
 
         guard let invalidESCReason = invalidESCReason else {
-            return .DEFAULT_REASON //SAVED CARD?
+            return .SAVED_CARD
         }
-        
+
         switch invalidESCReason {
         case .INVALID_ESC:
             return .INVALID_ESC
@@ -97,7 +93,7 @@ extension SecurityCodeViewModel {
         case .ESC_CAP:
             return .ESC_CAP
         default:
-            return .DEFAULT_REASON //SAVED CARD?
+            return .SAVED_CARD
         }
     }
 }

@@ -145,8 +145,7 @@ extension MercadoPagoCheckout {
     }
 
     func showSecurityCodeScreen() {
-        let securityCodeViewModel = viewModel.getSecurityCodeViewModel()
-        let securityCodeVc = SecurityCodeViewController(viewModel: securityCodeViewModel, collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
+        let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.getSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
             self?.getTokenizationService().createCardToken(securityCode: securityCode)
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToFirstPaymentVault: true)

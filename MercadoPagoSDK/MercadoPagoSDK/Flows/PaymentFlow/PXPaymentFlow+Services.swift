@@ -45,18 +45,23 @@ internal extension PXPaymentFlow {
 
             let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
 
-            // ESC error
-            if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
-                self?.paymentErrorHandler?.escError(reason: .DEFAULT_REASON)
+            guard let apiException = mpError.apiException else {
+                self?.showError(error: mpError)
+                return
+            }
 
-                // Identification number error
-            } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
+            // ESC Errors
+            if apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) {
+                self?.paymentErrorHandler?.escError(reason: .INVALID_ESC)
+            } else if apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
+                self?.paymentErrorHandler?.escError(reason: .INVALID_FINGERPRINT)
+            } else if apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
+                self?.paymentErrorHandler?.escError(reason: .ESC_CAP)
+            } else if apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
                 self?.paymentErrorHandler?.identificationError?()
-
             } else {
                 self?.showError(error: mpError)
             }
-
         })
     }
 
