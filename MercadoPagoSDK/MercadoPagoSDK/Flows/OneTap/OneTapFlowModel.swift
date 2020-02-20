@@ -42,7 +42,6 @@ final internal class OneTapFlowModel: PXFlowModel {
 
     var chargeRules: [PXPaymentTypeChargeRule]?
 
-    var invalidESC: Bool = false
     var invalidESCReason: PXESCDeleteReason?
 
     // In order to ensure data updated create new instance for every usage
@@ -114,12 +113,7 @@ internal extension OneTapFlowModel {
             fatalError("Don't have paymentData to open Security View Controller")
         }
 
-        var reason: SecurityCodeViewModel.Reason
-        if invalidESC {
-            reason = SecurityCodeViewModel.Reason.INVALID_ESC
-        } else {
-            reason = SecurityCodeViewModel.Reason.SAVED_CARD
-        }
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 

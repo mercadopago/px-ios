@@ -36,7 +36,7 @@ extension MercadoPagoCheckout {
     }
 
     func createPayment() {
-        viewModel.invalidESC = false
+        viewModel.invalidESCReason = nil
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
         paymentFlow.setData(amountHelper: viewModel.amountHelper, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
         paymentFlow.start()
