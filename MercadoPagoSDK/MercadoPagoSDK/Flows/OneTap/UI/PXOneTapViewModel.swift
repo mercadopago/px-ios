@@ -127,6 +127,13 @@ extension PXOneTapViewModel {
                         templateCard.cardLogoImage = paymentMethodImage
                     }
 
+                    //***
+//                    if let paymentMethodId = targetNode.paymentMethodId, let paymentMethodImage = ResourceManager.shared.getPaymentMethodCardImage(paymentMethodId: paymentMethodId.lowercased()) {
+//                        templateCard.cardLogoImageUrl = "https://mobile.mercadolibre.com/remote_resources/image/buflo_payment_card_visa-white?density=xxxhdpi&locale=es"
+//                    }
+
+                    //***
+
                     let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(targetCardData.cardId)
                     let defaultEnabledSplitPayment: Bool = amountConfiguration?.splitConfiguration?.splitEnabled ?? false
 
@@ -142,6 +149,7 @@ extension PXOneTapViewModel {
 
                     if let issuerImageName = targetNode.oneTapCard?.cardUI?.issuerImage {
                         templateCard.bankImage = ResourceManager.shared.getIssuerCardImage(issuerImageName: issuerImageName)
+//                        templateCard.bankImageUrl = "https://mobile.mercadolibre.com/remote_resources/image/buflo_payment_card_santander?density=xxxhdpi&locale=es"
                     }
 
                     var showArrow: Bool = true
