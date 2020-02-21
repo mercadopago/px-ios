@@ -571,7 +571,7 @@ internal class Utils {
             timeString = String.SPACE + "a las".localized + String.SPACE + formatterTime.string(from: date) + String.SPACE + "hs".localized
         }
 
-        if Localizator.sharedInstance.getLocalizedID() == "en" {
+        if Localizator.sharedInstance.getLocalizedID() == PXLanguages.ENGLISH.rawValue {
             return formatterMonth.string(from: date).localized + " " + dayString + ", " + formatterYear.string(from: date)
         } else {
             return dayString + " " + "de".localized + " " + formatterMonth.string(from: date).localized.lowercased() + " " + "de".localized + " " + formatterYear.string(from: date) + timeString
