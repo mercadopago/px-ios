@@ -144,3 +144,15 @@
 "px_dialog_detail_payment_method_disable_high_risk" = "Recusamos seu pagamento.";
 "px_dialog_detail_payment_method_disable_black_list" = "Recusamos seu pagamento com este cartão.";
 "px_payment_method_disable_title" = "Não é possível pagar com essa opção";
+"January" = "Janeiro";
+"February" = "Fevereiro";
+"March" = "Março";
+"April" = "Abril";
+"May" = "Maio";
+"June" = "Junho";
+"July" = "Julho";
+"August" = "Agosto";
+"September" = "Setembro";
+"October" = "Outubro";
+"November" = "Novembro";
+"December" = "Dezembro";
