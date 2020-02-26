@@ -266,14 +266,14 @@ extension PXOneTapViewModel {
             // To deprecate. After instore migrate current preferences.
 
             // Title desc from item
-            if let headerTitleStr = item?._description {
+            if let headerTitleStr = item?._description, headerTitleStr.isNotEmpty {
                 headerTitle = headerTitleStr
             } else if let headerTitleStr = item?.title {
                 headerTitle = headerTitleStr
             }
             headerSubtitle = nil
             // Image from item
-            if let headerUrl = item?.getPictureURL() {
+            if let headerUrl = item?.getPictureURL(), headerUrl.isNotEmpty {
                 headerImage = PXUIImage(url: headerUrl)
             }
         }
