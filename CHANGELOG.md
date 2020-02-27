@@ -1,3 +1,10 @@
+# v4.32.5
+🚀Private Release - 4.32.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Pay preference fixes
+- Translations fixes
+- Tracking enhancements
+
 # v4.32.4
 🚀Public Release - 4.32.4 🚀
 MercadoPagoSDK - Public Version
