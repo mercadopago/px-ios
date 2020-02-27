@@ -565,13 +565,22 @@ internal class Utils {
         }
 
         var timeString = ""
+        let language = Localizator.sharedInstance.getLocalizedID()
         if addTime {
             let formatterTime = DateFormatter()
             formatterTime.dateFormat = "HH:mm"
-            timeString = String.SPACE + "a las".localized + String.SPACE + formatterTime.string(from: date) + String.SPACE + "hs".localized
+            if language == PXLanguages.ENGLISH.rawValue {
+                timeString = String.SPACE + "at" + String.SPACE + formatterTime.string(from: date)
+            } else {
+                timeString = String.SPACE + "a las".localized + String.SPACE + formatterTime.string(from: date) + String.SPACE + "hs".localized
+            }
         }
 
-        return dayString + " de ".localized + formatterMonth.string(from: date).localized.lowercased() + " de ".localized + formatterYear.string(from: date) + timeString
+        if language == PXLanguages.ENGLISH.rawValue {
+            return formatterMonth.string(from: date).localized + " " + dayString + ", " + formatterYear.string(from: date) + timeString
+        } else {
+            return dayString + " " + "de".localized + " " + formatterMonth.string(from: date).localized.lowercased() + " " + "de".localized + " " + formatterYear.string(from: date) + timeString
+        }
     }
 
     static func getShortFormatedStringDate(_ date: Date?) -> String? {

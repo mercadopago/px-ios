@@ -81,7 +81,7 @@ internal extension Localizator {
 
 // MARK: Localization Paths
 extension Localizator {
-    private func getLocalizedID() -> String {
+    func getLocalizedID() -> String {
         let bundle = ResourceManager.shared.getBundle() ?? Bundle.main
         let currentLanguage = getLanguage()
         let currentLanguageSeparated = currentLanguage.components(separatedBy: "-").first
