@@ -21,7 +21,7 @@ internal protocol MercadoPagoESC: NSObjectProtocol {
 
     @discardableResult func saveESC(token: PXToken, esc: String) -> Bool
 
-    @objc func deleteESC(cardId: String)
+    func deleteESC(cardId: String)
 
     func deleteESC(firstSixDigits: String, lastFourDigits: String)
 

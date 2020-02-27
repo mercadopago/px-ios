@@ -17,7 +17,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
         self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: payment.getPaymentMethodTypeId())
 
         if payment.getStatusDetail() == PXRejectedStatusDetail.INVALID_ESC.rawValue {
-            self.paymentErrorHandler?.escError(reason: .INVALID_ESC)
+            self.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return
         }
 
@@ -45,7 +45,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
             self.model.handleESCForPayment(status: basePayment.getStatus(), statusDetails: basePayment.getStatusDetail(), errorPaymentType: basePayment.getPaymentMethodTypeId())
 
             if basePayment.getStatusDetail() == PXRejectedStatusDetail.INVALID_ESC.rawValue {
-                self.paymentErrorHandler?.escError(reason: .INVALID_ESC)
+                self.paymentErrorHandler?.escError(reason: .ESC_CAP)
                 return
             }
 
