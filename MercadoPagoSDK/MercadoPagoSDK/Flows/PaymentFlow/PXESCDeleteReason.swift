@@ -11,10 +11,10 @@ import Foundation
     case INVALID_ESC
     case INVALID_FINGERPRINT
     case UNEXPECTED_TOKENIZATION_ERROR
-    case ESC_CAP
     case REJECTED_PAYMENT
-    // TODO: DELETE
-    case DEFAULT_REASON
+    case ESC_CAP
+    case NO_ESC
+    case NO_REASON
 
     public typealias RawValue = String
 
@@ -25,12 +25,12 @@ import Foundation
         case .UNEXPECTED_TOKENIZATION_ERROR: return  "unexpected_tokenization_error"
         case .ESC_CAP: return  "esc_cap"
         case .REJECTED_PAYMENT: return  "rejected_payment"
-        //DELETE
-        case .DEFAULT_REASON: return  "default"
+        case .NO_ESC: return  "no_esc"
+        case .NO_REASON: return  "no_reason"
         }
     }
 
-    public init?(rawValue: RawValue) {
+    public init(rawValue: RawValue) {
         switch rawValue {
         case "invalid_esc":
             self = .INVALID_ESC
@@ -42,10 +42,12 @@ import Foundation
             self = .ESC_CAP
         case "rejected_payment":
             self = .REJECTED_PAYMENT
-        case "default":
-            self = .DEFAULT_REASON
+        case "no_esc":
+            self = .NO_ESC
+        case "no_reason":
+            self = .NO_REASON
         default:
-            return nil
+            self = .NO_REASON
         }
     }
 }
