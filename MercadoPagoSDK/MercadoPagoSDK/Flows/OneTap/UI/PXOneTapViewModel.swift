@@ -268,7 +268,7 @@ extension PXOneTapViewModel {
             // Title desc from item
             if let headerTitleStr = item?._description, headerTitleStr.isNotEmpty {
                 headerTitle = headerTitleStr
-            } else if let headerTitleStr = item?.title {
+            } else if let headerTitleStr = item?.title, headerTitleStr.isNotEmpty {
                 headerTitle = headerTitleStr
             }
             headerSubtitle = nil
