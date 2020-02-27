@@ -62,21 +62,26 @@ internal class SecurityCodeViewModel {
     }
 
     internal enum Reason: String {
+        case SAVED_CARD = "saved_card"
         case INVALID_ESC = "invalid_esc"
         case INVALID_FINGERPRINT = "invalid_fingerprint"
         case UNEXPECTED_TOKENIZATION_ERROR = "unexpected_tokenization_error"
-        case ESC_CAP = "esc_cap"
-        case SAVED_CARD = "saved_card"
         case ESC_DISABLED = "esc_disabled"
+        case ESC_CAP = "esc_cap"
         case CALL_FOR_AUTH = "call_for_auth"
+        case NO_REASON = "no_reason"
     }
 }
 
 // MARK: Static methods
 extension SecurityCodeViewModel {
-    static func getSecurityCodeReason(invalidESCReason: PXESCDeleteReason?, isCallForAuth: Bool = false) -> SecurityCodeViewModel.Reason {
+    static func getSecurityCodeReason(invalidESCReason: PXESCDeleteReason?, isCallForAuth: Bool = false, escEnabled: Bool = true) -> SecurityCodeViewModel.Reason {
         if isCallForAuth {
             return .CALL_FOR_AUTH
+        }
+
+        if !escEnabled {
+            return .ESC_DISABLED
         }
 
         guard let invalidESCReason = invalidESCReason else {
@@ -93,7 +98,7 @@ extension SecurityCodeViewModel {
         case .ESC_CAP:
             return .ESC_CAP
         default:
-            return .SAVED_CARD
+            return .NO_REASON
         }
     }
 }

@@ -278,7 +278,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let cardInformation = self.paymentOptionSelected as? PXCardInformation, let paymentMethod = self.paymentData.paymentMethod else {
             fatalError("Cannot conver payment option selected to CardInformation")
         }
-        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth)
+        let ESCEnabled = escManager?.hasESCEnable() ?? false
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth, escEnabled: ESCEnabled)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
@@ -544,7 +545,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if let esc = token.esc, !String.isNullOrEmpty(esc) {
             escManager?.saveESC(token: token, esc: esc)
         } else {
-            escManager?.deleteESC(token: token, reason: .DEFAULT_REASON, detail: nil)
+            escManager?.deleteESC(token: token, reason: .NO_REASON, detail: nil)
         }
         self.paymentData.updatePaymentDataWith(token: token)
     }

@@ -127,7 +127,7 @@ internal class TokenizationService {
         }, failure: { (error) in
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.trackInvalidESC(error: error, cardId: savedESCCardToken.cardId, esc_length: savedESCCardToken.esc?.count)
-            self.escManager?.deleteESC(cardId: savedESCCardToken.cardId, reason: .DEFAULT_REASON, detail: nil)
+            self.escManager?.deleteESC(cardId: savedESCCardToken.cardId, reason: .NO_REASON, detail: nil)
             self.resultHandler?.finishWithESCError()
         })
     }

@@ -162,7 +162,7 @@ internal extension PXPaymentFlowModel {
             }
         } else {
             guard let errorPaymentType = errorPaymentType else {
-                escManager?.deleteESC(token: token, reason: .DEFAULT_REASON, detail: nil)
+                escManager?.deleteESC(token: token, reason: .NO_REASON, detail: nil)
                 return
             }
 

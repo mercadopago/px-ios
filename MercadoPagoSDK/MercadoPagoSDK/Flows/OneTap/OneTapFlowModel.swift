@@ -113,7 +113,8 @@ internal extension OneTapFlowModel {
             fatalError("Don't have paymentData to open Security View Controller")
         }
 
-        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason)
+        let ESCEnabled = escManager?.hasESCEnable() ?? false
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, escEnabled: ESCEnabled)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
