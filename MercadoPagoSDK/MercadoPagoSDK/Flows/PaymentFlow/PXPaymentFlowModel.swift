@@ -162,14 +162,14 @@ internal extension PXPaymentFlowModel {
             }
         } else {
             guard let errorPaymentType = errorPaymentType else {
-                escManager?.deleteESC(token: token, reason: .NO_REASON, detail: nil)
+                escManager?.deleteESC(token: token)
                 return
             }
 
             // If it has error Payment Type, check if the error was from a card
             if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
                 if let ESCBlacklistedStatus = ESCBlacklistedStatus, ESCBlacklistedStatus.contains(statusDetails) {
-                    escManager?.deleteESC(token: token, reason: .REJECTED_PAYMENT, detail: nil)
+                    escManager?.deleteESC(token: token)
                 }
             }
         }

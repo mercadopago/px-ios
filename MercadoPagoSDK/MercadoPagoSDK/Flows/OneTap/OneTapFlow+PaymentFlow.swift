@@ -62,7 +62,7 @@ extension OneTapFlow: PXPaymentErrorHandlerProtocol {
         model.readyToPay = true
         model.invalidESCReason = reason
         if let token = model.paymentData.getToken() {
-            model.escManager?.deleteESC(token: token, reason: reason, detail: nil)
+            model.escManager?.deleteESC(token: token)
         }
         model.paymentData.cleanToken()
         executeNextStep()
