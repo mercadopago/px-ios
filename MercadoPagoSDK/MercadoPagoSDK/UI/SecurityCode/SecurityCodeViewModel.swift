@@ -9,8 +9,8 @@
 import Foundation
 
 internal class SecurityCodeViewModel {
-    var paymentMethod: PXPaymentMethod!
-    var cardInfo: PXCardInformationForm!
+    var paymentMethod: PXPaymentMethod
+    var cardInfo: PXCardInformationForm
     var reason: Reason
 
     var callback: ((_ cardInformation: PXCardInformationForm, _ securityCode: String) -> Void)?
@@ -118,8 +118,8 @@ extension SecurityCodeViewModel {
         properties["message"] = message
         properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
-        extraDic["payment_method_type"] = paymentMethod?.getPaymentTypeForTracking()
-        extraDic["payment_method_id"] = paymentMethod?.getPaymentIdForTracking()
+        extraDic["payment_method_type"] = paymentMethod.getPaymentTypeForTracking()
+        extraDic["payment_method_id"] = paymentMethod.getPaymentIdForTracking()
         properties["extra_info"] = extraDic
         return properties
     }
