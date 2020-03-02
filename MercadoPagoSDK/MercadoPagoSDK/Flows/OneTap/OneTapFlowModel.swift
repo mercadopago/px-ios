@@ -213,12 +213,18 @@ internal extension OneTapFlowModel {
         let paymentOptionSelectedId = paymentOptionSelected.getId()
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
 
-        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
+        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded {
             if let customOptionSearchItem = search.payerPaymentMethods.first(where: { $0.id == paymentOptionSelectedId}) {
-                if customOptionSearchItem.escStatus != PXESCStatus.APPROVED.rawValue {
-                    invalidESCReason = .ESC_CAP
+                if hasSavedESC() {
+                    if customOptionSearchItem.escStatus == PXESCStatus.REJECTED.rawValue {
+                        invalidESCReason = .ESC_CAP
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return true
                 }
-                return customOptionSearchItem.escStatus != PXESCStatus.APPROVED.rawValue
             } else {
                 return true
             }
