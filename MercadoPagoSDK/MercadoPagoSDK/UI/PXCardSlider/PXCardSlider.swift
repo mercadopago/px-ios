@@ -11,7 +11,6 @@ final class PXCardSlider: NSObject {
     private var pageControl = ISPageControl(frame: .zero, numberOfPages: 0)
     private var model: [PXCardSliderViewModel] = [] {
         didSet {
-            self.selectedIndex = 0
             self.pagerView.reloadData()
             self.pageControl.numberOfPages = self.model.count
         }

@@ -182,6 +182,9 @@ extension MercadoPagoCheckoutViewModel {
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
             if let customOptionSearchItem = search?.payerPaymentMethods.first(where: { $0.id == paymentOptionSelectedId}) {
+                if customOptionSearchItem.escStatus != PXESCStatus.APPROVED.rawValue {
+                    invalidESCReason = .ESC_CAP
+                }
                 return customOptionSearchItem.escStatus != PXESCStatus.APPROVED.rawValue
             } else {
                 return true

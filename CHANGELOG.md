@@ -1,3 +1,28 @@
+# v4.32.5
+🚀Private Release - 4.32.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Pay preference fixes
+- Translations fixes
+- Tracking enhancements
+
+# v4.32.4
+🚀Public Release - 4.32.4 🚀
+MercadoPagoSDK - Public Version
+- Edit CPF button removed 
+- Brasil locale fix
+- Benefits fix
+- Translations fixes
+- Old code deleted
+
+# v4.32.3
+🚀Private Release - 4.32.3 🚀
+MercadoPagoSDKV4 - Private Version
+- MLBusiness Discount Tracker
+- Edit CPF button removed 
+- Brasil locale fix
+- Benefits fix
+- Translations fixes
+- Old code deleted
 
 # v4.32.2
 🚀Public Release - 4.32.2 🚀

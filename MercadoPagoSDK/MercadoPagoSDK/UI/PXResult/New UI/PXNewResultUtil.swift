@@ -152,7 +152,7 @@ extension PXNewResultUtil {
 
                 // Installment Rate
                 if payerCost.installmentRate == 0.0 {
-                    let interestRateString = " " + "Sin\u{00a0}interés".localized.lowercased()
+                    let interestRateString = " " + "Sin interés".localized.lowercased()
                     let attributedInsterest = NSAttributedString(string: interestRateString, attributes: interestRateAttributes)
                     firstString.appendWithSpace(attributedInsterest)
                 }

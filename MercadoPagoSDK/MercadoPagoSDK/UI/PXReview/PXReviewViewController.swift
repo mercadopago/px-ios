@@ -301,14 +301,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getPayerComponentView() -> UIView? {
-
-        let action = PXAction(label: "review_change_payer_action".localized, action: {
-            if let reviewViewModel = self.viewModel {
-                self.changePayerInformation(reviewViewModel.getClearPayerData())
-            }
-        })
-
-        if let payerComponent = viewModel.buildPayerComponent(action: action) {
+        if let payerComponent = viewModel.buildPayerComponent() {
             let payerView = payerComponent.render()
             return payerView
         }
