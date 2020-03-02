@@ -93,6 +93,7 @@ final class PXFooterRenderer: NSObject {
         button.backgroundColor = color
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(footerAction.label, for: .normal)
+        button.titleLabel?.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.S_FONT)
         button.layer.cornerRadius = 4
         button.add(for: .touchUpInside, footerAction.action)
         return button
