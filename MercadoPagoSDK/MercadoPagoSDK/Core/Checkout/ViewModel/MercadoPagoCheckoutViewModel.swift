@@ -545,7 +545,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if let esc = token.esc, !String.isNullOrEmpty(esc) {
             escManager?.saveESC(token: token, esc: esc)
         } else {
-            escManager?.deleteESC(token: token, reason: .NO_REASON, detail: nil)
+            escManager?.deleteESC(token: token, reason: .NO_ESC, detail: nil)
         }
         self.paymentData.updatePaymentDataWith(token: token)
     }
