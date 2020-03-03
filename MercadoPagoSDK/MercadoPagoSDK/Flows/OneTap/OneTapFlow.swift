@@ -52,6 +52,8 @@ final class OneTapFlow: NSObject, PXFlow {
             self.showSecurityCodeScreen()
         case .serviceCreateESCCardToken:
             self.getTokenizationService().createCardToken()
+        case .serviceResetESCCap:
+            self.resetESCCap()
         case .screenKyC:
             self.showKyCScreen()
         case .payment:
@@ -101,6 +103,19 @@ final class OneTapFlow: NSObject, PXFlow {
     func needSecurityCodeValidation() -> Bool {
         model.readyToPay = true
         return model.nextStep() == .screenSecurityCode
+    }
+
+    func resetESCCap() {
+        guard let cardId = model.paymentData.token?.cardId else {
+            return
+        }
+        model.mercadoPagoServices.resetESCCap(cardId: cardId, callback: { [weak self] in
+            self?.model.needsToResetESCCap = false
+            self?.executeNextStep()
+        }) { [weak self] (_) in
+            self?.model.needsToResetESCCap = false
+            self?.executeNextStep()
+        }
     }
 }
 

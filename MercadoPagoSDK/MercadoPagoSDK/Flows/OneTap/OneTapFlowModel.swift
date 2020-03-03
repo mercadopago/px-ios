@@ -14,6 +14,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         case screenReviewOneTap
         case screenSecurityCode
         case serviceCreateESCCardToken
+        case serviceResetESCCap
         case screenKyC
         case payment
     }
@@ -32,6 +33,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
+    var needsToResetESCCap: Bool = false
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -91,6 +93,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
         if needCreateESCToken() {
             return .serviceCreateESCCardToken
+        }
+        if needToResetESCCap() {
+            return .serviceResetESCCap
         }
         if needKyC() {
             return .screenKyC
@@ -241,6 +246,10 @@ internal extension OneTapFlowModel {
         let savedCardWithESC = !paymentData.hasToken() && paymentMethod.isCard && hasSavedESC() && hasInstallmentsIfNeeded
 
         return savedCardWithESC
+    }
+
+    func needToResetESCCap() -> Bool {
+        return needsToResetESCCap && paymentData.token?.cardId != nil
     }
 
     func needKyC() -> Bool {

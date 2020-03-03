@@ -136,4 +136,27 @@ internal class CustomService: MercadoPagoService {
                 failure?(PXError(domain: ApiDomain.CREATE_PREFERENCE, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "Response cannot be decoded"]))
         })
     }
+
+    internal func resetESCCap(success: @escaping () -> Void, failure: ((_ error: PXError) -> Void)?) {
+        self.request(uri: self.URI, params: nil, body: nil, method: HTTPMethod.delete, cache: false, success: {
+            (data) in
+            do {
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+
+                if let responseDic = jsonResult as? NSDictionary {
+                    if responseDic["error"] != nil && failure != nil {
+                        let apiException = try PXApiException.fromJSON(data: data)
+                        failure?(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: ["message": "PREFERENCE_ERROR"], apiException: apiException))
+                    } else {
+                        success()
+                    }
+                } else {
+                    failure?(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: ["message": "Response cannot be decoded"]))
+
+                }} catch {
+                    failure?(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido resetear el cap de ESC"]))
+            }}, failure: { (_) in
+                failure?(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "Response cannot be decoded"]))
+        })
+    }
 }
