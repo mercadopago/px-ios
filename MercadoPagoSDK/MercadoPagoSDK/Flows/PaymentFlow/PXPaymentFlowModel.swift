@@ -13,7 +13,7 @@ internal final class PXPaymentFlowModel: NSObject {
     var checkoutPreference: PXCheckoutPreference?
     let paymentPlugin: PXSplitPaymentProcessor?
 
-    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+    let mercadoPagoServicesAdapter: MercadoPagoServices
 
     var paymentResult: PaymentResult?
     var instructionsInfo: PXInstructions?
@@ -25,7 +25,7 @@ internal final class PXPaymentFlowModel: NSObject {
     var shouldSearchPointsAndDiscounts: Bool = true
     let ESCBlacklistedStatus: [String]?
 
-    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, escManager: MercadoPagoESC?, ESCBlacklistedStatus: [String]?) {
+    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServices, escManager: MercadoPagoESC?, ESCBlacklistedStatus: [String]?) {
         self.paymentPlugin = paymentPlugin
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         self.escManager = escManager

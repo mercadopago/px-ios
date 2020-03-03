@@ -11,7 +11,7 @@ import Foundation
 internal class MercadoPagoServices: NSObject {
 
     open var merchantPublicKey: String
-    open var payerAccessToken: String
+    open var payerAccessToken: String?
     private var processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
     private var branchId: String?
     private var baseURL: String! = PXServicesURLConfigs.MP_API_BASE_URL
@@ -19,18 +19,19 @@ internal class MercadoPagoServices: NSObject {
 
     private var language: String = NSLocale.preferredLanguages[0]
 
-    init(merchantPublicKey: String, payerAccessToken: String = "") {
+    init(merchantPublicKey: String, payerAccessToken: String? = nil) {
         self.merchantPublicKey = merchantPublicKey
         self.payerAccessToken = payerAccessToken
         super.init()
     }
 
-    func update(processingModes: [String]) {
+    func update(processingModes: [String] , branchId: String? = nil) {
         self.processingModes = processingModes
+        self.branchId = branchId
     }
 
-    func update(branchId: String?) {
-        self.branchId = branchId
+    func getTimeOut() -> TimeInterval {
+        return 15.0
     }
 
     func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {

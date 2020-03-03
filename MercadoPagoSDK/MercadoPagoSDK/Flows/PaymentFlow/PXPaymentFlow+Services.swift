@@ -82,6 +82,7 @@ internal extension PXPaymentFlow {
 
         model.shouldSearchPointsAndDiscounts = false
         let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
+        model.mercadoPagoServicesAdapter
         model.mercadoPagoServicesAdapter.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_POINTS_URI, paymentIds: paymentIds, campaignId: campaignId, platform: platform, callback: { [weak self] (pointsAndBenef) in
                 guard let strongSelf = self else { return }
                 strongSelf.model.pointsAndDiscounts = pointsAndBenef
@@ -106,7 +107,7 @@ internal extension PXPaymentFlow {
             fatalError("Get Instructions - Payment Method Type Id does no exist")
         }
 
-        model.mercadoPagoServicesAdapter.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (instructions) in
+        model.mercadoPagoServicesAdapter.getInstructions(paymentId: Int64(paymentId)!, paymentTypeId: paymentTypeId, callback: { [weak self] (instructions) in
             self?.model.instructionsInfo = instructions
             self?.executeNextStep()
 
