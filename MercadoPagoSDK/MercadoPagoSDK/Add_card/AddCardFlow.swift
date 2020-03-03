@@ -28,7 +28,7 @@ public class AddCardFlow: NSObject, PXFlow {
     private let escManager: PXESCManager
 
     //add card flow should have 'aggregator' processing mode by default
-    private lazy var mercadoPagoServices = MercadoPagoServices(merchantPublicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", payerAccessToken: self.accessToken)
+    private lazy var mercadoPagoServices = MercadoPagoServices(publicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", privateKey: self.accessToken)
 
     public convenience init(accessToken: String, locale: String, navigationController: UINavigationController, shouldSkipCongrats: Bool) {
         self.init(accessToken: accessToken, locale: locale, navigationController: navigationController)

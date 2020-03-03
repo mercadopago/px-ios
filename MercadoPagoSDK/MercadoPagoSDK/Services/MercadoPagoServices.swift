@@ -19,9 +19,9 @@ internal class MercadoPagoServices: NSObject {
 
     private var language: String = NSLocale.preferredLanguages[0]
 
-    init(merchantPublicKey: String, payerAccessToken: String? = nil) {
-        self.merchantPublicKey = merchantPublicKey
-        self.payerAccessToken = payerAccessToken
+    init(publicKey: String, privateKey: String? = nil) {
+        self.merchantPublicKey = publicKey
+        self.payerAccessToken = privateKey
         super.init()
     }
 
