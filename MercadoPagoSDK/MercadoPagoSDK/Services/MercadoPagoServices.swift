@@ -25,8 +25,8 @@ internal class MercadoPagoServices: NSObject {
         super.init()
     }
 
-    func update(processingModes: [String] , branchId: String? = nil) {
-        self.processingModes = processingModes
+    func update(processingModes: [String]? , branchId: String? = nil) {
+        self.processingModes = processingModes ?? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
         self.branchId = branchId
     }
 

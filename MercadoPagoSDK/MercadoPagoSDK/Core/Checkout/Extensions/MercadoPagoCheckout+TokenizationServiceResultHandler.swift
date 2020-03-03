@@ -31,6 +31,6 @@ extension MercadoPagoCheckout: TokenizationServiceResultHandler {
     }
 
     func getTokenizationService() -> TokenizationService {
-        return TokenizationService(paymentOptionSelected: viewModel.paymentOptionSelected, cardToken: viewModel.cardToken, escManager: viewModel.escManager, pxNavigationHandler: viewModel.pxNavigationHandler, needToShowLoading: true, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, gatewayFlowResultHandler: self)
+        return TokenizationService(paymentOptionSelected: viewModel.paymentOptionSelected, cardToken: viewModel.cardToken, escManager: viewModel.escManager, pxNavigationHandler: viewModel.pxNavigationHandler, needToShowLoading: true, mercadoPagoServices: viewModel.mercadoPagoServices, gatewayFlowResultHandler: self)
     }
 }

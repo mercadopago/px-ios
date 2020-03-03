@@ -18,7 +18,7 @@ extension MercadoPagoCheckout {
         let bin = viewModel.cardToken?.getBin()
 
         //issuers service should be performed using the processing modes designated by the payment method
-        viewModel.mercadoPagoServicesAdapter.update(processingModes: paymentMethod.processingModes)
+        viewModel.mercadoPagoServices.update(processingModes: paymentMethod.processingModes)
         viewModel.mercadoPagoServices.getIssuers(paymentMethodId: paymentMethod.id, bin: bin, callback: { [weak self] (issuers) in
             guard let self = self else { return }
             self.viewModel.issuers = issuers

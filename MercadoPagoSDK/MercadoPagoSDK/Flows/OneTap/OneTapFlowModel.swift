@@ -51,7 +51,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 
     let escManager: MercadoPagoESC?
     let advancedConfiguration: PXAdvancedConfiguration
-    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+    let mercadoPagoServices: MercadoPagoServices
     let paymentConfigurationService: PXPaymentConfigurationServices
 
     init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
@@ -64,7 +64,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         self.paymentOptionSelected = paymentOptionSelected
         advancedConfiguration = checkoutViewModel.getAdvancedConfiguration()
         chargeRules = checkoutViewModel.chargeRules
-        mercadoPagoServicesAdapter = checkoutViewModel.mercadoPagoServicesAdapter
+        mercadoPagoServices = checkoutViewModel.mercadoPagoServices
         escManager = checkoutViewModel.escManager
         paymentConfigurationService = checkoutViewModel.paymentConfigurationService
         disabledOption = checkoutViewModel.disabledOption
@@ -268,7 +268,7 @@ internal extension OneTapFlowModel {
     func getTimeoutForOneTapReviewController() -> TimeInterval {
         if let paymentFlow = paymentFlow {
             paymentFlow.model.amountHelper = amountHelper
-            let tokenTimeOut: TimeInterval = mercadoPagoServicesAdapter.getTimeOut()
+            let tokenTimeOut: TimeInterval = mercadoPagoServices.getTimeOut()
             // Payment Flow timeout + tokenization TimeOut
             return paymentFlow.getPaymentTimeOut() + tokenTimeOut
         }

@@ -32,6 +32,6 @@ extension OneTapFlow: TokenizationServiceResultHandler {
     }
 
     func getTokenizationService() -> TokenizationService {
-        return TokenizationService(paymentOptionSelected: model.paymentOptionSelected, cardToken: nil, escManager: model.escManager, pxNavigationHandler: pxNavigationHandler, needToShowLoading: model.needToShowLoading(), mercadoPagoServicesAdapter: model.mercadoPagoServicesAdapter, gatewayFlowResultHandler: self)
+        return TokenizationService(paymentOptionSelected: model.paymentOptionSelected, cardToken: nil, escManager: model.escManager, pxNavigationHandler: pxNavigationHandler, needToShowLoading: model.needToShowLoading(), mercadoPagoServices: model.mercadoPagoServices, gatewayFlowResultHandler: self)
     }
 }

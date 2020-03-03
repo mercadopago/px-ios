@@ -24,12 +24,12 @@ class PaymentVaultViewModel: NSObject {
 
     var customerId: String?
 
-    var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
+    var mercadoPagoServices: MercadoPagoServices!
     let advancedConfiguration: PXAdvancedConfiguration
 
     internal var isRoot = true
 
-    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CustomerPaymentMethod]?, paymentMethods: [PXPaymentMethod], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, advancedConfiguration: PXAdvancedConfiguration, disabledOption: PXDisabledOption?) {
+    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CustomerPaymentMethod]?, paymentMethods: [PXPaymentMethod], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServices: MercadoPagoServices, callbackCancel: (() -> Void)? = nil, advancedConfiguration: PXAdvancedConfiguration, disabledOption: PXDisabledOption?) {
         self.amountHelper = amountHelper
         self.email = email
         self.groupName = groupName
@@ -37,7 +37,7 @@ class PaymentVaultViewModel: NSObject {
         self.customerPaymentOptions = customerPaymentOptions
         self.paymentMethods = paymentMethods
         self.isRoot = isRoot
-        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.mercadoPagoServices = mercadoPagoServices
         self.advancedConfiguration = advancedConfiguration
         self.disabledOption = disabledOption
         super.init()

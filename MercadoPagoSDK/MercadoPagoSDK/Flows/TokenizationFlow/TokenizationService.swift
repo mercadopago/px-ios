@@ -13,15 +13,15 @@ internal class TokenizationService {
     var escManager: MercadoPagoESC?
     var pxNavigationHandler: PXNavigationHandler
     var needToShowLoading: Bool
-    var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+    var mercadoPagoServices: MercadoPagoServices
     weak var resultHandler: TokenizationServiceResultHandler?
 
-    init(paymentOptionSelected: PaymentMethodOption?, cardToken: PXCardToken?, escManager: MercadoPagoESC?, pxNavigationHandler: PXNavigationHandler, needToShowLoading: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, gatewayFlowResultHandler: TokenizationServiceResultHandler) {
+    init(paymentOptionSelected: PaymentMethodOption?, cardToken: PXCardToken?, escManager: MercadoPagoESC?, pxNavigationHandler: PXNavigationHandler, needToShowLoading: Bool, mercadoPagoServices: MercadoPagoServices, gatewayFlowResultHandler: TokenizationServiceResultHandler) {
         self.paymentOptionSelected = paymentOptionSelected
         self.escManager = escManager
         self.pxNavigationHandler = pxNavigationHandler
         self.needToShowLoading = needToShowLoading
-        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.mercadoPagoServices = mercadoPagoServices
         self.resultHandler = gatewayFlowResultHandler
         self.cardToken = cardToken
     }
@@ -71,7 +71,7 @@ internal class TokenizationService {
         }
         pxNavigationHandler.presentLoading()
 
-        mercadoPagoServicesAdapter.createToken(cardToken: cardToken, callback: { (token) in
+        mercadoPagoServices.createToken(cardToken: cardToken, callback: { (token) in
             self.resultHandler?.finishFlow(token: token)
 
         }, failure: { (error) in
@@ -96,7 +96,7 @@ internal class TokenizationService {
 
         let saveCardToken = PXSavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
-        mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { (token) in
+        mercadoPagoServices.createToken(savedCardToken: saveCardToken, callback: { (token) in
 
             if token.lastFourDigits.isEmpty {
                 token.lastFourDigits = cardInformation.getCardLastForDigits()
@@ -115,7 +115,7 @@ internal class TokenizationService {
             self.pxNavigationHandler.presentLoading()
         }
 
-        mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { (token) in
+        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { (token) in
 
             if token.lastFourDigits.isEmpty {
                 let cardInformation = self.paymentOptionSelected as? PXCardInformation
@@ -134,7 +134,7 @@ internal class TokenizationService {
 
     private func cloneCardToken(token: PXToken, securityCode: String) {
         pxNavigationHandler.presentLoading()
-        mercadoPagoServicesAdapter.cloneToken(tokenId: token.id, securityCode: securityCode, callback: { (token) in
+        mercadoPagoServices.cloneToken(tokenId: token.id, securityCode: securityCode, callback: { (token) in
             self.resultHandler?.finishFlow(token: token)
 
         }, failure: { (error) in

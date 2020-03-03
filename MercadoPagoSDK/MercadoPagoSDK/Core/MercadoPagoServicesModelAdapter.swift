@@ -8,9 +8,9 @@
 
 import Foundation
 
-internal extension MercadoPagoServicesAdapter {
-    func getStringDateFromDate(_ date: Date) -> String {
-        let stringDate = String(describing: date)
-        return stringDate
-    }
-}
+//internal extension MercadoPagoServicesAdapter {
+//    func getStringDateFromDate(_ date: Date) -> String {
+//        let stringDate = String(describing: date)
+//        return stringDate
+//    }
+//}
