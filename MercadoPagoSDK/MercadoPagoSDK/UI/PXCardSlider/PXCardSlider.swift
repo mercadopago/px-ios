@@ -6,6 +6,10 @@
 
 import UIKit
 
+public protocol ChangeCardAccessibilityProtocol: NSObjectProtocol {
+    func scrollTo(direction: UIAccessibilityScrollDirection)
+}
+
 final class PXCardSlider: NSObject {
     private var pagerView = FSPagerView(frame: .zero)
     private var pageControl = ISPageControl(frame: .zero, numberOfPages: 0)
@@ -20,6 +24,11 @@ final class PXCardSlider: NSObject {
     private var selectedIndex: Int = 0
     private let cardSliderCornerRadius: CGFloat = 11
     weak var termsAndCondDelegate: PXTermsAndConditionViewDelegate?
+
+    override init() {
+        super.init()
+        pagerView.accessibilityDelegate = self
+    }
 }
 
 // MARK: DataSource
@@ -193,6 +202,13 @@ extension PXCardSlider {
         PXLayout.setHeight(owner: pageControl, height: pagerHeight).isActive = true
         pageControl.layoutIfNeeded()
     }
+
+    func updateCardSelected(_ index: Int) {
+        if model.indices.contains(pageControl.currentPage) {
+            let modelData = model[pageControl.currentPage]
+            delegate?.newCardDidSelected(targetModel: modelData)
+        }
+    }
 }
 
 extension PXCardSlider: PXTermsAndConditionViewDelegate {
@@ -203,5 +219,19 @@ extension PXCardSlider: PXTermsAndConditionViewDelegate {
     func goToItemAt(index: Int, animated: Bool) {
         pagerView.scrollToItem(at: index, animated: animated)
         pageControl.currentPage = index
+    }
+}
+
+// MARK: ChangeCardAccessibilityProtocol
+extension PXCardSlider: ChangeCardAccessibilityProtocol {
+    func scrollTo(direction: UIAccessibilityScrollDirection) {
+        if direction == UIAccessibilityScrollDirection.left, pageControl.currentPage < pageControl.numberOfPages - 1 {
+            goToItemAt(index: pageControl.currentPage + 1, animated: true)
+            updateCardSelected(pageControl.currentPage)
+        }
+        else if direction == UIAccessibilityScrollDirection.right, pageControl.currentPage > 0 {
+            goToItemAt(index: pageControl.currentPage - 1, animated: true)
+            updateCardSelected(pageControl.currentPage)
+        }
     }
 }
