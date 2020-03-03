@@ -10,8 +10,8 @@ import Foundation
 
 internal class MercadoPagoServices: NSObject {
 
-    open var merchantPublicKey: String
-    open var payerAccessToken: String?
+    open var publicKey: String
+    open var privateKey: String?
     private var processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
     private var branchId: String?
     private var baseURL: String! = PXServicesURLConfigs.MP_API_BASE_URL
@@ -20,8 +20,8 @@ internal class MercadoPagoServices: NSObject {
     private var language: String = NSLocale.preferredLanguages[0]
 
     init(publicKey: String, privateKey: String? = nil) {
-        self.merchantPublicKey = publicKey
-        self.payerAccessToken = privateKey
+        self.publicKey = publicKey
+        self.privateKey = privateKey
         super.init()
     }
 
@@ -35,20 +35,20 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let instructionsService = InstructionsService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
+        let instructionsService = InstructionsService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey)
         instructionsService.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: { (instructionsInfo : PXInstructions) -> Void in
             callback(instructionsInfo)
         }, failure: failure)
     }
 
     func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingModes: processingModes, branchId: branchId)
+        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
 
         paymentMethodSearchService.getOpenPrefInit(pref: pref, cardsWithEsc: cardsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
     }
 
     func getClosedPrefInitSearch(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingModes: processingModes, branchId: branchId)
+        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
 
         paymentMethodSearchService.getClosedPrefInit(preferenceId: preferenceId, cardsWithEsc: cardsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
     }
@@ -57,7 +57,7 @@ internal class MercadoPagoServices: NSObject {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 
 
-        var params = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
+        var params = MercadoPagoServices.getParamsPublicKeyAndAcessToken(publicKey, privateKey)
         params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
         if let queryParams = query as NSDictionary? {
             params = queryParams.parseToQuery()
@@ -69,7 +69,7 @@ internal class MercadoPagoServices: NSObject {
     func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, campaignId: String?, platform: String, callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 
-        var params = MercadoPagoServices.getParamsAccessTokenAndPaymentIdsAndPlatform(payerAccessToken, paymentIds, platform)
+        var params = MercadoPagoServices.getParamsAccessTokenAndPaymentIdsAndPlatform(privateKey, paymentIds, platform)
 
         params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
 
@@ -97,7 +97,7 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func createToken(cardToken: Data?, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
+        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
         guard let cardToken = cardToken else {
             return
         }
@@ -121,8 +121,8 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
-        service.cloneToken(public_key: merchantPublicKey, tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
+        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
+        service.cloneToken(public_key: publicKey, tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
             do {
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
                 var token : PXToken
@@ -143,7 +143,7 @@ internal class MercadoPagoServices: NSObject {
 
     func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: PromosService = PromosService(baseURL: baseURL)
-        service.getPromos(public_key: merchantPublicKey, success: { (jsonResult) -> Void in
+        service.getPromos(public_key: publicKey, success: { (jsonResult) -> Void in
             do {
                 var promos : [PXBankDeal] = [PXBankDeal]()
                 if let data = jsonResult {
@@ -157,7 +157,7 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: IdentificationService = IdentificationService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
+        let service: IdentificationService = IdentificationService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey)
         service.getIdentificationTypes(success: {(data: Data!) -> Void in do {
             let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
 
@@ -181,12 +181,12 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func getSummaryAmount(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, payment_type_id: String, differentialPricingId: String?, siteId: String?, marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer: PXPayer, defaultInstallments: Int?, charges: [PXPaymentTypeChargeRule]?,  maxInstallments: Int?, callback: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingModes: processingModes, branchId: branchId)
+        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
         service.getSummaryAmount(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, payment_type_id: payment_type_id, differential_pricing_id: differentialPricingId, siteId: siteId, marketplace: marketplace, discountParamsConfiguration: discountParamsConfiguration, payer: payer, defaultInstallments: defaultInstallments, charges: charges, maxInstallments: maxInstallments, success: callback, failure: failure)
     }
 
     func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingModes: processingModes, branchId: branchId)
+        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
         service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(data: Data) -> Void in
             do {
 
