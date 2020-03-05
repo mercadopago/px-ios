@@ -1,3 +1,11 @@
+# v4.32.6
+🚀Private Release - 4.32.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Reset ESC Cap
+- Services refactor
+- Fonts fixes
+- Minor bug fixes
+
 # v4.32.5
 🚀Private Release - 4.32.5 🚀
 MercadoPagoSDKV4 - Private Version
