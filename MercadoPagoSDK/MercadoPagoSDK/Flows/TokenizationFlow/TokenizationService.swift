@@ -124,7 +124,13 @@ internal class TokenizationService {
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
 
-            self.resultHandler?.finishFlow(token: token)
+            if let securityCode = savedESCCardToken.securityCode, !securityCode.isEmpty {
+                self.resetESCCap(cardId: token.cardId, onCompletion: {
+                    self.resultHandler?.finishFlow(token: token)
+                })
+            } else {
+                self.resultHandler?.finishFlow(token: token)
+            }
 
         }, failure: { (error) in
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)

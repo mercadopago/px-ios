@@ -14,9 +14,6 @@ extension OneTapFlow: TokenizationServiceResultHandler {
 
     func finishFlow(token: PXToken) {
         model.updateCheckoutModel(token: token)
-        if let esc = token.esc {
-            model.escManager?.saveESC(token: token, esc: esc)
-        }
         executeNextStep()
     }
 
