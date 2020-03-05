@@ -82,8 +82,6 @@ class PXTextFieldRemedyRenderer: NSObject {
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
 
-        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-
         PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true
         if let upperView = upperView {

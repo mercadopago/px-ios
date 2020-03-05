@@ -24,7 +24,8 @@ var props: PXRemedyProps
         let amount = props.paymentResult.paymentData?.payerCost?.totalAmount ?? props.amountHelper.amountToPay
         let paymentMethodName = props.paymentResult.paymentData?.paymentMethod?.name
 
-        let title = getErrorTitle(status: status, statusDetail: statusDetail)
+        let title = getErrorTitle(status: status,
+                                  statusDetail: statusDetail)
         let message = getErrorMessage(status: status,
                                       statusDetail: statusDetail,
                                       amount: amount,
@@ -42,7 +43,20 @@ var props: PXRemedyProps
             case PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE:
                 errorTitle = PXResourceProvider.getTitleForCallForAuth()
             case PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE:
-                break
+                guard let paymentData = props.paymentResult.paymentData,
+                    let paymentMethod = paymentData.paymentMethod else {
+                    fatalError("paymentData cannot be nil")
+                }
+                let paymentMethodName = paymentMethod.name ?? ""
+                var paymentMethodDescription = " \(paymentMethodName)"
+                if let issuer = paymentData.getIssuer(), let issuerName = issuer.name, !issuerName.isEmpty, issuerName.lowercased() != paymentMethodName.lowercased() {
+                    paymentMethodDescription += " \(issuerName)"
+                }
+                if paymentMethod.isCard, let lastFourDigits = paymentData.token?.lastFourDigits {
+                    paymentMethodDescription += " *** \(lastFourDigits)"
+                }
+
+                errorTitle = PXResourceProvider.getTitleForBadFilledSecurityCode(paymentMethodDescription)
             default:
                 errorTitle = PXResourceProvider.getTitleForErrorBody()
             }
