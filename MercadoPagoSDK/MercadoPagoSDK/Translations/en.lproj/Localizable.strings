@@ -91,6 +91,7 @@
 "cc_rejected_fraud_title" = "You are suspended for payments";
 "cc_rejected_high_risk_title" = "We rejected your payment";
 "cc_rejected_bad_filled_title" = "One of the card's details is invalid";
+"cc_rejected_bad_filled_security_code_title" = "El código de seguridad es inválido";
 "rejected_high_risk_title" = "You cannot use your money in Mercado Pago for this payment";
 "cc_rejected_invalid_installments_title" = "Your card does not accept this amount of fees";
 "error_body_description_rejected_high_risk" = "Try paying with a different payment method.";

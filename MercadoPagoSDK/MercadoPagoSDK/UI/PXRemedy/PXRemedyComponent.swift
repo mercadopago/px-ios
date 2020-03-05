@@ -18,7 +18,7 @@ var props: PXRemedyProps
         return isRejectedWithBadFilledSecurityCode()
     }
 
-    func getSecurityCodeRemedyComponent() -> PXErrorComponent {
+    func getTextFieldRemedyComponent() -> PXTextFieldRemedyComponent {
         let status = props.paymentResult.status
         let statusDetail = props.paymentResult.statusDetail
         let amount = props.paymentResult.paymentData?.payerCost?.totalAmount ?? props.amountHelper.amountToPay
@@ -30,24 +30,24 @@ var props: PXRemedyProps
                                       amount: amount,
                                       paymentMethodName: paymentMethodName)
 
-        let errorProps = PXErrorProps(title: title.toAttributedString(), message: message?.toAttributedString(), secondaryTitle: nil, action: nil)
-        let errorComponent = PXErrorComponent(props: errorProps)
+        let errorProps = PXTextFieldRemedyProps(title: title, message: message?.toAttributedString(), secondaryTitle: nil, action: nil)
+        let errorComponent = PXTextFieldRemedyComponent(props: errorProps)
         return errorComponent
     }
 
-    private func getErrorTitle(status: String, statusDetail: String) -> String {
-        var errorTitle = PXResourceProvider.getTitleForErrorBody()
+    private func getErrorTitle(status: String, statusDetail: String) -> NSAttributedString? {
+        var errorTitle: String?
         if status == PXPayment.Status.REJECTED {
             switch statusDetail {
             case PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE:
                 errorTitle = PXResourceProvider.getTitleForCallForAuth()
             case PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE:
-                errorTitle = PXResourceProvider.getTitleForCallForAuth()
-            default:
                 break
+            default:
+                errorTitle = PXResourceProvider.getTitleForErrorBody()
             }
         }
-        return errorTitle
+        return errorTitle?.toAttributedString()
     }
 
     private func getErrorMessage(status: String, statusDetail: String, amount: Double, paymentMethodName: String?) -> String? {

@@ -58,7 +58,8 @@ internal extension PXResultViewModel {
 
         var statusDetail = statusDetail
         let badFilledKey = "cc_rejected_bad_filled"
-        if statusDetail.contains(badFilledKey) {
+        if statusDetail.contains(badFilledKey) &&
+            statusDetail != PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue {
             statusDetail = badFilledKey
         }
 

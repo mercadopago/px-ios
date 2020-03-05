@@ -11,7 +11,7 @@ class PXRemedyRenderer: NSObject {
 
     func render(_ component: PXRemedyComponent) -> UIView {
         if component.isRejectedWithBadFilledSecurityCode() {
-            return component.getSecurityCodeRemedyComponent().render()
+            return component.getTextFieldRemedyComponent().render()
         }
         let remedyView = UIView()
         remedyView.translatesAutoresizingMaskIntoConstraints = false

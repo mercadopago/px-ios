@@ -91,6 +91,7 @@
 "cc_rejected_fraud_title" = "Você está suspenso para pagar";
 "cc_rejected_high_risk_title" = "Recusamos o seu pagamento";
 "cc_rejected_bad_filled_title" = "Algum dado do cartão é inválido";
+"cc_rejected_bad_filled_security_code_title" = "El código de seguridad es inválido";
 "rejected_high_risk_title" = "Você não pode usar seu dinheiro no Mercado Pago para este pagamento";
 "cc_rejected_invalid_installments_title" = "O seu cartão não aceita esta quantidade de parcelas";
 "error_body_description_rejected_high_risk" = "Tente pagar com outro meio.";
