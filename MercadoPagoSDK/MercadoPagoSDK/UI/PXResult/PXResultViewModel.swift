@@ -29,7 +29,10 @@ internal class PXResultViewModel: NSObject {
     }
 
     func getPaymentData() -> PXPaymentData {
-        return self.paymentResult.paymentData!
+        guard let paymentData = paymentResult.paymentData else {
+            fatalError("paymentResult.paymentData cannot be nil")
+        }
+        return paymentData
     }
 
     func setCallback(callback: @escaping ((PaymentResult.CongratsState) -> Void)) {
@@ -37,18 +40,18 @@ internal class PXResultViewModel: NSObject {
     }
 
     func getPaymentStatus() -> String {
-        return self.paymentResult.status
+        return paymentResult.status
     }
 
     func getPaymentStatusDetail() -> String {
-        return self.paymentResult.statusDetail
+        return paymentResult.statusDetail
     }
 
     func getPaymentId() -> String? {
-        return self.paymentResult.paymentId
+        return paymentResult.paymentId
     }
     func isCallForAuth() -> Bool {
-        return self.paymentResult.isCallForAuth()
+        return paymentResult.isCallForAuth()
     }
 
     func primaryResultColor() -> UIColor {
@@ -212,13 +215,11 @@ extension PXResultViewModel {
     }
 
     func openURL(url: URL, success: @escaping (Bool) -> Void) {
-        let completionHandler : (Bool) -> Void = { result in
-            sleep(1)
-            success(result)
-        }
-
         if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: completionHandler)
+            UIApplication.shared.open(url, options: [:], completionHandler: { result in
+                sleep(1)
+                success(result)
+            })
         } else {
             success(false)
         }
@@ -310,8 +311,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func hasInstructions() -> Bool {
-        let bodyComponent = buildBodyComponent() as? PXBodyComponent
-        return bodyComponent?.hasInstructions() ?? false
+        return instructionsInfo?.getInstruction() != nil
     }
 
     func getInstructionsView() -> UIView? {
@@ -348,8 +348,17 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getErrorBodyView() -> UIView? {
-        if shouldShowErrorBody() {
-            return buildBodyComponent()?.render()
+        if let bodyComponent = buildBodyComponent() as? PXBodyComponent,
+            bodyComponent.hasBodyError() {
+            return bodyComponent.render()
+        }
+        return nil
+    }
+
+    func getRemedyBodyView() -> UIView? {
+        if let component = buildRemedyComponent() as? PXRemedyComponent,
+            component.hasRemedyError() {
+            return component.render()
         }
         return nil
     }

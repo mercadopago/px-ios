@@ -275,11 +275,11 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func getSecurityCodeViewModel(isCallForAuth: Bool = false) -> SecurityCodeViewModel {
-        guard let cardInformation = self.paymentOptionSelected as? PXCardInformation, let paymentMethod = self.paymentData.paymentMethod else {
-            fatalError("Cannot conver payment option selected to CardInformation")
+        guard let cardInformation = paymentOptionSelected as? PXCardInformation, let paymentMethod = paymentData.paymentMethod else {
+            fatalError("paymentOptionSelected is not of type PXCardInformation or paymentMethod is nil")
         }
-        let ESCEnabled = escManager?.hasESCEnable() ?? false
-        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth, escEnabled: ESCEnabled)
+        let escEnabled = escManager?.hasESCEnable() ?? false
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth, escEnabled: escEnabled)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 

@@ -191,6 +191,10 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         }
         return nil
     }
+    
+    func getRemedyBodyView() -> UIView? {
+        return nil
+    }
 
     func getFooterMainAction() -> PXAction? {
         return businessResult.getMainAction()

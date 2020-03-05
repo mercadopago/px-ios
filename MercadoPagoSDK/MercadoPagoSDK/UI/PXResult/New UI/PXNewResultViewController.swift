@@ -184,12 +184,10 @@ internal extension UIView {
 
 // MARK: Ring Animate.
 extension PXNewResultViewController {
-    @objc func doAnimateRing() {
-        ringView?.fillPercentProgressWithAnimation()
-    }
-
     private func animateRing() {
-        perform(#selector(self.doAnimateRing), with: self, afterDelay: 0.3)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.ringView?.fillPercentProgressWithAnimation()
+        }
     }
 }
 
@@ -199,17 +197,17 @@ extension PXNewResultViewController {
         var views = [ResultViewData]()
 
         //Header View
-        let headerView = buildHeaderView()
-        views.append(ResultViewData(view: headerView, verticalMargin: 0, horizontalMargin: 0))
+        let view = buildHeaderView()
+        views.append(ResultViewData(view: view))
 
         //Instructions View
-        if let instructionsView = buildInstructionsView() {
-            views.append(ResultViewData(view: instructionsView, verticalMargin: 0, horizontalMargin: 0))
+        if let view = buildInstructionsView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Important View
-        if let importantView = buildImportantView() {
-            views.append(ResultViewData(view: importantView, verticalMargin: 0, horizontalMargin: 0))
+        if let view = buildImportantView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Points and Discounts
@@ -245,39 +243,44 @@ extension PXNewResultViewController {
             } else if discountsView == nil && pointsView != nil {
                 margin = PXLayout.XXS_MARGIN
             }
-            for crossSellingView in crossSellingViews {
-                views.append(ResultViewData(view: crossSellingView, verticalMargin: margin, horizontalMargin: PXLayout.L_MARGIN))
+            for view in crossSellingViews {
+                views.append(ResultViewData(view: view, verticalMargin: margin, horizontalMargin: PXLayout.L_MARGIN))
             }
         }
 
         //Top Custom View
-        if let topCustomView = buildTopCustomView() {
-            views.append(ResultViewData(view: topCustomView, verticalMargin: 0, horizontalMargin: 0))
+        if let view = buildTopCustomView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Receipt View
-        if let receiptView = buildReceiptView() {
-            views.append(ResultViewData(view: receiptView, verticalMargin: 0, horizontalMargin: 0))
+        if let view = buildReceiptView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Error body View
-        if let errorBodyView = viewModel.getErrorBodyView() {
-            views.append(ResultViewData(view: errorBodyView, verticalMargin: 0, horizontalMargin: 0))
+        if let view = viewModel.getErrorBodyView() {
+            views.append(ResultViewData(view: view))
+        }
+
+        //Remedy body View
+        if let view = viewModel.getRemedyBodyView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Payment Method View
-        if viewModel.shouldShowPaymentMethod(), let PMView = buildPaymentMethodView() {
-            views.append(ResultViewData(view: PMView, verticalMargin: 0, horizontalMargin: 0))
+        if viewModel.shouldShowPaymentMethod(), let view = buildPaymentMethodView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Split Payment View
-        if viewModel.shouldShowPaymentMethod(), let splitView = buildSplitPaymentMethodView() {
-            views.append(ResultViewData(view: splitView, verticalMargin: 0, horizontalMargin: 0))
+        if viewModel.shouldShowPaymentMethod(), let view = buildSplitPaymentMethodView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Bottom Custom View
-        if let bottomCustomView = buildBottomCustomView() {
-            views.append(ResultViewData(view: bottomCustomView, verticalMargin: 0, horizontalMargin: 0))
+        if let view = buildBottomCustomView() {
+            views.append(ResultViewData(view: view))
         }
 
         return views

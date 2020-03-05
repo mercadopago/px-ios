@@ -207,16 +207,16 @@ extension ResourceManager {
                 return ThemeManager.shared.rejectedColor()
             }
         }
-        if status.uppercased() == PXBusinessResultStatus.APPROVED.getDescription() {
+        switch status.uppercased() {
+        case PXBusinessResultStatus.APPROVED.getDescription():
             return ThemeManager.shared.successColor()
-        } else if status.uppercased() == PXBusinessResultStatus.REJECTED.getDescription() {
+        case PXBusinessResultStatus.REJECTED.getDescription():
             return ThemeManager.shared.rejectedColor()
-        } else if status.uppercased() == PXBusinessResultStatus.PENDING.getDescription() {
+        case PXBusinessResultStatus.PENDING.getDescription(), PXBusinessResultStatus.IN_PROGRESS.getDescription():
             return ThemeManager.shared.warningColor()
-        } else if status.uppercased() == PXBusinessResultStatus.IN_PROGRESS.getDescription() {
-            return ThemeManager.shared.warningColor()
+        default:
+            return ThemeManager.shared.rejectedColor()
         }
-        return ThemeManager.shared.rejectedColor()
     }
 
     func getBadgeImageWith(status: String, statusDetail: String? = nil, clearBackground: Bool = false) -> UIImage? {

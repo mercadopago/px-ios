@@ -49,7 +49,7 @@ internal final class PXHeaderRenderer: NSObject {
         }
 
         //Badge Image
-        headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
+        headerView.badgeImage = buildBadgeImage(with: header.props.statusImage)
         headerView.addSubview(headerView.badgeImage!)
         PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_HORIZONTAL_OFFSET).isActive = true
         PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_VERTICAL_OFFSET).isActive = true
@@ -100,7 +100,7 @@ internal final class PXHeaderRenderer: NSObject {
         return circleImage
     }
 
-    func buildBudgeImage(with image: UIImage?) -> PXAnimatedImageView {
+    func buildBadgeImage(with image: UIImage?) -> PXAnimatedImageView {
         let imageView = PXAnimatedImageView(image: image, size: CGSize(width: BADGE_IMAGE_SIZE, height: BADGE_IMAGE_SIZE))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
