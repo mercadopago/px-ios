@@ -429,6 +429,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             readyToPay = false
             return .SERVICE_POST_PAYMENT
         }
+        if needToResetESCCap() {
+            return .SERVICE_RESET_ESC_CAP
+        }
         if needReviewAndConfirm() {
             return .SCREEN_REVIEW_AND_CONFIRM
         }

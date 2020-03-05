@@ -216,6 +216,10 @@ extension MercadoPagoCheckoutViewModel {
         return (newCard || savedCardWithESC)
     }
 
+    func needToResetESCCap() -> Bool {
+        return needsToResetESCCap && paymentData.token?.cardId != nil
+    }
+
     func needReviewAndConfirm() -> Bool {
         guard self.paymentOptionSelected != nil else {
             return false
