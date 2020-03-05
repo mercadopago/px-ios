@@ -19,6 +19,7 @@ extension MercadoPagoCheckout: TokenizationServiceResultHandler {
         if let esc = token.esc {
             viewModel.escManager?.saveESC(token: token, esc: esc)
         }
+        viewModel.needsToResetESCCap = true
         executeNextStep()
     }
 
