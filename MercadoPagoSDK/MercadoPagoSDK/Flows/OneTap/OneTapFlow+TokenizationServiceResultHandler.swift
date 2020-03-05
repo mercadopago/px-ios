@@ -17,7 +17,6 @@ extension OneTapFlow: TokenizationServiceResultHandler {
         if let esc = token.esc {
             model.escManager?.saveESC(token: token, esc: esc)
         }
-        model.needsToResetESCCap = true
         executeNextStep()
     }
 

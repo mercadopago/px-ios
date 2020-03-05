@@ -18,7 +18,6 @@ internal enum CheckoutStep: String {
     case SERVICE_GET_ISSUERS
     case SCREEN_ISSUERS
     case SERVICE_CREATE_CARD_TOKEN
-    case SERVICE_RESET_ESC_CAP
     case SCREEN_IDENTIFICATION
     case SCREEN_ENTITY_TYPE
     case SCREEN_FINANCIAL_INSTITUTIONS
@@ -72,7 +71,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var rootPaymentMethodOptions: [PaymentMethodOption]?
     var customPaymentOptions: [CustomerPaymentMethod]?
     var identificationTypes: [PXIdentificationType]?
-    var needsToResetESCCap: Bool = false
 
     var search: PXInitDTO?
 
@@ -428,9 +426,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if needToCreatePayment() || shouldSkipReviewAndConfirm() {
             readyToPay = false
             return .SERVICE_POST_PAYMENT
-        }
-        if needToResetESCCap() {
-            return .SERVICE_RESET_ESC_CAP
         }
         if needReviewAndConfirm() {
             return .SCREEN_REVIEW_AND_CONFIRM

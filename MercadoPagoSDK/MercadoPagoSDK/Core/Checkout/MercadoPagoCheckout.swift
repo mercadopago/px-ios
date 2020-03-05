@@ -162,8 +162,6 @@ extension MercadoPagoCheckout {
             self.showIssuersScreen()
         case .SERVICE_CREATE_CARD_TOKEN:
             self.getTokenizationService().createCardToken()
-        case .SERVICE_RESET_ESC_CAP:
-            self.resetESCCap()
         case .SERVICE_GET_IDENTIFICATION_TYPES:
             self.getIdentificationTypes()
         case .SERVICE_GET_PAYER_COSTS:

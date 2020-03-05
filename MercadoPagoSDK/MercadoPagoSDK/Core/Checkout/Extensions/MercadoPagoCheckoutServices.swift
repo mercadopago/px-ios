@@ -56,14 +56,4 @@ extension MercadoPagoCheckout {
                 self.executeNextStep()
         })
     }
-
-    func resetESCCap() {
-        guard let cardId = viewModel.paymentData.token?.cardId else {
-            return
-        }
-        viewModel.mercadoPagoServices.resetESCCap(cardId: cardId, onCompletion: { [weak self] in
-            self?.viewModel.needsToResetESCCap = false
-            self?.executeNextStep()
-        })
-    }
 }
