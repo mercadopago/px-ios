@@ -109,13 +109,10 @@ final class OneTapFlow: NSObject, PXFlow {
         guard let cardId = model.paymentData.token?.cardId else {
             return
         }
-        model.mercadoPagoServices.resetESCCap(cardId: cardId, callback: { [weak self] in
+        model.mercadoPagoServices.resetESCCap(cardId: cardId, onCompletion: { [weak self] in
             self?.model.needsToResetESCCap = false
             self?.executeNextStep()
-        }) { [weak self] (_) in
-            self?.model.needsToResetESCCap = false
-            self?.executeNextStep()
-        }
+        })
     }
 }
 

@@ -61,12 +61,9 @@ extension MercadoPagoCheckout {
         guard let cardId = viewModel.paymentData.token?.cardId else {
             return
         }
-        viewModel.mercadoPagoServices.resetESCCap(cardId: cardId, callback: { [weak self] in
+        viewModel.mercadoPagoServices.resetESCCap(cardId: cardId, onCompletion: { [weak self] in
             self?.viewModel.needsToResetESCCap = false
             self?.executeNextStep()
-        }) { [weak self] (_) in
-            self?.viewModel.needsToResetESCCap = false
-            self?.executeNextStep()
-        }
+        })
     }
 }
