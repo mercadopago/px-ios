@@ -38,8 +38,10 @@ internal class MercadoPagoServices: NSObject {
         var uri = PXServicesURLConfigs.MP_RESET_ESC_CAP
         uri.append("/\(cardId)")
 
+        let params = MercadoPagoServices.getParamsAccessToken(privateKey)
+
         let service: CustomService = CustomService(baseURL: baseURL, URI: uri)
-        service.resetESCCap(success: callback, failure: failure)
+        service.resetESCCap(params: params, success: callback, failure: failure)
     }
 
     func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {

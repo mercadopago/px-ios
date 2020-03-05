@@ -137,8 +137,8 @@ internal class CustomService: MercadoPagoService {
         })
     }
 
-    internal func resetESCCap(success: @escaping () -> Void, failure: ((_ error: PXError) -> Void)?) {
-        self.request(uri: self.URI, params: nil, body: nil, method: HTTPMethod.delete, cache: false, success: {
+    internal func resetESCCap(params: String, success: @escaping () -> Void, failure: ((_ error: PXError) -> Void)?) {
+        self.request(uri: self.URI, params: params, body: nil, method: HTTPMethod.delete, cache: false, success: {
             (data) in
             do {
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
