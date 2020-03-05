@@ -16,6 +16,9 @@ extension MercadoPagoCheckout: TokenizationServiceResultHandler {
 
     func finishFlow(token: PXToken) {
         viewModel.updateCheckoutModel(token: token)
+        if let esc = token.esc {
+            viewModel.escManager?.saveESC(token: token, esc: esc)
+        }
         executeNextStep()
     }
 
