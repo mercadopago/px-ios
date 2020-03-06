@@ -1,3 +1,8 @@
+# v4.32.7
+🚀Private Release - 4.32.7 🚀
+MercadoPagoSDKV4 - Private Version
+- ESC tracking
+
 # v4.32.6
 🚀Private Release - 4.32.6 🚀
 MercadoPagoSDKV4 - Private Version
