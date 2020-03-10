@@ -12,7 +12,17 @@ extension OneTapFlow: TokenizationServiceResultHandler {
     func finishInvalidIdentificationNumber() {
     }
 
-    func finishFlow(token: PXToken) {
+    func finishFlow(token: PXToken, shouldResetESC: Bool) {
+        if shouldResetESC {
+            getTokenizationService().resetESCCap(cardId: token.cardId) { [weak self] in
+                self?.flowCompletion(token: token)
+            }
+        } else {
+            flowCompletion(token: token)
+        }
+    }
+
+    func flowCompletion(token: PXToken) {
         model.updateCheckoutModel(token: token)
         executeNextStep()
     }
