@@ -1,3 +1,8 @@
+# v4.32.8
+🚀Private Release - 4.32.8 🚀
+MercadoPagoSDKV4 - Private Version
+- Reset ESC Cap hot fix
+
 # v4.32.7
 🚀Private Release - 4.32.7 🚀
 MercadoPagoSDKV4 - Private Version
