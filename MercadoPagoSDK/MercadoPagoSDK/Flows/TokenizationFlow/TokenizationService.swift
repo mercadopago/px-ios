@@ -72,7 +72,7 @@ internal class TokenizationService {
         pxNavigationHandler.presentLoading()
 
         mercadoPagoServices.createToken(cardToken: cardToken, callback: { (token) in
-            self.resultHandler?.finishFlow(token: token)
+            self.resultHandler?.finishFlow(token: token, shouldResetESC: false)
 
         }, failure: { (error) in
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
@@ -101,8 +101,7 @@ internal class TokenizationService {
             if token.lastFourDigits.isEmpty {
                 token.lastFourDigits = cardInformation.getCardLastForDigits()
             }
-            self.resultHandler?.finishFlow(token: token)
-
+            self.resultHandler?.finishFlow(token: token, shouldResetESC: true)
         }, failure: { (error) in
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
 
@@ -122,8 +121,11 @@ internal class TokenizationService {
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
 
-            self.resultHandler?.finishFlow(token: token)
-
+            var shouldResetESC = false
+            if let securityCode = savedESCCardToken.securityCode, securityCode.isNotEmpty {
+                shouldResetESC = true
+            }
+            self.resultHandler?.finishFlow(token: token, shouldResetESC: shouldResetESC)
         }, failure: { (error) in
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.trackInvalidESC(error: error, cardId: savedESCCardToken.cardId, esc_length: savedESCCardToken.esc?.count)
@@ -135,11 +137,14 @@ internal class TokenizationService {
     private func cloneCardToken(token: PXToken, securityCode: String) {
         pxNavigationHandler.presentLoading()
         mercadoPagoServices.cloneToken(tokenId: token.id, securityCode: securityCode, callback: { (token) in
-            self.resultHandler?.finishFlow(token: token)
-
+            self.resultHandler?.finishFlow(token: token, shouldResetESC: true)
         }, failure: { (error) in
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.resultHandler?.finishWithError(error: error, securityCode: securityCode)
         })
+    }
+
+    func resetESCCap(cardId: String, onCompletion: @escaping () -> Void) {
+        mercadoPagoServices.resetESCCap(cardId: cardId, onCompletion: onCompletion)
     }
 }

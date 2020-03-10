@@ -43,5 +43,6 @@ internal class PXServicesURLConfigs: NSObject {
     static let MP_SUMMARY_AMOUNT_URI = "\(MP_SELECTED_ENV)/px_mobile_api/summary_amount"
     static let MP_PAYMENTS_URI = MP_SELECTED_ENV + "/px_mobile" + PAYMENTS
     static let MP_INIT_URI = NEW_API_SELECTED_ENV + "/px_mobile/v2/checkout"
+    static let MP_RESET_ESC_CAP = NEW_API_SELECTED_ENV + "/px_mobile/v1/esc_cap"
     static let MP_POINTS_URI = MP_SELECTED_ENV + "/px_mobile" + "/congrats"
 }
