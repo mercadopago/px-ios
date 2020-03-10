@@ -61,14 +61,11 @@ class PXNewResultHeader: UIView {
 
         //Close button
         if let closeAction = data.closeAction {
-            let button = buildCloseButton()
-            closeButton = button
-            pxContentView.addSubview(button)
-            button.add(for: .touchUpInside, {
-                closeAction()
-            })
-            PXLayout.pinTop(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinLeft(view: button, withMargin: PXLayout.S_MARGIN).isActive = true
+            let closeButton = buildCloseButton(touchUpInsideClosure: closeAction)
+            self.closeButton = closeButton
+            pxContentView.addSubview(closeButton)
+            PXLayout.pinTop(view: closeButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinLeft(view: closeButton, withMargin: PXLayout.S_MARGIN).isActive = true
         }
 
         //Title Label
@@ -118,20 +115,20 @@ class PXNewResultHeader: UIView {
         self.layoutIfNeeded()
     }
 
-    func buildCloseButton() -> UIButton {
+    private func buildCloseButton(touchUpInsideClosure: @escaping () -> Void) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = ResourceManager.shared.getImage("result-close-button")
-        let margin: CGFloat = 0
-        button.contentEdgeInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        button.contentEdgeInsets = UIEdgeInsets.zero
         button.setImage(image, for: .normal)
         button.accessibilityIdentifier = "result_close_button"
+        button.add(for: .touchUpInside, touchUpInsideClosure)
         PXLayout.setHeight(owner: button, height: CLOSE_BUTTON_SIZE).isActive = true
         PXLayout.setWidth(owner: button, width: CLOSE_BUTTON_SIZE).isActive = true
         return button
     }
 
-    func buildCircleImage(with image: UIImage?) -> PXUIImageView {
+    private func buildCircleImage(with image: UIImage?) -> PXUIImageView {
         let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: IMAGE_WIDTH, height: IMAGE_HEIGHT))
         circleImage.layer.masksToBounds = false
         circleImage.layer.cornerRadius = circleImage.frame.height / 2
@@ -148,7 +145,7 @@ class PXNewResultHeader: UIView {
         return circleImage
     }
 
-    func buildTitleLabel(with text: String) -> UILabel {
+    private func buildTitleLabel(with text: String) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.M_FONT)
         titleLabel.textAlignment = .left

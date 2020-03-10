@@ -81,6 +81,7 @@
 "cc_rejected_call_for_authorize_title" = "O emissor do cartão não autorizou o pagamento";
 "cc_rejected_card_disabled_button" = "Já liguei";
 "cc_rejected_bad_filled_button" = "Inserir os dados do cartão novamente";
+"cc_rejected_bad_filled_security_code_button" = "Pagar con este medio";
 "cc_rejected_call_for_authorize_button" = "Já autorizei o pagamento";
 "cc_rejected_duplicated_payment_button" = "Entendi";
 "cc_rejected_card_disabled_title" = "O seu cartão está bloqueado";

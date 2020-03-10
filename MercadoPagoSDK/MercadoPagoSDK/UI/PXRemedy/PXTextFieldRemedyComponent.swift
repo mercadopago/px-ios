@@ -20,14 +20,10 @@ internal class PXTextFieldRemedyComponent: PXComponentizable {
 
 internal class PXTextFieldRemedyProps {
     var title: NSAttributedString?
-    var message: NSAttributedString?
-    var secondaryTitle: NSAttributedString?
-    var action: PXAction?
+    var hint: NSAttributedString?
 
-    init(title: NSAttributedString? = nil, message: NSAttributedString? = nil, secondaryTitle: NSAttributedString? = nil, action: PXAction? = nil) {
+    init(title: NSAttributedString? = nil, hint: NSAttributedString? = nil) {
         self.title = title
-        self.message = message
-        self.action = action
-        self.secondaryTitle = secondaryTitle
+        self.hint = hint
     }
 }

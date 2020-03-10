@@ -172,8 +172,7 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
-        var congratsViewController: MercadoPagoUIViewController
-        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] (state: PaymentResult.CongratsState) in
+        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] state in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             if state == .call_FOR_AUTH {
@@ -192,23 +191,21 @@ extension MercadoPagoCheckout {
         }
 
         let resultViewModel = self.viewModel.resultViewModel()
-        congratsViewController = PXNewResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
+        let congratsViewController = PXNewResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
     func showBusinessResultScreen() {
-        var congratsViewController: MercadoPagoUIViewController
-        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] (_: PaymentResult.CongratsState) in
-            self?.finish()
-        }
-
         guard let businessResult = viewModel.businessResult else {
             return
         }
 
-        let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] _ in
+            self?.finish()
+        }
 
-        congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: congratsViewControllerCallback)
+        let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: congratsViewControllerCallback)
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 

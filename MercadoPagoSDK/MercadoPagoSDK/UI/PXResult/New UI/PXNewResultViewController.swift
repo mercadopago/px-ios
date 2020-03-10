@@ -12,22 +12,21 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
     private weak var ringView: MLBusinessLoyaltyRingView?
     private lazy var elasticHeader = UIView()
-    private lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.8
-    private lazy var NAVIGATION_BAR_SECONDARY_DELTA_Y: CGFloat = 0
-    private lazy var navigationTitleStatusStep: Int = 0
-
     private let statusBarHeight = PXLayout.getStatusBarHeight()
+    private var contentViewHeightConstraint: NSLayoutConstraint?
 
     let scrollView = UIScrollView()
     let viewModel: PXNewResultViewModelInterface
-
-    internal var changePaymentMethodCallback: (() -> Void)?
 
     init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
         super.init(nibName: nil, bundle: nil)
         self.shouldHideNavigationBar = true
+
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(keyboardWillBeShown(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -37,7 +36,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupScrollView()
-        addElasticHeader(headerBackgroundColor: viewModel.getHeaderColor())
+        addElasticHeader()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -52,11 +51,51 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         }
     }
 
-    private func animateScrollView() {
-        let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1) {
-            self.scrollView.alpha = 1
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc func keyboardWillBeShown(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
+            if let textField = getAllTextFields(fromView : self.view).first(where: {$0.isFirstResponder}) {
+                scrollView.scrollRectToVisible(textField.frame, animated: true)
+            }
+            animateContentViewHeightConstraint(isActive: false)
         }
-        animator.startAnimation()
+    }
+
+    @objc func keyboardWillBeHidden(notification: Notification) {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+        animateContentViewHeightConstraint(isActive: true)
+    }
+
+    private func animateContentViewHeightConstraint(isActive: Bool) {
+        if contentViewHeightConstraint != nil {
+            UIViewPropertyAnimator(duration: 0.25, curve: .easeInOut) { [weak self] in
+                self?.contentViewHeightConstraint?.isActive = isActive
+            }.startAnimation()
+        }
+    }
+
+    private func getAllTextFields(fromView view: UIView) -> [UITextField] {
+        return view.subviews.compactMap { (view) -> [UITextField]? in
+            if let textField = view as? UITextField {
+                return [textField]
+            } else {
+                return getAllTextFields(fromView: view)
+            }
+            }.flatMap({$0})
+    }
+
+    private func animateScrollView() {
+        UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1) { [weak self] in
+            self?.scrollView.alpha = 1
+        }.startAnimation()
     }
 
     private func setupScrollView() {
@@ -93,12 +132,14 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
 
         //FOOTER VIEW
         let footerView = buildFooterView()
-        footerView.addSeparatorLineToTop(height: 1)
+        if let model = viewModel as? PXResultViewModel, model.getPaymentStatus() != PXPayment.Status.REJECTED {
+            footerView.addSeparatorLineToTop(height: 1)
+        }
         scrollView.addSubview(footerView)
 
         //Footer View Layout
@@ -106,50 +147,43 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             footerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             footerView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
-            footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            footerView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
 
         //Calculate content view min height
         self.view.layoutIfNeeded()
         let scrollViewMinHeight: CGFloat = PXLayout.getScreenHeight() - footerView.frame.height - PXLayout.getSafeAreaTopInset() - PXLayout.getSafeAreaBottomInset()
-        NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: scrollViewMinHeight)
-        ])
+        contentViewHeightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: scrollViewMinHeight)
+        if let contentViewHeightConstraint = contentViewHeightConstraint {
+            contentViewHeightConstraint.isActive = true
+        }
 
         //Load content views
         let views = getContentViews()
-        for data in views {
-            if let ringView = data.view as? MLBusinessLoyaltyRingView {
-                self.ringView = ringView
+        if views.count > 0 {
+            for data in views {
+                if let ringView = data.view as? MLBusinessLoyaltyRingView {
+                    self.ringView = ringView
+                }
+
+                contentView.addViewToBottom(data.view, withMargin: data.verticalMargin)
+
+                NSLayoutConstraint.activate([
+                    data.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: data.horizontalMargin),
+                    data.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -data.horizontalMargin)
+                ])
             }
-
-            contentView.addViewToBottom(data.view, withMargin: data.verticalMargin)
-
-            NSLayoutConstraint.activate([
-                data.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: data.horizontalMargin),
-                data.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -data.horizontalMargin)
-            ])
+            PXLayout.pinLastSubviewToBottom(view: contentView, relation: .lessThanOrEqual)
         }
-        PXLayout.pinLastSubviewToBottom(view: contentView, relation: .lessThanOrEqual)
     }
 }
 
 // MARK: Elastic header.
 extension PXNewResultViewController: UIScrollViewDelegate {
-    func addElasticHeader(headerBackgroundColor: UIColor?, navigationDeltaY: CGFloat?=nil, navigationSecondaryDeltaY: CGFloat?=nil) {
+    func addElasticHeader() {
         elasticHeader.removeFromSuperview()
-        scrollView.delegate = self
-        elasticHeader.backgroundColor = headerBackgroundColor
-        if let customDeltaY = navigationDeltaY {
-            NAVIGATION_BAR_DELTA_Y = customDeltaY
-        }
-        if let customSecondaryDeltaY = navigationSecondaryDeltaY {
-            NAVIGATION_BAR_SECONDARY_DELTA_Y = customSecondaryDeltaY
-        }
-
+        elasticHeader.backgroundColor = viewModel.getHeaderColor()
         view.insertSubview(elasticHeader, aboveSubview: scrollView)
-        scrollView.bounces = true
     }
 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -201,12 +235,12 @@ extension PXNewResultViewController {
         views.append(ResultViewData(view: view))
 
         //Instructions View
-        if let view = buildInstructionsView() {
+        if let view = viewModel.getInstructionsView() {
             views.append(ResultViewData(view: view))
         }
 
         //Important View
-        if let view = buildImportantView() {
+        if let view = viewModel.getImportantView() {
             views.append(ResultViewData(view: view))
         }
 
@@ -249,7 +283,7 @@ extension PXNewResultViewController {
         }
 
         //Top Custom View
-        if let view = buildTopCustomView() {
+        if let view = viewModel.getTopCustomView() {
             views.append(ResultViewData(view: view))
         }
 
@@ -279,7 +313,7 @@ extension PXNewResultViewController {
         }
 
         //Bottom Custom View
-        if let view = buildBottomCustomView() {
+        if let view = viewModel.getBottomCustomView() {
             views.append(ResultViewData(view: view))
         }
 
@@ -359,11 +393,6 @@ extension PXNewResultViewController {
         return itemsViews
     }
 
-    //INSTRUCTIONS
-    func buildInstructionsView() -> UIView? {
-        return viewModel.getInstructionsView()
-    }
-
     //PAYMENT METHOD
     func buildPaymentMethodView() -> UIView? {
         guard let paymentData = viewModel.getPaymentData() else {
@@ -403,21 +432,5 @@ extension PXNewResultViewController {
     func buildFooterView() -> UIView {
         let footerProps = PXFooterProps(buttonAction: viewModel.getFooterMainAction(), linkAction: viewModel.getFooterSecondaryAction())
         return PXFooterComponent(props: footerProps).render()
-    }
-
-    //CUSTOM
-    ////IMPORTANT
-    func buildImportantView() -> UIView? {
-        return viewModel.getImportantView()
-    }
-
-    ////TOP CUSTOM
-    func buildTopCustomView() -> UIView? {
-        return viewModel.getTopCustomView()
-    }
-
-    ////BOTTOM CUSTOM
-    func buildBottomCustomView() -> UIView? {
-        return viewModel.getBottomCustomView()
     }
 }

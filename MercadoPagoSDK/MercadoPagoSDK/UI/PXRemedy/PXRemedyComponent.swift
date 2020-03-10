@@ -31,7 +31,7 @@ var props: PXRemedyProps
                                       amount: amount,
                                       paymentMethodName: paymentMethodName)
 
-        let errorProps = PXTextFieldRemedyProps(title: title, message: message?.toAttributedString(), secondaryTitle: nil, action: nil)
+        let errorProps = PXTextFieldRemedyProps(title: title, hint: "Los 3 números que estan al dorso de tu tarjeta".toAttributedString())
         let errorComponent = PXTextFieldRemedyComponent(props: errorProps)
         return errorComponent
     }

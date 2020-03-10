@@ -13,7 +13,7 @@ internal extension PXResultViewModel {
 
     func getActionButton() -> PXAction? {
          var actionButton: PXAction?
-        if let label = self.getButtonLabel(), let action = self.getButtonAction() {
+        if let label = getButtonLabel(), let action = getButtonAction() {
             actionButton = PXAction(label: label, action: action)
         }
         return actionButton
@@ -41,7 +41,11 @@ internal extension PXResultViewModel {
         if self.paymentResult.isCallForAuth() {
             return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
         } else if self.paymentResult.isBadFilled() {
-            return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized
+            if paymentResult.statusDetail == PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE {
+                return PXFooterResultConstants.BAD_FILLED_SECURITY_CODE_BUTTON_TEXT.localized
+            } else {
+                return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized
+            }
         } else if self.paymentResult.isDuplicatedPayment() {
             return PXFooterResultConstants.DUPLICATED_PAYMENT_BUTTON_TEXT.localized
         } else if self.paymentResult.isCardDisabled() {
@@ -63,7 +67,7 @@ internal extension PXResultViewModel {
     }
 
     private func getButtonAction() -> (() -> Void)? {
-        return { self.pressButton() }
+        return { [weak self] in self?.pressButton() }
     }
 
     private func getLinkAction() -> (() -> Void)? {

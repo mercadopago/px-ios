@@ -81,6 +81,7 @@
 "cc_rejected_call_for_authorize_title" = "Declined payment by your card";
 "cc_rejected_card_disabled_button" = "I already activated my card";
 "cc_rejected_bad_filled_button" = "Enter the card details again";
+"cc_rejected_bad_filled_security_code_button" = "Pagar con este medio";
 "cc_rejected_call_for_authorize_button" = "I have authorized this payment";
 "cc_rejected_duplicated_payment_button" = "Got it";
 "cc_rejected_card_disabled_title" = "Your card is not activated";
