@@ -1,3 +1,8 @@
+# v4.32.9
+🚀Private Release - 4.32.9 🚀
+MercadoPagoSDKV4 - Private Version
+- Translation fixes
+
 # v4.32.8
 🚀Private Release - 4.32.8 🚀
 MercadoPagoSDKV4 - Private Version
