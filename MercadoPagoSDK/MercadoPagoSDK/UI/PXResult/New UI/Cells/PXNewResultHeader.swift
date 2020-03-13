@@ -52,18 +52,13 @@ class PXNewResultHeader: UIView {
 
     func render() {
         removeAllSubviews()
-        self.backgroundColor = data.color
-        let pxContentView = UIView()
-        pxContentView.backgroundColor = .clear
-        pxContentView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(pxContentView)
-        PXLayout.pinAllEdges(view: pxContentView, withMargin: PXLayout.ZERO_MARGIN)
+        backgroundColor = data.color
 
         //Close button
         if let closeAction = data.closeAction {
             let closeButton = buildCloseButton(touchUpInsideClosure: closeAction)
             self.closeButton = closeButton
-            pxContentView.addSubview(closeButton)
+            addSubview(closeButton)
             PXLayout.pinTop(view: closeButton, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinLeft(view: closeButton, withMargin: PXLayout.S_MARGIN).isActive = true
         }
@@ -71,7 +66,7 @@ class PXNewResultHeader: UIView {
         //Title Label
         let titleLabel = buildTitleLabel(with: data.title)
         self.titleLabel = titleLabel
-        pxContentView.addSubview(titleLabel)
+        addSubview(titleLabel)
 
         if let closeButton = self.closeButton {
             PXLayout.put(view: titleLabel, onBottomOf: closeButton, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -90,7 +85,7 @@ class PXNewResultHeader: UIView {
             iconImageView = buildCircleImage(with: data.icon)
         }
         if let circleImage = iconImageView {
-            pxContentView.addSubview(circleImage)
+            addSubview(circleImage)
             PXLayout.centerVertically(view: circleImage, to: titleLabel).isActive = true
             PXLayout.pinRight(view: circleImage, withMargin: PXLayout.L_MARGIN).isActive = true
 
@@ -102,7 +97,7 @@ class PXNewResultHeader: UIView {
             self.badgeImageView = badgeImageView
             badgeImageView.image = data.badgeImage
             badgeImageView.translatesAutoresizingMaskIntoConstraints = false
-            pxContentView.addSubview(badgeImageView)
+            addSubview(badgeImageView)
             PXLayout.setWidth(owner: badgeImageView, width: BADGE_IMAGE_SIZE).isActive = true
             PXLayout.setHeight(owner: badgeImageView, height: BADGE_IMAGE_SIZE).isActive = true
             PXLayout.pinRight(view: badgeImageView, to: circleImage, withMargin: BADGE_HORIZONTAL_OFFSET).isActive = true

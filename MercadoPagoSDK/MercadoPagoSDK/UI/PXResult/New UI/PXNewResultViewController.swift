@@ -60,9 +60,6 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
             scrollView.contentInset = contentInset
             scrollView.scrollIndicatorInsets = contentInset
-            if let textField = getAllTextFields(fromView : self.view).first(where: {$0.isFirstResponder}) {
-                scrollView.scrollRectToVisible(textField.frame, animated: true)
-            }
             animateContentViewHeightConstraint(isActive: false)
         }
     }
@@ -80,16 +77,6 @@ class PXNewResultViewController: MercadoPagoUIViewController {
                 self?.contentViewHeightConstraint?.isActive = isActive
             }.startAnimation()
         }
-    }
-
-    private func getAllTextFields(fromView view: UIView) -> [UITextField] {
-        return view.subviews.compactMap { (view) -> [UITextField]? in
-            if let textField = view as? UITextField {
-                return [textField]
-            } else {
-                return getAllTextFields(fromView: view)
-            }
-            }.flatMap({$0})
     }
 
     private func animateScrollView() {
@@ -173,7 +160,11 @@ class PXNewResultViewController: MercadoPagoUIViewController {
                     data.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -data.horizontalMargin)
                 ])
             }
-            PXLayout.pinLastSubviewToBottom(view: contentView, relation: .lessThanOrEqual)
+            if (contentView.subviews.last as? PXResultTextFieldRemedyView) != nil {
+                PXLayout.pinLastSubviewToBottom(view: contentView)
+            } else {
+                PXLayout.pinLastSubviewToBottom(view: contentView, relation: .lessThanOrEqual)
+            }
         }
     }
 }
@@ -298,7 +289,7 @@ extension PXNewResultViewController {
         }
 
         //Remedy body View
-        if let view = viewModel.getRemedyBodyView() {
+        if let view = viewModel.getRemedyView() {
             views.append(ResultViewData(view: view))
         }
 
@@ -395,13 +386,9 @@ extension PXNewResultViewController {
 
     //PAYMENT METHOD
     func buildPaymentMethodView() -> UIView? {
-        guard let paymentData = viewModel.getPaymentData() else {
-            return nil
-        }
-        guard let amountHelper = viewModel.getAmountHelper() else {
-            return nil
-        }
-        guard let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
+        guard let paymentData = viewModel.getPaymentData(),
+            let amountHelper = viewModel.getAmountHelper(),
+            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
             return nil
         }
 
@@ -414,18 +401,13 @@ extension PXNewResultViewController {
 
     //SPLIT PAYMENT METHOD
     func buildSplitPaymentMethodView() -> UIView? {
-        guard let paymentData = viewModel.getSplitPaymentData() else {
-            return nil
-        }
-        guard let amountHelper = viewModel.getSplitAmountHelper() else {
-            return nil
-        }
-        guard let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
+        guard let paymentData = viewModel.getSplitPaymentData(),
+            let amountHelper = viewModel.getSplitAmountHelper(),
+            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
             return nil
         }
 
-        let view = PXNewCustomView(data: data)
-        return view
+        return PXNewCustomView(data: data)
     }
 
     //FOOTER

@@ -38,11 +38,12 @@ internal extension PXResultViewModel {
     }
 
     private func getWarningButtonLabel() -> String? {
-        if self.paymentResult.isCallForAuth() {
+        if paymentResult.isCallForAuth() {
             return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
-        } else if self.paymentResult.isBadFilled() {
+        } else if paymentResult.isBadFilled() {
             if paymentResult.statusDetail == PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE {
-                return PXFooterResultConstants.BAD_FILLED_SECURITY_CODE_BUTTON_TEXT.localized
+                return nil
+                //return PXFooterResultConstants.BAD_FILLED_SECURITY_CODE_BUTTON_TEXT.localized
             } else {
                 return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized
             }
@@ -83,7 +84,7 @@ internal extension PXResultViewModel {
     }
 
     private func pressButton() {
-        guard let callback = self.callback else { return }
+        guard let callback = callback else { return }
         if paymentResult.isAccepted() {
              callback(PaymentResult.CongratsState.cancel_EXIT)
         } else if paymentResult.isError() {
@@ -103,9 +104,9 @@ internal extension PXResultViewModel {
     }
 
     private func pressLink() {
-        guard let callback = self.callback else { return }
+        guard let callback = callback else { return }
         if paymentResult.isAccepted() {
-                callback(PaymentResult.CongratsState.cancel_EXIT)
+            callback(PaymentResult.CongratsState.cancel_EXIT)
         } else {
             switch self.paymentResult.statusDetail {
             case PXRejectedStatusDetail.REJECTED_FRAUD.rawValue:

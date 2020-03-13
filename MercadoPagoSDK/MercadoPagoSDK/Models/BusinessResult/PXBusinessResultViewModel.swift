@@ -16,6 +16,7 @@ class PXBusinessResultViewModel: NSObject {
     let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
     var callback: ((PaymentResult.CongratsState) -> Void)?
+    var onRemedyButtonTapped: ((String?) -> Void)?
 
     //Default Image
     private lazy var approvedIconName = "default_item_icon"
@@ -100,6 +101,15 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         let action = { [weak self] in
             if let callback = self?.callback {
                 callback(PaymentResult.CongratsState.cancel_EXIT)
+            }
+        }
+        return action
+    }
+
+    func getRemedyButtonAction() -> ((String?) -> Void)? {
+        let action = { [weak self] (text: String?) in
+            if let onRemedyButtonTapped = self?.onRemedyButtonTapped {
+                onRemedyButtonTapped(text)
             }
         }
         return action
@@ -191,8 +201,8 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         }
         return nil
     }
-    
-    func getRemedyBodyView() -> UIView? {
+
+    func getRemedyView() -> UIView? {
         return nil
     }
 

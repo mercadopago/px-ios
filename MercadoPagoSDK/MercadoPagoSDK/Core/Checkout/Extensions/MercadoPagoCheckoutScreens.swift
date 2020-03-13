@@ -60,7 +60,7 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let identificationStep = IdentificationViewController(identificationTypes: identificationTypes, paymentMethod: viewModel.paymentData.paymentMethod, callback: { [weak self] (identification : PXIdentification) in
+        let identificationStep = IdentificationViewController(identificationTypes: identificationTypes, paymentMethod: viewModel.paymentData.paymentMethod, callback: { [weak self] identification in
             guard let self = self else { return }
 
             self.viewModel.updateCheckoutModel(identification: identification)
@@ -145,7 +145,7 @@ extension MercadoPagoCheckout {
     }
 
     func showSecurityCodeScreen() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.getSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
+        let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.getSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] _, securityCode in
             self?.getTokenizationService().createCardToken(securityCode: securityCode)
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToFirstPaymentVault: true)
@@ -172,27 +172,28 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
-        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] state in
+        let resultViewModel = viewModel.resultViewModel()
+        let viewController = PXNewResultViewController(viewModel: resultViewModel, callback: { [weak self] congratsState in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
-            if state == .call_FOR_AUTH {
+            switch congratsState {
+            case .call_FOR_AUTH:
                 self.viewModel.prepareForClone()
                 self.collectSecurityCodeForRetry()
-            } else if state == .cancel_RETRY || state == .cancel_SELECT_OTHER {
-                if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(), state == .cancel_SELECT_OTHER {
+            case .cancel_RETRY,
+                 .cancel_SELECT_OTHER :
+                if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(),
+                    congratsState == .cancel_SELECT_OTHER {
                     changePaymentMethodAction()
                 } else {
                     self.viewModel.prepareForNewSelection()
                     self.executeNextStep()
                 }
-            } else {
+            default:
                 self.finish()
             }
-        }
-
-        let resultViewModel = self.viewModel.resultViewModel()
-        let congratsViewController = PXNewResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
-        viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
+        })
+        viewModel.pxNavigationHandler.pushViewController(viewController: viewController, animated: false)
     }
 
     func showBusinessResultScreen() {
@@ -200,12 +201,10 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] _ in
-            self?.finish()
-        }
-
         let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
-        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: congratsViewControllerCallback)
+        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback:{ [weak self] _ in
+            self?.finish()
+        })
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
@@ -280,10 +279,10 @@ extension MercadoPagoCheckout {
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
-        if shouldUpdateOnetapFlow() {
+        if shouldUpdateOnetapFlow(), let onetapFlow = viewModel.onetapFlow {
             if let cardId = cardIdForInitFlowRefresh {
                 if viewModel.customPaymentOptions?.first(where: { $0.getCardId() == cardId }) != nil {
-                    viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: viewModel.paymentOptionSelected)
+                    onetapFlow.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: viewModel.paymentOptionSelected)
                 } else {
                     // New card didn't return. Refresh Init again
                     refreshInitFlow(cardId: cardId)

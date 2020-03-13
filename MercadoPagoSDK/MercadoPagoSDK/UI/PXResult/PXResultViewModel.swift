@@ -16,6 +16,7 @@ internal class PXResultViewModel: NSObject {
     var pointsAndDiscounts: PXPointsAndDiscounts?
     var preference: PXPaymentResultConfiguration
     var callback: ((PaymentResult.CongratsState) -> Void)?
+    var onRemedyButtonTapped: ((String?) -> Void)?
     let amountHelper: PXAmountHelper
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.REJECTED_INVALID_INSTALLMENTS, PXRejectedStatusDetail.BAD_FILLED_OTHER]
@@ -263,6 +264,15 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return action
     }
 
+    func getRemedyButtonAction() -> ((String?) -> Void)? {
+        let action = { [weak self] (text: String?) in
+            if let onRemedyButtonTapped = self?.onRemedyButtonTapped {
+                onRemedyButtonTapped(text)
+            }
+        }
+        return action
+    }
+
     func mustShowReceipt() -> Bool {
         return hasReceiptComponent()
     }
@@ -355,10 +365,32 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 
-    func getRemedyBodyView() -> UIView? {
-        if let component = buildRemedyComponent() as? PXRemedyComponent,
-            component.hasRemedyError() {
-            return component.render()
+    func getRemedyView() -> UIView? {
+        if paymentResult.status == PXPayment.Status.REJECTED && [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE].contains(paymentResult.statusDetail) {
+
+            // Build title
+            guard let paymentData = paymentResult.paymentData,
+                let paymentMethod = paymentData.paymentMethod else {
+                fatalError("paymentData cannot be nil")
+            }
+            let paymentMethodName = paymentMethod.name ?? ""
+            var paymentMethodDescription = " \(paymentMethodName)"
+            if let issuer = paymentData.getIssuer(), let issuerName = issuer.name, !issuerName.isEmpty, issuerName.lowercased() != paymentMethodName.lowercased() {
+                paymentMethodDescription += " \(issuerName)"
+            }
+            if paymentMethod.isCard, let lastFourDigits = paymentData.token?.lastFourDigits {
+                paymentMethodDescription += " *** \(lastFourDigits)"
+            }
+            let title = PXResourceProvider.getTitleForBadFilledSecurityCode(paymentMethodDescription)
+
+            let data = PXResultTextFieldRemedyViewData(title: title,
+                                                       placeholder: "security_code".localized,
+                                                       hint: "Los 3 números que estan al dorso de tu tarjeta",
+                                                       error: "error",
+                                                       buttonColor: ThemeManager.shared.getAccentColor(),
+                                                       buttonAnimationDelegate: nil,
+                                                       buttonTapped: getRemedyButtonAction())
+            return PXResultTextFieldRemedyView(data: data)
         }
         return nil
     }

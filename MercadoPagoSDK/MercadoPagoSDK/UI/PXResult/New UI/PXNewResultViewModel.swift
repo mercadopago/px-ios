@@ -11,7 +11,7 @@ struct ResultViewData {
     let view: UIView
     let verticalMargin: CGFloat
     let horizontalMargin: CGFloat
-    
+
     init(view: UIView,
          verticalMargin: CGFloat = 0,
          horizontalMargin: CGFloat = 0) {
@@ -65,7 +65,8 @@ protocol PXNewResultViewModelInterface {
     func getErrorBodyView() -> UIView?
 
     //REMEDY
-    func getRemedyBodyView() -> UIView?
+    func getRemedyView() -> UIView?
+    func getRemedyButtonAction() -> ((String?) -> Void)?
 
     //FOOTER
     func getFooterMainAction() -> PXAction?

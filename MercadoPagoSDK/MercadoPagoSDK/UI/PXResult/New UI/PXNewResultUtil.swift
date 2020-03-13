@@ -197,10 +197,8 @@ extension PXNewResultUtil {
         var pmDescription: String = ""
         let paymentMethodName = paymentMethod.name ?? ""
 
-        if paymentMethod.isCard {
-            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
-                pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
-            }
+        if paymentMethod.isCard, let lastFourDigits = (paymentData.token?.lastFourDigits) {
+            pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
         } else {
             pmDescription = paymentMethodName
         }
@@ -216,9 +214,7 @@ extension PXNewResultUtil {
         }
         let paymentMethodName = paymentMethod.name ?? ""
         if let issuer = paymentData.getIssuer(), let issuerName = issuer.name, !issuerName.isEmpty, issuerName.lowercased() != paymentMethodName.lowercased() {
-            let issuerAttributedString = NSMutableAttributedString(string: issuerName, attributes: PXNewCustomView.subtitleAttributes)
-
-            return issuerAttributedString
+            return NSMutableAttributedString(string: issuerName, attributes: PXNewCustomView.subtitleAttributes)
         }
         return nil
     }
