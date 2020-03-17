@@ -18,7 +18,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     let scrollView = UIScrollView()
     let viewModel: PXNewResultViewModelInterface
 
-    init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
+    init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
         super.init(nibName: nil, bundle: nil)

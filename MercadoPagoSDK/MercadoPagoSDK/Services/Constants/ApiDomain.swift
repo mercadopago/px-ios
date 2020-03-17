@@ -23,5 +23,6 @@ internal struct ApiDomain {
     static let GET_ISSUERS = "\(BASE_DOMAIN)PaymentService.getIssuers"
     static let GET_PREFERENCE = "\(BASE_DOMAIN)PreferenceService.getPreference"
     static let GET_PROMOS = "\(BASE_DOMAIN)PromosService.getPromos"
+    static let GET_REMEDY = "\(BASE_DOMAIN)RemedyService.getRemedy"
     static let RESET_ESC_CAP = "\(BASE_DOMAIN)ESCService.resetCap"
 }

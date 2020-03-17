@@ -169,6 +169,24 @@ internal class MercadoPagoServices: NSObject {
             }
         }, failure: failure)
     }
+    
+    func getRemedy(success : @escaping (PXRemedy) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let service = RemedyService(baseURL: baseURL, payerAccessToken: privateKey)
+        service.getRemedy(for: "5148018960", success: { data -> Void in
+            guard let data = data else {
+                failure(PXError(domain: ApiDomain.GET_PROMOS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
+                return
+            }
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let responseObject = try decoder.decode(PXRemedy.self, from: data)
+                success(responseObject)
+            } catch {
+                failure(PXError(domain: ApiDomain.GET_PROMOS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
+            }
+        }, failure: failure)
+    }
 
     func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: IdentificationService = IdentificationService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey)

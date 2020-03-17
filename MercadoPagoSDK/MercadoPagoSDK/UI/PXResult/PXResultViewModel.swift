@@ -15,8 +15,7 @@ internal class PXResultViewModel: NSObject {
     var instructionsInfo: PXInstructions?
     var pointsAndDiscounts: PXPointsAndDiscounts?
     var preference: PXPaymentResultConfiguration
-    var callback: ((PaymentResult.CongratsState) -> Void)?
-    var onRemedyButtonTapped: ((String?) -> Void)?
+    var callback: ((PaymentResult.CongratsState, String?) -> Void)?
     let amountHelper: PXAmountHelper
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.REJECTED_INVALID_INSTALLMENTS, PXRejectedStatusDetail.BAD_FILLED_OTHER]
@@ -36,7 +35,7 @@ internal class PXResultViewModel: NSObject {
         return paymentData
     }
 
-    func setCallback(callback: @escaping ((PaymentResult.CongratsState) -> Void)) {
+    func setCallback(callback: @escaping ((PaymentResult.CongratsState, String?) -> Void)) {
         self.callback = callback
     }
 
@@ -254,10 +253,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
             if let callback = self?.callback {
                 if let url = self?.getBackUrl() {
                     self?.openURL(url: url, success: { (_) in
-                        callback(PaymentResult.CongratsState.cancel_EXIT)
+                        callback(PaymentResult.CongratsState.cancel_EXIT, nil)
                     })
                 } else {
-                    callback(PaymentResult.CongratsState.cancel_EXIT)
+                    callback(PaymentResult.CongratsState.cancel_EXIT, nil)
                 }
             }
         }
@@ -266,8 +265,8 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { [weak self] (text: String?) in
-            if let onRemedyButtonTapped = self?.onRemedyButtonTapped {
-                onRemedyButtonTapped(text)
+            if let callback = self?.callback {
+                callback(PaymentResult.CongratsState.cancel_RETRY, text)
             }
         }
         return action

@@ -86,7 +86,7 @@ protocol PXNewResultViewModelInterface {
     func getBottomCustomView() -> UIView?
 
     //CALLBACKS & TRACKING
-    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void)
+    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void)
     func getTrackingProperties() -> [String: Any]
     func getTrackingPath() -> String
     func getFlowBehaviourResult() -> PXResultKey

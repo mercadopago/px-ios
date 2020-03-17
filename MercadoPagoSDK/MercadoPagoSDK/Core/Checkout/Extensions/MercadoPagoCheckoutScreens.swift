@@ -172,8 +172,7 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
-        let resultViewModel = viewModel.resultViewModel()
-        let viewController = PXNewResultViewController(viewModel: resultViewModel, callback: { [weak self] congratsState in
+        let viewController = PXNewResultViewController(viewModel: viewModel.resultViewModel(), callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
@@ -186,8 +185,12 @@ extension MercadoPagoCheckout {
                     congratsState == .cancel_SELECT_OTHER {
                     changePaymentMethodAction()
                 } else {
-                    self.viewModel.prepareForNewSelection()
-                    self.executeNextStep()
+                    if let remedyText = remedyText, remedyText.isNotEmpty {
+                        self.getTokenizationService().createCardToken(securityCode: remedyText)
+                    } else {
+                        self.viewModel.prepareForNewSelection()
+                        self.executeNextStep()
+                    }
                 }
             default:
                 self.finish()
@@ -202,7 +205,7 @@ extension MercadoPagoCheckout {
         }
 
         let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
-        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback:{ [weak self] _ in
+        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
             self?.finish()
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
