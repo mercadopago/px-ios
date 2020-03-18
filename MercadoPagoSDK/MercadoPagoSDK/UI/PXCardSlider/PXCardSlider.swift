@@ -10,6 +10,8 @@ public protocol ChangeCardAccessibilityProtocol: NSObjectProtocol {
     func scrollTo(direction: UIAccessibilityScrollDirection)
 }
 
+typealias AccessibilityCardData = (paymentMethodId: String, paymentTypeId: String, issuerName: String, description: String)
+
 final class PXCardSlider: NSObject {
     private var pagerView = FSPagerView(frame: .zero)
     private var pageControl = ISPageControl(frame: .zero, numberOfPages: 0)
@@ -39,6 +41,12 @@ extension PXCardSlider: FSPagerViewDataSource {
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         if model.indices.contains(index) {
             let targetModel = model[index]
+            var accessibilityData = AccessibilityCardData(paymentMethodId: "", paymentTypeId: "", issuerName: "", description: "")
+            if index < targetModel.payerPaymentMethods.count {
+                let payerPaymentMethod = targetModel.payerPaymentMethods[index]
+                accessibilityData = AccessibilityCardData(paymentMethodId: targetModel.paymentMethodId, paymentTypeId: targetModel.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "")
+            }
+
             if let cardData = targetModel.cardData, let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
                 let bottomMessage = targetModel.bottomMessage
 
@@ -50,7 +58,7 @@ extension PXCardSlider: FSPagerViewDataSource {
                     cell.renderConsumerCreditsCard(creditsViewModel: oneTapCreditsInfo, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage, creditsInstallmentSelected: targetModel.selectedPayerCost?.installments)
                 } else {
                     // Other cards.
-                    cell.render(withCard: targetModel.cardUI, cardData: cardData, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage)
+                    cell.render(withCard: targetModel.cardUI, cardData: cardData, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage, accessibilityData: accessibilityData)
                 }
                 return cell
             } else {

@@ -44,7 +44,7 @@ protocol AddNewMethodCardDelegate: NSObjectProtocol {
 
 // MARK: Publics.
 extension PXCardSliderPagerCell {
-    func render(withCard: CardUI, cardData: CardData, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
+    func render(withCard: CardUI, cardData: CardData, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil, accessibilityData: AccessibilityCardData) {
         containerView.layer.masksToBounds = false
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
@@ -60,6 +60,7 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
+        accessibilityLabel = "\(accessibilityData.paymentMethodId) \(accessibilityData.paymentTypeId) \(accessibilityData.issuerName) \(accessibilityData.description)"
     }
 
     func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: AddNewMethodCardDelegate) {

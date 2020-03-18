@@ -119,7 +119,7 @@ internal extension OneTapFlowModel {
     }
 
     func oneTapViewModel() -> PXOneTapViewModel {
-        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: escManager, currentFlow: oneTapFlow)
+        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: escManager, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods)
         viewModel.publicKey = publicKey
         viewModel.privateKey = privateKey
         viewModel.siteId = siteId
