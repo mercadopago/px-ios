@@ -16,18 +16,9 @@ internal class RemedyService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getRemedy(for payment_method_id: String, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    internal func getRemedy(for paymentMethodId: String, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: PXError) -> Void)?) {
         let params: String = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
-
-        let payerPaymentMethodRejected = PXPayerPaymentMethodRejected(paymentMethodId: "visa",
-                                                                      paymentTypeId: "credit_card",
-                                                                      issuerName: "Banco Santander",
-                                                                      lastFourDigit: "4444",
-                                                                      securityCodeLocation: "back",
-                                                                      securityCodeLength: 3,
-                                                                      totalAmount: 123.00,
-                                                                      installments: 2,
-                                                                      esc: true)
+        
         let alternativePayerPaymentMethods = [
         PXAlternativePayerPaymentMethod(paymentMethodId: "visa",
                                         paymentTypeId: "credit_card",
@@ -61,7 +52,7 @@ internal class RemedyService: MercadoPagoService {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         let body = try? encoder.encode(remedyBody)
 
-        self.request(uri: PXServicesURLConfigs.MP_REMEDY_URI.replacingOccurrences(of: "${payment_id}", with: payment_method_id), params: params, body: body, method: HTTPMethod.post, success: success, failure: { _ in
+        self.request(uri: PXServicesURLConfigs.MP_REMEDY_URI.replacingOccurrences(of: "${payment_id}", with: paymentMethodId), params: params, body: body, method: HTTPMethod.post, success: success, failure: { _ in
             failure?(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }

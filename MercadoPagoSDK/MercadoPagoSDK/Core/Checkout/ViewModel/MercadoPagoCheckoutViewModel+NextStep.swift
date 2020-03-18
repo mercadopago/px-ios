@@ -130,9 +130,9 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needGetRemedy() -> Bool {
-//        guard let pm = paymentData.getPaymentMethod(), pm.isCard else {
-//            return false
-//        }
+        guard let pm = paymentData.getPaymentMethod(), pm.isCreditCard else {
+            return false
+        }
 
         if let paymentResult = paymentResult,
             paymentResult.isRejected(),

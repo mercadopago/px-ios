@@ -21,10 +21,6 @@ internal class PXResourceProvider {
         return error_body_title_c4a.localized
     }
 
-    static internal func getTitleForBadFilledSecurityCode(_ paymentMethodDescription: String) -> String {
-        return "Vuelve a ingresarlo para confirmar el pago con tu {0}".localized.replacingOccurrences(of: "{0}", with: paymentMethodDescription)
-    }
-
     static internal func getTitleForErrorBody() -> String {
         return error_body_title_base.localized
     }

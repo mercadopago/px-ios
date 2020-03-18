@@ -293,7 +293,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let paymentResult = paymentResult else {
             fatalError("paymentResult is nil")
         }
-        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration)
+        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy)
     }
 
     //SEARCH_PAYMENT_METHODS
@@ -301,7 +301,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
         self.cleanIdentificationTypesSearch()
-        self.cleanRemdy()
+        self.cleanRemedy()
         self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethods[0])
         self.cardToken = cardToken
         // Sets if esc is enabled to card token
@@ -774,8 +774,8 @@ extension MercadoPagoCheckoutViewModel {
     func cleanIdentificationTypesSearch() {
         self.identificationTypes = nil
     }
-    
-    func cleanRemdy() {
+
+    func cleanRemedy() {
         self.remedy = nil
     }
 
@@ -788,13 +788,11 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func prepareForClone() {
-        self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.cleanPaymentResult()
         self.wentBackFrom(hook: .BEFORE_PAYMENT)
     }
 
     func prepareForNewSelection() {
-        self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.keepDisabledOptionIfNeeded()
         self.cleanPaymentResult()
         self.resetInformation()

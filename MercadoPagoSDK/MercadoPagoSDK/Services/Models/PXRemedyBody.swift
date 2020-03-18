@@ -18,9 +18,9 @@ struct PXPayerPaymentMethodRejected: Codable {
     let issuerName: String?
     let lastFourDigit: String?
     let securityCodeLocation: String?
-    let securityCodeLength: Int
-    let totalAmount: Double
-    let installments: Int
-    let esc: Bool
+    let securityCodeLength: Int?
+    let totalAmount: Double?
+    let installments: Int?
+    let esc: Bool?
 }
 
