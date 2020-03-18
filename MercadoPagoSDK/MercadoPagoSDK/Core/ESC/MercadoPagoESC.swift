@@ -21,11 +21,11 @@ internal protocol MercadoPagoESC: NSObjectProtocol {
 
     @discardableResult func saveESC(token: PXToken, esc: String) -> Bool
 
-    func deleteESC(cardId: String)
+    func deleteESC(cardId: String, reason: PXESCDeleteReason, detail: String?)
 
-    func deleteESC(firstSixDigits: String, lastFourDigits: String)
+    func deleteESC(firstSixDigits: String, lastFourDigits: String, reason: PXESCDeleteReason, detail: String?)
 
-    func deleteESC(token: PXToken)
+    func deleteESC(token: PXToken, reason: PXESCDeleteReason, detail: String?)
 
     func deleteAllESC()
 

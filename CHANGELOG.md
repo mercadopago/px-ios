@@ -1,3 +1,76 @@
+# v4.32.9
+🚀Private Release - 4.32.9 🚀
+MercadoPagoSDKV4 - Private Version
+- Translation fixes
+
+# v4.32.8
+🚀Private Release - 4.32.8 🚀
+MercadoPagoSDKV4 - Private Version
+- Reset ESC Cap hot fix
+
+# v4.32.7
+🚀Private Release - 4.32.7 🚀
+MercadoPagoSDKV4 - Private Version
+- ESC tracking
+
+# v4.32.6
+🚀Private Release - 4.32.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Reset ESC Cap
+- Services refactor
+- Fonts fixes
+- Minor bug fixes
+
+# v4.32.5
+🚀Private Release - 4.32.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Pay preference fixes
+- Translations fixes
+- Tracking enhancements
+
+# v4.32.4
+🚀Public Release - 4.32.4 🚀
+MercadoPagoSDK - Public Version
+- Edit CPF button removed 
+- Brasil locale fix
+- Benefits fix
+- Translations fixes
+- Old code deleted
+
+# v4.32.3
+🚀Private Release - 4.32.3 🚀
+MercadoPagoSDKV4 - Private Version
+- MLBusiness Discount Tracker
+- Edit CPF button removed 
+- Brasil locale fix
+- Benefits fix
+- Translations fixes
+- Old code deleted
+
+# v4.32.2
+🚀Public Release - 4.32.2 🚀
+MercadoPagoSDK - Public Version
+- One Tap for new and white label users
+- ESC Always on
+- Translations fixes
+- Minor UI Fixes
+
+# v4.32.1
+🚀Private Release - 4.32.1 🚀
+MercadoPagoSDKV4 - Private Version
+- MLBusiness Discount Tracker disabled
+
+# v4.32.0
+🚀Private Release - 4.32.0 🚀
+MercadoPagoSDKV4 - Private Version
+- ESC Always on
+- One Tap for new and white label users
+- Consumer credits terms and conditions for MLB
+- MLBusiness Discount Tracker
+- Congrats tracking protocol
+- Translations fixes
+- Minor UI Fixes
+
 # v4.31.1
 🚀Private Release - 4.31.1 🚀
 MercadoPagoSDKV4 - Private Version

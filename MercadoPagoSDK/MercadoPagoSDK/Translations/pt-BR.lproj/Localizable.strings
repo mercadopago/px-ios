@@ -22,6 +22,7 @@
 "Número de tarjeta" = "Número do cartão";
 "NOMBRE APELLIDO" = "NOME SOBRENOME";
 "MM/AA" = "MM/AA";
+"Pagar" = "Pagar";
 "Fecha de expiración" = "Data de vencimento";
 "Ingresa el número de la tarjeta de crédito" = "Digite o número do cartão de crédito";
 "Ingresa el nombre y apellido impreso en la tarjeta" = "Digite o nome e o sobrenome impresso no cartão";
@@ -59,7 +60,6 @@
 "Operación #{0}" = "Operação #{0}";
 "Se acreditará instantáneamente" = "É aprovado imediatamente";
 "Se acreditará en" = "Será aprovado em {0}";
-"Pagar" = "Pagar";
 "día hábil" = "dia útil";
 "días hábiles" = "dias úteis";
 "Revisa si está todo bien" = "Confira se está tudo correto";
@@ -144,3 +144,15 @@
 "px_dialog_detail_payment_method_disable_high_risk" = "Recusamos seu pagamento.";
 "px_dialog_detail_payment_method_disable_black_list" = "Recusamos seu pagamento com este cartão.";
 "px_payment_method_disable_title" = "Não é possível pagar com essa opção";
+"January" = "Janeiro";
+"February" = "Fevereiro";
+"March" = "Março";
+"April" = "Abril";
+"May" = "Maio";
+"June" = "Junho";
+"July" = "Julho";
+"August" = "Agosto";
+"September" = "Setembro";
+"October" = "Outubro";
+"November" = "Novembro";
+"December" = "Dezembro";

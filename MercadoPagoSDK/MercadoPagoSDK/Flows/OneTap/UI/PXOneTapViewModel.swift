@@ -71,7 +71,7 @@ extension PXOneTapViewModel {
         for targetNode in reArrangedNodes {
 
             //Charge rule message when amount is zero
-            let chargeRuleMessage = getCardBottomMessage(paymentTypeId: targetNode.paymentTypeId, benefits: targetNode.benefits)
+            var chargeRuleMessage = getCardBottomMessage(paymentTypeId: targetNode.paymentTypeId, benefits: targetNode.benefits, selectedPayerCost: nil)
             let benefits = targetNode.benefits
 
             let statusConfig = getStatusConfig(currentStatus: targetNode.status, cardId: targetNode.oneTapCard?.cardId, paymentMethodId: targetNode.paymentMethodId)
@@ -159,6 +159,8 @@ extension PXOneTapViewModel {
                     }
 
                     let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment)
+
+                    chargeRuleMessage = getCardBottomMessage(paymentTypeId: targetNode.paymentTypeId, benefits: targetNode.benefits, selectedPayerCost: selectedPayerCost)
 
                     let viewModelCard = PXCardSliderViewModel(paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits)
 
@@ -264,14 +266,14 @@ extension PXOneTapViewModel {
             // To deprecate. After instore migrate current preferences.
 
             // Title desc from item
-            if let headerTitleStr = item?._description {
+            if let headerTitleStr = item?._description, headerTitleStr.isNotEmpty {
                 headerTitle = headerTitleStr
-            } else if let headerTitleStr = item?.title {
+            } else if let headerTitleStr = item?.title, headerTitleStr.isNotEmpty {
                 headerTitle = headerTitleStr
             }
             headerSubtitle = nil
             // Image from item
-            if let headerUrl = item?.getPictureURL() {
+            if let headerUrl = item?.getPictureURL(), headerUrl.isNotEmpty {
                 headerImage = PXUIImage(url: headerUrl)
             }
         }
@@ -346,12 +348,12 @@ extension PXOneTapViewModel {
         return getChargeRuleViewController() != nil
     }
 
-    func getCardBottomMessage(paymentTypeId: String?, benefits: PXBenefits?) -> String? {
+    func getCardBottomMessage(paymentTypeId: String?, benefits: PXBenefits?, selectedPayerCost: PXPayerCost?) -> String? {
         if let chargeRuleMessage = getChargeRuleBottomMessage(paymentTypeId) {
             return chargeRuleMessage
         }
 
-        guard let selectedInstallments = amountHelper.getPaymentData().payerCost?.installments else {
+        guard let selectedInstallments = selectedPayerCost?.installments else {
             return nil
         }
 

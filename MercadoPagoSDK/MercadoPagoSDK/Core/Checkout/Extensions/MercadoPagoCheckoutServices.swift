@@ -18,8 +18,8 @@ extension MercadoPagoCheckout {
         let bin = viewModel.cardToken?.getBin()
 
         //issuers service should be performed using the processing modes designated by the payment method
-        viewModel.mercadoPagoServicesAdapter.update(processingModes: paymentMethod.processingModes)
-        viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod.id, bin: bin, callback: { [weak self] (issuers) in
+        viewModel.mercadoPagoServices.update(processingModes: paymentMethod.processingModes)
+        viewModel.mercadoPagoServices.getIssuers(paymentMethodId: paymentMethod.id, bin: bin, callback: { [weak self] (issuers) in
             guard let self = self else { return }
             self.viewModel.issuers = issuers
             if issuers.count == 1 {
@@ -36,7 +36,7 @@ extension MercadoPagoCheckout {
     }
 
     func createPayment() {
-        viewModel.invalidESC = false
+        viewModel.invalidESCReason = nil
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
         paymentFlow.setData(amountHelper: viewModel.amountHelper, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
         paymentFlow.start()
@@ -44,7 +44,7 @@ extension MercadoPagoCheckout {
 
     func getIdentificationTypes() {
         viewModel.pxNavigationHandler.presentLoading()
-        viewModel.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] (identificationTypes) in
+        viewModel.mercadoPagoServices.getIdentificationTypes(callback: { [weak self] (identificationTypes) in
             guard let self = self else { return }
             self.viewModel.updateCheckoutModel(identificationTypes: identificationTypes)
             self.executeNextStep()

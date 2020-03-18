@@ -8,18 +8,6 @@
 
 import UIKit
 
-internal extension PXResultViewModel {
-
-    func getFooterComponentProps() -> PXFooterProps {
-        return PXFooterProps(buttonAction: getActionButton(), linkAction: getActionLink())
-    }
-
-    func buildFooterComponent() -> PXFooterComponent {
-        let footerProps = getFooterComponentProps()
-        return PXFooterComponent(props: footerProps)
-    }
-}
-
 // MARK: Build Helpers
 internal extension PXResultViewModel {
 

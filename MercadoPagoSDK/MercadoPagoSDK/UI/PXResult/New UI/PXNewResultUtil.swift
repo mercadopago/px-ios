@@ -22,7 +22,7 @@ class PXNewResultUtil {
             return nil
         }
 
-        let attributedTitle = NSAttributedString(string: "Operación".localized + " #" + paymentId, attributes: PXNewCustomView.titleAttributes)
+        let attributedTitle = NSAttributedString(string: ("Operación #{0}".localized as NSString).replacingOccurrences(of: "{0}", with: "\(paymentId)"), attributes: PXNewCustomView.titleAttributes)
 
         let date = Date()
         let attributedSubtitle = NSAttributedString(string: Utils.getFormatedStringDate(date, addTime: true), attributes: PXNewCustomView.subtitleAttributes)
@@ -152,7 +152,7 @@ extension PXNewResultUtil {
 
                 // Installment Rate
                 if payerCost.installmentRate == 0.0 {
-                    let interestRateString = " " + "Sin\u{00a0}interés".localized.lowercased()
+                    let interestRateString = " " + "Sin interés".localized.lowercased()
                     let attributedInsterest = NSAttributedString(string: interestRateString, attributes: interestRateAttributes)
                     firstString.appendWithSpace(attributedInsterest)
                 }

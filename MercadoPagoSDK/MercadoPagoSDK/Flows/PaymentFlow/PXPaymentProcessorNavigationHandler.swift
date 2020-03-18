@@ -32,7 +32,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
     open func didFinishPayment(paymentStatus: PXGenericPayment.RemotePaymentStatus, statusDetails: String = "", paymentId: String? = nil) {
 
         if statusDetails == PXRejectedStatusDetail.INVALID_ESC.rawValue {
-            flow?.paymentErrorHandler?.escError()
+            flow?.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return
         }
 
@@ -69,7 +69,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
     open func didFinishPayment(status: String, statusDetail: String, paymentId: String? = nil) {
 
         if statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue {
-            flow?.paymentErrorHandler?.escError()
+            flow?.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return
         }
 

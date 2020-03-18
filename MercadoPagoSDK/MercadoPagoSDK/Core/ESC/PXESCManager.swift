@@ -83,29 +83,32 @@ internal class PXESCManager: NSObject, MercadoPagoESC {
         return false
     }
 
-    func deleteESC(cardId: String) {
+    func deleteESC(cardId: String, reason: PXESCDeleteReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
-                mLESCManager.deleteESC(cardId: cardId)
+                let deleteESCReason = MLESCDeleteReason(rawValue: reason.rawValue)
+                mLESCManager.deleteESC(cardId: cardId, reason: deleteESCReason, detail: detail)
             #endif
         }
     }
 
-    func deleteESC(firstSixDigits: String, lastFourDigits: String) {
+    func deleteESC(firstSixDigits: String, lastFourDigits: String, reason: PXESCDeleteReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
-            mLESCManager.deleteESC(firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits)
+            let deleteESCReason = MLESCDeleteReason(rawValue: reason.rawValue)
+            mLESCManager.deleteESC(firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, reason: deleteESCReason, detail: detail)
             #endif
         }
     }
 
-    func deleteESC(token: PXToken) {
+    func deleteESC(token: PXToken, reason: PXESCDeleteReason, detail: String?) {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
+            let deleteESCReason = MLESCDeleteReason(rawValue: reason.rawValue)
             if token.hasCardId() {
-                mLESCManager.deleteESC(cardId: token.cardId)
+                mLESCManager.deleteESC(cardId: token.cardId, reason: deleteESCReason, detail: detail)
             } else {
-                mLESCManager.deleteESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits)
+                mLESCManager.deleteESC(firstSixDigits: token.firstSixDigits, lastFourDigits: token.lastFourDigits, reason: deleteESCReason, detail: detail)
             }
             #endif
         }

@@ -12,17 +12,15 @@ final class PXPayerProps: NSObject {
     let payerIcon: UIImage?
     let identityfication: NSAttributedString
     let fulltName: NSAttributedString
-    let action: PXAction
     let backgroundColor: UIColor
     let nameLabelColor: UIColor
     let identificationLabelColor: UIColor
     let separatorColor: UIColor
 
-    public init(payerIcon: UIImage?, identityfication: NSAttributedString, fulltName: NSAttributedString, action: PXAction, backgroundColor: UIColor, nameLabelColor: UIColor, identificationLabelColor: UIColor, separatorColor: UIColor) {
+    public init(payerIcon: UIImage?, identityfication: NSAttributedString, fulltName: NSAttributedString, backgroundColor: UIColor, nameLabelColor: UIColor, identificationLabelColor: UIColor, separatorColor: UIColor) {
         self.payerIcon = payerIcon
         self.identityfication = identityfication
         self.fulltName = fulltName
-        self.action = action
         self.backgroundColor = backgroundColor
         self.nameLabelColor = nameLabelColor
         self.identificationLabelColor = identificationLabelColor

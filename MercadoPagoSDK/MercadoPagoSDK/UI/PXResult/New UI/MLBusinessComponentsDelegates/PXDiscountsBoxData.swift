@@ -33,6 +33,6 @@ class PXDiscountsBoxData: NSObject, MLBusinessDiscountBoxData {
     }
     
     func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol? {
-        return PXDiscountTracker(touchPointId: "px-congrats")
+        return PXDiscountTracker(touchPointId: "px_congrats")
     }
 }

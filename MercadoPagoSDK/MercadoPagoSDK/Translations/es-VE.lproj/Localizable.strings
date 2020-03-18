@@ -22,6 +22,7 @@
 "Número de tarjeta" = "Número de tarjeta";
 "NOMBRE APELLIDO" = "NOMBRE APELLIDO";
 "MM/AA" = "MM/AA";
+"Pagar" = "Pagar";
 "Fecha de expiración" = "Fecha de expiración";
 "Ingresa el número de la tarjeta de crédito" = "Ingresa el número de la tarjeta de crédito";
 "Ingresa el nombre y apellido impreso en la tarjeta" = "Ingresa el nombre y apellido impreso en la tarjeta";
@@ -143,3 +144,15 @@
 "px_dialog_detail_payment_method_disable_high_risk" = "Rechazamos tu pago.";
 "px_dialog_detail_payment_method_disable_black_list" = "Rechazamos tu pago con esta tarjeta.";
 "px_payment_method_disable_title" = "No puedes usar este medio de pago";
+"January" = "Enero";
+"February" = "Febrero";
+"March" = "Marzo";
+"April" = "Abril";
+"May" = "Mayo";
+"June" = "Junio";
+"July" = "Julio";
+"August" = "Agosto";
+"September" = "Septiembre";
+"October" = "Octubre";
+"November" = "Noviembre";
+"December" = "Diciembre";

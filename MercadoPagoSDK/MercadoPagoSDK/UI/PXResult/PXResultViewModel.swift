@@ -9,7 +9,7 @@
 import UIKit
 import MLBusinessComponents
 
-internal class PXResultViewModel: NSObject, PXResultViewModelInterface {
+internal class PXResultViewModel: NSObject {
 
     var paymentResult: PaymentResult
     var instructionsInfo: PXInstructions?
@@ -59,11 +59,11 @@ internal class PXResultViewModel: NSObject, PXResultViewModelInterface {
 // MARK: PXCongratsTrackingDataProtocol Implementation
 extension PXResultViewModel: PXCongratsTrackingDataProtocol {
     func hasBottomView() -> Bool {
-        return buildBottomCustomView() != nil ? true : false
+        return getBottomCustomView() != nil
     }
 
     func hasTopView() -> Bool {
-        return buildTopCustomView() != nil ? true : false
+        return getTopCustomView() != nil
     }
 
     func hasImportantView() -> Bool {
@@ -136,6 +136,18 @@ extension PXResultViewModel {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
         return screenPath
+    }
+
+    func getFlowBehaviourResult() -> PXResultKey {
+        let isApprovedOfflinePayment = PXPayment.Status.PENDING.elementsEqual(paymentResult.status) && PXPayment.StatusDetails.PENDING_WAITING_PAYMENT.elementsEqual(paymentResult.statusDetail)
+
+        if paymentResult.isApproved() || isApprovedOfflinePayment {
+            return .SUCCESS
+        } else if paymentResult.isRejected() {
+            return .FAILURE
+        } else {
+            return .PENDING
+        }
     }
 
     func getFooterPrimaryActionTrackingPath() -> String {

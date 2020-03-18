@@ -8,29 +8,6 @@
 
 import UIKit
 
-internal extension PXResultViewModel {
-
-    func getHeaderComponentProps() -> PXHeaderProps {
-        let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage(), closeAction: { [weak self] in
-            if let callback = self?.callback {
-                if let url = self?.getBackUrl() {
-                    self?.openURL(url: url, success: { (_) in
-                        callback(PaymentResult.CongratsState.cancel_EXIT)
-                    })
-                } else {
-                    callback(PaymentResult.CongratsState.cancel_EXIT)
-                }
-            }
-        })
-        return props
-    }
-
-    func buildHeaderComponent() -> PXHeaderComponent {
-        let headerProps = getHeaderComponentProps()
-        return PXHeaderComponent(props: headerProps)
-    }
-}
-
 // MARK: Build Helpers
 internal extension PXResultViewModel {
     func iconImageHeader() -> UIImage? {

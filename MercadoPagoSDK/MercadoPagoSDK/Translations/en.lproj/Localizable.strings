@@ -22,6 +22,7 @@
 "Número de tarjeta" = "Card number";
 "NOMBRE APELLIDO" = "NAME SURNAME";
 "MM/AA" = "MM/YY";
+"Pagar" = "Pay";
 "Fecha de expiración" = "Date of expiration";
 "Ingresa el número de la tarjeta de crédito" = "Enter the credit card number";
 "Ingresa el nombre y apellido impreso en la tarjeta" = "Enter the name and last name printed on the card";
@@ -50,7 +51,6 @@
 "¿Cómo quieres pagar?" = "How would you like to pay?";
 "Procesando tu pago" = "Processing your payment";
 "Producto" = "Product";
-"Pagar" = "Pay";
 "Mora" = "Arrear";
 "Cargos" = "Charges";
 "Impuestos" = "Taxes";
@@ -144,3 +144,15 @@
 "px_dialog_detail_payment_method_disable_high_risk" = "We rejected your payment.";
 "px_dialog_detail_payment_method_disable_black_list" = "We rejected the payment with this card.";
 "px_payment_method_disable_title" = "You can not use this payment method";
+"January" = "January";
+"February" = "February";
+"March" = "March";
+"April" = "April";
+"May" = "May";
+"June" = "June";
+"July" = "July";
+"August" = "August";
+"September" = "September";
+"October" = "October";
+"November" = "November";
+"December" = "December";
