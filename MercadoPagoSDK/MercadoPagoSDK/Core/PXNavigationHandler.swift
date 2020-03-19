@@ -21,7 +21,7 @@ internal class PXNavigationHandler: NSObject {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         if self.navigationController.viewControllers.count > 0 {
-            let newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of: MercadoPagoUIViewController.self) || $0.isKind(of: PXReviewViewController.self)
+            let newNavigationStack = self.navigationController.viewControllers.filter {!($0 is MercadoPagoUIViewController) || $0 is PXReviewViewController
             }
             viewControllerBase = newNavigationStack.last
         }
@@ -147,8 +147,8 @@ internal class PXNavigationHandler: NSObject {
     }
 
     func cleanCompletedCheckoutsFromNavigationStack() {
-        let  pxResultViewControllers = self.navigationController.viewControllers.filter { $0.isKind(of: PXResultViewController.self) }
-        if let lastResultViewController = pxResultViewControllers.last {
+        let resultViewControllers = navigationController.viewControllers.filter { $0 is PXResultViewController || $0 is PXNewResultViewController }
+        if let lastResultViewController = resultViewControllers.last {
             let index = self.navigationController.viewControllers.index(of: lastResultViewController)
             var  validViewControllers = self.navigationController.viewControllers.filter { (!$0.isKind(of: MercadoPagoUIViewController.self)) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
 

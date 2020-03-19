@@ -43,8 +43,9 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         super.viewDidAppear(animated)
         animateScrollView()
         animateRing()
-        if !String.isNullOrEmpty(viewModel.getTrackingPath()) {
-            trackScreen(path: viewModel.getTrackingPath(), properties: viewModel.getTrackingProperties())
+        let path = viewModel.getTrackingPath()
+        if !path.isEmpty {
+            trackScreen(path: path, properties: viewModel.getTrackingProperties())
 
             let behaviourProtocol = PXConfiguratorManager.flowBehaviourProtocol
             behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())

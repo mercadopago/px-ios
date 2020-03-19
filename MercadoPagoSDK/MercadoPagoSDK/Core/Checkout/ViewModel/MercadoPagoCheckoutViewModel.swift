@@ -795,6 +795,7 @@ extension MercadoPagoCheckoutViewModel {
     func prepareForNewSelection() {
         self.keepDisabledOptionIfNeeded()
         self.cleanPaymentResult()
+        self.cleanRemedy()
         self.resetInformation()
         self.resetGroupSelection()
         self.applyDefaultDiscountOrClear()

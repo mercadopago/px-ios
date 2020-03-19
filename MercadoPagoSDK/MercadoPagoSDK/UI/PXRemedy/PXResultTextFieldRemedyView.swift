@@ -9,14 +9,15 @@ import UIKit
 import MLCardDrawer
 
 struct PXResultTextFieldRemedyViewData {
+    //let cardUI: CardUI?
     let title: String
     let placeholder: String
     let hint: String?
-    let error: String?
+    let maxTextLength: Int
 
     let buttonColor: UIColor?
     weak var buttonAnimationDelegate: PXAnimatedButtonDelegate?
-    let buttonTapped: ((String?) -> Void)?
+    let remedyButtonTapped: ((String?) -> Void)?
 }
 
 class PXResultTextFieldRemedyView: UIView {
@@ -42,7 +43,7 @@ class PXResultTextFieldRemedyView: UIView {
     let BUTTON_HEIGHT: CGFloat = 50.0
 
     var textField: HoshiTextField?
-    var hintLabel: UILabel?
+    var button: PXAnimatedButton?
 
     private func render() {
         removeAllSubviews()
@@ -58,22 +59,23 @@ class PXResultTextFieldRemedyView: UIView {
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
 
-        //CardDrawer
-        let cardDrawerView = buildCardDrawerView()
-        addSubview(cardDrawerView)
-        NSLayoutConstraint.activate([
-            cardDrawerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: PXLayout.M_MARGIN),
-            cardDrawerView.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
-            cardDrawerView.heightAnchor.constraint(equalToConstant: CARD_VIEW_HEIGHT),
-            cardDrawerView.centerXAnchor.constraint(equalTo: centerXAnchor)
-        ])
+//        //CardDrawer
+//        let cardDrawerView = buildCardDrawerView()
+//        addSubview(cardDrawerView)
+//        NSLayoutConstraint.activate([
+//            cardDrawerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: PXLayout.M_MARGIN),
+//            cardDrawerView.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
+//            cardDrawerView.heightAnchor.constraint(equalToConstant: CARD_VIEW_HEIGHT),
+//            cardDrawerView.centerXAnchor.constraint(equalTo: centerXAnchor)
+//        ])
 
         //TextField
         let textField = buildTextField(with: data.placeholder)
         self.textField = textField
         addSubview(textField)
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: cardDrawerView.bottomAnchor, constant: PXLayout.M_MARGIN),
+            textField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: PXLayout.M_MARGIN),
+//            textField.topAnchor.constraint(equalTo: cardDrawerView.bottomAnchor, constant: PXLayout.M_MARGIN),
             textField.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
             textField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT),
             textField.centerXAnchor.constraint(equalTo: centerXAnchor)
@@ -82,7 +84,6 @@ class PXResultTextFieldRemedyView: UIView {
         //Hint Label
         if let hint = data.hint {
             let hintLabel = buildHintLabel(with: hint)
-            self.hintLabel = hintLabel
             addSubview(hintLabel)
             let height = UILabel.requiredHeight(forText: hint, withFont: hintLabel.font, inWidth: screenWidth)
             NSLayoutConstraint.activate([
@@ -94,7 +95,11 @@ class PXResultTextFieldRemedyView: UIView {
         }
 
         //Button
-        let button = buildPayButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
+        guard let button = buildPayButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized) as? PXAnimatedButton else {
+            fatalError("Cannot convert button to type PXAnimatedButton")
+        }
+        self.button = button
+        self.button?.setDisabled()
         let lastView = subviews.last ?? textField
         addSubview(button)
         NSLayoutConstraint.activate([
@@ -193,8 +198,8 @@ class PXResultTextFieldRemedyView: UIView {
         button.setTitle(normalText, for: .normal)
         button.layer.cornerRadius = 4
         button.add(for: .touchUpInside, { [weak self] in
-            if let buttonTapped = self?.data.buttonTapped {
-                buttonTapped(self?.textField?.text)
+            if let remedyButtonTapped = self?.data.remedyButtonTapped {
+                remedyButtonTapped(self?.textField?.text)
             }
         })
         return button
@@ -202,7 +207,25 @@ class PXResultTextFieldRemedyView: UIView {
 }
 
 extension PXResultTextFieldRemedyView: UITextFieldDelegate {
-
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if !string.isNumber {
+            return false
+        }
+        if let text = textField.text as NSString? {
+            let newString = text.replacingCharacters(in: range, with: string)
+            if newString.count > data.maxTextLength {
+                return false
+            }
+            if newString.count == data.maxTextLength {
+                button?.setEnabled()
+            } else {
+                button?.setDisabled()
+            }
+            let num = Int(newString)
+            return (num != nil)
+        }
+        return true
+    }
 }
 
 extension PXResultTextFieldRemedyView {

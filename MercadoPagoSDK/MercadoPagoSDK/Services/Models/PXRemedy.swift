@@ -9,6 +9,7 @@ import Foundation
 
 struct PXRemedy: Codable {
     let cvv: PXInvalidCVV?
+    let callForAuth: PXCallForAuth?
     let suggestionPaymentMethod: PXSuggestionPaymentMethod?
 }
 
@@ -16,6 +17,11 @@ struct PXInvalidCVV: Codable {
     let title: String?
     let message: String?
     let fieldSetting: PXFieldSetting?
+}
+
+struct PXCallForAuth: Codable {
+    let title: String?
+    let message: String?
 }
 
 struct PXFieldSetting: Codable {

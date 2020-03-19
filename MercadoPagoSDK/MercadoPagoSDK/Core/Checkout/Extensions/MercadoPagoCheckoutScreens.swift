@@ -126,7 +126,7 @@ extension MercadoPagoCheckout {
 
             self.viewModel.updateCheckoutModel(paymentData: paymentData)
             self.executeNextStep()
-        }, finishButtonAnimation: {
+        }, finishButtonAnimation: { //[weak self] in
             self.executeNextStep()
         }, changePayerInformation: { [weak self] (paymentData: PXPaymentData) in
             guard let self = self else { return }
@@ -180,12 +180,13 @@ extension MercadoPagoCheckout {
                 self.viewModel.prepareForClone()
                 self.collectSecurityCodeForRetry()
             case .cancel_RETRY,
-                 .cancel_SELECT_OTHER :
+                 .cancel_SELECT_OTHER:
                 if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(),
                     congratsState == .cancel_SELECT_OTHER {
                     changePaymentMethodAction()
                 } else {
                     if let remedyText = remedyText, remedyText.isNotEmpty {
+                        self.viewModel.prepareForClone()
                         self.getTokenizationService().createCardToken(securityCode: remedyText)
                     } else {
                         self.viewModel.prepareForNewSelection()

@@ -104,11 +104,6 @@ extension PXResultViewModel: PXCongratsTrackingDataProtocol {
 // MARK: Tracking
 extension PXResultViewModel {
     func getTrackingProperties() -> [String: Any] {
-        let currency_id = "currency_id"
-        let discount_coupon_amount = "discount_coupon_amount"
-        let has_split = "has_split_payment"
-        let raw_amount = "preference_amount"
-
         var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
         properties["style"] = "generic"
         if let paymentId = paymentResult.paymentId {
@@ -117,13 +112,26 @@ extension PXResultViewModel {
         properties["payment_status"] = paymentResult.status
         properties["payment_status_detail"] = paymentResult.statusDetail
 
-        properties[has_split] = amountHelper.isSplitPayment
-        properties[currency_id] = SiteManager.shared.getCurrency().id
-        properties[discount_coupon_amount] = amountHelper.getDiscountCouponAmountForTracking()
+        properties["has_split_payment"] = amountHelper.isSplitPayment
+        properties["currency_id"] = SiteManager.shared.getCurrency().id
+        properties["discount_coupon_amount"] = amountHelper.getDiscountCouponAmountForTracking()
         properties = PXCongratsTracking.getProperties(dataProtocol: self, properties: properties)
 
         if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
-            properties[raw_amount] = rawAmount.decimalValue
+            properties["preference_amount"] = rawAmount.decimalValue
+        }
+        
+        if let remedy = remedy {
+            properties["recoverable"] = true
+            var remedies: String? = nil
+            if remedy.cvv != nil {
+                remedies = "cvv_request"
+            } else if remedy.suggestionPaymentMethod != nil {
+                remedies = "payment_method_suggestion"
+            }
+            if let remedies = remedies {
+                properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
+            }
         }
 
         return properties
@@ -372,10 +380,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
                 let data = PXResultTextFieldRemedyViewData(title: cvv.message ?? "",
                                                            placeholder: cvv.fieldSetting?.title ?? "",
                                                            hint: cvv.fieldSetting?.hintMessage ?? "",
-                                                           error: "error",
+                                                           maxTextLength: cvv.fieldSetting?.length ?? 1,
                                                            buttonColor: ThemeManager.shared.getAccentColor(),
                                                            buttonAnimationDelegate: nil,
-                                                           buttonTapped: getRemedyButtonAction())
+                                                           remedyButtonTapped: getRemedyButtonAction())
                 return PXResultTextFieldRemedyView(data: data)
             } else if let suggestionPaymentMethod = remedy?.suggestionPaymentMethod {
                 // Silver bullet
