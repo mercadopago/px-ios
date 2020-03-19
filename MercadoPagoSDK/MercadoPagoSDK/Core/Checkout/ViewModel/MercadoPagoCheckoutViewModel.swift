@@ -44,6 +44,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     internal var publicKey: String
     internal var privateKey: String?
+    var shouldSkipReviewConfirm: Bool = false
 
     var lifecycleProtocol: PXLifeCycleProtocol?
 
@@ -338,6 +339,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updateCheckoutModel(remedy: PXRemedy) {
+        shouldSkipReviewConfirm = true
         self.remedy = remedy
     }
 
@@ -776,6 +778,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func cleanRemedy() {
+        shouldSkipReviewConfirm = false
         self.remedy = nil
     }
 

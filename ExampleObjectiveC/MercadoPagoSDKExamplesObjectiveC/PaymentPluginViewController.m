@@ -68,7 +68,7 @@
 //    PXBusinessResult* result = [[PXBusinessResult alloc] initWithReceiptId:@"1879867544" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: nil paymentStatus:@"approved" paymentStatusDetail:@""];
 
     // PAYMENT ID BRASIL (Test New Congrats)
-    PXBusinessResult* result = [[[PXBusinessResult alloc] initWithReceiptId:@"5148665090" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: [component render] paymentStatus:@"approved" paymentStatusDetail:@"" paymentMethodId: [[[checkoutStore getPaymentData] getPaymentMethod] getId] paymentTypeId: [[[checkoutStore getPaymentData] getPaymentMethod] paymentTypeId] importantView: [component render]] shouldShowReceipt:YES];
+//    PXBusinessResult* result = [[[PXBusinessResult alloc] initWithReceiptId:@"5148665090" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: [component render] paymentStatus:@"approved" paymentStatusDetail:@"" paymentMethodId: [[[checkoutStore getPaymentData] getPaymentMethod] getId] paymentTypeId: [[[checkoutStore getPaymentData] getPaymentMethod] paymentTypeId] importantView: [component render]] shouldShowReceipt:YES];
 
     /*
      // Credits Log
@@ -79,6 +79,8 @@
      */
 
     // PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"rejected" statusDetail:@"" paymentId: @""];
+
+    PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_bad_filled_security_code" paymentId: @"6101162949"];
 
     successWithBasePayment(result);
 }

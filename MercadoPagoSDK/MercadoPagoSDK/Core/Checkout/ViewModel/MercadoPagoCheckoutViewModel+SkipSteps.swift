@@ -15,6 +15,9 @@ internal extension MercadoPagoCheckoutViewModel {
         if let shouldSkipReviewConfirm = paymentPlugin?.shouldSkipUserConfirmation?(), shouldSkipReviewConfirm && paymentData.isComplete() {
             return true
         }
+        if paymentData.isComplete(), shouldSkipReviewConfirm {
+            return true
+        }
         return false
     }
 }
