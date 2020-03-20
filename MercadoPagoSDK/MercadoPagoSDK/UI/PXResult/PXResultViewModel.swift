@@ -120,10 +120,10 @@ extension PXResultViewModel {
         if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
             properties["preference_amount"] = rawAmount.decimalValue
         }
-        
+
         if let remedy = remedy {
             properties["recoverable"] = true
-            var remedies: String? = nil
+            var remedies: String?
             if remedy.cvv != nil {
                 remedies = "cvv_request"
             } else if remedy.suggestionPaymentMethod != nil {
@@ -275,6 +275,20 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { [weak self] (text: String?) in
+            var properties: [String: Any] = [:]
+            if let remedy = self?.remedy {
+                var remedies: String?
+                if remedy.cvv != nil {
+                    remedies = "cvv_request"
+                } else if remedy.suggestionPaymentMethod != nil {
+                    remedies = "payment_method_suggestion"
+                }
+                if let remedies = remedies {
+                    properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
+                }
+                MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: properties)
+            }
+
             if let callback = self?.callback {
                 callback(PaymentResult.CongratsState.cancel_RETRY, text)
             }

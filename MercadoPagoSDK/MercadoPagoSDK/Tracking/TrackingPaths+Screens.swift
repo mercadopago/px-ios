@@ -132,6 +132,7 @@ extension TrackingPaths.Screens {
         private static let primaryAction = "/primary_action"
         private static let secondaryAction = "/secondary_action"
         private static let changePaymentMethod = "/change_payment_method"
+        private static let remedy = "/remedy"
 
         private static let result = TrackingPaths.pxTrack + "/result"
 
@@ -185,6 +186,10 @@ extension TrackingPaths.Screens {
 
         static func getErrorChangePaymentMethodPath() -> String {
             return getErrorPath() + changePaymentMethod
+        }
+        
+        static func getErrorRemedyPath() -> String {
+            return getErrorPath() + remedy
         }
 
         static func getErrorPrimaryActionPath() -> String {

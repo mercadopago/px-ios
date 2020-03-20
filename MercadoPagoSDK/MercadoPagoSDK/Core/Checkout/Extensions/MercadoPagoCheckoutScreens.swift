@@ -187,6 +187,7 @@ extension MercadoPagoCheckout {
                 } else {
                     if let remedyText = remedyText, remedyText.isNotEmpty {
                         self.viewModel.prepareForClone()
+                        self.viewModel.readyToPay = true
                         self.getTokenizationService().createCardToken(securityCode: remedyText)
                     } else {
                         self.viewModel.prepareForNewSelection()
