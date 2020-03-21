@@ -127,6 +127,9 @@ class PXOneTapSummaryRowView: UIView {
         PXLayout.centerVertically(view: valueLabel).isActive = true
         PXLayout.setHeight(owner: self, height: rowHeight).isActive = true
 
+        isAccessibilityElement = true
+        let rowValue = valueLabel.text?.replacingOccurrences(of: "$", with: "") ?? ""
+        accessibilityLabel = "\(titleLabel.text ?? "")" + "\(rowValue)" + "pesos".localized
         updateUI()
     }
 }

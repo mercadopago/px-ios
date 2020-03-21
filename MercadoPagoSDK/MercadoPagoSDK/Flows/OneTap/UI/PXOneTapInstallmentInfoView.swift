@@ -90,6 +90,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = itemModel.text
         label.textAlignment = .left
+        label.accessibilityLabel = getAccessibilityMessage(itemModel.text.string)
         cell.addSubview(label)
         PXLayout.pinLeft(view: label, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         PXLayout.centerVertically(view: label).isActive = true
@@ -143,6 +144,18 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
                 pagerView.alpha = newAlpha
             }
         }
+    }
+}
+
+// MARK: Accessibility
+private extension PXOneTapInstallmentInfoView {
+    func getAccessibilityMessage(_ message: String) -> String {
+        let text = message.replacingOccurrences(of: "x", with: "de".localized).replacingOccurrences(of: "$", with: "").replacingOccurrences(of: ":", with: "")
+        if let range: Range<String.Index> = text.range(of: "CFT") {
+            let index: Int = text.distance(from: text.startIndex, to: range.lowerBound)
+            return text.insert("pesos".localized + ":", ind: index)
+        }
+        return message.contains("$") ? text + "pesos".localized : text
     }
 }
 
