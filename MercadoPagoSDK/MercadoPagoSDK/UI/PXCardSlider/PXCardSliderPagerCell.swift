@@ -26,7 +26,6 @@ class PXCardSliderPagerCell: FSPagerViewCell {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        isAccessibilityElement = true
     }
 
     override func prepareForReuse() {
@@ -60,7 +59,7 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
-        accessibilityLabel = "\(accessibilityData.paymentMethodId) \(accessibilityData.paymentTypeId) \(accessibilityData.issuerName) \(accessibilityData.description)"
+        accessibilityLabel = getAccessibilityMessage(accessibilityData)
     }
 
     func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: AddNewMethodCardDelegate) {
@@ -77,6 +76,7 @@ extension PXCardSliderPagerCell {
         let shouldApplyCompactMode = newCardData != nil && newOfflineData != nil
         let newMethodViewHeight = shouldApplyCompactMode ? smallSize : bigSize
 
+        isAccessibilityElement = false
         if let newCardData = newCardData {
             let icon = ResourceManager.shared.getImage("add_new_card")
             let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon, compactMode: shouldApplyCompactMode)
@@ -128,7 +128,7 @@ extension PXCardSliderPagerCell {
         addNewMethodDelegate?.addNewOfflineMethod()
     }
 
-    func renderAccountMoneyCard(isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil) {
+    func renderAccountMoneyCard(isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil, accessibilityData: AccessibilityCardData) {
         containerView.layer.masksToBounds = false
         containerView.backgroundColor = .clear
         containerView.removeAllSubviews()
@@ -145,9 +145,10 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
+        accessibilityLabel = getAccessibilityMessage(accessibilityData)
     }
 
-    func renderConsumerCreditsCard(creditsViewModel: PXCreditsViewModel, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil, creditsInstallmentSelected: Int? = nil) {
+    func renderConsumerCreditsCard(creditsViewModel: PXCreditsViewModel, isDisabled: Bool, cardSize: CGSize, bottomMessage: String? = nil, creditsInstallmentSelected: Int? = nil, accessibilityData: AccessibilityCardData) {
         consumerCreditCard = ConsumerCreditsCard(creditsViewModel, isDisabled: isDisabled)
         guard let consumerCreditCard = consumerCreditCard else { return }
 
@@ -170,6 +171,7 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
+        accessibilityLabel = getAccessibilityMessage(accessibilityData)
     }
 
     func addBottomMessageView(message: String?) {
@@ -232,6 +234,29 @@ extension PXCardSliderPagerCell {
     }
 }
 
+// MARK: Publics
+private extension PXCardSliderPagerCell {
+    func getAccessibilityMessage(_ accessibilityData: AccessibilityCardData) -> String {
+        isAccessibilityElement = true
+        var sliderPosition = ""
+        if accessibilityData.numberOfPages > 1 && accessibilityData.index == 0 {
+            sliderPosition = "\(accessibilityData.index + 1)" + "de".localized + "\(accessibilityData.numberOfPages)"
+        }
+        switch accessibilityData.paymentTypeId {
+        case "account_money":
+            return "\(accessibilityData.description)" + "\(sliderPosition)"
+        case "credit_card":
+            return "\(accessibilityData.paymentMethodId)" + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "\(sliderPosition)"
+        case "debit_card":
+            return "\(accessibilityData.paymentMethodId)" + "Débito".localized + "\(accessibilityData.issuerName) \(accessibilityData.description)" + "\(sliderPosition)"
+        case "digital_currency":
+            return "\(accessibilityData.description)" + "\(sliderPosition)"
+        default:
+            return "\(sliderPosition)"
+        }
+    }
+}
+
 extension PXCardSliderPagerCell: PXTermsAndConditionViewDelegate {
     func shouldOpenTermsCondition(_ title: String, url: URL) {
         delegate?.shouldOpenTermsCondition(title, url: url)
@@ -250,6 +275,7 @@ class PXAddMethodView: UIView {
     init(data: PXAddMethodData) {
         self.data = data
         super.init(frame: .zero)
+        isAccessibilityElement = true
         render()
     }
 
@@ -286,6 +312,7 @@ class PXAddMethodView: UIView {
             labelsContainerView.addArrangedSubview(subtitleLabel)
         }
 
+        accessibilityLabel = data.title?.message
         addSubview(labelsContainerView)
 
         if data.compactMode {

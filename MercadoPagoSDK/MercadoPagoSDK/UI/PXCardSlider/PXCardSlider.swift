@@ -10,7 +10,7 @@ public protocol ChangeCardAccessibilityProtocol: NSObjectProtocol {
     func scrollTo(direction: UIAccessibilityScrollDirection)
 }
 
-typealias AccessibilityCardData = (paymentMethodId: String, paymentTypeId: String, issuerName: String, description: String)
+typealias AccessibilityCardData = (paymentMethodId: String, paymentTypeId: String, issuerName: String, description: String, index: Int, numberOfPages: Int)
 
 final class PXCardSlider: NSObject {
     private var pagerView = FSPagerView(frame: .zero)
@@ -41,10 +41,10 @@ extension PXCardSlider: FSPagerViewDataSource {
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         if model.indices.contains(index) {
             let targetModel = model[index]
-            var accessibilityData = AccessibilityCardData(paymentMethodId: "", paymentTypeId: "", issuerName: "", description: "")
+            var accessibilityData = AccessibilityCardData(paymentMethodId: "", paymentTypeId: "", issuerName: "", description: "", index: 0, numberOfPages: 1)
             if index < targetModel.payerPaymentMethods.count {
                 let payerPaymentMethod = targetModel.payerPaymentMethods[index]
-                accessibilityData = AccessibilityCardData(paymentMethodId: targetModel.paymentMethodId, paymentTypeId: targetModel.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "")
+                accessibilityData = AccessibilityCardData(paymentMethodId: targetModel.paymentMethodId, paymentTypeId: targetModel.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "", index: index,  numberOfPages: pageControl.numberOfPages)
             }
 
             if let cardData = targetModel.cardData, let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
@@ -52,10 +52,10 @@ extension PXCardSlider: FSPagerViewDataSource {
 
                 if targetModel.cardUI is AccountMoneyCard {
                     // AM card.
-                    cell.renderAccountMoneyCard(isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage)
+                    cell.renderAccountMoneyCard(isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage, accessibilityData: accessibilityData)
                 } else if let oneTapCreditsInfo = targetModel.creditsViewModel, targetModel.cardUI is ConsumerCreditsCard {
                     cell.delegate = self
-                    cell.renderConsumerCreditsCard(creditsViewModel: oneTapCreditsInfo, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage, creditsInstallmentSelected: targetModel.selectedPayerCost?.installments)
+                    cell.renderConsumerCreditsCard(creditsViewModel: oneTapCreditsInfo, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage, creditsInstallmentSelected: targetModel.selectedPayerCost?.installments, accessibilityData: accessibilityData)
                 } else {
                     // Other cards.
                     cell.render(withCard: targetModel.cardUI, cardData: cardData, isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage, accessibilityData: accessibilityData)
@@ -226,6 +226,7 @@ extension PXCardSlider: PXTermsAndConditionViewDelegate {
     func goToItemAt(index: Int, animated: Bool) {
         pagerView.scrollToItem(at: index, animated: animated)
         pageControl.currentPage = index
+        UIAccessibility.post(notification: .pageScrolled, argument: "\(index + 1)" + "de".localized + "\(pageControl.numberOfPages)")
     }
 }
 
