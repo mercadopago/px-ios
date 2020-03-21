@@ -63,6 +63,7 @@ class PXNewResultHeader: UIView {
         if let closeAction = data.closeAction {
             let button = buildCloseButton()
             closeButton = button
+            closeButton?.accessibilityLabel = "atrás".localized
             pxContentView.addSubview(button)
             button.add(for: .touchUpInside, {
                 closeAction()
@@ -115,6 +116,9 @@ class PXNewResultHeader: UIView {
             PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
+        if let button = closeButton {
+            accessibilityElements = [titleLabel, button]
+        }
         self.layoutIfNeeded()
     }
 
