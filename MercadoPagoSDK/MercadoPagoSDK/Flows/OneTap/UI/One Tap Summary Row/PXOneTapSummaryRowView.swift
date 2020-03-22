@@ -80,6 +80,9 @@ class PXOneTapSummaryRowView: UIView {
         valueLabel?.text = data.value
         valueLabel?.textColor = data.highlightedColor
         valueLabel?.alpha = data.alpha
+
+        let rowValue = data.value.replacingOccurrences(of: "$", with: "")
+        accessibilityLabel = "\(data.title)" + "\(rowValue)" + "pesos".localized
     }
 
     private func render() {

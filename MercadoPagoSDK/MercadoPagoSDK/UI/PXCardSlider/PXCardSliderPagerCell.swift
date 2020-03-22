@@ -13,6 +13,13 @@ class PXCardSliderPagerCell: FSPagerViewCell {
         return UINib(nibName: PXCardSliderPagerCell.identifier, bundle: ResourceManager.shared.getBundle())
     }
 
+    private enum PaymentTypeId: String {
+        case accountMoney = "account_money"
+        case creditCard = "credit_card"
+        case debitCard = "debit_card"
+        case digitalCurrency = "digital_currency"
+    }
+
     private lazy var bottomMessageViewHeight: CGFloat = 24
     private lazy var cornerRadius: CGFloat = 11
     private var cardHeader: MLCardDrawerController?
@@ -240,16 +247,16 @@ private extension PXCardSliderPagerCell {
         isAccessibilityElement = true
         var sliderPosition = ""
         if accessibilityData.numberOfPages > 1 && accessibilityData.index == 0 {
-            sliderPosition = "\(accessibilityData.index + 1)" + "de".localized + "\(accessibilityData.numberOfPages)"
+            sliderPosition = ": " + "1" + "de".localized + "\(accessibilityData.numberOfPages)"
         }
         switch accessibilityData.paymentTypeId {
-        case "account_money":
+        case PaymentTypeId.accountMoney.rawValue:
             return "\(accessibilityData.description)" + "\(sliderPosition)"
-        case "credit_card":
-            return "\(accessibilityData.paymentMethodId)" + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "\(sliderPosition)"
-        case "debit_card":
-            return "\(accessibilityData.paymentMethodId)" + "Débito".localized + "\(accessibilityData.issuerName) \(accessibilityData.description)" + "\(sliderPosition)"
-        case "digital_currency":
+        case PaymentTypeId.creditCard.rawValue:
+            return "\(accessibilityData.paymentMethodId)" + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
+        case PaymentTypeId.debitCard.rawValue:
+            return "\(accessibilityData.paymentMethodId)" + "Débito".localized + "\(accessibilityData.issuerName) + \(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
+        case PaymentTypeId.digitalCurrency.rawValue:
             return "\(accessibilityData.description)" + "\(sliderPosition)"
         default:
             return "\(sliderPosition)"
