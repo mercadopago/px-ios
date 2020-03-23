@@ -124,7 +124,18 @@ class PXOneTapSplitPaymentView: PXComponentView {
         let amountAttributed = NSMutableAttributedString(string: amount, attributes: attributes)
         amountAttributed.append(" ".toAttributedString())
         amountAttributed.append(messageAttributed)
+        setAccessibilityMessage(amount, messageAttributed.string)
         return amountAttributed
     }
+}
 
+// MARK: Accessibility
+private extension PXOneTapSplitPaymentView {
+    func setAccessibilityMessage(_ amount: String, _ message: String) {
+        var amountText = ""
+        if amount.contains("$") {
+            amountText = amount.replacingOccurrences(of: "$", with: "") + "pesos".localized
+        }
+        splitMessageLabel?.accessibilityLabel = amountText + message
+    }
 }
