@@ -72,6 +72,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         cell.removeAllSubviews()
 
         var benefitsLabel: UILabel?
+        var benefitsText = ""
         if itemModel.shouldShowInstallmentsHeader, let benefitText = itemModel.benefits?.installmentsHeader?.getAttributedString(fontSize: PXLayout.XXXS_FONT) {
             let label = UILabel()
             benefitsLabel = label
@@ -79,6 +80,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
             label.translatesAutoresizingMaskIntoConstraints = false
             label.attributedText = benefitText
             label.textAlignment = .right
+            benefitsText = benefitText.string
             cell.addSubview(label)
             PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.centerVertically(view: label).isActive = true
@@ -90,7 +92,11 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = itemModel.text
         label.textAlignment = .left
-        label.accessibilityLabel = getAccessibilityMessage(itemModel.text.string)
+        let accessibilityMessage = getAccessibilityMessage(itemModel.text.string, benefitsText)
+        cell.setAccessibilityMessage(accessibilityMessage)
+        if index == 0 {
+            accessibilityLabel = accessibilityMessage
+        }
         cell.addSubview(label)
         PXLayout.pinLeft(view: label, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         PXLayout.centerVertically(view: label).isActive = true
@@ -134,6 +140,10 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
         enableTap()
     }
 
+    func didEndScrollAnimation() {
+        accessibilityLabel = pagerView.cellForItem(at: pagerView.currentIndex)?.getAccessibilityMessage()
+    }
+
     func pagerViewDidScroll(_ pagerView: FSPagerView) {
         disableTap()
         if let currentIndex = getCurrentIndex() {
@@ -149,13 +159,14 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
 
 // MARK: Accessibility
 private extension PXOneTapInstallmentInfoView {
-    func getAccessibilityMessage(_ message: String) -> String {
+    func getAccessibilityMessage(_ message: String, _ benefitsText: String) -> String {
+        isAccessibilityElement = true
         let text = message.replacingOccurrences(of: "x", with: "de".localized).replacingOccurrences(of: "$", with: "").replacingOccurrences(of: ":", with: "")
         if let range: Range<String.Index> = text.range(of: "CFT") {
             let index: Int = text.distance(from: text.startIndex, to: range.lowerBound)
-            return text.insert("pesos".localized + ":", ind: index)
+            return text.insert("pesos".localized + ":", ind: index) + "\(benefitsText)"
         }
-        return message.contains("$") ? text + "pesos".localized : text
+        return message.contains("$") ? text + "pesos".localized + "\(benefitsText)" : text + "\(benefitsText)"
     }
 }
 
@@ -261,24 +272,28 @@ extension PXOneTapInstallmentInfoView {
             let cardStatus = currentModel[currentIndex].status
             if !cardStatus.enabled {
                 delegate?.disabledCardTapped(status: cardStatus)
-            } else if currentModel[currentIndex].shouldShowArrow, tapEnabled {
+            } else if currentModel[currentIndex].shouldShowArrow, (tapEnabled || UIAccessibility.isVoiceOverRunning) {
                 let selectedModel = currentModel[currentIndex]
                 if let installmentData = selectedModel.installmentData {
                     if arrowImage.tag != colapsedTag {
                         delegate?.hideInstallments()
                         UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                            self?.arrowImage.layer.transform = CATransform3DIdentity
-                            self?.pagerView.alpha = 1
-                            self?.titleLabel.alpha = 0
+                            guard let self = self else { return }
+                            self.arrowImage.layer.transform = CATransform3DIdentity
+                            self.pagerView.alpha = 1
+                            self.titleLabel.alpha = 0
+                            self.accessibilityLabel = self.pagerView.cellForItem(at: self.pagerView.currentIndex)?.getAccessibilityMessage()
                         }, completion: completion)
                         arrowImage.tag = colapsedTag
                     } else {
                         delegate?.showInstallments(installmentData: installmentData, selectedPayerCost: selectedModel.selectedPayerCost, interest: selectedModel.benefits?.interestFree, reimbursement: selectedModel.benefits?.reimbursement)
                         UIView.animate(withDuration: 0.3, animations: { [weak self] in
                             let rotationAngle = (180.0 * CGFloat(Double.pi)) / 180.0
-                            self?.arrowImage.layer.transform = CATransform3DRotate(CATransform3DIdentity, rotationAngle, 1.0, 0.0, 0.0)
-                            self?.pagerView.alpha = 0
-                            self?.titleLabel.alpha = 1
+                            guard let self = self else { return }
+                            self.arrowImage.layer.transform = CATransform3DRotate(CATransform3DIdentity, rotationAngle, 1.0, 0.0, 0.0)
+                            self.pagerView.alpha = 0
+                            self.titleLabel.alpha = 1
+                            self.accessibilityLabel = self.titleLabel.text
                         }, completion: completion)
                         arrowImage.tag = 1
                     }

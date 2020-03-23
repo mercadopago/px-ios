@@ -107,6 +107,10 @@ extension PXCardSlider: FSPagerViewDelegate {
         delegate?.didEndDecelerating()
     }
 
+    func pagerViewDidEndScrollAnimation(_ pagerView: FSPagerView) {
+        delegate?.didEndScrollAnimation()
+    }
+
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
         pageControl.currentPage = targetIndex
         for cellIndex in 0...model.count {
