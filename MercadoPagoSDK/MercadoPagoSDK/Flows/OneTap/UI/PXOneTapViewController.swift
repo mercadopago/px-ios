@@ -20,7 +20,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     // MARK: Callbacks
     var callbackPaymentData: ((PXPaymentData) -> Void)
-    var callbackConfirm: ((PXPaymentData, Bool) -> Void)
+    var callbackConfirm: ((PXPaymentData, Bool, Bool) -> Void)
     var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
     var callbackRefreshInit: ((String) -> Void)
     var callbackExit: (() -> Void)
@@ -39,7 +39,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     private var navigationBarTapGesture: UITapGestureRecognizer?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
@@ -304,8 +304,12 @@ extension PXOneTapViewController {
     }
 
     private func doPayment() {
-        self.subscribeLoadingButtonToNotifications()
-        self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
+        let animatedButton = UIAccessibility.isVoiceOverRunning ? false : true
+        if animatedButton {
+            self.subscribeLoadingButtonToNotifications()
+            self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
+        }
+
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         if let selectedCardItem = selectedCard {
@@ -316,7 +320,7 @@ extension PXOneTapViewController {
         let splitPayment = viewModel.splitPaymentEnabled
         self.hideBackButton()
         self.hideNavBar()
-        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment)
+        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment, animatedButton)
     }
 
     func resetButton(error: MPSDKError) {
