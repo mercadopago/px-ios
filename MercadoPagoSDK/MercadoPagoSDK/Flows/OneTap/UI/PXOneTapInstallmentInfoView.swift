@@ -96,6 +96,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         cell.setAccessibilityMessage(accessibilityMessage)
         if index == 0 {
             accessibilityLabel = accessibilityMessage
+            setAccessibilityValue()
         }
         cell.addSubview(label)
         PXLayout.pinLeft(view: label, withMargin: PXLayout.XXXS_MARGIN).isActive = true
@@ -142,6 +143,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
 
     func didEndScrollAnimation() {
         accessibilityLabel = pagerView.cellForItem(at: pagerView.currentIndex)?.getAccessibilityMessage()
+        setAccessibilityValue()
     }
 
     func pagerViewDidScroll(_ pagerView: FSPagerView) {
@@ -167,6 +169,13 @@ private extension PXOneTapInstallmentInfoView {
             return text.insert("pesos".localized + ":", ind: index) + "\(benefitsText)"
         }
         return message.contains("$") ? text + "pesos".localized + "\(benefitsText)" : text + "\(benefitsText)"
+    }
+
+    func setAccessibilityValue() {
+        if let model = model {
+            let item = model[pagerView.currentIndex]
+            accessibilityValue = item.shouldShowArrow ? "botón".localized : ""
+        }
     }
 }
 
