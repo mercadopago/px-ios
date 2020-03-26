@@ -251,7 +251,11 @@ private extension PXCardSliderPagerCell {
         }
         switch accessibilityData.paymentTypeId {
         case PaymentTypeId.accountMoney.rawValue:
-            return "\(accessibilityData.description)" + "\(sliderPosition)"
+            var description = accessibilityData.description
+            if description.contains("$") {
+                description = description.replacingOccurrences(of: "$", with: "") + "pesos".localized
+            }
+            return "\(description)" + "\(sliderPosition)"
         case PaymentTypeId.creditCard.rawValue:
             return "\(accessibilityData.paymentMethodId)" + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
         case PaymentTypeId.debitCard.rawValue:
