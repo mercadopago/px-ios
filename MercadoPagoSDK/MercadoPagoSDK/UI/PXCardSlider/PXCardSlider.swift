@@ -215,7 +215,7 @@ extension PXCardSlider {
         pageControl.layoutIfNeeded()
     }
 
-    func updateCardSelected(_ index: Int) {
+    func newCardDidSelected(_ index: Int) {
         if model.indices.contains(pageControl.currentPage) {
             let modelData = model[pageControl.currentPage]
             delegate?.newCardDidSelected(targetModel: modelData)
@@ -240,11 +240,10 @@ extension PXCardSlider: ChangeCardAccessibilityProtocol {
     func scrollTo(direction: UIAccessibilityScrollDirection) {
         if direction == UIAccessibilityScrollDirection.left, pageControl.currentPage < pageControl.numberOfPages - 1 {
             goToItemAt(index: pageControl.currentPage + 1, animated: true)
-            updateCardSelected(pageControl.currentPage)
         }
         else if direction == UIAccessibilityScrollDirection.right, pageControl.currentPage > 0 {
             goToItemAt(index: pageControl.currentPage - 1, animated: true)
-            updateCardSelected(pageControl.currentPage)
         }
+        newCardDidSelected(pageControl.currentPage)
     }
 }
