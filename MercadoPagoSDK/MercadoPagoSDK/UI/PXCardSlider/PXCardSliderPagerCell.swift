@@ -31,10 +31,6 @@ class PXCardSliderPagerCell: FSPagerViewCell {
     weak var addNewMethodDelegate: AddNewMethodCardDelegate?
     @IBOutlet weak var containerView: UIView!
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
         cardHeader?.view.removeFromSuperview()
