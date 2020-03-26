@@ -142,6 +142,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
     }
 
     func didEndScrollAnimation() {
+        enableTap()
         accessibilityLabel = pagerView.cellForItem(at: pagerView.currentIndex)?.getAccessibilityMessage()
         setAccessibilityValue()
     }
@@ -281,7 +282,7 @@ extension PXOneTapInstallmentInfoView {
             let cardStatus = currentModel[currentIndex].status
             if !cardStatus.enabled {
                 delegate?.disabledCardTapped(status: cardStatus)
-            } else if currentModel[currentIndex].shouldShowArrow, (tapEnabled || UIAccessibility.isVoiceOverRunning) {
+            } else if currentModel[currentIndex].shouldShowArrow, tapEnabled {
                 let selectedModel = currentModel[currentIndex]
                 if let installmentData = selectedModel.installmentData {
                     if arrowImage.tag != colapsedTag {
