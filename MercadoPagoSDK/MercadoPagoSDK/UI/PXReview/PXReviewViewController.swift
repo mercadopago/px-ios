@@ -420,13 +420,7 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
     }
 
     func resetButton() {
-        loadingButtonComponent?.resetButton()
-        loadingFloatingButtonComponent?.resetButton()
-        if isConfirmButtonVisible() {
-            loadingButtonComponent?.showErrorToast()
-        } else {
-            loadingFloatingButtonComponent?.showErrorToast()
-        }
+        progressButtonAnimationTimeOut()
     }
 
     func shouldOpenTermsCondition(_ title: String, url: URL) {

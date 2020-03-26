@@ -320,8 +320,7 @@ extension PXOneTapViewController {
     }
 
     func resetButton(error: MPSDKError) {
-        loadingButtonComponent?.resetButton()
-        loadingButtonComponent?.showErrorToast()
+        progressButtonAnimationTimeOut()
         trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: viewModel.getErrorProperties(error: error))
     }
 
