@@ -73,7 +73,7 @@ private extension PXOneTapInstallmentsSelectorCell {
         var topText = ""
         var bottomText = ""
         if let text = topLabel, text.isNotEmpty {
-            topText = text.replacingOccurrences(of: "$", with: "".localized).replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "") + "pesos".localized
+            topText = text.replacingOccurrences(of: "$", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "") + "pesos".localized
         }
         if let text = bottomLabel, text.isNotEmpty {
             bottomText = text.replacingOccurrences(of: "$", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "") + "pesos".localized
