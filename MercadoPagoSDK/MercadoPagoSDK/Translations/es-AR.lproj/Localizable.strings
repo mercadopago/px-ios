@@ -143,7 +143,7 @@
 "hs" = "hs";
 "px_dialog_detail_payment_method_disable_high_risk" = "Rechazamos tu pago.";
 "px_dialog_detail_payment_method_disable_black_list" = "Rechazamos tu pago con esta tarjeta.";
-"px_payment_method_disable_title" = "No puedes usar este medio de pago";
+"px_payment_method_disable_title" = "No podés usar este medio de pago";
 "January" = "Enero";
 "February" = "Febrero";
 "March" = "Marzo";
@@ -156,3 +156,6 @@
 "October" = "Octubre";
 "November" = "Noviembre";
 "December" = "Diciembre";
+"pesos" = "pesos";
+"atrás" = "atrás";
+"botón" = "botón";

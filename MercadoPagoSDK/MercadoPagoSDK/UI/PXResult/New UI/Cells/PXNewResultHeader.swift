@@ -56,6 +56,7 @@ class PXNewResultHeader: UIView {
 
         //Close button
         if let closeAction = data.closeAction {
+
             let closeButton = buildCloseButton(touchUpInsideClosure: closeAction)
             self.closeButton = closeButton
             addSubview(closeButton)
@@ -107,6 +108,9 @@ class PXNewResultHeader: UIView {
             PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
+        if let button = closeButton {
+            accessibilityElements = [titleLabel, button]
+        }
         self.layoutIfNeeded()
     }
 
@@ -118,6 +122,7 @@ class PXNewResultHeader: UIView {
         button.setImage(image, for: .normal)
         button.accessibilityIdentifier = "result_close_button"
         button.add(for: .touchUpInside, touchUpInsideClosure)
+        button.accessibilityLabel = "atrás".localized
         PXLayout.setHeight(owner: button, height: CLOSE_BUTTON_SIZE).isActive = true
         PXLayout.setWidth(owner: button, width: CLOSE_BUTTON_SIZE).isActive = true
         return button
