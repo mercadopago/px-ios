@@ -8,6 +8,10 @@
 import UIKit
 import MLCardDrawer
 
+protocol PXResultTextFieldRemedyViewDelegate: class {
+    func remedyButtonTouchUpInside(_ sender: PXAnimatedButton)
+}
+
 struct PXResultTextFieldRemedyViewData {
     //let cardUI: CardUI?
     let title: String
@@ -16,7 +20,8 @@ struct PXResultTextFieldRemedyViewData {
     let maxTextLength: Int
 
     let buttonColor: UIColor?
-    weak var buttonAnimationDelegate: PXAnimatedButtonDelegate?
+    weak var animatedButtonDelegate: PXAnimatedButtonDelegate?
+    weak var resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?
     let remedyButtonTapped: ((String?) -> Void)?
 }
 
@@ -43,7 +48,7 @@ class PXResultTextFieldRemedyView: UIView {
     let BUTTON_HEIGHT: CGFloat = 50.0
 
     var textField: HoshiTextField?
-    var button: PXAnimatedButton?
+    public var button: PXAnimatedButton?
 
     private func render() {
         removeAllSubviews()
@@ -192,7 +197,7 @@ class PXResultTextFieldRemedyView: UIView {
 
     private func buildPayButton(normalText: String, loadingText: String, retryText: String) -> UIButton {
         let button = PXAnimatedButton(normalText: normalText, loadingText: loadingText, retryText: retryText)
-        button.animationDelegate = data.buttonAnimationDelegate
+        button.animationDelegate = data.animatedButtonDelegate
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = data.buttonColor
         button.setTitle(normalText, for: .normal)
@@ -200,6 +205,9 @@ class PXResultTextFieldRemedyView: UIView {
         button.add(for: .touchUpInside, { [weak self] in
             if let remedyButtonTapped = self?.data.remedyButtonTapped {
                 remedyButtonTapped(self?.textField?.text)
+            }
+            if let button = self?.button {
+                self?.data.resultTextFieldRemedyViewDelegate?.remedyButtonTouchUpInside(button)
             }
         })
         return button

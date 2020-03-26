@@ -65,7 +65,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
+        unsubscribeFromNotifications()
         removeNavigationTapGesture()
     }
 

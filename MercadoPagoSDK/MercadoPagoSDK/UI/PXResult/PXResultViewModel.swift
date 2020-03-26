@@ -388,7 +388,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 
-    func getRemedyView() -> UIView? {
+    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
         if paymentResult.status == PXPayment.Status.REJECTED && [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE].contains(paymentResult.statusDetail) {
             if let cvv = remedy?.cvv {
                 let data = PXResultTextFieldRemedyViewData(title: cvv.message ?? "",
@@ -396,7 +396,8 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
                                                            hint: cvv.fieldSetting?.hintMessage ?? "",
                                                            maxTextLength: cvv.fieldSetting?.length ?? 1,
                                                            buttonColor: ThemeManager.shared.getAccentColor(),
-                                                           buttonAnimationDelegate: nil,
+                                                           animatedButtonDelegate: animatedButtonDelegate,
+                                                           resultTextFieldRemedyViewDelegate: resultTextFieldRemedyViewDelegate,
                                                            remedyButtonTapped: getRemedyButtonAction())
                 return PXResultTextFieldRemedyView(data: data)
             } else if let suggestionPaymentMethod = remedy?.suggestionPaymentMethod {

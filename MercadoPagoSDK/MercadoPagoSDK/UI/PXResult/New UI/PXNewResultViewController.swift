@@ -17,10 +17,12 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
     let scrollView = UIScrollView()
     let viewModel: PXNewResultViewModelInterface
+    private var finishButtonAnimation: (() -> Void)?
 
-    init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void) {
+    init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void, finishButtonAnimation: (() -> Void)? = nil) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
+        self.finishButtonAnimation = finishButtonAnimation
         super.init(nibName: nil, bundle: nil)
         self.shouldHideNavigationBar = true
 
@@ -108,7 +110,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         renderContentView()
     }
 
-    func renderContentView() {
+    private func renderContentView() {
         //CONTENT VIEW
         let contentView = UIView()
         contentView.backgroundColor = .white
@@ -161,7 +163,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
                     data.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -data.horizontalMargin)
                 ])
             }
-            if (contentView.subviews.last as? PXResultTextFieldRemedyView) != nil {
+            if contentView.subviews.last is PXResultTextFieldRemedyView {
                 PXLayout.pinLastSubviewToBottom(view: contentView)
             } else {
                 PXLayout.pinLastSubviewToBottom(view: contentView, relation: .lessThanOrEqual)
@@ -290,7 +292,7 @@ extension PXNewResultViewController {
         }
 
         //Remedy body View
-        if let view = viewModel.getRemedyView() {
+        if let view = viewModel.getRemedyView(animatedButtonDelegate: self, resultTextFieldRemedyViewDelegate: self) {
             views.append(ResultViewData(view: view))
         }
 
@@ -415,5 +417,62 @@ extension PXNewResultViewController {
     func buildFooterView() -> UIView {
         let footerProps = PXFooterProps(buttonAction: viewModel.getFooterMainAction(), linkAction: viewModel.getFooterSecondaryAction())
         return PXFooterComponent(props: footerProps).render()
+    }
+}
+
+// MARK: Animated Button delegate
+extension PXNewResultViewController: PXAnimatedButtonDelegate {
+    func shakeDidFinish() {
+        print("shakeDidFinish")
+//        displayBackButton()
+//        scrollView.isScrollEnabled = true
+//        view.isUserInteractionEnabled = true
+//        unsubscribeFromNotifications()
+//        UIView.animate(withDuration: 0.3, animations: {
+//            self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+//        })
+    }
+
+    func expandAnimationInProgress() {
+        print("expandAnimationInProgress")
+    }
+
+    func didFinishAnimation() {
+        if let finishButtonAnimation = finishButtonAnimation {
+            finishButtonAnimation()
+        }
+    }
+
+    func progressButtonAnimationTimeOut() {
+        if let remedyView = scrollView.subviews.first(where: { $0 is PXResultTextFieldRemedyView } ) as? PXResultTextFieldRemedyView,
+            let button = remedyView.button {
+            button.resetButton()
+            button.showErrorToast()
+        }
+    }
+}
+
+extension PXNewResultViewController: PXResultTextFieldRemedyViewDelegate {
+    func remedyButtonTouchUpInside(_ sender: PXAnimatedButton) {
+        subscribeToAnimatedButtonNotifications(button: sender)
+        sender.startLoading()
+
+        scrollView.isScrollEnabled = false
+        view.isUserInteractionEnabled = false
+        hideBackButton()
+        hideNavBar()
+    }
+}
+
+// MARK: Notifications
+extension PXNewResultViewController {
+    func subscribeToAnimatedButtonNotifications(button: PXAnimatedButton) {
+        PXNotificationManager.SuscribeTo.animateButton(button, selector: #selector(button.animateFinish))
+    }
+
+    func unsubscribeFromAnimatedButtonNotifications() {
+        if let remedyView = scrollView.subviews.first(where: { $0 is PXResultTextFieldRemedyView } ) as? PXResultTextFieldRemedyView {
+            PXNotificationManager.UnsuscribeTo.animateButton(remedyView.button)
+        }
     }
 }

@@ -201,7 +201,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 
-    func getRemedyView() -> UIView? {
+    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
         return nil
     }
 

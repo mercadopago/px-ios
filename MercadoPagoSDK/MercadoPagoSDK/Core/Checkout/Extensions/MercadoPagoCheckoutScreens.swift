@@ -186,9 +186,12 @@ extension MercadoPagoCheckout {
                     changePaymentMethodAction()
                 } else {
                     if let remedyText = remedyText, remedyText.isNotEmpty {
+                        // CVV Remedy. Create new card token
                         self.viewModel.prepareForClone()
+                        // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
                         self.viewModel.readyToPay = true
-                        self.getTokenizationService().createCardToken(securityCode: remedyText)
+                        // Set needToShowLoading to false so the button animation can be shown
+                        self.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: remedyText)
                     } else {
                         self.viewModel.prepareForNewSelection()
                         self.executeNextStep()
@@ -197,6 +200,9 @@ extension MercadoPagoCheckout {
             default:
                 self.finish()
             }
+        }, finishButtonAnimation: { [weak self] in
+            // Remedy view has an animated button. This closure is called after the animation has finished
+            self?.executeNextStep()
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: viewController, animated: false)
     }
