@@ -42,8 +42,8 @@ internal extension PXResultViewModel {
             return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
         } else if paymentResult.isBadFilled() {
             if paymentResult.statusDetail == PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE {
+                // The new remedy view for CVV has its own animated button
                 return nil
-                //return PXFooterResultConstants.BAD_FILLED_SECURITY_CODE_BUTTON_TEXT.localized
             } else {
                 return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized
             }

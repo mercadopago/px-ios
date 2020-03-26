@@ -27,7 +27,6 @@ struct PXFooterResultConstants {
     static let CARD_DISABLE_BUTTON_TEXT = "cc_rejected_card_disabled_button"
     static let DUPLICATED_PAYMENT_BUTTON_TEXT = "cc_rejected_duplicated_payment_button"
     static let BAD_FILLED_BUTTON_TEXT = "cc_rejected_bad_filled_button"
-    static let BAD_FILLED_SECURITY_CODE_BUTTON_TEXT = "cc_rejected_bad_filled_security_code_button"
     static let FRAUD_BUTTON_TEXT = "Continuar"
     static let DEFAULT_BUTTON_TEXT: String? = nil
 
