@@ -56,10 +56,13 @@ internal extension PXResultViewModel {
             return "".toAttributedString()
         }
 
+        if let cvvRemedyTitle = remedy?.cvv?.title {
+            return cvvRemedyTitle.toAttributedString()
+        }
+
         var statusDetail = statusDetail
         let badFilledKey = "cc_rejected_bad_filled"
-        if statusDetail.contains(badFilledKey) &&
-            statusDetail != PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue {
+        if statusDetail.contains(badFilledKey) {
             statusDetail = badFilledKey
         }
 

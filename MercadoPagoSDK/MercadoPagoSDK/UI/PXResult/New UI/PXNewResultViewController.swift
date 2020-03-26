@@ -49,20 +49,24 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        // remove animated button observer
         unsubscribeFromAnimatedButtonNotifications()
         // remove keyboard observer
-        NotificationCenter.default.removeObserver(self)
+        unsubscribeFromKeyboardNotifications()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        if let remedyView = scrollView.subviews.first(where: { $0 is PXResultTextFieldRemedyView }) as? PXResultTextFieldRemedyView,
-            let button = remedyView.button {
+        if let remedyView = getRemedyView(), let button = remedyView.button {
             button.resetButton()
         }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     @objc func keyboardWillBeShown(notification: Notification) {
@@ -321,6 +325,13 @@ extension PXNewResultViewController {
 
         return views
     }
+
+    func getRemedyView() -> PXResultTextFieldRemedyView? {
+        if let remedyView = scrollView.subviews.first?.subviews.first(where: { $0 is PXResultTextFieldRemedyView }) as? PXResultTextFieldRemedyView? {
+            return remedyView
+        }
+        return nil
+    }
 }
 
 // MARK: Views builders
@@ -434,8 +445,7 @@ extension PXNewResultViewController: PXAnimatedButtonDelegate {
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
         unsubscribeFromAnimatedButtonNotifications()
-        if let remedyView = scrollView.subviews.first(where: { $0 is PXResultTextFieldRemedyView }) as? PXResultTextFieldRemedyView,
-            let button = remedyView.button {
+        if let remedyView = getRemedyView(), let button = remedyView.button {
             UIView.animate(withDuration: 0.3, animations: {
                 button.backgroundColor = ThemeManager.shared.getAccentColor()
             })
@@ -443,6 +453,14 @@ extension PXNewResultViewController: PXAnimatedButtonDelegate {
     }
 
     func expandAnimationInProgress() {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            if let scrollView = self?.scrollView {
+                self?.view.bringSubviewToFront(scrollView)
+            }
+            if let footerView = self?.scrollView.subviews.first(where: { $0 is PXFooterView }) {
+                self?.scrollView.sendSubviewToBack(footerView)
+            }
+        })
     }
 
     func didFinishAnimation() {
@@ -452,8 +470,7 @@ extension PXNewResultViewController: PXAnimatedButtonDelegate {
     }
 
     func progressButtonAnimationTimeOut() {
-        if let remedyView = scrollView.subviews.first(where: { $0 is PXResultTextFieldRemedyView }) as? PXResultTextFieldRemedyView,
-            let button = remedyView.button {
+        if let remedyView = getRemedyView(), let button = remedyView.button {
             button.resetButton()
             button.showErrorToast()
         }
@@ -464,7 +481,6 @@ extension PXNewResultViewController: PXResultTextFieldRemedyViewDelegate {
     func remedyButtonTouchUpInside(_ sender: PXAnimatedButton) {
         subscribeToAnimatedButtonNotifications(button: sender)
         sender.startLoading()
-
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         hideBackButton()
@@ -479,13 +495,19 @@ extension PXNewResultViewController {
         center.addObserver(self, selector: #selector(keyboardWillBeShown(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
+    func unsubscribeFromKeyboardNotifications() {
+        let center = NotificationCenter.default
+        center.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
     func subscribeToAnimatedButtonNotifications(button: PXAnimatedButton) {
         PXNotificationManager.SuscribeTo.animateButton(button, selector: #selector(button.animateFinish))
     }
 
     func unsubscribeFromAnimatedButtonNotifications() {
-        if let remedyView = scrollView.subviews.first(where: { $0 is PXResultTextFieldRemedyView }) as? PXResultTextFieldRemedyView {
+        if let remedyView = getRemedyView() {
             PXNotificationManager.UnsuscribeTo.animateButton(remedyView.button)
         }
     }

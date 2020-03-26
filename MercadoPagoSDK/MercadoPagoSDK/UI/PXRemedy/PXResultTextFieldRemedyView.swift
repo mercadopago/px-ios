@@ -100,11 +100,8 @@ class PXResultTextFieldRemedyView: UIView {
         }
 
         //Button
-        guard let button = buildPayButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized) as? PXAnimatedButton else {
-            fatalError("Cannot convert button to type PXAnimatedButton")
-        }
+        let button = buildPayButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
         self.button = button
-        self.button?.setDisabled()
         let lastView = subviews.last ?? textField
         addSubview(button)
         NSLayoutConstraint.activate([
@@ -195,7 +192,7 @@ class PXResultTextFieldRemedyView: UIView {
         return label
     }
 
-    private func buildPayButton(normalText: String, loadingText: String, retryText: String) -> UIButton {
+    private func buildPayButton(normalText: String, loadingText: String, retryText: String) -> PXAnimatedButton {
         let button = PXAnimatedButton(normalText: normalText, loadingText: loadingText, retryText: retryText)
         button.animationDelegate = data.animatedButtonDelegate
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -210,6 +207,7 @@ class PXResultTextFieldRemedyView: UIView {
                 self?.data.resultTextFieldRemedyViewDelegate?.remedyButtonTouchUpInside(button)
             }
         })
+        button.setDisabled()
         return button
     }
 }
