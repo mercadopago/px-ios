@@ -255,7 +255,7 @@ private extension PXCardSliderPagerCell {
         case PaymentTypeId.creditCard.rawValue:
             return "\(accessibilityData.paymentMethodId)" + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
         case PaymentTypeId.debitCard.rawValue:
-            return "\(accessibilityData.paymentMethodId.replacingOccurrences(of: "deb", with: ""))" + "Débito".localized + "\(accessibilityData.issuerName) + \(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
+            return "\(accessibilityData.paymentMethodId.replacingOccurrences(of: "deb", with: ""))" + "Débito".localized + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
         case PaymentTypeId.digitalCurrency.rawValue:
             return "\(accessibilityData.description)" + "\(sliderPosition)"
         default:
