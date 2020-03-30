@@ -30,7 +30,11 @@ internal extension PXResultViewModel {
         if paymentResult.isAccepted() {
             return nil
         } else if paymentResult.isError() {
-            return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
+            if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
+                return PXFooterResultConstants.KYC_BUTTON_TEXT.localized
+            } else {
+                return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
+            }
         } else if paymentResult.isWarning() {
             return getWarningButtonLabel()
         }
@@ -88,7 +92,11 @@ internal extension PXResultViewModel {
         if paymentResult.isAccepted() {
              callback(PaymentResult.CongratsState.cancel_EXIT, nil)
         } else if paymentResult.isError() {
-            callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
+            if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
+                callback(PaymentResult.CongratsState.cancel_DEEPLINK, remedy?.highRisk?.deepLink)
+            } else {
+                callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
+            }
         } else if self.paymentResult.isBadFilled() {
             callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
         } else if paymentResult.isWarning() {

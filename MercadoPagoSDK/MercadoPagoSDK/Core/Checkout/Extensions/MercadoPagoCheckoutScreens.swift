@@ -197,6 +197,12 @@ extension MercadoPagoCheckout {
                         self.executeNextStep()
                     }
                 }
+            case .cancel_DEEPLINK:
+                if let remedyText = remedyText, remedyText.isNotEmpty {
+                    PXDeepLinkManager.open(remedyText)
+                } else {
+                    self.finish()
+                }
             default:
                 self.finish()
             }

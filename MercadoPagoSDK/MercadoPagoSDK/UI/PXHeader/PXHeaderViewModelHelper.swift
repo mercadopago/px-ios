@@ -56,8 +56,10 @@ internal extension PXResultViewModel {
             return "".toAttributedString()
         }
 
-        if let cvvRemedyTitle = remedy?.cvv?.title {
-            return cvvRemedyTitle.toAttributedString()
+        if let title = remedy?.cvv?.title {
+            return title.toAttributedString()
+        } else if let title = remedy?.highRisk?.title {
+            return title.toAttributedString()
         }
 
         var statusDetail = statusDetail

@@ -16,6 +16,7 @@ internal class PaymentResult {
         case cancel_RETRY = 2
         case cancel_RECOVER = 3
         case call_FOR_AUTH = 4
+        case cancel_DEEPLINK = 5
     }
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue,
@@ -34,6 +35,10 @@ internal class PaymentResult {
                                   PXRejectedStatusDetail.BAD_FILLED_DATE.rawValue,
                                   PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue,
                                   PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
+
+    let rejectedWithRemedyStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
+                                           PXPayment.StatusDetails.REJECTED_HIGH_RISK,
+                                           PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK]
 
     var paymentData: PXPaymentData?
     var splitAccountMoney: PXPaymentData?
@@ -73,6 +78,11 @@ internal class PaymentResult {
         return self.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue
     }
 
+    func isHighRisk() -> Bool {
+        return statusDetail == PXPayment.StatusDetails.REJECTED_HIGH_RISK ||
+            statusDetail == PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK
+    }
+
     func isInvalidInstallments() -> Bool {
         return self.statusDetail == PXRejectedStatusDetail.REJECTED_INVALID_INSTALLMENTS.rawValue
     }
@@ -94,10 +104,11 @@ internal class PaymentResult {
     }
 
     func hasSecondaryButton() -> Bool {
-        return self.isCallForAuth() ||
-            self.isBadFilled() ||
-            self.isInvalidInstallments() ||
-            self.isCardDisabled()
+        return isCallForAuth() ||
+            isHighRisk() ||
+            isBadFilled() ||
+            isInvalidInstallments() ||
+            isCardDisabled()
     }
 
     func isApproved() -> Bool {
@@ -114,6 +125,10 @@ internal class PaymentResult {
 
     func isRejected() -> Bool {
         return self.status == PXPaymentStatus.REJECTED.rawValue
+    }
+
+    func isRejectedWithRemedy() -> Bool {
+        return self.status == PXPaymentStatus.REJECTED.rawValue && rejectedWithRemedyStatusDetails.contains(statusDetail)
     }
 
     func isInvalidESC() -> Bool {

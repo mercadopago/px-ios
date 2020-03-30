@@ -23,6 +23,7 @@ struct PXHeaderResutlConstants {
 struct PXFooterResultConstants {
     // Button texts
     static let GENERIC_ERROR_BUTTON_TEXT = "Pagar con otro medio"
+    static let KYC_BUTTON_TEXT = "cc_rejected_kyc_button"
     static let C4AUTH_BUTTON_TEXT = "cc_rejected_call_for_authorize_button"
     static let CARD_DISABLE_BUTTON_TEXT = "cc_rejected_card_disabled_button"
     static let DUPLICATED_PAYMENT_BUTTON_TEXT = "cc_rejected_duplicated_payment_button"

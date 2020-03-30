@@ -200,11 +200,15 @@ extension ResourceManager {
             if paymentResult.isApproved() || paymentResult.isWaitingForPayment() {
                 return ThemeManager.shared.successColor()
             }
-            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() {
+            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() || paymentResult.isRejectedWithRemedy() {
                 return ThemeManager.shared.warningColor()
             }
             if paymentResult.isError() {
-                return ThemeManager.shared.rejectedColor()
+                if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
+                    return ThemeManager.shared.warningColor()
+                } else {
+                    return ThemeManager.shared.rejectedColor()
+                }
             }
         }
         switch status.uppercased() {
@@ -237,7 +241,11 @@ extension ResourceManager {
                 return getBadgeImage(name: "need_action_badge", clearBackground: clearBackground)
             }
             if paymentResult.isError() {
-                return getBadgeImage(name: "error_badge", clearBackground: clearBackground)
+                if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
+                    return getBadgeImage(name: "need_action_badge", clearBackground: clearBackground)
+                } else {
+                    return getBadgeImage(name: "error_badge", clearBackground: clearBackground)
+                }
             }
         } else {
             //Business Result Logic

@@ -52,6 +52,7 @@ internal class PXResultViewModel: NSObject {
     func getPaymentId() -> String? {
         return paymentResult.paymentId
     }
+
     func isCallForAuth() -> Bool {
         return paymentResult.isCallForAuth()
     }
@@ -389,7 +390,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
-        if paymentResult.status == PXPayment.Status.REJECTED && [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE].contains(paymentResult.statusDetail) {
+        if paymentResult.isRejectedWithRemedy() {
             if let cvv = remedy?.cvv {
                 let data = PXResultTextFieldRemedyViewData(title: cvv.message ?? "",
                                                            placeholder: cvv.fieldSetting?.title ?? "",
@@ -400,6 +401,9 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
                                                            resultTextFieldRemedyViewDelegate: resultTextFieldRemedyViewDelegate,
                                                            remedyButtonTapped: getRemedyButtonAction())
                 return PXResultTextFieldRemedyView(data: data)
+            } else if let highRisk = remedy?.highRisk {
+                let data = PXResultDescritionRemedyViewData(title: highRisk.message ?? "")
+                return PXResultDescritionRemedyView(data: data)
             } else if let suggestionPaymentMethod = remedy?.suggestionPaymentMethod {
                 // Silver bullet
                 return nil

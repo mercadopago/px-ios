@@ -199,8 +199,6 @@ internal class PXBodyComponent: PXComponentizable {
                              PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT,
                              PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
                              PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
-                             PXPayment.StatusDetails.REJECTED_HIGH_RISK,
-                             PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
                              PXPayment.StatusDetails.REJECTED_BY_REGULATIONS]
 
         return props.paymentResult.status == PXPayment.Status.REJECTED && statusDetails.contains(props.paymentResult.statusDetail)
