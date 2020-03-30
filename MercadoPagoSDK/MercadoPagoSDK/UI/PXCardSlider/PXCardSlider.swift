@@ -231,6 +231,7 @@ extension PXCardSlider: PXTermsAndConditionViewDelegate {
     func goToItemAt(index: Int, animated: Bool) {
         pagerView.scrollToItem(at: index, animated: animated)
         pageControl.currentPage = index
+        selectedIndex = index
         UIAccessibility.post(notification: .pageScrolled, argument: "\(index + 1)" + "de".localized + "\(pageControl.numberOfPages)")
     }
 }
