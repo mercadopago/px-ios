@@ -20,7 +20,6 @@ Pod::Spec.new do |s|
     s.dependency 'MLCardForm', '~> 0.7'
   end
 
-
   s.subspec 'ESC' do |esc|
     esc.dependency 'MercadoPagoSDKV4/Default'
     esc.dependency 'MLESCManager', '~> 2.0.3'
