@@ -107,6 +107,9 @@ class PXNewCustomView: UIView {
         // First Label
         if let firstString = data.firstString {
             let label = buildLabel(firstString)
+            if firstString.string.contains("$") {
+                label.accessibilityLabel = firstString.string.replacingOccurrences(of: "$", with: "") + "pesos".localized
+            }
             labelsView.addSubviewToBottom(label)
             PXLayout.pinLeft(view: label)
             PXLayout.pinRight(view: label)
