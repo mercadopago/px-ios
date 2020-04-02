@@ -226,9 +226,9 @@ extension MercadoPagoCheckout {
                 executeNextStep()
             } else {
                 let financialInstitutionViewModel = viewModel.financialInstitutionViewModel()
-                let financialInstitutionStep = AdditionalStepViewController(viewModel: financialInstitutionViewModel, callback: { [weak self] (financialInstitution) in
+                let financialInstitutionStep = AdditionalStepViewController(viewModel: financialInstitutionViewModel, callback: { [weak self] financialInstitution in
                     guard let financialInstitution = financialInstitution as? PXFinancialInstitution else {
-                        fatalError("Cannot convert entityType to type EntityType")
+                        fatalError("Cannot convert financialInstitution to type PXFinancialInstitution")
                     }
                     self?.viewModel.updateCheckoutModel(financialInstitution: financialInstitution)
                     self?.executeNextStep()
@@ -257,7 +257,7 @@ extension MercadoPagoCheckout {
         }
         // Esto de aca abajo no deberia estar en un bloque de else del if de arriba, como en showFinancialInstitutionsScreen() ?
         let entityTypeViewModel = viewModel.entityTypeViewModel()
-        let entityTypeStep = AdditionalStepViewController(viewModel: entityTypeViewModel, callback: { [weak self] (entityType) in
+        let entityTypeStep = AdditionalStepViewController(viewModel: entityTypeViewModel, callback: { [weak self] entityType in
             guard let entityType = entityType as? EntityType else {
                 fatalError("Cannot convert entityType to type EntityType")
             }
