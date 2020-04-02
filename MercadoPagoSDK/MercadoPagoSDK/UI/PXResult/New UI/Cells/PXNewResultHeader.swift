@@ -63,7 +63,7 @@ class PXNewResultHeader: UIView {
         if let closeAction = data.closeAction {
             let button = buildCloseButton()
             closeButton = button
-            closeButton?.accessibilityLabel = "atrás".localized
+            closeButton?.accessibilityLabel = "cerrar".localized
             pxContentView.addSubview(button)
             button.add(for: .touchUpInside, {
                 closeAction()
