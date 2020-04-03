@@ -180,9 +180,18 @@ extension MercadoPagoCheckoutViewModel {
             paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue &&
             paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
 
-        if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
+        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded {
             if let customOptionSearchItem = search?.payerPaymentMethods.first(where: { $0.id == paymentOptionSelectedId}) {
-                return customOptionSearchItem.escStatus != PXESCStatus.APPROVED.rawValue
+                if hasSavedESC() {
+                    if customOptionSearchItem.escStatus == PXESCStatus.REJECTED.rawValue {
+                        invalidESCReason = .ESC_CAP
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return true
+                }
             } else {
                 return true
             }

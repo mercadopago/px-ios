@@ -36,7 +36,8 @@ import UIKit
         if let token = token {
             //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
             let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: token.getCardBin()), completeEmptySpaces: true, leftToRight: false)
-            self.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
+            cardNumber.text = mask.textMasked(token.getCardLastForDigits())
+            cardNumber.accessibilityLabel = "Número de tarjeta".localized + "terminada en".localized + "\(token.getCardLastForDigits())"
         }
 
         cardName.text = ""

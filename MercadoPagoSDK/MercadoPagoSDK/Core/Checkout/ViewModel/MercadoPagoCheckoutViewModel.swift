@@ -56,7 +56,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     var checkoutPreference: PXCheckoutPreference!
-    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+    let mercadoPagoServices: MercadoPagoServices
 
     //    var paymentMethods: [PaymentMethod]?
     var cardToken: PXCardToken?
@@ -100,7 +100,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentMethodConfigPluginShowed = false
 
     var escManager: MercadoPagoESC?
-    var invalidESC: Bool = false
+    var invalidESCReason: PXESCDeleteReason?
 
     // Discounts bussines service.
     var paymentConfigurationService = PXPaymentConfigurationServices()
@@ -132,7 +132,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.trackingConfig = trackingConfig
 
         //let branchId = checkoutPreference.branchId
-        mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: publicKey, privateKey: privateKey)
+        mercadoPagoServices = MercadoPagoServices(publicKey: publicKey, privateKey: privateKey)
 
         super.init()
 
@@ -196,7 +196,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func cardFormManager() -> CardFormViewModel {
-        return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, bankDealsEnabled: advancedConfig.bankDealsEnabled)
+        return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServices: mercadoPagoServices, bankDealsEnabled: advancedConfig.bankDealsEnabled)
     }
 
     public func getPaymentMethodsForSelection() -> [PXPaymentMethod] {
@@ -241,15 +241,15 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             customerOptions = self.customPaymentOptions
         }
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethods: search?.availablePaymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig, disabledOption: disabledOption)
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethods: search?.availablePaymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServices: mercadoPagoServices, advancedConfiguration: advancedConfig, disabledOption: disabledOption)
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
-        return EntityTypeViewModel(amountHelper: self.amountHelper, token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.entityTypes!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig)
+        return EntityTypeViewModel(amountHelper: self.amountHelper, token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.entityTypes!, mercadoPagoServices: mercadoPagoServices, advancedConfiguration: advancedConfig)
     }
 
     public func financialInstitutionViewModel() -> AdditionalStepViewModel {
-        return FinancialInstitutionViewModel(amountHelper: self.amountHelper, token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.financialInstitutions!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig)
+        return FinancialInstitutionViewModel(amountHelper: self.amountHelper, token: self.cardToken, paymentMethod: self.paymentData.getPaymentMethod()!, dataSource: self.financialInstitutions!, mercadoPagoServices: mercadoPagoServices, advancedConfiguration: advancedConfig)
     }
 
     public func issuerViewModel() -> AdditionalStepViewModel {
@@ -257,7 +257,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             fatalError("Cannot find payment method")
         }
 
-        return IssuerAdditionalStepViewModel(amountHelper: self.amountHelper, token: self.cardToken, paymentMethod: paymentMethod, dataSource: self.issuers!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig)
+        return IssuerAdditionalStepViewModel(amountHelper: self.amountHelper, token: self.cardToken, paymentMethod: paymentMethod, dataSource: self.issuers!, mercadoPagoServices: mercadoPagoServices, advancedConfiguration: advancedConfig)
     }
 
     public func payerCostViewModel() -> AdditionalStepViewModel {
@@ -271,26 +271,24 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             }
         }
 
-        return PayerCostAdditionalStepViewModel(amountHelper: self.amountHelper, token: cardInformation, paymentMethod: paymentMethod, dataSource: payerCosts!, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfig)
+        return PayerCostAdditionalStepViewModel(amountHelper: self.amountHelper, token: cardInformation, paymentMethod: paymentMethod, dataSource: payerCosts!, email: self.checkoutPreference.payer.email, mercadoPagoServices: mercadoPagoServices, advancedConfiguration: advancedConfig)
     }
 
-    public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
-        guard let cardInformation = self.paymentOptionSelected as? PXCardInformation else {
-            fatalError("Cannot conver payment option selected to CardInformation")
-        }
-        var reason: SecurityCodeViewModel.Reason
-        if paymentResult != nil && paymentResult!.isInvalidESC() || invalidESC {
-            reason = SecurityCodeViewModel.Reason.INVALID_ESC
+    public func getSecurityCodeViewModel(isCallForAuth: Bool = false) -> SecurityCodeViewModel {
+        let cardInformation: PXCardInformationForm
+        if let paymentOptionSelected = paymentOptionSelected as? PXCardInformationForm {
+            cardInformation = paymentOptionSelected
+        } else if isCallForAuth, let token = paymentData.token {
+            cardInformation = token
         } else {
-            reason = SecurityCodeViewModel.Reason.SAVED_CARD
+            fatalError("Cannot convert payment option selected to CardInformation")
         }
-        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation, reason: reason)
-    }
-
-    public func cloneTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
-        let cardInformation = self.paymentData.token
-        let reason = SecurityCodeViewModel.Reason.CALL_FOR_AUTH
-        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!, reason: reason)
+        guard let paymentMethod = paymentData.paymentMethod else {
+            fatalError("Don't have paymentData to open Security View Controller")
+        }
+        let ESCEnabled = escManager?.hasESCEnable() ?? false
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth, escEnabled: ESCEnabled)
+        return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
@@ -555,7 +553,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if let esc = token.esc, !String.isNullOrEmpty(esc) {
             escManager?.saveESC(token: token, esc: esc)
         } else {
-            escManager?.deleteESC(token: token)
+            escManager?.deleteESC(token: token, reason: .NO_ESC, detail: nil)
         }
         self.paymentData.updatePaymentDataWith(token: token)
     }
@@ -798,12 +796,12 @@ extension MercadoPagoCheckoutViewModel {
         hookService.resetHooksToShow()
     }
 
-    func prepareForInvalidPaymentWithESC() {
+    func prepareForInvalidPaymentWithESC(reason: PXESCDeleteReason) {
         if self.paymentData.isComplete() {
             readyToPay = true
             if let cardId = paymentData.getToken()?.cardId, cardId.isNotEmpty {
                 savedESCCardToken = PXSavedESCCardToken(cardId: cardId, esc: nil, requireESC: getAdvancedConfiguration().isESCEnabled())
-                escManager?.deleteESC(cardId: cardId)
+                escManager?.deleteESC(cardId: cardId, reason: reason, detail: nil)
             }
         }
         self.paymentData.cleanToken()
@@ -844,7 +842,7 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
         guard let paymentFlow = paymentFlow else {
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, amountHelper: amountHelper, checkoutPreference: checkoutPreference, escManager: escManager)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServices: mercadoPagoServices, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, amountHelper: amountHelper, checkoutPreference: checkoutPreference, escManager: escManager, ESCBlacklistedStatus: search?.configurations?.ESCBlacklistedStatus)
             if let productId = advancedConfig.productId {
                 paymentFlow.setProductIdForPayment(productId)
             }

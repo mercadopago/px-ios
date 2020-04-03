@@ -42,7 +42,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 
     var chargeRules: [PXPaymentTypeChargeRule]?
 
-    var invalidESC: Bool = false
+    var invalidESCReason: PXESCDeleteReason?
 
     // In order to ensure data updated create new instance for every usage
     internal var amountHelper: PXAmountHelper {
@@ -51,7 +51,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 
     let escManager: MercadoPagoESC?
     let advancedConfiguration: PXAdvancedConfiguration
-    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+    let mercadoPagoServices: MercadoPagoServices
     let paymentConfigurationService: PXPaymentConfigurationServices
 
     init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
@@ -64,7 +64,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         self.paymentOptionSelected = paymentOptionSelected
         advancedConfiguration = checkoutViewModel.getAdvancedConfiguration()
         chargeRules = checkoutViewModel.chargeRules
-        mercadoPagoServicesAdapter = checkoutViewModel.mercadoPagoServicesAdapter
+        mercadoPagoServices = checkoutViewModel.mercadoPagoServices
         escManager = checkoutViewModel.escManager
         paymentConfigurationService = checkoutViewModel.paymentConfigurationService
         disabledOption = checkoutViewModel.disabledOption
@@ -113,17 +113,13 @@ internal extension OneTapFlowModel {
             fatalError("Don't have paymentData to open Security View Controller")
         }
 
-        var reason: SecurityCodeViewModel.Reason
-        if invalidESC {
-            reason = SecurityCodeViewModel.Reason.INVALID_ESC
-        } else {
-            reason = SecurityCodeViewModel.Reason.SAVED_CARD
-        }
+        let ESCEnabled = escManager?.hasESCEnable() ?? false
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, escEnabled: ESCEnabled)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
     func oneTapViewModel() -> PXOneTapViewModel {
-        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: escManager, currentFlow: oneTapFlow)
+        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: escManager, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods)
         viewModel.publicKey = publicKey
         viewModel.privateKey = privateKey
         viewModel.siteId = siteId
@@ -217,9 +213,18 @@ internal extension OneTapFlowModel {
         let paymentOptionSelectedId = paymentOptionSelected.getId()
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
 
-        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
+        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded {
             if let customOptionSearchItem = search.payerPaymentMethods.first(where: { $0.id == paymentOptionSelectedId}) {
-                return customOptionSearchItem.escStatus != PXESCStatus.APPROVED.rawValue
+                if hasSavedESC() {
+                    if customOptionSearchItem.escStatus == PXESCStatus.REJECTED.rawValue {
+                        invalidESCReason = .ESC_CAP
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return true
+                }
             } else {
                 return true
             }
@@ -269,7 +274,7 @@ internal extension OneTapFlowModel {
     func getTimeoutForOneTapReviewController() -> TimeInterval {
         if let paymentFlow = paymentFlow {
             paymentFlow.model.amountHelper = amountHelper
-            let tokenTimeOut: TimeInterval = mercadoPagoServicesAdapter.getTimeOut()
+            let tokenTimeOut: TimeInterval = mercadoPagoServices.getTimeOut()
             // Payment Flow timeout + tokenization TimeOut
             return paymentFlow.getPaymentTimeOut() + tokenTimeOut
         }

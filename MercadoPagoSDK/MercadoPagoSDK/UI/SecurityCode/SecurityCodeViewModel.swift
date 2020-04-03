@@ -9,8 +9,8 @@
 import Foundation
 
 internal class SecurityCodeViewModel {
-    var paymentMethod: PXPaymentMethod!
-    var cardInfo: PXCardInformationForm!
+    var paymentMethod: PXPaymentMethod
+    var cardInfo: PXCardInformationForm
     var reason: Reason
 
     var callback: ((_ cardInformation: PXCardInformationForm, _ securityCode: String) -> Void)?
@@ -62,9 +62,44 @@ internal class SecurityCodeViewModel {
     }
 
     internal enum Reason: String {
-        case INVALID_ESC = "esc_cap"
-        case CALL_FOR_AUTH = "call_for_auth"
         case SAVED_CARD = "saved_card"
+        case INVALID_ESC = "invalid_esc"
+        case INVALID_FINGERPRINT = "invalid_fingerprint"
+        case UNEXPECTED_TOKENIZATION_ERROR = "unexpected_tokenization_error"
+        case ESC_DISABLED = "esc_disabled"
+        case ESC_CAP = "esc_cap"
+        case CALL_FOR_AUTH = "call_for_auth"
+        case NO_REASON = "no_reason"
+    }
+}
+
+// MARK: Static methods
+extension SecurityCodeViewModel {
+    static func getSecurityCodeReason(invalidESCReason: PXESCDeleteReason?, isCallForAuth: Bool = false, escEnabled: Bool = true) -> SecurityCodeViewModel.Reason {
+        if isCallForAuth {
+            return .CALL_FOR_AUTH
+        }
+
+        if !escEnabled {
+            return .ESC_DISABLED
+        }
+
+        guard let invalidESCReason = invalidESCReason else {
+            return .SAVED_CARD
+        }
+
+        switch invalidESCReason {
+        case .INVALID_ESC:
+            return .INVALID_ESC
+        case .INVALID_FINGERPRINT:
+            return .INVALID_FINGERPRINT
+        case .UNEXPECTED_TOKENIZATION_ERROR:
+            return .UNEXPECTED_TOKENIZATION_ERROR
+        case .ESC_CAP:
+            return .ESC_CAP
+        default:
+            return .NO_REASON
+        }
     }
 }
 
@@ -88,8 +123,8 @@ extension SecurityCodeViewModel {
         properties["message"] = message
         properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
-        extraDic["payment_method_type"] = paymentMethod?.getPaymentTypeForTracking()
-        extraDic["payment_method_id"] = paymentMethod?.getPaymentIdForTracking()
+        extraDic["payment_method_type"] = paymentMethod.getPaymentTypeForTracking()
+        extraDic["payment_method_id"] = paymentMethod.getPaymentIdForTracking()
         properties["extra_info"] = extraDic
         return properties
     }

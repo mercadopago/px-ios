@@ -1,3 +1,39 @@
+# v4.33.0
+🚀Private Release - 4.33.0 🚀
+MercadoPagoSDKV4 - Private Version
+- Accessibility
+- Fix CallForAuth crash
+
+# v4.32.9
+🚀Private Release - 4.32.9 🚀
+MercadoPagoSDKV4 - Private Version
+- Translation fixes
+
+# v4.32.8
+🚀Private Release - 4.32.8 🚀
+MercadoPagoSDKV4 - Private Version
+- Reset ESC Cap hot fix
+
+# v4.32.7
+🚀Private Release - 4.32.7 🚀
+MercadoPagoSDKV4 - Private Version
+- ESC tracking
+
+# v4.32.6
+🚀Private Release - 4.32.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Reset ESC Cap
+- Services refactor
+- Fonts fixes
+- Minor bug fixes
+
+# v4.32.5
+🚀Private Release - 4.32.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Pay preference fixes
+- Translations fixes
+- Tracking enhancements
+
 # v4.32.4
 🚀Public Release - 4.32.4 🚀
 MercadoPagoSDK - Public Version

@@ -136,4 +136,12 @@ internal class CustomService: MercadoPagoService {
                 failure?(PXError(domain: ApiDomain.CREATE_PREFERENCE, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "Response cannot be decoded"]))
         })
     }
+
+    internal func resetESCCap(params: String, success: @escaping () -> Void, failure: ((_ error: PXError) -> Void)?) {
+        self.request(uri: self.URI, params: params, body: nil, method: HTTPMethod.delete, cache: false, success: { (data) in
+                success()
+        }, failure: { (_) in
+                failure?(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "Response cannot be decoded"]))
+        })
+    }
 }

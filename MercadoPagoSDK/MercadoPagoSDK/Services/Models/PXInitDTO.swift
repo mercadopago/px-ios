@@ -21,8 +21,9 @@ final class PXInitDTO: NSObject, Decodable {
     public var selectedDiscountConfiguration: PXDiscountConfiguration?
     public var experiments: [PXExperiment]?
     public var payerCompliance: PXPayerCompliance?
+    public var configurations: PXInitConfigurations?
 
-    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod], experiments: [PXExperiment]?, payerCompliance: PXPayerCompliance?) {
+    public init(preference: PXCheckoutPreference?, oneTap: [PXOneTapDto]?, currency: PXCurrency, site: PXSite, generalCoupon: String, coupons: [String: PXDiscountConfiguration], groups: [PXPaymentMethodSearchItem], payerPaymentMethods: [PXCustomOptionSearchItem], availablePaymentMethods: [PXPaymentMethod], experiments: [PXExperiment]?, payerCompliance: PXPayerCompliance?, configurations: PXInitConfigurations?) {
         self.preference = preference
         self.oneTap = oneTap
         self.payerCompliance = payerCompliance
@@ -34,6 +35,7 @@ final class PXInitDTO: NSObject, Decodable {
         self.payerPaymentMethods = payerPaymentMethods
         self.availablePaymentMethods = availablePaymentMethods
         self.experiments = experiments
+        self.configurations = configurations
 
         if let selectedDiscountConfiguration = coupons[generalCoupon] {
             self.selectedDiscountConfiguration = selectedDiscountConfiguration
@@ -52,6 +54,7 @@ final class PXInitDTO: NSObject, Decodable {
         case payerPaymentMethods = "payer_payment_methods"
         case availablePaymentMethods = "available_payment_methods"
         case experiments
+        case configurations
     }
 
     public class func fromJSON(data: Data) throws -> PXInitDTO {

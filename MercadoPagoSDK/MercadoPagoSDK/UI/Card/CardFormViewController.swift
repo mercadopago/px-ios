@@ -95,9 +95,9 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
 
-    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter?, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil, bankDealsEnabled: Bool) {
+    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServices: MercadoPagoServices?, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil, bankDealsEnabled: Bool) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
-        self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, bankDealsEnabled: bankDealsEnabled)
+        self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServices: mercadoPagoServices, bankDealsEnabled: bankDealsEnabled)
         self.callbackCancel = callbackCancel
         self.callback = callback
     }
@@ -220,8 +220,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     private func getPromos() {
-        if let mercadoPagoServicesAdapter = self.viewModel.mercadoPagoServicesAdapter {
-            mercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
+        if let mercadoPagoServices = self.viewModel.mercadoPagoServices {
+            mercadoPagoServices.getBankDeals(callback: { (bankDeals) in
                 self.viewModel.promos = bankDeals
                 self.updateCardSkin()
             }, failure: { _ in

@@ -14,10 +14,10 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
             return
         }
 
-        self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: payment.getPaymentMethodTypeId())
+        self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: paymentData.getPaymentMethod()?.paymentTypeId)
 
         if payment.getStatusDetail() == PXRejectedStatusDetail.INVALID_ESC.rawValue {
-            self.paymentErrorHandler?.escError()
+            self.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return
         }
 
@@ -28,7 +28,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
 
     func handlePayment(business: PXBusinessResult) {
         self.model.businessResult = business
-        self.model.handleESCForPayment(status: business.paymentStatus, statusDetails: business.paymentStatusDetail, errorPaymentType: business.getPaymentMethodTypeId())
+        self.model.handleESCForPayment(status: business.paymentStatus, statusDetails: business.paymentStatusDetail, errorPaymentType: self.model.amountHelper?.getPaymentData().getPaymentMethod()?.paymentTypeId)
         self.executeNextStep()
     }
 
@@ -42,10 +42,10 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
                 return
             }
 
-            self.model.handleESCForPayment(status: basePayment.getStatus(), statusDetails: basePayment.getStatusDetail(), errorPaymentType: basePayment.getPaymentMethodTypeId())
+            self.model.handleESCForPayment(status: basePayment.getStatus(), statusDetails: basePayment.getStatusDetail(), errorPaymentType: paymentData.getPaymentMethod()?.paymentTypeId)
 
             if basePayment.getStatusDetail() == PXRejectedStatusDetail.INVALID_ESC.rawValue {
-                self.paymentErrorHandler?.escError()
+                self.paymentErrorHandler?.escError(reason: .ESC_CAP)
                 return
             }
 

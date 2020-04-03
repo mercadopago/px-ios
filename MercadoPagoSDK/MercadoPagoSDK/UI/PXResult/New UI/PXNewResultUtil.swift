@@ -22,7 +22,7 @@ class PXNewResultUtil {
             return nil
         }
 
-        let attributedTitle = NSAttributedString(string: "Operación".localized + " #" + paymentId, attributes: PXNewCustomView.titleAttributes)
+        let attributedTitle = NSAttributedString(string: ("Operación #{0}".localized as NSString).replacingOccurrences(of: "{0}", with: "\(paymentId)"), attributes: PXNewCustomView.titleAttributes)
 
         let date = Date()
         let attributedSubtitle = NSAttributedString(string: Utils.getFormatedStringDate(date, addTime: true), attributes: PXNewCustomView.subtitleAttributes)

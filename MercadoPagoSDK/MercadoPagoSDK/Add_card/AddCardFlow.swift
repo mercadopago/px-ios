@@ -28,7 +28,7 @@ public class AddCardFlow: NSObject, PXFlow {
     private let escManager: PXESCManager
 
     //add card flow should have 'aggregator' processing mode by default
-    private lazy var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", privateKey: self.accessToken)
+    private lazy var mercadoPagoServices = MercadoPagoServices(publicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", privateKey: self.accessToken)
 
     public convenience init(accessToken: String, locale: String, navigationController: UINavigationController, shouldSkipCongrats: Bool) {
         self.init(accessToken: accessToken, locale: locale, navigationController: navigationController)
@@ -125,7 +125,7 @@ public class AddCardFlow: NSObject, PXFlow {
     }
 
     private func getIdentificationTypes() {
-        self.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] identificationTypes in
+        self.mercadoPagoServices.getIdentificationTypes(callback: { [weak self] identificationTypes in
             guard let self = self else { return }
             self.model.identificationTypes = identificationTypes
             self.executeNextStep()
@@ -153,7 +153,7 @@ public class AddCardFlow: NSObject, PXFlow {
         guard let paymentMethods = self.model.paymentMethods else {
             return
         }
-        let cardFormViewModel = CardFormViewModel(paymentMethods: paymentMethods, guessedPaymentMethods: nil, customerCard: nil, token: nil, mercadoPagoServicesAdapter: nil, bankDealsEnabled: false)
+        let cardFormViewModel = CardFormViewModel(paymentMethods: paymentMethods, guessedPaymentMethods: nil, customerCard: nil, token: nil, mercadoPagoServices: nil, bankDealsEnabled: false)
         let cardFormViewController = CardFormViewController(cardFormManager: cardFormViewModel, callback: { [weak self] (paymentMethods, cardToken) in
             guard let self = self else { return }
             self.model.cardToken = cardToken
@@ -185,7 +185,7 @@ public class AddCardFlow: NSObject, PXFlow {
         cardToken.requireESC = escEnabled
         self.navigationHandler.presentLoading()
 
-        self.mercadoPagoServicesAdapter.createToken(cardToken: cardToken, callback: { [weak self] (token) in
+        self.mercadoPagoServices.createToken(cardToken: cardToken, callback: { [weak self] (token) in
             guard let self = self else { return }
             self.model.tokenizedCard = token
             if let esc = token.esc {

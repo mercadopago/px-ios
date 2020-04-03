@@ -80,6 +80,9 @@ class PXOneTapSummaryRowView: UIView {
         valueLabel?.text = data.value
         valueLabel?.textColor = data.highlightedColor
         valueLabel?.alpha = data.alpha
+
+        let rowValue = data.value.replacingOccurrences(of: "$", with: "")
+        accessibilityLabel = "\(data.title)" + "\(rowValue)" + "pesos".localized
     }
 
     private func render() {
@@ -127,6 +130,9 @@ class PXOneTapSummaryRowView: UIView {
         PXLayout.centerVertically(view: valueLabel).isActive = true
         PXLayout.setHeight(owner: self, height: rowHeight).isActive = true
 
+        isAccessibilityElement = true
+        let rowValue = valueLabel.text?.replacingOccurrences(of: "$", with: "") ?? ""
+        accessibilityLabel = "\(titleLabel.text ?? "")" + "\(rowValue)" + "pesos".localized
         updateUI()
     }
 }
