@@ -122,6 +122,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
             backButton.target = self
             backButton.tintColor = navBarTextColor
             backButton.action = #selector(MercadoPagoUIViewController.executeBack)
+            backButton.accessibilityLabel = "atrás".localized
             self.navigationItem.leftBarButtonItem = backButton
         }
     }

@@ -14,4 +14,5 @@ protocol PXCardSliderProtocol: NSObjectProtocol {
     func didEndDecelerating()
     func addNewCardDidTap()
     func addNewOfflineDidTap()
+    func didEndScrollAnimation()
 }

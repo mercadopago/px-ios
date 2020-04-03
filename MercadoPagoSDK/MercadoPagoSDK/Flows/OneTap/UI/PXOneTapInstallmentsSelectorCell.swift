@@ -51,6 +51,8 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
         PXLayout.setHeight(owner: valueLabelsContainer, height: 39).isActive = true
         PXLayout.put(view: valueLabelsContainer, rightOf: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
 
+        setAccessibilityMessage(data.title.string, data.topValue?.string, data.bottomValue?.string)
+
         if data.isSelected {
             let selectedIndicatorView = UIView()
             selectedIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,5 +63,21 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
             PXLayout.pinBottom(view: selectedIndicatorView).isActive = true
             PXLayout.pinLeft(view: selectedIndicatorView, withMargin: 0).isActive = true
         }
+    }
+}
+
+// MARK: Accessibility
+private extension PXOneTapInstallmentsSelectorCell {
+    func setAccessibilityMessage(_ titleLabel: String, _ topLabel: String?, _ bottomLabel: String?) {
+        let title = titleLabel.replacingOccurrences(of: "x", with: "de".localized).replacingOccurrences(of: "$", with: "") + " " + "pesos".localized
+        var topText = ""
+        var bottomText = ""
+        if let text = topLabel, text.isNotEmpty {
+            topText = text.replacingOccurrences(of: "$", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "") + "pesos".localized
+        }
+        if let text = bottomLabel, text.isNotEmpty {
+            bottomText = text.replacingOccurrences(of: "$", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "") + "pesos".localized
+        }
+        accessibilityLabel = title + ":" + topText + bottomText
     }
 }

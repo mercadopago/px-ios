@@ -60,6 +60,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
             guard let animatedView = self.animatedView else { return }
             animatedView.backgroundColor = self.backgroundColor
             animatedView.layer.cornerRadius = self.layer.cornerRadius
+            animatedView.isAccessibilityElement = true
             self.superview?.addSubview(animatedView)
             self.alpha = 0
 

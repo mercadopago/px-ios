@@ -93,6 +93,9 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         }
     }
 
+    open weak var accessibilityDelegate: ChangeCardAccessibilityProtocol?
+
+
     /// The time interval of automatic sliding. 0 means disabling automatic sliding. Default is 0.
     @IBInspectable
     open var automaticSlidingInterval: CGFloat = 0.0 {
@@ -644,4 +647,12 @@ extension FSPagerView {
     /// Requests that FSPagerView use the default value for a given size.
     public static let automaticSize: CGSize = .zero
 
+}
+
+// MARK: Accessibility
+extension FSPagerView {
+    override open func accessibilityScroll(_ direction: UIAccessibilityScrollDirection) -> Bool {
+        accessibilityDelegate?.scrollTo(direction: direction)
+        return true
+    }
 }

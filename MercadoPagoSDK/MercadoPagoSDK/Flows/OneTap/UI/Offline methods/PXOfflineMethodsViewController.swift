@@ -431,6 +431,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
             self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
             tableView.isScrollEnabled = false
             view.isUserInteractionEnabled = false
+            disableModalDismiss()
         }
 
         if let selectedOfflineMethod = viewModel.getSelectedOfflineMethod(), let newPaymentMethod = viewModel.getOfflinePaymentMethod(targetOfflinePaymentMethod: selectedOfflineMethod) {
@@ -467,6 +468,12 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
             return true
         }
         return false
+    }
+
+    private func disableModalDismiss() {
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = true
+        }
     }
 }
 

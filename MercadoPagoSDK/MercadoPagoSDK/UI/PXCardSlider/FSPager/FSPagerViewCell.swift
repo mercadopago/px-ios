@@ -46,6 +46,7 @@ open class FSPagerViewCell: UICollectionViewCell {
 
     fileprivate weak var _textLabel: UILabel?
     fileprivate weak var _imageView: UIImageView?
+    private var accessibilityMessage: String = ""
 
     fileprivate let kvoContext = UnsafeMutableRawPointer(bitPattern: 0)
     fileprivate let selectionColor = UIColor(white: 0.2, alpha: 0.2)
@@ -149,4 +150,15 @@ open class FSPagerViewCell: UICollectionViewCell {
         }
     }
 
+}
+
+// MARK: Accessibility
+extension FSPagerViewCell {
+    func setAccessibilityMessage(_ message: String) {
+        self.accessibilityMessage = message
+    }
+
+    func getAccessibilityMessage() -> String {
+        return accessibilityMessage
+    }
 }

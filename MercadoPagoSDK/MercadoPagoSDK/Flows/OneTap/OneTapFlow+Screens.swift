@@ -16,9 +16,10 @@ extension OneTapFlow {
         }
         let callbackConfirm: ((PXPaymentData, Bool) -> Void) = {
             [weak self] (paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) in
-            self?.model.updateCheckoutModel(paymentData: paymentData, splitAccountMoneyEnabled: splitAccountMoneyEnabled)
+            guard let self = self else { return }
+            self.model.updateCheckoutModel(paymentData: paymentData, splitAccountMoneyEnabled: splitAccountMoneyEnabled)
             // Deletes default one tap option in payment method search
-            self?.executeNextStep()
+            self.executeNextStep()
         }
         let callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void) = {
             [weak self] (newPaymentOption: PaymentMethodOption) in
