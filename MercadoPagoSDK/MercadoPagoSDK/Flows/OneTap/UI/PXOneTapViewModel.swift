@@ -117,6 +117,12 @@ extension PXOneTapViewModel {
                         templateCard.cardPattern = cardPattern
                     }
 
+                    templateCard.securityCodeLocation = targetCardData.cardUI?.securityCode?.cardLocation == "front" ? .front : .back
+
+                    if let codeLength = targetCardData.cardUI?.securityCode?.length {
+                        templateCard.securityCodePattern = codeLength
+                    }
+
                     if let cardBackgroundColor = targetCardData.cardUI?.color {
                         templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
                     }
