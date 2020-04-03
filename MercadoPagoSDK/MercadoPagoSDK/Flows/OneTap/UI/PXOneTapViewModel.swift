@@ -104,7 +104,6 @@ extension PXOneTapViewModel {
 
                 let viewModelCard = PXCardSliderViewModel(paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits, payerPaymentMethods: payerPaymentMethods)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
-                viewModelCard.setAccountMoneyMessage(targetNode.accountMoney?.cardTitle ?? "")
                 let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 viewModelCard.displayMessage = NSAttributedString(string: accountMoney.sliderTitle ?? "", attributes: attributes)
                 sliderModel.append(viewModelCard)

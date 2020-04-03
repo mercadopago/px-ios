@@ -52,7 +52,6 @@ extension PXCardSlider: FSPagerViewDataSource {
 
                 if targetModel.cardUI is AccountMoneyCard {
                     // AM card.
-                    accessibilityData.description = targetModel.getAccountMoneyMessage()
                     cell.renderAccountMoneyCard(isDisabled: !targetModel.status.enabled, cardSize: pagerView.itemSize, bottomMessage: bottomMessage, accessibilityData: accessibilityData)
                 } else if let oneTapCreditsInfo = targetModel.creditsViewModel, targetModel.cardUI is ConsumerCreditsCard {
                     cell.delegate = self
@@ -231,6 +230,7 @@ extension PXCardSlider: PXTermsAndConditionViewDelegate {
     func goToItemAt(index: Int, animated: Bool) {
         pagerView.scrollToItem(at: index, animated: animated)
         pageControl.currentPage = index
+        selectedIndex = index
         UIAccessibility.post(notification: .pageScrolled, argument: "\(index + 1)" + "de".localized + "\(pageControl.numberOfPages)")
     }
 }
