@@ -80,9 +80,12 @@ internal extension PXPaymentFlow {
 
         let campaignId: String? = model.amountHelper?.campaign?.id?.stringValue
 
+        // ifpe is always false until KyC callback can return to one tap
+        let ifpe = false
+
         model.shouldSearchPointsAndDiscounts = false
         let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
-        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_POINTS_URI, paymentIds: paymentIds, campaignId: campaignId, platform: platform, callback: { [weak self] (pointsAndBenef) in
+        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_POINTS_URI, paymentIds: paymentIds, campaignId: campaignId, platform: platform, ifpe: ifpe, callback: { [weak self] (pointsAndBenef) in
                 guard let strongSelf = self else { return }
                 strongSelf.model.pointsAndDiscounts = pointsAndBenef
                 strongSelf.executeNextStep()
