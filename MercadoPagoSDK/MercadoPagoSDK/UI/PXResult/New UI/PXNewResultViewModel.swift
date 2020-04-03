@@ -67,6 +67,7 @@ protocol PXNewResultViewModelInterface {
     //REMEDY
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView?
     func getRemedyButtonAction() -> ((String?) -> Void)?
+    func isPaymentResultRejectedWithRemedy() -> Bool
 
     //FOOTER
     func getFooterMainAction() -> PXAction?

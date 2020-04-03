@@ -434,7 +434,7 @@ extension PXNewResultViewController {
 
     //FOOTER
     func buildFooterView() -> UIView {
-        let footerProps = PXFooterProps(buttonAction: viewModel.getFooterMainAction(), linkAction: viewModel.getFooterSecondaryAction())
+        let footerProps = PXFooterProps(buttonAction: viewModel.getFooterMainAction(), linkAction: viewModel.getFooterSecondaryAction(), useAndesButtonForLinkAction: viewModel.isPaymentResultRejectedWithRemedy())
         return PXFooterComponent(props: footerProps).render()
     }
 }

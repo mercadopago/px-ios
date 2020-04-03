@@ -30,8 +30,9 @@ internal extension PXResultViewModel {
         if paymentResult.isAccepted() {
             return nil
         } else if paymentResult.isError() {
-            if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
-                return PXFooterResultConstants.KYC_BUTTON_TEXT.localized
+            if paymentResult.isHighRisk(),
+                let label = remedy?.highRisk?.actionLoud?.label {
+                return label
             } else {
                 return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
             }
@@ -92,8 +93,8 @@ internal extension PXResultViewModel {
         if paymentResult.isAccepted() {
              callback(PaymentResult.CongratsState.cancel_EXIT, nil)
         } else if paymentResult.isError() {
-            if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
-                callback(PaymentResult.CongratsState.cancel_DEEPLINK, remedy?.highRisk?.deepLink)
+            if paymentResult.isHighRisk() {
+                callback(PaymentResult.CongratsState.call_DEEPLINK, remedy?.highRisk?.deepLink)
             } else {
                 callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
             }

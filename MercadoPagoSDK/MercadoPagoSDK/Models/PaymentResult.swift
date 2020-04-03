@@ -16,7 +16,8 @@ internal class PaymentResult {
         case cancel_RETRY = 2
         case cancel_RECOVER = 3
         case call_FOR_AUTH = 4
-        case cancel_DEEPLINK = 5
+        case bad_FILLED_SECURITY_CODE = 5
+        case call_DEEPLINK = 6
     }
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue,
@@ -79,8 +80,8 @@ internal class PaymentResult {
     }
 
     func isHighRisk() -> Bool {
-        return statusDetail == PXPayment.StatusDetails.REJECTED_HIGH_RISK ||
-            statusDetail == PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK
+        return [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
+                PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(statusDetail)
     }
 
     func isInvalidInstallments() -> Bool {

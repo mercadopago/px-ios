@@ -185,24 +185,25 @@ extension MercadoPagoCheckout {
                     congratsState == .cancel_SELECT_OTHER {
                     changePaymentMethodAction()
                 } else {
-                    if let remedyText = remedyText, remedyText.isNotEmpty {
-                        // CVV Remedy. Create new card token
-                        self.viewModel.prepareForClone()
-                        // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
-                        self.viewModel.readyToPay = true
-                        // Set needToShowLoading to false so the button animation can be shown
-                        self.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: remedyText)
-                    } else {
-                        self.viewModel.prepareForNewSelection()
-                        self.executeNextStep()
-                    }
+                    self.viewModel.prepareForNewSelection()
+                    self.executeNextStep()
                 }
-            case .cancel_DEEPLINK:
+            case .bad_FILLED_SECURITY_CODE:
                 if let remedyText = remedyText, remedyText.isNotEmpty {
-                    PXDeepLinkManager.open(remedyText)
+                    // CVV Remedy. Create new card token
+                    self.viewModel.prepareForClone()
+                    // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
+                    self.viewModel.readyToPay = true
+                    // Set needToShowLoading to false so the button animation can be shown
+                    self.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: remedyText)
                 } else {
                     self.finish()
                 }
+            case .call_DEEPLINK:
+                if let remedyText = remedyText, remedyText.isNotEmpty {
+                    PXDeepLinkManager.open(remedyText)
+                }
+                self.finish()
             default:
                 self.finish()
             }

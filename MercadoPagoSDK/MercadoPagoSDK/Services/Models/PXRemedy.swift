@@ -24,6 +24,7 @@ struct PXHighRisk: Codable {
     let title: String?
     let message: String?
     let deepLink: String?
+    let actionLoud: PXButtonAction?
 }
 
 struct PXCallForAuth: Codable {
@@ -36,6 +37,10 @@ struct PXFieldSetting: Codable {
     let length: Int
     let title: String?
     let hintMessage: String?
+}
+
+struct PXButtonAction: Codable {
+    let label: String?
 }
 
 struct PXSuggestionPaymentMethod: Codable {

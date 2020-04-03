@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AndesUI
 
 final class PXFooterRenderer: NSObject {
 
@@ -57,12 +58,7 @@ final class PXFooterRenderer: NSObject {
                 principalButton.heightAnchor.constraint(equalToConstant: BUTTON_HEIGHT)
             ])
         }
-        if let linkAction = footer.props.linkAction {
-            let linkButton = self.buildLinkButton(with: linkAction, color: footer.props.primaryColor)
-            linkButton.add(for: .touchUpInside) {
-                fooView.delegate?.didTapSecondaryAction()
-            }
-
+        if let linkButton = buildLinkButton(props: footer.props) {
             fooView.linkButton = linkButton
             fooView.addSubview(linkButton)
 
@@ -94,11 +90,19 @@ final class PXFooterRenderer: NSObject {
         return button
     }
 
-    func buildLinkButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXSecondaryButton {
-        let linkButton = PXSecondaryButton()
+    func buildLinkButton(props: PXFooterProps) -> UIControl? {
+        guard let linkAction = props.linkAction  else { return nil }
+
+        let linkButton: UIControl
+        if props.useAndesButtonForLinkAction {
+            linkButton = AndesButton(text: linkAction.label, hierarchy: AndesButtonHierarchy.quiet, size: AndesButtonSize.large, icon: nil)
+        } else {
+            let secondaryButton = PXSecondaryButton()
+            secondaryButton.buttonTitle = linkAction.label
+            linkButton = secondaryButton
+        }
+        linkButton.add(for: .touchUpInside, linkAction.action)
         linkButton.translatesAutoresizingMaskIntoConstraints = false
-        linkButton.buttonTitle = footerAction.label
-        linkButton.add(for: .touchUpInside, footerAction.action)
         return linkButton
     }
 }

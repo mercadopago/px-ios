@@ -106,9 +106,9 @@ class PXResultTextFieldRemedyView: UIView {
         addSubview(button)
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(greaterThanOrEqualTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
-            button.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
+            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: PXLayout.S_MARGIN),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -PXLayout.S_MARGIN),
             button.heightAnchor.constraint(equalToConstant: BUTTON_HEIGHT),
-            button.centerXAnchor.constraint(equalTo: centerXAnchor),
             button.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 

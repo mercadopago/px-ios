@@ -41,7 +41,7 @@ extension ResourceManager {
         }
         return NSDictionary(contentsOfFile: path)
     }
-    
+
     func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
         let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethodSearch")
         var description = withDescription
@@ -204,7 +204,7 @@ extension ResourceManager {
                 return ThemeManager.shared.warningColor()
             }
             if paymentResult.isError() {
-                if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
+                if paymentResult.isHighRisk() {
                     return ThemeManager.shared.warningColor()
                 } else {
                     return ThemeManager.shared.rejectedColor()
@@ -241,7 +241,7 @@ extension ResourceManager {
                 return getBadgeImage(name: "need_action_badge", clearBackground: clearBackground)
             }
             if paymentResult.isError() {
-                if [PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK, PXPayment.StatusDetails.REJECTED_HIGH_RISK].contains(paymentResult.statusDetail) {
+                if paymentResult.isHighRisk() {
                     return getBadgeImage(name: "need_action_badge", clearBackground: clearBackground)
                 } else {
                     return getBadgeImage(name: "error_badge", clearBackground: clearBackground)
