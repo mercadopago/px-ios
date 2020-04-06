@@ -7,6 +7,7 @@
 
 import UIKit
 import MLUI
+import AndesUI
 
 class PXOneTapDisabledViewController: UIViewController {
 
@@ -54,6 +55,7 @@ class PXOneTapDisabledViewController: UIViewController {
 
         if let secondaryAction = secondaryButton {
             addNewButton(containerView: containerView, action: secondaryAction, isSecondary: true, margin: PXLayout.S_MARGIN)
+
         }
 
         containerView.pinLastSubviewToBottom(withMargin: 20)
@@ -67,22 +69,14 @@ class PXOneTapDisabledViewController: UIViewController {
 
     @discardableResult
     func addNewButton(containerView: PXComponentView, action: PXAction, isSecondary: Bool, margin: CGFloat) -> UIView {
-        let button: MLButton
-        if isSecondary {
-            button = PXOutlinedSecondaryButton()
-        } else {
-            button = PXPrimaryButton()
-       }
-        button.buttonTitle = action.label
+        let button = isSecondary ? AndesButton(text: action.label, hierarchy: .quiet, size: .large) : AndesButton(text: action.label, hierarchy: .loud, size: .large)
 
         containerView.addSubviewToBottom(button, withMargin: margin)
-
         NSLayoutConstraint.activate([
             button.heightAnchor.constraint(equalToConstant: 50),
             button.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: PXLayout.M_MARGIN),
             button.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -PXLayout.M_MARGIN)
-            ])
-
+        ])
         button.add(for: .touchUpInside) {
             action.action()
         }
