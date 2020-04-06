@@ -41,7 +41,7 @@ extension ResourceManager {
         }
         return NSDictionary(contentsOfFile: path)
     }
-    
+
     func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
         let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethodSearch")
         var description = withDescription
@@ -200,23 +200,27 @@ extension ResourceManager {
             if paymentResult.isApproved() || paymentResult.isWaitingForPayment() {
                 return ThemeManager.shared.successColor()
             }
-            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() {
+            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() || paymentResult.isRejectedWithRemedy() {
                 return ThemeManager.shared.warningColor()
             }
             if paymentResult.isError() {
-                return ThemeManager.shared.rejectedColor()
+                if paymentResult.isHighRisk() {
+                    return ThemeManager.shared.warningColor()
+                } else {
+                    return ThemeManager.shared.rejectedColor()
+                }
             }
         }
-        if status.uppercased() == PXBusinessResultStatus.APPROVED.getDescription() {
+        switch status.uppercased() {
+        case PXBusinessResultStatus.APPROVED.getDescription():
             return ThemeManager.shared.successColor()
-        } else if status.uppercased() == PXBusinessResultStatus.REJECTED.getDescription() {
+        case PXBusinessResultStatus.REJECTED.getDescription():
             return ThemeManager.shared.rejectedColor()
-        } else if status.uppercased() == PXBusinessResultStatus.PENDING.getDescription() {
+        case PXBusinessResultStatus.PENDING.getDescription(), PXBusinessResultStatus.IN_PROGRESS.getDescription():
             return ThemeManager.shared.warningColor()
-        } else if status.uppercased() == PXBusinessResultStatus.IN_PROGRESS.getDescription() {
-            return ThemeManager.shared.warningColor()
+        default:
+            return ThemeManager.shared.rejectedColor()
         }
-        return ThemeManager.shared.rejectedColor()
     }
 
     func getBadgeImageWith(status: String, statusDetail: String? = nil, clearBackground: Bool = false) -> UIImage? {
@@ -237,7 +241,11 @@ extension ResourceManager {
                 return getBadgeImage(name: "need_action_badge", clearBackground: clearBackground)
             }
             if paymentResult.isError() {
-                return getBadgeImage(name: "error_badge", clearBackground: clearBackground)
+                if paymentResult.isHighRisk() {
+                    return getBadgeImage(name: "need_action_badge", clearBackground: clearBackground)
+                } else {
+                    return getBadgeImage(name: "error_badge", clearBackground: clearBackground)
+                }
             }
         } else {
             //Business Result Logic

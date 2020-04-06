@@ -9,19 +9,6 @@
 import UIKit
 
 internal class PXBodyComponent: PXComponentizable {
-
-    let rejectedStatusDetailsWithBody = [PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE,
-                                         PXPayment.StatusDetails.REJECTED_CARD_DISABLED,
-                                         PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
-                                         PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT,
-                                         PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
-                                         PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
-                                         PXPayment.StatusDetails.REJECTED_HIGH_RISK,
-                                         PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
-                                         PXPayment.StatusDetails.REJECTED_BY_REGULATIONS]
-
-    let pendingStatusDetailsWithBody = [PXPayment.StatusDetails.PENDING_CONTINGENCY, PXPayment.StatusDetails.PENDING_REVIEW_MANUAL]
-
     var props: PXBodyProps
 
     init(props: PXBodyProps) {
@@ -199,11 +186,22 @@ internal class PXBodyComponent: PXComponentizable {
 
     func isPendingWithBody() -> Bool {
         let hasPendingStatus = props.paymentResult.status == PXPayment.Status.PENDING || props.paymentResult.status == PXPayment.Status.IN_PROCESS
-        return hasPendingStatus && pendingStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
+        let statusDetails = [PXPayment.StatusDetails.PENDING_CONTINGENCY,
+                             PXPayment.StatusDetails.PENDING_REVIEW_MANUAL]
+
+        return hasPendingStatus && statusDetails.contains(props.paymentResult.statusDetail)
     }
 
     func isRejectedWithBody() -> Bool {
-        return props.paymentResult.status == PXPayment.Status.REJECTED && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
+        let statusDetails = [PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE,
+                             PXPayment.StatusDetails.REJECTED_CARD_DISABLED,
+                             PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
+                             PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT,
+                             PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
+                             PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
+                             PXPayment.StatusDetails.REJECTED_BY_REGULATIONS]
+
+        return props.paymentResult.status == PXPayment.Status.REJECTED && statusDetails.contains(props.paymentResult.statusDetail)
     }
 
     func render() -> UIView {
@@ -216,12 +214,10 @@ internal class PXBodyProps {
     let paymentResult: PaymentResult
     let instruction: PXInstruction?
     let amountHelper: PXAmountHelper
-    let callback : (() -> Void)
 
-    init(paymentResult: PaymentResult, amountHelper: PXAmountHelper, instruction: PXInstruction?, callback:  @escaping (() -> Void)) {
+    init(paymentResult: PaymentResult, amountHelper: PXAmountHelper, instruction: PXInstruction?) {
         self.paymentResult = paymentResult
         self.instruction = instruction
         self.amountHelper = amountHelper
-        self.callback = callback
     }
 }

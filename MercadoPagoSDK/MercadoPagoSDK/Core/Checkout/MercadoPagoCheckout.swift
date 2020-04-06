@@ -174,6 +174,8 @@ extension MercadoPagoCheckout {
             self.showSecurityCodeScreen()
         case .SERVICE_POST_PAYMENT:
             self.createPayment()
+        case .SERVICE_GET_REMEDY:
+            self.getRemedy()
         case .SCREEN_PAYMENT_RESULT:
             self.showPaymentResultScreen()
         case .ACTION_FINISH:

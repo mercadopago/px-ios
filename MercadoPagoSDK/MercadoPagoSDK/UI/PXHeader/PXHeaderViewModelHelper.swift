@@ -17,7 +17,7 @@ internal extension PXResultViewModel {
             } else if self.paymentResult.isWaitingForPayment() {
                 return preference.getHeaderPendingIcon()
             } else {
-                return preference.getHeaderImageFor(self.paymentResult.paymentData?.paymentMethod)
+                return preference.getHeaderImageFor(paymentResult.paymentData?.paymentMethod)
             }
         } else {
             return preference.getHeaderRejectedIcon(paymentResult.paymentData?.paymentMethod)
@@ -32,35 +32,6 @@ internal extension PXResultViewModel {
         return ResourceManager.shared.getBadgeImageWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
     }
 
-    func labelTextHeader() -> NSAttributedString? {
-        if paymentResult.isAccepted() {
-            var isOnlineMethod = true
-            if let paymentMethod = self.paymentResult.paymentData?.getPaymentMethod() {
-                isOnlineMethod = paymentMethod.isOnlinePaymentMethod
-            }
-
-            if self.paymentResult.isWaitingForPayment() && isOnlineMethod {
-                return "¡Apúrate a pagar!".localized.toAttributedString(attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
-            } else {
-                var labelText: String?
-                if self.paymentResult.isApproved() {
-                    labelText = preference.getApprovedLabelText()
-                } else {
-                    labelText = preference.getPendingLabelText()
-                }
-                guard let text = labelText else {
-                    return nil
-                }
-                return text.toAttributedString(attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
-            }
-        }
-        if !preference.showLabelText {
-            return nil
-        } else {
-            return NSMutableAttributedString(string: "review_and_confirm_toast_error".localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
-        }
-
-    }
     func titleHeader(forNewResult: Bool = false) -> NSAttributedString {
         let fontSize = forNewResult ? PXNewResultHeader.TITLE_FONT_SIZE : PXHeaderRenderer.TITLE_FONT_SIZE
 
@@ -69,13 +40,13 @@ internal extension PXResultViewModel {
         }
         if paymentResult.isAccepted() {
             if self.paymentResult.isApproved() {
-                return NSMutableAttributedString(string: preference.getApprovedTitle(), attributes: [NSAttributedString.Key.font: Utils.getFont(size: fontSize)])
+                return getHeaderAttributedString(string: preference.getApprovedTitle(), size: fontSize)
             } else {
-                return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: fontSize)])
+                return getHeaderAttributedString(string: "Estamos procesando el pago".localized, size: fontSize)
             }
         }
         if preference.rejectedTitleSetted {
-            return NSMutableAttributedString(string: preference.getRejectedTitle(), attributes: [NSAttributedString.Key.font: Utils.getFont(size: fontSize)])
+            return getHeaderAttributedString(string: preference.getRejectedTitle(), size: fontSize)
         }
         return titleForStatusDetail(statusDetail: self.paymentResult.statusDetail, paymentMethod: self.paymentResult.paymentData?.paymentMethod)
     }
@@ -85,6 +56,12 @@ internal extension PXResultViewModel {
             return "".toAttributedString()
         }
 
+        if let title = remedy?.cvv?.title {
+            return title.toAttributedString()
+        } else if let title = remedy?.highRisk?.title {
+            return title.toAttributedString()
+        }
+
         var statusDetail = statusDetail
         let badFilledKey = "cc_rejected_bad_filled"
         if statusDetail.contains(badFilledKey) {
@@ -92,11 +69,10 @@ internal extension PXResultViewModel {
         }
 
         let title = PXResourceProvider.getErrorTitleKey(statusDetail: statusDetail).localized
-
         return getTitleForRejected(paymentMethod, title)
     }
 
-    func titleForInstructions() -> NSMutableAttributedString {
+    func titleForInstructions() -> NSAttributedString {
         guard let instructionsInfo = self.instructionsInfo, let amountInfo = instructionsInfo.amountInfo else {
             return "".toAttributedString()
         }
@@ -112,30 +88,32 @@ internal extension PXResultViewModel {
 
         if let range = amountRange {
             let lowerBoundTitle = String(instructionsInfo.instructions[0].title[..<range.lowerBound])
-            let attributedTitle = NSMutableAttributedString(string: lowerBoundTitle, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+            guard let attributedTitle = getHeaderAttributedString(string: lowerBoundTitle).mutableCopy() as? NSMutableAttributedString else { fatalError("Guaranteed cast to mutable sttributed string failed") }
             let attributedAmount = Utils.getAttributedAmount(amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .white, fontSize: PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize: PXHeaderRenderer.TITLE_FONT_SIZE / 2, smallSymbol: true)
             attributedTitle.append(attributedAmount)
             let upperBoundTitle = String(instructionsInfo.instructions[0].title[range.upperBound...])
-            let endingTitle = NSAttributedString(string: upperBoundTitle, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+            let endingTitle = getHeaderAttributedString(string: upperBoundTitle)
             attributedTitle.append(endingTitle)
 
             return attributedTitle
         } else {
-            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title), attributes: [NSAttributedString.Key.font: Utils.getFont(size: 26)])
-            return attributedTitle
+            return getHeaderAttributedString(string: instructionsInfo.instructions[0].title, size: 26)
         }
     }
 
     func getTitleForRejected(_ paymentMethod: PXPaymentMethod, _ title: String) -> NSAttributedString {
-
         guard let paymentMethodName = paymentMethod.name else {
             return getDefaultRejectedTitle()
         }
 
-        return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "{0}", with: "\(paymentMethodName)"), attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+        return getHeaderAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "{0}", with: "\(paymentMethodName)"))
     }
 
     func getDefaultRejectedTitle() -> NSAttributedString {
-        return NSMutableAttributedString(string: PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+        return getHeaderAttributedString(string: PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized)
+    }
+
+    func getHeaderAttributedString(string: String, size: CGFloat = PXHeaderRenderer.TITLE_FONT_SIZE) -> NSAttributedString {
+        return NSAttributedString(string: string, attributes: [NSAttributedString.Key.font: Utils.getFont(size: size)])
     }
 }

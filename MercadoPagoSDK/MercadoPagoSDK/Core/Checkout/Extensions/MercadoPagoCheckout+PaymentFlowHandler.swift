@@ -11,11 +11,14 @@ import Foundation
 extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
 
     func finishPaymentFlow(error: MPSDKError) {
-        guard let reviewScreen = viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController else {
-            return
+        let lastViewController = viewModel.pxNavigationHandler.navigationController.viewControllers.last
+        if lastViewController is PXReviewViewController || lastViewController is PXNewResultViewController {
+            if let reviewViewController = lastViewController as? PXReviewViewController {
+                reviewViewController.resetButton()
+            } else if let newResultViewController = lastViewController as? PXNewResultViewController {
+                newResultViewController.progressButtonAnimationTimeOut()
+            }
         }
-
-        reviewScreen.resetButton()
     }
 
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?, pointsAndDiscounts: PXPointsAndDiscounts?) {
@@ -23,21 +26,29 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
         viewModel.instructionsInfo = instructionsInfo
         viewModel.pointsAndDiscounts = pointsAndDiscounts
 
-        if viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
+        if shouldCallAnimateButton() {
             PXAnimatedButton.animateButtonWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
         } else {
             executeNextStep()
         }
-
     }
 
     func finishPaymentFlow(businessResult: PXBusinessResult, pointsAndDiscounts: PXPointsAndDiscounts?) {
-        self.viewModel.businessResult = businessResult
-        self.viewModel.pointsAndDiscounts = pointsAndDiscounts
-        if self.viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
+        viewModel.businessResult = businessResult
+        viewModel.pointsAndDiscounts = pointsAndDiscounts
+
+        if shouldCallAnimateButton() {
             PXAnimatedButton.animateButtonWith(status: businessResult.getBusinessStatus().getDescription())
         } else {
-            self.executeNextStep()
+            executeNextStep()
         }
+    }
+
+    private func shouldCallAnimateButton() -> Bool {
+        let lastViewController = viewModel.pxNavigationHandler.navigationController.viewControllers.last
+        if lastViewController is PXReviewViewController || lastViewController is PXNewResultViewController {
+            return true
+        }
+        return false
     }
 }

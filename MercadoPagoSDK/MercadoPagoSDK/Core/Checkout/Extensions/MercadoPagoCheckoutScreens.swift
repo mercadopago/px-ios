@@ -60,7 +60,7 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let identificationStep = IdentificationViewController(identificationTypes: identificationTypes, paymentMethod: viewModel.paymentData.paymentMethod, callback: { [weak self] (identification : PXIdentification) in
+        let identificationStep = IdentificationViewController(identificationTypes: identificationTypes, paymentMethod: viewModel.paymentData.paymentMethod, callback: { [weak self] identification in
             guard let self = self else { return }
 
             self.viewModel.updateCheckoutModel(identification: identification)
@@ -126,7 +126,7 @@ extension MercadoPagoCheckout {
 
             self.viewModel.updateCheckoutModel(paymentData: paymentData)
             self.executeNextStep()
-        }, finishButtonAnimation: {
+        }, finishButtonAnimation: { //[weak self] in
             self.executeNextStep()
         }, changePayerInformation: { [weak self] (paymentData: PXPaymentData) in
             guard let self = self else { return }
@@ -145,7 +145,7 @@ extension MercadoPagoCheckout {
     }
 
     func showSecurityCodeScreen() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.getSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
+        let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.getSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] _, securityCode in
             self?.getTokenizationService().createCardToken(securityCode: securityCode)
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToFirstPaymentVault: true)
@@ -172,43 +172,57 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
-        var congratsViewController: MercadoPagoUIViewController
-        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] (state: PaymentResult.CongratsState) in
+        let viewController = PXNewResultViewController(viewModel: viewModel.resultViewModel(), callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
-            if state == .call_FOR_AUTH {
+            switch congratsState {
+            case .call_FOR_AUTH:
                 self.viewModel.prepareForClone()
                 self.collectSecurityCodeForRetry()
-            } else if state == .cancel_RETRY || state == .cancel_SELECT_OTHER {
-                if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(), state == .cancel_SELECT_OTHER {
+            case .cancel_RETRY,
+                 .cancel_SELECT_OTHER:
+                if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(),
+                    congratsState == .cancel_SELECT_OTHER {
                     changePaymentMethodAction()
                 } else {
                     self.viewModel.prepareForNewSelection()
                     self.executeNextStep()
                 }
-            } else {
+            case .bad_FILLED_SECURITY_CODE:
+                if let remedyText = remedyText, remedyText.isNotEmpty {
+                    // CVV Remedy. Create new card token
+                    self.viewModel.prepareForClone()
+                    // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
+                    self.viewModel.readyToPay = true
+                    // Set needToShowLoading to false so the button animation can be shown
+                    self.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: remedyText)
+                } else {
+                    self.finish()
+                }
+            case .call_DEEPLINK:
+                if let remedyText = remedyText, remedyText.isNotEmpty {
+                    PXDeepLinkManager.open(remedyText)
+                }
+                self.finish()
+            default:
                 self.finish()
             }
-        }
-
-        let resultViewModel = self.viewModel.resultViewModel()
-        congratsViewController = PXNewResultViewController(viewModel: resultViewModel, callback: congratsViewControllerCallback)
-        viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
+        }, finishButtonAnimation: { [weak self] in
+            // Remedy view has an animated button. This closure is called after the animation has finished
+            self?.executeNextStep()
+        })
+        viewModel.pxNavigationHandler.pushViewController(viewController: viewController, animated: false)
     }
 
     func showBusinessResultScreen() {
-        var congratsViewController: MercadoPagoUIViewController
-        let congratsViewControllerCallback: ( _ status: PaymentResult.CongratsState) -> Void = { [weak self] (_: PaymentResult.CongratsState) in
-            self?.finish()
-        }
-
         guard let businessResult = viewModel.businessResult else {
             return
         }
 
         let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
-
-        congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: congratsViewControllerCallback)
+        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
+            self?.finish()
+        })
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
@@ -283,10 +297,10 @@ extension MercadoPagoCheckout {
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
-        if shouldUpdateOnetapFlow() {
+        if shouldUpdateOnetapFlow(), let onetapFlow = viewModel.onetapFlow {
             if let cardId = cardIdForInitFlowRefresh {
                 if viewModel.customPaymentOptions?.first(where: { $0.getCardId() == cardId }) != nil {
-                    viewModel.onetapFlow?.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: viewModel.paymentOptionSelected)
+                    onetapFlow.update(checkoutViewModel: viewModel, search: search, paymentOptionSelected: viewModel.paymentOptionSelected)
                 } else {
                     // New card didn't return. Refresh Init again
                     refreshInitFlow(cardId: cardId)

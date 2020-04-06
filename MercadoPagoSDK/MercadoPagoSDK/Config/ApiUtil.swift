@@ -37,6 +37,7 @@ internal class ApiUtil {
         case GET_CAMPAIGNS
         case GET_PAYMENT_METHODS
         case GET_IDENTIFICATION_TYPES
+        case GET_REMEDY
         case GET_BANK_DEALS
         case GET_INSTRUCTIONS
         case ASSOCIATE_TOKEN

@@ -16,7 +16,7 @@ extension OneTapFlow {
         model.invalidESCReason = nil
         paymentFlow.paymentErrorHandler = self
         if isShowingLoading() {
-            self.pxNavigationHandler.presentLoading()
+            pxNavigationHandler.presentLoading()
         }
         paymentFlow.setData(amountHelper: model.amountHelper, checkoutPreference: model.checkoutPreference, resultHandler: self)
         paymentFlow.start()
@@ -24,6 +24,14 @@ extension OneTapFlow {
 
     func isShowingLoading() -> Bool {
         return pxNavigationHandler.isLoadingPresented() || pxNavigationHandler.isShowingDynamicViewController()
+    }
+
+    private func finishPaymentFlow(status: String, statusDetail: String? = nil) {
+        if isShowingLoading() {
+            executeNextStep()
+        } else {
+            PXAnimatedButton.animateButtonWith(status: status, statusDetail: statusDetail)
+        }
     }
 }
 
@@ -36,24 +44,16 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
     }
 
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?, pointsAndDiscounts: PXPointsAndDiscounts?) {
-        self.model.paymentResult = paymentResult
-        self.model.instructionsInfo = instructionsInfo
-        self.model.pointsAndDiscounts = pointsAndDiscounts
-        if isShowingLoading() {
-            self.executeNextStep()
-        } else {
-            PXAnimatedButton.animateButtonWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
-        }
+        model.paymentResult = paymentResult
+        model.instructionsInfo = instructionsInfo
+        model.pointsAndDiscounts = pointsAndDiscounts
+        finishPaymentFlow(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
     }
 
     func finishPaymentFlow(businessResult: PXBusinessResult, pointsAndDiscounts: PXPointsAndDiscounts?) {
-        self.model.businessResult = businessResult
-        self.model.pointsAndDiscounts = pointsAndDiscounts
-        if isShowingLoading() {
-            self.executeNextStep()
-        } else {
-            PXAnimatedButton.animateButtonWith(status: businessResult.getBusinessStatus().getDescription())
-        }
+        model.businessResult = businessResult
+        model.pointsAndDiscounts = pointsAndDiscounts
+        finishPaymentFlow(status: businessResult.getBusinessStatus().getDescription())
     }
 }
 

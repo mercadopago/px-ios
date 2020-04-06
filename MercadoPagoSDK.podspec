@@ -15,9 +15,10 @@ Pod::Spec.new do |s|
     default.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets','MercadoPagoSDK/MercadoPagoSDK/*/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf', 'MercadoPagoSDK/MercadoPagoSDK/**/**.{xib,strings,stringsdict}', 'MercadoPagoSDK/MercadoPagoSDK/Translations/**/**.{plist,strings}', 'MercadoPagoSDK/MercadoPagoSDK/Plist/*.plist', 'MercadoPagoSDK/MercadoPagoSDK/*.lproj']
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     default.dependency 'MLUI', '~> 5.0'
-    default.dependency 'MLCardDrawer', '~> 1.0'
+    default.dependency 'MLCardDrawer', '~> 1.4'
     s.dependency 'MLBusinessComponents', '~> 1.0'
-    s.dependency 'MLCardForm', '~> 0.1'
+    s.dependency 'MLCardForm', '~> 0.7'
+    s.dependency 'AndesUI', '~> 2.0'
   end
 
   #s.test_spec do |test_spec|

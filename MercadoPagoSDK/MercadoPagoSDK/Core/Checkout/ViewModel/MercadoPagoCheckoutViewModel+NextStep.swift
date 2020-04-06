@@ -129,6 +129,23 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
+    func needGetRemedy() -> Bool {
+        guard let pm = paymentData.getPaymentMethod(), pm.isCreditCard else {
+            return false
+        }
+
+        let remedySupportedStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
+                                            PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
+                                            PXPayment.StatusDetails.REJECTED_HIGH_RISK]
+        if let paymentResult = paymentResult,
+            paymentResult.isRejected(),
+            remedySupportedStatusDetails.contains(paymentResult.statusDetail),
+            remedy == nil {
+            return true
+        }
+        return false
+    }
+
     func needIssuerSelectionScreen() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
             return false
@@ -201,7 +218,6 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needCreateToken() -> Bool {
-
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }

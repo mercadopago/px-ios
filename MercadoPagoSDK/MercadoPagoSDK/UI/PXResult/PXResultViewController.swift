@@ -49,8 +49,9 @@ class PXResultViewController: PXComponentContainerViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !String.isNullOrEmpty(viewModel.getTrackingPath()) {
-            trackScreen(path: viewModel.getTrackingPath(), properties: viewModel.getTrackingProperties())
+        let path = viewModel.getTrackingPath()
+        if !path.isEmpty {
+            trackScreen(path: path, properties: viewModel.getTrackingProperties())
         }
     }
 

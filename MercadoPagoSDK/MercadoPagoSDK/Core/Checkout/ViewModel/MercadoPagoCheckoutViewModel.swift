@@ -26,7 +26,7 @@ internal enum CheckoutStep: String {
     case SCREEN_PAYER_COST
     case SCREEN_REVIEW_AND_CONFIRM
     case SERVICE_POST_PAYMENT
-
+    case SERVICE_GET_REMEDY
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
     case SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
@@ -49,10 +49,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
-        guard let paymentData = self.paymentData.copy() as? PXPaymentData else {
+        guard let paymentData = paymentData.copy() as? PXPaymentData else {
             fatalError("Cannot find payment data")
         }
-        return PXAmountHelper(preference: self.checkoutPreference, paymentData: paymentData, chargeRules: self.chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
+        return PXAmountHelper(preference: checkoutPreference, paymentData: paymentData, chargeRules: chargeRules, paymentConfigurationService: paymentConfigurationService, splitAccountMoney: splitAccountMoney)
     }
 
     var checkoutPreference: PXCheckoutPreference!
@@ -71,6 +71,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var rootPaymentMethodOptions: [PaymentMethodOption]?
     var customPaymentOptions: [CustomerPaymentMethod]?
     var identificationTypes: [PXIdentificationType]?
+    var remedy: PXRemedy?
 
     var search: PXInitDTO?
 
@@ -286,8 +287,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let paymentMethod = paymentData.paymentMethod else {
             fatalError("Don't have paymentData to open Security View Controller")
         }
-        let ESCEnabled = escManager?.hasESCEnable() ?? false
-        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth, escEnabled: ESCEnabled)
+        let escEnabled = escManager?.hasESCEnable() ?? false
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth, escEnabled: escEnabled)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
@@ -297,7 +298,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func resultViewModel() -> PXResultViewModel {
-        return PXResultViewModel(amountHelper: self.amountHelper, paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, pointsAndDiscounts: self.pointsAndDiscounts, resultConfiguration: self.advancedConfig.paymentResultConfiguration)
+        guard let paymentResult = paymentResult else {
+            fatalError("paymentResult is nil")
+        }
+        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy)
     }
 
     //SEARCH_PAYMENT_METHODS
@@ -305,6 +309,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
         self.cleanIdentificationTypesSearch()
+        self.cleanRemedy()
         self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethods[0])
         self.cardToken = cardToken
         // Sets if esc is enabled to card token
@@ -338,6 +343,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     public func updateCheckoutModel(identificationTypes: [PXIdentificationType]) {
         self.identificationTypes = identificationTypes
+    }
+
+    public func updateCheckoutModel(remedy: PXRemedy) {
+        self.remedy = remedy
     }
 
     public func cardFlowSupportedIdentificationTypes() -> [PXIdentificationType]? {
@@ -408,6 +417,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
         if shouldExitCheckout() {
             return .ACTION_FINISH
+        }
+        if needGetRemedy() {
+            return .SERVICE_GET_REMEDY
         }
         if shouldShowCongrats() {
             return .SCREEN_PAYMENT_RESULT
@@ -771,6 +783,10 @@ extension MercadoPagoCheckoutViewModel {
         self.identificationTypes = nil
     }
 
+    func cleanRemedy() {
+        self.remedy = nil
+    }
+
     func cleanPaymentResult() {
         self.payment = nil
         self.paymentResult = nil
@@ -780,15 +796,14 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func prepareForClone() {
-        self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.cleanPaymentResult()
         self.wentBackFrom(hook: .BEFORE_PAYMENT)
     }
 
     func prepareForNewSelection() {
-        self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.keepDisabledOptionIfNeeded()
         self.cleanPaymentResult()
+        self.cleanRemedy()
         self.resetInformation()
         self.resetGroupSelection()
         self.applyDefaultDiscountOrClear()
@@ -859,7 +874,7 @@ extension MercadoPagoCheckoutViewModel {
     func keepDisabledOptionIfNeeded() {
         disabledOption = PXDisabledOption(paymentResult: self.paymentResult)
     }
-    
+
     func clean() {
         paymentFlow = nil
         initFlow = nil

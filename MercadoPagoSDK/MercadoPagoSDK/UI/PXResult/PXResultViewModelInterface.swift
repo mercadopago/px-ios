@@ -16,6 +16,7 @@ protocol PXResultViewModelInterface {
     func getPaymentStatusDetail() -> String
     func getPaymentId() -> String?
     func isCallForAuth() -> Bool
+    func isHighRisk() -> Bool
     func buildHeaderComponent() -> PXHeaderComponent
     func buildFooterComponent() -> PXFooterComponent
     func buildReceiptComponent() -> PXReceiptComponent?

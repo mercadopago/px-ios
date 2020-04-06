@@ -142,7 +142,7 @@ internal extension PXAmountHelper {
      }
 }
 
-// MARK: Tracking usage,.
+// MARK: Tracking usage
 internal extension PXAmountHelper {
     func getDiscountCouponAmountForTracking() -> Decimal {
         guard let couponAmount = paymentData.getDiscount()?.getCouponAmount()?.decimalValue else { return 0 }

@@ -44,10 +44,14 @@ final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
         return false
     }
 
+    func isHighRisk() -> Bool {
+        return false
+    }
+
     func buildHeaderComponent() -> PXHeaderComponent {
         let productImage = ResourceManager.shared.getImage("card_icon")
         let statusImage = ResourceManager.shared.getImage("ok_badge")
-        
+
         let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "add_card_congrats_title".localized, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.successColor(), productImage: productImage, statusImage: statusImage, closeAction: { [weak self] in
             if let callback = self?.callback {
                 callback(PaymentResult.CongratsState.cancel_EXIT)
