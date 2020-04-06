@@ -7,6 +7,7 @@
 
 import Foundation
 import MLBusinessComponents
+import AndesUI
 
 class PXNewResultUtil {
 
@@ -53,9 +54,7 @@ class PXNewResultUtil {
 
         let dataService = MLBusinessAppDataService()
         if dataService.isMpAlreadyInstalled() {
-            let button = PXOutlinedSecondaryButton()
-            button.buttonTitle = discounts.discountsAction.label
-
+            let button = AndesButton(text: discounts.discountsAction.label, hierarchy: .quiet, size: .large)
             button.add(for: .touchUpInside) {
                 //open deep link
                 PXDeepLinkManager.open(discounts.discountsAction.target)
