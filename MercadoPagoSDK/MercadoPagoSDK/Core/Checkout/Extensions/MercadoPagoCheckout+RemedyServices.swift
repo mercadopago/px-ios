@@ -8,6 +8,40 @@
 import Foundation
 
 extension MercadoPagoCheckout {
+
+    private func getAlternativePayerPaymentMethods(from payerPaymentMethods: [PXCustomOptionSearchItem]?) -> [PXAlternativePayerPaymentMethod]? {
+        guard let payerPaymentMethods = payerPaymentMethods else { return nil }
+        
+        var alternativePayerPaymentMethods: [PXAlternativePayerPaymentMethod] = []
+        for payerPaymentMethod in payerPaymentMethods {
+            if let paymentMethodId = payerPaymentMethod.paymentMethodId,
+                let paymentTypeId = payerPaymentMethod.paymentTypeId {
+                let installments = getInstallments(from: payerPaymentMethod.selectedPaymentOption?.payerCosts)
+                let alternativePayerPaymentMethod = PXAlternativePayerPaymentMethod(paymentMethodId: paymentMethodId,
+                                                                                    paymentTypeId: paymentTypeId,
+                                                                                    installments: installments,
+                                                                                    selectedPayerCostIndex: payerPaymentMethod.selectedPaymentOption?.selectedPayerCostIndex ?? 0,
+                                                                                    esc: false)
+                alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
+            }
+        }
+        return alternativePayerPaymentMethods
+    }
+
+    private func getInstallments(from payerCosts:[PXPayerCost]?) -> [PXPaymentMethodInstallment]? {
+        guard let payerCosts = payerCosts else { return nil }
+
+        var paymentMethodInstallments: [PXPaymentMethodInstallment] = []
+        for payerCost in payerCosts {
+            let paymentMethodInstallment = PXPaymentMethodInstallment(installments: payerCost.installments,
+                                                                      totalAmount: payerCost.totalAmount,
+                                                                      labels: payerCost.labels,
+                                                                      recommendedMessage: payerCost.recommendedMessage)
+            paymentMethodInstallments.append(paymentMethodInstallment)
+        }
+        return paymentMethodInstallments
+    }
+
     func getRemedy() {
         guard let paymentId = viewModel.paymentResult?.paymentId,
             let payerCost = viewModel.paymentResult?.paymentData?.payerCost,
@@ -34,33 +68,9 @@ extension MercadoPagoCheckout {
                                                                       totalAmount: payerCost.totalAmount,
                                                                       installments: payerCost.installments,
                                                                       esc: viewModel.hasSavedESC())
-        
-        let alternativePayerPaymentMethods = [PXAlternativePayerPaymentMethod(paymentMethodId: "visa",
-        paymentTypeId: "credit_card",
-        installments: [
-            PXPaymentMethodInstallment(installments: 2,
-                                       totalAmount: 123.00,
-                                       labels: ["CFT: 0%"],
-                                       recommendedMessage: "xxx"),
-            PXPaymentMethodInstallment(installments: 2,
-                                       totalAmount: 190.00,
-                                       labels: ["CFT: 50%"],
-                                       recommendedMessage: "aaa")],
-        selectedPayerCostIndex: 1,
-        esc: true),
-        PXAlternativePayerPaymentMethod(paymentMethodId: "master",
-                                          paymentTypeId: "credit_card",
-                                          installments: [
-                                            PXPaymentMethodInstallment(installments: 1,
-                                                                       totalAmount: 150.00,
-                                                                       labels: ["CFT: 50%"],
-                                                                       recommendedMessage: "bbb"),
-                                            PXPaymentMethodInstallment(installments: 2,
-                                                                       totalAmount: 140.00,
-                                                                       labels: ["CFT: 10%"],
-                                                                       recommendedMessage: "mmm")],
-                                          selectedPayerCostIndex: 0,
-                                          esc: false)]
+
+        let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != paymentOptionSelectedId }
+        let alternativePayerPaymentMethods = getAlternativePayerPaymentMethods(from: remainingPayerPaymentMethods)
 
         //viewModel.pxNavigationHandler.presentLoading()
         viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, success: { [weak self] remedy in
