@@ -303,11 +303,13 @@ extension PXOneTapViewController {
 
     private func getActionForModal(_ action: PXRemoteAction?, isSplit: Bool) -> PXAction? {
         let defaultTitle = "Pagar con otro medio".localized
-        let nonSplitDefaultAction: () -> Void = {
+        let nonSplitDefaultAction: () -> Void = { [weak self] in
+            guard let self = self else { return }
             self.currentModal?.dismiss()
             self.selectFirstCardInSlider()
         }
-        let splitDefaultAction: () -> Void = {
+        let splitDefaultAction: () -> Void = { [weak self] in
+            guard let self = self else { return }
             self.currentModal?.dismiss()
         }
 
@@ -321,7 +323,8 @@ extension PXOneTapViewController {
             return PXAction(label: action.label, action: defaultAction)
         }
 
-        return PXAction(label: action.label, action: {
+        return PXAction(label: action.label, action: { [weak self] in
+            guard let self = self else { return }
             self.currentModal?.dismiss()
             PXDeepLinkManager.open(target)
         })
