@@ -209,6 +209,8 @@ extension PXNewResultUtil {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
             }
+        } else if paymentMethod.paymentTypeId == "digital_currency" {
+            pmDescription = paymentMethodName
         } else {
             return nil
         }
