@@ -278,7 +278,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         let action = { [weak self] (text: String?) in
             var properties: [String: Any] = [:]
             guard let remedy = self?.remedy else { return }
-            
+
             var remedies: String?
             if remedy.cvv != nil {
                 remedies = "cvv_request"

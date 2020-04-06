@@ -204,7 +204,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
         return nil
     }
-    
+
     func isPaymentResultRejectedWithRemedy() -> Bool {
         return false
     }

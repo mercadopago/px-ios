@@ -34,9 +34,36 @@ extension MercadoPagoCheckout {
                                                                       totalAmount: payerCost.totalAmount,
                                                                       installments: payerCost.installments,
                                                                       esc: viewModel.hasSavedESC())
+        
+        let alternativePayerPaymentMethods = [PXAlternativePayerPaymentMethod(paymentMethodId: "visa",
+        paymentTypeId: "credit_card",
+        installments: [
+            PXPaymentMethodInstallment(installments: 2,
+                                       totalAmount: 123.00,
+                                       labels: ["CFT: 0%"],
+                                       recommendedMessage: "xxx"),
+            PXPaymentMethodInstallment(installments: 2,
+                                       totalAmount: 190.00,
+                                       labels: ["CFT: 50%"],
+                                       recommendedMessage: "aaa")],
+        selectedPayerCostIndex: 1,
+        esc: true),
+        PXAlternativePayerPaymentMethod(paymentMethodId: "master",
+                                          paymentTypeId: "credit_card",
+                                          installments: [
+                                            PXPaymentMethodInstallment(installments: 1,
+                                                                       totalAmount: 150.00,
+                                                                       labels: ["CFT: 50%"],
+                                                                       recommendedMessage: "bbb"),
+                                            PXPaymentMethodInstallment(installments: 2,
+                                                                       totalAmount: 140.00,
+                                                                       labels: ["CFT: 10%"],
+                                                                       recommendedMessage: "mmm")],
+                                          selectedPayerCostIndex: 0,
+                                          esc: false)]
 
         //viewModel.pxNavigationHandler.presentLoading()
-        viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, success: { [weak self] remedy in
+        viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, success: { [weak self] remedy in
             guard let self = self else { return }
             self.viewModel.updateCheckoutModel(remedy: remedy)
             self.executeNextStep()
