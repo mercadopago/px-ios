@@ -7,6 +7,7 @@
 
 import UIKit
 import MLBusinessComponents
+import AndesUI
 
 class PXNewResultViewController: MercadoPagoUIViewController {
 
@@ -421,9 +422,8 @@ extension PXNewResultViewController {
         guard let viewReceiptAction = viewModel.getViewReceiptAction() else {
             return nil
         }
-        let button = PXOutlinedSecondaryButton()
-        button.buttonTitle = viewReceiptAction.label
 
+        let button = AndesButton(text: viewReceiptAction.label, hierarchy: .quiet, size: AndesButtonSize.large)
         button.add(for: .touchUpInside) {
             //open deep link
             PXDeepLinkManager.open(viewReceiptAction.target)
