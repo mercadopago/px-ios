@@ -245,14 +245,14 @@ extension PXNewResultViewController {
             views.append(ResultViewData(view: view))
         }
 
-        //Important View
-        if let view = viewModel.getImportantView() {
-            views.append(ResultViewData(view: view))
-        }
-
         //Top text box View
         if let topTextBoxView = buildTopTextBoxView() {
             views.append(ResultViewData(view: topTextBoxView, verticalMargin: PXLayout.ZERO_MARGIN, horizontalMargin: PXLayout.ZERO_MARGIN))
+        }
+        
+        //Important View
+        if let view = viewModel.getImportantView() {
+            views.append(ResultViewData(view: view))
         }
 
         //Points and Discounts
