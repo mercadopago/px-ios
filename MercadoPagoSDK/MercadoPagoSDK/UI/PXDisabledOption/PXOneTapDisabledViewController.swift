@@ -55,7 +55,6 @@ class PXOneTapDisabledViewController: UIViewController {
 
         if let secondaryAction = secondaryButton {
             addNewButton(containerView: containerView, action: secondaryAction, isSecondary: true, margin: PXLayout.S_MARGIN)
-
         }
 
         containerView.pinLastSubviewToBottom(withMargin: 20)
