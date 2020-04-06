@@ -11,17 +11,15 @@ open class PXNewCustomViewData {
     let firstString: NSAttributedString?
     let secondString: NSAttributedString?
     let thirdString: NSAttributedString?
-    let fourthString: NSAttributedString?
     let icon: UIImage?
     let iconURL: String?
     let action: PXAction?
     let color: UIColor?
 
-    init(firstString: NSAttributedString?, secondString: NSAttributedString?, thirdString: NSAttributedString?, fourthString: NSAttributedString?, icon: UIImage?, iconURL: String?, action: PXAction?, color: UIColor?) {
+    init(firstString: NSAttributedString?, secondString: NSAttributedString?, thirdString: NSAttributedString?, icon: UIImage?, iconURL: String?, action: PXAction?, color: UIColor?) {
         self.firstString = firstString
         self.secondString = secondString
         self.thirdString = thirdString
-        self.fourthString = fourthString
         self.icon = icon
         self.iconURL = iconURL
         self.action = action
@@ -43,7 +41,7 @@ class PXNewCustomView: UIView {
     let data: PXNewCustomViewData
 
     class func getData() -> PXNewCustomViewData {
-        return PXNewCustomViewData(firstString: nil, secondString: nil, thirdString: nil, fourthString: nil, icon: nil, iconURL: nil, action: nil, color: nil)
+        return PXNewCustomViewData(firstString: nil, secondString: nil, thirdString: nil, icon: nil, iconURL: nil, action: nil, color: nil)
     }
 
     init(data: PXNewCustomViewData, bottomView: UIView? = nil) {
@@ -113,7 +111,7 @@ class PXNewCustomView: UIView {
             }
             if let label = firstLabel {
                 pxContentView.addSubview(label)
-                setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: nil, secondLabel: nil, thirdLabel: nil, fourthLabel: nil, actionButton: nil)
+                setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: nil, secondLabel: nil, thirdLabel: nil, actionButton: nil)
                 NSLayoutConstraint.activate([
                     label.leadingAnchor.constraint(equalTo: labelsView.leadingAnchor),
                     label.trailingAnchor.constraint(equalTo: labelsView.trailingAnchor)
@@ -130,7 +128,7 @@ class PXNewCustomView: UIView {
                     label.leadingAnchor.constraint(equalTo: labelsView.leadingAnchor),
                     label.trailingAnchor.constraint(equalTo: labelsView.trailingAnchor)
                 ])
-                setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: firstLabel, secondLabel: nil, thirdLabel: nil, fourthLabel: nil, actionButton: nil)
+                setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: firstLabel, secondLabel: nil, thirdLabel: nil, actionButton: nil)
             }
         }
 
@@ -143,20 +141,7 @@ class PXNewCustomView: UIView {
                     label.leadingAnchor.constraint(equalTo: labelsView.leadingAnchor),
                     label.trailingAnchor.constraint(equalTo: labelsView.trailingAnchor)
                 ])
-                setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: nil, fourthLabel: nil, actionButton: nil)
-            }
-        }
-
-        var fourthLabel: UILabel?
-        if let fourthString = data.fourthString {
-            fourthLabel = buildLabel(fourthString)
-            if let label = fourthLabel {
-                pxContentView.addSubview(label)
-                NSLayoutConstraint.activate([
-                    label.leadingAnchor.constraint(equalTo: labelsView.leadingAnchor),
-                    label.trailingAnchor.constraint(equalTo: labelsView.trailingAnchor)
-                ])
-                setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: thirdLabel, fourthLabel: nil, actionButton: nil)
+                setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: nil, actionButton: nil)
             }
         }
 
@@ -170,7 +155,7 @@ class PXNewCustomView: UIView {
                     button.trailingAnchor.constraint(equalTo: labelsView.trailingAnchor),
                     button.heightAnchor.constraint(equalToConstant: 20)
                 ])
-                setTopConstraints(targetView: button, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: thirdLabel, fourthLabel: fourthLabel, actionButton: nil)
+                setTopConstraints(targetView: button, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: thirdLabel, actionButton: nil)
             }
         }
 
@@ -184,7 +169,7 @@ class PXNewCustomView: UIView {
             if let iconView = iconView {
                 expectationView.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: PXLayout.S_MARGIN).isActive = true
             } else {
-                setTopConstraints(targetView: expectationView, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: thirdLabel, fourthLabel: fourthLabel, actionButton: actionButton)
+                setTopConstraints(targetView: expectationView, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: thirdLabel, actionButton: actionButton)
             }
         }
         PXLayout.pinLastSubviewToBottom(view: pxContentView, withMargin: PXLayout.S_MARGIN)
@@ -249,13 +234,11 @@ private extension PXNewCustomView {
         return button
     }
 
-    func setTopConstraints(targetView: UIView, labelsView: UIView, firstLabel: UILabel? = nil, secondLabel: UILabel? = nil, thirdLabel: UILabel?, fourthLabel: UILabel? = nil, actionButton: UIButton? = nil) {
+    func setTopConstraints(targetView: UIView, labelsView: UIView, firstLabel: UILabel? = nil, secondLabel: UILabel? = nil, thirdLabel: UILabel?, actionButton: UIButton? = nil) {
 
         var topConstraint: NSLayoutConstraint
         if let actionButton = actionButton {
             topConstraint = targetView.topAnchor.constraint(equalTo: actionButton.topAnchor, constant: PXLayout.XXXS_MARGIN)
-        } else if let fourthLabel = fourthLabel {
-            topConstraint = targetView.topAnchor.constraint(equalTo: fourthLabel.bottomAnchor, constant: PXLayout.XXXS_MARGIN)
         } else if let thirdLabel = thirdLabel {
             topConstraint = targetView.topAnchor.constraint(equalTo: thirdLabel.bottomAnchor, constant: PXLayout.XXXS_MARGIN)
         } else if let secondLabel = secondLabel {

@@ -24,7 +24,7 @@ class PXNewResultUtil {
 
         let icon = ResourceManager.shared.getImage("receipt_icon")
 
-        let data = PXNewCustomViewData(firstString: attributedTitle, secondString: attributedSubtitle, thirdString: nil, fourthString: nil, icon: icon, iconURL: nil, action: nil, color: nil)
+        let data = PXNewCustomViewData(firstString: attributedTitle, secondString: attributedSubtitle, thirdString: nil, icon: icon, iconURL: nil, action: nil, color: nil)
         return data
     }
 
@@ -111,9 +111,8 @@ extension PXNewResultUtil {
         let firstString: NSAttributedString = getPMFirstString(currency: currency, paymentData: paymentData, amountHelper: amountHelper)
         let secondString: NSAttributedString? = getPMSecondString(paymentData: paymentData)
         let thirdString: NSAttributedString? = getPMThirdString(paymentData: paymentData)
-        let fourthString: NSAttributedString? = getPMFourthString(paymentData: paymentData)
 
-        let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, fourthString: fourthString, icon: image, iconURL: nil, action: nil, color: .white)
+        let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: image, iconURL: nil, action: nil, color: .white)
         return data
     }
 
@@ -213,22 +212,10 @@ extension PXNewResultUtil {
 
     // PM Third String
     class func getPMThirdString(paymentData: PXPaymentData) -> NSAttributedString? {
-        guard let paymentMethod = paymentData.paymentMethod else {
-            return nil
-        }
-        let paymentMethodName = paymentMethod.name ?? ""
-        if let issuer = paymentData.getIssuer(), let issuerName = issuer.name, !issuerName.isEmpty, issuerName.lowercased() != paymentMethodName.lowercased() {
-            return NSMutableAttributedString(string: issuerName, attributes: PXNewCustomView.subtitleAttributes)
-        }
-        return nil
-    }
-
-    // PM Fourth String
-    class func getPMFourthString(paymentData: PXPaymentData) -> NSAttributedString? {
         guard let paymentMethodDisplayDescription = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message else {
             return nil
         }
-        let attributedFourth = NSMutableAttributedString(string: paymentMethodDisplayDescription, attributes: PXNewCustomView.subtitleAttributes)
-        return attributedFourth
+        let thirdAttributed = NSMutableAttributedString(string: paymentMethodDisplayDescription, attributes: PXNewCustomView.subtitleAttributes)
+        return thirdAttributed
     }
 }
