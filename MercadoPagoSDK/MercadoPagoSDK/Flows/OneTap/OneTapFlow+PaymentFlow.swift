@@ -18,7 +18,7 @@ extension OneTapFlow {
         if isShowingLoading() {
             pxNavigationHandler.presentLoading()
         }
-        paymentFlow.setData(amountHelper: model.amountHelper, checkoutPreference: model.checkoutPreference, resultHandler: self)
+        paymentFlow.setData(amountHelper: model.amountHelper, checkoutPreference: model.checkoutPreference, resultHandler: self, splitAccountMoney: model.splitAccountMoney)
         paymentFlow.start()
     }
 

@@ -80,10 +80,11 @@ internal class MercadoPagoServices: NSObject {
         service.createPayment(headers: headers, body: paymentDataJSON, params: params, success: callback, failure: failure)
     }
 
-    func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, campaignId: String?, platform: String, ifpe: Bool, callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
+    func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, paymentMethodsIds: [String]? = nil, campaignId: String?, platform: String, ifpe: Bool, callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 
         var params = MercadoPagoServices.getParamsAccessTokenAndPaymentIdsAndPlatform(privateKey, paymentIds, platform)
+        params.paramsAppend(key: ApiParam.PAYMENT_METHODS_IDS, value: MercadoPagoServices.getPaymentMethodsIds(paymentMethodsIds))
 
         params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
         params.paramsAppend(key: ApiParam.IFPE, value: String(ifpe))
@@ -329,6 +330,21 @@ internal class MercadoPagoServices: NSObject {
         }
 
         return params
+    }
+
+    class func getPaymentMethodsIds(_ paymentMethodsIds: [String]?) -> String {
+        var paymentMethodsIdsString = ""
+        if let paymentMethodsIds = paymentMethodsIds {
+            for (index, paymentMethodId) in paymentMethodsIds.enumerated() {
+                if index != 0 {
+                    paymentMethodsIdsString.append(",")
+                }
+                if paymentMethodId.isNotEmpty {
+                    paymentMethodsIdsString.append(paymentMethodId)
+                }
+            }
+        }
+        return paymentMethodsIdsString
     }
 
     func setLanguage(language: String) {

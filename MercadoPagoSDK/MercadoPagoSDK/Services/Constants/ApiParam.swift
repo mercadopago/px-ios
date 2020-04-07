@@ -32,6 +32,7 @@ internal struct ApiParam {
     static let LABELS = "labels"
     static let CHARGES = "charges"
     static let PAYMENT_IDS = "payment_ids"
+    static let PAYMENT_METHODS_IDS = "payment_methods_ids"
     static let PLATFORM = "platform"
     static let CAMPAIGN_ID = "campaign_id"
     static let FLOW_NAME = "flow_name"

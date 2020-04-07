@@ -66,15 +66,26 @@ internal extension PXPaymentFlow {
     }
 
     func getPointsAndDiscounts() {
-
         var paymentIds = [String]()
-        if let paymentResultId = model.paymentResult?.paymentId {
-            paymentIds.append(paymentResultId)
+        var paymentMethodsIds = [String]()
+        if let split = splitAccountMoney, let paymentMethod = split.paymentMethod?.id {
+            paymentMethodsIds.append(paymentMethod)
+        }
+        if let paymentResult = model.paymentResult {
+            if let paymentId = paymentResult.paymentId {
+                paymentIds.append(paymentId)
+            }
+            if let paymentMethodId = paymentResult.paymentData?.paymentMethod?.id {
+                paymentMethodsIds.append(paymentMethodId)
+            }
         } else if let businessResult = model.businessResult {
             if let receiptLists = businessResult.getReceiptIdList() {
                 paymentIds = receiptLists
             } else if let receiptId = businessResult.getReceiptId() {
                 paymentIds.append(receiptId)
+            }
+            if let paymentMethodId = businessResult.getPaymentMethodId() {
+                paymentMethodsIds.append(paymentMethodId)
             }
         }
 
@@ -85,7 +96,7 @@ internal extension PXPaymentFlow {
 
         model.shouldSearchPointsAndDiscounts = false
         let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
-        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_POINTS_URI, paymentIds: paymentIds, campaignId: campaignId, platform: platform, ifpe: ifpe, callback: { [weak self] (pointsAndBenef) in
+        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_POINTS_URI, paymentIds: paymentIds, paymentMethodsIds: paymentMethodsIds, campaignId: campaignId, platform: platform, ifpe: ifpe, callback: { [weak self] (pointsAndBenef) in
                 guard let strongSelf = self else { return }
                 strongSelf.model.pointsAndDiscounts = pointsAndBenef
                 strongSelf.executeNextStep()

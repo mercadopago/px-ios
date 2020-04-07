@@ -12,6 +12,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
     let model: PXPaymentFlowModel
     weak var resultHandler: PXPaymentResultHandlerProtocol?
     weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
+    var splitAccountMoney: PXPaymentData?
 
     var pxNavigationHandler: PXNavigationHandler
 
@@ -23,10 +24,11 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         self.model.checkoutPreference = checkoutPreference
     }
 
-    func setData(amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
+    func setData(amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol, splitAccountMoney: PXPaymentData? = nil) {
         self.model.amountHelper = amountHelper
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
+        self.splitAccountMoney = splitAccountMoney
 
         if let discountToken = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(amountHelper.getPaymentData().token?.cardId)?.discountToken, amountHelper.splitAccountMoney == nil {
             self.model.amountHelper?.getPaymentData().discount?.id = discountToken.stringValue
