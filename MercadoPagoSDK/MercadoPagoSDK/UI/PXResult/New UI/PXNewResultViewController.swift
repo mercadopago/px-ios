@@ -249,7 +249,7 @@ extension PXNewResultViewController {
         if let topTextBoxView = buildTopTextBoxView() {
             views.append(ResultViewData(view: topTextBoxView, verticalMargin: PXLayout.ZERO_MARGIN, horizontalMargin: PXLayout.ZERO_MARGIN))
         }
-        
+
         //Important View
         if let view = viewModel.getImportantView() {
             views.append(ResultViewData(view: view))
@@ -420,6 +420,9 @@ extension PXNewResultViewController {
     ////VIEW RECEIPT ACTION
     func buildViewReceiptActionView() -> UIView? {
         guard let viewReceiptAction = viewModel.getViewReceiptAction() else {
+            return nil
+        }
+        if !MLBusinessAppDataService().isMpAlreadyInstalled() {
             return nil
         }
 
