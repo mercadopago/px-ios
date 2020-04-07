@@ -187,7 +187,7 @@ extension TrackingPaths.Screens {
         static func getErrorChangePaymentMethodPath() -> String {
             return getErrorPath() + changePaymentMethod
         }
-        
+
         static func getErrorRemedyPath() -> String {
             return getErrorPath() + remedy
         }

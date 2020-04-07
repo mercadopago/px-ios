@@ -292,11 +292,15 @@ extension PXOneTapViewController {
 
     private func handleBehaviour(_ behaviour: PXBehaviour, isSplit: Bool) {
         if let target = behaviour.target {
+            let properties = viewModel.getTargetBehaviourProperties(behaviour)
+            trackEvent(path: TrackingPaths.Events.OneTap.getTargetBehaviourPath(), properties: properties)
             PXDeepLinkManager.open(target)
         } else if let modal = behaviour.modal, let modalConfig = viewModel.modals?[modal] {
             let primaryAction = getActionForModal(modalConfig.mainButton, isSplit: isSplit)
             let secondaryAction = getActionForModal(modalConfig.secondaryButton, isSplit: isSplit)
             let vc = PXOneTapDisabledViewController(title: modalConfig.title, description: modalConfig.description, primaryButton: primaryAction, secondaryButton: secondaryAction, iconUrl: modalConfig.iconUrl)
+            let properties = viewModel.getModalBehaviourProperties(behaviour, modalConfig)
+            trackEvent(path: TrackingPaths.Events.OneTap.getDialogOpenPath(), properties: properties)
             self.currentModal = PXComponentFactory.Modal.show(viewController: vc, title: nil)
         }
     }

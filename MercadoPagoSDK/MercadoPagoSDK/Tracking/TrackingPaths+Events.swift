@@ -52,6 +52,26 @@ extension TrackingPaths.Events {
         static func getConfirmPath() -> String {
             return TrackingPaths.pxTrack + "/review/confirm"
         }
+        
+        static func getTargetBehaviourPath() -> String {
+            return TrackingPaths.pxTrack + "/review/one_tap/target_behaviour"
+        }
+        
+        static func getOfflineMethodStartKYCPath() -> String {
+            return TrackingPaths.pxTrack + "/review/one_tap/offline_methods/start_kyc_flow"
+        }
+
+        static func getDialogOpenPath() -> String {
+            return TrackingPaths.pxTrack + "/dialog/open"
+        }
+
+        static func getDialogDismissPath() -> String {
+            return TrackingPaths.pxTrack + "/dialog/dismiss"
+        }
+
+        static func getDialogActionPath() -> String {
+            return TrackingPaths.pxTrack + "/dialog/action"
+        }
     }
 }
 
@@ -106,6 +126,10 @@ extension TrackingPaths.Events {
 
         static func getSuccessTapSeeAllDiscountsPath() -> String {
             return getSuccessPath() + EventsPaths.tapSeeAllDiscounts.rawValue
+        }
+        
+        static func getSuccessTapViewReceiptPath() -> String {
+            return getSuccessPath() + "/tap_view_receipt"
         }
     }
 }
