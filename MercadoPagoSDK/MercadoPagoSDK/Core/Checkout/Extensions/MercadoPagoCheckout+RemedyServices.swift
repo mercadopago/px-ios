@@ -21,14 +21,14 @@ extension MercadoPagoCheckout {
                                                                                     paymentTypeId: paymentTypeId,
                                                                                     installments: installments,
                                                                                     selectedPayerCostIndex: payerPaymentMethod.selectedPaymentOption?.selectedPayerCostIndex ?? 0,
-                                                                                    esc: false)
+                                                                                    esc: hasSavedESC(customOptionSearchItem: payerPaymentMethod))
                 alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
             }
         }
         return alternativePayerPaymentMethods
     }
 
-    private func getInstallments(from payerCosts:[PXPayerCost]?) -> [PXPaymentMethodInstallment]? {
+    private func getInstallments(from payerCosts: [PXPayerCost]?) -> [PXPaymentMethodInstallment]? {
         guard let payerCosts = payerCosts else { return nil }
 
         var paymentMethodInstallments: [PXPaymentMethodInstallment] = []
@@ -40,6 +40,14 @@ extension MercadoPagoCheckout {
             paymentMethodInstallments.append(paymentMethodInstallment)
         }
         return paymentMethodInstallments
+    }
+
+    private func hasSavedESC(customOptionSearchItem: PXCustomOptionSearchItem) -> Bool {
+        let customerPaymentMethod = customOptionSearchItem.getCustomerPaymentMethod()
+        guard customerPaymentMethod.isCard() else {
+            return false
+        }
+        return viewModel.escManager?.getESC(cardId: customerPaymentMethod.getCardId(), firstSixDigits: customerPaymentMethod.getFirstSixDigits(), lastFourDigits: customerPaymentMethod.getCardLastForDigits()) == nil ? false : true
     }
 
     func getRemedy() {
