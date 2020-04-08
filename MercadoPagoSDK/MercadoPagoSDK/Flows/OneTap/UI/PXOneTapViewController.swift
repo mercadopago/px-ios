@@ -35,6 +35,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var selectedCard: PXCardSliderViewModel?
 
     var currentModal: MLModal?
+    var shouldTrackModal: Bool = false
+    var currentModalDismissTrackingProperties: [String: Any]? = nil
     let timeOutPayButton: TimeInterval
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
@@ -293,23 +295,40 @@ extension PXOneTapViewController {
         if let target = behaviour.target {
             let properties = viewModel.getTargetBehaviourProperties(behaviour)
             trackEvent(path: TrackingPaths.Events.OneTap.getTargetBehaviourPath(), properties: properties)
+
             PXDeepLinkManager.open(target)
         } else if let modal = behaviour.modal, let modalConfig = viewModel.modals?[modal] {
-            let primaryAction = getActionForModal(modalConfig.mainButton, isSplit: isSplit)
-            let secondaryAction = getActionForModal(modalConfig.secondaryButton, isSplit: isSplit)
-            let vc = PXOneTapDisabledViewController(title: modalConfig.title, description: modalConfig.description, primaryButton: primaryAction, secondaryButton: secondaryAction, iconUrl: modalConfig.iconUrl)
-            let properties = viewModel.getModalBehaviourProperties(behaviour, modalConfig)
+            let properties = viewModel.getDialogOpenProperties(behaviour, modalConfig)
             trackEvent(path: TrackingPaths.Events.OneTap.getDialogOpenPath(), properties: properties)
-            self.currentModal = PXComponentFactory.Modal.show(viewController: vc, title: nil)
+
+            let mainActionProperties = viewModel.getDialogActionProperties(behaviour, modalConfig, "main_action", modalConfig.mainButton)
+            let secondaryActionProperties = viewModel.getDialogActionProperties(behaviour, modalConfig, "secondary_action", modalConfig.secondaryButton)
+            let primaryAction = getActionForModal(modalConfig.mainButton, isSplit: isSplit, trackingPath: TrackingPaths.Events.OneTap.getDialogActionPath(), properties: mainActionProperties)
+            let secondaryAction = getActionForModal(modalConfig.secondaryButton, isSplit: isSplit, trackingPath: TrackingPaths.Events.OneTap.getDialogActionPath(), properties: secondaryActionProperties)
+            let vc = PXOneTapDisabledViewController(title: modalConfig.title, description: modalConfig.description, primaryButton: primaryAction, secondaryButton: secondaryAction, iconUrl: modalConfig.iconUrl)
+            shouldTrackModal = true
+            currentModalDismissTrackingProperties = viewModel.getDialogDismissProperties(behaviour, modalConfig)
+            currentModal = PXComponentFactory.Modal.show(viewController: vc, title: nil, dismissBlock: { [weak self] in
+                guard let self = self else { return }
+                self.trackDialogEvent(trackingPath: TrackingPaths.Events.OneTap.getDialogDismissPath(), properties: self.currentModalDismissTrackingProperties)
+            })
         }
     }
 
-    private func getActionForModal(_ action: PXRemoteAction?, isSplit: Bool) -> PXAction? {
+    func trackDialogEvent(trackingPath: String?, properties: [String: Any]?) {
+        if shouldTrackModal, let trackingPath = trackingPath, let properties = properties {
+            shouldTrackModal = false
+            trackEvent(path: trackingPath, properties: properties)
+        }
+    }
+
+    private func getActionForModal(_ action: PXRemoteAction? = nil, isSplit: Bool = false, trackingPath: String? = nil, properties: [String: Any]? = nil) -> PXAction? {
         let defaultTitle = "Pagar con otro medio".localized
         let nonSplitDefaultAction: () -> Void = { [weak self] in
             guard let self = self else { return }
             self.currentModal?.dismiss()
             self.selectFirstCardInSlider()
+            self.trackDialogEvent(trackingPath: trackingPath, properties: properties)
         }
         let splitDefaultAction: () -> Void = { [weak self] in
             guard let self = self else { return }
@@ -330,6 +349,7 @@ extension PXOneTapViewController {
             guard let self = self else { return }
             self.currentModal?.dismiss()
             PXDeepLinkManager.open(target)
+            self.trackDialogEvent(trackingPath: trackingPath, properties: properties)
         })
     }
 
@@ -549,7 +569,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
         guard let message = status.secondaryMessage else {return}
 
-        let primaryAction = getActionForModal(nil, isSplit: false)
+        let primaryAction = getActionForModal()
         let vc = PXOneTapDisabledViewController(title: nil, description: message, primaryButton: primaryAction, secondaryButton: nil, iconUrl: nil)
 
         self.currentModal = PXComponentFactory.Modal.show(viewController: vc, title: nil)

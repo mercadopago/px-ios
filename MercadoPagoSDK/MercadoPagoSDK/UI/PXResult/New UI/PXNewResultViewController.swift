@@ -427,7 +427,8 @@ extension PXNewResultViewController {
         }
 
         let button = AndesButton(text: viewReceiptAction.label, hierarchy: .quiet, size: AndesButtonSize.large)
-        button.add(for: .touchUpInside) {
+        button.add(for: .touchUpInside) { [weak self] in
+            self?.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapViewReceiptPath())
             //open deep link
             PXDeepLinkManager.open(viewReceiptAction.target)
         }

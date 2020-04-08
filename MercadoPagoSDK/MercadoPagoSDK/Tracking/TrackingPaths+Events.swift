@@ -52,11 +52,11 @@ extension TrackingPaths.Events {
         static func getConfirmPath() -> String {
             return TrackingPaths.pxTrack + "/review/confirm"
         }
-        
+
         static func getTargetBehaviourPath() -> String {
             return TrackingPaths.pxTrack + "/review/one_tap/target_behaviour"
         }
-        
+
         static func getOfflineMethodStartKYCPath() -> String {
             return TrackingPaths.pxTrack + "/review/one_tap/offline_methods/start_kyc_flow"
         }
