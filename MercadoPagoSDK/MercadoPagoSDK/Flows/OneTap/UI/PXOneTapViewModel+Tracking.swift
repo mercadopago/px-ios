@@ -122,8 +122,8 @@ extension PXOneTapViewModel {
         }
         return properties
     }
-
-    func getModalBehaviourProperties(_ behaviour: PXBehaviour, _ modalConfig: PXModal) -> [String: Any] {
+    
+    func getDialogOpenProperties(_ behaviour: PXBehaviour, _ modalConfig: PXModal) -> [String: Any] {
         var properties: [String: Any] = [:]
         if behaviour.target != nil {
             return getTargetBehaviourProperties(behaviour)
@@ -134,6 +134,18 @@ extension PXOneTapViewModel {
             if modalConfig.secondaryButton != nil { actions += 1 }
             properties["actions"] = actions
         }
+        return properties
+    }
+
+    func getDialogDismissProperties(_ behaviour: PXBehaviour, _ modalConfig: PXModal) -> [String: Any] {
+        return getDialogOpenProperties(behaviour, modalConfig)
+    }
+
+    func getDialogActionProperties(_ behaviour: PXBehaviour, _ modalConfig: PXModal, _ type: String, _ button: PXRemoteAction?) -> [String: Any]? {
+        guard let button = button else { return nil }
+        var properties = getDialogOpenProperties(behaviour, modalConfig)
+        properties["type"] = type
+        properties["deepLink"] = button.target ?? ""
         return properties
     }
 }
