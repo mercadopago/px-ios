@@ -12,13 +12,15 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
     let paymentTypes: [PXOfflinePaymentType]
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     private let payerCompliance: PXPayerCompliance?
+    private let displayInfo: PXOneTapDisplayInfo?
 
     var selectedIndexPath: IndexPath?
 
-    public init(offlinePaymentTypes: [PXOfflinePaymentType], paymentMethods: [PXPaymentMethod], amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption?, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, payerCompliance: PXPayerCompliance?) {
+    public init(offlinePaymentTypes: [PXOfflinePaymentType], paymentMethods: [PXPaymentMethod], amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption?, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, payerCompliance: PXPayerCompliance?, displayInfo: PXOneTapDisplayInfo?) {
         self.paymentTypes = PXOfflineMethodsViewModel.filterPaymentTypes(offlinePaymentTypes: offlinePaymentTypes)
         self.paymentMethods = paymentMethods
         self.payerCompliance = payerCompliance
+        self.displayInfo = displayInfo
         super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged, escProtocol: nil)
     }
 
@@ -92,6 +94,10 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
 
     func getPayerIdentification() -> PXIdentification? {
         return payerCompliance?.offlineMethods.sensitiveInformation?.identification
+    }
+
+    func getDisplayInfo() -> PXOneTapDisplayInfo? {
+        return displayInfo
     }
 }
 

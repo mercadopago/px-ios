@@ -183,6 +183,26 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         footerContainer.translatesAutoresizingMaskIntoConstraints = false
         footerContainer.backgroundColor = .white
 
+        var displayInfoLabel: UILabel?
+        if let description = viewModel.getDisplayInfo()?.bottomDescription {
+            displayInfoLabel = buildLabel()
+            if let label = displayInfoLabel {
+                label.text = description.message
+                if let backgroundColor = description.backgroundColor {
+                    label.backgroundColor = UIColor.fromHex(backgroundColor)
+                }
+                if let textColor = description.textColor {
+                    label.textColor = UIColor.fromHex(textColor)
+                }
+                footerContainer.addSubview(label)
+                NSLayoutConstraint.activate([
+                    label.leadingAnchor.constraint(equalTo: footerContainer.leadingAnchor, constant: PXLayout.M_MARGIN),
+                    label.trailingAnchor.constraint(equalTo: footerContainer.trailingAnchor, constant: -PXLayout.M_MARGIN),
+                    label.topAnchor.constraint(equalTo: footerContainer.topAnchor, constant: PXLayout.S_MARGIN)
+                ])
+            }
+        }
+
         let loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
         self.loadingButtonComponent = loadingButtonComponent
         loadingButtonComponent.animationDelegate = self
@@ -198,8 +218,15 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
         footerContainer.addSubview(loadingButtonComponent)
 
+        var topConstraint: NSLayoutConstraint
+        if let label = displayInfoLabel {
+            topConstraint = loadingButtonComponent.topAnchor.constraint(equalTo: label.bottomAnchor, constant: PXLayout.S_MARGIN)
+        } else {
+            topConstraint = loadingButtonComponent.topAnchor.constraint(equalTo: footerContainer.topAnchor, constant: PXLayout.S_MARGIN)
+        }
+        topConstraint.isActive = true
+
         NSLayoutConstraint.activate([
-            loadingButtonComponent.topAnchor.constraint(equalTo: footerContainer.topAnchor, constant: PXLayout.S_MARGIN),
             loadingButtonComponent.bottomAnchor.constraint(greaterThanOrEqualTo: footerContainer.bottomAnchor, constant: -getBottomPayButtonMargin()),
             loadingButtonComponent.leadingAnchor.constraint(equalTo: footerContainer.leadingAnchor, constant: PXLayout.M_MARGIN),
             loadingButtonComponent.trailingAnchor.constraint(equalTo: footerContainer.trailingAnchor, constant: -PXLayout.M_MARGIN)
@@ -210,6 +237,14 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         footerContainer.dropShadow()
 
         return footerContainer
+    }
+
+    private func buildLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.XXXS_FONT)
+        return label
     }
 }
 
