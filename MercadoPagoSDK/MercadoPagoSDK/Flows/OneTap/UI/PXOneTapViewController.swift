@@ -305,7 +305,7 @@ extension PXOneTapViewController {
             let secondaryActionProperties = viewModel.getDialogActionProperties(behaviour, modalConfig, "secondary_action", modalConfig.secondaryButton)
             let primaryAction = getActionForModal(modalConfig.mainButton, isSplit: isSplit, trackingPath: TrackingPaths.Events.OneTap.getDialogActionPath(), properties: mainActionProperties)
             let secondaryAction = getActionForModal(modalConfig.secondaryButton, isSplit: isSplit, trackingPath: TrackingPaths.Events.OneTap.getDialogActionPath(), properties: secondaryActionProperties)
-            let vc = PXOneTapDisabledViewController(title: modalConfig.title, description: modalConfig.description, primaryButton: primaryAction, secondaryButton: secondaryAction, iconUrl: modalConfig.iconUrl)
+            let vc = PXOneTapDisabledViewController(title: modalConfig.title, description: modalConfig.description, primaryButton: primaryAction, secondaryButton: secondaryAction, iconUrl: modalConfig.imageUrl)
             shouldTrackModal = true
             currentModalDismissTrackingProperties = viewModel.getDialogDismissProperties(behaviour, modalConfig)
             currentModal = PXComponentFactory.Modal.show(viewController: vc, title: nil, dismissBlock: { [weak self] in

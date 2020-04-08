@@ -11,14 +11,14 @@ public struct PXModal: Codable {
     let description: PXText?
     let mainButton: PXRemoteAction?
     let secondaryButton: PXRemoteAction?
-    let iconUrl: String?
+    let imageUrl: String?
 
     enum CodingKeys: String, CodingKey {
         case title
         case description
         case mainButton = "main_button"
         case secondaryButton = "secondary_button"
-        case iconUrl = "icon_url"
+        case imageUrl = "image_url"
     }
 
 }
