@@ -295,8 +295,7 @@ extension PXOneTapViewController {
         if let target = behaviour.target {
             let properties = viewModel.getTargetBehaviourProperties(behaviour)
             trackEvent(path: TrackingPaths.Events.OneTap.getTargetBehaviourPath(), properties: properties)
-
-            PXDeepLinkManager.open(target)
+            openKyCDeeplinkWithoutCallback(target)
         } else if let modal = behaviour.modal, let modalConfig = viewModel.modals?[modal] {
             let properties = viewModel.getDialogOpenProperties(behaviour, modalConfig)
             trackEvent(path: TrackingPaths.Events.OneTap.getDialogOpenPath(), properties: properties)
@@ -348,7 +347,7 @@ extension PXOneTapViewController {
         return PXAction(label: action.label, action: { [weak self] in
             guard let self = self else { return }
             self.currentModal?.dismiss()
-            PXDeepLinkManager.open(target)
+            self.openKyCDeeplinkWithoutCallback(target)
             self.trackDialogEvent(trackingPath: trackingPath, properties: properties)
         })
     }
@@ -400,6 +399,14 @@ extension PXOneTapViewController {
 
     private func cancelPayment() {
         self.callbackExit()
+    }
+
+    private func openKyCDeeplinkWithoutCallback(_ target: String) {
+        let index = target.firstIndex(of: "&")
+        if let index = index {
+            let deepLink = String(target[..<index])
+            PXDeepLinkManager.open(deepLink)
+        }
     }
 }
 
