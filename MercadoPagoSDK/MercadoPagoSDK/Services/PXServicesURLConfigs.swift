@@ -36,6 +36,7 @@ internal class PXServicesURLConfigs: NSObject {
     static var MP_ISSUERS_URI = MP_ENVIROMENT + CARD_ISSSUERS
     static let MP_IDENTIFICATION_URI = "/identification_types"
     static let MP_PROMOS_URI = MP_OP_ENVIROMENT + PAYMENT_METHODS + "/deals"
+    static let MP_REMEDY_URI = NEW_API_SELECTED_ENV + "/px_mobile/v1/remedies/${payment_id}"
     static let MP_INSTRUCTIONS_URI = MP_ENVIROMENT + PAYMENTS + "/${payment_id}/results"
     static let MP_DISCOUNT_URI =  "/discount_campaigns/"
     static let MP_CUSTOMER_URI = "/customers?preference_id="

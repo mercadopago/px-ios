@@ -9,7 +9,7 @@
 import Foundation
 
 extension OneTapFlow {
-    func showReviewAndConfirmScreenForOneTap() {
+    func showOneTapViewController() {
         let callbackPaymentData: ((PXPaymentData) -> Void) = {
             [weak self] (paymentData: PXPaymentData) in
             self?.cancelFlowForNewPaymentSelection()
@@ -43,9 +43,9 @@ extension OneTapFlow {
             self?.executeNextStep()
         }
         let viewModel = model.oneTapViewModel()
-        let reviewVC = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
+        let viewController = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
 
-        pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
+        pxNavigationHandler.pushViewController(viewController: viewController, animated: true)
     }
 
     func updateOneTapViewModel(cardId: String) {
@@ -56,7 +56,7 @@ extension OneTapFlow {
     }
 
     func showSecurityCodeScreen() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: model.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode: String) -> Void in
+        let securityCodeVc = SecurityCodeViewController(viewModel: model.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode) in
             self?.getTokenizationService().createCardToken(securityCode: securityCode)
         })
         pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)

@@ -11,7 +11,7 @@ import Foundation
 final internal class OneTapFlowModel: PXFlowModel {
     enum Steps: String {
         case finish
-        case screenReviewOneTap
+        case screenOneTap
         case screenSecurityCode
         case serviceCreateESCCardToken
         case screenKyC
@@ -83,8 +83,8 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
     }
     public func nextStep() -> Steps {
-        if needReviewAndConfirmForOneTap() {
-            return .screenReviewOneTap
+        if needShowOneTap() {
+            return .screenOneTap
         }
         if needSecurityCode() {
             return .screenSecurityCode
@@ -188,7 +188,7 @@ internal extension OneTapFlowModel {
 
 // MARK: Flow logic
 internal extension OneTapFlowModel {
-    func needReviewAndConfirmForOneTap() -> Bool {
+    func needShowOneTap() -> Bool {
         if readyToPay {
             return false
         }

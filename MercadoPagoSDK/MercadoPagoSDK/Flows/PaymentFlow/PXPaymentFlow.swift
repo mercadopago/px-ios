@@ -84,11 +84,9 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     func finishFlow() {
         if let paymentResult = model.paymentResult {
-            self.resultHandler?.finishPaymentFlow(paymentResult: (paymentResult), instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts)
-            return
+            self.resultHandler?.finishPaymentFlow(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts)
         } else if let businessResult = model.businessResult {
             self.resultHandler?.finishPaymentFlow(businessResult: businessResult, pointsAndDiscounts: model.pointsAndDiscounts)
-            return
         }
     }
 
@@ -106,7 +104,7 @@ extension PXPaymentFlow: PXPaymentProcessorErrorHandler {
     func showError() {
         let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: false)
         error.requestOrigin = ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue
-        resultHandler?.finishPaymentFlow(error: error)
+        showError(error: error)
     }
 
     func showError(error: MPSDKError) {

@@ -129,6 +129,19 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
+    func needGetRemedy() -> Bool {
+        guard let pm = paymentData.getPaymentMethod(), pm.isCreditCard else {
+            return false
+        }
+
+        if let paymentResult = paymentResult,
+            paymentResult.isRejectedWithRemedy(),
+            remedy == nil {
+            return true
+        }
+        return false
+    }
+
     func needIssuerSelectionScreen() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
             return false
@@ -201,7 +214,6 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needCreateToken() -> Bool {
-
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }

@@ -46,8 +46,8 @@ final class OneTapFlow: NSObject, PXFlow {
 
     func executeNextStep() {
         switch self.model.nextStep() {
-        case .screenReviewOneTap:
-            self.showReviewAndConfirmScreenForOneTap()
+        case .screenOneTap:
+            self.showOneTapViewController()
         case .screenSecurityCode:
             self.showSecurityCodeScreen()
         case .serviceCreateESCCardToken:

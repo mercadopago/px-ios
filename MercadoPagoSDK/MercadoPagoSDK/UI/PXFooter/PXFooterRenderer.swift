@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AndesUI
 
 final class PXFooterRenderer: NSObject {
 
@@ -19,17 +20,11 @@ final class PXFooterRenderer: NSObject {
 
     func render(_ footer: PXFooterComponent) -> PXFooterView {
         let fooView = PXFooterView()
-        var topView: UIView = fooView
-        var termsView: PXTermsAndConditionView?
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .white
 
-        if footer.props.termsInfo != nil {
-            termsView = PXTermsAndConditionView(termsDto: footer.props.termsInfo, delegate: termsDelegate)
-        }
-
-        if let principalAction = footer.props.buttonAction {
-            let principalButton = self.buildAnimatedButton(with: principalAction, color: footer.props.primaryColor)
+        if let buttonAction = footer.props.buttonAction {
+            let principalButton = self.buildAnimatedButton(with: buttonAction, color: footer.props.primaryColor)
             principalButton.add(for: .touchUpInside) {
                 fooView.delegate?.didTapPrimaryAction()
             }
@@ -39,53 +34,50 @@ final class PXFooterRenderer: NSObject {
             fooView.principalButton?.animationDelegate = footer.props.animationDelegate
             fooView.addSubview(principalButton)
 
-            if let termsView = termsView {
+            var principalButtonTopConstraint: NSLayoutConstraint?
+            if footer.props.termsInfo != nil {
+                let termsView = PXTermsAndConditionView(termsDto: footer.props.termsInfo, delegate: termsDelegate)
                 fooView.insertSubview(termsView, belowSubview: principalButton)
-                PXLayout.pinTop(view: termsView, to: fooView, withMargin: 0).isActive = true
-                PXLayout.pinLeft(view: termsView, to: fooView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
-                PXLayout.pinRight(view: termsView, to: fooView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
-                PXLayout.setHeight(owner: termsView, height: termsView.DEFAULT_CREDITS_HEIGHT).isActive = true
-                PXLayout.put(view: principalButton, onBottomOf: termsView, withMargin: PXLayout.S_MARGIN, relation: .equal).isActive = true
+                NSLayoutConstraint.activate([
+                    termsView.leadingAnchor.constraint(equalTo: fooView.leadingAnchor),
+                    termsView.trailingAnchor.constraint(equalTo: fooView.trailingAnchor),
+                    termsView.topAnchor.constraint(equalTo: fooView.topAnchor),
+                    termsView.heightAnchor.constraint(equalToConstant: termsView.DEFAULT_CREDITS_HEIGHT)
+                ])
+                principalButtonTopConstraint = principalButton.topAnchor.constraint(equalTo: termsView.bottomAnchor, constant: PXLayout.S_MARGIN)
             } else {
-                PXLayout.pinTop(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
+                principalButtonTopConstraint = principalButton.topAnchor.constraint(equalTo: fooView.topAnchor, constant: PXLayout.S_MARGIN)
+            }
+            if let principalButtonTopConstraint = principalButtonTopConstraint {
+                principalButtonTopConstraint.isActive = true
             }
 
-            PXLayout.pinLeft(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.pinRight(view: principalButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
-            topView = principalButton
+            NSLayoutConstraint.activate([
+                principalButton.leadingAnchor.constraint(equalTo: fooView.leadingAnchor, constant: PXLayout.S_MARGIN),
+                principalButton.trailingAnchor.constraint(equalTo: fooView.trailingAnchor, constant: -PXLayout.S_MARGIN),
+                principalButton.heightAnchor.constraint(equalToConstant: BUTTON_HEIGHT)
+            ])
         }
-        if let linkAction = footer.props.linkAction {
-            let linkButton = self.buildLinkButton(with: linkAction, color: footer.props.primaryColor)
-            linkButton.add(for: .touchUpInside) {
-                fooView.delegate?.didTapSecondaryAction()
-            }
-
+        if let linkButton = buildLinkButton(props: footer.props) {
             fooView.linkButton = linkButton
             fooView.addSubview(linkButton)
-            if topView != fooView {
-               PXLayout.put(view: linkButton, onBottomOf: topView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            } else {
+
+            if fooView.subviews.count == 1 {
                 PXLayout.pinTop(view: linkButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
+            } else {
+                PXLayout.put(view: linkButton, onBottomOfLastViewOf: fooView, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
             }
 
-            PXLayout.pinLeft(view: linkButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.pinRight(view: linkButton, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.setHeight(owner: linkButton, height: BUTTON_HEIGHT).isActive = true
-            topView = linkButton
+            NSLayoutConstraint.activate([
+                linkButton.leadingAnchor.constraint(equalTo: fooView.leadingAnchor, constant: PXLayout.S_MARGIN),
+                linkButton.trailingAnchor.constraint(equalTo: fooView.trailingAnchor, constant: -PXLayout.S_MARGIN),
+                linkButton.heightAnchor.constraint(equalToConstant: BUTTON_HEIGHT)
+            ])
         }
-        if topView != fooView, footer.props.pinLastSubviewToBottom { // Si hay al menos alguna vista dentro del footer, agrego un margen
-            PXLayout.pinBottom(view: topView, to: fooView, withMargin: PXLayout.S_MARGIN).isActive = true
+        if footer.props.pinLastSubviewToBottom { // Si hay al menos alguna vista dentro del footer, agrego un margen
+            PXLayout.pinLastSubviewToBottom(view: fooView, withMargin: PXLayout.S_MARGIN)
         }
         return fooView
-    }
-
-    func buildPrincipalButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXPrimaryButton {
-        let button = PXPrimaryButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.buttonTitle = footerAction.label
-        button.add(for: .touchUpInside, footerAction.action)
-        return button
     }
 
     func buildAnimatedButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXAnimatedButton {
@@ -98,11 +90,19 @@ final class PXFooterRenderer: NSObject {
         return button
     }
 
-    func buildLinkButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXSecondaryButton {
-        let linkButton = PXSecondaryButton()
+    func buildLinkButton(props: PXFooterProps) -> UIControl? {
+        guard let linkAction = props.linkAction  else { return nil }
+
+        let linkButton: UIControl
+        if props.useAndesButtonForLinkAction {
+            linkButton = AndesButton(text: linkAction.label, hierarchy: AndesButtonHierarchy.quiet, size: AndesButtonSize.large, icon: nil)
+        } else {
+            let secondaryButton = PXSecondaryButton()
+            secondaryButton.buttonTitle = linkAction.label
+            linkButton = secondaryButton
+        }
+        linkButton.add(for: .touchUpInside, linkAction.action)
         linkButton.translatesAutoresizingMaskIntoConstraints = false
-        linkButton.buttonTitle = footerAction.label
-        linkButton.add(for: .touchUpInside, footerAction.action)
         return linkButton
     }
 }

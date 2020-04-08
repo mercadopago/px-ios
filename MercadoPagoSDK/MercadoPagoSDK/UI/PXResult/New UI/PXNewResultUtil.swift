@@ -10,12 +10,6 @@ import MLBusinessComponents
 
 class PXNewResultUtil {
 
-    //HEADER DATA
-    class func getDataForHeaderView(color: UIColor?, title: String, icon: UIImage?, iconURL: String?, badgeImage: UIImage?, closeAction: (() -> Void)?) -> PXNewResultHeaderData {
-
-        return PXNewResultHeaderData(color: color, title: title, icon: icon, iconURL: iconURL, badgeImage: badgeImage, closeAction: closeAction)
-    }
-
     //RECEIPT DATA
     class func getDataForReceiptView(paymentId: String?) -> PXNewCustomViewData? {
         guard let paymentId = paymentId else {
@@ -168,7 +162,6 @@ extension PXNewResultUtil {
             }
         } else {
             // Caso account money
-
             if let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
                 let string = Utils.getAmountFormated(amount: splitAccountMoneyAmount, forCurrency: currency)
                 let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
@@ -204,10 +197,8 @@ extension PXNewResultUtil {
         var pmDescription: String = ""
         let paymentMethodName = paymentMethod.name ?? ""
 
-        if paymentMethod.isCard {
-            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
-                pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
-            }
+        if paymentMethod.isCard, let lastFourDigits = (paymentData.token?.lastFourDigits) {
+            pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
         } else {
             pmDescription = paymentMethodName
         }
@@ -223,9 +214,7 @@ extension PXNewResultUtil {
         }
         let paymentMethodName = paymentMethod.name ?? ""
         if let issuer = paymentData.getIssuer(), let issuerName = issuer.name, !issuerName.isEmpty, issuerName.lowercased() != paymentMethodName.lowercased() {
-            let issuerAttributedString = NSMutableAttributedString(string: issuerName, attributes: PXNewCustomView.subtitleAttributes)
-            
-            return issuerAttributedString
+            return NSMutableAttributedString(string: issuerName, attributes: PXNewCustomView.subtitleAttributes)
         }
         return nil
     }

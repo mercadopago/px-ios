@@ -11,6 +11,14 @@ struct ResultViewData {
     let view: UIView
     let verticalMargin: CGFloat
     let horizontalMargin: CGFloat
+
+    init(view: UIView,
+         verticalMargin: CGFloat = 0,
+         horizontalMargin: CGFloat = 0) {
+        self.view = view
+        self.verticalMargin = verticalMargin
+        self.horizontalMargin = horizontalMargin
+    }
 }
 
 protocol PXNewResultViewModelInterface {
@@ -27,15 +35,15 @@ protocol PXNewResultViewModelInterface {
     func getReceiptId() -> String?
 
     //POINTS AND DISCOUNTS
-    ////POINTS
+    ///POINTS
     func getPoints() -> PXPoints?
     func getPointsTapAction() -> ((_ deepLink: String) -> Void)?
 
-    ////DISCOUNTS
+    ///DISCOUNTS
     func getDiscounts() -> PXDiscounts?
     func getDiscountsTapAction() -> ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
 
-    ////CROSS SELLING
+    ///CROSS SELLING
     func getCrossSellingItems() -> [PXCrossSellingItem]?
     func getCrossSellingTapAction() -> ((_ deepLink: String) -> Void)?
 
@@ -56,25 +64,30 @@ protocol PXNewResultViewModelInterface {
     func shouldShowErrorBody() -> Bool
     func getErrorBodyView() -> UIView?
 
+    //REMEDY
+    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView?
+    func getRemedyButtonAction() -> ((String?) -> Void)?
+    func isPaymentResultRejectedWithRemedy() -> Bool
+
     //FOOTER
     func getFooterMainAction() -> PXAction?
     func getFooterSecondaryAction() -> PXAction?
 
     //CUSTOM VIEWS
-    ////IMPORTANT
+    ///IMPORTANT
     func getImportantView() -> UIView?
 
     //CONSUMER CREDITS EXPECTATION VIEW
     func getCreditsExpectationView() -> UIView?
 
-    ////TOP CUSTOM
+    ///TOP CUSTOM
     func getTopCustomView() -> UIView?
 
-    ////BOTTOM CUSTOM
+    ///BOTTOM CUSTOM
     func getBottomCustomView() -> UIView?
 
     //CALLBACKS & TRACKING
-    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void)
+    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void)
     func getTrackingProperties() -> [String: Any]
     func getTrackingPath() -> String
     func getFlowBehaviourResult() -> PXResultKey
