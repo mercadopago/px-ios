@@ -13,13 +13,6 @@ class PXCardSliderPagerCell: FSPagerViewCell {
         return UINib(nibName: PXCardSliderPagerCell.identifier, bundle: ResourceManager.shared.getBundle())
     }
 
-    private enum PaymentTypeId: String {
-        case accountMoney = "account_money"
-        case creditCard = "credit_card"
-        case debitCard = "debit_card"
-        case digitalCurrency = "digital_currency"
-    }
-
     private lazy var bottomMessageViewHeight: CGFloat = 24
     private lazy var cornerRadius: CGFloat = 11
     private var cardHeader: MLCardDrawerController?
@@ -246,13 +239,13 @@ private extension PXCardSliderPagerCell {
             sliderPosition = ": " + "1" + "de".localized + "\(accessibilityData.numberOfPages)"
         }
         switch accessibilityData.paymentTypeId {
-        case PaymentTypeId.accountMoney.rawValue:
+        case PXPaymentTypes.ACCOUNT_MONEY.rawValue:
             return "\(accessibilityData.description)" + "\(sliderPosition)"
-        case PaymentTypeId.creditCard.rawValue:
+        case PXPaymentTypes.CREDIT_CARD.rawValue:
             return "\(accessibilityData.paymentMethodId)" + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
-        case PaymentTypeId.debitCard.rawValue:
+        case PXPaymentTypes.DEBIT_CARD.rawValue:
             return "\(accessibilityData.paymentMethodId.replacingOccurrences(of: "deb", with: ""))" + "Débito".localized + "\(accessibilityData.issuerName)" + "\(accessibilityData.description)" + "de".localized + "\(accessibilityData.cardName)" + "\(sliderPosition)"
-        case PaymentTypeId.digitalCurrency.rawValue:
+        case PXPaymentTypes.DIGITAL_CURRENCY.rawValue:
             return "\(accessibilityData.description)" + "\(sliderPosition)"
         default:
             return "\(sliderPosition)"
