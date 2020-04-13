@@ -130,8 +130,8 @@ extension PXOneTapViewController {
     }
 
     private func setAccessibilityElements() {
-        if let titleLabel = headerView?.getMerchantView()?.getTitleLabel() {
-            accessibilityElements = [titleLabel]
+        if let merchantView = headerView?.getMerchantView() {
+            accessibilityElements = [merchantView]
         }
     }
 
