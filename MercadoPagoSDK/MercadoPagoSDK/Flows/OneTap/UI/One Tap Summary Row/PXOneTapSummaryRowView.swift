@@ -81,7 +81,7 @@ class PXOneTapSummaryRowView: UIView {
         valueLabel?.textColor = data.highlightedColor
         valueLabel?.alpha = data.alpha
 
-        let rowValue = data.value.replacingOccurrences(of: "$", with: "")
+        let rowValue = data.value.replacingOccurrences(of: "$", with: "").replacingOccurrences(of: ".", with: "")
         accessibilityLabel = "\(data.title)" + "\(rowValue)" + "pesos".localized
     }
 
