@@ -59,6 +59,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewWillAppear(animated)
         setupNavigationBar()
         setupUI()
+        setAccessibilityElements()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
     }
@@ -78,9 +79,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewDidAppear(animated)
         navigationController?.delegate = self
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
-        if let merchantView = headerView?.getMerchantView() {
-            accessibilityElements = [merchantView.title]
-        }
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
 
@@ -128,6 +126,12 @@ extension PXOneTapViewController {
                 viewModel.amountHelper.getPaymentData().payerCost = preSelectedCard.selectedPayerCost
             }
             renderViews()
+        }
+    }
+
+    private func setAccessibilityElements() {
+        if let titleLabel = headerView?.getMerchantView()?.getTitleLabel() {
+            accessibilityElements = [titleLabel]
         }
     }
 
