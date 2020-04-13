@@ -43,8 +43,7 @@ extension PXCardSlider: FSPagerViewDataSource {
             let targetModel = model[index]
             var accessibilityData = AccessibilityCardData(paymentMethodId: "", paymentTypeId: "", issuerName: "", description: "", cardName: "", index: 0, numberOfPages: 1)
 
-            let payerPM = getPayerPaymentMethod(targetModel)
-            if let payerPaymentMethod = payerPM {
+            if let payerPaymentMethod = targetModel.payerPaymentMethod {
                 accessibilityData = AccessibilityCardData(paymentMethodId: targetModel.paymentMethodId, paymentTypeId: targetModel.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "", cardName: targetModel.cardData?.name ?? "", index: index,  numberOfPages: pageControl.numberOfPages)
             }
 
@@ -220,19 +219,6 @@ extension PXCardSlider {
             let modelData = model[pageControl.currentPage]
             delegate?.newCardDidSelected(targetModel: modelData)
         }
-    }
-
-    func getPayerPaymentMethod(_ targetModel: PXCardSliderViewModel) -> PXCustomOptionSearchItem? {
-        if let paymentTypeId = targetModel.paymentTypeId {
-            for payerPaymentMethod in targetModel.payerPaymentMethods {
-                if (paymentTypeId == PXPaymentTypes.ACCOUNT_MONEY.rawValue || paymentTypeId == PXPaymentTypes.DIGITAL_CURRENCY.rawValue) && (paymentTypeId == payerPaymentMethod.paymentTypeId) {
-                    return payerPaymentMethod
-                } else if (paymentTypeId == PXPaymentTypes.CREDIT_CARD.rawValue || paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue) && (targetModel.cardId == payerPaymentMethod.id) {
-                    return payerPaymentMethod
-                }
-            }
-        }
-        return nil
     }
 }
 
