@@ -21,8 +21,10 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
     open var pmImage: String?
     open var fontType: String?
     open var securityCode: PXSecurityCode?
+    open var paymentMethodImageUrl: String?
+    open var issuerImageUrl: String?
 
-    public init(expiration: String?, firstSixDigits: String?, lastFourDigits: String?, issuerId: String?, name: String?, cardPattern: [Int]?, color: String?, fontColor: String?, issuerImage: String?, pmImage: String?, fontType: String?, securityCode: PXSecurityCode?) {
+    public init(expiration: String?, firstSixDigits: String?, lastFourDigits: String?, issuerId: String?, name: String?, cardPattern: [Int]?, color: String?, fontColor: String?, issuerImage: String?, pmImage: String?, fontType: String?, securityCode: PXSecurityCode?, paymentMethodImageUrl: String?, issuerImageUrl: String?) {
         self.expiration = expiration
         self.firstSixDigits = firstSixDigits
         self.lastFourDigits = lastFourDigits
@@ -35,6 +37,8 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         self.pmImage = pmImage
         self.fontType = fontType
         self.securityCode = securityCode
+        self.paymentMethodImageUrl = paymentMethodImageUrl
+        self.issuerImageUrl = issuerImageUrl
     }
 
     public enum PXCardDisplayInfoKeys: String, CodingKey {
@@ -50,6 +54,8 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         case pm_image = "payment_method_image"
         case font_type
         case securityCode = "security_code"
+        case paymentMethodImageUrl = "payment_method_image_url"
+        case issuerImageUrl = "issuer_image_url"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -66,7 +72,9 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         let fontType: String? = try container.decodeIfPresent(String.self, forKey: .font_type)
         let paymentMethodImage: String? = try container.decodeIfPresent(String.self, forKey: .pm_image)
         let securityCode: PXSecurityCode? = try container.decodeIfPresent(PXSecurityCode.self, forKey: .securityCode)
-        self.init(expiration: expiration, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, issuerId: issuerId, name: name, cardPattern: cardPattern, color: color, fontColor: fontColor, issuerImage: issuerImage, pmImage: paymentMethodImage, fontType: fontType, securityCode: securityCode)
+        let paymentMethodImageUrl: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodImageUrl)
+        let issuerImageUrl: String? = try container.decodeIfPresent(String.self, forKey: .issuerImageUrl)
+        self.init(expiration: expiration, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, issuerId: issuerId, name: name, cardPattern: cardPattern, color: color, fontColor: fontColor, issuerImage: issuerImage, pmImage: paymentMethodImage, fontType: fontType, securityCode: securityCode, paymentMethodImageUrl: paymentMethodImageUrl, issuerImageUrl: issuerImageUrl)
     }
 
     public func encode(to encoder: Encoder) throws {

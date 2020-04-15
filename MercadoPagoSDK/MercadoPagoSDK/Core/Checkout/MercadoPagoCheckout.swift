@@ -123,10 +123,6 @@ extension MercadoPagoCheckout {
         }
     }
 
-    internal func setPaymentData(paymentData: PXPaymentData) {
-        self.viewModel.paymentData = paymentData
-    }
-
     internal func enableBetaServices() {
         PXServicesSettings.enableBetaServices()
         PXTrackingSettings.enableBetaServices()

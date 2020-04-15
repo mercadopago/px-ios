@@ -21,4 +21,6 @@ class TemplateCard: NSObject, CardUI {
     var defaultUI = true
     var securityCodePattern = 3
     var fontType: String = "light"
+    var cardLogoImageUrl: String?
+    var bankImageUrl: String?
 }

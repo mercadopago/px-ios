@@ -103,6 +103,12 @@ extension PXOneTapViewModel {
                         templateCard.cardPattern = cardPattern
                     }
 
+                    templateCard.securityCodeLocation = targetCardData.cardUI?.securityCode?.cardLocation == "front" ? .front : .back
+
+                    if let codeLength = targetCardData.cardUI?.securityCode?.length {
+                        templateCard.securityCodePattern = codeLength
+                    }
+
                     if let cardBackgroundColor = targetCardData.cardUI?.color {
                         templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
                     }
@@ -111,8 +117,8 @@ extension PXOneTapViewModel {
                         templateCard.cardFontColor = cardFontColor.hexToUIColor()
                     }
 
-                    if let paymentMethodId = targetNode.paymentMethodId, let paymentMethodImage = ResourceManager.shared.getPaymentMethodCardImage(paymentMethodId: paymentMethodId.lowercased()) {
-                        templateCard.cardLogoImage = paymentMethodImage
+                    if let cardLogoImageUrl = targetNode.oneTapCard?.cardUI?.paymentMethodImageUrl {
+                        templateCard.cardLogoImageUrl = cardLogoImageUrl
                     }
 
                     let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(targetCardData.cardId)
@@ -128,8 +134,8 @@ extension PXOneTapViewModel {
                         targetIssuerId = issuerId
                     }
 
-                    if let issuerImageName = targetNode.oneTapCard?.cardUI?.issuerImage {
-                        templateCard.bankImage = ResourceManager.shared.getIssuerCardImage(issuerImageName: issuerImageName)
+                    if let bankImageUrl = targetNode.oneTapCard?.cardUI?.issuerImageUrl {
+                        templateCard.bankImageUrl = bankImageUrl
                     }
 
                     var showArrow: Bool = true

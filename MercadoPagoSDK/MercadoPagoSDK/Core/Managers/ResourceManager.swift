@@ -81,10 +81,6 @@ extension ResourceManager {
         }
     }
 
-    func getPaymentMethodCardImage(paymentMethodId: String) -> UIImage? {
-        return ResourceManager.shared.getImage("icoTc_\(paymentMethodId.lowercased())_light")
-    }
-
     func getCardDefaultLogo() -> UIImage? {
         return ResourceManager.shared.getImage("icoTc_default")
     }
@@ -266,13 +262,5 @@ extension ResourceManager {
         var imageName = clearBackground ? "clear_" : ""
         imageName += name
         return getImage(imageName)
-    }
-}
-
-// MARK: Issuers
-// TODO: Change by OnDemand resources. - Q2 2019
-extension ResourceManager {
-    func getIssuerCardImage(issuerImageName: String) -> UIImage? {
-        return ResourceManager.shared.getImage(issuerImageName)
     }
 }

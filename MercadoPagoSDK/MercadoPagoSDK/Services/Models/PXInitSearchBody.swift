@@ -46,14 +46,17 @@ struct PXInitBody: Codable {
 struct PXInitFeatures: Codable {
     let oneTap: Bool
     let split: Bool
+    let odr: Bool
 
-    init(oneTap: Bool, split: Bool) {
+    init(oneTap: Bool, split: Bool, odr: Bool = true) {
         self.oneTap = oneTap
         self.split = split
+        self.odr = odr
     }
 
     enum CodingKeys: String, CodingKey {
         case oneTap = "one_tap"
         case split = "split"
+        case odr
     }
 }
