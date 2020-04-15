@@ -223,8 +223,11 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getCreditsExpectationView() -> UIView? {
-        if let resultInfo = self.amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo, self.businessResult.isApproved() {
-            return PXCreditsExpectationView(title: resultInfo.title, subtitle: resultInfo.subtitle)
+        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
+            let title = resultInfo.title,
+            let subtitle = resultInfo.subtitle,
+            businessResult.isApproved() {
+            return PXCreditsExpectationView(title: title, subtitle: subtitle)
         }
         return nil
     }
