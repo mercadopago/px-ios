@@ -11,7 +11,7 @@ extension MercadoPagoCheckout {
 
     private func getAlternativePayerPaymentMethods(from payerPaymentMethods: [PXCustomOptionSearchItem]?) -> [PXAlternativePayerPaymentMethod]? {
         guard let payerPaymentMethods = payerPaymentMethods else { return nil }
-        
+
         var alternativePayerPaymentMethods: [PXAlternativePayerPaymentMethod] = []
         for payerPaymentMethod in payerPaymentMethods {
             if let paymentMethodId = payerPaymentMethod.paymentMethodId,
@@ -53,17 +53,16 @@ extension MercadoPagoCheckout {
     func getRemedy() {
         guard let paymentId = viewModel.paymentResult?.paymentId,
             let payerCost = viewModel.paymentResult?.paymentData?.payerCost,
-            let paymentOptionSelected = viewModel.paymentOptionSelected as? CustomerPaymentMethod else {
+            let cardId = viewModel.paymentResult?.cardId,
+            let oneTap = viewModel.search?.oneTap?.first(where: { $0.oneTapCard?.cardId == cardId }),
+            let cardUI = oneTap.oneTapCard?.cardUI else {
             return
         }
 
-        let paymentOptionSelectedId = paymentOptionSelected.getId()
-        let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() &&
-            paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue &&
-            paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
-
-        guard isCustomerCard,
-            let customOptionSearchItem = viewModel.search?.payerPaymentMethods.first(where: { $0.id == paymentOptionSelectedId}) else {
+        guard let customOptionSearchItem = viewModel.search?.payerPaymentMethods.first(where: { $0.id == cardId}),
+            customOptionSearchItem.isCustomerPaymentMethod() &&
+            customOptionSearchItem.paymentTypeId != PXPaymentTypes.ACCOUNT_MONEY.rawValue &&
+            customOptionSearchItem.paymentTypeId != PXPaymentTypes.CONSUMER_CREDITS.rawValue else {
             return
         }
 
@@ -71,16 +70,15 @@ extension MercadoPagoCheckout {
                                                                       paymentTypeId: customOptionSearchItem.paymentTypeId,
                                                                       issuerName: customOptionSearchItem.issuer?.name,
                                                                       lastFourDigit: customOptionSearchItem.lastFourDigits,
-                                                                      securityCodeLocation: paymentOptionSelected.securityCode?.cardLocation,
-                                                                      securityCodeLength: paymentOptionSelected.securityCode?.length,
+                                                                      securityCodeLocation: cardUI.securityCode?.cardLocation,
+                                                                      securityCodeLength: cardUI.securityCode?.length,
                                                                       totalAmount: payerCost.totalAmount,
                                                                       installments: payerCost.installments,
                                                                       esc: viewModel.hasSavedESC())
 
-        let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != paymentOptionSelectedId }
+        let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != cardId }
         let alternativePayerPaymentMethods = getAlternativePayerPaymentMethods(from: remainingPayerPaymentMethods)
 
-        //viewModel.pxNavigationHandler.presentLoading()
         viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, success: { [weak self] remedy in
             guard let self = self else { return }
             self.viewModel.updateCheckoutModel(remedy: remedy)

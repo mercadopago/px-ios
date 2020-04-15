@@ -81,7 +81,7 @@ final class OneTapFlow: NSObject, PXFlow {
     // Finish one tap and continue with checkout
     func finishFlow() {
         if let paymentResult = model.paymentResult {
-            resultHandler?.finishOneTap(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts)
+            resultHandler?.finishOneTap(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts, paymentOptionSelected: model.paymentOptionSelected)
         } else if let businessResult = model.businessResult {
             resultHandler?.finishOneTap(businessResult: businessResult, paymentData: model.paymentData, splitAccountMoney: model.splitAccountMoney, pointsAndDiscounts: model.pointsAndDiscounts)
         } else {

@@ -20,7 +20,7 @@ internal class PaymentResult {
         case call_DEEPLINK = 6
     }
 
-    let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue,
+    private let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue,
                                 PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue,
                                 PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue,
                                 PXRejectedStatusDetail.CARD_DISABLE.rawValue,
@@ -32,12 +32,12 @@ internal class PaymentResult {
                                 PXPendingStatusDetail.CONTINGENCY.rawValue,
                                 PXPendingStatusDetail.REVIEW_MANUAL.rawValue]
 
-    let badFilledStatusDetails = [PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue,
+    private let badFilledStatusDetails = [PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue,
                                   PXRejectedStatusDetail.BAD_FILLED_DATE.rawValue,
                                   PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue,
                                   PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
 
-    let rejectedWithRemedyStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
+    private let rejectedWithRemedyStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
                                            PXPayment.StatusDetails.REJECTED_HIGH_RISK,
                                            PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK]
 
