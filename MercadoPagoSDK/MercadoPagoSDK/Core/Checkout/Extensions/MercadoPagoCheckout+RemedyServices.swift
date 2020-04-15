@@ -8,6 +8,48 @@
 import Foundation
 
 extension MercadoPagoCheckout {
+
+    private func getAlternativePayerPaymentMethods(from payerPaymentMethods: [PXCustomOptionSearchItem]?) -> [PXAlternativePayerPaymentMethod]? {
+        guard let payerPaymentMethods = payerPaymentMethods else { return nil }
+        
+        var alternativePayerPaymentMethods: [PXAlternativePayerPaymentMethod] = []
+        for payerPaymentMethod in payerPaymentMethods {
+            if let paymentMethodId = payerPaymentMethod.paymentMethodId,
+                let paymentTypeId = payerPaymentMethod.paymentTypeId {
+                let installments = getInstallments(from: payerPaymentMethod.selectedPaymentOption?.payerCosts)
+                let alternativePayerPaymentMethod = PXAlternativePayerPaymentMethod(paymentMethodId: paymentMethodId,
+                                                                                    paymentTypeId: paymentTypeId,
+                                                                                    installments: installments,
+                                                                                    selectedPayerCostIndex: payerPaymentMethod.selectedPaymentOption?.selectedPayerCostIndex ?? 0,
+                                                                                    esc: hasSavedESC(customOptionSearchItem: payerPaymentMethod))
+                alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
+            }
+        }
+        return alternativePayerPaymentMethods
+    }
+
+    private func getInstallments(from payerCosts: [PXPayerCost]?) -> [PXPaymentMethodInstallment]? {
+        guard let payerCosts = payerCosts else { return nil }
+
+        var paymentMethodInstallments: [PXPaymentMethodInstallment] = []
+        for payerCost in payerCosts {
+            let paymentMethodInstallment = PXPaymentMethodInstallment(installments: payerCost.installments,
+                                                                      totalAmount: payerCost.totalAmount,
+                                                                      labels: payerCost.labels,
+                                                                      recommendedMessage: payerCost.recommendedMessage)
+            paymentMethodInstallments.append(paymentMethodInstallment)
+        }
+        return paymentMethodInstallments
+    }
+
+    private func hasSavedESC(customOptionSearchItem: PXCustomOptionSearchItem) -> Bool {
+        let customerPaymentMethod = customOptionSearchItem.getCustomerPaymentMethod()
+        guard customerPaymentMethod.isCard() else {
+            return false
+        }
+        return viewModel.escManager?.getESC(cardId: customerPaymentMethod.getCardId(), firstSixDigits: customerPaymentMethod.getFirstSixDigits(), lastFourDigits: customerPaymentMethod.getCardLastForDigits()) == nil ? false : true
+    }
+
     func getRemedy() {
         guard let paymentId = viewModel.paymentResult?.paymentId,
             let payerCost = viewModel.paymentResult?.paymentData?.payerCost,
@@ -35,8 +77,11 @@ extension MercadoPagoCheckout {
                                                                       installments: payerCost.installments,
                                                                       esc: viewModel.hasSavedESC())
 
+        let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != paymentOptionSelectedId }
+        let alternativePayerPaymentMethods = getAlternativePayerPaymentMethods(from: remainingPayerPaymentMethods)
+
         //viewModel.pxNavigationHandler.presentLoading()
-        viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, success: { [weak self] remedy in
+        viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, success: { [weak self] remedy in
             guard let self = self else { return }
             self.viewModel.updateCheckoutModel(remedy: remedy)
             self.executeNextStep()

@@ -42,8 +42,8 @@ extension PXCardSlider: FSPagerViewDataSource {
         if model.indices.contains(index) {
             let targetModel = model[index]
             var accessibilityData = AccessibilityCardData(paymentMethodId: "", paymentTypeId: "", issuerName: "", description: "", cardName: "", index: 0, numberOfPages: 1)
-            if index < targetModel.payerPaymentMethods.count {
-                let payerPaymentMethod = targetModel.payerPaymentMethods[index]
+
+            if let payerPaymentMethod = targetModel.payerPaymentMethod {
                 accessibilityData = AccessibilityCardData(paymentMethodId: targetModel.paymentMethodId, paymentTypeId: targetModel.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "", cardName: targetModel.cardData?.name ?? "", index: index,  numberOfPages: pageControl.numberOfPages)
             }
 

@@ -9,7 +9,7 @@ import UIKit
 
 /// :nodoc:
 public struct PXPaymentMethodDisplayInfo: Codable {
-    let resultInfo: PXResultInfo
+    let resultInfo: PXResultInfo?
     let termsAndConditions: PXTermsDto?
     let description: PXText?
 

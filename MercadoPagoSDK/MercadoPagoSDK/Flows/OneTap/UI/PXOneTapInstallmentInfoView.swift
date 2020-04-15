@@ -164,7 +164,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
 private extension PXOneTapInstallmentInfoView {
     func getAccessibilityMessage(_ message: String, _ benefitsText: String) -> String {
         isAccessibilityElement = true
-        let text = message.replacingOccurrences(of: "x", with: "de".localized).replacingOccurrences(of: "$", with: "").replacingOccurrences(of: ":", with: "")
+        let text = message.replacingOccurrences(of: "x", with: "de".localized).replacingOccurrences(of: "$", with: "").replacingOccurrences(of: ":", with: "").replacingOccurrences(of: ".", with: "")
         if let range: Range<String.Index> = text.range(of: "CFT") {
             let index: Int = text.distance(from: text.startIndex, to: range.lowerBound)
             return text.insert("pesos".localized + ":", ind: index) + "\(benefitsText)"

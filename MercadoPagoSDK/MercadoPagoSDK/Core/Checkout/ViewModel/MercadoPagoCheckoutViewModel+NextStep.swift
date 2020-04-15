@@ -134,12 +134,8 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        let remedySupportedStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
-                                            PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
-                                            PXPayment.StatusDetails.REJECTED_HIGH_RISK]
         if let paymentResult = paymentResult,
-            paymentResult.isRejected(),
-            remedySupportedStatusDetails.contains(paymentResult.statusDetail),
+            paymentResult.isRejectedWithRemedy(),
             remedy == nil {
             return true
         }
