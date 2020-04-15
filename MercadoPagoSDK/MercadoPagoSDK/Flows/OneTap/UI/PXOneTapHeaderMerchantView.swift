@@ -39,6 +39,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         // The title
         let titleLabel = buildTitleLabel(text: title)
         containerView.addSubview(titleLabel)
+
         addSubviewToBottom(containerView)
 
         if layout.getLayoutType() == .onlyTitle {
@@ -49,7 +50,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
             containerView.addSubview(subTitleLabel)
             layout.makeConstraints(containerView, imageContainerView, titleLabel, subTitleLabel)
         }
-        
+
         let direction: OneTapHeaderAnimationDirection = showHorizontally ? .horizontal : .vertical
         animateHeaderLayout(direction: direction)
 

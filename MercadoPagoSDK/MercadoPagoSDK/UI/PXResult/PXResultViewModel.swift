@@ -433,8 +433,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getCreditsExpectationView() -> UIView? {
-        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo {
-            return PXCreditsExpectationView(title: resultInfo.title, subtitle: resultInfo.subtitle)
+        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
+            let title = resultInfo.title,
+            let subtitle = resultInfo.subtitle {
+            return PXCreditsExpectationView(title: title, subtitle: subtitle)
         }
         return nil
     }

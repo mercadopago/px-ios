@@ -29,9 +29,9 @@ final class PXCardSliderViewModel {
     var bottomMessage: String?
     var benefits: PXBenefits?
     var userDidSelectPayerCost: Bool = false
-    var payerPaymentMethods: [PXCustomOptionSearchItem]
+    var payerPaymentMethod: PXCustomOptionSearchItem?
 
-    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: PXCreditsViewModel? = nil, status: PXStatus, bottomMessage: String? = nil, benefits: PXBenefits?, payerPaymentMethods: [PXCustomOptionSearchItem]) {
+    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?, creditsViewModel: PXCreditsViewModel? = nil, status: PXStatus, bottomMessage: String? = nil, benefits: PXBenefits?, payerPaymentMethod: PXCustomOptionSearchItem?) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.issuerId = issuerId
@@ -46,7 +46,7 @@ final class PXCardSliderViewModel {
         self.status = status
         self.bottomMessage = bottomMessage
         self.benefits = benefits
-        self.payerPaymentMethods = payerPaymentMethods
+        self.payerPaymentMethod = payerPaymentMethod
     }
 }
 
