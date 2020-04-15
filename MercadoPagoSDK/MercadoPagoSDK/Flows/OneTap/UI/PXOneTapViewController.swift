@@ -59,7 +59,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewWillAppear(animated)
         setupNavigationBar()
         setupUI()
-        setAccessibilityElements()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
     }
@@ -80,10 +79,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         navigationController?.delegate = self
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
-        UIAccessibility.post(notification: .announcement, argument: headerView?.getMerchantView()?.title)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.navigationController?.navigationBar.accessibilityElementsHidden = false
-        }
     }
 
     func update(viewModel: PXOneTapViewModel, cardId: String) {
@@ -118,7 +113,6 @@ extension PXOneTapViewController {
         navigationController?.navigationBar.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.accessibilityElementsHidden = true
         addNavigationTapGesture()
     }
 
@@ -131,12 +125,6 @@ extension PXOneTapViewController {
                 viewModel.amountHelper.getPaymentData().payerCost = preSelectedCard.selectedPayerCost
             }
             renderViews()
-        }
-    }
-
-    private func setAccessibilityElements() {
-        if let titleLabel = headerView?.getMerchantView()?.getTitleLabel() {
-            accessibilityElements = [titleLabel]
         }
     }
 

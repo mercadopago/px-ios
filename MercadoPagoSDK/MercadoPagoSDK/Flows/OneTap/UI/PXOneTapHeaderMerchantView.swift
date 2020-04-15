@@ -11,8 +11,6 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     let image: UIImage
     let title: String
     private var subTitle: String?
-    private var titleLabel: UILabel?
-    private var subtitleLabel: UILabel?
     private var showHorizontally: Bool
     private var layout: PXOneTapHeaderMerchantLayout
     private var imageView: PXUIImageView?
@@ -39,30 +37,24 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         let imageContainerView = buildImageContainerView(image: image)
         containerView.addSubview(imageContainerView)
         // The title
-        let titleUILabel = buildTitleLabel(text: title)
-        titleLabel = titleUILabel
-        containerView.addSubview(titleUILabel)
+        let titleLabel = buildTitleLabel(text: title)
+        containerView.addSubview(titleLabel)
+
         addSubviewToBottom(containerView)
 
         if layout.getLayoutType() == .onlyTitle {
-            layout.makeConstraints(containerView, imageContainerView, titleUILabel)
+            layout.makeConstraints(containerView, imageContainerView, titleLabel)
         } else {
             // The subTitle
-            let subTitleUILabel = buildSubTitleLabel(text: subTitle)
-            subtitleLabel = subTitleUILabel
-            containerView.addSubview(subTitleUILabel)
-            layout.makeConstraints(containerView, imageContainerView, titleUILabel, subTitleUILabel)
+            let subTitleLabel = buildSubTitleLabel(text: subTitle)
+            containerView.addSubview(subTitleLabel)
+            layout.makeConstraints(containerView, imageContainerView, titleLabel, subTitleLabel)
         }
 
         let direction: OneTapHeaderAnimationDirection = showHorizontally ? .horizontal : .vertical
         animateHeaderLayout(direction: direction)
 
         isUserInteractionEnabled = true
-        if let subtitle = subtitleLabel {
-            accessibilityElements = [titleUILabel, subtitle]
-        } else {
-            accessibilityElements = [titleUILabel]
-        }
     }
 
     private func buildImageContainerView(image: UIImage) -> UIView {
@@ -144,9 +136,5 @@ extension PXOneTapHeaderMerchantView {
         })
 
         pxAnimator.animate()
-    }
-
-    func getTitleLabel() -> UILabel? {
-        return titleLabel
     }
 }

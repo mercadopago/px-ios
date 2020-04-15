@@ -210,13 +210,6 @@ extension PXOneTapHeaderView {
     }
 }
 
-// MARK: Publics
-extension PXOneTapHeaderView {
-    func getMerchantView() -> PXOneTapHeaderMerchantView? {
-        return merchantView
-    }
-}
-
 extension PXOneTapHeaderView: PXOneTapSummaryProtocol {
     func didTapCharges() {
         delegate?.didTapCharges()
