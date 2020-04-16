@@ -166,11 +166,11 @@ class PXResultTextFieldRemedyView: UIView {
         if let cardFontColor = data.oneTapCard?.cardUI?.fontColor {
             templateCard.cardFontColor = cardFontColor.hexToUIColor()
         }
-        
+
         if let cardLogoImageUrl = data.oneTapCard?.cardUI?.paymentMethodImageUrl {
             templateCard.cardLogoImageUrl = cardLogoImageUrl
         }
-        
+
         if let issuerImageUrl = data.oneTapCard?.cardUI?.issuerImageUrl {
             templateCard.bankImageUrl = issuerImageUrl
         }
