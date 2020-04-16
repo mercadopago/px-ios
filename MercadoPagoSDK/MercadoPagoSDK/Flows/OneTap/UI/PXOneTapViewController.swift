@@ -353,13 +353,20 @@ extension PXOneTapViewController {
     }
 
     private func handlePayButton() {
-        if let selectedCard = selectedCard, selectedCard.status.detail == "suspended" {
+        if let selectedCard = getSuspendedCardSliderViewModel() {
             if let tapPayBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.tapPay.rawValue] {
                 handleBehaviour(tapPayBehaviour, isSplit: false)
             }
         } else {
             confirmPayment()
         }
+    }
+
+    private func getSuspendedCardSliderViewModel() -> PXCardSliderViewModel? {
+        if let selectedCard = selectedCard, selectedCard.status.detail == "suspended" {
+            return selectedCard
+        }
+        return nil
     }
 
     private func confirmPayment() {
@@ -416,7 +423,7 @@ extension PXOneTapViewController {
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
 
     func splitPaymentSwitchChangedValue(isOn: Bool, isUserSelection: Bool) {
-        if isUserSelection, let selectedCard = selectedCard, selectedCard.status.detail == "suspended", let splitConfiguration = selectedCard.amountConfiguration?.splitConfiguration, let switchSplitBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.switchSplit.rawValue] {
+        if isUserSelection, let selectedCard = getSuspendedCardSliderViewModel(), let splitConfiguration = selectedCard.amountConfiguration?.splitConfiguration, let switchSplitBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.switchSplit.rawValue] {
             handleBehaviour(switchSplitBehaviour, isSplit: true)
             splitConfiguration.splitEnabled = false
             headerView?.updateSplitPaymentView(splitConfiguration: splitConfiguration)
@@ -567,7 +574,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     func cardDidTap(status: PXStatus) {
-        if let selectedCard = selectedCard, selectedCard.status.detail == "suspended" {
+        if let selectedCard = getSuspendedCardSliderViewModel() {
             if let tapCardBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.tapCard.rawValue] {
                 handleBehaviour(tapCardBehaviour, isSplit: false)
             }
@@ -627,7 +634,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 // MARK: Installment Row Info delegate.
 extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapInstallmentsSelectorProtocol {
     func cardTapped(status: PXStatus) {
-        if let selectedCard = selectedCard, selectedCard.status.detail == "suspended" {
+        if let selectedCard = getSuspendedCardSliderViewModel() {
             if let tapCardBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.tapCard.rawValue] {
                 handleBehaviour(tapCardBehaviour, isSplit: false)
             }
