@@ -79,7 +79,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
             label.numberOfLines = 1
             label.translatesAutoresizingMaskIntoConstraints = false
             label.attributedText = benefitText
-            label.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.XXXS_FONT)
+            label.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT)
             label.textAlignment = .right
             benefitsText = benefitText.string
             cell.addSubview(label)
@@ -92,7 +92,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = itemModel.text
-        label.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.XS_FONT)
+        label.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT)
         label.textAlignment = .left
         let accessibilityMessage = getAccessibilityMessage(itemModel.text.string, benefitsText)
         cell.setAccessibilityMessage(accessibilityMessage)
