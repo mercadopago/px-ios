@@ -1,3 +1,11 @@
+
+# v4.33.1
+🚀Private Release - 4.33.1 🚀
+MercadoPagoSDKV4 - Private Version
+- ODR support
+- Accessibility improvements
+- Fix remedy bug
+
 # v4.33.0
 🚀Private Release - 4.33.0 🚀
 MercadoPagoSDKV4 - Private Version
