@@ -20,8 +20,7 @@ extension MercadoPagoCheckout {
                 let alternativePayerPaymentMethod = PXAlternativePayerPaymentMethod(paymentMethodId: paymentMethodId,
                                                                                     paymentTypeId: paymentTypeId,
                                                                                     installments: installments,
-                                                                                    selectedPayerCostIndex: payerPaymentMethod.selectedPaymentOption?.selectedPayerCostIndex ?? 0,
-                                                                                    esc: hasSavedESC(customOptionSearchItem: payerPaymentMethod))
+                                                                                    esc_status: payerPaymentMethod.escStatus ?? "not_available")
                 alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
             }
         }
@@ -40,14 +39,6 @@ extension MercadoPagoCheckout {
             paymentMethodInstallments.append(paymentMethodInstallment)
         }
         return paymentMethodInstallments
-    }
-
-    private func hasSavedESC(customOptionSearchItem: PXCustomOptionSearchItem) -> Bool {
-        let customerPaymentMethod = customOptionSearchItem.getCustomerPaymentMethod()
-        guard customerPaymentMethod.isCard() else {
-            return false
-        }
-        return viewModel.escManager?.getESC(cardId: customerPaymentMethod.getCardId(), firstSixDigits: customerPaymentMethod.getFirstSixDigits(), lastFourDigits: customerPaymentMethod.getCardLastForDigits()) == nil ? false : true
     }
 
     func getRemedy() {

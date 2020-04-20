@@ -53,8 +53,8 @@ struct PXAlternativePayerPaymentMethod: Codable {
     let paymentMethodId: String
     let paymentTypeId: String
     let installments: [PXPaymentMethodInstallment]?
-    let selectedPayerCostIndex: Int
-    let esc: Bool
+    //let selectedPayerCostIndex: Int
+    let esc_status: String
 }
 
 struct PXPaymentMethodInstallment: Codable {

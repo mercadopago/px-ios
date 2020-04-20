@@ -38,8 +38,15 @@ internal class PaymentResult {
                                   PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
 
     private let rejectedWithRemedyStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
-                                           PXPayment.StatusDetails.REJECTED_HIGH_RISK,
-                                           PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK]
+                                                  PXPayment.StatusDetails.REJECTED_HIGH_RISK,
+                                                  PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
+                                                  PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
+                                                  PXPayment.StatusDetails.REJECTED_OTHER_REASON,
+                                                  PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
+                                                  PXPayment.StatusDetails.REJECTED_BLACKLIST,
+                                                  PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
+                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
+                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER]
 
     var paymentData: PXPaymentData?
     var splitAccountMoney: PXPaymentData?
