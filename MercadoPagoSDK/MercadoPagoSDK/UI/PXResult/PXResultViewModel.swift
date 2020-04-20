@@ -17,15 +17,17 @@ internal class PXResultViewModel: NSObject {
     var pointsAndDiscounts: PXPointsAndDiscounts?
     var preference: PXPaymentResultConfiguration
     let remedy: PXRemedy?
+    let oneTapCard: PXOneTapCardDto?
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapCard: PXOneTapCardDto? = nil) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
         self.pointsAndDiscounts = pointsAndDiscounts
         self.preference = resultConfiguration
         self.amountHelper = amountHelper
         self.remedy = remedy
+        self.oneTapCard = oneTapCard
     }
 
     func getPaymentData() -> PXPaymentData {
@@ -394,7 +396,8 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
         if isPaymentResultRejectedWithRemedy() {
             if let cvv = remedy?.cvv {
-                let data = PXResultTextFieldRemedyViewData(title: cvv.message ?? "",
+                let data = PXResultTextFieldRemedyViewData(oneTapCard: oneTapCard,
+                                                           title: cvv.message ?? "",
                                                            placeholder: cvv.fieldSetting?.title ?? "",
                                                            hint: cvv.fieldSetting?.hintMessage ?? "",
                                                            maxTextLength: cvv.fieldSetting?.length ?? 1,

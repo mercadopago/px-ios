@@ -13,7 +13,7 @@ protocol PXResultTextFieldRemedyViewDelegate: class {
 }
 
 struct PXResultTextFieldRemedyViewData {
-    //let cardUI: CardUI?
+    let oneTapCard: PXOneTapCardDto?
     let title: String
     let placeholder: String
     let hint: String?
@@ -64,23 +64,24 @@ class PXResultTextFieldRemedyView: UIView {
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
 
-//        //CardDrawer
-//        let cardDrawerView = buildCardDrawerView()
-//        addSubview(cardDrawerView)
-//        NSLayoutConstraint.activate([
-//            cardDrawerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: PXLayout.M_MARGIN),
-//            cardDrawerView.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
-//            cardDrawerView.heightAnchor.constraint(equalToConstant: CARD_VIEW_HEIGHT),
-//            cardDrawerView.centerXAnchor.constraint(equalTo: centerXAnchor)
-//        ])
+        //CardDrawer
+        if let cardDrawerView = buildCardDrawerView() {
+            addSubview(cardDrawerView)
+            NSLayoutConstraint.activate([
+                cardDrawerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: PXLayout.M_MARGIN),
+                cardDrawerView.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
+                cardDrawerView.heightAnchor.constraint(equalToConstant: CARD_VIEW_HEIGHT),
+                cardDrawerView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            ])
+        }
 
         //TextField
         let textField = buildTextField(with: data.placeholder)
         self.textField = textField
+        var lastView = subviews.last ?? titleLabel
         addSubview(textField)
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: PXLayout.M_MARGIN),
-//            textField.topAnchor.constraint(equalTo: cardDrawerView.bottomAnchor, constant: PXLayout.M_MARGIN),
+            textField.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
             textField.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
             textField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT),
             textField.centerXAnchor.constraint(equalTo: centerXAnchor)
@@ -102,7 +103,7 @@ class PXResultTextFieldRemedyView: UIView {
         //Button
         let button = buildPayButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
         self.button = button
-        let lastView = subviews.last ?? textField
+        lastView = subviews.last ?? textField
         addSubview(button)
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(greaterThanOrEqualTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
@@ -142,41 +143,43 @@ class PXResultTextFieldRemedyView: UIView {
         return textField
     }
 
-    private func buildCardDrawerView() -> UIView {
-        let cardName = "Milton Brandes".uppercased()
-        let cardNumber = "1234"
-        let cardExpiration = "11/12"
-        let cardPattern = [4, 4, 4, 4]
+    private func buildCardDrawerView() -> UIView? {
+        guard let cardName = data.oneTapCard?.cardUI?.name,
+            let cardNumber = data.oneTapCard?.cardUI?.lastFourDigits,
+            let cardExpiration = data.oneTapCard?.cardUI?.expiration else {
+                return nil
+        }
 
-        let cardData = PXCardDataFactory().create(cardName: cardName, cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: cardPattern)
+        let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: data.oneTapCard?.cardUI?.cardPattern)
 
         let templateCard = TemplateCard()
-//        if let cardPattern = targetCardData.cardUI?.cardPattern {
+        if let cardPattern = data.oneTapCard?.cardUI?.cardPattern {
             templateCard.cardPattern = cardPattern
-//        }
+        }
 
-//        if let cardBackgroundColor = targetCardData.cardUI?.color {
-//            templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
-//        }
-//
-//        if let cardFontColor = targetCardData.cardUI?.fontColor {
-//            templateCard.cardFontColor = cardFontColor.hexToUIColor()
-//        }
-//
-//        if let paymentMethodId = targetNode.paymentMethodId, let paymentMethodImage = ResourceManager.shared.getPaymentMethodCardImage(paymentMethodId: paymentMethodId.lowercased()) {
-//            templateCard.cardLogoImage = paymentMethodImage
-//        }
-//
-//        if let issuerImageName = targetNode.oneTapCard?.cardUI?.issuerImage {
-//            templateCard.bankImage = ResourceManager.shared.getIssuerCardImage(issuerImageName: issuerImageName)
-//        }
+        templateCard.securityCodeLocation = data.oneTapCard?.cardUI?.securityCode?.cardLocation == "front" ? .front : .back
+
+        if let cardBackgroundColor = data.oneTapCard?.cardUI?.color {
+            templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
+        }
+
+        if let cardFontColor = data.oneTapCard?.cardUI?.fontColor {
+            templateCard.cardFontColor = cardFontColor.hexToUIColor()
+        }
+
+        if let cardLogoImageUrl = data.oneTapCard?.cardUI?.paymentMethodImageUrl {
+            templateCard.cardLogoImageUrl = cardLogoImageUrl
+        }
+
+        if let issuerImageUrl = data.oneTapCard?.cardUI?.issuerImageUrl {
+            templateCard.bankImageUrl = issuerImageUrl
+        }
 
         let controller = MLCardDrawerController(templateCard, cardData, false, .medium)
         controller.view.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: CARD_VIEW_WIDTH, height: CARD_VIEW_HEIGHT))
         controller.view.translatesAutoresizingMaskIntoConstraints = false
         controller.animated(false)
         controller.show()
-
         return controller.view
     }
 
