@@ -20,7 +20,7 @@ extension MercadoPagoCheckout {
                 let alternativePayerPaymentMethod = PXAlternativePayerPaymentMethod(paymentMethodId: paymentMethodId,
                                                                                     paymentTypeId: paymentTypeId,
                                                                                     installments: installments,
-                                                                                    esc_status: payerPaymentMethod.escStatus ?? "not_available")
+                                                                                    escStatus: payerPaymentMethod.escStatus ?? "not_available")
                 alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
             }
         }

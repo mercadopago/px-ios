@@ -176,19 +176,19 @@ extension MercadoPagoCheckout {
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
-            case .call_FOR_AUTH:
+            case .CALL_FOR_AUTH:
                 self.viewModel.prepareForClone()
                 self.collectSecurityCodeForRetry()
-            case .cancel_RETRY,
-                 .cancel_SELECT_OTHER:
+            case .RETRY,
+                 .SELECT_OTHER:
                 if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(),
-                    congratsState == .cancel_SELECT_OTHER {
+                    congratsState == .SELECT_OTHER {
                     changePaymentMethodAction()
                 } else {
                     self.viewModel.prepareForNewSelection()
                     self.executeNextStep()
                 }
-            case .bad_FILLED_SECURITY_CODE:
+            case .RETRY_SECURITY_CODE:
                 if let remedyText = remedyText, remedyText.isNotEmpty {
                     // CVV Remedy. Create new card token
                     self.viewModel.prepareForClone()
@@ -199,7 +199,12 @@ extension MercadoPagoCheckout {
                 } else {
                     self.finish()
                 }
-            case .call_DEEPLINK:
+            case .RETRY_SILVER_BULLET:
+//                if let remedyText = remedyText, remedyText.isNotEmpty {
+//                    
+//                }
+                self.finish()
+            case .DEEPLINK:
                 if let remedyText = remedyText, remedyText.isNotEmpty {
                     PXDeepLinkManager.open(remedyText)
                 }

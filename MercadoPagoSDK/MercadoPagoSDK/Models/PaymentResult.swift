@@ -11,13 +11,13 @@ import Foundation
 internal class PaymentResult {
 
     internal enum CongratsState: Int {
-        case cancel_EXIT = 0
-        case cancel_SELECT_OTHER = 1
-        case cancel_RETRY = 2
-        case cancel_RECOVER = 3
-        case call_FOR_AUTH = 4
-        case bad_FILLED_SECURITY_CODE = 5
-        case call_DEEPLINK = 6
+        case EXIT
+        case SELECT_OTHER
+        case RETRY
+        case CALL_FOR_AUTH
+        case RETRY_SECURITY_CODE
+        case RETRY_SILVER_BULLET
+        case DEEPLINK
     }
 
     private let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue,

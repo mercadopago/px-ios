@@ -52,16 +52,19 @@ internal extension PXResultViewModel {
     }
 
     func titleForStatusDetail(statusDetail: String, paymentMethod: PXPaymentMethod?) -> NSAttributedString {
-        guard let paymentMethod = paymentMethod else {
-            return "".toAttributedString()
-        }
-
+        // Set title for remedy
         if let title = remedy?.cvv?.title {
             return title.toAttributedString()
         } else if let title = remedy?.highRisk?.title {
             return title.toAttributedString()
+        } else if let title = remedy?.suggestedPaymentMethod?.title {
+            return title.toAttributedString()
         }
 
+        guard let paymentMethod = paymentMethod else {
+            return "".toAttributedString()
+        }
+        // Set title for paymentMethod
         var statusDetail = statusDetail
         let badFilledKey = "cc_rejected_bad_filled"
         if statusDetail.contains(badFilledKey) {

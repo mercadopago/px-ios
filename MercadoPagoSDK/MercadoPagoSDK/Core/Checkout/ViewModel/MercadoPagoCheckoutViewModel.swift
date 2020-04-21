@@ -305,7 +305,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if let cardId = paymentResult.cardId {
             oneTapCard = search?.oneTap?.first(where: { $0.oneTapCard?.cardId == cardId })?.oneTapCard
         }
-        
+
         return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapCard: oneTapCard)
     }
 

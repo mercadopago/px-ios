@@ -1,34 +1,30 @@
 //
-//  PXResultTextFieldRemedyView.swift
-//  Pods
+//  PXRemedyView.swift
+//  MercadoPagoSDK
 //
-//  Created by Eric Ertl on 12/03/2020.
+//  Created by Eric Ertl on 21/04/2020.
 //
 
 import UIKit
 import MLCardDrawer
 
-protocol PXResultTextFieldRemedyViewDelegate: class {
-    func remedyButtonTouchUpInside(_ sender: PXAnimatedButton)
+protocol PXRemedyViewProtocol: class {
+    func remedyViewButtonTouchUpInside(_ sender: PXAnimatedButton)
 }
 
-struct PXResultTextFieldRemedyViewData {
+struct PXRemedyViewData {
     let oneTapCard: PXOneTapCardDto?
-    let title: String
-    let placeholder: String
-    let hint: String?
-    let maxTextLength: Int
+    let remedy: PXRemedy
 
-    let buttonColor: UIColor?
     weak var animatedButtonDelegate: PXAnimatedButtonDelegate?
-    weak var resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?
+    weak var remedyViewProtocol: PXRemedyViewProtocol?
     let remedyButtonTapped: ((String?) -> Void)?
 }
 
-class PXResultTextFieldRemedyView: UIView {
-    private let data: PXResultTextFieldRemedyViewData
+class PXRemedyView: UIView {
+    private let data: PXRemedyViewData
 
-    init(data: PXResultTextFieldRemedyViewData) {
+    init(data: PXRemedyViewData) {
         self.data = data
         super.init(frame: .zero)
         render()
@@ -53,10 +49,10 @@ class PXResultTextFieldRemedyView: UIView {
     private func render() {
         removeAllSubviews()
         //Title Label
-        let titleLabel = buildTitleLabel(with: data.title)
+        let titleLabel = buildTitleLabel(text: getRemedyMessage())
         addSubview(titleLabel)
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        let height = UILabel.requiredHeight(forText: data.title, withFont: titleLabel.font, inWidth: screenWidth)
+        let height = UILabel.requiredHeight(forText: getRemedyMessage(), withFont: titleLabel.font, inWidth: screenWidth)
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: PXLayout.L_MARGIN),
             titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: CONTENT_WIDTH_PERCENT  / 100),
@@ -75,48 +71,51 @@ class PXResultTextFieldRemedyView: UIView {
             ])
         }
 
-        //TextField
-        let textField = buildTextField(with: data.placeholder)
-        self.textField = textField
-        var lastView = subviews.last ?? titleLabel
-        addSubview(textField)
-        NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
-            textField.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
-            textField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT),
-            textField.centerXAnchor.constraint(equalTo: centerXAnchor)
-        ])
-
-        //Hint Label
-        if let hint = data.hint {
-            let hintLabel = buildHintLabel(with: hint)
-            addSubview(hintLabel)
-            let height = UILabel.requiredHeight(forText: hint, withFont: hintLabel.font, inWidth: screenWidth)
+        if shouldShowTextField() {
+            //TextField
+            let textField = buildTextField(placeholder: getRemedyPlaceholder())
+            self.textField = textField
+            let lastView = subviews.last ?? titleLabel
+            addSubview(textField)
             NSLayoutConstraint.activate([
-                hintLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: PXLayout.XS_MARGIN),
-                hintLabel.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
-                hintLabel.heightAnchor.constraint(equalToConstant: height),
-                hintLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+                textField.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
+                textField.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
+                textField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT),
+                textField.centerXAnchor.constraint(equalTo: centerXAnchor)
             ])
+
+            //Hint Label
+            if let hint = getRemedyHintMessage() {
+                let hintLabel = buildHintLabel(with: hint)
+                addSubview(hintLabel)
+                let height = UILabel.requiredHeight(forText: hint, withFont: hintLabel.font, inWidth: screenWidth)
+                NSLayoutConstraint.activate([
+                    hintLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: PXLayout.XS_MARGIN),
+                    hintLabel.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
+                    hintLabel.heightAnchor.constraint(equalToConstant: height),
+                    hintLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+                ])
+            }
         }
 
-        //Button
-        let button = buildPayButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
-        self.button = button
-        lastView = subviews.last ?? textField
-        addSubview(button)
-        NSLayoutConstraint.activate([
-            button.topAnchor.constraint(greaterThanOrEqualTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
-            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: PXLayout.S_MARGIN),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -PXLayout.S_MARGIN),
-            button.heightAnchor.constraint(equalToConstant: BUTTON_HEIGHT),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        if shouldShowButton(), let lastView = subviews.last ?? textField {
+            //Button
+            let button = buildPayButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
+            self.button = button
+            addSubview(button)
+            NSLayoutConstraint.activate([
+                button.topAnchor.constraint(greaterThanOrEqualTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
+                button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: PXLayout.S_MARGIN),
+                button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -PXLayout.S_MARGIN),
+                button.heightAnchor.constraint(equalToConstant: BUTTON_HEIGHT),
+                button.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+        }
 
         self.layoutIfNeeded()
     }
 
-    private func buildTitleLabel(with text: String) -> UILabel {
+    private func buildTitleLabel(text: String) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -129,7 +128,7 @@ class PXResultTextFieldRemedyView: UIView {
         return label
     }
 
-    private func buildTextField(with placeholder: String) -> HoshiTextField {
+    private func buildTextField(placeholder: String) -> HoshiTextField {
         let textField = HoshiTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = placeholder
@@ -199,7 +198,7 @@ class PXResultTextFieldRemedyView: UIView {
         let button = PXAnimatedButton(normalText: normalText, loadingText: loadingText, retryText: retryText)
         button.animationDelegate = data.animatedButtonDelegate
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = data.buttonColor
+        button.backgroundColor = ThemeManager.shared.getAccentColor()
         button.setTitle(normalText, for: .normal)
         button.layer.cornerRadius = 4
         button.add(for: .touchUpInside, { [weak self] in
@@ -207,25 +206,27 @@ class PXResultTextFieldRemedyView: UIView {
                 remedyButtonTapped(self?.textField?.text)
             }
             if let button = self?.button {
-                self?.data.resultTextFieldRemedyViewDelegate?.remedyButtonTouchUpInside(button)
+                self?.data.remedyViewProtocol?.remedyViewButtonTouchUpInside(button)
             }
         })
-        button.setDisabled()
+        if shouldShowTextField() {
+            button.setDisabled()
+        }
         return button
     }
 }
 
-extension PXResultTextFieldRemedyView: UITextFieldDelegate {
+extension PXRemedyView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if !string.isNumber {
             return false
         }
         if let text = textField.text as NSString? {
             let newString = text.replacingCharacters(in: range, with: string)
-            if newString.count > data.maxTextLength {
+            if newString.count > getRemedyMaxLength() {
                 return false
             }
-            if newString.count == data.maxTextLength {
+            if newString.count == getRemedyMaxLength() {
                 button?.setEnabled()
             } else {
                 button?.setDisabled()
@@ -237,8 +238,73 @@ extension PXResultTextFieldRemedyView: UITextFieldDelegate {
     }
 }
 
-extension PXResultTextFieldRemedyView {
+extension PXRemedyView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         endEditing(true)
+    }
+}
+
+// PXRemedy Helpers
+extension PXRemedyView {
+    private func getRemedyMessage() -> String {
+        let remedy = data.remedy
+        if let cvv = remedy.cvv, let text = cvv.message {
+            return text
+        } else if let highRisk = remedy.highRisk, let text = highRisk.message {
+            return text
+        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let text = suggestionPaymentMethod.message {
+            return text
+        }
+        return ""
+    }
+
+    private func getRemedyPlaceholder() -> String {
+        let remedy = data.remedy
+        if let cvv = remedy.cvv, let text = cvv.fieldSetting?.title {
+            return text
+//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let text = suggestionPaymentMethod.fieldSetting?.title {
+//            return text
+        }
+        return ""
+    }
+
+    private func getRemedyHintMessage() -> String? {
+        let remedy = data.remedy
+        if let cvv = remedy.cvv, let text = cvv.fieldSetting?.hintMessage {
+            return text
+//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let text = suggestionPaymentMethod.fieldSetting?.hintMessage {
+//            return text
+        }
+        return nil
+    }
+
+    private func getRemedyMaxLength() -> Int {
+        let remedy = data.remedy
+        if let cvv = remedy.cvv, let length = cvv.fieldSetting?.length {
+            return length
+//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let length = suggestionPaymentMethod.fieldSetting?.length {
+//            return length
+        }
+        return 0
+    }
+
+    private func shouldShowTextField() -> Bool {
+        let remedy = data.remedy
+        if remedy.cvv != nil && data.remedyViewProtocol != nil {
+            return true
+//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let length = suggestionPaymentMethod.fieldSetting?.length {
+//            return true
+        }
+        return false
+    }
+
+    private func shouldShowButton() -> Bool {
+        let remedy = data.remedy
+        if (remedy.cvv != nil || remedy.suggestedPaymentMethod != nil) &&
+            data.animatedButtonDelegate != nil &&
+            data.remedyButtonTapped != nil {
+            return true
+        }
+        return false
     }
 }

@@ -127,7 +127,7 @@ extension PXResultViewModel {
             var remedies: String?
             if remedy.cvv != nil {
                 remedies = "cvv_request"
-            } else if remedy.suggestionPaymentMethod != nil {
+            } else if remedy.suggestedPaymentMethod != nil {
                 remedies = "payment_method_suggestion"
             }
             if let remedies = remedies {
@@ -264,10 +264,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
             if let callback = self?.callback {
                 if let url = self?.getBackUrl() {
                     self?.openURL(url: url, success: { (_) in
-                        callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+                        callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
-                    callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+                    callback(PaymentResult.CongratsState.EXIT, nil)
                 }
             }
         }
@@ -282,7 +282,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
             var remedies: String?
             if remedy.cvv != nil {
                 remedies = "cvv_request"
-            } else if remedy.suggestionPaymentMethod != nil {
+            } else if remedy.suggestedPaymentMethod != nil {
                 remedies = "payment_method_suggestion"
             }
             if let remedies = remedies {
@@ -292,9 +292,11 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
 
             if let callback = self?.callback {
                 if remedy.cvv != nil {
-                    callback(PaymentResult.CongratsState.bad_FILLED_SECURITY_CODE, text)
+                    callback(PaymentResult.CongratsState.RETRY_SECURITY_CODE, text)
+                } else if remedy.suggestedPaymentMethod != nil {
+                    callback(PaymentResult.CongratsState.RETRY_SILVER_BULLET, text)
                 } else {
-                    callback(PaymentResult.CongratsState.cancel_RETRY, text)
+                    callback(PaymentResult.CongratsState.RETRY, text)
                 }
             }
         }
@@ -393,25 +395,15 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 
-    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
+    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
         if isPaymentResultRejectedWithRemedy() {
-            if let cvv = remedy?.cvv {
-                let data = PXResultTextFieldRemedyViewData(oneTapCard: oneTapCard,
-                                                           title: cvv.message ?? "",
-                                                           placeholder: cvv.fieldSetting?.title ?? "",
-                                                           hint: cvv.fieldSetting?.hintMessage ?? "",
-                                                           maxTextLength: cvv.fieldSetting?.length ?? 1,
-                                                           buttonColor: ThemeManager.shared.getAccentColor(),
-                                                           animatedButtonDelegate: animatedButtonDelegate,
-                                                           resultTextFieldRemedyViewDelegate: resultTextFieldRemedyViewDelegate,
-                                                           remedyButtonTapped: getRemedyButtonAction())
-                return PXResultTextFieldRemedyView(data: data)
-            } else if let highRisk = remedy?.highRisk {
-                let data = PXResultDescritionRemedyViewData(title: highRisk.message ?? "")
-                return PXResultDescritionRemedyView(data: data)
-            } else if let suggestionPaymentMethod = remedy?.suggestionPaymentMethod {
-                // Silver bullet
-                return nil
+            if let remedy = remedy {
+                let data = PXRemedyViewData(oneTapCard: oneTapCard,
+                                            remedy: remedy,
+                                            animatedButtonDelegate: animatedButtonDelegate,
+                                            remedyViewProtocol: remedyViewProtocol,
+                                            remedyButtonTapped: getRemedyButtonAction())
+                return PXRemedyView(data: data)
             }
         }
         return nil

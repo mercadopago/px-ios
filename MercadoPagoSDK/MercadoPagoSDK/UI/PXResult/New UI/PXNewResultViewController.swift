@@ -60,7 +60,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        if let remedyView = getRemedyView(), let button = remedyView.button {
+        if let button = getRemedyViewAnimatedButton() {
             button.resetButton()
         }
     }
@@ -174,7 +174,9 @@ class PXNewResultViewController: MercadoPagoUIViewController {
                     data.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -data.horizontalMargin)
                 ])
             }
-            if contentView.subviews.last is PXResultTextFieldRemedyView {
+            if let model = viewModel as? PXResultViewModel,
+                model.remedy?.cvv != nil || model.remedy?.suggestedPaymentMethod != nil,
+                contentView.subviews.last is PXRemedyView {
                 PXLayout.pinLastSubviewToBottom(view: contentView)
             } else {
                 PXLayout.pinLastSubviewToBottom(view: contentView, relation: .lessThanOrEqual)
@@ -303,7 +305,7 @@ extension PXNewResultViewController {
         }
 
         //Remedy body View
-        if let view = viewModel.getRemedyView(animatedButtonDelegate: self, resultTextFieldRemedyViewDelegate: self) {
+        if let view = viewModel.getRemedyView(animatedButtonDelegate: self, remedyViewProtocol: self) {
             subscribeToKeyboardNotifications()
             views.append(ResultViewData(view: view))
         }
@@ -326,9 +328,9 @@ extension PXNewResultViewController {
         return views
     }
 
-    func getRemedyView() -> PXResultTextFieldRemedyView? {
-        if let remedyView = scrollView.subviews.first?.subviews.first(where: { $0 is PXResultTextFieldRemedyView }) as? PXResultTextFieldRemedyView? {
-            return remedyView
+    private func getRemedyViewAnimatedButton() -> PXAnimatedButton? {
+        if let remedyView = scrollView.subviews.first?.subviews.first(where: { $0 is PXRemedyView }) as? PXRemedyView? {
+            return remedyView?.button
         }
         return nil
     }
@@ -445,7 +447,7 @@ extension PXNewResultViewController: PXAnimatedButtonDelegate {
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
         unsubscribeFromAnimatedButtonNotifications()
-        if let remedyView = getRemedyView(), let button = remedyView.button {
+        if let button = getRemedyViewAnimatedButton() {
             UIView.animate(withDuration: 0.3, animations: {
                 button.backgroundColor = ThemeManager.shared.getAccentColor()
             })
@@ -470,15 +472,15 @@ extension PXNewResultViewController: PXAnimatedButtonDelegate {
     }
 
     func progressButtonAnimationTimeOut() {
-        if let remedyView = getRemedyView(), let button = remedyView.button {
+        if let button = getRemedyViewAnimatedButton() {
             button.resetButton()
             button.showErrorToast()
         }
     }
 }
 
-extension PXNewResultViewController: PXResultTextFieldRemedyViewDelegate {
-    func remedyButtonTouchUpInside(_ sender: PXAnimatedButton) {
+extension PXNewResultViewController: PXRemedyViewProtocol {
+    func remedyViewButtonTouchUpInside(_ sender: PXAnimatedButton) {
         subscribeToAnimatedButtonNotifications(button: sender)
         sender.startLoading()
         scrollView.isScrollEnabled = false
@@ -507,8 +509,8 @@ extension PXNewResultViewController {
     }
 
     func unsubscribeFromAnimatedButtonNotifications() {
-        if let remedyView = getRemedyView() {
-            PXNotificationManager.UnsuscribeTo.animateButton(remedyView.button)
+        if let button = getRemedyViewAnimatedButton() {
+            PXNotificationManager.UnsuscribeTo.animateButton(button)
         }
     }
 }
