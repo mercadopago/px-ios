@@ -120,12 +120,12 @@ extension OneTapFlow {
 
             if let suggestedAccountMoney = search.oneTap?.first?.accountMoney {
                 selectedPaymentOption = suggestedAccountMoney
-            } else if let firstOneTapDto = search.oneTap?.first {
+            } else if let oneTapDto = search.oneTap?.first {
                 let customOptionsFound = customerPaymentMethods.filter {
-                    if let firstOneTapCard = firstOneTapDto.oneTapCard {
-                        return $0.getPaymentMethodId() == firstOneTapDto.paymentMethodId && $0.id == firstOneTapCard.cardId
+                    if let oneTapCard = oneTapDto.oneTapCard {
+                        return $0.getPaymentMethodId() == oneTapDto.paymentMethodId && $0.id == oneTapCard.cardId
                     }
-                    return $0.getPaymentMethodId() == firstOneTapDto.paymentMethodId
+                    return $0.getPaymentMethodId() == oneTapDto.paymentMethodId
                 }
                 if let customerPaymentMethod = customOptionsFound.first {
                     // Check if one tap response has payer costs
