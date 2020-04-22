@@ -82,7 +82,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewDidAppear(animated)
         navigationController?.delegate = self
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
-        accessibilityElements = [view, navigationItem]
+        UIAccessibility.post(notification: .layoutChanged, argument: headerView?.merchantView?.titleMerchantLabel)
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
 
