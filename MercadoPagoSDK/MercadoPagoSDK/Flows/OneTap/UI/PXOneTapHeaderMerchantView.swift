@@ -14,6 +14,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     private var showHorizontally: Bool
     private var layout: PXOneTapHeaderMerchantLayout
     private var imageView: PXUIImageView?
+    var titleMerchantLabel: UILabel?
 
     init(image: UIImage, title: String, subTitle: String? = nil, showHorizontally: Bool) {
         self.image = image
@@ -38,6 +39,8 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         containerView.addSubview(imageContainerView)
         // The title
         let titleLabel = buildTitleLabel(text: title)
+        titleMerchantLabel = titleLabel
+        titleMerchantLabel?.accessibilityLabel = "prueba"
         containerView.addSubview(titleLabel)
 
         addSubviewToBottom(containerView)

@@ -23,7 +23,7 @@ class PXOneTapHeaderView: PXComponentView {
     private var isShowingHorizontally: Bool = false
     private var verticalLayoutConstraints: [NSLayoutConstraint] = []
     private var horizontalLayoutConstraints: [NSLayoutConstraint] = []
-    private var merchantView: PXOneTapHeaderMerchantView?
+    var merchantView: PXOneTapHeaderMerchantView?
     private var summaryView: PXOneTapSummaryView?
     private var splitPaymentView: PXOneTapSplitPaymentView?
     private var splitPaymentViewHeightConstraint: NSLayoutConstraint?
