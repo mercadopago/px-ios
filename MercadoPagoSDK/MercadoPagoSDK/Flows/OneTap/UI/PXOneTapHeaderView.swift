@@ -23,7 +23,7 @@ class PXOneTapHeaderView: PXComponentView {
     private var isShowingHorizontally: Bool = false
     private var verticalLayoutConstraints: [NSLayoutConstraint] = []
     private var horizontalLayoutConstraints: [NSLayoutConstraint] = []
-    var merchantView: PXOneTapHeaderMerchantView?
+    private var merchantView: PXOneTapHeaderMerchantView?
     private var summaryView: PXOneTapSummaryView?
     private var splitPaymentView: PXOneTapSplitPaymentView?
     private var splitPaymentViewHeightConstraint: NSLayoutConstraint?
@@ -53,9 +53,9 @@ class PXOneTapHeaderView: PXComponentView {
 }
 
 // MARK: Privates.
-extension PXOneTapHeaderView {
+private extension PXOneTapHeaderView {
 
-    private func toggleSplitPaymentView(shouldShow: Bool, duration: Double = 0.5) {
+    func toggleSplitPaymentView(shouldShow: Bool, duration: Double = 0.5) {
         layoutIfNeeded()
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
         pxAnimator.addAnimation(animation: { [weak self] in
@@ -71,7 +71,7 @@ extension PXOneTapHeaderView {
         pxAnimator.animate()
     }
 
-    private func shouldShowHorizontally(model: PXOneTapHeaderViewModel) -> Bool {
+    func shouldShowHorizontally(model: PXOneTapHeaderViewModel) -> Bool {
         if UIDevice.isLargeOrExtraLargeDevice() {
             //an extra large device will always be able to accomodate al view in vertical mode
             return false
@@ -84,14 +84,14 @@ extension PXOneTapHeaderView {
         return model.hasMediumHeaderOrLarger()
     }
 
-    private func removeAnimations() {
+    func removeAnimations() {
         layer.removeAllAnimations()
         for view in self.getSubviews() {
             view.layer.removeAllAnimations()
         }
     }
 
-    private func updateLayout(newModel: PXOneTapHeaderViewModel, oldModel: PXOneTapHeaderViewModel) {
+    func updateLayout(newModel: PXOneTapHeaderViewModel, oldModel: PXOneTapHeaderViewModel) {
         removeAnimations()
 
         let animationDuration = 0.35
@@ -124,7 +124,7 @@ extension PXOneTapHeaderView {
         }
     }
 
-    private func animateHeaderLayout(direction: OneTapHeaderAnimationDirection, duration: Double = 0) {
+    func animateHeaderLayout(direction: OneTapHeaderAnimationDirection, duration: Double = 0) {
         isShowingHorizontally = (direction == .horizontal) ? true : false
         merchantView?.animateHeaderLayout(direction: direction, duration: duration)
         if (direction == .vertical) {
@@ -149,7 +149,7 @@ extension PXOneTapHeaderView {
         pxAnimator.animate()
     }
 
-    private func render() {
+    func render() {
         removeAllSubviews()
         removeMargins()
         backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
@@ -221,5 +221,12 @@ extension PXOneTapHeaderView: PXOneTapSummaryProtocol {
 
     func handleHeaderTap() {
         delegate?.didTapMerchantHeader()
+    }
+}
+
+// MARK: Publics
+extension PXOneTapHeaderView {
+    func getMerchantView() -> PXOneTapHeaderMerchantView? {
+        return merchantView
     }
 }

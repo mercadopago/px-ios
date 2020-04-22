@@ -14,7 +14,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     private var showHorizontally: Bool
     private var layout: PXOneTapHeaderMerchantLayout
     private var imageView: PXUIImageView?
-    var titleMerchantLabel: UILabel?
+    private var titleMerchantLabel: UILabel?
 
     init(image: UIImage, title: String, subTitle: String? = nil, showHorizontally: Bool) {
         self.image = image
@@ -138,5 +138,9 @@ extension PXOneTapHeaderMerchantView {
         })
 
         pxAnimator.animate()
+    }
+
+    func getTitleMerchantLabel() -> UILabel? {
+        return titleMerchantLabel
     }
 }
