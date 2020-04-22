@@ -13,6 +13,7 @@ struct PXRemedyBody: Codable {
 }
 
 struct PXPayerPaymentMethodRejected: Codable {
+    let customOptionId: String?
     let paymentMethodId: String?
     let paymentTypeId: String?
     let issuerName: String?
@@ -21,6 +22,6 @@ struct PXPayerPaymentMethodRejected: Codable {
     let securityCodeLength: Int?
     let totalAmount: Double?
     let installments: Int?
-    let esc: Bool?
+    let escStatus: String?
 }
 

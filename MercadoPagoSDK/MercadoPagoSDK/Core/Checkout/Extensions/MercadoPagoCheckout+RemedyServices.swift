@@ -9,22 +9,29 @@ import Foundation
 
 extension MercadoPagoCheckout {
 
-    private func getAlternativePayerPaymentMethods(from payerPaymentMethods: [PXCustomOptionSearchItem]?) -> [PXAlternativePayerPaymentMethod]? {
-        guard let payerPaymentMethods = payerPaymentMethods else { return nil }
+    private func getAlternativePayerPaymentMethods(from customOptionSearchItems: [PXCustomOptionSearchItem]?) -> [PXAlternativePayerPaymentMethod]? {
+        guard let customOptionSearchItems = customOptionSearchItems else { return nil }
 
         var alternativePayerPaymentMethods: [PXAlternativePayerPaymentMethod] = []
-        for payerPaymentMethod in payerPaymentMethods {
-            if let paymentMethodId = payerPaymentMethod.paymentMethodId,
-                let paymentTypeId = payerPaymentMethod.paymentTypeId {
-                let installments = getInstallments(from: payerPaymentMethod.selectedPaymentOption?.payerCosts)
-                let alternativePayerPaymentMethod = PXAlternativePayerPaymentMethod(paymentMethodId: paymentMethodId,
-                                                                                    paymentTypeId: paymentTypeId,
-                                                                                    installments: installments,
-                                                                                    escStatus: payerPaymentMethod.escStatus ?? "not_available")
-                alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
-            }
+        for customOptionSearchItem in customOptionSearchItems {
+            let oneTapCard = getOneTapCard(cardId: customOptionSearchItem.id)
+            let installments = getInstallments(from: customOptionSearchItem.selectedPaymentOption?.payerCosts)
+            let alternativePayerPaymentMethod = PXAlternativePayerPaymentMethod(customOptionId: customOptionSearchItem.id,
+                                                                                paymentMethodId: customOptionSearchItem.paymentMethodId,
+                                                                                paymentTypeId: customOptionSearchItem.paymentTypeId,
+                                                                                escStatus: customOptionSearchItem.escStatus ?? "not_available",
+                                                                                issuerName: customOptionSearchItem.issuer?.name,
+                                                                                lastFourDigit: customOptionSearchItem.lastFourDigits,
+                                                                                securityCodeLocation: oneTapCard?.cardUI?.securityCode?.cardLocation,
+                                                                                securityCodeLength: oneTapCard?.cardUI?.securityCode?.length,
+                                                                                installmentsList: installments)
+            alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
         }
         return alternativePayerPaymentMethods
+    }
+    
+    private func getOneTapCard(cardId: String) -> PXOneTapCardDto? {
+        return viewModel.search?.oneTap?.first(where: { $0.oneTapCard?.cardId == cardId })?.oneTapCard
     }
 
     private func getInstallments(from payerCosts: [PXPayerCost]?) -> [PXPaymentMethodInstallment]? {
@@ -33,9 +40,7 @@ extension MercadoPagoCheckout {
         var paymentMethodInstallments: [PXPaymentMethodInstallment] = []
         for payerCost in payerCosts {
             let paymentMethodInstallment = PXPaymentMethodInstallment(installments: payerCost.installments,
-                                                                      totalAmount: payerCost.totalAmount,
-                                                                      labels: payerCost.labels,
-                                                                      recommendedMessage: payerCost.recommendedMessage)
+                                                                      totalAmount: payerCost.totalAmount)
             paymentMethodInstallments.append(paymentMethodInstallment)
         }
         return paymentMethodInstallments
@@ -45,8 +50,7 @@ extension MercadoPagoCheckout {
         guard let paymentId = viewModel.paymentResult?.paymentId,
             let payerCost = viewModel.paymentResult?.paymentData?.payerCost,
             let cardId = viewModel.paymentResult?.cardId,
-            let oneTap = viewModel.search?.oneTap?.first(where: { $0.oneTapCard?.cardId == cardId }),
-            let cardUI = oneTap.oneTapCard?.cardUI else {
+            let oneTapCard = getOneTapCard(cardId: cardId) else {
             return
         }
 
@@ -57,15 +61,16 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let payerPaymentMethodRejected = PXPayerPaymentMethodRejected(paymentMethodId: customOptionSearchItem.paymentMethodId,
+        let payerPaymentMethodRejected = PXPayerPaymentMethodRejected(customOptionId: customOptionSearchItem.id,
+                                                                      paymentMethodId: customOptionSearchItem.paymentMethodId,
                                                                       paymentTypeId: customOptionSearchItem.paymentTypeId,
                                                                       issuerName: customOptionSearchItem.issuer?.name,
                                                                       lastFourDigit: customOptionSearchItem.lastFourDigits,
-                                                                      securityCodeLocation: cardUI.securityCode?.cardLocation,
-                                                                      securityCodeLength: cardUI.securityCode?.length,
+                                                                      securityCodeLocation: oneTapCard.cardUI?.securityCode?.cardLocation,
+                                                                      securityCodeLength: oneTapCard.cardUI?.securityCode?.length,
                                                                       totalAmount: payerCost.totalAmount,
                                                                       installments: payerCost.installments,
-                                                                      esc: viewModel.hasSavedESC())
+                                                                      escStatus: customOptionSearchItem.escStatus)
 
         let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != cardId }
         let alternativePayerPaymentMethods = getAlternativePayerPaymentMethods(from: remainingPayerPaymentMethods)
