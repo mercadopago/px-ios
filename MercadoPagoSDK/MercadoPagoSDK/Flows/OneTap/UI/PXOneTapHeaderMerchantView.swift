@@ -40,7 +40,6 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         // The title
         let titleLabel = buildTitleLabel(text: title)
         titleMerchantLabel = titleLabel
-        titleMerchantLabel?.accessibilityLabel = "prueba"
         containerView.addSubview(titleLabel)
 
         addSubviewToBottom(containerView)
