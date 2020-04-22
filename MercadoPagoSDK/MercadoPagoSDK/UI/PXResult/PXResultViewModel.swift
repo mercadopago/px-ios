@@ -396,21 +396,24 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
-        if isPaymentResultRejectedWithRemedy() {
-            if let remedy = remedy {
-                let data = PXRemedyViewData(oneTapCard: oneTapCard,
-                                            remedy: remedy,
-                                            animatedButtonDelegate: animatedButtonDelegate,
-                                            remedyViewProtocol: remedyViewProtocol,
-                                            remedyButtonTapped: getRemedyButtonAction())
-                return PXRemedyView(data: data)
-            }
+        if isPaymentResultRejectedWithRemedy(),
+            let remedy = remedy {
+            let data = PXRemedyViewData(oneTapCard: oneTapCard,
+                                        remedy: remedy,
+                                        animatedButtonDelegate: animatedButtonDelegate,
+                                        remedyViewProtocol: remedyViewProtocol,
+                                        remedyButtonTapped: getRemedyButtonAction())
+            return PXRemedyView(data: data)
         }
         return nil
     }
 
     func isPaymentResultRejectedWithRemedy() -> Bool {
-        return paymentResult.isRejectedWithRemedy()
+        if paymentResult.isRejectedWithRemedy(),
+            let remedy = remedy, remedy.isEmpty == false {
+            return true
+        }
+        return false
     }
 
     func getFooterMainAction() -> PXAction? {

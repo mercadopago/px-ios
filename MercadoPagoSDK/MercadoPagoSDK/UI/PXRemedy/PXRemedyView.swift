@@ -143,7 +143,8 @@ class PXRemedyView: UIView {
     }
 
     private func buildCardDrawerView() -> UIView? {
-        guard let cardName = data.oneTapCard?.cardUI?.name,
+        guard data.remedy.cvv != nil || data.remedy.suggestedPaymentMethod != nil,
+            let cardName = data.oneTapCard?.cardUI?.name,
             let cardNumber = data.oneTapCard?.cardUI?.lastFourDigits,
             let cardExpiration = data.oneTapCard?.cardUI?.expiration else {
                 return nil
