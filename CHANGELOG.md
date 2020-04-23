@@ -1,3 +1,10 @@
+# v4.33.2
+🚀Private Release - 4.33.2 🚀
+MercadoPagoSDKV4 - Private Version
+- IFPE support
+- Add Card to CVV Remedy
+- Fix bug 1081
+- Accessibility improvements
 
 # v4.33.1
 🚀Private Release - 4.33.1 🚀
