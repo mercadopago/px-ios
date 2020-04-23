@@ -29,7 +29,7 @@ extension MercadoPagoCheckout {
         }
         return alternativePayerPaymentMethods
     }
-    
+
     private func getOneTapCard(cardId: String) -> PXOneTapCardDto? {
         return viewModel.search?.oneTap?.first(where: { $0.oneTapCard?.cardId == cardId })?.oneTapCard
     }
@@ -74,8 +74,9 @@ extension MercadoPagoCheckout {
 
         let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != cardId }
         let alternativePayerPaymentMethods = getAlternativePayerPaymentMethods(from: remainingPayerPaymentMethods)
+        let oneTap = viewModel.search?.oneTap != nil
 
-        viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, success: { [weak self] remedy in
+        viewModel.mercadoPagoServices.getRemedy(for: paymentId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, oneTap: oneTap, success: { [weak self] remedy in
             guard let self = self else { return }
             self.viewModel.updateCheckoutModel(remedy: remedy)
             self.executeNextStep()

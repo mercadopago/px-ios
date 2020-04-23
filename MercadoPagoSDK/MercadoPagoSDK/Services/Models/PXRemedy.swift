@@ -64,18 +64,6 @@ struct PXRemedyPaymentMethod: Codable {
     let escStatus: String
 }
 
-struct PXAlternativePayerPaymentMethod: Codable {
-    let customOptionId: String?
-    let paymentMethodId: String?
-    let paymentTypeId: String?
-    let escStatus: String
-    let issuerName: String?
-    let lastFourDigit: String
-    let securityCodeLocation: String?
-    let securityCodeLength: Int?
-    let installmentsList: [PXPaymentMethodInstallment]?
-}
-
 struct PXPaymentMethodInstallment: Codable {
     let installments: Int
     let totalAmount: Double

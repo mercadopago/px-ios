@@ -190,6 +190,8 @@ extension MercadoPagoCheckout {
                 }
             case .RETRY_SECURITY_CODE:
                 if let remedyText = remedyText, remedyText.isNotEmpty {
+                    // Update PaymentOptionSelected if needed
+                    self.viewModel.updatePaymentOptionSelectedWithRemedy()
                     // CVV Remedy. Create new card token
                     self.viewModel.prepareForClone()
                     // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
@@ -200,9 +202,9 @@ extension MercadoPagoCheckout {
                     self.finish()
                 }
             case .RETRY_SILVER_BULLET:
-//                if let remedyText = remedyText, remedyText.isNotEmpty {
-//                    
-//                }
+                // Update PaymentOptionSelected if needed
+                self.viewModel.updatePaymentOptionSelectedWithRemedy()
+                // change finish for retry
                 self.finish()
             case .DEEPLINK:
                 if let remedyText = remedyText, remedyText.isNotEmpty {

@@ -393,6 +393,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
         resetPaymentOptionSelectedWith(newPaymentOptionSelected: paymentOptionSelected)
     }
+    
+    public func updatePaymentOptionSelectedWithRemedy() {
+        guard let paymentMethod = remedy?.suggestedPaymentMethod?.paymentMethod,
+            let customOptionSearchItem = search?.payerPaymentMethods.first(where: { $0.id == paymentMethod.customOptionId}),
+            customOptionSearchItem.isCustomerPaymentMethod() else { return }
+        updateCheckoutModel(paymentOptionSelected: customOptionSearchItem)
+    }
 
     public func resetPaymentOptionSelectedWith(newPaymentOptionSelected: PaymentMethodOption) {
         self.paymentOptionSelected = newPaymentOptionSelected
