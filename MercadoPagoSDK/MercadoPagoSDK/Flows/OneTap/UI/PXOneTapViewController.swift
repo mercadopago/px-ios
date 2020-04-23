@@ -65,7 +65,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         setupUI()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
-        UIAccessibility.post(notification: .layoutChanged, argument: headerView?.getMerchantView()?.getTitleMerchantLabel())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,6 +82,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewDidAppear(animated)
         navigationController?.delegate = self
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
+        UIAccessibility.post(notification: .layoutChanged, argument: headerView?.getMerchantView()?.getTitleMerchantLabel())
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
 
