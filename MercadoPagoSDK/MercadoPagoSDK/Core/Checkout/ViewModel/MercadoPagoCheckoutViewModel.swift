@@ -301,12 +301,19 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let paymentResult = paymentResult else {
             fatalError("paymentResult is nil")
         }
-        var oneTapCard: PXOneTapCardDto?
-        if let cardId = paymentResult.cardId {
-            oneTapCard = search?.oneTap?.first(where: { $0.oneTapCard?.cardId == cardId })?.oneTapCard
+        var oneTapDto: PXOneTapDto?
+        if paymentResult.isRejectedWithRemedy(), let oneTap = search?.oneTap, let remedy = remedy {
+            var cardId = remedy.suggestedPaymentMethod?.alternativePaymentMethod?.customOptionId
+            if cardId == nil {
+                cardId = paymentResult.cardId
+            }
+            oneTapDto = oneTap.first(where: { $0.oneTapCard?.cardId == cardId })
+            if oneTapDto == nil {
+                oneTapDto = oneTap.first(where: { $0.paymentMethodId == cardId })
+            }
         }
 
-        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapCard: oneTapCard)
+        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapDto: oneTapDto)
     }
 
     //SEARCH_PAYMENT_METHODS
@@ -393,9 +400,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
         resetPaymentOptionSelectedWith(newPaymentOptionSelected: paymentOptionSelected)
     }
-    
+
     public func updatePaymentOptionSelectedWithRemedy() {
-        guard let paymentMethod = remedy?.suggestedPaymentMethod?.paymentMethod,
+        guard let paymentMethod = remedy?.suggestedPaymentMethod?.alternativePaymentMethod,
             let customOptionSearchItem = search?.payerPaymentMethods.first(where: { $0.id == paymentMethod.customOptionId}),
             customOptionSearchItem.isCustomerPaymentMethod() else { return }
         updateCheckoutModel(paymentOptionSelected: customOptionSearchItem)

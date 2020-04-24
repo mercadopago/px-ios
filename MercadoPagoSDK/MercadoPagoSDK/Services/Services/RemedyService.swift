@@ -16,7 +16,7 @@ internal class RemedyService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getRemedy(for paymentMethodId: String, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, alternativePayerPaymentMethods: [PXAlternativePayerPaymentMethod]?, oneTap: Bool, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    internal func getRemedy(for paymentMethodId: String, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, alternativePayerPaymentMethods: [PXRemedyPaymentMethod]?, oneTap: Bool, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: PXError) -> Void)?) {
         var params: String = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
         params.paramsAppend(key: "one_tap", value: oneTap ? "true" : "false")
 

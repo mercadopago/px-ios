@@ -103,6 +103,10 @@ extension ThemeManager {
     func successColor() -> UIColor {
         return currentStylesheet.successColor
     }
+    
+    func remedyWarningColor() -> UIColor {
+        return #colorLiteral(red: 1, green: 0.4663783312, blue: 0.2018467486, alpha: 1) //currentStylesheet.warningColor
+    }
 
     func warningColor() -> UIColor {
         return currentStylesheet.warningColor

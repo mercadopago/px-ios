@@ -13,7 +13,7 @@ protocol PXRemedyViewProtocol: class {
 }
 
 struct PXRemedyViewData {
-    let oneTapCard: PXOneTapCardDto?
+    let oneTapDto: PXOneTapDto?
     let remedy: PXRemedy
 
     weak var animatedButtonDelegate: PXAnimatedButtonDelegate?
@@ -144,42 +144,59 @@ class PXRemedyView: UIView {
 
     private func buildCardDrawerView() -> UIView? {
         guard data.remedy.cvv != nil || data.remedy.suggestedPaymentMethod != nil,
-            let cardName = data.oneTapCard?.cardUI?.name,
-            let cardNumber = data.oneTapCard?.cardUI?.lastFourDigits,
-            let cardExpiration = data.oneTapCard?.cardUI?.expiration else {
+            let oneTapDto = data.oneTapDto else {
                 return nil
         }
 
-        let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: data.oneTapCard?.cardUI?.cardPattern)
+        var cardData: CardData
+        var cardUI: CardUI
+        if oneTapDto.accountMoney != nil {
+            cardData = PXCardDataFactory()
+            cardUI = AccountMoneyCard()
+        } else if let oneTapCardUI = oneTapDto.oneTapCard?.cardUI,
+            let cardName = oneTapCardUI.name,
+            let cardNumber = oneTapCardUI.lastFourDigits,
+            let cardExpiration = oneTapCardUI.expiration {
+            cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: oneTapCardUI.cardPattern)
 
-        let templateCard = TemplateCard()
-        if let cardPattern = data.oneTapCard?.cardUI?.cardPattern {
-            templateCard.cardPattern = cardPattern
+            let templateCard = TemplateCard()
+            if let cardPattern = oneTapCardUI.cardPattern {
+                templateCard.cardPattern = cardPattern
+            }
+
+            templateCard.securityCodeLocation = oneTapCardUI.securityCode?.cardLocation == "front" ? .front : .back
+
+            if let cardBackgroundColor = oneTapCardUI.color {
+                templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
+            }
+
+            if let cardFontColor = oneTapCardUI.fontColor {
+                templateCard.cardFontColor = cardFontColor.hexToUIColor()
+            }
+
+            if let cardLogoImageUrl = oneTapCardUI.paymentMethodImageUrl {
+                templateCard.cardLogoImageUrl = cardLogoImageUrl
+            }
+
+            if let issuerImageUrl = oneTapCardUI.issuerImageUrl {
+                templateCard.bankImageUrl = issuerImageUrl
+            }
+            cardUI = templateCard
+        } else {
+            return nil
         }
 
-        templateCard.securityCodeLocation = data.oneTapCard?.cardUI?.securityCode?.cardLocation == "front" ? .front : .back
-
-        if let cardBackgroundColor = data.oneTapCard?.cardUI?.color {
-            templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
-        }
-
-        if let cardFontColor = data.oneTapCard?.cardUI?.fontColor {
-            templateCard.cardFontColor = cardFontColor.hexToUIColor()
-        }
-
-        if let cardLogoImageUrl = data.oneTapCard?.cardUI?.paymentMethodImageUrl {
-            templateCard.cardLogoImageUrl = cardLogoImageUrl
-        }
-
-        if let issuerImageUrl = data.oneTapCard?.cardUI?.issuerImageUrl {
-            templateCard.bankImageUrl = issuerImageUrl
-        }
-
-        let controller = MLCardDrawerController(templateCard, cardData, false, .medium)
+        let controller = MLCardDrawerController(cardUI, cardData, false, .medium)
         controller.view.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: CARD_VIEW_WIDTH, height: CARD_VIEW_HEIGHT))
         controller.view.translatesAutoresizingMaskIntoConstraints = false
         controller.animated(false)
         controller.show()
+
+        if oneTapDto.accountMoney != nil {
+            let view = controller.getCardView()
+            AccountMoneyCard.render(containerView: view, isDisabled: false, size: view.bounds.size)
+        }
+
         return controller.view
     }
 

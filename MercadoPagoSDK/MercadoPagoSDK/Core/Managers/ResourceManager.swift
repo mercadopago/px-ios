@@ -196,7 +196,10 @@ extension ResourceManager {
             if paymentResult.isApproved() || paymentResult.isWaitingForPayment() {
                 return ThemeManager.shared.successColor()
             }
-            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() || paymentResult.isRejectedWithRemedy() {
+            if paymentResult.isRejectedWithRemedy() {
+                return ThemeManager.shared.remedyWarningColor()
+            }
+            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() {
                 return ThemeManager.shared.warningColor()
             }
             if paymentResult.isError() {

@@ -204,8 +204,11 @@ extension MercadoPagoCheckout {
             case .RETRY_SILVER_BULLET:
                 // Update PaymentOptionSelected if needed
                 self.viewModel.updatePaymentOptionSelectedWithRemedy()
-                // change finish for retry
-                self.finish()
+                // Silver Bullet remedy
+                self.viewModel.prepareForClone()
+                // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
+                self.viewModel.readyToPay = true
+                self.executeNextStep()
             case .DEEPLINK:
                 if let remedyText = remedyText, remedyText.isNotEmpty {
                     PXDeepLinkManager.open(remedyText)

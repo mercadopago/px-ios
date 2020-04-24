@@ -53,15 +53,20 @@ struct PXSuggestedPaymentMethod: Codable {
     let title: String?
     let message: String?
     let actionLoud: PXButtonAction?
-    let paymentMethod: PXRemedyPaymentMethod?
+    let alternativePaymentMethod: PXRemedyPaymentMethod?
 }
 
 struct PXRemedyPaymentMethod: Codable {
-    let customOptionId: String
-    let paymentMethodId: String
-    let paymentTypeId: String
-    let installment: PXPaymentMethodInstallment?
+    let customOptionId: String?
+    let paymentMethodId: String?
+    let paymentTypeId: String?
     let escStatus: String
+    let issuerName: String?
+    let lastFourDigit: String
+    let securityCodeLocation: String?
+    let securityCodeLength: Int?
+    let installmentsList: [PXPaymentMethodInstallment]?
+    let installment: PXPaymentMethodInstallment?
 }
 
 struct PXPaymentMethodInstallment: Codable {

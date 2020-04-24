@@ -9,14 +9,14 @@ import Foundation
 
 extension MercadoPagoCheckout {
 
-    private func getAlternativePayerPaymentMethods(from customOptionSearchItems: [PXCustomOptionSearchItem]?) -> [PXAlternativePayerPaymentMethod]? {
+    private func getAlternativePayerPaymentMethods(from customOptionSearchItems: [PXCustomOptionSearchItem]?) -> [PXRemedyPaymentMethod]? {
         guard let customOptionSearchItems = customOptionSearchItems else { return nil }
 
-        var alternativePayerPaymentMethods: [PXAlternativePayerPaymentMethod] = []
+        var alternativePayerPaymentMethods: [PXRemedyPaymentMethod] = []
         for customOptionSearchItem in customOptionSearchItems {
             let oneTapCard = getOneTapCard(cardId: customOptionSearchItem.id)
             let installments = getInstallments(from: customOptionSearchItem.selectedPaymentOption?.payerCosts)
-            let alternativePayerPaymentMethod = PXAlternativePayerPaymentMethod(customOptionId: customOptionSearchItem.id,
+            let alternativePayerPaymentMethod = PXRemedyPaymentMethod(customOptionId: customOptionSearchItem.id,
                                                                                 paymentMethodId: customOptionSearchItem.paymentMethodId,
                                                                                 paymentTypeId: customOptionSearchItem.paymentTypeId,
                                                                                 escStatus: customOptionSearchItem.escStatus ?? "not_available",
@@ -24,7 +24,8 @@ extension MercadoPagoCheckout {
                                                                                 lastFourDigit: customOptionSearchItem.lastFourDigits,
                                                                                 securityCodeLocation: oneTapCard?.cardUI?.securityCode?.cardLocation,
                                                                                 securityCodeLength: oneTapCard?.cardUI?.securityCode?.length,
-                                                                                installmentsList: installments)
+                                                                                installmentsList: installments,
+                                                                                installment: nil)
             alternativePayerPaymentMethods.append(alternativePayerPaymentMethod)
         }
         return alternativePayerPaymentMethods
@@ -82,9 +83,8 @@ extension MercadoPagoCheckout {
             self.executeNextStep()
         }, failure: { [weak self] error in
             guard let self = self else { return }
-            self.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_REMEDY.rawValue), errorCallback: { [weak self] () in
-                self?.getRemedy()
-            })
+            printDebug(error)
+            self.viewModel.updateCheckoutModel(remedy: PXRemedy(cvv: nil, highRisk: nil, callForAuth: nil, suggestedPaymentMethod: nil))
             self.executeNextStep()
         })
     }

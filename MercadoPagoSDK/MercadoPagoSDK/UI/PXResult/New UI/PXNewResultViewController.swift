@@ -174,8 +174,8 @@ class PXNewResultViewController: MercadoPagoUIViewController {
                     data.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -data.horizontalMargin)
                 ])
             }
-            if let model = viewModel as? PXResultViewModel,
-                model.remedy?.cvv != nil || model.remedy?.suggestedPaymentMethod != nil,
+            if let resultViewModel = viewModel as? PXResultViewModel,
+                resultViewModel.remedy?.cvv != nil || resultViewModel.remedy?.suggestedPaymentMethod != nil,
                 contentView.subviews.last is PXRemedyView {
                 PXLayout.pinLastSubviewToBottom(view: contentView)
             } else {

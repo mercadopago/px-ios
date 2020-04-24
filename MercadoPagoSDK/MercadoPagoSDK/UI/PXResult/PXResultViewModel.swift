@@ -17,17 +17,17 @@ internal class PXResultViewModel: NSObject {
     var pointsAndDiscounts: PXPointsAndDiscounts?
     var preference: PXPaymentResultConfiguration
     let remedy: PXRemedy?
-    let oneTapCard: PXOneTapCardDto?
+    let oneTapDto: PXOneTapDto?
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapCard: PXOneTapCardDto? = nil) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapDto: PXOneTapDto? = nil) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
         self.pointsAndDiscounts = pointsAndDiscounts
         self.preference = resultConfiguration
         self.amountHelper = amountHelper
         self.remedy = remedy
-        self.oneTapCard = oneTapCard
+        self.oneTapDto = oneTapDto
     }
 
     func getPaymentData() -> PXPaymentData {
@@ -398,7 +398,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
         if isPaymentResultRejectedWithRemedy(),
             let remedy = remedy {
-            let data = PXRemedyViewData(oneTapCard: oneTapCard,
+            let data = PXRemedyViewData(oneTapDto: oneTapDto,
                                         remedy: remedy,
                                         animatedButtonDelegate: animatedButtonDelegate,
                                         remedyViewProtocol: remedyViewProtocol,
