@@ -405,7 +405,24 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let paymentMethod = remedy?.suggestedPaymentMethod?.alternativePaymentMethod,
             let customOptionSearchItem = search?.payerPaymentMethods.first(where: { $0.id == paymentMethod.customOptionId}),
             customOptionSearchItem.isCustomerPaymentMethod() else { return }
-        updateCheckoutModel(paymentOptionSelected: customOptionSearchItem)
+        updateCheckoutModel(paymentOptionSelected: customOptionSearchItem.getCustomerPaymentMethod())
+
+        if let payerCosts = paymentConfigurationService.getPayerCostsForPaymentMethod(customOptionSearchItem.getId()) {
+            self.payerCosts = payerCosts
+            if let installment = remedy?.suggestedPaymentMethod?.alternativePaymentMethod?.installmentsList?.first,
+                let payerCost = payerCosts.first(where: { $0.installments == installment.installments }) {
+                updateCheckoutModel(payerCost: payerCost)
+            } else if let defaultPayerCost = checkoutPreference.paymentPreference.autoSelectPayerCost(payerCosts) {
+                updateCheckoutModel(payerCost: defaultPayerCost)
+            }
+        } else {
+            payerCosts = nil
+        }
+        if let discountConfiguration = paymentConfigurationService.getDiscountConfigurationForPaymentMethod(customOptionSearchItem.getId()) {
+            attemptToApplyDiscount(discountConfiguration)
+        } else {
+            applyDefaultDiscountOrClear()
+        }
     }
 
     public func resetPaymentOptionSelectedWith(newPaymentOptionSelected: PaymentMethodOption) {
