@@ -46,7 +46,8 @@ internal class PaymentResult {
                                                   PXPayment.StatusDetails.REJECTED_BLACKLIST,
                                                   PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
                                                   PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
-                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER]
+                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER,
+                                                  PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE]
 
     var paymentData: PXPaymentData?
     var splitAccountMoney: PXPaymentData?

@@ -154,11 +154,11 @@ extension MercadoPagoCheckout {
     func collectSecurityCodeForRetry() {
         let securityCodeViewModel = viewModel.getSecurityCodeViewModel(isCallForAuth: true)
         let securityCodeVc = SecurityCodeViewController(viewModel: securityCodeViewModel, collectSecurityCodeCallback: { [weak self] (cardInformation: PXCardInformationForm, securityCode: String) -> Void in
-            guard let token = cardInformation as? PXToken else {
-                fatalError("Cannot convert cardInformation to Token")
+            if let token = cardInformation as? PXToken {
+                self?.getTokenizationService().createCardToken(securityCode: securityCode, token: token)
+            } else {
+                self?.getTokenizationService().createCardToken(securityCode: securityCode)
             }
-            self?.getTokenizationService().createCardToken(securityCode: securityCode, token: token)
-
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }
@@ -177,7 +177,16 @@ extension MercadoPagoCheckout {
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
             case .CALL_FOR_AUTH:
-                self.viewModel.prepareForClone()
+                if self.viewModel.remedy != nil {
+                    // Update PaymentOptionSelected if needed
+                    self.viewModel.updatePaymentOptionSelectedWithRemedy()
+                    // CVV Remedy. Create new card token
+                    self.viewModel.prepareForClone()
+                    // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
+                    self.viewModel.readyToPay = true
+                } else {
+                    self.viewModel.prepareForClone()
+                }
                 self.collectSecurityCodeForRetry()
             case .RETRY,
                  .SELECT_OTHER:
