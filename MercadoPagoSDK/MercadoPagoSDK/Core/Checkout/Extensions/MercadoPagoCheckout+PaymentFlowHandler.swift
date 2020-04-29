@@ -22,6 +22,7 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
     }
 
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?, pointsAndDiscounts: PXPointsAndDiscounts?) {
+        viewModel.remedy = nil
         viewModel.paymentResult = paymentResult
         viewModel.instructionsInfo = instructionsInfo
         viewModel.pointsAndDiscounts = pointsAndDiscounts
@@ -34,6 +35,7 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
     }
 
     func finishPaymentFlow(businessResult: PXBusinessResult, pointsAndDiscounts: PXPointsAndDiscounts?) {
+        viewModel.remedy = nil
         viewModel.businessResult = businessResult
         viewModel.pointsAndDiscounts = pointsAndDiscounts
 

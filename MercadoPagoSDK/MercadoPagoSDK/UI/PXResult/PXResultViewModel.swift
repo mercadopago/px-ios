@@ -122,17 +122,46 @@ extension PXResultViewModel {
             properties["preference_amount"] = rawAmount.decimalValue
         }
 
-        if let remedy = remedy {
+        if let remedy = remedy, !(remedy.isEmpty) {
             properties["recoverable"] = true
-            var remedies: String?
-            if remedy.cvv != nil {
-                remedies = "cvv_request"
-            } else if remedy.suggestedPaymentMethod != nil {
-                remedies = "payment_method_suggestion"
+            var remedies: [String] = []
+            if remedy.suggestedPaymentMethod != nil {
+                remedies.append("payment_method_suggestion")
+            } else if remedy.cvv != nil {
+                remedies.append("cvv_request")
+            } else if remedy.highRisk != nil {
+                remedies.append("kyc_request")
             }
-            if let remedies = remedies {
+            if !(remedies.isEmpty) {
                 properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
             }
+        } else {
+            properties["recoverable"] = false
+        }
+
+        return properties
+    }
+
+    func getRemedyProperties() -> [String: Any] {
+        var properties: [String: Any] = [:]
+        guard let remedy = remedy else { return properties }
+
+        var type: String?
+        if remedy.suggestedPaymentMethod != nil {
+            type = "payment_method_suggestion"
+            if let paymentMethod = remedy.suggestedPaymentMethod?.alternativePaymentMethod {
+                var extraInfo: [String: Any] = [:]
+                extraInfo["payment_method_type"] = paymentMethod.paymentTypeId ?? ""
+                extraInfo["payment_method_id"] = paymentMethod.paymentMethodId ?? ""
+                properties["extra_info"] = extraInfo
+            }
+        } else if remedy.cvv != nil {
+            type = "cvv_request"
+        } else if remedy.highRisk != nil {
+            type = "kyc_request"
+        }
+        if let type = type {
+            properties["type"] = type // [ payment_method_suggestion / cvv_request /  kyc_request ]
         }
 
         return properties
@@ -276,24 +305,14 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { [weak self] (text: String?) in
-            var properties: [String: Any] = [:]
-            guard let remedy = self?.remedy else { return }
-
-            var remedies: String?
-            if remedy.cvv != nil {
-                remedies = "cvv_request"
-            } else if remedy.suggestedPaymentMethod != nil {
-                remedies = "payment_method_suggestion"
+            if let properties = self?.getRemedyProperties() {
+                MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: properties)
             }
-            if let remedies = remedies {
-                properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
-            }
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: properties)
 
             if let callback = self?.callback {
-                if remedy.cvv != nil {
+                if self?.remedy?.cvv != nil {
                     callback(PaymentResult.CongratsState.RETRY_SECURITY_CODE, text)
-                } else if remedy.suggestedPaymentMethod != nil {
+                } else if self?.remedy?.suggestedPaymentMethod != nil {
                     callback(PaymentResult.CongratsState.RETRY_SILVER_BULLET, text)
                 } else {
                     callback(PaymentResult.CongratsState.RETRY, text)
