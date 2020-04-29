@@ -300,8 +300,6 @@ extension PXRemedyView {
         let remedy = data.remedy
         if let cvv = remedy.cvv, let length = cvv.fieldSetting?.length {
             return length
-//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let length = suggestionPaymentMethod.fieldSetting?.length {
-//            return length
         }
         return 0
     }
@@ -310,8 +308,6 @@ extension PXRemedyView {
         let remedy = data.remedy
         if remedy.cvv != nil && data.remedyViewProtocol != nil {
             return true
-//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let length = suggestionPaymentMethod.fieldSetting?.length {
-//            return true
         }
         return false
     }
