@@ -19,6 +19,9 @@ internal class RemedyService: MercadoPagoService {
     internal func getRemedy(for paymentMethodId: String, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, alternativePayerPaymentMethods: [PXRemedyPaymentMethod]?, oneTap: Bool, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: PXError) -> Void)?) {
         var params: String = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
         params.paramsAppend(key: "one_tap", value: oneTap ? "true" : "false")
+        if let flowName = MPXTracker.sharedInstance.getFlowName() {
+            params.paramsAppend(key: ApiParam.FLOW_NAME, value: flowName)
+        }
 
         let remedyBody = PXRemedyBody(payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods)
         let encoder = JSONEncoder()
