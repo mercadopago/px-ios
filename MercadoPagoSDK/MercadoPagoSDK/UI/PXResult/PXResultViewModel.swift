@@ -426,6 +426,8 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         if isPaymentResultRejectedWithRemedy(),
             let remedy = remedy {
             let data = PXRemedyViewData(oneTapDto: oneTapDto,
+                                        paymentData: getPaymentData(),
+                                        amountHelper: getAmountHelper(),
                                         remedy: remedy,
                                         animatedButtonDelegate: animatedButtonDelegate,
                                         remedyViewProtocol: remedyViewProtocol,

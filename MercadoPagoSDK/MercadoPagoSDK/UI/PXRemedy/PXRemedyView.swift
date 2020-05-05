@@ -14,6 +14,8 @@ protocol PXRemedyViewProtocol: class {
 
 struct PXRemedyViewData {
     let oneTapDto: PXOneTapDto?
+    let paymentData: PXPaymentData?
+    let amountHelper: PXAmountHelper?
     let remedy: PXRemedy
 
     weak var animatedButtonDelegate: PXAnimatedButtonDelegate?
@@ -40,6 +42,7 @@ class PXRemedyView: UIView {
     let CARD_VIEW_HEIGHT: CGFloat = 109
     let TEXTFIELD_HEIGHT: CGFloat = 50.0
     let TEXTFIELD_FONT_SIZE: CGFloat = PXLayout.M_FONT
+    let TOTAL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let HINT_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let BUTTON_HEIGHT: CGFloat = 50.0
 
@@ -48,7 +51,7 @@ class PXRemedyView: UIView {
 
     private func render() {
         removeAllSubviews()
-        //Title Label
+        // Title Label
         let titleLabel = buildTitleLabel(text: getRemedyMessage())
         addSubview(titleLabel)
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
@@ -60,7 +63,7 @@ class PXRemedyView: UIView {
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
 
-        //CardDrawer
+        // CardDrawer
         if let cardDrawerView = buildCardDrawerView() {
             addSubview(cardDrawerView)
             NSLayoutConstraint.activate([
@@ -71,8 +74,20 @@ class PXRemedyView: UIView {
             ])
         }
 
+        // Total Amount
+        if let totalAmountView = buildTotalAmountView() {
+            let lastView = subviews.last ?? titleLabel
+            addSubview(totalAmountView)
+            NSLayoutConstraint.activate([
+                totalAmountView.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
+                totalAmountView.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
+                totalAmountView.heightAnchor.constraint(equalToConstant: 40),
+                totalAmountView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            ])
+        }
+
         if shouldShowTextField() {
-            //TextField
+            // TextField
             let textField = buildTextField(placeholder: getRemedyPlaceholder())
             self.textField = textField
             let lastView = subviews.last ?? titleLabel
@@ -199,6 +214,115 @@ class PXRemedyView: UIView {
         }
 
         return controller.view
+    }
+
+    private func buildTotalAmountView() -> UIView? {
+        guard data.remedy.cvv == nil && data.remedy.suggestedPaymentMethod != nil,
+            let paymentData = data.paymentData,
+            let amountHelper = data.amountHelper else {
+                return nil
+        }
+
+        let currency = SiteManager.shared.getCurrency()
+        let defaultTextColor = UIColor.black.withAlphaComponent(0.45)
+        let defaultFont = UIFont.ml_semiboldSystemFont(ofSize: TOTAL_FONT_SIZE) ?? Utils.getSemiBoldFont(size: TOTAL_FONT_SIZE)
+        let interestRateAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: defaultFont,
+            NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+        ]
+        let firstString: NSMutableAttributedString = NSMutableAttributedString()
+
+        if let payerCost = paymentData.payerCost {
+            if payerCost.installments > 1 {
+                let titleString = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
+                let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
+                firstString.append(attributedTitle)
+
+                // Installment Rate
+                if payerCost.installmentRate == 0.0 {
+                    let string = " " + "Sin interés".localized.lowercased()
+                    let attributedInsterest = NSAttributedString(string: string, attributes: interestRateAttributes)
+                    firstString.appendWithSpace(attributedInsterest)
+                }
+
+                // Total Amount
+                let totalAmountAttributes: [NSAttributedString.Key: Any] = [
+                    NSAttributedString.Key.font: defaultFont,
+                    NSAttributedString.Key.foregroundColor: defaultTextColor
+                ]
+                let totalString = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true)
+                let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
+                firstString.appendWithSpace(attributedTotal)
+            } else {
+                let string = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency)
+                let attributedTitle = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+                firstString.append(attributedTitle)
+            }
+        } else {
+            // Caso account money
+            if let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
+                let string = Utils.getAmountFormated(amount: splitAccountMoneyAmount, forCurrency: currency)
+                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+                firstString.append(attributed)
+            } else {
+                let string = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
+                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+                firstString.append(attributed)
+            }
+        }
+
+        // Discount
+        if let discount = paymentData.getDiscount(), let transactionAmount = paymentData.transactionAmount {
+            let discountAmountAttributes: [NSAttributedString.Key: Any] = [
+                NSAttributedString.Key.font: defaultFont,
+                NSAttributedString.Key.foregroundColor: defaultTextColor,
+                NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
+            ]
+            let string = Utils.getAmountFormated(amount: transactionAmount.doubleValue, forCurrency: currency)
+            let attributedAmount = NSAttributedString(string: string, attributes: discountAmountAttributes)
+            firstString.appendWithSpace(attributedAmount)
+
+            let discountString = discount.getDiscountDescription()
+            let attributedString = NSAttributedString(string: discountString, attributes: interestRateAttributes)
+            firstString.appendWithSpace(attributedString)
+        }
+
+        let totalView = UIView()
+        totalView.translatesAutoresizingMaskIntoConstraints = false
+
+        let totalTitleLabel = UILabel()
+        totalTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        totalTitleLabel.textAlignment = .left
+        totalTitleLabel.textColor = UIColor.black.withAlphaComponent(0.8)
+        totalTitleLabel.numberOfLines = 1
+        totalTitleLabel.text = "total_row_title_default".localized
+        totalTitleLabel.font = defaultFont
+        totalTitleLabel.lineBreakMode = .byTruncatingTail
+
+        totalView.addSubview(totalTitleLabel)
+        NSLayoutConstraint.activate([
+            totalTitleLabel.topAnchor.constraint(equalTo: totalView.topAnchor),
+            totalTitleLabel.heightAnchor.constraint(equalToConstant: 20),
+            totalTitleLabel.leftAnchor.constraint(equalTo: totalView.leftAnchor),
+            totalTitleLabel.rightAnchor.constraint(equalTo: totalView.rightAnchor)
+        ])
+
+        let totalDescriptionLabel = UILabel()
+        totalDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        totalDescriptionLabel.textAlignment = .left
+        totalDescriptionLabel.numberOfLines = 1
+        totalDescriptionLabel.attributedText = firstString
+        totalDescriptionLabel.lineBreakMode = .byTruncatingTail
+
+        totalView.addSubview(totalDescriptionLabel)
+        NSLayoutConstraint.activate([
+            totalDescriptionLabel.topAnchor.constraint(equalTo: totalTitleLabel.bottomAnchor),
+            totalDescriptionLabel.heightAnchor.constraint(equalToConstant: 20),
+            totalDescriptionLabel.leftAnchor.constraint(equalTo: totalView.leftAnchor),
+            totalDescriptionLabel.rightAnchor.constraint(equalTo: totalView.rightAnchor)
+        ])
+
+        return totalView
     }
 
     private func buildHintLabel(with text: String) -> UILabel {
