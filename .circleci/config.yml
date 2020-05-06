@@ -36,9 +36,6 @@ jobs:
           command: |
             curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s
       - run:
-          name: Install And Update CocoaPods
-          command: bundle exec pod install --repo-update
-      - run:
           name: Run Deploy
           command: ./scripts/run_deploy.sh
       - save_cache:
