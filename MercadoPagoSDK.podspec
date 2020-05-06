@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
     default.dependency 'MLCardDrawer', '~> 1.4'
     s.dependency 'MLBusinessComponents', '~> 1.0'
     s.dependency 'MLCardForm', '~> 0.7'
-    s.dependency 'AndesUI', '~> 3.0'
+    s.dependency 'AndesUI', '3.0.0'
   end
 
   #s.test_spec do |test_spec|
