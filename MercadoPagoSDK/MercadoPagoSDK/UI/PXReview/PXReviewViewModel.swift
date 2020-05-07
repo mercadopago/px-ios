@@ -88,7 +88,8 @@ extension PXReviewViewModel {
     }
 
     func shouldShowCreditsTermsAndConditions() -> Bool {
-        return creditsTermsAndConditions() != nil
+        guard let termsAndConditions = creditsTermsAndConditions(), termsAndConditions.text.isNotEmpty else { return false }
+        return true
     }
 
     func creditsTermsAndConditions() -> PXTermsDto? {
