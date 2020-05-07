@@ -1,3 +1,10 @@
+# v4.33.5
+🚀Private Release - 4.33.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Add total amount for silver bullet remedy
+- Add flow name to every request header. Remove flow name as remedies request param
+- Fix tyc view
+
 # v4.33.4
 🚀Private Release - 4.33.4 🚀
 MercadoPagoSDKV4 - Private Version
@@ -62,7 +69,7 @@ MercadoPagoSDKV4 - Private Version
 # v4.32.4
 🚀Public Release - 4.32.4 🚀
 MercadoPagoSDK - Public Version
-- Edit CPF button removed 
+- Edit CPF button removed
 - Brasil locale fix
 - Benefits fix
 - Translations fixes
@@ -72,7 +79,7 @@ MercadoPagoSDK - Public Version
 🚀Private Release - 4.32.3 🚀
 MercadoPagoSDKV4 - Private Version
 - MLBusiness Discount Tracker
-- Edit CPF button removed 
+- Edit CPF button removed
 - Brasil locale fix
 - Benefits fix
 - Translations fixes
@@ -121,7 +128,7 @@ MercadoPagoSDKV4 - Private Version
 🚀Private Release - 4.30.1 🚀
 MercadoPagoSDKV4 - Private Version
 - MLCardForm update
-- Added max retries for Init refresh 
+- Added max retries for Init refresh
 
 # v4.30
 🚀Private Release - 4.30 🚀
