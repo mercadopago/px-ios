@@ -27,17 +27,27 @@ jobs:
       - add_ssh_keys
       - restore_cache:
           key: gem-cache-{{ checksum "Gemfile.lock" }}-v2
+      - restore_cache:
+          # Add key when remove Podfile.lock from gitignore
+          # key: pods-cache-{{ .Branch }}-{{ checksum "Podfile.lock" }}
+          keys:
+            - pods-cache-{{ .Branch }}-{{ checksum "Podfile" }}
+            - pods-cache-{{ .Branch }}-
+            - pods-cache
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4.6" > ~/.ruby-version
       - run: bundle check || bundle install --path vendor/bundle
       - run:
-          name: Get cocoapods master repo
-          command: |
-            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s
-      - run:
           name: Run Deploy
           command: ./scripts/run_deploy.sh
+      - save_cache:
+          # Replace key when remove Podfile.lock from gitignore
+          # key: pods-cache-{{ .Branch }}-{{ checksum "Podfile.lock" }}
+          key: pods-cache-{{ .Branch }}-{{ checksum "Podfile" }}
+          paths:
+            - Pods
+            - ~/.cocoapods/repos/cocoapods-
       - save_cache:
           key: gem-cache-{{ checksum "Gemfile.lock" }}-v2
           paths:
