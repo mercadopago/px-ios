@@ -84,7 +84,7 @@ extension MercadoPagoCheckout {
         }, failure: { [weak self] error in
             guard let self = self else { return }
             printDebug(error)
-            self.viewModel.updateCheckoutModel(remedy: PXRemedy(cvv: nil, highRisk: nil, callForAuth: nil, suggestedPaymentMethod: nil))
+            self.viewModel.updateCheckoutModel(remedy: PXRemedy(cvv: nil, highRisk: nil, callForAuth: nil, suggestedPaymentMethod: nil, trackingData: nil))
             self.executeNextStep()
         })
     }

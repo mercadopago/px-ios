@@ -12,6 +12,7 @@ struct PXRemedy: Codable {
     let highRisk: PXHighRisk?
     let callForAuth: PXCallForAuth?
     let suggestedPaymentMethod: PXSuggestedPaymentMethod?
+    let trackingData: [String: String]?
 }
 
 extension PXRemedy {

@@ -149,12 +149,6 @@ extension PXResultViewModel {
         var type: String?
         if remedy.suggestedPaymentMethod != nil {
             type = "payment_method_suggestion"
-            if let paymentMethod = remedy.suggestedPaymentMethod?.alternativePaymentMethod {
-                var extraInfo: [String: Any] = [:]
-                extraInfo["payment_method_type"] = paymentMethod.paymentTypeId ?? ""
-                extraInfo["payment_method_id"] = paymentMethod.paymentMethodId ?? ""
-                properties["extra_info"] = extraInfo
-            }
         } else if remedy.cvv != nil {
             type = "cvv_request"
         } else if remedy.highRisk != nil {
@@ -162,6 +156,9 @@ extension PXResultViewModel {
         }
         if let type = type {
             properties["type"] = type // [ payment_method_suggestion / cvv_request /  kyc_request ]
+        }
+        if let trackingData = remedy.trackingData {
+            properties["extra_info"] = trackingData
         }
 
         return properties
