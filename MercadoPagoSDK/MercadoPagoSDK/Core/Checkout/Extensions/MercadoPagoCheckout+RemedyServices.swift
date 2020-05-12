@@ -50,8 +50,10 @@ extension MercadoPagoCheckout {
     func getRemedy() {
         guard let paymentId = viewModel.paymentResult?.paymentId,
             let payerCost = viewModel.paymentResult?.paymentData?.payerCost,
-            let cardId = viewModel.paymentResult?.cardId,
+            let cardId = viewModel.paymentResult?.cardId ?? viewModel.paymentResult?.paymentData?.token?.cardId,
             let oneTapCard = getOneTapCard(cardId: cardId) else {
+            viewModel.updateCheckoutModel(remedy: PXRemedy())
+            executeNextStep()
             return
         }
 
@@ -59,6 +61,8 @@ extension MercadoPagoCheckout {
             customOptionSearchItem.isCustomerPaymentMethod() &&
             customOptionSearchItem.paymentTypeId != PXPaymentTypes.ACCOUNT_MONEY.rawValue &&
             customOptionSearchItem.paymentTypeId != PXPaymentTypes.CONSUMER_CREDITS.rawValue else {
+            viewModel.updateCheckoutModel(remedy: PXRemedy())
+            executeNextStep()
             return
         }
 
@@ -84,7 +88,7 @@ extension MercadoPagoCheckout {
         }, failure: { [weak self] error in
             guard let self = self else { return }
             printDebug(error)
-            self.viewModel.updateCheckoutModel(remedy: PXRemedy(cvv: nil, highRisk: nil, callForAuth: nil, suggestedPaymentMethod: nil, trackingData: nil))
+            self.viewModel.updateCheckoutModel(remedy: PXRemedy())
             self.executeNextStep()
         })
     }
