@@ -11,7 +11,14 @@ struct PXRemedy: Codable {
     let cvv: PXInvalidCVV?
     let highRisk: PXHighRisk?
     let callForAuth: PXCallForAuth?
-    let suggestionPaymentMethod: PXSuggestionPaymentMethod?
+    let suggestedPaymentMethod: PXSuggestedPaymentMethod?
+    let trackingData: [String: String]?
+}
+
+extension PXRemedy {
+    var isEmpty: Bool {
+        return cvv == nil && highRisk == nil && callForAuth == nil && suggestedPaymentMethod == nil
+    }
 }
 
 struct PXInvalidCVV: Codable {
@@ -43,23 +50,27 @@ struct PXButtonAction: Codable {
     let label: String?
 }
 
-struct PXSuggestionPaymentMethod: Codable {
+struct PXSuggestedPaymentMethod: Codable {
     let title: String?
     let message: String?
-    let alternativePayerPaymentMethod: PXAlternativePayerPaymentMethod?
+    let actionLoud: PXButtonAction?
+    let alternativePaymentMethod: PXRemedyPaymentMethod?
 }
 
-struct PXAlternativePayerPaymentMethod: Codable {
-    let paymentMethodId: String
-    let paymentTypeId: String
-    let installments: [PXPaymentMethodInstallment]?
-    let selectedPayerCostIndex: Int
-    let esc: Bool
+struct PXRemedyPaymentMethod: Codable {
+    let customOptionId: String?
+    let paymentMethodId: String?
+    let paymentTypeId: String?
+    let escStatus: String
+    let issuerName: String?
+    let lastFourDigit: String
+    let securityCodeLocation: String?
+    let securityCodeLength: Int?
+    let installmentsList: [PXPaymentMethodInstallment]?
+    let installment: PXPaymentMethodInstallment?
 }
 
 struct PXPaymentMethodInstallment: Codable {
     let installments: Int
     let totalAmount: Double
-    let labels: [String]
-    let recommendedMessage: String?
 }

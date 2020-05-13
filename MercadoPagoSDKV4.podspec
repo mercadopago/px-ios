@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.33.1"
+  s.version          = "4.33.5"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
     s.dependency 'MLCardDrawer', '~> 1.4'
     s.dependency 'MLBusinessComponents', '~> 1.0'
     s.dependency 'MLCardForm', '~> 0.7'
-    s.dependency 'AndesUI', '~> 2.0'
+    s.dependency 'AndesUI', '~> 3.0'
   end
 
 

@@ -600,11 +600,13 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
+            let siteId = viewModel.siteId
+            let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
             let builder: MLCardFormBuilder
             if let privateKey = viewModel.privateKey {
-                builder = MLCardFormBuilder(privateKey: privateKey, siteId: viewModel.siteId, flowId: PXConfiguratorManager.biometricConfig.flowIdentifier, lifeCycleDelegate: self)
+                builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
             } else {
-                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: viewModel.siteId, flowId: PXConfiguratorManager.biometricConfig.flowIdentifier, lifeCycleDelegate: self)
+                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
             }
             builder.setLanguage(Localizator.sharedInstance.getLanguage())
             builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)

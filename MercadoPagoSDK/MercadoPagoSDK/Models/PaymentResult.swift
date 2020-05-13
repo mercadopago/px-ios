@@ -11,13 +11,13 @@ import Foundation
 internal class PaymentResult {
 
     internal enum CongratsState: Int {
-        case cancel_EXIT = 0
-        case cancel_SELECT_OTHER = 1
-        case cancel_RETRY = 2
-        case cancel_RECOVER = 3
-        case call_FOR_AUTH = 4
-        case bad_FILLED_SECURITY_CODE = 5
-        case call_DEEPLINK = 6
+        case EXIT
+        case SELECT_OTHER
+        case RETRY
+        case CALL_FOR_AUTH
+        case RETRY_SECURITY_CODE
+        case RETRY_SILVER_BULLET
+        case DEEPLINK
     }
 
     private let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue,
@@ -38,8 +38,16 @@ internal class PaymentResult {
                                   PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
 
     private let rejectedWithRemedyStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
-                                           PXPayment.StatusDetails.REJECTED_HIGH_RISK,
-                                           PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK]
+                                                  PXPayment.StatusDetails.REJECTED_HIGH_RISK,
+                                                  PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
+                                                  PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
+                                                  PXPayment.StatusDetails.REJECTED_OTHER_REASON,
+                                                  PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
+                                                  PXPayment.StatusDetails.REJECTED_BLACKLIST,
+                                                  PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
+                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
+                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER,
+                                                  PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE]
 
     var paymentData: PXPaymentData?
     var splitAccountMoney: PXPaymentData?

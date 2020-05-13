@@ -54,7 +54,7 @@ final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
 
         let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "add_card_congrats_title".localized, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.successColor(), productImage: productImage, statusImage: statusImage, closeAction: { [weak self] in
             if let callback = self?.callback {
-                callback(PaymentResult.CongratsState.cancel_EXIT)
+                callback(PaymentResult.CongratsState.EXIT)
             }
         })
         let header = PXHeaderComponent(props: props)

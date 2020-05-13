@@ -17,17 +17,17 @@ internal class PXResultViewModel: NSObject {
     var pointsAndDiscounts: PXPointsAndDiscounts?
     var preference: PXPaymentResultConfiguration
     let remedy: PXRemedy?
-    let oneTapCard: PXOneTapCardDto?
+    let oneTapDto: PXOneTapDto?
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapCard: PXOneTapCardDto? = nil) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapDto: PXOneTapDto? = nil) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
         self.pointsAndDiscounts = pointsAndDiscounts
         self.preference = resultConfiguration
         self.amountHelper = amountHelper
         self.remedy = remedy
-        self.oneTapCard = oneTapCard
+        self.oneTapDto = oneTapDto
     }
 
     func getPaymentData() -> PXPaymentData {
@@ -122,17 +122,43 @@ extension PXResultViewModel {
             properties["preference_amount"] = rawAmount.decimalValue
         }
 
-        if let remedy = remedy {
+        if let remedy = remedy, !(remedy.isEmpty) {
             properties["recoverable"] = true
-            var remedies: String?
-            if remedy.cvv != nil {
-                remedies = "cvv_request"
-            } else if remedy.suggestionPaymentMethod != nil {
-                remedies = "payment_method_suggestion"
+            var remedies: [String] = []
+            if remedy.suggestedPaymentMethod != nil {
+                remedies.append("payment_method_suggestion")
+            } else if remedy.cvv != nil {
+                remedies.append("cvv_request")
+            } else if remedy.highRisk != nil {
+                remedies.append("kyc_request")
             }
-            if let remedies = remedies {
+            if !(remedies.isEmpty) {
                 properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
             }
+        } else {
+            properties["recoverable"] = false
+        }
+
+        return properties
+    }
+
+    func getRemedyProperties() -> [String: Any] {
+        var properties: [String: Any] = [:]
+        guard let remedy = remedy else { return properties }
+
+        var type: String?
+        if remedy.suggestedPaymentMethod != nil {
+            type = "payment_method_suggestion"
+        } else if remedy.cvv != nil {
+            type = "cvv_request"
+        } else if remedy.highRisk != nil {
+            type = "kyc_request"
+        }
+        if let type = type {
+            properties["type"] = type // [ payment_method_suggestion / cvv_request /  kyc_request ]
+        }
+        if let trackingData = remedy.trackingData {
+            properties["extra_info"] = trackingData
         }
 
         return properties
@@ -264,10 +290,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
             if let callback = self?.callback {
                 if let url = self?.getBackUrl() {
                     self?.openURL(url: url, success: { (_) in
-                        callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+                        callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
-                    callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+                    callback(PaymentResult.CongratsState.EXIT, nil)
                 }
             }
         }
@@ -276,25 +302,17 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { [weak self] (text: String?) in
-            var properties: [String: Any] = [:]
-            guard let remedy = self?.remedy else { return }
-
-            var remedies: String?
-            if remedy.cvv != nil {
-                remedies = "cvv_request"
-            } else if remedy.suggestionPaymentMethod != nil {
-                remedies = "payment_method_suggestion"
+            if let properties = self?.getRemedyProperties() {
+                MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: properties)
             }
-            if let remedies = remedies {
-                properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
-            }
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: properties)
 
             if let callback = self?.callback {
-                if remedy.cvv != nil {
-                    callback(PaymentResult.CongratsState.bad_FILLED_SECURITY_CODE, text)
+                if self?.remedy?.cvv != nil {
+                    callback(PaymentResult.CongratsState.RETRY_SECURITY_CODE, text)
+                } else if self?.remedy?.suggestedPaymentMethod != nil {
+                    callback(PaymentResult.CongratsState.RETRY_SILVER_BULLET, text)
                 } else {
-                    callback(PaymentResult.CongratsState.cancel_RETRY, text)
+                    callback(PaymentResult.CongratsState.RETRY, text)
                 }
             }
         }
@@ -401,32 +419,27 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 
-    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
-        if isPaymentResultRejectedWithRemedy() {
-            if let cvv = remedy?.cvv {
-                let data = PXResultTextFieldRemedyViewData(oneTapCard: oneTapCard,
-                                                           title: cvv.message ?? "",
-                                                           placeholder: cvv.fieldSetting?.title ?? "",
-                                                           hint: cvv.fieldSetting?.hintMessage ?? "",
-                                                           maxTextLength: cvv.fieldSetting?.length ?? 1,
-                                                           buttonColor: ThemeManager.shared.getAccentColor(),
-                                                           animatedButtonDelegate: animatedButtonDelegate,
-                                                           resultTextFieldRemedyViewDelegate: resultTextFieldRemedyViewDelegate,
-                                                           remedyButtonTapped: getRemedyButtonAction())
-                return PXResultTextFieldRemedyView(data: data)
-            } else if let highRisk = remedy?.highRisk {
-                let data = PXResultDescritionRemedyViewData(title: highRisk.message ?? "")
-                return PXResultDescritionRemedyView(data: data)
-            } else if let suggestionPaymentMethod = remedy?.suggestionPaymentMethod {
-                // Silver bullet
-                return nil
-            }
+    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
+        if isPaymentResultRejectedWithRemedy(),
+            let remedy = remedy {
+            let data = PXRemedyViewData(oneTapDto: oneTapDto,
+                                        paymentData: getPaymentData(),
+                                        amountHelper: getAmountHelper(),
+                                        remedy: remedy,
+                                        animatedButtonDelegate: animatedButtonDelegate,
+                                        remedyViewProtocol: remedyViewProtocol,
+                                        remedyButtonTapped: getRemedyButtonAction())
+            return PXRemedyView(data: data)
         }
         return nil
     }
 
     func isPaymentResultRejectedWithRemedy() -> Bool {
-        return paymentResult.isRejectedWithRemedy()
+        if paymentResult.isRejectedWithRemedy(),
+            let remedy = remedy, remedy.isEmpty == false {
+            return true
+        }
+        return false
     }
 
     func getFooterMainAction() -> PXAction? {

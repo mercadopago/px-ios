@@ -25,11 +25,9 @@ extension MercadoPagoCheckout {
 
         //summary ammount service should be performed using the processing modes designated by the payment method
         viewModel.mercadoPagoServices.update(processingModes: paymentMethod.processingModes)
-        viewModel.mercadoPagoServices.getSummaryAmount(bin: bin, amount: viewModel.amountHelper.preferenceAmount, issuerId: viewModel.paymentData.getIssuer()?.id, paymentMethodId: paymentMethod.id, payment_type_id: paymentMethod.paymentTypeId, differentialPricingId: diffPricingString, siteId: SiteManager.shared.getSiteId(), marketplace: viewModel.checkoutPreference.marketplace, discountParamsConfiguration: viewModel.getAdvancedConfiguration().discountParamsConfiguration, payer: viewModel.checkoutPreference.payer, defaultInstallments: viewModel.checkoutPreference.getDefaultInstallments(), charges: viewModel.amountHelper.chargeRules, maxInstallments: viewModel.checkoutPreference.getMaxAcceptedInstallments(), callback: { [weak self] (summaryAmount) in
+        viewModel.mercadoPagoServices.getSummaryAmount(bin: bin, amount: viewModel.amountHelper.preferenceAmount, issuerId: viewModel.paymentData.getIssuer()?.id, paymentMethodId: paymentMethod.id, payment_type_id: paymentMethod.paymentTypeId, differentialPricingId: diffPricingString, siteId: SiteManager.shared.getSiteId(), marketplace: viewModel.checkoutPreference.marketplace, discountParamsConfiguration: viewModel.getAdvancedConfiguration().discountParamsConfiguration, payer: viewModel.checkoutPreference.payer, defaultInstallments: viewModel.checkoutPreference.getDefaultInstallments(), charges: viewModel.amountHelper.chargeRules, maxInstallments: viewModel.checkoutPreference.getMaxAcceptedInstallments(), callback: { [weak self] summaryAmount in
 
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.viewModel.payerCosts = summaryAmount.selectedAmountConfiguration.amountConfiguration?.payerCosts
             if let discountConfig = summaryAmount.selectedAmountConfiguration.discountConfiguration {
                 self.viewModel.attemptToApplyDiscount(discountConfig)
@@ -40,18 +38,13 @@ extension MercadoPagoCheckout {
                     self.viewModel.updateCheckoutModel(payerCost: defaultPC)
                 }
             }
-
             self.executeNextStep()
-
-            }, failure: { [weak self] (error) in
-
-                guard let self = self else {
-                    return
-                }
-                self.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] () in
-                    self?.getPayerCostsConfiguration()
-                })
-                self.executeNextStep()
+        }, failure: { [weak self] error in
+            guard let self = self else { return }
+            self.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] () in
+                self?.getPayerCostsConfiguration()
+            })
+            self.executeNextStep()
         })
     }
 

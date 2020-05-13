@@ -35,7 +35,7 @@ final class PXFooterRenderer: NSObject {
             fooView.addSubview(principalButton)
 
             var principalButtonTopConstraint: NSLayoutConstraint?
-            if footer.props.termsInfo != nil {
+            if let termsInfo = footer.props.termsInfo, termsInfo.text.isNotEmpty {
                 let termsView = PXTermsAndConditionView(termsDto: footer.props.termsInfo, delegate: termsDelegate)
                 fooView.insertSubview(termsView, belowSubview: principalButton)
                 NSLayoutConstraint.activate([

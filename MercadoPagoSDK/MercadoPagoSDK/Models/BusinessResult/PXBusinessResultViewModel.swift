@@ -99,7 +99,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     func getHeaderCloseAction() -> (() -> Void)? {
         let action = { [weak self] in
             if let callback = self?.callback {
-                callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+                callback(PaymentResult.CongratsState.EXIT, nil)
             }
         }
         return action
@@ -108,7 +108,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { [weak self] (text: String?) in
             if let callback = self?.callback {
-                callback(PaymentResult.CongratsState.cancel_EXIT, text)
+                callback(PaymentResult.CongratsState.EXIT, text)
             }
         }
         return action
@@ -209,7 +209,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 
-    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, resultTextFieldRemedyViewDelegate: PXResultTextFieldRemedyViewDelegate?) -> UIView? {
+    func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
         return nil
     }
 

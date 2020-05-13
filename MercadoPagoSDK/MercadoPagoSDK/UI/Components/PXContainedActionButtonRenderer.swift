@@ -22,7 +22,7 @@ class PXContainedActionButtonRenderer: NSObject {
         containedButtonView.translatesAutoresizingMaskIntoConstraints = false
         var termsView: PXTermsAndConditionView?
 
-        if containedButton.props.termsInfo != nil {
+        if let termsInfo = containedButton.props.termsInfo, termsInfo.text.isNotEmpty {
             termsView = PXTermsAndConditionView(termsDto: containedButton.props.termsInfo, delegate: termsDelegate)
         }
 

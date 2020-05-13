@@ -32,10 +32,6 @@ jobs:
           command: echo "ruby-2.4.6" > ~/.ruby-version
       - run: bundle check || bundle install --path vendor/bundle
       - run:
-          name: Get cocoapods master repo
-          command: |
-            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s
-      - run:
           name: Run Deploy
           command: ./scripts/run_deploy.sh
       - save_cache:

@@ -19,6 +19,7 @@ internal class MercadoPagoService: NSObject {
         case density = "x-density"
         case language = "Accept-Language"
         case platform = "x-platform"
+        case flowId = "x-flow-id"
     }
 
     let MP_DEFAULT_TIME_OUT = 15.0
@@ -79,6 +80,9 @@ internal class MercadoPagoService: NSObject {
 
         // Add platform
         request.setValue(MLBusinessAppDataService().getAppIdentifier().rawValue, forHTTPHeaderField: HeaderField.platform.rawValue)
+        
+        // Add flow id
+        request.setValue(MPXTracker.sharedInstance.getFlowName() ?? "unknown", forHTTPHeaderField: HeaderField.flowId.rawValue)
 
         if let headers = headers {
             for header in headers {

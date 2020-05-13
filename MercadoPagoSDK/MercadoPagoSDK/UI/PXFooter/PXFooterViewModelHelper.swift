@@ -43,15 +43,14 @@ internal extension PXResultViewModel {
     }
 
     private func getWarningButtonLabel() -> String? {
+        if paymentResult.isRejectedWithRemedy() && remedy?.cvv != nil || remedy?.suggestedPaymentMethod != nil {
+            // These remedy types have its own animated button
+            return nil
+        }
         if paymentResult.isCallForAuth() {
             return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
         } else if paymentResult.isBadFilled() {
-            if paymentResult.statusDetail == PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE {
-                // The new remedy view for CVV has its own animated button
-                return nil
-            } else {
-                return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized
-            }
+            return PXFooterResultConstants.BAD_FILLED_BUTTON_TEXT.localized
         } else if self.paymentResult.isDuplicatedPayment() {
             return PXFooterResultConstants.DUPLICATED_PAYMENT_BUTTON_TEXT.localized
         } else if self.paymentResult.isCardDisabled() {
@@ -91,23 +90,23 @@ internal extension PXResultViewModel {
     private func pressButton() {
         guard let callback = callback else { return }
         if paymentResult.isAccepted() {
-             callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+             callback(PaymentResult.CongratsState.EXIT, nil)
         } else if paymentResult.isError() {
-            if paymentResult.isHighRisk() {
-                callback(PaymentResult.CongratsState.call_DEEPLINK, remedy?.highRisk?.deepLink)
+            if paymentResult.isHighRisk(), let deepLink = remedy?.highRisk?.deepLink {
+                callback(PaymentResult.CongratsState.DEEPLINK, deepLink)
             } else {
-                callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
+                callback(PaymentResult.CongratsState.SELECT_OTHER, nil)
             }
         } else if self.paymentResult.isBadFilled() {
-            callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
+            callback(PaymentResult.CongratsState.SELECT_OTHER, nil)
         } else if paymentResult.isWarning() {
             switch self.paymentResult.statusDetail {
             case PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue:
-                callback(PaymentResult.CongratsState.call_FOR_AUTH, nil)
+                callback(PaymentResult.CongratsState.CALL_FOR_AUTH, nil)
             case PXRejectedStatusDetail.CARD_DISABLE.rawValue:
-                callback(PaymentResult.CongratsState.cancel_RETRY, nil)
+                callback(PaymentResult.CongratsState.RETRY, nil)
             default:
-                callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
+                callback(PaymentResult.CongratsState.SELECT_OTHER, nil)
             }
         }
     }
@@ -115,15 +114,15 @@ internal extension PXResultViewModel {
     private func pressLink() {
         guard let callback = callback else { return }
         if paymentResult.isAccepted() {
-            callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+            callback(PaymentResult.CongratsState.EXIT, nil)
         } else {
             switch self.paymentResult.statusDetail {
             case PXRejectedStatusDetail.REJECTED_FRAUD.rawValue:
-                callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+                callback(PaymentResult.CongratsState.EXIT, nil)
             case PXRejectedStatusDetail.DUPLICATED_PAYMENT.rawValue:
-                callback(PaymentResult.CongratsState.cancel_EXIT, nil)
+                callback(PaymentResult.CongratsState.EXIT, nil)
             default:
-                callback(PaymentResult.CongratsState.cancel_SELECT_OTHER, nil)
+                callback(PaymentResult.CongratsState.SELECT_OTHER, nil)
             }
         }
     }
