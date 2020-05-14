@@ -1,3 +1,8 @@
+# v4.33.7
+🚀Private Release - 4.33.7 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix cardlabel bug
+
 # v4.33.6
 🚀Private Release - 4.33.6 🚀
 MercadoPagoSDKV4 - Private Version
