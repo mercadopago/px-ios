@@ -1,3 +1,11 @@
+# v4.33.6
+🚀Private Release - 4.33.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Feature CoronaVoucher
+- Fix loading issue
+- Agregado de datos para tracking de remedies
+- Fix CardForm flowID value
+
 # v4.33.5
 🚀Private Release - 4.33.5 🚀
 MercadoPagoSDKV4 - Private Version
