@@ -77,7 +77,7 @@ extension PXCardSliderPagerCell {
         isAccessibilityElement = false
         if let newCardData = newCardData {
             let icon = ResourceManager.shared.getImage("add_new_card")
-            let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon, compactMode: shouldApplyCompactMode)
+            let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon, compactMode: false)
             let newCardView = PXAddMethodView(data: newCardData)
             newCardView.translatesAutoresizingMaskIntoConstraints = false
             newCardView.layer.cornerRadius = cornerRadius
@@ -297,21 +297,22 @@ class PXAddMethodView: UIView {
         labelsContainerView.axis = .vertical
         labelsContainerView.distribution = .fillEqually
 
+        var titleLabel: UILabel?
+        let titleView = UIView()
         if let title = data.title {
-            let titleLabel = UILabel()
-            titleLabel.numberOfLines = 2
-            titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            titleLabel.attributedText = title.getAttributedString(fontSize: PXLayout.XS_FONT)
-            titleLabel.textAlignment = data.compactMode ? .left : .center
-
-            let titleView = UIView()
-            titleView.addSubview(titleLabel)
-            labelsContainerView.addArrangedSubview(titleView)
-            NSLayoutConstraint.activate([
-                titleLabel.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
-                titleLabel.trailingAnchor.constraint(equalTo: titleView.trailingAnchor),
-                titleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor)
-            ])
+            titleLabel = UILabel()
+            if let titleLabel = titleLabel {
+                titleLabel.numberOfLines = 2
+                titleLabel.translatesAutoresizingMaskIntoConstraints = false
+                titleLabel.attributedText = title.getAttributedString(fontSize: PXLayout.XS_FONT)
+                titleLabel.textAlignment = data.compactMode ? .left : .center
+                titleView.addSubview(titleLabel)
+                labelsContainerView.addArrangedSubview(titleView)
+                NSLayoutConstraint.activate([
+                    titleLabel.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
+                    titleLabel.trailingAnchor.constraint(equalTo: titleView.trailingAnchor)
+                ])
+            }
         }
 
         if let subtitle = data.subtitle {
@@ -329,6 +330,11 @@ class PXAddMethodView: UIView {
                 subtitleLabel.trailingAnchor.constraint(equalTo: subtitleView.trailingAnchor),
                 subtitleLabel.topAnchor.constraint(equalTo: subtitleView.topAnchor)
             ])
+            if let titleLabel = titleLabel {
+                titleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor).isActive = true
+            }
+        } else {
+            titleLabel?.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         }
 
         accessibilityLabel = data.title?.message
