@@ -77,7 +77,7 @@ extension PXCardSliderPagerCell {
         isAccessibilityElement = false
         if let newCardData = newCardData {
             let icon = ResourceManager.shared.getImage("add_new_card")
-            let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon, compactMode: false)
+            let newCardData = PXAddMethodData(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon, compactMode: shouldApplyCompactMode)
             let newCardView = PXAddMethodView(data: newCardData)
             newCardView.translatesAutoresizingMaskIntoConstraints = false
             newCardView.layer.cornerRadius = cornerRadius
