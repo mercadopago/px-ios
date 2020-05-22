@@ -63,8 +63,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewWillAppear(animated)
         setupNavigationBar()
         setupUI()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
+        isUIEnabled(true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -371,15 +370,17 @@ extension PXOneTapViewController {
     }
 
     private func confirmPayment() {
+        isUIEnabled(false)
         if viewModel.shouldValidateWithBiometric() {
             let biometricModule = PXConfiguratorManager.biometricProtocol
             biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
-                DispatchQueue.main.async { [weak self] in
+                DispatchQueue.main.async {
                     self?.doPayment()
                 }
-                }, onError: { [weak self] _ in
-                    // User abort validation or validation fail.
-                    self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
+            }, onError: { [weak self] _ in
+                // User abort validation or validation fail.
+                self?.isUIEnabled(true)
+                self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
             })
         } else {
             doPayment()
@@ -387,19 +388,22 @@ extension PXOneTapViewController {
     }
 
     private func doPayment() {
-        self.subscribeLoadingButtonToNotifications()
-        self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
-        scrollView.isScrollEnabled = false
-        view.isUserInteractionEnabled = false
+        subscribeLoadingButtonToNotifications()
+        loadingButtonComponent?.startLoading(timeOut: timeOutPayButton)
         if let selectedCardItem = selectedCard {
             viewModel.amountHelper.getPaymentData().payerCost = selectedCardItem.selectedPayerCost
             let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem, selectedIndex: slider.getSelectedIndex())
             trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
         }
         let splitPayment = viewModel.splitPaymentEnabled
-        self.hideBackButton()
-        self.hideNavBar()
-        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment)
+        hideBackButton()
+        hideNavBar()
+        callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
+    }
+    
+    func isUIEnabled(_ enabled: Bool) {
+        view.isUserInteractionEnabled = enabled
+        loadingButtonComponent?.isUserInteractionEnabled = enabled
     }
 
     func resetButton(error: MPSDKError) {
@@ -745,8 +749,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 extension PXOneTapViewController: PXAnimatedButtonDelegate {
     func shakeDidFinish() {
         displayBackButton()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
+        isUIEnabled(true)
         unsubscribeFromNotifications()
         UIView.animate(withDuration: 0.3, animations: {
             self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()

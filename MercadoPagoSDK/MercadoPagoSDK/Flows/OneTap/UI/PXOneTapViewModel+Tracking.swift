@@ -122,7 +122,7 @@ extension PXOneTapViewModel {
         }
         return properties
     }
-    
+
     func getDialogOpenProperties(_ behaviour: PXBehaviour, _ modalConfig: PXModal) -> [String: Any] {
         var properties: [String: Any] = [:]
         if behaviour.target != nil {
