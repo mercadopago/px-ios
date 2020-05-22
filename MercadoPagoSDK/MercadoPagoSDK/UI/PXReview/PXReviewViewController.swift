@@ -414,7 +414,7 @@ extension PXReviewViewController {
         hideBackButton()
         callbackConfirm(viewModel.amountHelper.getPaymentData())
     }
-    
+
     func isUIEnabled(_ enabled: Bool) {
         scrollView.isScrollEnabled = enabled
         view.isUserInteractionEnabled = enabled
