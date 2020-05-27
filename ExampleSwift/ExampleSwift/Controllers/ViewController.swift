@@ -17,13 +17,15 @@ import UIKit
 
 // Check full documentation: http://mercadopago.github.io/px-ios/v4/
 class ViewController: UIViewController {
-
     private var checkout: MercadoPagoCheckout?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    @IBAction func initDefault(_ sender: Any) {
         // runMercadoPagoCheckout()
         runMercadoPagoCheckoutWithLifecycle()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
 
     private func runMercadoPagoCheckout() {
