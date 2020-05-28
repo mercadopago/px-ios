@@ -13,6 +13,7 @@
 		23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13D2147DFC90085CA7A /* Assets.xcassets */; };
 		23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13F2147DFC90085CA7A /* LaunchScreen.storyboard */; };
 		3BF796944AEC371EF5E3193D /* Pods_ExampleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */; };
+		F9DF596424803FFD00B1FDBF /* CustomCheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99370F01A1046BF2A7CF23EC /* Pods-ExampleSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.release.xcconfig"; sourceTree = "<group>"; };
 		DFDCC3FA5A49D0CD1D1BD714 /* Pods-ExampleSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCheckoutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				23EDA1382147DFC90085CA7A /* ViewController.swift */,
+				F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			files = (
 				23EDA1392147DFC90085CA7A /* ViewController.swift in Sources */,
 				23EDA1372147DFC90085CA7A /* AppDelegate.swift in Sources */,
+				F9DF596424803FFD00B1FDBF /* CustomCheckoutViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

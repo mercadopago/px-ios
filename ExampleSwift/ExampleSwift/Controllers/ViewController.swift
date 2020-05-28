@@ -26,6 +26,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        let col1 = UIColor(red: 34.0/255.0, green: 211/255.0, blue: 198/255.0, alpha: 1)
+        let col2 = UIColor(red: 145/255.0, green: 72.0/255.0, blue: 203/255.0, alpha: 1)
+        gradient.colors = [col1.cgColor, col2.cgColor]
+        view.layer.insertSublayer(gradient, at: 0)
     }
 
     private func runMercadoPagoCheckout() {
