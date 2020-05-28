@@ -122,21 +122,25 @@ extension PXResultViewModel {
             properties["preference_amount"] = rawAmount.decimalValue
         }
 
-        if let remedy = remedy, !(remedy.isEmpty) {
-            properties["recoverable"] = true
-            var remedies: [String] = []
-            if remedy.suggestedPaymentMethod != nil {
-                remedies.append("payment_method_suggestion")
-            } else if remedy.cvv != nil {
-                remedies.append("cvv_request")
-            } else if remedy.highRisk != nil {
-                remedies.append("kyc_request")
+        let paymentStatus = paymentResult.status
+        if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            if let remedy = remedy, !(remedy.isEmpty) {
+                properties["recoverable"] = true
+                var remedies: [String] = []
+                if remedy.suggestedPaymentMethod != nil {
+                    remedies.append("payment_method_suggestion")
+                } else if remedy.cvv != nil {
+                    remedies.append("cvv_request")
+                } else if remedy.highRisk != nil {
+                    remedies.append("kyc_request")
+                }
+                if !(remedies.isEmpty) {
+                    properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
+                }
+            } else {
+                properties["recoverable"] = false
+                properties["remedies"] = []
             }
-            if !(remedies.isEmpty) {
-                properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
-            }
-        } else {
-            properties["recoverable"] = false
         }
 
         return properties

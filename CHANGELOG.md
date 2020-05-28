@@ -1,4 +1,12 @@
-# v4.33.8 
+# v4.33.9 
+🚀Private Release - 4.33.9 🚀
+MercadoPagoSDKV4 - Private Version
+- Se corrigieron tracks invalidos (Melidata)
+- Se quitaron clases en desuso
+- Se corrigio el bug 1062
+- Se corrigio el bug 1100
+
+# v4.33.8
 🚀Private Release - 4.33.8 🚀
 MercadoPagoSDKV4 - Private Version
 - Se agrego el nuevo componente MLBusinessTouchpointsView

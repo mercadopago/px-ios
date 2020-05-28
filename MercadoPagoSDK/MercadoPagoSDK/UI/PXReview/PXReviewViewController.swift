@@ -66,12 +66,11 @@ class PXReviewViewController: PXComponentContainerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupUI()
-        self.scrollView.showsVerticalScrollIndicator = false
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.view.layoutIfNeeded()
-        self.checkFloatingButtonVisibility()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        view.layoutIfNeeded()
+        checkFloatingButtonVisibility()
+        isUIEnabled(true)
         // Temporary fix for MP/Meli UX incompatibility
         UIApplication.shared.statusBarStyle = .default
     }
@@ -387,42 +386,49 @@ extension PXReviewViewController {
             self.footerView?.alpha = 1
         }
     }
-}
-
-// MARK: Actions.
-extension PXReviewViewController: PXTermsAndConditionViewDelegate {
+    
     private func confirmPayment(_ targetButton: PXAnimatedButton) {
+        isUIEnabled(false)
         if viewModel.shouldValidateWithBiometric() {
             let biometricModule = PXConfiguratorManager.biometricProtocol
             biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
                 DispatchQueue.main.async {
                     self?.doPayment(targetButton)
                 }
-            }) { [weak self] error in
+            }, onError: { [weak self] _ in
                 // User abort validation or validation fail.
+                self?.isUIEnabled(true)
                 self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
-            }
+            })
         } else {
-            self.doPayment(targetButton)
+            doPayment(targetButton)
         }
     }
 
     private func doPayment(_ targetButton: PXAnimatedButton) {
         if shouldAnimatePayButton {
             subscribeLoadingButtonToNotifications(loadingButton: targetButton)
-            targetButton.startLoading(timeOut: self.timeOutPayButton)
+            targetButton.startLoading(timeOut: timeOutPayButton)
         }
-        scrollView.isScrollEnabled = false
-        view.isUserInteractionEnabled = false
         trackEvent(path: TrackingPaths.Events.ReviewConfirm.getConfirmPath(), properties: viewModel.getConfirmEventProperties())
-        self.hideBackButton()
-        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData())
+        hideBackButton()
+        callbackConfirm(viewModel.amountHelper.getPaymentData())
+    }
+
+    func isUIEnabled(_ enabled: Bool) {
+        scrollView.isScrollEnabled = enabled
+        view.isUserInteractionEnabled = enabled
+        loadingButtonComponent?.isUserInteractionEnabled = enabled
+        loadingFloatingButtonComponent?.isUserInteractionEnabled = enabled
     }
 
     func resetButton() {
         progressButtonAnimationTimeOut()
     }
+}
 
+// MARK: Actions.
+extension PXReviewViewController: PXTermsAndConditionViewDelegate {
     func shouldOpenTermsCondition(_ title: String, url: URL) {
         let webVC = WebViewController(url: url, navigationBarTitle: title)
         webVC.title = title
@@ -436,8 +442,7 @@ extension PXReviewViewController: PXAnimatedButtonDelegate {
     func shakeDidFinish() {
         showNavBarForAnimation()
         displayBackButton()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
+        isUIEnabled(true)
         unsubscribeFromNotifications()
         UIView.animate(withDuration: 0.3, animations: {
             self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()

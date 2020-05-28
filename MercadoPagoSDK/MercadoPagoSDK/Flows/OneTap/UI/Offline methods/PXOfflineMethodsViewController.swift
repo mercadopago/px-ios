@@ -423,8 +423,7 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
 extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
     func shakeDidFinish() {
         displayBackButton()
-        tableView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
+        isUIEnabled(true)
         unsubscribeFromNotifications()
         UIView.animate(withDuration: 0.3, animations: {
             self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
@@ -445,15 +444,17 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
     }
 
     private func confirmPayment() {
+        isUIEnabled(false)
         if viewModel.shouldValidateWithBiometric() {
             let biometricModule = PXConfiguratorManager.biometricProtocol
             biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
                 DispatchQueue.main.async {
                     self?.doPayment()
                 }
-                }, onError: { [weak self] _ in
-                    // User abort validation or validation fail.
-                    self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
+            }, onError: { [weak self] _ in
+                // User abort validation or validation fail.
+                self?.isUIEnabled(true)
+                self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
             })
         } else {
             doPayment()
@@ -462,10 +463,8 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
 
     private func doPayment() {
         if shouldAnimateButton() {
-            self.subscribeLoadingButtonToNotifications()
-            self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
-            tableView.isScrollEnabled = false
-            view.isUserInteractionEnabled = false
+            subscribeLoadingButtonToNotifications()
+            loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
             disableModalDismiss()
         }
 
@@ -483,14 +482,20 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
         }
 
         let splitPayment = false
-        self.hideBackButton()
-        self.hideNavBar()
-        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment)
+        hideBackButton()
+        hideNavBar()
+        callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
 
         if shouldShowKyC() {
             dismiss(animated: false, completion: nil)
             callbackFinishCheckout()
         }
+    }
+    
+    func isUIEnabled(_ enabled: Bool) {
+        tableView.isScrollEnabled = enabled
+        view.isUserInteractionEnabled = enabled
+        loadingButtonComponent?.isUserInteractionEnabled = enabled
     }
 
     private func shouldAnimateButton() -> Bool {

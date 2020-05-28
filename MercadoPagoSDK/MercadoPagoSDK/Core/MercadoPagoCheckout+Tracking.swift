@@ -25,7 +25,7 @@ extension MercadoPagoCheckout {
         properties["express_enabled"] = viewModel.getAdvancedConfiguration().expressEnabled
 
         viewModel.populateCheckoutStore()
-        properties["split_enabled"] = viewModel.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance)
+        properties["split_enabled"] = viewModel.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
 
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getInitPath(), properties: properties)
     }
