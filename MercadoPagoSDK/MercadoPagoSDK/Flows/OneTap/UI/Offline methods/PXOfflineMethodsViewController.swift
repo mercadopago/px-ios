@@ -446,8 +446,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
     private func confirmPayment() {
         isUIEnabled(false)
         if viewModel.shouldValidateWithBiometric() {
-            let biometricModule = PXConfiguratorManager.biometricProtocol
-            biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
+            viewModel.validateWithBiometric(onSuccess: { [weak self] in
                 DispatchQueue.main.async {
                     self?.doPayment()
                 }
