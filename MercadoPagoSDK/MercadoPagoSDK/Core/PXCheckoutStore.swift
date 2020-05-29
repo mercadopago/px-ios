@@ -12,6 +12,11 @@ import Foundation
  */
 @objcMembers
 open class PXCheckoutStore: NSObject {
+    private enum PXSecurity: String {
+        case NONE = "none"
+        case TWO_FACTOR_AUTHENTICATION = "2fa"
+    }
+
     static let sharedInstance = PXCheckoutStore()
     internal var checkoutPreference: PXCheckoutPreference?
     internal var paymentDatas: [PXPaymentData] = []
@@ -39,6 +44,13 @@ extension PXCheckoutStore {
      */
     public func getCheckoutPreference() -> PXCheckoutPreference? {
         return checkoutPreference
+    }
+    
+    /**
+     Get `PXSecurity` type.
+     */
+    public func getSecurityType() -> String {
+        return PXConfiguratorManager.hasSecurityValidation() ? PXSecurity.TWO_FACTOR_AUTHENTICATION.rawValue : PXSecurity.NONE.rawValue
     }
 }
 
