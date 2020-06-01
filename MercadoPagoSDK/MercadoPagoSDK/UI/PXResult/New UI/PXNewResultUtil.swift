@@ -45,7 +45,7 @@ class PXNewResultUtil {
         let data = PXDiscountsBoxData(discounts: discounts)
         return data
     }
-    
+
     class func getDataForTouchpointsView(discounts: PXDiscounts?) -> MLBusinessTouchpointsData? {
         guard let touchpoint = discounts?.touchpoint else {
             return nil

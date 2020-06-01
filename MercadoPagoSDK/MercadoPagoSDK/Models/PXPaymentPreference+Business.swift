@@ -125,8 +125,8 @@ extension PXPaymentPreference {
         return paymentPrefDic
     }
 
-    private func transformTrackingArray(_ items: [String]) -> [[String:String]] {
-        var newArray = [[String:String]]()
+    private func transformTrackingArray(_ items: [String]) -> [[String: String]] {
+        var newArray = [[String: String]]()
         for item in items {
             let newItem = transformTrackingItem(item)
             newArray.append(newItem)
@@ -134,7 +134,7 @@ extension PXPaymentPreference {
         return newArray
     }
 
-    private func transformTrackingItem(_ item: String) -> [String:String] {
-        return ["id":item]
+    private func transformTrackingItem(_ item: String) -> [String: String] {
+        return ["id": item]
     }
 }

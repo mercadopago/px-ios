@@ -21,7 +21,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     private var finishButtonAnimation: (() -> Void)?
 
     private var touchpointView: MLBusinessTouchpointsView?
-    
+
     init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void, finishButtonAnimation: (() -> Void)? = nil) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
@@ -280,12 +280,12 @@ extension PXNewResultViewController {
                 views.append(ResultViewData(view: MLBusinessDividingLineView(hasTriangle: true), verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
                 margin -= 8
             }
-            
+
             //Discounts Top View
             if let discountsTopViewData = buildDiscountsTopView() {
                 views.append(discountsTopViewData)
             }
-            
+
             //Discount Component
             views.append(ResultViewData(view: discountsView, verticalMargin: margin, horizontalMargin: PXLayout.M_MARGIN))
 
@@ -396,12 +396,12 @@ extension PXNewResultViewController {
 
         return pointsView
     }
-    
+
     ////DISCOUNTS
     func buildDiscountsTopView() -> ResultViewData? {
         return getDataForDiscountTopView(discounts: viewModel.getDiscounts())
     }
-    
+
     //DISCOUNTS TOP VIEW
     func getDataForDiscountTopView(discounts: PXDiscounts?) -> ResultViewData? {
         if let discounts = discounts, discounts.touchpoint != nil, let title = discounts.title {
@@ -418,7 +418,7 @@ extension PXNewResultViewController {
         }
         return nil
     }
-    
+
     private func buildMPLabel(with text: String, font: UIFont, numberOfLines: Int) -> MPLabel {
         let mpLabel = MPLabel(frame: .zero)
         mpLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)

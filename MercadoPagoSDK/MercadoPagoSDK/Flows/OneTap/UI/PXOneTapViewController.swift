@@ -36,7 +36,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     var currentModal: MLModal?
     var shouldTrackModal: Bool = false
-    var currentModalDismissTrackingProperties: [String: Any]? = nil
+    var currentModalDismissTrackingProperties: [String: Any]?
     let timeOutPayButton: TimeInterval
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
@@ -400,7 +400,7 @@ extension PXOneTapViewController {
         hideNavBar()
         callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
     }
-    
+
     func isUIEnabled(_ enabled: Bool) {
         view.isUserInteractionEnabled = enabled
         loadingButtonComponent?.isUserInteractionEnabled = enabled

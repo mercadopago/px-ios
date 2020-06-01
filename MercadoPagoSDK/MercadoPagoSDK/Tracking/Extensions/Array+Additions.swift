@@ -15,7 +15,7 @@ internal extension Array {
             self.removeLast(suffix)
         }
     }
-    
+
     mutating func safeRemoveFirst(_ suffix: Int) {
         if suffix > self.count {
             self.removeAll()
@@ -23,7 +23,7 @@ internal extension Array {
             self.removeFirst(suffix)
         }
     }
-    
+
     static func isNullOrEmpty(_ value: Array?) -> Bool {
         return value == nil || value?.count == 0
     }

@@ -491,7 +491,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
             callbackFinishCheckout()
         }
     }
-    
+
     func isUIEnabled(_ enabled: Bool) {
         tableView.isScrollEnabled = enabled
         view.isUserInteractionEnabled = enabled

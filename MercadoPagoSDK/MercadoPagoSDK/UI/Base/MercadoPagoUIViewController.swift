@@ -37,7 +37,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         self.loadMPStyles()
     }
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.statusBarStyle()
     }
 

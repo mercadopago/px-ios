@@ -71,7 +71,7 @@ open class PXGenericPayment: NSObject, PXBasePayment {
      - parameter statusDetail: Status detail of payment.
      - parameter paymentId: Id of payment.
      */
-    @available(*, deprecated: 4.7.0, message: "Use init with payment method id")
+    @available(*, deprecated, message: "Use init with payment method id")
     public init(status: String, statusDetail: String, paymentId: String? = nil) {
         self.status = status
         self.statusDetail = statusDetail

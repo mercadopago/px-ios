@@ -122,4 +122,3 @@ extension PXTermsAndConditionView: UITextViewDelegate, UIGestureRecognizerDelega
         return false
     }
 }
-

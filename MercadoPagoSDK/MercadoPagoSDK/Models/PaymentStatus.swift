@@ -114,7 +114,7 @@ public enum PXRejectedStatusDetail: String, CustomStringConvertible {
      REJECTED_BY_REGULATIONS - The MLB user needs to complete some information to proceed.
      */
     case REJECTED_BY_REGULATIONS = "rejected_by_regulations"
-    
+
     public var description: String {
         return self.rawValue
     }

@@ -21,7 +21,7 @@ internal class PXInstructionsContentComponent: PXComponentizable {
 
     func getInfoComponent() -> PXInstructionsInfoComponent? {
         var content: [String] = []
-        var info: [String] = props.instruction.info
+        let info: [String] = props.instruction.info
 
         var title = ""
         var hasTitle = false

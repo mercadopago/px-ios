@@ -9,7 +9,7 @@ import Foundation
 
 internal extension PXSetting {
     class func getSettingByBin(_ settings: [PXSetting]!, bin: String!) -> [PXSetting]? {
-        var selectedSetting = [PXSetting] ()
+        var selectedSetting = [PXSetting]()
         if settings != nil && settings.count > 0 {
             for setting in settings {
                 if let settingBin = setting.bin {

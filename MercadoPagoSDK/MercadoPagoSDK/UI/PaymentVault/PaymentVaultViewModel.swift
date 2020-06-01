@@ -116,8 +116,8 @@ extension PaymentVaultViewModel {
 
     fileprivate func populateDisplayItemsDrawable() {
 
-        var topPluginsDrawable = [PaymentOptionDrawable]()
-        var bottomPluginsDrawable = [PaymentOptionDrawable]()
+        let topPluginsDrawable = [PaymentOptionDrawable]()
+        let bottomPluginsDrawable = [PaymentOptionDrawable]()
         var customerPaymentOptionsDrawable = [PaymentOptionDrawable]()
         var paymentOptionsDrawable = [PaymentOptionDrawable]()
 
