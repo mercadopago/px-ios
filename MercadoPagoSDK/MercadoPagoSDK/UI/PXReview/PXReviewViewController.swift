@@ -386,12 +386,11 @@ extension PXReviewViewController {
             self.footerView?.alpha = 1
         }
     }
-    
+
     private func confirmPayment(_ targetButton: PXAnimatedButton) {
         isUIEnabled(false)
         if viewModel.shouldValidateWithBiometric() {
-            let biometricModule = PXConfiguratorManager.biometricProtocol
-            biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
+            viewModel.validateWithBiometric(onSuccess: { [weak self] in
                 DispatchQueue.main.async {
                     self?.doPayment(targetButton)
                 }

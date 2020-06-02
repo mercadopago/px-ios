@@ -8,7 +8,7 @@
 import Foundation
 
 internal extension PXPayer {
-    internal func clearCollectedData() {
+    func clearCollectedData() {
         entityType = nil
         identification = nil
         firstName = nil

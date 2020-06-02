@@ -38,8 +38,8 @@ internal class JSONHandler: NSObject {
     }
 
     class func attemptParseToBool(_ anyobject: Any?) -> Bool? {
-        if anyobject is Bool {
-            return anyobject as! Bool?
+        if let boolObject = anyobject as? Bool {
+            return boolObject
         }
         guard let string = attemptParseToString(anyobject) else {
             return nil

@@ -64,6 +64,7 @@
     NSString* imageUrl = @"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png";
     NSString* paymentMethodId = [[[checkoutStore getPaymentData] getPaymentMethod] getId];
     NSString* paymentTypeId = [[[checkoutStore getPaymentData] getPaymentMethod] paymentTypeId];
+    NSString* securityType = [checkoutStore getSecurityType];
 
     CustomComponentText* topCustomView = [[CustomComponentText alloc] initWithLabelText:@"Custom view test. PXBusinessResult topCustomView."];
     CustomComponentText* bottomCustomView = [[CustomComponentText alloc] initWithLabelText:@"Custom view test. PXBusinessResult bottomCustomView."];

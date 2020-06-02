@@ -19,7 +19,7 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
             return paymentTypeId
         }
         set {
-            paymentTypeId = paymentMethodId
+            paymentTypeId = newValue
         }
     }
     internal var paymentTypeId: String

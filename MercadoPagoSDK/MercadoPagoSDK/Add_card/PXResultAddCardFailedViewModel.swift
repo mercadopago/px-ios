@@ -45,7 +45,7 @@ final class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
     func isCallForAuth() -> Bool {
         return false
     }
-    
+
     func isHighRisk() -> Bool {
         return false
     }

@@ -25,52 +25,38 @@ internal struct PXAmountHelper {
     }
 
     internal var consumedDiscount: Bool {
-        get {
-            return paymentData.consumedDiscount ?? false
-        }
+        return paymentData.consumedDiscount ?? false
     }
 
     var discount: PXDiscount? {
-        get {
-            return paymentData.discount
-        }
+        return paymentData.discount
     }
 
     var campaign: PXCampaign? {
-        get {
-            return paymentData.campaign
-        }
+        return paymentData.campaign
     }
 
     var preferenceAmount: Double {
-        get {
-            return self.preference.getTotalAmount()
-        }
+        return self.preference.getTotalAmount()
     }
 
     var preferenceAmountWithCharges: Double {
-        get {
+        return preferenceAmount + chargeRuleAmount
+    }
+
+    var amountToPay: Double {
+        if let payerCost = paymentData.payerCost {
+            return payerCost.totalAmount
+        }
+        if let couponAmount = paymentData.discount?.couponAmount {
+            return preferenceAmount - couponAmount + chargeRuleAmount
+        } else {
             return preferenceAmount + chargeRuleAmount
         }
     }
 
-    var amountToPay: Double {
-        get {
-            if let payerCost = paymentData.payerCost {
-                return payerCost.totalAmount
-            }
-            if let couponAmount = paymentData.discount?.couponAmount {
-                return preferenceAmount - couponAmount + chargeRuleAmount
-            } else {
-                return preferenceAmount + chargeRuleAmount
-            }
-        }
-    }
-
     var isSplitPayment: Bool {
-        get {
-            return splitAccountMoney != nil
-        }
+        return splitAccountMoney != nil
     }
 
     func getAmountToPayWithoutPayerCost(_ paymentMethodId: String?) -> Double {
@@ -81,45 +67,37 @@ internal struct PXAmountHelper {
     }
 
     private var amountToPayWithoutPayerCost: Double {
-        get {
-            if let couponAmount = paymentData.discount?.couponAmount {
-                return preferenceAmount - couponAmount + chargeRuleAmount
-            } else {
-                return preferenceAmount + chargeRuleAmount
-            }
+        if let couponAmount = paymentData.discount?.couponAmount {
+            return preferenceAmount - couponAmount + chargeRuleAmount
+        } else {
+            return preferenceAmount + chargeRuleAmount
         }
     }
 
     var amountOff: Double {
-        get {
-            guard let discount = self.paymentData.discount else {
-                return 0
-            }
-            return discount.couponAmount
+        guard let discount = self.paymentData.discount else {
+            return 0
         }
+        return discount.couponAmount
     }
 
     var maxCouponAmount: Double? {
-        get {
-            if let maxCouponAmount = paymentData.campaign?.maxCouponAmount, maxCouponAmount > 0.0 {
-                return maxCouponAmount
-            }
-            return nil
+        if let maxCouponAmount = paymentData.campaign?.maxCouponAmount, maxCouponAmount > 0.0 {
+            return maxCouponAmount
         }
+        return nil
     }
 
     internal var chargeRuleAmount: Double {
-        get {
-            guard let rules = chargeRules else {
-                return 0
-            }
-            for rule in rules {
-                if rule.paymentTypeId == paymentData.paymentMethod?.paymentTypeId {
-                    return rule.amountCharge
-                }
-            }
+        guard let rules = chargeRules else {
             return 0
         }
+        for rule in rules {
+            if rule.paymentTypeId == paymentData.paymentMethod?.paymentTypeId {
+                return rule.amountCharge
+            }
+        }
+        return 0
     }
 
     internal func getPaymentData() -> PXPaymentData {

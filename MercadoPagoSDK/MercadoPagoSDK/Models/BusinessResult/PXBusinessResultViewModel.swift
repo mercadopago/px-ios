@@ -138,7 +138,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     func getDiscounts() -> PXDiscounts? {
         return pointsAndDiscounts?.discounts
     }
-    
+
     func getDiscountsTapAction() -> ((Int, String?, String?) -> Void)? {
         let action: (Int, String?, String?) -> Void = { (index, deepLink, trackId) in
             //open deep link

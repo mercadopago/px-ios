@@ -84,7 +84,7 @@ extension PXResultViewModel: PXCongratsTrackingDataProtocol {
         guard let numberOfDiscounts = PXNewResultUtil.getDataForDiscountsView(discounts: pointsAndDiscounts?.discounts)?.getItems().count else { return 0 }
         return numberOfDiscounts
     }
-    
+
     func getCampaignsIds() -> String? {
         guard let discounts = PXNewResultUtil.getDataForDiscountsView(discounts: pointsAndDiscounts?.discounts) else { return nil }
         var campaignsIdsArray: [String] = []
@@ -347,7 +347,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     func getDiscounts() -> PXDiscounts? {
         return pointsAndDiscounts?.discounts
     }
-    
+
     func getDiscountsTapAction() -> ((Int, String?, String?) -> Void)? {
         let action: (Int, String?, String?) -> Void = { (index, deepLink, trackId) in
             //open deep link

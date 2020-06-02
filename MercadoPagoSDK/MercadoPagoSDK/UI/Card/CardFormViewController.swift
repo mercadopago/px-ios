@@ -938,5 +938,4 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     internal func validateExpirationDate() -> Bool {
         return self.viewModel.validateExpirationDate(self.cardNumberLabel!, expirationDateLabel: self.expirationDateLabel!, cvvLabel: self.cvvLabel!, cardholderNameLabel: self.nameLabel!)
     }
-
 }

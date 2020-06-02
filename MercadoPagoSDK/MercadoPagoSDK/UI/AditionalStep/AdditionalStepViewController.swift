@@ -148,24 +148,19 @@ extension AdditionalStepViewController: UITableViewDelegate, UITableViewDataSour
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellWidth = self.tableView.bounds.width
-
-        if viewModel.isTitleCellFor(indexPath: indexPath) {
-
-            let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! AdditionalStepTitleTableViewCell
+        if viewModel.isTitleCellFor(indexPath: indexPath),
+            let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as? AdditionalStepTitleTableViewCell {
             titleCell.selectionStyle = .none
             titleCell.setTitle(string: self.getNavigationBarTitle())
             titleCell.backgroundColor = UIColor.primaryColor()
             self.titleCell = titleCell
 
             return titleCell
-
-        } else if viewModel.isCardCellFor(indexPath: indexPath) {
-
+        } else if viewModel.isCardCellFor(indexPath: indexPath),
+            let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as? AdditionalStepCardTableViewCell {
             if viewModel.isDigitalCurrency() {
                 return createEmptyCell()
             }
-
-            let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
             cardSectionCell.selectionStyle = .none
             cardSectionCell.backgroundColor = UIColor.primaryColor()
 
@@ -175,9 +170,8 @@ extension AdditionalStepViewController: UITableViewDelegate, UITableViewDataSour
             }
 
             return cardSectionCell
-
-        } else if viewModel.isBankInterestCellFor(indexPath: indexPath) {
-            let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
+        } else if viewModel.isBankInterestCellFor(indexPath: indexPath),
+            let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as? BankInsterestTableViewCell {
             bankInsterestCell.backgroundColor = UIColor.primaryColor()
             return bankInsterestCell
 
@@ -191,10 +185,9 @@ extension AdditionalStepViewController: UITableViewDelegate, UITableViewDataSour
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if viewModel.isBodyCellFor(indexPath: indexPath) {
-            let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
-            self.viewModel.callback!(callbackData)
-
+        if viewModel.isBodyCellFor(indexPath: indexPath),
+            let callbackData: NSObject = viewModel.dataSource[indexPath.row] as? NSObject {
+            viewModel.callback!(callbackData)
         }
     }
 

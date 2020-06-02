@@ -13,9 +13,7 @@ class PXSummaryAmount: NSObject, Codable {
     let defaultAmountConfigurationId: String
 
     var selectedAmountConfiguration: PXPaymentOptionConfiguration {
-        get {
-            return PXPaymentOptionConfiguration(id: defaultAmountConfigurationId, discountConfiguration: discountConfigurations?[defaultAmountConfigurationId], payerCostConfiguration: amountConfigurations?[defaultAmountConfigurationId])
-        }
+        return PXPaymentOptionConfiguration(id: defaultAmountConfigurationId, discountConfiguration: discountConfigurations?[defaultAmountConfigurationId], payerCostConfiguration: amountConfigurations?[defaultAmountConfigurationId])
     }
 
     init(amountConfigurations: [String: PXAmountConfiguration]?, discountConfigurations: [String: PXDiscountConfiguration]?, defaultAmountConfigurationId: String) {

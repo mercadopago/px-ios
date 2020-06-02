@@ -36,7 +36,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     var currentModal: MLModal?
     var shouldTrackModal: Bool = false
-    var currentModalDismissTrackingProperties: [String: Any]? = nil
+    var currentModalDismissTrackingProperties: [String: Any]?
     let timeOutPayButton: TimeInterval
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
@@ -372,8 +372,7 @@ extension PXOneTapViewController {
     private func confirmPayment() {
         isUIEnabled(false)
         if viewModel.shouldValidateWithBiometric() {
-            let biometricModule = PXConfiguratorManager.biometricProtocol
-            biometricModule.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: { [weak self] in
+            viewModel.validateWithBiometric(onSuccess: { [weak self] in
                 DispatchQueue.main.async {
                     self?.doPayment()
                 }
@@ -400,7 +399,7 @@ extension PXOneTapViewController {
         hideNavBar()
         callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
     }
-    
+
     func isUIEnabled(_ enabled: Bool) {
         view.isUserInteractionEnabled = enabled
         loadingButtonComponent?.isUserInteractionEnabled = enabled

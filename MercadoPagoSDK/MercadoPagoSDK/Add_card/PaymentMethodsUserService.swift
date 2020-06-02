@@ -27,7 +27,7 @@ class PaymentMethodsUserService: MercadoPagoService {
             headers[MercadoPagoService.HeaderField.productId.rawValue] = prodId
         }
 
-        self.request(uri: uri, params: "access_token=\(accessToken)", body: nil, method: .get, headers: headers, success: { (data) in
+        self.request(uri: uri, params: "access_token=\(accessToken)", body: nil, method: .get, headers: headers, success: { data in
             do {
                 let paymentMethods = try JSONDecoder().decode([PXPaymentMethod].self, from: data)
                 success(paymentMethods)
@@ -36,9 +36,9 @@ class PaymentMethodsUserService: MercadoPagoService {
                 let dict = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
                 failure(PXError(domain: "mercadopago.sdk.getPaymentMethods", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: dict ?? [:], apiException: apiException))
             }
-        }) { (_) in
+        }, failure: { _ in
             failure(PXError(domain: "mercadopago.sdk.PaymentMethodsUserService.getPaymentMethods", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
-        }
+        })
     }
 
 }

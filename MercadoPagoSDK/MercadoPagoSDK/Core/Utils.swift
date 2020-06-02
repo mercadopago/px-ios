@@ -51,7 +51,7 @@ internal class Utils {
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        var dateArr = string.split { $0 == "T" }.map(String.init)
+        let dateArr = string.split { $0 == "T" }.map(String.init)
         return dateFormatter.date(from: dateArr[0])
     }
 
@@ -392,9 +392,6 @@ internal class Utils {
     }
 
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXInitDTO, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
-        guard paymentMethodSearch.groups != nil
-            else { return nil }
-
         if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
             return result
         }
@@ -456,7 +453,7 @@ internal class Utils {
 
     static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems: [PXPaymentMethodSearchItem], paymentTypeId: PXPaymentTypes) -> PXPaymentMethodSearchItem? {
 
-        var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+        let filterPaymentMethodSearchFound = paymentMethodSearchItems.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
             arg.id == paymentTypeId.rawValue
         }
 

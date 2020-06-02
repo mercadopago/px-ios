@@ -162,7 +162,7 @@ internal class CardFormViewModel {
 
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
 
-        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").count < self.getGuessedPM()?.secCodeLenght()) {
+        if cvvLabel.text?.replacingOccurrences(of: "•", with: "").count < self.getGuessedPM()?.secCodeLenght() {
             return false
         }
         let errorMethod = self.cardToken!.validateSecurityCode()

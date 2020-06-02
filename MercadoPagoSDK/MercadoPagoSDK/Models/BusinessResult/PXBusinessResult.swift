@@ -89,7 +89,7 @@ import UIKit
      - parameter paymentStatus: Payment status of the payment result
      - parameter paymentStatusDetail: Payment status detail of the payment result
      */
-    @available(*, deprecated: 4.7.0, message: "Use init with payment method id")
+    @available(*, deprecated, message: "Use init with payment method id")
     public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXAction? = nil, secondaryAction: PXAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil, paymentStatus: String, paymentStatusDetail: String) {
         self.receiptId = receiptId
         self.status = status
@@ -260,10 +260,10 @@ extension PXBusinessResult {
         return receiptId
     }
     public func getStatus() -> String {
-        return paymentStatus 
+        return paymentStatus
     }
 
     public func getStatusDetail() -> String {
-        return paymentStatusDetail 
+        return paymentStatusDetail
     }
 }

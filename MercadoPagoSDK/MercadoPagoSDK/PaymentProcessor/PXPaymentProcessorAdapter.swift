@@ -30,9 +30,9 @@ internal class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
     func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBasePayment: @escaping ((PXBasePayment) -> Void)) {
         paymentProcessor.startPayment?(checkoutStore: checkoutStore, errorHandler: errorHandler, successWithBusinessResult: { (businessResult) in
             successWithBasePayment(businessResult)
-        }) { (genericPayment) in
+        }, successWithPaymentResult: { (genericPayment) in
             successWithBasePayment(genericPayment)
-        }
+        })
     }
 
     func didReceive(checkoutStore: PXCheckoutStore) {

@@ -16,12 +16,10 @@ open class PXSplitPaymentMethod: NSObject, Codable {
     open var selectedPayerCostIndex: Int?
     open var payerCosts: [PXPayerCost]?
     open var selectedPayerCost: PXPayerCost? {
-        get {
-            if let remotePayerCosts = payerCosts, let selectedIndex = selectedPayerCostIndex, remotePayerCosts.indices.contains(selectedIndex) {
-                return remotePayerCosts[selectedIndex]
-            }
-            return nil
+        if let remotePayerCosts = payerCosts, let selectedIndex = selectedPayerCostIndex, remotePayerCosts.indices.contains(selectedIndex) {
+            return remotePayerCosts[selectedIndex]
         }
+        return nil
     }
 
     init(amount: Double, id: String, discount: PXDiscount?, message: String?, selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
