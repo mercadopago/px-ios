@@ -23,6 +23,8 @@ final class PXOneTapViewModel: PXReviewViewModel {
     var payerCompliance: PXPayerCompliance?
     var modals: [String: PXModal]?
     var payerPaymentMethods: [PXCustomOptionSearchItem]
+    var experimentsViewModel: PXExperimentsViewModel
+    var pulseViewTapped = false
 
     var splitPaymentEnabled: Bool = false
     var splitPaymentSelectionByUser: Bool?
@@ -32,10 +34,11 @@ final class PXOneTapViewModel: PXReviewViewModel {
     // Current flow.
     weak var currentFlow: OneTapFlow?
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption?, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, escProtocol: MercadoPagoESC?, currentFlow: OneTapFlow?, payerPaymentMethods: [PXCustomOptionSearchItem]) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption?, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, escProtocol: MercadoPagoESC?, currentFlow: OneTapFlow?, payerPaymentMethods: [PXCustomOptionSearchItem], experiments: [PXExperiment]?) {
         self.disabledOption = disabledOption
         self.currentFlow = currentFlow
         self.payerPaymentMethods = payerPaymentMethods
+        self.experimentsViewModel = PXExperimentsViewModel(experiments)
         super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged, escProtocol: escProtocol)
     }
 
@@ -402,6 +405,22 @@ extension PXOneTapViewModel {
     func shouldUseOldCardForm() -> Bool {
         if let newCardVersion = expressData?.filter({$0.newCard != nil}).first?.newCard?.version {
             return newCardVersion == "v1"
+        }
+        return false
+    }
+
+    func shouldHighlightInstallments() -> Bool {
+        var pxExperiment: PXExperiment?
+        if let experiments = experimentsViewModel.experiments {
+            for experiment in experiments where experiment.name == "px_nativo/highlight_installments" {
+                pxExperiment = experiment
+            }
+        }
+        if let experiment = pxExperiment {
+            if experiment.variant.name == "pulse" {
+                return !pulseViewTapped ? true : false
+            }
+            return true
         }
         return false
     }
