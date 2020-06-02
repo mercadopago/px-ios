@@ -97,9 +97,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     }
 
     @objc func willEnterForeground() {
-        if viewModel.shouldHighlightInstallments() {
-            installmentRow.highlightInstallments(viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
-        }
+        installmentRow.pulseView?.setupAnimations()
     }
 
     func update(viewModel: PXOneTapViewModel, cardId: String) {
@@ -147,8 +145,8 @@ extension PXOneTapViewController {
                 viewModel.amountHelper.getPaymentData().payerCost = preSelectedCard.selectedPayerCost
             }
             renderViews()
-        } else if viewModel.shouldHighlightInstallments() {
-            installmentRow.highlightInstallments(viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
+        } else {
+            installmentRow.pulseView?.setupAnimations()
         }
     }
 
@@ -731,7 +729,6 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 
         PXFeedbackGenerator.selectionFeedback()
 
-        installmentRow.pulseViewTapped = true
         installmentRow.removePulseView()
 
         self.installmentsSelectorView?.removeFromSuperview()

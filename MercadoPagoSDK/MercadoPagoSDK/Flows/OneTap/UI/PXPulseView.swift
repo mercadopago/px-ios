@@ -27,13 +27,13 @@ final class PXPulseView: UIView {
 }
 
 // MARK: Animations
-private extension PXPulseView {
+extension PXPulseView {
     func setupAnimations() {
         addPulseAnimation()
         addOpacityAnimation()
     }
 
-    func addPulseAnimation() {
+    private func addPulseAnimation() {
         let pulseAnimation: CABasicAnimation = CABasicAnimation(keyPath: "transform.scale")
         pulseAnimation.duration = 1
         pulseAnimation.fromValue = 1.3
@@ -44,7 +44,7 @@ private extension PXPulseView {
         layer.add(pulseAnimation, forKey: "scale")
     }
 
-    func addOpacityAnimation() {
+    private func addOpacityAnimation() {
         let opacityAnimation = CABasicAnimation(keyPath: "opacity")
         opacityAnimation.duration = 1
         opacityAnimation.fromValue = 0

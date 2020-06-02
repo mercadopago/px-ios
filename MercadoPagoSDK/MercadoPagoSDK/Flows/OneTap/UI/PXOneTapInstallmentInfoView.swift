@@ -18,7 +18,6 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     private var tapEnabled = true
     private var chevronBackgroundView: UIView?
     var pulseView: PXPulseView?
-    var pulseViewTapped = false
 
     weak var delegate: PXOneTapInstallmentInfoViewProtocol?
     private var model: [PXOneTapInstallmentInfoViewModel]?
@@ -327,40 +326,35 @@ extension PXOneTapInstallmentInfoView {
 // MARK: PulseView
 extension PXOneTapInstallmentInfoView {
     func highlightInstallments(_ experiment: PXExperiment?) {
-        if experiment?.variant.name == "pulse" {
-            if chevronBackgroundView == nil, !pulseViewTapped {
-                chevronBackgroundView = UIView()
-                if let chevronBackgroundView = chevronBackgroundView {
-                    chevronBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-                    chevronBackgroundView.backgroundColor = .white
-                    addSubview(chevronBackgroundView)
-                    NSLayoutConstraint.activate([
-                        chevronBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
-                        chevronBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                        chevronBackgroundView.widthAnchor.constraint(equalToConstant: 56),
-                        chevronBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-                    ])
+        if experiment?.variant.name == "pulse", chevronBackgroundView == nil {
+            chevronBackgroundView = UIView()
+            if let chevronBackgroundView = chevronBackgroundView {
+                chevronBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+                chevronBackgroundView.backgroundColor = .white
+                addSubview(chevronBackgroundView)
+                NSLayoutConstraint.activate([
+                    chevronBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
+                    chevronBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                    chevronBackgroundView.widthAnchor.constraint(equalToConstant: 56),
+                    chevronBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+                ])
 
-                    arrowImage.image = MLBusinessAppDataService().getAppIdentifier() == .mp ? ResourceManager.shared.getImage("chevronMP") : ResourceManager.shared.getImage("chevronML")
-                    arrowImage.translatesAutoresizingMaskIntoConstraints = false
-                    addSubview(arrowImage)
-                    NSLayoutConstraint.activate([
-                        arrowImage.centerYAnchor.constraint(equalTo: chevronBackgroundView.centerYAnchor),
-                        arrowImage.leadingAnchor.constraint(equalTo: chevronBackgroundView.leadingAnchor, constant: PXLayout.XXS_MARGIN),
-                        arrowImage.heightAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE),
-                        arrowImage.widthAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE)
-                    ])
+                arrowImage.image = MLBusinessAppDataService().getAppIdentifier() == .mp ? ResourceManager.shared.getImage("chevronMP") : ResourceManager.shared.getImage("chevronML")
+                arrowImage.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(arrowImage)
+                NSLayoutConstraint.activate([
+                    arrowImage.centerYAnchor.constraint(equalTo: chevronBackgroundView.centerYAnchor),
+                    arrowImage.leadingAnchor.constraint(equalTo: chevronBackgroundView.leadingAnchor, constant: PXLayout.XXS_MARGIN),
+                    arrowImage.heightAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE),
+                    arrowImage.widthAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE)
+                ])
 
-                    setupPulseView()
-                }
-            } else if !pulseViewTapped {
                 setupPulseView()
             }
         }
     }
 
     func setupPulseView() {
-        removePulseView()
         pulseView = PXPulseView()
         if let pulseView = pulseView {
             arrowImage.addSubview(pulseView)
@@ -390,5 +384,6 @@ extension PXOneTapInstallmentInfoView {
         if let pulseView = pulseView {
             pulseView.removeFromSuperview()
         }
+        pulseView = nil
     }
 }
