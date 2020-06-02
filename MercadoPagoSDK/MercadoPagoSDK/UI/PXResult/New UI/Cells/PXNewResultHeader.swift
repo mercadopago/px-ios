@@ -59,7 +59,7 @@ class PXNewResultHeader: UIView {
             let closeButton = buildCloseButton(touchUpInsideClosure: closeAction)
             self.closeButton = closeButton
             addSubview(closeButton)
-            PXLayout.pinTop(view: closeButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinTop(view: closeButton, withMargin: PXLayout.XXXS_MARGIN).isActive = true
             PXLayout.pinLeft(view: closeButton, withMargin: PXLayout.S_MARGIN).isActive = true
         }
 
@@ -69,12 +69,12 @@ class PXNewResultHeader: UIView {
         addSubview(titleLabel)
 
         if let closeButton = self.closeButton {
-            PXLayout.put(view: titleLabel, onBottomOf: closeButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.put(view: titleLabel, onBottomOf: closeButton, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         } else {
-            PXLayout.pinTop(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinTop(view: titleLabel, withMargin: PXLayout.SM_MARGIN).isActive = true
         }
 
-        PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.SM_MARGIN).isActive = true
         PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
 
         //Icon ImageView
@@ -154,6 +154,7 @@ class PXNewResultHeader: UIView {
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.lineBreakMode = .byTruncatingTail
+        PXLayout.setHeight(owner: titleLabel, height: IMAGE_HEIGHT, relation: .greaterThanOrEqual).isActive = true
         return titleLabel
     }
 }

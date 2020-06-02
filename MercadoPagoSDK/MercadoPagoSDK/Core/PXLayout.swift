@@ -16,6 +16,7 @@ class PXLayout: NSObject {
     static let XXS_MARGIN: CGFloat = 8.0
     static let XS_MARGIN: CGFloat = 12.0
     static let S_MARGIN: CGFloat = 16.0
+    static let SM_MARGIN: CGFloat = 20.0
     static let M_MARGIN: CGFloat = 24.0
     static let L_MARGIN: CGFloat = 32.0
     static let XL_MARGIN: CGFloat = 40.0
