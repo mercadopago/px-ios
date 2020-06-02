@@ -24,7 +24,6 @@ final class PXOneTapViewModel: PXReviewViewModel {
     var modals: [String: PXModal]?
     var payerPaymentMethods: [PXCustomOptionSearchItem]
     var experimentsViewModel: PXExperimentsViewModel
-    var pulseViewTapped = false
 
     var splitPaymentEnabled: Bool = false
     var splitPaymentSelectionByUser: Bool?
@@ -410,17 +409,10 @@ extension PXOneTapViewModel {
     }
 
     func shouldHighlightInstallments() -> Bool {
-        var pxExperiment: PXExperiment?
         if let experiments = experimentsViewModel.experiments {
-            for experiment in experiments where experiment.name == "px_nativo/highlight_installments" {
-                pxExperiment = experiment
+            for experiment in experiments where experiment.name == PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS {
+                return true
             }
-        }
-        if let experiment = pxExperiment {
-            if experiment.variant.name == "pulse" {
-                return !pulseViewTapped ? true : false
-            }
-            return true
         }
         return false
     }
