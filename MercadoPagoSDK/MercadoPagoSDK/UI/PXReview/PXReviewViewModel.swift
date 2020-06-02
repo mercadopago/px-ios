@@ -50,7 +50,7 @@ class PXReviewViewModel: NSObject {
         // We should´t validate with Biometric.
         return false
     }
-    
+
     func validateWithBiometric(onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
         let config = PXConfiguratorManager.biometricConfig
         config.setAmount(NSDecimalNumber(value: getTotalAmount()))

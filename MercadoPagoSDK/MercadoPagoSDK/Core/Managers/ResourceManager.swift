@@ -49,19 +49,22 @@ extension ResourceManager {
 
         if defaultColor {
             description += "Azul"
-        } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" || description.contains("bolbradesco") || description.contains("pec") {
-            if tintColorForIcons == nil {
-                description += "Azul"
-            }
+        } else if (PaymentType.allPaymentIDs.contains(description) ||
+            description == "cards" ||
+            description.contains("bolbradesco") ||
+            description.contains("pec")) && tintColorForIcons == nil {
+            description += "Azul"
         }
 
         guard let itemSelected = dictPM?.value(forKey: description) as? NSDictionary else {
             return nil
         }
-
         let image = ResourceManager.shared.getImage(itemSelected.object(forKey: "image_name") as? String)
 
-        if description == "credit_card" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") || description.contains("pec") {
+        let paymentMethods = ["credit_card", "prepaid_card", "debit_card", "bank_transfer", "ticket", "cards"]
+        if paymentMethods.contains(description) ||
+            description.contains("bolbradesco") ||
+            description.contains("pec") {
             if let iconsTintColor = tintColorForIcons {
                 return image?.imageWithOverlayTint(tintColor: iconsTintColor)
             }

@@ -9,11 +9,13 @@
 import Foundation
 
 internal class PXServicesURLConfigs: NSObject {
-    static var MP_TEST_ENV = "/beta"
+    static var MP_ALPHA_ENV = "/alpha"
+    static var MP_BETA_ENV = "/beta"
     static var MP_PROD_ENV = "/v1"
     static var MP_SELECTED_ENV = MP_PROD_ENV
 
-    static let NEW_API_TEST_ENV = "/beta"
+    static let NEW_API_ALPHA_ENV = "/alpha"
+    static let NEW_API_BETA_ENV = "/beta"
     static let NEW_API_PROD_ENV = "/production"
     static var NEW_API_SELECTED_ENV = NEW_API_PROD_ENV
     

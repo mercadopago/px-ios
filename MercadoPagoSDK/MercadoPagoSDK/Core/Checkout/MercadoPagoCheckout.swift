@@ -123,11 +123,6 @@ extension MercadoPagoCheckout {
         }
     }
 
-    internal func enableBetaServices() {
-        PXServicesSettings.enableBetaServices()
-        PXTrackingSettings.enableBetaServices()
-    }
-
     internal func setCheckoutPreference(checkoutPreference: PXCheckoutPreference) {
         self.viewModel.checkoutPreference = checkoutPreference
     }
