@@ -41,6 +41,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
     private var navigationBarTapGesture: UITapGestureRecognizer?
+    var installmentRow = PXOneTapInstallmentInfoView()
 
     // MARK: Lifecycle/Publics
     init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
@@ -57,6 +58,11 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +89,17 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
         UIAccessibility.post(notification: .layoutChanged, argument: headerView?.getMerchantView()?.getMerchantTitleLabel())
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        installmentRow.addChevronBackgroundViewGradient()
+    }
+
+    @objc func willEnterForeground() {
+        if viewModel.shouldHighlightInstallments() {
+            installmentRow.highlightInstallments(viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
+        }
     }
 
     func update(viewModel: PXOneTapViewModel, cardId: String) {
@@ -130,6 +147,8 @@ extension PXOneTapViewController {
                 viewModel.amountHelper.getPaymentData().payerCost = preSelectedCard.selectedPayerCost
             }
             renderViews()
+        } else if viewModel.shouldHighlightInstallments() {
+            installmentRow.highlightInstallments(viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
         }
     }
 
@@ -153,7 +172,7 @@ extension PXOneTapViewController {
         PXLayout.pinRight(view: whiteView, withMargin: 0).isActive = true
 
         // Add installment row
-        let installmentRow = getInstallmentInfoView()
+        installmentRow = getInstallmentInfoView()
         whiteView.addSubview(installmentRow)
         PXLayout.pinLeft(view: installmentRow).isActive = true
         PXLayout.pinRight(view: installmentRow).isActive = true
@@ -190,7 +209,11 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         let installmentRowWidth: CGFloat = slider.getItemSize(cardSliderContentView).width
-        installmentRow.render(installmentRowWidth)
+        if viewModel.shouldHighlightInstallments() {
+            installmentRow.render(installmentRowWidth, experiment: viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
+        } else {
+            installmentRow.render(installmentRowWidth)
+        }
 
         view.layoutIfNeeded()
         refreshContentViewSize()
@@ -707,6 +730,9 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         }
 
         PXFeedbackGenerator.selectionFeedback()
+
+        installmentRow.pulseViewTapped = true
+        installmentRow.removePulseView()
 
         self.installmentsSelectorView?.removeFromSuperview()
         self.installmentsSelectorView?.layoutIfNeeded()
