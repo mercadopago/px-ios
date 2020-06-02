@@ -1,4 +1,11 @@
-# v4.33.9 
+# v4.34.0
+🚀Private Release - 4.34.0 🚀
+MercadoPagoSDKV4 - Private Version
+- Se actualiza el monto para la validacion de biometric
+- Se agrego security type al PXCheckoutStore
+- Se redujo el numero de warnings en xCode
+
+# v4.33.9
 🚀Private Release - 4.33.9 🚀
 MercadoPagoSDKV4 - Private Version
 - Se corrigieron tracks invalidos (Melidata)
