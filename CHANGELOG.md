@@ -1,4 +1,4 @@
-# v4.34.0
+# v4.34.0 
 🚀Private Release - 4.34.0 🚀
 MercadoPagoSDKV4 - Private Version
 - Se actualiza el monto para la validacion de biometric
