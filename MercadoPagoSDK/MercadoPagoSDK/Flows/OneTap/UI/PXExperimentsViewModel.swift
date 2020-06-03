@@ -25,3 +25,17 @@ struct PXExperimentsViewModel {
         return nil
     }
 }
+
+enum HighlightInstallmentsVariant: String {
+    case control
+    case animationPulse
+    case badge
+
+    var getValue: String {
+        switch self {
+        case .control: return "control"
+        case .animationPulse: return "animation_pulse"
+        case .badge: return "badge"
+        }
+    }
+}
