@@ -13,7 +13,7 @@ extension MercadoPagoCheckout: InitFlowProtocol {
     func didFailInitFlow(flowError: InitFlowError) {
         if initMode == .lazy {
             initProtocol?.failure(checkout: self)
-            trackErrorEvent(flowError: flowError)
+            trackInitFlowFriction(flowError: flowError)
             #if DEBUG
                 print("Error - \(flowError.errorStep.rawValue)")
             #endif
@@ -37,39 +37,10 @@ extension MercadoPagoCheckout: InitFlowProtocol {
     }
 
     func didFinishInitFlow() {
-        if initMode == .lazy && cardIdForInitFlowRefresh == nil {
+        if initMode == .lazy && InitFlowRefresh.cardId == nil {
             initProtocol?.didFinish(checkout: self)
         } else {
             executeNextStep()
         }
-    }
-}
-extension MercadoPagoCheckout {
-    func trackErrorEvent(flowError: InitFlowError) {
-        var properties: [String: Any] = [:]
-        properties["path"] = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
-        properties["style"] = Tracking.Style.screen
-        properties["id"] = Tracking.Error.Id.genericError
-        properties["message"] = "Hubo un error"
-        properties["attributable_to"] = Tracking.Error.Atrributable.user
-
-        var extraDic: [String: Any] = [:]
-        var errorDic: [String: Any] = [:]
-
-        errorDic["url"] =  flowError.requestOrigin?.rawValue
-        errorDic["retry_available"] = flowError.shouldRetry
-        errorDic["status"] =  flowError.apiException?.status
-
-        if let causes = flowError.apiException?.cause {
-            var causesDic: [String: Any] = [:]
-            for cause in causes where !String.isNullOrEmpty(cause.code) {
-                causesDic["code"] = cause.code
-                causesDic["description"] = cause.causeDescription
-            }
-            errorDic["causes"] = causesDic
-        }
-        extraDic["api_error"] = errorDic
-        properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 }

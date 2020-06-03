@@ -23,11 +23,23 @@ open class MercadoPagoCheckout: NSObject {
     internal var initProtocol: PXLazyInitProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
-    // This var will hold the value of the new card added by MLCardForm
+    // This struct will hold the value of the new card added by MLCardForm
     // until the init flow is refreshed with this new payment method
-    internal var cardIdForInitFlowRefresh: String?
-    internal var countInitFlowRefreshRetries: Int = 0
-    internal let maxInitFlowRefreshRetries: Int = 3
+    internal struct InitFlowRefresh {
+        static var cardId: String?
+        static var countRetries: Int = 0
+        static let maxRetries: Int = 3
+        static let retryDelay: Double = 0.5
+
+        static var hasReachedMaxRetries: Bool {
+            return countRetries >= maxRetries
+        }
+
+        static func resetValues() {
+            cardId = nil
+            countRetries = 0
+        }
+    }
 
     // MARK: Initialization
     /**
