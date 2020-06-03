@@ -227,13 +227,16 @@ extension PXOneTapInstallmentInfoView {
         addSubview(arrowImage)
         arrowImage.contentMode = .scaleAspectFit
         arrowImage.tag = colapsedTag
-        if experiment == nil || experiment?.variant.name != "pulse" {
+        if experiment == nil || experiment?.variant.name != HighlightInstallmentsVariant.animationPulse.getValue {
             arrowImage.image = ResourceManager.shared.getImage("one-tap-installments-info-chevron")
             PXLayout.centerVertically(view: arrowImage).isActive = true
             PXLayout.pinTop(view: arrowImage).isActive = true
             PXLayout.pinBottom(view: arrowImage).isActive = true
             PXLayout.setWidth(owner: arrowImage, width: 56).isActive = true
             PXLayout.pinRight(view: arrowImage, withMargin: 0).isActive = true
+            if experiment?.variant.name == HighlightInstallmentsVariant.badge.getValue {
+                highlightInstallments(experiment)
+            }
         } else {
             highlightInstallments(experiment)
         }
@@ -326,19 +329,9 @@ extension PXOneTapInstallmentInfoView {
 // MARK: PulseView
 extension PXOneTapInstallmentInfoView {
     func highlightInstallments(_ experiment: PXExperiment?) {
-        if experiment?.variant.name == "pulse", chevronBackgroundView == nil {
-            chevronBackgroundView = UIView()
+        if experiment?.variant.name == HighlightInstallmentsVariant.animationPulse.getValue {
+            setupChevronBackgroundView()
             if let chevronBackgroundView = chevronBackgroundView {
-                chevronBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-                chevronBackgroundView.backgroundColor = .white
-                addSubview(chevronBackgroundView)
-                NSLayoutConstraint.activate([
-                    chevronBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
-                    chevronBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                    chevronBackgroundView.widthAnchor.constraint(equalToConstant: 56),
-                    chevronBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-                ])
-
                 arrowImage.image = MLBusinessAppDataService().getAppIdentifier() == .mp ? ResourceManager.shared.getImage("chevronMP") : ResourceManager.shared.getImage("chevronML")
                 arrowImage.translatesAutoresizingMaskIntoConstraints = false
                 addSubview(arrowImage)
@@ -348,9 +341,10 @@ extension PXOneTapInstallmentInfoView {
                     arrowImage.heightAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE),
                     arrowImage.widthAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE)
                 ])
-
                 setupPulseView()
             }
+        } else if experiment?.variant.name == HighlightInstallmentsVariant.badge.getValue {
+            // do badge stuff
         }
     }
 
@@ -367,6 +361,28 @@ extension PXOneTapInstallmentInfoView {
         }
     }
 
+    func removePulseView() {
+        if let pulse = pulseView {
+            pulse.removeFromSuperview()
+            pulseView = nil
+        }
+    }
+
+    func setupChevronBackgroundView() {
+        chevronBackgroundView = UIView()
+        if let chevronBackgroundView = chevronBackgroundView {
+            chevronBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+            chevronBackgroundView.backgroundColor = .white
+            addSubview(chevronBackgroundView)
+            NSLayoutConstraint.activate([
+                chevronBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
+                chevronBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                chevronBackgroundView.widthAnchor.constraint(equalToConstant: 56),
+                chevronBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            ])
+        }
+    }
+
     func addChevronBackgroundViewGradient() {
         if let chevronBackgroundView = chevronBackgroundView {
             let gradient = CAGradientLayer()
@@ -378,12 +394,5 @@ extension PXOneTapInstallmentInfoView {
             gradient.frame = chevronBackgroundView.bounds
             chevronBackgroundView.layer.mask = gradient
         }
-    }
-
-    func removePulseView() {
-        if let pulseView = pulseView {
-            pulseView.removeFromSuperview()
-        }
-        pulseView = nil
     }
 }
