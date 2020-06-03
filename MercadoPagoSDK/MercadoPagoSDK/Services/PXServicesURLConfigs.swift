@@ -18,8 +18,7 @@ internal class PXServicesURLConfigs: NSObject {
     static var NEW_API_SELECTED_ENV = NEW_API_PROD_ENV
     
     static var API_VERSION = "2.0"
-    static let MP_API_BASE_URL_PROD: String =  "https://api.mercadopago.com"
-    static let MP_API_BASE_URL: String = MP_API_BASE_URL_PROD
+    static let MP_API_BASE_URL: String = "https://api.mercadopago.com"
 
     static let MP_DEFAULT_PROCESSING_MODE = "aggregator"
     static let MP_DEFAULT_PROCESSING_MODES = [MP_DEFAULT_PROCESSING_MODE]
