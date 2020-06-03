@@ -328,7 +328,7 @@ extension PXOneTapInstallmentInfoView {
 
 // MARK: PulseView
 extension PXOneTapInstallmentInfoView {
-    func highlightInstallments(_ experiment: PXExperiment?) {
+    private func highlightInstallments(_ experiment: PXExperiment?) {
         if experiment?.variant.name == HighlightInstallmentsVariant.animationPulse.getValue {
             setupChevronBackgroundView()
             if let chevronBackgroundView = chevronBackgroundView {
@@ -348,7 +348,7 @@ extension PXOneTapInstallmentInfoView {
         }
     }
 
-    func setupPulseView() {
+    private func setupPulseView() {
         pulseView = PXPulseView()
         if let pulseView = pulseView {
             arrowImage.addSubview(pulseView)
@@ -368,7 +368,7 @@ extension PXOneTapInstallmentInfoView {
         }
     }
 
-    func setupChevronBackgroundView() {
+    private func setupChevronBackgroundView() {
         chevronBackgroundView = UIView()
         if let chevronBackgroundView = chevronBackgroundView {
             chevronBackgroundView.translatesAutoresizingMaskIntoConstraints = false
