@@ -45,7 +45,7 @@ extension PXCheckoutStore {
     public func getCheckoutPreference() -> PXCheckoutPreference? {
         return checkoutPreference
     }
-    
+
     /**
      Get `PXSecurity` type.
      */

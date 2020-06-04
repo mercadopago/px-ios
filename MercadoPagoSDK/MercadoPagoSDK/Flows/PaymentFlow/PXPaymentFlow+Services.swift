@@ -35,8 +35,8 @@ internal extension PXPaymentFlow {
         if let productId = model.productId {
             headers[MercadoPagoService.HeaderField.productId.rawValue] = productId
         }
-
         headers[MercadoPagoService.HeaderField.idempotencyKey.rawValue] =  model.generateIdempotecyKey()
+        headers[MercadoPagoService.HeaderField.security.rawValue] = PXCheckoutStore.sharedInstance.getSecurityType()
 
         model.mercadoPagoServices.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_PAYMENTS_URI, paymentDataJSON: paymentBody, query: nil, headers: headers, callback: { (payment) in
             self.handlePayment(payment: payment)
