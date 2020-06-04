@@ -1,4 +1,10 @@
-# v4.34.0 
+# v4.34.1
+🚀Private Release - 4.34.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Se actualiza la congrats
+- Se corrigio un bug al agregar una nueva tarjeta
+
+# v4.34.0
 🚀Private Release - 4.34.0 🚀
 MercadoPagoSDKV4 - Private Version
 - Se actualiza el monto para la validacion de biometric
