@@ -382,6 +382,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     func getTopTextBox() -> PXText? {
         return pointsAndDiscounts?.topTextBox
     }
+    
+    func getCustomOrder() -> Bool? {
+        return pointsAndDiscounts?.customOrder
+    }
 
     func hasInstructions() -> Bool {
         return instructionsInfo?.getInstruction() != nil

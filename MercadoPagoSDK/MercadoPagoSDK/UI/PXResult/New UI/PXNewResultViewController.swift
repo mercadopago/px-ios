@@ -242,6 +242,7 @@ extension PXNewResultViewController {
 // MARK: Get content views
 extension PXNewResultViewController {
     func getContentViews() -> [ResultViewData] {
+        let customOrder = viewModel.getCustomOrder() ?? false
         var views = [ResultViewData]()
 
         //Header View
@@ -261,6 +262,15 @@ extension PXNewResultViewController {
         //Important View
         if let view = viewModel.getImportantView() {
             views.append(ResultViewData(view: view))
+        }
+
+        // Custom Order
+        /// Payment Method View
+        /// Split Payment View
+        /// Receipt View
+        /// Top Custom View
+        if customOrder == true {
+            views.append(contentsOf: addReceiptAndPaymentViews(customOrder))
         }
 
         //Points and Discounts
@@ -308,16 +318,6 @@ extension PXNewResultViewController {
             }
         }
 
-        //Top Custom View
-        if let view = viewModel.getTopCustomView() {
-            views.append(ResultViewData(view: view))
-        }
-
-        //Receipt View
-        if let view = buildReceiptView() {
-            views.append(ResultViewData(view: view))
-        }
-
         //Error body View
         if let view = viewModel.getErrorBodyView() {
             views.append(ResultViewData(view: view))
@@ -327,6 +327,43 @@ extension PXNewResultViewController {
         if let view = viewModel.getRemedyView(animatedButtonDelegate: self, remedyViewProtocol: self) {
             subscribeToKeyboardNotifications()
             views.append(ResultViewData(view: view))
+        }
+
+        // Normal Order
+        /// Top Custom View
+        /// Receipt View
+        /// Payment Method View
+        /// Split Payment View
+        if customOrder == false {
+            views.append(contentsOf: addReceiptAndPaymentViews(customOrder))
+        }
+
+        //View receipt action view
+        if let viewReceiptActionView = buildViewReceiptActionView() {
+            views.append(ResultViewData(view: viewReceiptActionView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
+        }
+
+        //Bottom Custom View
+        if let view = viewModel.getBottomCustomView() {
+            views.append(ResultViewData(view: view))
+        }
+
+        return views
+    }
+
+    private func addReceiptAndPaymentViews(_ customOrder: Bool) -> [ResultViewData] {
+        var views = [ResultViewData]()
+
+        if customOrder == false {
+            //Top Custom View
+            if let view = viewModel.getTopCustomView() {
+                views.append(ResultViewData(view: view))
+            }
+
+            //Receipt View
+            if let view = buildReceiptView() {
+                views.append(ResultViewData(view: view))
+            }
         }
 
         //Payment Method View
@@ -339,14 +376,16 @@ extension PXNewResultViewController {
             views.append(ResultViewData(view: view))
         }
 
-        //View receipt action view
-        if let viewReceiptActionView = buildViewReceiptActionView() {
-            views.append(ResultViewData(view: viewReceiptActionView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
-        }
+        if customOrder == true {
+            //Receipt View
+            if let view = buildReceiptView() {
+                views.append(ResultViewData(view: view))
+            }
 
-        //Bottom Custom View
-        if let view = viewModel.getBottomCustomView() {
-            views.append(ResultViewData(view: view))
+            //Top Custom View
+            if let view = viewModel.getTopCustomView() {
+                views.append(ResultViewData(view: view))
+            }
         }
 
         return views
