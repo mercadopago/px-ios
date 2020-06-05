@@ -229,14 +229,14 @@ extension PXOneTapInstallmentInfoView {
         addSubview(arrowImage)
         arrowImage.contentMode = .scaleAspectFit
         arrowImage.tag = colapsedTag
-        if experiment == nil || experiment?.variant.name != HighlightInstallmentsVariant.animationPulse.getValue {
+        if experiment == nil || !shouldShowPulseView(experiment) {
             arrowImage.image = ResourceManager.shared.getImage("one-tap-installments-info-chevron")
             PXLayout.centerVertically(view: arrowImage).isActive = true
             PXLayout.pinTop(view: arrowImage).isActive = true
             PXLayout.pinBottom(view: arrowImage).isActive = true
             PXLayout.setWidth(owner: arrowImage, width: 56).isActive = true
             PXLayout.pinRight(view: arrowImage, withMargin: 0).isActive = true
-            if experiment?.variant.name == HighlightInstallmentsVariant.badge.getValue {
+            if shouldShowBadgeView(experiment) {
                 highlightInstallments(experiment)
             }
         } else {
@@ -344,7 +344,7 @@ private extension PXOneTapInstallmentInfoView {
 // MARK: PulseView
 extension PXOneTapInstallmentInfoView {
     private func highlightInstallments(_ experiment: PXExperiment?) {
-        if experiment?.variant.name == HighlightInstallmentsVariant.animationPulse.getValue {
+        if shouldShowPulseView(experiment) {
             setupChevronBackgroundView()
             if let chevronBackgroundView = chevronBackgroundView {
                 arrowImage.image = MLBusinessAppDataService().getAppIdentifier() == .mp ? ResourceManager.shared.getImage("chevronMP") : ResourceManager.shared.getImage("chevronML")
@@ -358,9 +358,17 @@ extension PXOneTapInstallmentInfoView {
                 ])
                 setupPulseView()
             }
-        } else if experiment?.variant.name == HighlightInstallmentsVariant.badge.getValue {
+        } else if shouldShowBadgeView(experiment) {
             shouldShowBadgeView = true
         }
+    }
+
+    private func shouldShowBadgeView(_ experiment: PXExperiment?) -> Bool {
+        return experiment?.variant.name == HighlightInstallmentsVariant.badge.getValue ? true : false
+    }
+
+    private func shouldShowPulseView(_ experiment: PXExperiment?) -> Bool {
+        return experiment?.variant.name == HighlightInstallmentsVariant.animationPulse.getValue ? true : false
     }
 
     private func buildBadgeView(_ attributedText: NSAttributedString, _ backgroundColor: UIColor?) -> UILabel {
