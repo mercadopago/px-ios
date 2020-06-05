@@ -11,11 +11,13 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     static let DEFAULT_ROW_HEIGHT: CGFloat = 50
     static let HIGH_ROW_HEIGHT: CGFloat = 78
     private let ARROW_IMAGE_SIZE: CGFloat = 24
+    private let BADGE_VIEW_HEIGHT: CGFloat = 24
     private let titleLabel = UILabel()
     private let colapsedTag: Int = 2
     private var arrowImage: UIImageView = UIImageView()
     private var pagerView = FSPagerView(frame: .zero)
     private var tapEnabled = true
+    private var shouldShowBadgeView = false
     private var chevronBackgroundView: UIView?
     var pulseView: PXPulseView?
 
@@ -77,26 +79,26 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         var benefitsLabel: UILabel?
         var benefitsText = ""
         if itemModel.shouldShowInstallmentsHeader, let benefitText = itemModel.benefits?.installmentsHeader?.getAttributedString(fontSize: PXLayout.XXXS_FONT) {
-            let label = UILabel()
-            benefitsLabel = label
-            label.numberOfLines = 1
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.attributedText = benefitText
-            label.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT)
-            label.textAlignment = .right
             benefitsText = benefitText.string
-            cell.addSubview(label)
-            PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.centerVertically(view: label).isActive = true
-            PXLayout.matchHeight(ofView: label).isActive = true
+            if shouldShowBadgeView {
+                let badgeView = buildBadgeView(benefitText, itemModel.benefits?.installmentsHeader?.getBackgroundColor())
+                benefitsLabel = badgeView
+                cell.addSubview(badgeView)
+                PXLayout.pinRight(view: badgeView, withMargin: PXLayout.M_MARGIN).isActive = true
+                PXLayout.centerVertically(view: badgeView).isActive = true
+                badgeView.heightAnchor.constraint(equalToConstant: BADGE_VIEW_HEIGHT).isActive = true
+                badgeView.widthAnchor.constraint(equalToConstant: badgeView.intrinsicContentSize.width + 20).isActive = true
+            } else {
+                let label = buildLabel(benefitText, UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT), .right)
+                benefitsLabel = label
+                cell.addSubview(label)
+                PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+                PXLayout.centerVertically(view: label).isActive = true
+                PXLayout.matchHeight(ofView: label).isActive = true
+            }
         }
 
-        let label = UILabel()
-        label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = itemModel.text
-        label.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT)
-        label.textAlignment = .left
+        let label = buildLabel(itemModel.text, UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT), .left)
         let accessibilityMessage = getAccessibilityMessage(itemModel.text.string, benefitsText)
         cell.setAccessibilityMessage(accessibilityMessage)
         if index == 0 {
@@ -326,6 +328,19 @@ extension PXOneTapInstallmentInfoView {
     }
 }
 
+// MARK: Privates
+private extension PXOneTapInstallmentInfoView {
+    func buildLabel(_ attributedText: NSAttributedString, _ font: UIFont, _ textAlignment: NSTextAlignment, _ numberOfLines: Int = 1) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = attributedText
+        label.font = font
+        label.textAlignment = textAlignment
+        label.numberOfLines = numberOfLines
+        return label
+    }
+}
+
 // MARK: PulseView
 extension PXOneTapInstallmentInfoView {
     private func highlightInstallments(_ experiment: PXExperiment?) {
@@ -344,8 +359,21 @@ extension PXOneTapInstallmentInfoView {
                 setupPulseView()
             }
         } else if experiment?.variant.name == HighlightInstallmentsVariant.badge.getValue {
-            // do badge stuff
+            shouldShowBadgeView = true
         }
+    }
+
+    private func buildBadgeView(_ attributedText: NSAttributedString, _ backgroundColor: UIColor?) -> UILabel {
+        let badgeView = UILabel()
+        badgeView.translatesAutoresizingMaskIntoConstraints = false
+        badgeView.numberOfLines = 1
+        badgeView.backgroundColor = backgroundColor
+        badgeView.attributedText = attributedText
+        badgeView.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT)
+        badgeView.layer.cornerRadius = BADGE_VIEW_HEIGHT / 2
+        badgeView.layer.masksToBounds = true
+        badgeView.textAlignment = .center
+        return badgeView
     }
 
     private func setupPulseView() {
