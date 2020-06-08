@@ -9,8 +9,6 @@ import Foundation
 
 final class PXPulseView: UIView {
 
-    static let PULSE_VIEW_SIZE: CGFloat = 32
-
     init() {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false

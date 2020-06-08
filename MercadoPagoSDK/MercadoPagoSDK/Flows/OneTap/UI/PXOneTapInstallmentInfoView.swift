@@ -10,8 +10,6 @@ import UIKit
 final class PXOneTapInstallmentInfoView: PXComponentView {
     static let DEFAULT_ROW_HEIGHT: CGFloat = 50
     static let HIGH_ROW_HEIGHT: CGFloat = 78
-    private let ARROW_IMAGE_SIZE: CGFloat = 24
-    private let BADGE_VIEW_HEIGHT: CGFloat = 24
     private let titleLabel = UILabel()
     private let colapsedTag: Int = 2
     private var arrowImage: UIImageView = UIImageView()
@@ -86,7 +84,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
                 cell.addSubview(badgeView)
                 PXLayout.pinRight(view: badgeView, withMargin: PXLayout.M_MARGIN).isActive = true
                 PXLayout.centerVertically(view: badgeView).isActive = true
-                badgeView.heightAnchor.constraint(equalToConstant: BADGE_VIEW_HEIGHT).isActive = true
+                badgeView.heightAnchor.constraint(equalToConstant: 24).isActive = true
                 badgeView.widthAnchor.constraint(equalToConstant: badgeView.intrinsicContentSize.width + 20).isActive = true
             } else {
                 let label = buildLabel(benefitText, UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT), .right)
@@ -353,8 +351,8 @@ extension PXOneTapInstallmentInfoView {
                 NSLayoutConstraint.activate([
                     arrowImage.centerYAnchor.constraint(equalTo: chevronBackgroundView.centerYAnchor),
                     arrowImage.leadingAnchor.constraint(equalTo: chevronBackgroundView.leadingAnchor, constant: PXLayout.XXS_MARGIN),
-                    arrowImage.heightAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE),
-                    arrowImage.widthAnchor.constraint(equalToConstant: ARROW_IMAGE_SIZE)
+                    arrowImage.heightAnchor.constraint(equalToConstant: 24),
+                    arrowImage.widthAnchor.constraint(equalToConstant: 24)
                 ])
                 setupPulseView()
             }
@@ -378,7 +376,7 @@ extension PXOneTapInstallmentInfoView {
         badgeView.backgroundColor = backgroundColor
         badgeView.attributedText = attributedText
         badgeView.font = UIFont.ml_regularSystemFont(ofSize: PXLayout.XXXS_FONT)
-        badgeView.layer.cornerRadius = BADGE_VIEW_HEIGHT / 2
+        badgeView.layer.cornerRadius = 12
         badgeView.layer.masksToBounds = true
         badgeView.textAlignment = .center
         return badgeView
@@ -391,8 +389,8 @@ extension PXOneTapInstallmentInfoView {
             NSLayoutConstraint.activate([
                 pulseView.centerYAnchor.constraint(equalTo: arrowImage.centerYAnchor),
                 pulseView.centerXAnchor.constraint(equalTo: arrowImage.centerXAnchor),
-                pulseView.heightAnchor.constraint(equalToConstant: PXPulseView.PULSE_VIEW_SIZE),
-                pulseView.widthAnchor.constraint(equalToConstant: PXPulseView.PULSE_VIEW_SIZE)
+                pulseView.heightAnchor.constraint(equalToConstant: 32),
+                pulseView.widthAnchor.constraint(equalToConstant: 32)
             ])
         }
     }
