@@ -341,7 +341,7 @@ private extension PXOneTapInstallmentInfoView {
     }
 }
 
-// MARK: PulseView
+// MARK: Highlight Installments
 extension PXOneTapInstallmentInfoView {
     private func highlightInstallments(_ experiment: PXExperiment?) {
         if shouldShowPulseView(experiment) {
