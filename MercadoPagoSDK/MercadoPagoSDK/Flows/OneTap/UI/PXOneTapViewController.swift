@@ -207,11 +207,7 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         let installmentRowWidth: CGFloat = slider.getItemSize(cardSliderContentView).width
-        if viewModel.shouldHighlightInstallments() {
-            installmentRow.render(installmentRowWidth, experiment: viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
-        } else {
-            installmentRow.render(installmentRowWidth)
-        }
+        installmentRow.render(installmentRowWidth, experiment: viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
 
         view.layoutIfNeeded()
         refreshContentViewSize()

@@ -407,15 +407,6 @@ extension PXOneTapViewModel {
         }
         return false
     }
-
-    func shouldHighlightInstallments() -> Bool {
-        if let experiments = experimentsViewModel.experiments {
-            for experiment in experiments where experiment.name == PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS {
-                return true
-            }
-        }
-        return false
-    }
 }
 
 // MARK: Privates.
