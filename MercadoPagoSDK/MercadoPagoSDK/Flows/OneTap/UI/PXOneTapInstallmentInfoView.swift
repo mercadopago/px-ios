@@ -212,7 +212,7 @@ extension PXOneTapInstallmentInfoView {
         removeAllSubviews()
         setupSlider(width: width)
         setupFadeImages()
-        setupChevron(experiment: experiment)
+        setupChevron(experiment)
         setupTitleLabel()
         PXLayout.setHeight(owner: self, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallmentsWrapper)))
@@ -223,7 +223,7 @@ extension PXOneTapInstallmentInfoView {
         toggleInstallments()
     }
 
-    private func setupChevron(experiment: PXExperiment?) {
+    private func setupChevron(_ experiment: PXExperiment?) {
         addSubview(arrowImage)
         arrowImage.contentMode = .scaleAspectFit
         arrowImage.tag = colapsedTag
