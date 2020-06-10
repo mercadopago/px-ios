@@ -16,6 +16,8 @@ extension PXOneTapDto {
         var extraInfo: [String: Any] = [:]
         extraInfo["balance"] = accountMoney?.availableBalance
         extraInfo["invested"] = accountMoney?.invested
+        extraInfo["has_interest_free"] = benefits?.interestFree != nil ? true : false
+        extraInfo["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
         accountMoneyDic["extra_info"] = extraInfo
 
         return accountMoneyDic
@@ -25,6 +27,10 @@ extension PXOneTapDto {
         var paymentMethodDic: [String: Any] = [:]
         paymentMethodDic["payment_method_type"] = paymentTypeId
         paymentMethodDic["payment_method_id"] = paymentMethodId
+        var extraInfo: [String: Any] = [:]
+        extraInfo["has_interest_free"] = benefits?.interestFree != nil ? true : false
+        extraInfo["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
+        paymentMethodDic["extra_info"] = extraInfo
         return paymentMethodDic
     }
 
@@ -43,6 +49,10 @@ extension PXOneTapDto {
         if let issuerId = oneTapCard?.cardUI?.issuerId {
             extraInfo["issuer_id"] = Int64(issuerId)
         }
+
+        extraInfo["has_interest_free"] = benefits?.interestFree != nil ? true : false
+        extraInfo["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
+
         savedCardDic["extra_info"] = extraInfo
         return savedCardDic
     }
