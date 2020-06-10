@@ -62,7 +62,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -70,11 +69,13 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         setupNavigationBar()
         setupUI()
         isUIEnabled(true)
+        addPulseViewNotifications()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromNotifications()
+        removePulseViewNotifications()
         removeNavigationTapGesture()
     }
 
@@ -789,7 +790,7 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
 }
 
 // MARK: Notifications
-extension PXOneTapViewController {
+private extension PXOneTapViewController {
     func subscribeLoadingButtonToNotifications() {
         guard let loadingButton = loadingButtonComponent else {
             return
@@ -799,6 +800,14 @@ extension PXOneTapViewController {
 
     func unsubscribeFromNotifications() {
         PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
+    }
+
+    func addPulseViewNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+
+    func removePulseViewNotifications() {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
