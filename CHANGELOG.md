@@ -1,3 +1,8 @@
+# v4.34.2 
+🚀Private Release - 4.34.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Feature Highlight Installments
+
 # v4.34.1 
 🚀Private Release - 4.34.1 🚀
 MercadoPagoSDKV4 - Private Version
