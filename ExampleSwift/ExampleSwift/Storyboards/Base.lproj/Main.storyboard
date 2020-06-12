@@ -73,6 +73,7 @@
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Locale" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="09F-Rj-EZo">
                                 <rect key="frame" x="16" y="61" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" label="localeInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="fE9-L9-KFC"/>
                                 </constraints>
@@ -84,6 +85,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Public Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dPD-W0-adk">
                                 <rect key="frame" x="16" y="103" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" label="publicKeyInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="84K-lx-OOd"/>
                                 </constraints>
@@ -95,6 +97,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Preference Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Exj-zd-9jV">
                                 <rect key="frame" x="16" y="145" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" label="preferenceIdInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="m97-VY-d0M"/>
                                 </constraints>
@@ -106,6 +109,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Access token" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LKu-HW-2LE">
                                 <rect key="frame" x="16" y="187" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" label="accessTokenInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="S2Q-9n-hhr"/>
                                 </constraints>
@@ -126,6 +130,7 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xWW-3B-9f3">
                                 <rect key="frame" x="310" y="229" width="51" height="31"/>
+                                <accessibility key="accessibilityConfiguration" label="one_tap"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="6kE-rI-o7e"/>
                                 </constraints>
@@ -133,6 +138,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSv-5z-ciZ">
                                 <rect key="frame" x="16" y="268" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-500"/>
+                                <accessibility key="accessibilityConfiguration" label="startButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="dl8-nM-ZiB"/>
                                 </constraints>

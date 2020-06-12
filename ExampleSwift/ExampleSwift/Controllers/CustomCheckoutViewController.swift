@@ -57,9 +57,10 @@ class CustomCheckoutViewController: UIViewController {
         if localeTextField.text?.count ?? 0 == 0,
             publicKeyTextField.text?.count ?? 0 == 0,
             preferenceIdTextField.text?.count ?? 0 == 0 {
-            localeTextField.text = "es"
-            publicKeyTextField.text = "TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
-            preferenceIdTextField.text = "243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"
+            localeTextField.text = "es-AR"
+            publicKeyTextField.text = "APP_USR-88bd636f-ef87-441d-a018-def0c3a3741a"
+            preferenceIdTextField.text = "566676612-3bbb117b-1f3f-49c9-915d-565a785837d0"
+            accessTokenTextField.text = "APP_USR-7092-060212-76d203ae7f1945924284191b71d5f01b-578132250"
         }
     }
 
@@ -104,6 +105,10 @@ extension CustomCheckoutViewController: PXLifeCycleProtocol {
 }
 
 extension CustomCheckoutViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
+    }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == " " {
             return false

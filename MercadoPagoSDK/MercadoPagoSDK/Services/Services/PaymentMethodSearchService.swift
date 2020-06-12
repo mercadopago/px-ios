@@ -48,6 +48,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
                         }
                     }
                 } catch {
+                    printDebug("PaymentMethodSearchService getInit error: \(error).")
                     failure(PaymentMethodSearchService.getError())
                 }
 
