@@ -23,31 +23,35 @@ extension PXPayerCost: Cellable {
     }
 
     func hasCFTValue() -> Bool {
-        return !String.isNullOrEmpty(getCFTValue())
+        return !String.isNullOrEmpty(getCFT())
     }
 
-    func getCFTValue() -> String? {
-        for label in labels {
-            let values = label.components(separatedBy: "|")
-            for value in values {
-                if let range = value.range(of: "CFT_") {
-                    return String(value[range.upperBound...])
-                }
+    private func getLabels() -> [String: String] {
+        let prefixes: [String] = ["CFT", "TEA"]
+        var labelsDictionary: [String: String] = [:]
+        _ = labels.filter { prefixes.contains(where: $0.hasPrefix) }.flatMap { $0.components(separatedBy: "|") }.map { (label) -> String in
+            let array = label.components(separatedBy: "_")
+            print(array.count)
+            if array.count == 2 {
+                labelsDictionary[array[0]] = array[1]
             }
+            return label
         }
-        return nil
+        return labelsDictionary
+    }
+
+    func getCFT(separator: String = "") -> String? {
+        let cftString = getLabels().compactMap { (key, value) -> String? in
+            if key.hasPrefix("CFT") {
+                return "\(key)\(separator) \(value)"
+            }
+            return nil
+        }.joined()
+        return cftString
     }
 
     func getTEAValue() -> String? {
-        for label in labels {
-            let values = label.components(separatedBy: "|")
-            for value in values {
-                if let range = value.range(of: "TEA_") {
-                    return String(value[range.upperBound...])
-                }
-            }
-        }
-        return nil
+        return getLabels()["TEA"]
     }
 
     func getPayerCostForTracking() -> [String: Any] {

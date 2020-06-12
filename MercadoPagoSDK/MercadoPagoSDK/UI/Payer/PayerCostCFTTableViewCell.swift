@@ -51,7 +51,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
 
     func fillCFTLabel(payerCost: PXPayerCost) {
         CFTLabel.textColor = UIColor.px_grayDark()
-        CFTLabel.text = payerCost.hasCFTValue() ? "CFT " + payerCost.getCFTValue()! : ""
+        CFTLabel.text = payerCost.getCFT() ?? ""
     }
 
     func addSeparatorLineToBottom(width: Double, height: Double) {

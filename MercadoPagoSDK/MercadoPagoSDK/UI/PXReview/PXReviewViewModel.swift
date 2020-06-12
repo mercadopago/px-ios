@@ -116,7 +116,7 @@ extension PXReviewViewModel {
     }
 
     func hasPayerCostAddionalInfo() -> Bool {
-        return self.amountHelper.getPaymentData().hasPayerCost() && self.amountHelper.getPaymentData().getPayerCost()!.getCFTValue() != nil && self.amountHelper.getPaymentData().paymentMethod!.isCreditCard
+        return self.amountHelper.getPaymentData().hasPayerCost() && self.amountHelper.getPaymentData().getPayerCost()!.hasCFTValue() && self.amountHelper.getPaymentData().paymentMethod!.isCreditCard
     }
 
     func hasConfirmAdditionalInfo() -> Bool {

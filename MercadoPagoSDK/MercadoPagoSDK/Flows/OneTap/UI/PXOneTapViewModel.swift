@@ -430,10 +430,10 @@ extension PXOneTapViewModel {
             }
 
             // Third attr
-            if let cftDisplayStr = payerCostData.getCFTValue() {
+            if let cftDisplayStr = payerCostData.getCFT(separator: ":") {
                 if (payerCostData.hasCFTValue() && (payerCostData.installments != 1)) || isDigitalCurrency {
                     let thirdAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
-                    let thirdText = " CFT: \(cftDisplayStr)"
+                    let thirdText = " \(cftDisplayStr)"
                     let thirdAttributedString = NSAttributedString(string: thirdText, attributes: thirdAttributes)
                     text.append(thirdAttributedString)
                 }
