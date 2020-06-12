@@ -1,9 +1,14 @@
-# v4.34.2 
+# v4.34.3
+🚀Private Release - 4.34.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Se agrego la sigla CNTFA para credits
+
+# v4.34.2
 🚀Private Release - 4.34.2 🚀
 MercadoPagoSDKV4 - Private Version
 - Feature Highlight Installments
 
-# v4.34.1 
+# v4.34.1
 🚀Private Release - 4.34.1 🚀
 MercadoPagoSDKV4 - Private Version
 - Se actualiza la congrats
