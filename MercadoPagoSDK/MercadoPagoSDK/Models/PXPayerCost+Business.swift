@@ -31,7 +31,6 @@ extension PXPayerCost: Cellable {
         var labelsDictionary: [String: String] = [:]
         _ = labels.filter { prefixes.contains(where: $0.hasPrefix) }.flatMap { $0.components(separatedBy: "|") }.map { (label) -> String in
             let array = label.components(separatedBy: "_")
-            print(array.count)
             if array.count == 2 {
                 labelsDictionary[array[0]] = array[1]
             }
