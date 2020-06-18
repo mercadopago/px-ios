@@ -114,6 +114,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        scrollView.accessibilityIdentifier = "scroll_view"
         scrollView.alpha = 0
         scrollView.bounces = true
         scrollView.delegate = self
