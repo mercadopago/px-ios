@@ -1,3 +1,9 @@
+# v4.34.4 
+🚀Private Release - 4.34.4 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix discounts bug for pay-preference
+- Appium improvements
+
 # v4.34.3 
 🚀Private Release - 4.34.3 🚀
 MercadoPagoSDKV4 - Private Version
