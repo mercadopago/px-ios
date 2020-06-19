@@ -16,9 +16,9 @@ extension MercadoPagoCheckout {
         // Track init event
         var properties: [String: Any] = [:]
         if !String.isNullOrEmpty(viewModel.checkoutPreference.id) {
-        properties["checkout_preference_id"] = viewModel.checkoutPreference.id
+            properties["checkout_preference_id"] = viewModel.checkoutPreference.id
         } else {
-        properties["checkout_preference"] = viewModel.checkoutPreference.getCheckoutPrefForTracking()
+            properties["checkout_preference"] = getCheckoutPrefForTracking(checkoutPreference: viewModel.checkoutPreference)
         }
 
         properties["esc_enabled"] = viewModel.getAdvancedConfiguration().isESCEnabled()
@@ -29,7 +29,7 @@ extension MercadoPagoCheckout {
 
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getInitPath(), properties: properties)
     }
-    
+
     internal func trackInitFlowFriction(flowError: InitFlowError) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
@@ -57,7 +57,7 @@ extension MercadoPagoCheckout {
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
-    
+
     internal func trackInitFlowRefreshFriction(cardId: String) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()
@@ -69,5 +69,45 @@ extension MercadoPagoCheckout {
         extraDic["cardId"] =  cardId
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+    }
+    
+    private func getCheckoutPrefForTracking(checkoutPreference: PXCheckoutPreference) -> [String: Any] {
+        var checkoutPrefDic: [String: Any] = [:]
+
+        var itemsDic: [Any] = []
+        for item in checkoutPreference.items {
+            itemsDic.append(item.getItemForTracking())
+        }
+        checkoutPrefDic["items"] = itemsDic
+        checkoutPrefDic["binary_mode"] = checkoutPreference.binaryModeEnabled
+        checkoutPrefDic["marketplace"] = checkoutPreference.marketplace
+        checkoutPrefDic["site_id"] = checkoutPreference.siteId
+        checkoutPrefDic["expiration_date_from"] = checkoutPreference.expirationDateFrom?.stringDate()
+        checkoutPrefDic["expiration_date_to"] = checkoutPreference.expirationDateTo?.stringDate()
+        checkoutPrefDic["payment_methods"] = getPaymentPreferenceForTracking(paymentPreference: checkoutPreference.paymentPreference)
+        return checkoutPrefDic
+    }
+    
+    func getPaymentPreferenceForTracking(paymentPreference: PXPaymentPreference) -> [String: Any] {
+        var paymentPrefDic: [String: Any] = [:]
+        paymentPrefDic["installments"] = paymentPreference.maxAcceptedInstallments
+        paymentPrefDic["default_installments"] = paymentPreference.defaultInstallments
+        paymentPrefDic["excluded_payment_methods"] = transformTrackingArray(paymentPreference.excludedPaymentMethodIds)
+        paymentPrefDic["excluded_payment_types"] = transformTrackingArray(paymentPreference.excludedPaymentTypeIds)
+        paymentPrefDic["default_card_id"] = paymentPreference.cardId
+        return paymentPrefDic
+    }
+
+    private func transformTrackingArray(_ items: [String]) -> [[String: String]] {
+        var newArray = [[String: String]]()
+        for item in items {
+            let newItem = transformTrackingItem(item)
+            newArray.append(newItem)
+        }
+        return newArray
+    }
+
+    private func transformTrackingItem(_ item: String) -> [String: String] {
+        return ["id": item]
     }
 }

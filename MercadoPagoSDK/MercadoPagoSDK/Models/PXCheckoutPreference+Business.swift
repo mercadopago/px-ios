@@ -292,24 +292,3 @@ extension PXCheckoutPreference {
         return nil
     }
 }
-// MARK: Tracking
-extension PXCheckoutPreference {
-    func getCheckoutPrefForTracking() -> [String: Any] {
-        //TODO: improve using a new struct codable compliant to avoid the manual creation of this dictionary
-        var checkoutPrefDic: [String: Any] = [:]
-
-        var itemsDic: [Any] = []
-        for item in items {
-            itemsDic.append(item.getItemForTracking())
-        }
-        checkoutPrefDic["items"] = itemsDic
-        checkoutPrefDic["binary_mode"] = binaryModeEnabled
-        checkoutPrefDic["marketplace"] = marketplace
-        checkoutPrefDic["site_id"] = siteId
-        checkoutPrefDic["expiration_date_from"] = expirationDateFrom?.stringDate()
-        checkoutPrefDic["expiration_date_to"] = expirationDateTo?.stringDate()
-        checkoutPrefDic["payment_methods"] = paymentPreference.getPaymentPreferenceForTracking()
-
-        return checkoutPrefDic
-    }
-}

@@ -123,23 +123,25 @@ extension PXResultViewModel {
         }
 
         let paymentStatus = paymentResult.status
-        if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            if let remedy = remedy, !(remedy.isEmpty) {
-                properties["recoverable"] = true
-                var remedies: [String] = []
-                if remedy.suggestedPaymentMethod != nil {
-                    remedies.append("payment_method_suggestion")
-                } else if remedy.cvv != nil {
-                    remedies.append("cvv_request")
-                } else if remedy.highRisk != nil {
-                    remedies.append("kyc_request")
-                }
-                if !(remedies.isEmpty) {
-                    properties["remedies"] = remedies // [ payment_method_suggestion / cvv_request /  kyc_request ]
-                }
-            } else {
-                properties["recoverable"] = false
-                properties["remedies"] = []
+        if paymentStatus == PXPaymentStatus.REJECTED.rawValue,
+            let remedy = remedy,
+            !(remedy.isEmpty) {
+            var remedies: [[String: Any]] = []
+            if remedy.suggestedPaymentMethod != nil {
+                remedies.append(["index": 0,
+                                 "type": "payment_method_suggestion",
+                                 "extra_info": remedy.trackingData ?? ""])
+            } else if remedy.cvv != nil {
+                remedies.append(["index": 0,
+                                 "type": "cvv_request",
+                                 "extra_info": remedy.trackingData ?? ""])
+            } else if remedy.highRisk != nil {
+                remedies.append(["index": 0,
+                                 "type": "kyc_request",
+                                 "extra_info": remedy.trackingData ?? ""])
+            }
+            if !(remedies.isEmpty) {
+                properties["remedies"] = remedies
             }
         }
 
@@ -148,8 +150,11 @@ extension PXResultViewModel {
 
     func getRemedyProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
+        properties["payment_status"] = paymentResult.status
+        properties["payment_status_detail"] = paymentResult.statusDetail
         guard let remedy = remedy else { return properties }
 
+        properties["index"] = 0
         var type: String?
         if remedy.suggestedPaymentMethod != nil {
             type = "payment_method_suggestion"
@@ -382,7 +387,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     func getTopTextBox() -> PXText? {
         return pointsAndDiscounts?.topTextBox
     }
-    
+
     func getCustomOrder() -> Bool? {
         return pointsAndDiscounts?.customOrder
     }
