@@ -18,9 +18,10 @@ internal class PXResultViewModel: NSObject {
     var preference: PXPaymentResultConfiguration
     let remedy: PXRemedy?
     let oneTapDto: PXOneTapDto?
+    var oneTapViewModel: PXOneTapViewModel?
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapDto: PXOneTapDto? = nil) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapDto: PXOneTapDto? = nil, oneTapViewModel: PXOneTapViewModel?) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
         self.pointsAndDiscounts = pointsAndDiscounts
@@ -28,6 +29,7 @@ internal class PXResultViewModel: NSObject {
         self.amountHelper = amountHelper
         self.remedy = remedy
         self.oneTapDto = oneTapDto
+        self.oneTapViewModel = oneTapViewModel
     }
 
     func getPaymentData() -> PXPaymentData {
@@ -433,8 +435,13 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
-        if isPaymentResultRejectedWithRemedy(),
-            let remedy = remedy {
+        if isPaymentResultRejectedWithRemedy(), let remedy = remedy {
+
+            // if it is silver bullet update paymentData with suggestedPaymentMethod
+            if remedy.suggestedPaymentMethod != nil {
+                updatePaymentData(remedy)
+            }
+
             let data = PXRemedyViewData(oneTapDto: oneTapDto,
                                         paymentData: getPaymentData(),
                                         amountHelper: getAmountHelper(),
@@ -490,3 +497,21 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 }
+
+// MARK: Remedy
+private extension PXResultViewModel {
+    func updatePaymentData(_ remedy: PXRemedy) {
+        if let alternativePaymentMethod = remedy.suggestedPaymentMethod?.alternativePaymentMethod,
+           let newPaymentMethod = oneTapViewModel?.getPaymentMethod(targetId: alternativePaymentMethod.paymentMethodId ?? "") {
+            paymentResult.paymentData?.paymentMethod = newPaymentMethod
+            paymentResult.paymentData?.payerCost = getSuggestedPayerCost(alternativePaymentMethod)
+            let summaryComposer = PXSummaryComposer(amountHelper: amountHelper, additionalInfoSummary: nil, selectedCard: oneTapViewModel?.getCardSliderViewModel().first(where: { $0.paymentMethodId == alternativePaymentMethod.paymentMethodId }), shouldDisplayChargesHelp: false)
+            oneTapViewModel?.updatePaymentData(composer: summaryComposer)
+        }
+    }
+
+    func getSuggestedPayerCost(_ alternativePaymentMethod: PXRemedyPaymentMethod?) -> PXPayerCost? {
+        return oneTapViewModel?.getCardSliderViewModel().first(where: { $0.paymentMethodId == alternativePaymentMethod?.paymentMethodId })?.selectedPayerCost
+    }
+}
+

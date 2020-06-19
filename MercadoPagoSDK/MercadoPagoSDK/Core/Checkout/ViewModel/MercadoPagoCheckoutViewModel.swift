@@ -313,7 +313,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             }
         }
 
-        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapDto: oneTapDto)
+        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapDto: oneTapDto, oneTapViewModel: onetapFlow?.model.pxOneTapViewModel)
     }
 
     //SEARCH_PAYMENT_METHODS

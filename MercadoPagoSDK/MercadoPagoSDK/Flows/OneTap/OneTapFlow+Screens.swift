@@ -43,6 +43,7 @@ extension OneTapFlow {
             self?.executeNextStep()
         }
         let viewModel = model.oneTapViewModel()
+        model.pxOneTapViewModel = viewModel
         let viewController = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
 
         pxNavigationHandler.pushViewController(viewController: viewController, animated: true)
