@@ -1,3 +1,4 @@
+
 //
 //  PXNewResultViewController.swift
 //  MercadoPagoSDK
@@ -70,6 +71,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+        print("--ResultView controller se esta desalocando")
     }
 
     @objc func keyboardWillBeShown(notification: Notification) {
@@ -165,6 +167,21 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
         //Load content views
         let views = getContentViews()
+        //*** test link
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .yellow
+        label.text = "MultiPlayer deeplink test"
+        label.textAlignment = .center
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapDeeplink))
+        label.addGestureRecognizer(gesture)
+        label.isUserInteractionEnabled = true
+        NSLayoutConstraint.activate([
+//            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+//            label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+//            label.widthAnchor.constraint(equalToConstant: 150)
+        ])
+        var cont = 1
         if views.count > 0 {
             for data in views {
                 if let ringView = data.view as? MLBusinessLoyaltyRingView {
@@ -172,6 +189,12 @@ class PXNewResultViewController: MercadoPagoUIViewController {
                 }
 
                 contentView.addViewToBottom(data.view, withMargin: data.verticalMargin)
+                if cont == 1 {
+                    contentView.addViewToBottom(label, withMargin: data.verticalMargin)
+                    cont += 1
+                }
+
+                label.widthAnchor.constraint(equalToConstant: 150).isActive = true
 
                 NSLayoutConstraint.activate([
                     data.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: data.horizontalMargin),
@@ -306,10 +329,18 @@ extension PXNewResultViewController {
             }
         }
 
+        // Split Payment Share money
+        let splitPaymentView = buildSplitPaymentView()
+        if let splitPaymentView = splitPaymentView, MLBusinessAppDataService().getAppIdentifier() == .mp {
+            views.append(ResultViewData(view: splitPaymentView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
+        }
+
         //Cross Selling View
         if let crossSellingViews = buildCrossSellingViews() {
             var margin: CGFloat = 0
-            if discountsView != nil && pointsView == nil {
+            if splitPaymentView != nil {
+                margin = PXLayout.M_MARGIN
+            } else if discountsView != nil && pointsView == nil {
                 margin = PXLayout.M_MARGIN
             } else if discountsView == nil && pointsView != nil {
                 margin = PXLayout.XXS_MARGIN
@@ -497,6 +528,17 @@ extension PXNewResultViewController {
         return PXNewResultUtil.getDataForDiscountsAccessoryViewData(discounts: viewModel.getDiscounts())
     }
 
+    ////SPLIT PAYMENT VIEW
+    private func buildSplitPaymentView() -> UIView? {
+        guard let paymentSplit = viewModel.getSplitPaymentViewData() else { return nil }
+        let data = PXNewResultUtil.getDataForSplitPaymentView(paymentSplit: paymentSplit)
+        let splitPaymentView = MLBusinessSplitPaymentView(data)
+        if let tapAction = viewModel.getSplitPaymentViewTapAction() {
+            splitPaymentView.addTapAction(tapAction)
+        }
+        return splitPaymentView
+    }
+
     ////CROSS SELLING
     func buildCrossSellingViews() -> [UIView]? {
         guard let data = PXNewResultUtil.getDataForCrossSellingView(crossSellingItems: viewModel.getCrossSellingItems()) else {
@@ -672,5 +714,15 @@ extension PXNewResultViewController {
 extension PXNewResultViewController: MLBusinessTouchpointsUserInteractionHandler {
     func didTap(with selectedIndex: Int, deeplink: String, trackingId: String) {
         viewModel.didTapDiscount(index: selectedIndex, deepLink: deeplink, trackId: trackingId)
+    }
+
+    @objc func didTapDeeplink() {
+        print("--Se esta por abrir el deeplink")
+//        if let paymentId = viewModel.getReceiptId() {
+//            print("--deeplink: mercadopago:mplayer/money_split_external?operation_id=\(paymentId)&source=px")
+//            PXDeepLinkManager.open("mercadopago:mplayer/money_split_external?operation_id=\(paymentId)&source=px")
+            PXDeepLinkManager.open("mercadopago://mplayer/money_split_external?operation_id=7068064969&source=px")
+//            PXDeepLinkManager.open("mercadopago://kyc/?initiative=px-payer-information")
+//        }
     }
 }

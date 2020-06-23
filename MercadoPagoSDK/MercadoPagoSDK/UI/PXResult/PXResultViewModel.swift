@@ -362,6 +362,18 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
     }
 
+    func getSplitPaymentViewData() -> PXPaymentSplit? {
+        return pointsAndDiscounts?.paymentSplit
+    }
+
+    func getSplitPaymentViewTapAction() -> (() -> Void)? {
+        let action: () -> Void = { [weak self] in
+            PXDeepLinkManager.open(self?.pointsAndDiscounts?.paymentSplit?.action.target)
+//            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapScorePath())
+        }
+        return action
+    }
+
     func getCrossSellingItems() -> [PXCrossSellingItem]? {
         return pointsAndDiscounts?.crossSelling
     }

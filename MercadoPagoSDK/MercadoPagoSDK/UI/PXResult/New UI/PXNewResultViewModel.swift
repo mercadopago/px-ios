@@ -44,6 +44,10 @@ protocol PXNewResultViewModelInterface {
     func getDiscountsTapAction() -> ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
     func didTapDiscount(index: Int, deepLink: String?, trackId: String?)
 
+    ///SPLIT PAYMENT VIEW
+    func getSplitPaymentViewData() -> PXPaymentSplit?
+    func getSplitPaymentViewTapAction() -> (() -> Void)?
+
     ///CROSS SELLING
     func getCrossSellingItems() -> [PXCrossSellingItem]?
     func getCrossSellingTapAction() -> ((_ deepLink: String) -> Void)?
