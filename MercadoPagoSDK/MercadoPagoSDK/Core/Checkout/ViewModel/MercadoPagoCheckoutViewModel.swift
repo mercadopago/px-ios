@@ -927,9 +927,10 @@ extension MercadoPagoCheckoutViewModel {
 private extension MercadoPagoCheckoutViewModel {
     func updatePaymentData(_ remedy: PXRemedy) {
         if let alternativePaymentMethod = remedy.suggestedPaymentMethod?.alternativePaymentMethod,
-            let newPaymentMethod = onetapFlow?.model.pxOneTapViewModel?.getPaymentMethod(targetId: alternativePaymentMethod.paymentMethodId ?? ""),
             let paymentResult = paymentResult {
-            paymentResult.paymentData?.paymentMethod = newPaymentMethod
+            if let newPaymentMethod = onetapFlow?.model.pxOneTapViewModel?.getPaymentMethod(targetId: alternativePaymentMethod.paymentMethodId ?? "") {
+                paymentResult.paymentData?.paymentMethod = newPaymentMethod
+            }
             if let installments = alternativePaymentMethod.installmentsList?.first?.installments {
                 paymentResult.paymentData?.payerCost?.installments = installments
             } else {
