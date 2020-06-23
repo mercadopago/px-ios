@@ -313,7 +313,12 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             }
         }
 
-        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapDto: oneTapDto, oneTapViewModel: onetapFlow?.model.pxOneTapViewModel)
+        // if it is silver bullet update paymentData with suggestedPaymentMethod
+        if let remedy = remedy, remedy.suggestedPaymentMethod != nil {
+            updatePaymentData(remedy)
+        }
+
+        return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapDto: oneTapDto)
     }
 
     //SEARCH_PAYMENT_METHODS
@@ -915,5 +920,21 @@ extension MercadoPagoCheckoutViewModel {
         paymentFlow = nil
         initFlow = nil
         onetapFlow = nil
+    }
+}
+
+// MARK: Remedy
+private extension MercadoPagoCheckoutViewModel {
+    func updatePaymentData(_ remedy: PXRemedy) {
+        if let alternativePaymentMethod = remedy.suggestedPaymentMethod?.alternativePaymentMethod,
+            let newPaymentMethod = onetapFlow?.model.pxOneTapViewModel?.getPaymentMethod(targetId: alternativePaymentMethod.paymentMethodId ?? ""),
+            let paymentResult = paymentResult {
+            paymentResult.paymentData?.paymentMethod = newPaymentMethod
+            if let installments = alternativePaymentMethod.installmentsList?.first?.installments {
+                paymentResult.paymentData?.payerCost?.installments = installments
+            } else {
+                paymentResult.paymentData?.payerCost = nil
+            }
+        }
     }
 }
