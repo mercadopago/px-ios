@@ -435,12 +435,8 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
-        if isPaymentResultRejectedWithRemedy(), let remedy = remedy {
-
-            // if it is silver bullet update paymentData with suggestedPaymentMethod
-            if remedy.suggestedPaymentMethod != nil {
-                updatePaymentData(remedy)
-            }
+        if isPaymentResultRejectedWithRemedy(),
+            let remedy = remedy {
 
             let data = PXRemedyViewData(oneTapDto: oneTapDto,
                                         paymentData: getPaymentData(),
@@ -497,21 +493,3 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 }
-
-// MARK: Remedy
-private extension PXResultViewModel {
-    func updatePaymentData(_ remedy: PXRemedy) {
-        if let alternativePaymentMethod = remedy.suggestedPaymentMethod?.alternativePaymentMethod,
-           let newPaymentMethod = oneTapViewModel?.getPaymentMethod(targetId: alternativePaymentMethod.paymentMethodId ?? "") {
-            paymentResult.paymentData?.paymentMethod = newPaymentMethod
-            paymentResult.paymentData?.payerCost = getSuggestedPayerCost(alternativePaymentMethod)
-            let summaryComposer = PXSummaryComposer(amountHelper: amountHelper, additionalInfoSummary: nil, selectedCard: oneTapViewModel?.getCardSliderViewModel().first(where: { $0.paymentMethodId == alternativePaymentMethod.paymentMethodId }), shouldDisplayChargesHelp: false)
-            oneTapViewModel?.updatePaymentData(composer: summaryComposer)
-        }
-    }
-
-    func getSuggestedPayerCost(_ alternativePaymentMethod: PXRemedyPaymentMethod?) -> PXPayerCost? {
-        return oneTapViewModel?.getCardSliderViewModel().first(where: { $0.paymentMethodId == alternativePaymentMethod?.paymentMethodId })?.selectedPayerCost
-    }
-}
-
