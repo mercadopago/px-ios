@@ -362,7 +362,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
     }
 
-    func getSplitPaymentViewData() -> PXPaymentSplit? {
+    func getSplitPaymentViewData() -> PXExpenseSplit? {
         return pointsAndDiscounts?.expenseSplit
     }
 

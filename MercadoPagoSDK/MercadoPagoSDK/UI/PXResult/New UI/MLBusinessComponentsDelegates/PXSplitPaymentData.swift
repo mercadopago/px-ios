@@ -10,9 +10,9 @@ import MLBusinessComponents
 
 class PXSplitPaymentData: NSObject {
 
-    let splitPaymentData: PXPaymentSplit
+    let splitPaymentData: PXExpenseSplit
 
-    init(splitPaymentData: PXPaymentSplit) {
+    init(splitPaymentData: PXExpenseSplit) {
         self.splitPaymentData = splitPaymentData
     }
 }

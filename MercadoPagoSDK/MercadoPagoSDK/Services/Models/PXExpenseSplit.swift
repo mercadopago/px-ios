@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PXPaymentSplit: Codable {
+struct PXExpenseSplit: Codable {
     let title: PXText
     let action: PXRemoteAction
     let icon: String
