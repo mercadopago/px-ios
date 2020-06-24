@@ -17,7 +17,7 @@ class PXExpenseSplitData: NSObject {
     }
 }
 
-extension PXExpenseSplitData: MLBusinessSplitPaymentData {
+extension PXExpenseSplitData: MLBusinessActionCardViewData {
     func getTitle() -> String {
         return expenseSplitData.title.message ?? " "
     }

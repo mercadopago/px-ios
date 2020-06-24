@@ -82,7 +82,7 @@ class PXNewResultUtil {
     }
 
     //EXPENSE SPLIT DATA
-    class func getDataForExpenseSplitView(expenseSplit: PXExpenseSplit) -> MLBusinessSplitPaymentData {
+    class func getDataForExpenseSplitView(expenseSplit: PXExpenseSplit) -> MLBusinessActionCardViewData {
         return PXExpenseSplitData(expenseSplitData: expenseSplit)
     }
 

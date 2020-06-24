@@ -512,7 +512,7 @@ extension PXNewResultViewController {
             else { return nil }
 
         let data = PXNewResultUtil.getDataForExpenseSplitView(expenseSplit: expenseSplit)
-        let expenseSplitView = MLBusinessSplitPaymentView(data)
+        let expenseSplitView = MLBusinessActionCardView(data)
         if let tapAction = viewModel.getExpenseSplitTapAction() {
             expenseSplitView.addTapAction(tapAction)
         }
