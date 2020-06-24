@@ -23,7 +23,7 @@ final class PXCongratsTracking {
         case hasBottomView  = "has_bottom_view"
         case hasTopView = "has_top_view"
         case hasImportantView = "has_important_view"
-        case hasExpenseSplitView = "has_split_view"
+        case hasExpenseSplitView = "has_money_split_view"
         case scoreLevel = "score_level"
         case discountsCount  = "discounts_count"
         case campaignsIds = "campaigns_ids"
