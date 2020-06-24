@@ -10,35 +10,35 @@ import MLBusinessComponents
 
 class PXExpenseSplitData: NSObject {
 
-    let splitPaymentData: PXExpenseSplit
+    let expenseSplitData: PXExpenseSplit
 
-    init(splitPaymentData: PXExpenseSplit) {
-        self.splitPaymentData = splitPaymentData
+    init(expenseSplitData: PXExpenseSplit) {
+        self.expenseSplitData = expenseSplitData
     }
 }
 
 extension PXExpenseSplitData: MLBusinessSplitPaymentData {
     func getTitle() -> String {
-        return splitPaymentData.title.message ?? " "
+        return expenseSplitData.title.message ?? " "
     }
 
     func getTitleColor() -> String {
-        return splitPaymentData.title.textColor ?? ""
+        return expenseSplitData.title.textColor ?? ""
     }
 
     func getTitleBackgroundColor() -> String {
-        return splitPaymentData.title.backgroundColor ?? ""
+        return expenseSplitData.title.backgroundColor ?? ""
     }
 
     func getTitleWeight() -> String {
-        return splitPaymentData.title.weight ?? ""
+        return expenseSplitData.title.weight ?? ""
     }
 
     func getImageUrl() -> String {
-        return splitPaymentData.imageUrl
+        return expenseSplitData.imageUrl
     }
 
     func getAffordanceText() -> String {
-        return splitPaymentData.action.label
+        return expenseSplitData.action.label
     }
 }

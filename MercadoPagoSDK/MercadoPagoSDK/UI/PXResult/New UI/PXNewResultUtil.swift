@@ -83,7 +83,7 @@ class PXNewResultUtil {
 
     //SPLIT PAYMENT VIEW DATA
     class func getDataForSplitPaymentView(paymentSplit: PXExpenseSplit) -> MLBusinessSplitPaymentData {
-        return PXExpenseSplitData(splitPaymentData: paymentSplit)
+        return PXExpenseSplitData(expenseSplitData: paymentSplit)
     }
 
     //CROSS SELLING VIEW
