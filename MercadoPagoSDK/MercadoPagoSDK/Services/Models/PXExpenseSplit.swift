@@ -10,11 +10,11 @@ import Foundation
 struct PXExpenseSplit: Codable {
     let title: PXText
     let action: PXRemoteAction
-    let icon: String
+    let imageUrl: String
 
     enum CodingKeys: String, CodingKey {
         case title
         case action
-        case icon
+        case imageUrl = "image_url"
     }
 }

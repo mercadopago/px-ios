@@ -35,7 +35,7 @@ extension PXSplitPaymentData: MLBusinessSplitPaymentData {
     }
 
     func getImageUrl() -> String {
-        return splitPaymentData.icon
+        return splitPaymentData.imageUrl
     }
 
     func getAffordanceText() -> String {
