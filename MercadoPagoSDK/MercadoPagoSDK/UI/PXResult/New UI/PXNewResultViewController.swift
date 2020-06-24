@@ -1,4 +1,3 @@
-
 //
 //  PXNewResultViewController.swift
 //  MercadoPagoSDK
@@ -71,7 +70,6 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
-        print("--ResultView controller se esta desalocando")
     }
 
     @objc func keyboardWillBeShown(notification: Notification) {
