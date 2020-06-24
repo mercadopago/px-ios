@@ -1,5 +1,5 @@
 //
-//  PXSplitPaymentData.swift
+//  PXExpenseSplitData.swift
 //  MercadoPagoSDK
 //
 //  Created by Esteban Adrian Boffa on 22/06/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLBusinessComponents
 
-class PXSplitPaymentData: NSObject {
+class PXExpenseSplitData: NSObject {
 
     let splitPaymentData: PXExpenseSplit
 
@@ -17,7 +17,7 @@ class PXSplitPaymentData: NSObject {
     }
 }
 
-extension PXSplitPaymentData: MLBusinessSplitPaymentData {
+extension PXExpenseSplitData: MLBusinessSplitPaymentData {
     func getTitle() -> String {
         return splitPaymentData.title.message ?? " "
     }
