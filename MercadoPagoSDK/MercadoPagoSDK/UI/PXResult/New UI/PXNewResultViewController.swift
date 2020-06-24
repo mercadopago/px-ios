@@ -528,15 +528,15 @@ extension PXNewResultViewController {
         return PXNewResultUtil.getDataForDiscountsAccessoryViewData(discounts: viewModel.getDiscounts())
     }
 
-    ////SPLIT PAYMENT VIEW
+    ////EXPENSE SPLIT VIEW
     private func buildSplitPaymentView() -> UIView? {
         guard let expenseSplit = viewModel.getExpenseSplit() else { return nil }
         let data = PXNewResultUtil.getDataForExpenseSplitView(expenseSplit: expenseSplit)
-        let splitPaymentView = MLBusinessSplitPaymentView(data)
-        if let tapAction = viewModel.getSplitPaymentViewTapAction() {
-            splitPaymentView.addTapAction(tapAction)
+        let expenseSplitView = MLBusinessSplitPaymentView(data)
+        if let tapAction = viewModel.getExpenseSplitTapAction() {
+            expenseSplitView.addTapAction(tapAction)
         }
-        return splitPaymentView
+        return expenseSplitView
     }
 
     ////CROSS SELLING

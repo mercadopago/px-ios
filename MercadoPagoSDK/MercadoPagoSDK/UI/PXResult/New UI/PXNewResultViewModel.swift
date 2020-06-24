@@ -46,7 +46,7 @@ protocol PXNewResultViewModelInterface {
 
     ///SPLIT PAYMENT VIEW
     func getExpenseSplit() -> PXExpenseSplit?
-    func getSplitPaymentViewTapAction() -> (() -> Void)?
+    func getExpenseSplitTapAction() -> (() -> Void)?
 
     ///CROSS SELLING
     func getCrossSellingItems() -> [PXCrossSellingItem]?

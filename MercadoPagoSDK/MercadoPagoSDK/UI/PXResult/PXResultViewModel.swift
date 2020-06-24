@@ -366,7 +366,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         return pointsAndDiscounts?.expenseSplit
     }
 
-    func getSplitPaymentViewTapAction() -> (() -> Void)? {
+    func getExpenseSplitTapAction() -> (() -> Void)? {
         let action: () -> Void = { [weak self] in
             PXDeepLinkManager.open(self?.pointsAndDiscounts?.expenseSplit?.action.target)
 //            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapScorePath())
