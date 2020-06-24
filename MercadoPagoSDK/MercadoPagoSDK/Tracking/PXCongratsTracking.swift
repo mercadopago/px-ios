@@ -43,6 +43,13 @@ final class PXCongratsTracking {
         return congratsProperties
     }
 
+    class func getDeeplinkProperties(type: String, deeplink: String) -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["type"] = type
+        properties["deep_link"] = deeplink
+        return properties
+    }
+
     class func trackTapDiscountItemEvent(_ index: Int, _ trackId: String?) {
         var properties: [String: Any] = [:]
         properties["index"] = index

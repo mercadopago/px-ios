@@ -373,7 +373,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     func getExpenseSplitTapAction() -> (() -> Void)? {
         let action: () -> Void = { [weak self] in
             PXDeepLinkManager.open(self?.pointsAndDiscounts?.expenseSplit?.action.target)
-//            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapScorePath())
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapDeeplinkPath(), properties: PXCongratsTracking.getDeeplinkProperties(type: "money_split", deeplink: self?.pointsAndDiscounts?.expenseSplit?.action.target ?? ""))
         }
         return action
     }

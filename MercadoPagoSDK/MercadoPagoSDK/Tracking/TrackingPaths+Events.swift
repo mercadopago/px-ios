@@ -95,6 +95,7 @@ enum EventsPaths: String {
     case tapDownloadApp = "/tap_download_app"
     case tapCrossSelling = "/tap_cross_selling"
     case tapSeeAllDiscounts = "/tap_see_all_discounts"
+    case deeplink = "/deep_link"
 }
 
 // MARK: Congrats events.
@@ -103,9 +104,14 @@ extension TrackingPaths.Events {
 
         private static let success = "/success"
         private static let result = TrackingPaths.pxTrack + "/result"
+        private static let congrats = "/congrats"
 
         static func getSuccessPath() -> String {
             return result + success
+        }
+
+        static func getNewSuccessPath() -> String {
+            TrackingPaths.pxTrack + congrats + success
         }
 
         static func getSuccessTapScorePath() -> String {
@@ -130,6 +136,10 @@ extension TrackingPaths.Events {
         
         static func getSuccessTapViewReceiptPath() -> String {
             return getSuccessPath() + "/tap_view_receipt"
+        }
+
+        static func getSuccessTapDeeplinkPath() -> String {
+            return getNewSuccessPath() + EventsPaths.deeplink.rawValue
         }
     }
 }
