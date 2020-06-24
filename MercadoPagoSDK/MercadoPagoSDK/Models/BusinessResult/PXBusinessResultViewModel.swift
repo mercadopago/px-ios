@@ -154,12 +154,12 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getSplitPaymentViewData() -> PXPaymentSplit? {
-        return pointsAndDiscounts?.paymentSplit
+        return pointsAndDiscounts?.expenseSplit
     }
 
     func getSplitPaymentViewTapAction() -> (() -> Void)? {
         let action: () -> Void = { [weak self] in
-            PXDeepLinkManager.open(self?.pointsAndDiscounts?.paymentSplit?.action.target)
+            PXDeepLinkManager.open(self?.pointsAndDiscounts?.expenseSplit?.action.target)
 //            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapScorePath())
         }
         return action

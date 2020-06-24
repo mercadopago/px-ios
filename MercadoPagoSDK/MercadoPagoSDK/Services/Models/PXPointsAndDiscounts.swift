@@ -15,7 +15,7 @@ struct PXPointsAndDiscounts: Decodable {
     let viewReceiptAction: PXRemoteAction?
     let topTextBox: PXText?
     let customOrder: Bool?
-    let paymentSplit: PXPaymentSplit?
+    let expenseSplit: PXPaymentSplit?
 
     init(points: PXPoints?, discounts: PXDiscounts?, crossSelling: [PXCrossSellingItem]?, viewReceiptAction: PXRemoteAction?, topTextBox: PXText?, customOrder: Bool?, paymentSplit: PXPaymentSplit?) {
         self.points = points
@@ -24,7 +24,7 @@ struct PXPointsAndDiscounts: Decodable {
         self.viewReceiptAction = viewReceiptAction
         self.topTextBox = topTextBox
         self.customOrder = customOrder
-        self.paymentSplit = paymentSplit
+        self.expenseSplit = paymentSplit
     }
 
     enum PointsAndDiscountsCodingKeys: String, CodingKey {
@@ -34,7 +34,7 @@ struct PXPointsAndDiscounts: Decodable {
         case viewReceiptAction = "view_receipt"
         case topTextBox = "top_text_box"
         case customOrder = "custom_order"
-        case paymentSplit = "payment_split"
+        case paymentSplit = "expense_split"
     }
 
     init(from decoder: Decoder) throws {
