@@ -116,6 +116,10 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
         return getImportantView() != nil
     }
 
+    func hasExpenseSplitView() -> Bool {
+        return getExpenseSplit() != nil && MLBusinessAppDataService().getAppIdentifier() == .mp ? true : false
+    }
+
     func getScoreLevel() -> Int? {
         return PXNewResultUtil.getDataForPointsView(points: pointsAndDiscounts?.points)?.getRingNumber()
     }
