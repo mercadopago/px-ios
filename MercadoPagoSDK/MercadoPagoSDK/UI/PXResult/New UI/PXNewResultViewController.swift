@@ -530,8 +530,8 @@ extension PXNewResultViewController {
 
     ////SPLIT PAYMENT VIEW
     private func buildSplitPaymentView() -> UIView? {
-        guard let paymentSplit = viewModel.getSplitPaymentViewData() else { return nil }
-        let data = PXNewResultUtil.getDataForSplitPaymentView(paymentSplit: paymentSplit)
+        guard let expenseSplit = viewModel.getExpenseSplit() else { return nil }
+        let data = PXNewResultUtil.getDataForExpenseSplitView(expenseSplit: expenseSplit)
         let splitPaymentView = MLBusinessSplitPaymentView(data)
         if let tapAction = viewModel.getSplitPaymentViewTapAction() {
             splitPaymentView.addTapAction(tapAction)
