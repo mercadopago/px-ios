@@ -80,7 +80,7 @@ internal class MercadoPagoServices: NSObject {
         service.createPayment(headers: headers, body: paymentDataJSON, params: params, success: callback, failure: failure)
     }
 
-    func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, paymentMethodsIds: [String]? = nil, campaignId: String?, platform: String, ifpe: Bool, callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
+    func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, paymentMethodsIds: [String]? = nil, campaignId: String?, platform: String, ifpe: Bool, headers: [String: String], callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 
         var params = MercadoPagoServices.getParamsAccessTokenAndPaymentIdsAndPlatform(privateKey, paymentIds, platform)
@@ -97,7 +97,7 @@ internal class MercadoPagoServices: NSObject {
             params.paramsAppend(key: ApiParam.FLOW_NAME, value: flowName)
         }
 
-        service.getPointsAndDiscounts(body: nil, params: params, success: callback, failure: failure)
+        service.getPointsAndDiscounts(headers: headers, body: nil, params: params, success: callback, failure: failure)
     }
 
     func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
