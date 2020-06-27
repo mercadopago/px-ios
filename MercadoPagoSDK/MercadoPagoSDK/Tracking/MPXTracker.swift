@@ -11,10 +11,10 @@ import UIKit
 @objc internal class MPXTracker: NSObject {
     @objc internal static let sharedInstance = MPXTracker()
 
-    internal static let kTrackingSettings = "tracking_settings"
-    internal var public_key: String = ""
-
-    private static let kTrackingEnabled = "tracking_enabled"
+//    internal static let kTrackingSettings = "tracking_settings"
+//    internal var public_key: String = ""
+//
+//    private static let kTrackingEnabled = "tracking_enabled"
     private var trackListener: PXTrackerListener?
     private var flowDetails: [String: Any]?
     private var flowName: String?
