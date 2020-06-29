@@ -1,10 +1,15 @@
-# v4.34.4 
+# v4.34.5
+🚀Private Release - 4.34.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Reduce image sizes
+
+# v4.34.4
 🚀Private Release - 4.34.4 🚀
 MercadoPagoSDKV4 - Private Version
 - Fix discounts bug for pay-preference
 - Appium improvements
 
-# v4.34.3 
+# v4.34.3
 🚀Private Release - 4.34.3 🚀
 MercadoPagoSDKV4 - Private Version
 - Se agrego la sigla CNTFA para credits
