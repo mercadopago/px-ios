@@ -318,7 +318,7 @@ extension PXNewResultViewController {
         //Cross Selling View
         if let crossSellingViews = buildCrossSellingViews() {
             var margin: CGFloat = 0
-            if views.last?.view is MLBusinessActionCardView {
+            if isActionCardViewLastView(views) {
                 margin = PXLayout.M_MARGIN
             } else if discountsView != nil && pointsView == nil {
                 margin = PXLayout.M_MARGIN
@@ -347,7 +347,7 @@ extension PXNewResultViewController {
         /// Payment Method View
         /// Split Payment View
         if customOrder == false {
-            let verticalMargin = views.last?.view is MLBusinessActionCardView ? true : false
+            let verticalMargin = isActionCardViewLastView(views)
             views.append(contentsOf: addReceiptAndPaymentViews(customOrder, verticalMargin))
         }
 
@@ -358,8 +358,7 @@ extension PXNewResultViewController {
 
         //Bottom Custom View
         if let view = viewModel.getBottomCustomView() {
-            let margin = views.last?.view is MLBusinessActionCardView ? PXLayout.M_MARGIN : 0
-            views.append(ResultViewData(view: view, verticalMargin: margin))
+            views.append(ResultViewData(view: view, verticalMargin: isActionCardViewLastView(views) ? PXLayout.M_MARGIN : 0))
         }
 
         return views
@@ -371,27 +370,23 @@ extension PXNewResultViewController {
         if customOrder == false {
             //Top Custom View
             if let view = viewModel.getTopCustomView() {
-                let margin = shouldApplyVerticalMargin(verticalMargin, views) ? PXLayout.M_MARGIN : 0
-                views.append(ResultViewData(view: view, verticalMargin: margin))
+                views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
             }
 
             //Receipt View
             if let view = buildReceiptView() {
-                let margin = shouldApplyVerticalMargin(verticalMargin, views) ? PXLayout.M_MARGIN : 0
-                views.append(ResultViewData(view: view, verticalMargin: margin))
+                views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
             }
         }
 
         //Payment Method View
         if viewModel.shouldShowPaymentMethod(), let view = buildPaymentMethodView() {
-            let margin = shouldApplyVerticalMargin(verticalMargin, views) ? PXLayout.M_MARGIN : 0
-            views.append(ResultViewData(view: view, verticalMargin: margin))
+            views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
         }
 
         //Split Payment View
         if viewModel.shouldShowPaymentMethod(), let view = buildSplitPaymentMethodView() {
-            let margin = shouldApplyVerticalMargin(verticalMargin, views) ? PXLayout.M_MARGIN : 0
-            views.append(ResultViewData(view: view, verticalMargin: margin))
+            views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
         }
 
         if customOrder == true {
@@ -417,10 +412,18 @@ extension PXNewResultViewController {
     }
 }
 
-//MARK: MLBusinessActionCardView
+// MARK: MLBusinessActionCardView
 private extension PXNewResultViewController {
+    func getVerticalMarginForViews(_ shouldApplyMargin: Bool, _ views: [ResultViewData]) -> CGFloat {
+       return shouldApplyVerticalMargin(shouldApplyMargin, views) ? PXLayout.M_MARGIN : 0
+    }
+
     func shouldApplyVerticalMargin(_ margin: Bool, _ views: [ResultViewData]) -> Bool {
         return margin == true && views.last == nil
+    }
+
+    func isActionCardViewLastView(_ views: [ResultViewData]) -> Bool {
+        return views.last?.view is MLBusinessActionCardView
     }
 }
 
