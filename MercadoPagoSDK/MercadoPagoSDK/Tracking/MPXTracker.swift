@@ -10,11 +10,6 @@ import UIKit
 
 @objc internal class MPXTracker: NSObject {
     @objc internal static let sharedInstance = MPXTracker()
-
-//    internal static let kTrackingSettings = "tracking_settings"
-//    internal var public_key: String = ""
-//
-//    private static let kTrackingEnabled = "tracking_enabled"
     private var trackListener: PXTrackerListener?
     private var flowDetails: [String: Any]?
     private var flowName: String?
@@ -27,7 +22,11 @@ import UIKit
 internal extension MPXTracker {
 
     func setTrack(listener: PXTrackerListener) {
+        if isPXAddonTrackListener() {
+            return
+        }
         trackListener = listener
+        
     }
 
     func setFlowDetails(flowDetails: [String: Any]?) {
@@ -59,8 +58,10 @@ internal extension MPXTracker {
     }
 
     func clean() {
+        if !isPXAddonTrackListener() {
+            MPXTracker.sharedInstance.trackListener = nil
+        }
         MPXTracker.sharedInstance.flowDetails = [:]
-        MPXTracker.sharedInstance.trackListener = nil
         MPXTracker.sharedInstance.experiments = nil
     }
 
@@ -70,6 +71,14 @@ internal extension MPXTracker {
 
     func setExperiments(_ experiments: [PXExperiment]?) {
         MPXTracker.sharedInstance.experiments = experiments
+    }
+    
+    private func isPXAddonTrackListener() -> Bool {
+        if let trackListener = trackListener,
+            String(describing: trackListener.self).contains("PXAddon.PXTrack") {
+            return true
+        }
+        return false
     }
 }
 
