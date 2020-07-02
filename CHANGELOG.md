@@ -1,4 +1,12 @@
-# v4.34.5 
+# v4.34.6
+🚀Private Release - 4.34.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Add ExpenseSplitView to congrats
+- Fix silverBullet amount
+- Use PXAddons tracking
+- Remedies tracking changes
+
+# v4.34.5
 🚀Private Release - 4.34.5 🚀
 MercadoPagoSDKV4 - Private Version
 - Reduce image sizes
