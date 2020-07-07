@@ -32,6 +32,7 @@ extension MercadoPagoCheckoutViewModel {
             guard let self = self else { return }
             self.checkoutPreference = checkoutPreference
             self.updateCheckoutModel(paymentMethodSearch: initSearch)
+            self.paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
             PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.cardIdsESC, value: self.getCardsIdsWithESC())
 
             let selectedDiscountConfigurartion = initSearch.selectedDiscountConfiguration

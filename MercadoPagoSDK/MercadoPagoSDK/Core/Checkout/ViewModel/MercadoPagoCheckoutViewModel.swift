@@ -138,7 +138,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         super.init()
 
         if !isPreferenceLoaded() {
-            self.paymentData.payer = self.checkoutPreference.getPayer()
+            paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
         }
 
         escManager = PXESCManager(enabled: getAdvancedConfiguration().isESCEnabled(), sessionId: MPXTracker.sharedInstance.getSessionID(), flow: MPXTracker.sharedInstance.getFlowName() ?? "PX")
@@ -790,7 +790,7 @@ extension MercadoPagoCheckoutViewModel {
         self.paymentData.clearPayerData()
 
         // Se setea nuevamente el payer que tenemos en la preferencia para no perder los datos
-        self.paymentData.payer = self.checkoutPreference.payer
+        paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
     }
 
     func isPayerSetted() -> Bool {
