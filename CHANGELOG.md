@@ -1,3 +1,9 @@
+# v4.34.7 
+🚀Private Release - 4.34.7 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix url for tracking
+- Fix medios off con kyc
+
 # v4.34.6 
 🚀Private Release - 4.34.6 🚀
 MercadoPagoSDKV4 - Private Version
