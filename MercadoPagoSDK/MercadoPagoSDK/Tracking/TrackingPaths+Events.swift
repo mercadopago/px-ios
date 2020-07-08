@@ -104,14 +104,9 @@ extension TrackingPaths.Events {
 
         private static let success = "/success"
         private static let result = TrackingPaths.pxTrack + "/result"
-        private static let congrats = "/congrats"
 
         static func getSuccessPath() -> String {
             return result + success
-        }
-
-        static func getNewSuccessPath() -> String {
-            TrackingPaths.pxTrack + congrats + success
         }
 
         static func getSuccessTapScorePath() -> String {
@@ -139,7 +134,7 @@ extension TrackingPaths.Events {
         }
 
         static func getSuccessTapDeeplinkPath() -> String {
-            return getNewSuccessPath() + EventsPaths.deeplink.rawValue
+            return getSuccessPath() + EventsPaths.deeplink.rawValue
         }
     }
 }
