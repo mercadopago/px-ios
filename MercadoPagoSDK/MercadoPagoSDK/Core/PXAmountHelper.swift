@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal struct PXAmountHelper {
+struct PXAmountHelper {
 
     internal let preference: PXCheckoutPreference
     private let paymentData: PXPaymentData

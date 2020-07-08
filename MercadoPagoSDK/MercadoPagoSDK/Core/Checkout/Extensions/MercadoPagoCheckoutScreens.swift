@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension MercadoPagoCheckout {
+public extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
         viewModel.clearCollectedData()
@@ -163,6 +163,20 @@ extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }
 
+    func franco(cualquierCosa: PXCualquierCosa, nc: UINavigationController) {
+        let br = cualquierCosa.br
+        let pd = cualquierCosa.pd
+        let ah = cualquierCosa.ah
+        let pad = cualquierCosa.pad
+        let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: br!, paymentData: pd!, amountHelper: ah!, pointsAndDiscounts: nil)
+        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
+            print("FRISMA FINISH")
+            nc.popViewController(animated: true)
+//            self?.finish()
+        })
+        nc.pushViewController(congratsViewController, animated: false)
+    }
+    
     func showPaymentResultScreen() {
         if viewModel.businessResult != nil {
             showBusinessResultScreen()

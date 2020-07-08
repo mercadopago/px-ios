@@ -8,11 +8,11 @@
 
 import UIKit
 
-#if PX_PRIVATE_POD
+//#if PX_PRIVATE_POD
     import MercadoPagoSDKV4
-#else
-    import MercadoPagoSDK
-#endif
+//#else
+//    import MercadoPagoSDK
+//#endif
 
 class CustomCheckoutViewController: UIViewController {
     @IBOutlet weak var localeTextField: UITextField!

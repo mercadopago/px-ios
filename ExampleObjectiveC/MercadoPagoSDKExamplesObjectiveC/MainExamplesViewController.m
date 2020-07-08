@@ -13,6 +13,38 @@
 @implementation MainExamplesViewController
 
 - (IBAction)checkoutFlow:(id)sender {
+    //CHECKOUT PREFERENCE
+    [self setCheckoutPref];
+    [self setCheckoutPrefAdditionalInfo];
+    
+    //  PREF CERRADA - Procesadora
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44" paymentConfiguration:[self getPaymentConfiguration]];
+    
+    //  Argentina
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7857491965888407-012218-2bcf74f24d303fb59d049291cdb20818-514226636"];
+
+    PXTrackingConfiguration *trackingConfig = [[PXTrackingConfiguration alloc] initWithTrackListener: self flowName:@"instore" flowDetails:nil sessionId:@"3783874"];
+    [self.checkoutBuilder setTrackingConfigurationWithConfig: trackingConfig];
+
+    //ADVANCED CONFIG
+    [self.checkoutBuilder setAdvancedConfigurationWithConfig: [self getAdvancedConfiguration]];
+
+    //LANGUAGE CONFIG
+    [self.checkoutBuilder setLanguage:@"es"];
+
+    //CUSTOM TRANSLATIONS
+    [self setCustomTranslations];
+
+    //CREATE CHECKOUT
+    MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
+
+    
+    //LAZY INIT
+    [mpCheckout startWithLazyInitProtocol:self];
+    
+}
+
+- (IBAction)checkoutFlowORIG:(id)sender {
 
     //CHECKOUT PREFERENCE
     [self setCheckoutPref];
@@ -24,10 +56,10 @@
 //    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
     //  PREF CERRADA - Procesadora
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" preferenceId:@"181794596-79127f41-cf23-4aff-952e-7d8f75121084" paymentConfiguration:[self getPaymentConfiguration]];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44" paymentConfiguration:[self getPaymentConfiguration]];
 
     //  PREF CERRADA - SIN PROCESADORA
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" preferenceId:@"181794596-79127f41-cf23-4aff-952e-7d8f75121084"];
+//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
 
 
     //ACCESS TOKENS
@@ -35,7 +67,7 @@
 //    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-092415-b89a7cdcec6cc6c3916deab0c56c7136-472129472"];
 
     //  Argentina
-    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636"];
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7857491965888407-012218-2bcf74f24d303fb59d049291cdb20818-514226636"];
 
     PXTrackingConfiguration *trackingConfig = [[PXTrackingConfiguration alloc] initWithTrackListener: self flowName:@"instore" flowDetails:nil sessionId:@"3783874"];
     [self.checkoutBuilder setTrackingConfigurationWithConfig: trackingConfig];

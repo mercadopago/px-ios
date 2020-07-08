@@ -8,5 +8,5 @@ target 'ExampleSwift' do
 
   # Pods for ExampleSwift
   # pod 'MLUI', '~> 5.0'
-  pod 'MercadoPagoSDK', :path => '../'
+  pod 'MercadoPagoSDKV4', :path => '../'
 end

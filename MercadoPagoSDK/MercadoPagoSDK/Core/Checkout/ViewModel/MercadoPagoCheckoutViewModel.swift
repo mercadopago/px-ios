@@ -82,7 +82,11 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var payment: PXPayment?
     internal var paymentResult: PaymentResult?
     var disabledOption: PXDisabledOption?
-    var businessResult: PXBusinessResult?
+    var businessResult: PXBusinessResult? {
+        didSet {
+            print("Seteando el businessResult")
+        }
+    }
     open var payerCosts: [PXPayerCost]?
     open var issuers: [PXIssuer]?
     open var entityTypes: [EntityType]?
