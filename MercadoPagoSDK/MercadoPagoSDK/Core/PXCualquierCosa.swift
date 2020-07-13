@@ -12,19 +12,72 @@ import Foundation
 public class PXCualquierCosa: NSObject {
     
     let br : PXBusinessResult!
-    let pd : PXPaymentData!
+    var pd : PXPaymentData!
     let ah : PXAmountHelper!
     let pad : PXPointsAndDiscounts?
     
     public override init() {
-        br = PXBusinessResult(receiptId: "123", status: .REJECTED, title: "Compraste Cigarrillos", subtitle: "Este es el subtitle", icon: nil, mainAction: nil, secondaryAction: nil, helpMessage: "Este es el help Message", showPaymentMethod: true, statementDescription: nil, imageUrl: nil, topCustomView: CustomComponentText(labelText: "Top view").render(), bottomCustomView: CustomComponentText(labelText: "Bottom view").render(), paymentStatus: "Payment Status", paymentStatusDetail: "Payment Detail", paymentMethodId: "PaymentMethodId", paymentTypeId: "PaymentTypeId", importantView: CustomComponentText(labelText: "Important view").render())
-        pd = PXPaymentData()
+        // PaymentModel en android (datos del pago y currency, congrats response (descuentos, crossselling)
         
-        let preference = PXCheckoutPreference(id: "asdasd", items: [PXItem(title: "Vasos", quantity: 1, unitPrice: 3)], payer: PXPayer(email: "asd@asd.com"), paymentPreference: nil, siteId: "MLA", expirationDateTo: nil, expirationDateFrom: nil, site: nil, differentialPricing: nil, marketplace: nil, branchId: nil, collectorId: "123123123123")
+        // BUSINESSPAYMENT en android
+        br = PXBusinessResult(receiptId: "_receipt_id_", // Numero de recibo
+                              status: .APPROVED, // Status
+                              title: "_title_", // Titulo header
+                              subtitle: "_subtitle_", //?????
+                              icon: nil, // ????
+                              mainAction: nil,
+                              secondaryAction: nil,
+                              helpMessage: "_help_message_",
+                              showPaymentMethod: true,
+                              statementDescription: nil,
+                              imageUrl: nil, //"https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg", // Imagen del collector
+                              topCustomView: CustomComponentText(labelText: "Top view").render(),
+                              bottomCustomView: CustomComponentText(labelText: "Bottom view").render(),
+                              paymentStatus: "approved", // El status de mas arriba sirve solo para dibujar la congrats, pero para que se muestre el recibo, tengo que poner en este campo si está aprobado o no (check enum PXPaymentStatus)
+                              paymentStatusDetail: "Payment Detail",
+                              paymentMethodId: "PaymentMethodId",
+                              paymentTypeId: "PaymentTypeId",
+                              importantView: CustomComponentText(labelText: "Important view").render())
+        
+        // Cuando tiene que mostrar el pago, usa este paymentData y el amount helper
+        pd = PXPaymentData()
+        // Payment data tiene que tener un paymentMethod
+        pd.updatePaymentDataWith(paymentMethod: PXPaymentMethod(additionalInfoNeeded: nil,
+                                                                id: "Master", // Con este id se obtiene la imagen
+                                                                name: "Master 2020",
+                                                                paymentTypeId: "credit_card", //Check PXPaymentTypes
+                                                                status: nil,
+                                                                secureThumbnail: nil,
+                                                                thumbnail: nil,
+                                                                deferredCapture: nil,
+                                                                settings: [PXSetting(bin: nil, cardNumber: PXCardNumber(length: 3, validation: nil), securityCode: nil)],
+                                                                minAllowedAmount: nil,
+                                                                maxAllowedAmount: nil,
+                                                                accreditationTime: nil,
+                                                                merchantAccountId: nil,
+                                                                financialInstitutions: nil,
+                                                                description: nil,
+                                                                processingModes: nil))
+        
+        // Para que se vea en el medio de pago los ultimos 4 dígitos hay que poner el token de la tarjeta de crédito
+        pd.updatePaymentDataWith(token: PXToken(id: "asd", publicKey: nil, cardId: "cardId", luhnValidation: nil, status: nil, usedDate: nil, cardNumberLength: 16, dateCreated: nil, securityCodeLength: 3, expirationMonth: 2, expirationYear: 2025, dateLastUpdated: nil, dueDate: nil, firstSixDigits: "123456", lastFourDigits: "0987", cardholder: nil, esc: nil))
+        
+        // Internamente cuando va a mostrar el payment, necesita tener seteado currency
+        SiteManager.shared.setCurrency(currency: PXCurrency(id: "$", description: "Pesos", symbol: "$", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: "."))
+        
+        let preference = PXCheckoutPreference(id: "asdasd", items: [PXItem(title: "Vasos", quantity: 1, unitPrice: 30)], payer: PXPayer(email: "asd@asd.com"), paymentPreference: nil, siteId: "MLA", expirationDateTo: nil, expirationDateFrom: nil, site: nil, differentialPricing: nil, marketplace: nil, branchId: nil, collectorId: "123123123123")
         let paymentConfigServices = PXPaymentConfigurationServices()
         
         ah = PXAmountHelper(preference: preference, paymentData: pd, chargeRules: nil, paymentConfigurationService: paymentConfigServices, splitAccountMoney: nil)
         pad = nil
+    }
+    
+    func getPaymentData() {
+        
+    }
+    
+    func getPointsAndDiscount() -> PXPointsAndDiscounts? {
+        return nil
     }
 }
 
