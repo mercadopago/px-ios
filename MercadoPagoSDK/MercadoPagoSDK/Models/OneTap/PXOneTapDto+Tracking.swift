@@ -9,36 +9,39 @@ import Foundation
 
 // MARK: Tracking
 extension PXOneTapDto {
+    private func getPaymentInfoForTracking() -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["payment_method_type"] = paymentTypeId
+        properties["payment_method_id"] = paymentMethodId
+        return properties
+    }
+    
+    private func getBenefitsInfoForTracking() -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["has_interest_free"] = benefits?.interestFree != nil ? true : false
+        properties["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
+        return properties
+    }
+    
     func getAccountMoneyForTracking() -> [String: Any] {
-        var accountMoneyDic: [String: Any] = [:]
-        accountMoneyDic["payment_method_type"] = paymentTypeId
-        accountMoneyDic["payment_method_id"] = paymentMethodId
-        var extraInfo: [String: Any] = [:]
+        var accountMoneyDic = getPaymentInfoForTracking()
+        var extraInfo = getBenefitsInfoForTracking()
         extraInfo["balance"] = accountMoney?.availableBalance
         extraInfo["invested"] = accountMoney?.invested
-        extraInfo["has_interest_free"] = benefits?.interestFree != nil ? true : false
-        extraInfo["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
         accountMoneyDic["extra_info"] = extraInfo
 
         return accountMoneyDic
     }
 
     func getPaymentMethodForTracking() -> [String: Any] {
-        var paymentMethodDic: [String: Any] = [:]
-        paymentMethodDic["payment_method_type"] = paymentTypeId
-        paymentMethodDic["payment_method_id"] = paymentMethodId
-        var extraInfo: [String: Any] = [:]
-        extraInfo["has_interest_free"] = benefits?.interestFree != nil ? true : false
-        extraInfo["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
-        paymentMethodDic["extra_info"] = extraInfo
+        var paymentMethodDic = getPaymentInfoForTracking()
+        paymentMethodDic["extra_info"] = getBenefitsInfoForTracking()
         return paymentMethodDic
     }
 
     func getCardForTracking(amountHelper: PXAmountHelper) -> [String: Any] {
-        var savedCardDic: [String: Any] = [:]
-        savedCardDic["payment_method_type"] = paymentTypeId
-        savedCardDic["payment_method_id"] = paymentMethodId
-        var extraInfo: [String: Any] = [:]
+        var savedCardDic = getPaymentInfoForTracking()
+        var extraInfo = getBenefitsInfoForTracking()
         extraInfo["card_id"] = oneTapCard?.cardId
         let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
         extraInfo["has_esc"] = cardIdsEsc.contains(oneTapCard?.cardId ?? "")
@@ -49,9 +52,6 @@ extension PXOneTapDto {
         if let issuerId = oneTapCard?.cardUI?.issuerId {
             extraInfo["issuer_id"] = Int64(issuerId)
         }
-
-        extraInfo["has_interest_free"] = benefits?.interestFree != nil ? true : false
-        extraInfo["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
 
         savedCardDic["extra_info"] = extraInfo
         return savedCardDic

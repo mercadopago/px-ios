@@ -127,26 +127,25 @@ extension PXResultViewModel {
         }
 
         let paymentStatus = paymentResult.status
-        if paymentStatus == PXPaymentStatus.REJECTED.rawValue,
-            let remedy = remedy,
-            !(remedy.isEmpty) {
+        if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
             var remedies: [[String: Any]] = []
-            if remedy.suggestedPaymentMethod != nil {
-                remedies.append(["index": 0,
-                                 "type": "payment_method_suggestion",
-                                 "extra_info": remedy.trackingData ?? ""])
-            } else if remedy.cvv != nil {
-                remedies.append(["index": 0,
-                                 "type": "cvv_request",
-                                 "extra_info": remedy.trackingData ?? ""])
-            } else if remedy.highRisk != nil {
-                remedies.append(["index": 0,
-                                 "type": "kyc_request",
-                                 "extra_info": remedy.trackingData ?? ""])
+            if let remedy = remedy,
+                !(remedy.isEmpty) {
+                if remedy.suggestedPaymentMethod != nil {
+                    remedies.append(["index": 0,
+                                     "type": "payment_method_suggestion",
+                                     "extra_info": remedy.trackingData ?? ""])
+                } else if remedy.cvv != nil {
+                    remedies.append(["index": 0,
+                                     "type": "cvv_request",
+                                     "extra_info": remedy.trackingData ?? ""])
+                } else if remedy.highRisk != nil {
+                    remedies.append(["index": 0,
+                                     "type": "kyc_request",
+                                     "extra_info": remedy.trackingData ?? ""])
+                }
             }
-            if !(remedies.isEmpty) {
-                properties["remedies"] = remedies
-            }
+            properties["remedies"] = remedies
         }
 
         return properties
