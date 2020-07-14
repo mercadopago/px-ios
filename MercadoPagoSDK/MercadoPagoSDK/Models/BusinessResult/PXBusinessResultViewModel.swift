@@ -76,22 +76,27 @@ class PXBusinessResultViewModel: NSObject {
 
 // MARK: New Result View Model Interface
 extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
+    // Esto se resuelve en base al businessResult.status (approved, rejected, etc)
     func getHeaderColor() -> UIColor {
         return primaryResultColor()
     }
 
+    // businessResult.title
     func getHeaderTitle() -> String {
         return getAttributedTitle().string
     }
 
+    // businessResult.icon (tiene que se una imagen)
     func getHeaderIcon() -> UIImage? {
         return getHeaderDefaultIcon()
     }
 
+    // businessResult.imageUrl (imagen para el header en url)
     func getHeaderURLIcon() -> String? {
         return businessResult.getImageUrl()
     }
 
+    // Esto se resuelve en base al businessResult.status (approved, rejected, etc)
     func getHeaderBadgeImage() -> UIImage? {
         return getBadgeImage()
     }
@@ -114,14 +119,17 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         return action
     }
 
+    // businessResult.shouldShowReceipt
     func mustShowReceipt() -> Bool {
         return businessResult.mustShowReceipt()
     }
 
+    // businessResult.receiptIdList (este tiene un setter aparte y no es parte del constructor)
     func getReceiptId() -> String? {
         return businessResult.getReceiptId()
     }
 
+    // pointsAndDiscounts.points
     func getPoints() -> PXPoints? {
         return pointsAndDiscounts?.points
     }
@@ -135,6 +143,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         return action
     }
 
+    // pointsAndDiscounts.discounts
     func getDiscounts() -> PXDiscounts? {
         return pointsAndDiscounts?.discounts
     }
@@ -153,6 +162,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
     }
 
+    // pointsAndDiscounts.expenseSplit
     func getExpenseSplit() -> PXExpenseSplit? {
         return pointsAndDiscounts?.expenseSplit
     }
@@ -165,6 +175,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         return action
     }
 
+    // pointsAndDiscounts.crossSelling
     func getCrossSellingItems() -> [PXCrossSellingItem]? {
         return pointsAndDiscounts?.crossSelling
     }
@@ -198,6 +209,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 
+    // businessResult.paymentStatus
     func shouldShowPaymentMethod() -> Bool {
         let isApproved = businessResult.isApproved()
         return !hasInstructions() && isApproved

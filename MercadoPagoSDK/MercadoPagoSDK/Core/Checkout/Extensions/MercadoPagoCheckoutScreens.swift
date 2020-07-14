@@ -163,18 +163,13 @@ public extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }
 
-    func showCongrats(cualquierCosa: PXCualquierCosa, nc: UINavigationController) {
-        let br = cualquierCosa.br
-        let pd = cualquierCosa.pd
-        let ah = cualquierCosa.ah
-        let pad = cualquierCosa.pad
-        let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: br!, paymentData: pd!, amountHelper: ah!, pointsAndDiscounts: pad)
-        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
+    func showCongrats(dto: PXCongratsData) {
+        let congratsViewController = PXNewResultViewController(viewModel: dto, callback: { [weak self] _, _ in
             print("FRISMA FINISH")
-            nc.popViewController(animated: true)
+            dto.navigationController.popViewController(animated: true)
 //            self?.finish()
         })
-        nc.pushViewController(congratsViewController, animated: false)
+        dto.navigationController.pushViewController(congratsViewController, animated: false)
     }
     
     func showPaymentResultScreen() {

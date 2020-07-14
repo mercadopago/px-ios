@@ -45,8 +45,9 @@ class ViewController: UIViewController {
         
         // 3) Start with your navigation controller.
         if let myNavigationController = navigationController {
-            let data = PXCualquierCosa()
-            checkout?.showCongrats(cualquierCosa: data, nc: myNavigationController)
+            let data = PXCongratsData()
+            data.navigationController = myNavigationController
+            checkout?.showCongrats(dto: data)
         }
     }
     
