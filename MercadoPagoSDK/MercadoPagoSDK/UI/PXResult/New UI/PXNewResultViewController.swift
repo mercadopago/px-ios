@@ -604,7 +604,16 @@ extension PXNewResultViewController {
     }
 
     //PAYMENT METHOD
+    
     func buildPaymentMethodView() -> UIView? {
+           guard let data  = viewModel.getPaymentViewData() else {
+               return nil
+           }
+
+           
+           return PXNewCustomView(data: data)
+       }
+    func buildPaymentMethodViewOrigin() -> UIView? {
         guard let paymentData = viewModel.getPaymentData(),
             let amountHelper = viewModel.getAmountHelper(),
             let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {

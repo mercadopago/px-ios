@@ -32,12 +32,23 @@ public class PXCongratsBuilder {
         return self
     }
     
+    public func paymentId(_ id: String) -> PXCongratsBuilder {
+        data.paymentId = id
+        return self
+    }
+    public func totalAmount(_ amount: Double) -> PXCongratsBuilder {
+        data.totalAmount = amount
+        return self
+    }
+    
     public func headerImage(_ image: UIImage?, orURL url: String?) -> PXCongratsBuilder {
         data.headerImage = image
         data.headerURL = url
         return self
     }
     
+  
+
     public func addPointsData(percentage: Double, levelColor: String, levelNumber: Int, title: String, actionLabel: String, actionTarget: String) -> PXCongratsBuilder {
         let action = PXRemoteAction(label: actionLabel, target: actionTarget)
         data.pointsData = PXPoints(progress: PXPointsProgress(percentage: percentage, levelColor: levelColor, levelNumber: levelNumber), title: title, action: action)
@@ -74,11 +85,18 @@ public class PXCongratsBuilder {
 public class PXCongratsData {
     
     // HEADER
+    
     var status: PXBusinessResultStatus = .REJECTED
     var headerTitle: String = ""
     var headerImage: UIImage?
     var headerURL: String?
-    
+    var totalAmount: Double = 0.0
+    var paymentId: String = ""
+  
+    let firstString: NSMutableAttributedString = NSMutableAttributedString()
+    let secondString: NSMutableAttributedString = NSMutableAttributedString()
+    let thirdString: NSMutableAttributedString = NSMutableAttributedString()
+    var icon: UIImage? 
     // POINTS
     var pointsData: PXPoints?
     
@@ -96,6 +114,7 @@ public class PXCongratsData {
     var closeCallback: (PaymentResult.CongratsState, String?) -> () = { state, text in
         print("congrats state \(state) and text \(text)")
     }
+   
     var shouldShowReceipt: Bool = false
     var receiptId: String?
     var mainAction: PXAction? = PXAction(label: "MainAction") {
@@ -109,7 +128,7 @@ public class PXCongratsData {
     
     public init() {}
     
-    
+   
     
     // Esto no debería hacerse
     private func getErrorComponent() -> PXErrorComponent? {
@@ -122,12 +141,34 @@ public class PXCongratsData {
 
         return PXErrorComponent(props: props)
     }
+    private func getPMFirstString(_ string: String) -> NSAttributedString {
+              let attributedTitle = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+           
+             return attributedTitle
+                 
+             }
+       private func getPMSecondString(_ string: String) -> NSAttributedString {
+                 let attributedTitle = NSAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
+              
+                return attributedTitle
+                    
+                }
 }
 
 extension PXCongratsData: PXNewResultViewModelInterface {
+    func getPaymentViewData() -> PXNewCustomViewData? {
+        
+        firstString.append(getPMFirstString("\(totalAmount)"))
+        secondString.append(getPMSecondString("Visa terminada en 3400"))
+        icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentId, defaultColor: false)
+              let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
+              return data
+    }
+    
     func getHeaderColor() -> UIColor {
         return ResourceManager.shared.getResultColorWith(status: self.status.getDescription())
     }
+   
     
     func getHeaderTitle() -> String {
         return headerTitle
