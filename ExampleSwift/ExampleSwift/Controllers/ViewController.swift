@@ -45,7 +45,15 @@ class ViewController: UIViewController {
         
         // 3) Start with your navigation controller.
         if let myNavigationController = navigationController {
-            let data = PXCongratsData()
+            let data = PXCongratsBuilder().setStatus(.APPROVED)
+                .setHeaderTitle("Prueba")
+                .headerImage(nil, orURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
+                .shouldShowReceipt(true, receiptId: "123")
+                .addPointsData(percentage: 0.85, levelColor: "#4063EA", levelNumber: 4, title: "Ud ganó 2.000 puntos", actionLabel: "Ver mis beneficios", actionTarget: "meli://loyalty/webview?url=https%3A%2F%2Fwww.mercadolivre.com.br%2Fmercado-pontos%2Fv2%2Fhub%23origin%3Dcongrats")
+                .addDiscounts()
+                .addCrossSelling()
+                .start(using: myNavigationController)
+            
             data.navigationController = myNavigationController
             checkout?.showCongrats(dto: data)
         }

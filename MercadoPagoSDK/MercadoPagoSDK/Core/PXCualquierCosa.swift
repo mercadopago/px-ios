@@ -8,14 +8,6 @@
 import UIKit
 import Foundation
 
-@objcMembers
-public class PXCongratsBuilder {
-    
-    func setStatus() -> PXCongratsBuilder {
-        return self
-    }
-    
-}
 
 @objcMembers
 public class PXCualquierCosa: NSObject {
