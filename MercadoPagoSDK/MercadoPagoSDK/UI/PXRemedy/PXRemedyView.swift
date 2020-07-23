@@ -147,8 +147,10 @@ class PXRemedyView: UIView {
         let textField = HoshiTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = placeholder
-        textField.borderActiveColor = ThemeManager.shared.secondaryColor()
-        textField.borderInactiveColor = ThemeManager.shared.secondaryColor()
+        textField.borderActiveColor = UIColor.red // ThemeManager.shared.secondaryColor()
+        textField.borderInactiveColor = UIColor.red // ThemeManager.shared.secondaryColor()
+        textField.textColor = UIColor.black
+        textField.placeholderColor = UIColor.gray
         textField.font = Utils.getFont(size: TEXTFIELD_FONT_SIZE)
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.numberPad
