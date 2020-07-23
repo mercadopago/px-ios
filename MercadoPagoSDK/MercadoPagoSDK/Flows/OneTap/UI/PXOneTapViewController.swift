@@ -336,7 +336,6 @@ extension PXOneTapViewController {
     }
 
     private func getActionForModal(_ action: PXRemoteAction? = nil, isSplit: Bool = false, trackingPath: String? = nil, properties: [String: Any]? = nil) -> PXAction? {
-        let defaultTitle = "Pagar con otro medio".localized
         let nonSplitDefaultAction: () -> Void = { [weak self] in
             guard let self = self else { return }
             self.currentModal?.dismiss()
@@ -351,7 +350,7 @@ extension PXOneTapViewController {
         let defaultAction = isSplit ? splitDefaultAction : nonSplitDefaultAction
 
         guard let action = action else {
-            return PXAction(label: defaultTitle, action: defaultAction)
+            return nil
         }
 
         guard let target = action.target else {
