@@ -18,6 +18,7 @@ public final class PXPaymentCongrats: NSObject {
     private var headerTitle: String = ""
     private var headerImage: UIImage?
     private var headerURL: String?
+    private var headerBadgeImage: UIImage?
     
     // Receipt
     private var shouldShowReceipt: Bool = false
@@ -26,10 +27,8 @@ public final class PXPaymentCongrats: NSObject {
     // Action Buttons
     private var mainAction: PXAction?
     private var secondaryAction: PXAction?
-    #warning("TBD")
-    private var closeCallback: (PaymentResult.CongratsState, String?) -> () = { state, text in
-        print("congrats state \(state) and text \(text)")
-    }
+    #warning("TBD - This action is triggered when tap on the X button at the top left")
+    private var closeAction: (() -> ())?
     
     /* --- Ponints & Discounts --- */
     // Points
@@ -43,6 +42,14 @@ public final class PXPaymentCongrats: NSObject {
     
     // Expense split
     private var expenseSplit: PXExpenseSplit?
+    
+    // View Receipt action
+    #warning("Investigate what is this used for")
+    private var viewReceiptAction: PXRemoteAction?
+    
+    private var topTextBox: PXText?
+    
+    private var hasCustomOrder: Bool?
     /* --- Ponints & Discounts --- */
     
     // CustomViews
@@ -51,6 +58,20 @@ public final class PXPaymentCongrats: NSObject {
     private var bottomView: UIView?
     
     private var errorMessage: String?
+    
+    // Remedies
+    private var hasPaymentBeenRejectedWithRemedy: Bool = false
+    private var remedyButtonAction: ((String?) -> ())?
+    
+    // Instructions
+    private var shouldShowInstructions: Bool = false
+    private var instructionsView: UIView?
+    
+    private var creditsExpectationView: UIView?
+    
+    // Tracking
+    private var trackingPath: String = "" //TODO
+    private var trackingValues: [String : Any] = [:] //TODO
     
     private var navigationController: UINavigationController?
     
@@ -186,6 +207,15 @@ extension PXPaymentCongrats {
         self.expenseSplit = PXExpenseSplit(title: PXText(message: message, backgroundColor: nil, textColor: nil, weight: nil), action: PXRemoteAction(label: "TBD", target: nil), imageUrl: "someImage")
         return self
     }
+    
+    /**
+     - ToDo: Fill this
+    */
+    @discardableResult
+    public func setViewReceiptAction(label: String, target: String) -> PXPaymentCongrats {
+        self.viewReceiptAction = PXRemoteAction(label: label, target: target)
+        return self
+    }
 
     /**
      Custom views to be displayed.
@@ -209,8 +239,9 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func addErrorMessage(_ message: String) {
+    public func addErrorMessage(_ message: String) -> PXPaymentCongrats {
         self.errorMessage = message
+        return self
     }
 
     /**
@@ -227,6 +258,10 @@ extension PXPaymentCongrats {
     }
 }
 
+/**
+ By conforming to `PXNewResultViewModelInterface` this class can be used
+ as a ViewModel for `PXNewResultViewController`
+ */
 extension PXPaymentCongrats: PXNewResultViewModelInterface {
     func getHeaderColor() -> UIColor {
         return ResourceManager.shared.getResultColorWith(status: self.status.getDescription())
@@ -245,16 +280,12 @@ extension PXPaymentCongrats: PXNewResultViewModelInterface {
     }
     
     func getHeaderBadgeImage() -> UIImage? {
-        return ResourceManager.shared.getBadgeImageWith(status: status.getDescription())
+        return headerBadgeImage
     }
     
+    #warning("Chequear implementacion por no es la misma entre PXResultViewModel y PXBusinessResultViewModel")
     func getHeaderCloseAction() -> (() -> Void)? {
-        let action = { [weak self] in
-            if let callback = self?.closeCallback {
-                callback(PaymentResult.CongratsState.EXIT, nil)
-            }
-        }
-        return action
+        return closeAction
     }
     
     func mustShowReceipt() -> Bool {
@@ -322,56 +353,55 @@ extension PXPaymentCongrats: PXNewResultViewModelInterface {
     }
     
     func getViewReceiptAction() -> PXRemoteAction? {
-        // TODO
-        //        return pointsAndDiscounts?.viewReceiptAction
-        return nil
+        return viewReceiptAction
     }
     
     func getTopTextBox() -> PXText? {
-        // TODO
-        //        return pointsAndDiscounts?.topTextBox
-        return nil
+        return topTextBox
     }
     
     func getCustomOrder() -> Bool? {
-        // TODO
-        //        return pointsAndDiscounts?.customOrder
-        return nil
+        return hasCustomOrder
     }
     
     func hasInstructions() -> Bool {
-        return false
+        return shouldShowInstructions
     }
     
     func getInstructionsView() -> UIView? {
-        return nil
+        return instructionsView
     }
     
     // Para que muestre el payment method, tenemos que devolver ademas paymentData
     func shouldShowPaymentMethod() -> Bool {
         #warning("logica especifica para comparar PXBusinessResultStatus con PXPaymentStatus")
+        // TODO checkear comparación de este status (BusinessStatus) pero puede ser que venga por PXResultViewModel que tiene otra logica
         let isApproved = status.getDescription().lowercased() == PXPaymentStatus.APPROVED.rawValue.lowercased()
         return !hasInstructions() && isApproved
     }
     
+    #warning("Desacoplar payment data del VC de Congrats")
     func getPaymentData() -> PXPaymentData? {
         // TODO
         //        return paymentData
         return nil
     }
     
+    #warning("Desacoplar ammount helper del VC de Congrats")
     func getAmountHelper() -> PXAmountHelper? {
         // TODO
         //        return amountHelper
         return nil
     }
     
+    #warning("Desacoplar payment data del VC de Congrats")
     func getSplitPaymentData() -> PXPaymentData? {
         // TODO
         //        return amountHelper.splitAccountMoney
         return nil
     }
     
+    #warning("Desacoplar ammount helper del VC de Congrats")
     func getSplitAmountHelper() -> PXAmountHelper? {
         // TODO
         //        return amountHelper
@@ -389,17 +419,18 @@ extension PXPaymentCongrats: PXNewResultViewModelInterface {
         return nil
     }
     
+    #warning("Chequear como resolver esto donde se le pasa parametros a esta funcion para que ejecute una accion en particular. Tener en cuenta que PXBusinessResult y PXResult tienen implementaciones distintas")
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
-        return nil
-    }
-    
-    func getRemedyButtonAction() -> ((String?) -> Void)? {
         // TODO
         return nil
     }
     
+    func getRemedyButtonAction() -> ((String?) -> Void)? {
+        return remedyButtonAction
+    }
+    
     func isPaymentResultRejectedWithRemedy() -> Bool {
-        return false
+        return self.hasPaymentBeenRejectedWithRemedy
     }
     
     func getFooterMainAction() -> PXAction? {
@@ -407,9 +438,6 @@ extension PXPaymentCongrats: PXNewResultViewModelInterface {
     }
     
     func getFooterSecondaryAction() -> PXAction? {
-        //        let linkAction = secondaryAction != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
-        //        return linkAction
-        // TODO
         return secondaryAction
     }
     
@@ -418,14 +446,7 @@ extension PXPaymentCongrats: PXNewResultViewModelInterface {
     }
     
     func getCreditsExpectationView() -> UIView? {
-        // TODO
-        //        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
-        //            let title = resultInfo.title,
-        //            let subtitle = resultInfo.subtitle,
-        //            businessResult.isApproved() {
-        //            return PXCreditsExpectationView(title: title, subtitle: subtitle)
-        //        }
-        return nil
+        return creditsExpectationView
     }
     
     func getTopCustomView() -> UIView? {
@@ -441,13 +462,11 @@ extension PXPaymentCongrats: PXNewResultViewModelInterface {
     }
     
     func getTrackingProperties() -> [String : Any] {
-        // TODO
-        return ["Franco": "Franco"]
+        return trackingValues
     }
     
     func getTrackingPath() -> String {
-        // TODO
-        return "trackingPath"
+        return trackingPath
     }
     
     func getFlowBehaviourResult() -> PXResultKey {
