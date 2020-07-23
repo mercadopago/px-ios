@@ -9,11 +9,11 @@
 
 import UIKit
 
-#if PX_PRIVATE_POD
+//#if PX_PRIVATE_POD
     import MercadoPagoSDKV4
-#else
-    import MercadoPagoSDK
-#endif
+//#else
+//    import MercadoPagoSDK
+//#endif
 
 // Check full documentation: http://mercadopago.github.io/px-ios/v4/
 class ViewController: UIViewController {
@@ -22,6 +22,26 @@ class ViewController: UIViewController {
     @IBAction func initDefault(_ sender: Any) {
         // runMercadoPagoCheckout()
         runMercadoPagoCheckoutWithLifecycle()
+    }
+    
+    @IBAction func launchCongrats(_ sender: Any) {
+        // TODO: Run congrats
+        _ = PXPaymentCongrats()
+            .setStatus(.APPROVED)
+            .setHeaderTitle("¡Listo! Ya le pagaste a SuperMarket")
+            .headerImage(nil, orURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
+            .shouldShowReceipt(true, receiptId: "123")
+            .setMainAction(label: "Continuar", action: {
+                print("Continuar")
+            })
+            .setSecondaryAction(label: "Tuve un problema", action: {
+                print("Tuve un problema")
+            })
+            .addPointsData(percentage: 0.85, levelColor: "#4063EA", levelNumber: 4, title: "Ud ganó 2.000 puntos", actionLabel: "Ver mis beneficios", actionTarget: "meli://loyalty/webview?url=https%3A%2F%2Fwww.mercadolivre.com.br%2Fmercado-pontos%2Fv2%2Fhub%23origin%3Dcongrats")
+            .addDiscounts()
+            .addCrossSelling()
+            .addExpenseSplit("Expense")
+            .start(using: self.navigationController!)
     }
     
     override func viewDidLoad() {
