@@ -53,11 +53,7 @@ internal extension PXResultViewModel {
 
     func titleForStatusDetail(statusDetail: String, paymentMethod: PXPaymentMethod?) -> NSAttributedString {
         // Set title for remedy
-        if let title = remedy?.cvv?.title {
-            return title.toAttributedString()
-        } else if let title = remedy?.highRisk?.title {
-            return title.toAttributedString()
-        } else if let title = remedy?.suggestedPaymentMethod?.title {
+        if let title = remedy?.title {
             return title.toAttributedString()
         }
 

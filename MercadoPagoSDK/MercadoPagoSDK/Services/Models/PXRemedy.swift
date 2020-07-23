@@ -15,6 +15,7 @@ struct PXRemedy: Codable {
     let trackingData: [String: String]?
 }
 
+// PXRemedy Helpers
 extension PXRemedy {
     init() {
         self.init(cvv: nil, highRisk: nil, callForAuth: nil, suggestedPaymentMethod: nil, trackingData: nil)
@@ -22,6 +23,18 @@ extension PXRemedy {
     
     var isEmpty: Bool {
         return cvv == nil && highRisk == nil && callForAuth == nil && suggestedPaymentMethod == nil
+    }
+    
+    var title: String? {
+        // Get title for remedy
+        if let title = suggestedPaymentMethod?.title {
+            return title
+        } else if let title = cvv?.title {
+            return title
+        } else if let title = highRisk?.title {
+            return title
+        }
+        return nil
     }
 }
 

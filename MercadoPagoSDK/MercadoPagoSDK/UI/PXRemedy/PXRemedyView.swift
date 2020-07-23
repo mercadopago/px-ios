@@ -402,36 +402,28 @@ extension PXRemedyView {
     }
 
     private func getRemedyPlaceholder() -> String {
-        let remedy = data.remedy
-        if let cvv = remedy.cvv, let text = cvv.fieldSetting?.title {
+        if let cvv = getCVVRemedy(), let text = cvv.fieldSetting?.title {
             return text
-//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let text = suggestionPaymentMethod.fieldSetting?.title {
-//            return text
         }
         return ""
     }
 
     private func getRemedyHintMessage() -> String? {
-        let remedy = data.remedy
-        if let cvv = remedy.cvv, let text = cvv.fieldSetting?.hintMessage {
+        if let cvv = getCVVRemedy(), let text = cvv.fieldSetting?.hintMessage {
             return text
-//        } else if let suggestionPaymentMethod = remedy.suggestedPaymentMethod, let text = suggestionPaymentMethod.fieldSetting?.hintMessage {
-//            return text
         }
         return nil
     }
 
     private func getRemedyMaxLength() -> Int {
-        let remedy = data.remedy
-        if let cvv = remedy.cvv, let length = cvv.fieldSetting?.length {
+        if let cvv = getCVVRemedy(), let length = cvv.fieldSetting?.length {
             return length
         }
         return 0
     }
 
     private func shouldShowTextField() -> Bool {
-        let remedy = data.remedy
-        if remedy.cvv != nil && data.remedyViewProtocol != nil {
+        if getCVVRemedy() != nil && data.remedyViewProtocol != nil {
             return true
         }
         return false
@@ -445,5 +437,12 @@ extension PXRemedyView {
             return true
         }
         return false
+    }
+    
+    private func getCVVRemedy() -> PXInvalidCVV? {
+        if let cvv = data.remedy.cvv {
+            return cvv
+        }
+        return nil
     }
 }
