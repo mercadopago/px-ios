@@ -114,7 +114,6 @@ internal class PaymentResult {
 
     func hasSecondaryButton() -> Bool {
         return isCallForAuth() ||
-            isHighRisk() ||
             isBadFilled() ||
             isInvalidInstallments() ||
             isCardDisabled()
