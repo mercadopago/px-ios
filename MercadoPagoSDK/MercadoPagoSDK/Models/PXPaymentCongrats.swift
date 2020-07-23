@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PXPaymentCongrats.swift
 //  MercadoPagoSDK
 //
 //  Created by Franco Risma on 23/07/2020.
@@ -13,7 +13,6 @@ This also acts as an entry point for congrats withouth having to go through the 
 */
 @objcMembers
 public final class PXPaymentCongrats: NSObject {
-    
     // Header
     private var status: PXBusinessResultStatus = .REJECTED
     private var headerTitle: String = ""
@@ -60,78 +59,6 @@ public final class PXPaymentCongrats: NSObject {
     public override init() {
         super.init()
     }
-    
-    public func setStatus(_ status: PXBusinessResultStatus) -> PXPaymentCongrats {
-        self.status = status
-        return self
-    }
-    
-    public func setHeaderTitle(_ title: String) -> PXPaymentCongrats {
-        self.headerTitle = title
-        return self
-    }
-    
-    public func headerImage(_ image: UIImage?, orURL url: String?) -> PXPaymentCongrats {
-        self.headerImage = image
-        self.headerURL = url
-        return self
-    }
-
-    public func shouldShowReceipt(_ shouldShow: Bool, receiptId: String?) -> PXPaymentCongrats {
-        self.shouldShowReceipt = shouldShow
-        self.receiptId = receiptId
-        return self
-    }
-    
-    public func setMainAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
-        self.mainAction = PXAction(label: label, action: action)
-        return self
-    }
-    
-    public func setSecondaryAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
-        self.secondaryAction = PXAction(label: label, action: action)
-        return self
-    }
-
-    public func addPointsData(percentage: Double, levelColor: String, levelNumber: Int, title: String, actionLabel: String, actionTarget: String) -> PXPaymentCongrats {
-        let action = PXRemoteAction(label: actionLabel, target: actionTarget)
-        self.pointsData = PXPoints(progress: PXPointsProgress(percentage: percentage, levelColor: levelColor, levelNumber: levelNumber), title: title, action: action)
-        return self
-    }
-
-    public func addDiscounts() -> PXPaymentCongrats {
-        self.discounts = PXDiscounts(title: "Descuentos por tu nivel", subtitle: "", discountsAction: PXRemoteAction(label: "Ver todos los descuentos", target: "mercadopago://discount_center_payers/list#from=/px/congrats"), downloadAction: PXDownloadAction(title: "Exclusivo con la app de Mercado Libre", action: PXRemoteAction(label: "Descargar", target: "https://852u.adj.st/discount_center_payers/list?adjust_t=ufj9wxn&adjust_deeplink=mercadopago%3A%2F%2Fdiscount_center_payers%2Flist&adjust_label=px-ml")), items: [PXDiscountsItem(icon: "https://mla-s1-p.mlstatic.com/766266-MLA32568902676_102019-O.jpg", title: "Hasta", subtitle: "20 % OFF", target: "mercadopago://discount_center_payers/detail?campaign_id=1018483&user_level=1&mcc=1091102&distance=1072139&coupon_used=false&status=FULL&store_id=13040071&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F766266-MLA32568902676_102019-O.jpg%22%2C%22title%22%3A%22At%C3%A9%20R%24%2010%22%2C%22subtitle%22%3A%22Nutty%20Bavarian%22%7D%7D%5D#from=/px/congrats", campaingId: "1018483"),PXDiscountsItem(icon: "https://mla-s1-p.mlstatic.com/826105-MLA32568902631_102019-O.jpg", title: "Hasta", subtitle: "20 % OFF", target: "mercadopago://discount_center_payers/detail?campaign_id=1018457&user_level=1&mcc=4771701&distance=543968&coupon_used=false&status=FULL&store_id=30316240&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F826105-MLA32568902631_102019-O.jpg%22%2C%22title%22%3A%22At%C3%A9%20R%24%2015%22%2C%22subtitle%22%3A%22Drogasil%22%7D%7D%5D#from=/px/congrats", campaingId: "1018457"),PXDiscountsItem(icon: "https://mla-s1-p.mlstatic.com/761600-MLA32568902662_102019-O.jpg", title: "Hasta", subtitle: "10 % OFF", target:  "mercadopago://discount_center_payers/detail?campaign_id=1018475&user_level=1&mcc=5611201&distance=654418&coupon_used=false&status=FULL&store_id=30108872&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F761600-MLA32568902662_102019-O.jpg%22%2C%22title%22%3A%22At%C3%A9%20R%24%2010%22%2C%22subtitle%22%3A%22McDonald%5Cu0027s%22%7D%7D%5D#from=/px/congrats", campaingId:"1018475") ], touchpoint: nil)
-        return self
-    }
-
-    public func addCrossSelling() -> PXPaymentCongrats {
-        self.crossSelling = [PXCrossSellingItem(title: "Gane 200 pesos por sus pagos diarios", icon: "https://mobile.mercadolibre.com/remote_resources/image/merchengine_mgm_icon_ml?density=xxhdpi&locale=es_AR", contentId: "cross_selling_mgm_ml", action: PXRemoteAction(label: "Invita a más amigos a usar la aplicación", target: "meli://invite/wallet"))]
-        return self
-    }
-    
-    #warning("Check if backgroundColor, textColor, weight should be customized from the outside")
-    public func addExpenseSplit(_ message: String) -> PXPaymentCongrats {
-        self.expenseSplit = PXExpenseSplit(title: PXText(message: message, backgroundColor: nil, textColor: nil, weight: nil), action: PXRemoteAction(label: "TBD", target: nil), imageUrl: "someImage")
-        return self
-    }
-
-    public func addViews(important: UIView?, top: UIView?, bottom: UIView?) -> PXPaymentCongrats {
-        self.importantView = important
-        self.topView = top
-        self.bottomView = bottom
-        return self
-    }
-    
-    public func addErrorMessage(_ message: String) {
-        self.errorMessage = message
-    }
-
-    public func start(using navController: UINavigationController) -> PXPaymentCongrats {
-        self.navigationController = navController
-        let vc = PXNewResultViewController(viewModel: self, callback:{_,_ in })
-        self.navigationController?.pushViewController(vc, animated: true)
-        return self
-    }
 
     // MARK: Private methods
     
@@ -145,6 +72,158 @@ public final class PXPaymentCongrats: NSObject {
         let props = PXErrorProps(title: title.toAttributedString(), message: labelInstruction.toAttributedString())
         
         return PXErrorComponent(props: props)
+    }
+}
+
+// MARK: Setters
+extension PXPaymentCongrats {
+    /**
+     Indicates status Success, Failure, for more info check `PXBusinessResultStatus`.
+     - parameter status: the result stats
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func setStatus(_ status: PXBusinessResultStatus) -> PXPaymentCongrats {
+        self.status = status
+        return self
+    }
+    
+    /**
+     Fills the header view with a message.
+     - parameter title: some message
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func setHeaderTitle(_ title: String) -> PXPaymentCongrats {
+        self.headerTitle = title
+        return self
+    }
+    
+    /**
+     Collector image shown in congrats' header. Can receive an `UIImage` or a `URL`.
+     - parameter image: an image in `UIImage` format
+     - parameter url: an `URL` for the image
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func headerImage(_ image: UIImage?, orURL url: String?) -> PXPaymentCongrats {
+        self.headerImage = image
+        self.headerURL = url
+        return self
+    }
+
+    /**
+     Defines if the receipt view should be shown, in affirmative case, the receiptId must be supplied.
+     - parameter shouldShow: some message
+     - parameter receiptId: some message
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func shouldShowReceipt(_ shouldShow: Bool, receiptId: String?) -> PXPaymentCongrats {
+        self.shouldShowReceipt = shouldShow
+        self.receiptId = receiptId
+        return self
+    }
+    
+    /**
+     Top button configuration.
+     - parameter label: button display text
+     - parameter action: a colsure to excecute
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func setMainAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
+        self.mainAction = PXAction(label: label, action: action)
+        return self
+    }
+    
+    /**
+     Bottom button configuration.
+     - parameter label: button display text
+     - parameter action: a colsure to excecute
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func setSecondaryAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
+        self.secondaryAction = PXAction(label: label, action: action)
+        return self
+    }
+
+    /**
+     - ToDo: Fill this
+    */
+    @discardableResult
+    public func addPointsData(percentage: Double, levelColor: String, levelNumber: Int, title: String, actionLabel: String, actionTarget: String) -> PXPaymentCongrats {
+        let action = PXRemoteAction(label: actionLabel, target: actionTarget)
+        self.pointsData = PXPoints(progress: PXPointsProgress(percentage: percentage, levelColor: levelColor, levelNumber: levelNumber), title: title, action: action)
+        return self
+    }
+
+    /**
+     - ToDo: Fill this
+    */
+    @discardableResult
+    public func addDiscounts() -> PXPaymentCongrats {
+        self.discounts = PXDiscounts(title: "Descuentos por tu nivel", subtitle: "", discountsAction: PXRemoteAction(label: "Ver todos los descuentos", target: "mercadopago://discount_center_payers/list#from=/px/congrats"), downloadAction: PXDownloadAction(title: "Exclusivo con la app de Mercado Libre", action: PXRemoteAction(label: "Descargar", target: "https://852u.adj.st/discount_center_payers/list?adjust_t=ufj9wxn&adjust_deeplink=mercadopago%3A%2F%2Fdiscount_center_payers%2Flist&adjust_label=px-ml")), items: [PXDiscountsItem(icon: "https://mla-s1-p.mlstatic.com/766266-MLA32568902676_102019-O.jpg", title: "Hasta", subtitle: "20 % OFF", target: "mercadopago://discount_center_payers/detail?campaign_id=1018483&user_level=1&mcc=1091102&distance=1072139&coupon_used=false&status=FULL&store_id=13040071&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F766266-MLA32568902676_102019-O.jpg%22%2C%22title%22%3A%22At%C3%A9%20R%24%2010%22%2C%22subtitle%22%3A%22Nutty%20Bavarian%22%7D%7D%5D#from=/px/congrats", campaingId: "1018483"),PXDiscountsItem(icon: "https://mla-s1-p.mlstatic.com/826105-MLA32568902631_102019-O.jpg", title: "Hasta", subtitle: "20 % OFF", target: "mercadopago://discount_center_payers/detail?campaign_id=1018457&user_level=1&mcc=4771701&distance=543968&coupon_used=false&status=FULL&store_id=30316240&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F826105-MLA32568902631_102019-O.jpg%22%2C%22title%22%3A%22At%C3%A9%20R%24%2015%22%2C%22subtitle%22%3A%22Drogasil%22%7D%7D%5D#from=/px/congrats", campaingId: "1018457"),PXDiscountsItem(icon: "https://mla-s1-p.mlstatic.com/761600-MLA32568902662_102019-O.jpg", title: "Hasta", subtitle: "10 % OFF", target:  "mercadopago://discount_center_payers/detail?campaign_id=1018475&user_level=1&mcc=5611201&distance=654418&coupon_used=false&status=FULL&store_id=30108872&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F761600-MLA32568902662_102019-O.jpg%22%2C%22title%22%3A%22At%C3%A9%20R%24%2010%22%2C%22subtitle%22%3A%22McDonald%5Cu0027s%22%7D%7D%5D#from=/px/congrats", campaingId:"1018475") ], touchpoint: nil)
+        return self
+    }
+
+    /**
+     - ToDo: Fill this
+    */
+    @discardableResult
+    public func addCrossSelling() -> PXPaymentCongrats {
+        self.crossSelling = [PXCrossSellingItem(title: "Gane 200 pesos por sus pagos diarios", icon: "https://mobile.mercadolibre.com/remote_resources/image/merchengine_mgm_icon_ml?density=xxhdpi&locale=es_AR", contentId: "cross_selling_mgm_ml", action: PXRemoteAction(label: "Invita a más amigos a usar la aplicación", target: "meli://invite/wallet"))]
+        return self
+    }
+    
+    /**
+     - ToDo: Fill this
+    */
+    #warning("Check if backgroundColor, textColor, weight should be customized from the outside")
+    @discardableResult
+    public func addExpenseSplit(_ message: String) -> PXPaymentCongrats {
+        self.expenseSplit = PXExpenseSplit(title: PXText(message: message, backgroundColor: nil, textColor: nil, weight: nil), action: PXRemoteAction(label: "TBD", target: nil), imageUrl: "someImage")
+        return self
+    }
+
+    /**
+     Custom views to be displayed.
+     - Parameters:
+        - important: some `UIView`
+        - top: some `UIView`
+        - bottom: some `UIView`
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func addViews(important: UIView?, top: UIView?, bottom: UIView?) -> PXPaymentCongrats {
+        self.importantView = important
+        self.topView = top
+        self.bottomView = bottom
+        return self
+    }
+    
+    /**
+     For a failure congrats, this is the message displayed.
+     - parameter message: some error message
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func addErrorMessage(_ message: String) {
+        self.errorMessage = message
+    }
+
+    /**
+     Shows the congrats' view.
+     - parameter navController: a `UINavigationController`
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func start(using navController: UINavigationController) -> PXPaymentCongrats {
+        self.navigationController = navController
+        let vc = PXNewResultViewController(viewModel: self, callback:{_,_ in })
+        self.navigationController?.pushViewController(vc, animated: true)
+        return self
     }
 }
 
