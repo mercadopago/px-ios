@@ -347,13 +347,12 @@ extension PXOneTapViewController {
             self.currentModal?.dismiss()
         }
 
-        let defaultAction = isSplit ? splitDefaultAction : nonSplitDefaultAction
-
         guard let action = action else {
             return nil
         }
 
         guard let target = action.target else {
+            let defaultAction = isSplit ? splitDefaultAction : nonSplitDefaultAction
             return PXAction(label: action.label, action: defaultAction)
         }
 
