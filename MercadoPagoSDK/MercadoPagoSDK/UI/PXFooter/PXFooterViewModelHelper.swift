@@ -11,7 +11,7 @@ import UIKit
 // MARK: Build Helpers
 internal extension PXResultViewModel {
 
-    typealias action = (() -> Void)?
+    typealias Action = (() -> Void)?
     
     func getActionButton() -> PXAction? {
         return getAction(label: getButtonLabel(), action: getButtonAction())
@@ -21,7 +21,7 @@ internal extension PXResultViewModel {
         return getAction(label: getLinkLabel(), action: getLinkAction())
     }
     
-    private func getAction(label: String?, action: action) -> PXAction? {
+    private func getAction(label: String?, action: Action) -> PXAction? {
         guard let label = label, let action = action else {
             return nil
         }
@@ -73,7 +73,7 @@ internal extension PXResultViewModel {
         return nil
     }
 
-    private func getButtonAction() -> action {
+    private func getButtonAction() -> Action {
         return { [weak self] in
             guard let self = self else { return }
             guard let callback = self.callback else { return }
@@ -100,7 +100,7 @@ internal extension PXResultViewModel {
         }
     }
 
-    private func getLinkAction() -> action {
+    private func getLinkAction() -> Action {
         return { [weak self] in
             if let url = self?.getBackUrl() {
                 self?.openURL(url: url, success: { [weak self] (_) in
