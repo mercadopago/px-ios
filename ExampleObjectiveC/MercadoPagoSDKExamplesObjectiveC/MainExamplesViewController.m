@@ -29,7 +29,6 @@
                                          setCrossSellingData]
                                         setExpenseSplit: @"Expense"]
                                        startUsing: self.navigationController];
-    ;
 }
 
 - (IBAction)checkoutFlow:(id)sender {
