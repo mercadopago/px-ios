@@ -9,11 +9,11 @@
 
 import UIKit
 
-//#if PX_PRIVATE_POD
+#if PX_PRIVATE_POD
     import MercadoPagoSDKV4
-//#else
-//    import MercadoPagoSDK
-//#endif
+#else
+    import MercadoPagoSDK
+#endif
 
 // Check full documentation: http://mercadopago.github.io/px-ios/v4/
 class ViewController: UIViewController {
