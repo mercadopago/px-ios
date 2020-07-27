@@ -166,7 +166,7 @@
 
 -(void)setCheckoutPrefAdditionalInfo {
     // Example SP support for custom additional info.
-    self.pref.additionalInfo = @"{\"px_summary\":{\"title\":\"Recarga Claro\",\"image_url\":\"https://www.rondachile.cl/wordpress/wp-content/uploads/2018/03/Logo-Claro-1.jpg\",\"subtitle\":\"Celular 1159199234\",\"purpose\":\"Tu recarga\"}}";
+    self.pref.additionalInfo = @"{\"px_summary\":{\"title\":\"Recarga Claro\",\"image_url\":\"https://www.rondachile.cl/wordpress/wp-content/uploads/2018/03/Logo-Claro-1.jpg\",\"subtitle\":\"Celular 1159199234\",\"purpose\":\"Tu recarga\"}, \"px_configuration\": {\"flow_id\": \"/multiplayer\"}, \"px_custom_texts\": {\"pay_button\": \"Enviar\", \"pay_button_progress\": \"Enviando...\", \"total_description\": \"Total a enviar\"}}";
 }
 
 - (void)didFinishWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {

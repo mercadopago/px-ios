@@ -23,4 +23,14 @@ import Foundation
         case .pay_button_progress: return "Procesando tu pago"
         }
     }
+
+    internal var description: String {
+        switch self {
+        case .total_to_pay: return "total_to_pay"
+        case .total_to_pay_onetap: return "total_to_pay_onetap"
+        case .how_to_pay: return "how_to_pay"
+        case .pay_button: return "pay_button"
+        case .pay_button_progress: return "pay_button_progress"
+        }
+    }
 }

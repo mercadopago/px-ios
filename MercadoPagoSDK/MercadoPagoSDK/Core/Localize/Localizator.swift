@@ -70,12 +70,11 @@ internal extension Localizator {
     }
 
     func addCustomTranslation(_ key: PXCustomTranslationKey, _ translation: String) {
-        if customTrans != nil {
-            customTrans?[key] = translation
-        } else {
+        if customTrans == nil {
             customTrans = [PXCustomTranslationKey: String]()
-            customTrans?[key] = translation
         }
+        printDebug("Added custom translation: \(translation) for key: \(key.description)")
+        customTrans?[key] = translation
     }
 }
 

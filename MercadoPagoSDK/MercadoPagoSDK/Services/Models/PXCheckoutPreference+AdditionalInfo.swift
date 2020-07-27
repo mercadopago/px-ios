@@ -9,8 +9,13 @@ import Foundation
 
 internal extension PXCheckoutPreference {
     func populateAdditionalInfoModel() {
-        if let str = self.additionalInfo, let additionInfoData = str.data(using: .utf8) {
-            self.pxAdditionalInfo = try? JSONDecoder().decode(PXAdditionalInfo.self, from: additionInfoData)
+        if let additionalInfo = additionalInfo,
+            let data = additionalInfo.data(using: .utf8) {
+            do {
+                pxAdditionalInfo = try PXAdditionalInfo.fromJSON(data: data)
+            } catch {
+                printDebug(error)
+            }
         }
     }
 
