@@ -25,22 +25,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func launchCongrats(_ sender: Any) {
+        guard let navController = navigationController else { return }
         _ = PXPaymentCongrats()
-            .setStatus(.APPROVED)
-            .setHeaderTitle("¡Listo! Ya le pagaste a SuperMarket")
-            .setHeaderImage(nil, orURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
+            .withStatus(.APPROVED)
+            .withHeaderTitle("¡Listo! Ya le pagaste a SuperMarket")
+            .withHeaderImage(nil, orURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
+            .withHeaderCloseAction {
+                navController.popViewController(animated: true)
+        }
             .shouldShowReceipt(true, receiptId: "123")
-            .setMainAction(label: "Continuar", action: {
-                print("Continuar")
+            .withMainAction(label: "Continuar", action: {
+                navController.popViewController(animated: true)
             })
-            .setSecondaryAction(label: "Tuve un problema", action: {
-                print("Tuve un problema")
+            .withSecondaryAction(label: "Tuve un problema", action: {
+                navController.popViewController(animated: true)
             })
-            .setPointsData(percentage: 0.85, levelColor: "#4063EA", levelNumber: 4, title: "Ud ganó 2.000 puntos", actionLabel: "Ver mis beneficios", actionTarget: "meli://loyalty/webview?url=https%3A%2F%2Fwww.mercadolivre.com.br%2Fmercado-pontos%2Fv2%2Fhub%23origin%3Dcongrats")
-            .setDiscountsData()
-            .setCrossSellingData()
-            .setExpenseSplit("Expense")
-            .start(using: self.navigationController!)
+            .withPointsData(percentage: 0.85, levelColor: "#4063EA", levelNumber: 4, title: "Ud ganó 2.000 puntos", actionLabel: "Ver mis beneficios", actionTarget: "meli://loyalty/webview?url=https%3A%2F%2Fwww.mercadolivre.com.br%2Fmercado-pontos%2Fv2%2Fhub%23origin%3Dcongrats")
+            .withDiscountsData()
+            .withCrossSellingData()
+            .withExpenseSplit("Expense", backgroundColor: "#000000", textColor: "#FFFFFF", weight: nil, actionLabel: "Action expense", actionTarget: nil, imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
+            .start(using: navController)
     }
     
     override func viewDidLoad() {
