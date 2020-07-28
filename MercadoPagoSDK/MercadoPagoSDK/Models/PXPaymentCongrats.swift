@@ -74,7 +74,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var trackingPath: String = "" //TODO
     private(set) var trackingValues: [String : Any] = [:] //TODO
     // This field is ment to be used only by Checkout
-    private(set) var flowBehaviourResult: PXResultKey!
+    private(set) var flowBehaviourResult: PXResultKey?
     
     // Error
     private(set) var errorBodyView: UIView?
@@ -295,11 +295,48 @@ extension PXPaymentCongrats {
         return self
     }
     
+    
+    /**
+     - ToDo: Fill this
+     */
+    @discardableResult
+    public func paymentHasBeenRejectedWithRemedy(_ hasRemedies: Bool) -> PXPaymentCongrats {
+        self.hasPaymentBeenRejectedWithRemedy = hasRemedies
+        return self
+    }
+    
+    /**
+     - ToDo: Fill this
+     */
+    @discardableResult
+    public func withRemedyButtonAction(_ action: @escaping (String?) -> ()) -> PXPaymentCongrats {
+        self.remedyButtonAction = action
+        return self
+    }
+    
+    /**
+     - ToDo: Fill this
+     */
+    @discardableResult
+    public func withCreditsExpectationView(_ view: UIView) -> PXPaymentCongrats {
+        self.creditsExpectationView = view
+        return self
+    }
+    
+    /**
+     - ToDo: Fill this
+     */
+    @discardableResult
+    internal func withFlowBehaviorResult(_ result: PXResultKey) -> PXPaymentCongrats {
+        self.flowBehaviourResult = result
+        return self
+    }
+    
     /**
      An error view to be displayed when a failure congrats is shown
      - parameter shouldShow: a `Bool` indicating if
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withErrorBodyView(_ view: UIView) -> PXPaymentCongrats {
         self.errorBodyView = view
