@@ -578,8 +578,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func selectCardInSliderAtIndex(_ index: Int) {
         let cardSliderViewModel = viewModel.getCardSliderViewModel()
-        if slider.canScrollTo(index: index),
-            (0 ... cardSliderViewModel.count - 1).contains(index) {
+        if (0 ... cardSliderViewModel.count - 1).contains(index) {
             do {
                 try slider.goToItemAt(index: index, animated: false)
             } catch {
