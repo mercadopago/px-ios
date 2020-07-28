@@ -217,14 +217,23 @@ extension PXCardSlider {
             delegate?.newCardDidSelected(targetModel: modelData)
         }
     }
-}
-
-extension PXCardSlider: PXTermsAndConditionViewDelegate {
-    func shouldOpenTermsCondition(_ title: String, url: URL) {
-        termsAndCondDelegate?.shouldOpenTermsCondition(title, url: url)
+    
+    func indexOfCard() -> Int {
+        return 0
+    }
+    
+    enum PXCardSliderError: Error {
+        case outOfBounds
+    }
+    
+    func canScrollTo(index: Int) -> Bool {
+        return (0 ... (pagerView.dataSource?.numberOfItems(in: pagerView) ?? 1 - 1)).contains(index)
     }
 
-    func goToItemAt(index: Int, animated: Bool) {
+    func goToItemAt(index: Int, animated: Bool) throws {
+        guard canScrollTo(index: index) else {
+            throw PXCardSliderError.outOfBounds
+        }
         pagerView.scrollToItem(at: index, animated: animated)
         pageControl.currentPage = index
         selectedIndex = index
@@ -232,14 +241,20 @@ extension PXCardSlider: PXTermsAndConditionViewDelegate {
     }
 }
 
+extension PXCardSlider: PXTermsAndConditionViewDelegate {
+    func shouldOpenTermsCondition(_ title: String, url: URL) {
+        termsAndCondDelegate?.shouldOpenTermsCondition(title, url: url)
+    }
+}
+
 // MARK: ChangeCardAccessibilityProtocol
 extension PXCardSlider: ChangeCardAccessibilityProtocol {
     func scrollTo(direction: UIAccessibilityScrollDirection) {
         if direction == UIAccessibilityScrollDirection.left, pageControl.currentPage < pageControl.numberOfPages - 1 {
-            goToItemAt(index: pageControl.currentPage + 1, animated: true)
+            try? goToItemAt(index: pageControl.currentPage + 1, animated: true)
         }
         else if direction == UIAccessibilityScrollDirection.right, pageControl.currentPage > 0 {
-            goToItemAt(index: pageControl.currentPage - 1, animated: true)
+            try? goToItemAt(index: pageControl.currentPage - 1, animated: true)
         }
         newCardDidSelected(pageControl.currentPage)
     }

@@ -345,7 +345,7 @@ extension PXOneTapInstallmentInfoView {
         if shouldShowPulseView(experiment) {
             setupChevronBackgroundView()
             if let chevronBackgroundView = chevronBackgroundView {
-                arrowImage.image = MLBusinessAppDataService().getAppIdentifier() == .mp ? ResourceManager.shared.getImage("chevronMP") : ResourceManager.shared.getImage("chevronML")
+                arrowImage.image = MLBusinessAppDataService().isMp() ? ResourceManager.shared.getImage("chevronMP") : ResourceManager.shared.getImage("chevronML")
                 arrowImage.translatesAutoresizingMaskIntoConstraints = false
                 addSubview(arrowImage)
                 NSLayoutConstraint.activate([

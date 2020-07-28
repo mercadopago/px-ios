@@ -113,6 +113,20 @@ extension PXOneTapViewModel {
         properties["extra_info"] = extraDic
         return properties
     }
+    
+    func getSelectCardEventProperties(index: Int, count: Int) -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()
+        properties["style"] = Tracking.Style.noScreen
+        properties["id"] = Tracking.Error.Id.genericError
+        properties["message"] = "No se pudo seleccionar la tarjeta ingresada"
+        properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
+        var extraDic: [String: Any] = [:]
+        extraDic["index"] =  index
+        extraDic["count"] =  count
+        properties["extra_info"] = extraDic
+        return properties
+    }
 
     func getTargetBehaviourProperties(_ behaviour: PXBehaviour) -> [String: Any] {
         var properties: [String: Any] = [:]
