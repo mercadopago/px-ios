@@ -29,9 +29,9 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var shouldShowReceipt: Bool = false
     private(set) var receiptId: String?
     
-    /* --- Ponints & Discounts --- */
+    /* --- Points & Discounts --- */
     // Points
-    private(set) var pointsData: PXPoints?
+    private(set) var points: PXPoints?
     
     // Discounts
     private(set) var discounts: PXDiscounts?
@@ -43,7 +43,6 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var crossSelling: [PXCrossSellingItem]?
     
     // View Receipt action
-    #warning("Investigate what is this used for")
     private(set) var viewReceiptAction: PXRemoteAction?
     
     private(set) var topTextBox: PXText?
@@ -177,7 +176,7 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withPointsData(percentage: Double, levelColor: String, levelNumber: Int, title: String, actionLabel: String, actionTarget: String) -> PXPaymentCongrats {
         let action = PXRemoteAction(label: actionLabel, target: actionTarget)
-        self.pointsData = PXPoints(progress: PXPointsProgress(percentage: percentage, levelColor: levelColor, levelNumber: levelNumber), title: title, action: action)
+        self.points = PXPoints(progress: PXPointsProgress(percentage: percentage, levelColor: levelColor, levelNumber: levelNumber), title: title, action: action)
         return self
     }
 
