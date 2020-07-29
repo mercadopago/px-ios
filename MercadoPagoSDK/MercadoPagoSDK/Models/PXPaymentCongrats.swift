@@ -350,7 +350,7 @@ extension PXPaymentCongrats {
     @discardableResult
     public func start(using navController: UINavigationController) -> PXPaymentCongrats {
         self.navigationController = navController
-        let viewModel = PXPaymentCongratsViewModel(paymentData: self)
+        let viewModel = PXPaymentCongratsViewModel(paymentCongrats: self)
         viewModel.launch()
         return self
     }
