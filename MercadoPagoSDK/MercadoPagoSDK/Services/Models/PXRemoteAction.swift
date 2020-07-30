@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PXRemoteAction: Codable {
+public struct PXRemoteAction: Codable {
 
     let label: String
     let target: String?

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PXDownloadAction: Decodable {
+public struct PXDownloadAction: Decodable {
     let title: String
     let action: PXRemoteAction
 }
