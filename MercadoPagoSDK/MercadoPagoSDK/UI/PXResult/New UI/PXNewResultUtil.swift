@@ -130,6 +130,27 @@ extension PXNewResultUtil {
     }
 
     // PM First String
+    
+    class func applyAttributesToFirstString(_ string: String) -> NSAttributedString {
+        let totalAmountAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
+        ]
+    
+        let interestRateAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+        ]
+    
+        let discountAmountAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45),
+        NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
+        ]
+    
+        return NSAttributedString(string: string, attributes: totalAmountAttributes)
+    }
+    
     class func getPMFirstString(currency: PXCurrency, paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> NSAttributedString {
 
         let totalAmountAttributes: [NSAttributedString.Key: Any] = [
@@ -206,21 +227,41 @@ extension PXNewResultUtil {
         guard let paymentMethod = paymentData.paymentMethod else {
             return nil
         }
-        var pmDescription: String = ""
         let paymentMethodName = paymentMethod.name ?? ""
 
-        if paymentMethod.isCard {
-            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
+//        if paymentMethod.isCard {
+//            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
+//                pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
+//            }
+//        } else if paymentMethod.paymentTypeId == "digital_currency" {
+//            pmDescription = paymentMethodName
+//        } else {
+//            return nil
+//        }
+        guard let description = assembleSecondString(paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentData.token?.lastFourDigits, paymentTypeIdValue: paymentMethod.paymentTypeId) else {
+            return nil
+        }
+
+        let attributedSecond = secondStringAttributed(description)
+        return attributedSecond
+    }
+    
+    class func assembleSecondString(paymentMethodName: String, paymentMethodLastFourDigits lastFourDigits: String?, paymentTypeIdValue: String) -> String? {
+        var pmDescription: String = ""
+        if let paymentType = PXPaymentTypes(rawValue: paymentTypeIdValue), paymentType.isCard() {
+            if let lastFourDigits = lastFourDigits {
                 pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
             }
-        } else if paymentMethod.paymentTypeId == "digital_currency" {
+        } else if paymentTypeIdValue == "digital_currency" {
             pmDescription = paymentMethodName
         } else {
             return nil
         }
-
-        let attributedSecond = NSMutableAttributedString(string: pmDescription, attributes: PXNewCustomView.subtitleAttributes)
-        return attributedSecond
+        return pmDescription
+    }
+    
+    class func secondStringAttributed(_ string: String) -> NSAttributedString {
+        return NSMutableAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
     }
 
     // PM Third String
@@ -228,7 +269,11 @@ extension PXNewResultUtil {
         guard let paymentMethodDisplayDescription = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message else {
             return nil
         }
-        let thirdAttributed = NSMutableAttributedString(string: paymentMethodDisplayDescription, attributes: PXNewCustomView.subtitleAttributes)
+        let thirdAttributed = thirdStringAttributed(paymentMethodDisplayDescription)
         return thirdAttributed
+    }
+    
+    class func thirdStringAttributed(_ string: String) -> NSAttributedString {
+        return NSMutableAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
     }
 }

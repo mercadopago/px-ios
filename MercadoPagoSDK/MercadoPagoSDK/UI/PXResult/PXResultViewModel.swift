@@ -277,6 +277,10 @@ extension PXResultViewModel {
 
 // MARK: New Result View Model Interface
 extension PXResultViewModel: PXNewResultViewModelInterface {
+    func getPaymentViewData() -> PXNewCustomViewData? {
+        return nil
+    }
+    
     func getHeaderColor() -> UIColor {
         return primaryResultColor()
     }

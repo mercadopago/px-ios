@@ -44,6 +44,7 @@ class ViewController: UIViewController {
             .withDiscountsData()
             .withCrossSellingData()
             .withExpenseSplit("Expense", backgroundColor: "#000000", textColor: "#FFFFFF", weight: nil, actionLabel: "Action expense", actionTarget: nil, imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
+            .withPaymentMethodInfo(PXPaymentInfo(amount: "$ 4321,98", paymentMethodName: "Mastercard", paymentMethodLastFourDigits: "6666", paymentMethodExtraInfo: "70% de descuento", paymentMethodId: "visa", paymentMethodType: PXPaymentTypes.CREDIT_CARD))
             .start(using: navController)
     }
     

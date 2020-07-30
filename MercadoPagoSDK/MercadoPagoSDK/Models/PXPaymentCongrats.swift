@@ -69,6 +69,10 @@ public final class PXPaymentCongrats: NSObject {
     
     private(set) var creditsExpectationView: UIView?
     
+    // Payment Info
+    private (set) var paymentViewData: PXNewCustomViewData?
+    private (set) var paymentInfo: PXPaymentInfo?
+    
     // Tracking
     private(set) var trackingPath: String = "" //TODO
     private(set) var trackingValues: [String : Any] = [:] //TODO
@@ -323,6 +327,28 @@ extension PXPaymentCongrats {
     }
     
     /**
+    Data containing all of the information for displaying the payment method. This should be used ONLY internally
+     - parameter viewData: a DTO for creating a `PXNewCustomView` representing the payment method
+     - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    internal func withPaymentViewData(_ viewData: PXNewCustomViewData) -> PXPaymentCongrats {
+        self.paymentViewData = viewData
+        return self
+    }
+    
+    /**
+     Data containing all of the information for displaying the payment method .
+     - parameter paymentInfo: a DTO for creating a `PXPaymentInfo` representing the payment method
+     - returns: tihs builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func withPaymentMethodInfo(_ paymentInfo: PXPaymentInfo) -> PXPaymentCongrats {
+        self.paymentInfo = paymentInfo
+        return self
+    }
+    
+    /**
      - ToDo: Fill this
      */
     @discardableResult
@@ -353,5 +379,26 @@ extension PXPaymentCongrats {
         let viewModel = PXPaymentCongratsViewModel(paymentCongrats: self)
         viewModel.launch()
         return self
+    }
+}
+
+
+//TODO: Move to another file
+public class PXPaymentInfo: NSObject {
+    let amount: String
+    let paymentMethodName: String
+    let paymentMethodLastFourDigits: String
+    let paymentMethodExtraInfo: String?
+    let paymentMethodId: String
+    let paymentMethodType: PXPaymentTypes
+    
+    public init(amount: String, paymentMethodName: String, paymentMethodLastFourDigits: String, paymentMethodExtraInfo: String, paymentMethodId: String, paymentMethodType: PXPaymentTypes) {
+        self.amount = amount
+        self.paymentMethodName = paymentMethodName
+        self.paymentMethodLastFourDigits = paymentMethodLastFourDigits
+        self.paymentMethodExtraInfo = paymentMethodExtraInfo
+        self.paymentMethodId = paymentMethodId
+        self.paymentMethodType = paymentMethodType
+        super.init()
     }
 }

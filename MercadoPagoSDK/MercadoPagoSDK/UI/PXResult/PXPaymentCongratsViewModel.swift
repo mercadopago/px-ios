@@ -19,6 +19,18 @@ class PXPaymentCongratsViewModel {
         let vc = PXNewResultViewController(viewModel: self, callback:{_,_ in })
         paymentCongrats.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    private func getPMFirstString(_ string: String) -> NSAttributedString {
+        let attributedTitle = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+        return attributedTitle
+        
+    }
+    
+    private func getPMSecondString(_ string: String) -> NSAttributedString {
+        let attributedTitle = NSAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
+        return attributedTitle
+        
+    }
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
@@ -136,7 +148,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     ////TOP TEXT BOX
     func getTopTextBox() -> PXText? {
-        return paymentCongrats.topTextBox
+        return paymentCongrats.topTextBox // Charlar con Mechi porque parece que ellos no van a exponer esto.
     }
     
     ////CUSTOM ORDER
@@ -167,6 +179,30 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         // TODO
         //        return paymentData
         return nil
+    }
+    
+    // TODO refinar esto.
+    // Como el Checkout va a setear directamente el paymentViewData, tenemos que chequear si hay paymentViewData, devolvemos ese, sino, hay que armarlo
+    // con los datos que el integrador externo nos provea. un title, seconTitle, thirdTitle y ver si pasamos un paymentMethodTypeId para calcular el icono
+    func getPaymentViewData() -> PXNewCustomViewData? {
+        guard let paymentViewData = paymentCongrats.paymentViewData else {
+            // This will be excecuted only for external integrators whom doesn't have access to paymentViewData
+            guard let paymentInfo = paymentCongrats.paymentInfo else { return nil }
+            //firstString.append(getPMFirstString("\(totalAmount)"))
+            let firstString = PXNewResultUtil.applyAttributesToFirstString(paymentInfo.amount)
+            
+            var secondString: NSAttributedString?
+            if let intermediateSecondString = PXNewResultUtil.assembleSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits.truncated(), paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue) {
+                secondString = PXNewResultUtil.secondStringAttributed(intermediateSecondString)
+            }
+            
+            let thirdString = (paymentInfo.paymentMethodExtraInfo != nil) ? PXNewResultUtil.thirdStringAttributed(paymentInfo.paymentMethodExtraInfo!) : nil
+            let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodType.rawValue, defaultColor: false)
+            
+            let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: nil)
+            return data
+        }
+        return paymentViewData
     }
     
     #warning("Desacoplar ammount helper del VC de Congrats")
@@ -270,5 +306,12 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             }
         }
         return result
+    }
+}
+
+
+extension String {
+    func truncated() -> String {
+        return String(prefix(3))
     }
 }
