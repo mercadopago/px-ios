@@ -45,8 +45,6 @@ public final class PXPaymentCongrats: NSObject {
     // View Receipt action
     private(set) var viewReceiptAction: PXRemoteAction?
     
-    private(set) var topTextBox: PXText?
-    
     private(set) var hasCustomOrder: Bool?
     /* --- Ponints & Discounts --- */
     
@@ -235,15 +233,6 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withViewReceiptAction(label: String, target: String) -> PXPaymentCongrats {
         self.viewReceiptAction = PXRemoteAction(label: label, target: target)
-        return self
-    }
-    
-    /**
-     - ToDo: Fill this
-    */
-    @discardableResult
-    public func withTopTextBox(message: String?, backgroundColor: String?, textColor: String?, weight: String?) -> PXPaymentCongrats {
-        self.topTextBox = PXText(message: message, backgroundColor: backgroundColor, textColor: textColor, weight: weight)
         return self
     }
     
