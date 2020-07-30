@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nVh-4Y-Mjr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nVh-4Y-Mjr">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,6 +43,19 @@
                                     <segue destination="zrt-Zz-h8w" kind="show" id="1D1-CH-h5u"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0VE-v2-udc">
+                                <rect key="frame" x="16" y="175" width="343" height="44"/>
+                                <color key="backgroundColor" name="andes-blue-ml-500"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="wZH-Sm-Ltq"/>
+                                </constraints>
+                                <state key="normal" title="Iniciar Congrats">
+                                    <color key="titleColor" name="andes-text-color-white"/>
+                                </state>
+                                <connections>
+                                    <action selector="launchCongrats:" destination="BYZ-38-t0r" eventType="touchUpInside" id="svl-3A-zDQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -51,6 +64,11 @@
                             <constraint firstItem="1Ik-LC-Wqd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Mrf-xv-I3Q"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0Yu-7c-2ky" secondAttribute="trailing" constant="16" id="duv-UE-5n1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1Ik-LC-Wqd" secondAttribute="trailing" constant="16" id="j0g-1M-3Yj"/>
+                            <constraint firstItem="0VE-v2-udc" firstAttribute="width" secondItem="0Yu-7c-2ky" secondAttribute="width" id="nJf-qw-Wlr"/>
+                            <constraint firstItem="0VE-v2-udc" firstAttribute="trailing" secondItem="0Yu-7c-2ky" secondAttribute="trailing" id="s6b-NA-rld"/>
+                            <constraint firstItem="0VE-v2-udc" firstAttribute="height" secondItem="0Yu-7c-2ky" secondAttribute="height" id="sT8-c7-rYH"/>
+                            <constraint firstItem="0VE-v2-udc" firstAttribute="top" secondItem="0Yu-7c-2ky" secondAttribute="bottom" constant="8" id="yYU-k2-X6b"/>
+                            <constraint firstItem="0VE-v2-udc" firstAttribute="leading" secondItem="0Yu-7c-2ky" secondAttribute="leading" id="ypB-YP-QQg"/>
                             <constraint firstItem="0Yu-7c-2ky" firstAttribute="top" secondItem="1Ik-LC-Wqd" secondAttribute="bottom" constant="8" id="zJp-vq-WDM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
