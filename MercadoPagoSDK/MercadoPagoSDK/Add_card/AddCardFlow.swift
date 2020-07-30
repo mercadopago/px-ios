@@ -8,11 +8,13 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Old CardForm flow will no longer be available")
 @objc public protocol AddCardFlowProtocol {
     func addCardFlowSucceded(result: [String: Any])
     func addCardFlowFailed(shouldRestart: Bool)
 }
 
+@available(*, deprecated, message: "Old CardForm flow will no longer be available")
 @objcMembers
 public class AddCardFlow: NSObject, PXFlow {
 
@@ -30,11 +32,13 @@ public class AddCardFlow: NSObject, PXFlow {
     //add card flow should have 'aggregator' processing mode by default
     private lazy var mercadoPagoServices = MercadoPagoServices(publicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", privateKey: self.accessToken)
 
+    @available(*, deprecated, message: "Old CardForm flow will no longer be available")
     public convenience init(accessToken: String, locale: String, navigationController: UINavigationController, shouldSkipCongrats: Bool) {
         self.init(accessToken: accessToken, locale: locale, navigationController: navigationController)
         model.skipCongrats = shouldSkipCongrats
     }
 
+    @available(*, deprecated, message: "Old CardForm flow will no longer be available")
     public init(accessToken: String, locale: String, navigationController: UINavigationController) {
         self.accessToken = accessToken
         self.navigationHandler = PXNavigationHandler(navigationController: navigationController)
@@ -58,6 +62,7 @@ public class AddCardFlow: NSObject, PXFlow {
         self.productId = productId
     }
 
+    @available(*, deprecated, message: "Old CardForm flow will no longer be available")
     public func start() {
         self.executeNextStep()
     }

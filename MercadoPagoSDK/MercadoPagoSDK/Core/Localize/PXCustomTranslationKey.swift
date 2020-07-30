@@ -9,7 +9,7 @@ import Foundation
 
 /// :nodoc
 @objc public enum PXCustomTranslationKey: Int {
-    @available(*, deprecated, message: "Groups will no longer be available")
+    @available(*, deprecated, message: "Groups flow will no longer be available")
     case total_to_pay
     case total_to_pay_onetap
     case how_to_pay

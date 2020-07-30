@@ -8,7 +8,7 @@
 
 import Foundation
 /// :nodoc:
-@available(*, deprecated, message: "Groups will no longer be available")
+@available(*, deprecated, message: "Groups flow will no longer be available")
 open class PXPaymentMethodSearchItem: NSObject, Codable {
     open var id: String!
     open var type: String?
