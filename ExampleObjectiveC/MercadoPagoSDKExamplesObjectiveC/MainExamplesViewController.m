@@ -12,6 +12,25 @@
   
 @implementation MainExamplesViewController
 
+- (IBAction)launchCongrats:(id)sender {
+    PXPaymentCongrats *congratsData = [[[[[[[[[[[[[PXPaymentCongrats alloc] init]
+                                                setStatus:PXBusinessResultStatusAPPROVED]
+                                               setHeaderTitle: @"¡Listo! Ya le pagaste a SuperMarket"]
+                                              setHeaderImage: nil orURL: @"https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg"]
+                                              shouldShowReceipt: TRUE receiptId: @"123"]
+                                             setMainActionWithLabel: @"Continuar" action:^{
+        NSLog(@"Continuar");
+    }]
+                                            setSecondaryActionWithLabel: @"Tuve un problema" action:^{
+        NSLog(@"Tuve un problema");
+    }]
+                                           setPointsDataWithPercentage: 0.85 levelColor: @"#4063EA" levelNumber: 4 title: @"Ud ganó 2.000 puntos" actionLabel: @"Ver mis beneficios" actionTarget: @"meli://loyalty/webview?url=https%3A%2F%2Fwww.mercadolivre.com.br%2Fmercado-pontos%2Fv2%2Fhub%23origin%3Dcongrats"]
+                                          setDiscountsData]
+                                         setCrossSellingData]
+                                        setExpenseSplit: @"Expense"]
+                                       startUsing: self.navigationController];
+}
+
 - (IBAction)checkoutFlow:(id)sender {
 
     //CHECKOUT PREFERENCE
