@@ -57,20 +57,6 @@ open class MercadoPagoCheckout: NSObject {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
 
-        // If AdditionalInfo has custom texts override the ones set by MercadoPagoCheckoutBuilder
-        if let customTexts = choPref.pxAdditionalInfo?.pxCustomTexts {
-            if let translation = customTexts.payButton {
-                Localizator.sharedInstance.addCustomTranslation(.pay_button, translation)
-            }
-            if let translation = customTexts.payButtonProgress {
-                Localizator.sharedInstance.addCustomTranslation(.pay_button_progress, translation)
-            }
-            if let translation = customTexts.totalDescription {
-                Localizator.sharedInstance.addCustomTranslation(.total_to_pay, translation)
-                Localizator.sharedInstance.addCustomTranslation(.total_to_pay_onetap, translation)
-            }
-        }
-
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey, advancedConfig: builder.advancedConfig, trackingConfig: builder.trackingConfig)
 
         // Set Theme.

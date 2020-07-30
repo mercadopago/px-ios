@@ -31,6 +31,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlow = InitFlow(flowProperties: initFlowProperties, finishInitCallback: { [weak self] (checkoutPreference, initSearch)  in
             guard let self = self else { return }
             self.checkoutPreference = checkoutPreference
+            self.updateCustomTexts()
             self.updateCheckoutModel(paymentMethodSearch: initSearch)
             self.paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
             PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.cardIdsESC, value: self.getCardsIdsWithESC())
