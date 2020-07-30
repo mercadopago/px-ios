@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct PXPointsProgress: Decodable {
 
     let percentage: Double

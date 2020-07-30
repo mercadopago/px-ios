@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct PXPoints: Decodable {
 
     let progress: PXPointsProgress
