@@ -219,11 +219,13 @@ extension PXPaymentCongrats {
     }
 
     /**
-     - ToDo: Fill this
+     Defines the cross selling data in the cross selling seccions of the congrats.
+     - parameter crossSellingItems: an array of PXCrossSellingItem
+     - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withCrossSellingData() -> PXPaymentCongrats {
-        self.crossSelling = [PXCrossSellingItem(title: "Gane 200 pesos por sus pagos diarios", icon: "https://mobile.mercadolibre.com/remote_resources/image/merchengine_mgm_icon_ml?density=xxhdpi&locale=es_AR", contentId: "cross_selling_mgm_ml", action: PXRemoteAction(label: "Invita a más amigos a usar la aplicación", target: "meli://invite/wallet"))]
+    public func withCrossSellingData(crossSellingItems: [PXCrossSellingItem] ) -> PXPaymentCongrats {
+        self.crossSelling = crossSellingItems
         return self
     }
     

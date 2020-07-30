@@ -15,6 +15,14 @@ public class PXDiscountsItem: NSObject, Decodable {
     let subtitle: String
     let target: String?
     let campaingId: String?
+    
+    public init(icon: String, title: String, subtitle: String, target: String?, campaingId: String?){
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        self.target = target
+        self.campaingId = campaingId
+    }
 
     enum CodingKeys: String, CodingKey {
         case icon

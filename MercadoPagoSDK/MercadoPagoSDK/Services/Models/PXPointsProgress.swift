@@ -7,18 +7,12 @@
 
 import Foundation
 
-@objcMembers
-public class PXPointsProgress: NSObject ,Decodable {
+
+struct PXPointsProgress: Decodable {
 
     let percentage: Double
     let levelColor: String
     let levelNumber: Int
-    
-    public init(percentage: Double, levelColor: String, levelNumber: Int) {
-        self.percentage = percentage
-        self.levelColor = levelColor
-        self.levelNumber = levelNumber
-    }
 
     enum CodingKeys: String, CodingKey {
         case percentage
