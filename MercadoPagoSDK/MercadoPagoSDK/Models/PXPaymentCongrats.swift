@@ -170,39 +170,23 @@ extension PXPaymentCongrats {
     
     /**
       Defines the points data in the points seccions of the congrats.
-     - parameter percentage: some percentage number
-     - parameter levelColor: a color
-     - parameter levelNumber: some number
-     - parameter title: some message
-     - parameter actionLabel: some message of the button label
-     - parameter actionTarget: deeplink
+     - parameter points: some PXPoints
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withPoints(percentage: Double, levelColor: String, levelNumber: Int, title: String, actionLabel: String, actionTarget: String) -> PXPaymentCongrats {
-        let action = PXRemoteAction(label: actionLabel, target: actionTarget)
-        self.points = PXPoints(progress: PXPointsProgress(percentage: percentage, levelColor: levelColor, levelNumber: levelNumber), title: title, action: action)
+    public func withPoints(_ points: PXPoints) -> PXPaymentCongrats {
+        self.points = points
         return self
     }
 
     /**
      Defines the discounts data in the discounts seccions of the congrats.
-     - parameter title: some message
-     - parameter subtitle: some message
-     - parameter discountsActionLabel: some message of the discounts button label
-     - parameter discountActionTarget: deeplink
-     - parameter downloadActionTitle: some message
-     - parameter downloadActionLabel: some message of the download button label
-     - parameter downloadActionTarget: deeplink
-     - parameter items: an array of PXDiscountsItem
-     - parameter touchpoint: some PXDiscountsTouchpoint
+     - parameter discounts: some PXDiscounts
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withDiscounts(title: String?, subtitle: String?, discountsActionLabel: String,  discountActionTarget: String, downloadActionTitle: String, downloadActionLabel: String, downloadActionTarget: String, items: [PXDiscountsItem], touchpoint: PXDiscountsTouchpoint? ) -> PXPaymentCongrats {
-        let discountAction = PXRemoteAction(label: discountsActionLabel, target: discountActionTarget)
-        let downloadAction = PXDownloadAction(title: downloadActionTitle, action: PXRemoteAction(label: downloadActionLabel, target: downloadActionTarget))
-        self.discounts = PXDiscounts(title: title, subtitle: subtitle, discountsAction: discountAction, downloadAction: downloadAction, items: items, touchpoint: touchpoint)
+    public func withDiscounts(_ discounts: PXDiscounts) -> PXPaymentCongrats {
+        self.discounts = discounts
         return self
     }
     
@@ -231,8 +215,8 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
     */
     @discardableResult
-    public func withViewReceiptAction(label: String, target: String) -> PXPaymentCongrats {
-        self.viewReceiptAction = PXRemoteAction(label: label, target: target)
+    public func withViewReceiptAction(action: PXRemoteAction) -> PXPaymentCongrats {
+        self.viewReceiptAction = action
         return self
     }
     
@@ -267,7 +251,7 @@ extension PXPaymentCongrats {
     /**
      Top button configuration.
      - parameter label: button display text
-     - parameter action: a colsure to excecute
+     - parameter action: a closure to excecute
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
@@ -279,7 +263,7 @@ extension PXPaymentCongrats {
     /**
      Bottom button configuration.
      - parameter label: button display text
-     - parameter action: a colsure to excecute
+     - parameter action: a closure to excecute
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
