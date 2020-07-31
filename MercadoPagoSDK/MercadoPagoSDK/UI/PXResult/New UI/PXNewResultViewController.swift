@@ -253,6 +253,14 @@ extension PXNewResultViewController {
         //Header View
         let view = buildHeaderView()
         views.append(ResultViewData(view: view))
+        
+        //Remedy body View
+        if let view = viewModel.getRemedyView(animatedButtonDelegate: self, remedyViewProtocol: self) {
+            subscribeToKeyboardNotifications()
+            views.append(ResultViewData(view: view))
+            // If payment has remedy don't show anything else in congrats
+            return views
+        }
 
         //Instructions View
         if let view = viewModel.getInstructionsView() {
@@ -332,12 +340,6 @@ extension PXNewResultViewController {
 
         //Error body View
         if let view = viewModel.getErrorBodyView() {
-            views.append(ResultViewData(view: view))
-        }
-
-        //Remedy body View
-        if let view = viewModel.getRemedyView(animatedButtonDelegate: self, remedyViewProtocol: self) {
-            subscribeToKeyboardNotifications()
             views.append(ResultViewData(view: view))
         }
 
