@@ -179,7 +179,7 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withPointsData(percentage: Double, levelColor: String, levelNumber: Int, title: String, actionLabel: String, actionTarget: String) -> PXPaymentCongrats {
+    public func withPoints(percentage: Double, levelColor: String, levelNumber: Int, title: String, actionLabel: String, actionTarget: String) -> PXPaymentCongrats {
         let action = PXRemoteAction(label: actionLabel, target: actionTarget)
         self.points = PXPoints(progress: PXPointsProgress(percentage: percentage, levelColor: levelColor, levelNumber: levelNumber), title: title, action: action)
         return self
@@ -199,7 +199,7 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withDiscountsData(title: String?, subtitle: String?, discountsActionLabel: String,  discountActionTarget: String, downloadActionTitle: String, downloadActionLabel: String, downloadActionTarget: String, items: [PXDiscountsItem], touchpoint: PXDiscountsTouchpoint? ) -> PXPaymentCongrats {
+    public func withDiscounts(title: String?, subtitle: String?, discountsActionLabel: String,  discountActionTarget: String, downloadActionTitle: String, downloadActionLabel: String, downloadActionTarget: String, items: [PXDiscountsItem], touchpoint: PXDiscountsTouchpoint? ) -> PXPaymentCongrats {
         let discountAction = PXRemoteAction(label: discountsActionLabel, target: discountActionTarget)
         let downloadAction = PXDownloadAction(title: downloadActionTitle, action: PXRemoteAction(label: downloadActionLabel, target: downloadActionTarget))
         self.discounts = PXDiscounts(title: title, subtitle: subtitle, discountsAction: discountAction, downloadAction: downloadAction, items: items, touchpoint: touchpoint)
@@ -222,7 +222,7 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withCrossSellingData(crossSellingItems: [PXCrossSellingItem] ) -> PXPaymentCongrats {
+    public func withCrossSelling(crossSellingItems: [PXCrossSellingItem] ) -> PXPaymentCongrats {
         self.crossSelling = crossSellingItems
         return self
     }
