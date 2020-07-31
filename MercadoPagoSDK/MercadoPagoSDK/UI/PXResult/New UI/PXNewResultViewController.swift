@@ -253,7 +253,7 @@ extension PXNewResultViewController {
         //Header View
         let view = buildHeaderView()
         views.append(ResultViewData(view: view))
-        
+
         //Remedy body View
         if let view = viewModel.getRemedyView(animatedButtonDelegate: self, remedyViewProtocol: self) {
             subscribeToKeyboardNotifications()
