@@ -162,6 +162,31 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return !hasInstructions() && isApproved
     }
     
+    // TODO refinar esto.
+    // Como el Checkout va a setear directamente el paymentViewData, tenemos que chequear si hay paymentViewData, devolvemos ese, sino, hay que armarlo
+    // con los datos que el integrador externo nos provea. un title, seconTitle, thirdTitle y ver si pasamos un paymentMethodTypeId para calcular el icono
+    func getPaymentViewData() -> PXNewCustomViewData? {
+        guard let paymentViewData = paymentCongrats.paymentViewData else {
+            // This will be excecuted only for external integrators whom doesn't have access to paymentViewData
+            guard let paymentInfo = paymentCongrats.paymentInfo else { return nil }
+            //firstString.append(getPMFirstString("\(totalAmount)"))
+
+            let firstString = NSAttributedString(string: paymentInfo.amount, attributes: PXNewCustomView.titleAttributes)
+            
+            var secondString: NSAttributedString?
+            if let intermediateSecondString = PXNewResultUtil.assembleSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits.truncated(), paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue) {
+                secondString = PXNewResultUtil.secondStringAttributed(intermediateSecondString)
+            }
+            
+            let thirdString = (paymentInfo.paymentMethodExtraInfo != nil) ? PXNewResultUtil.thirdStringAttributed(paymentInfo.paymentMethodExtraInfo!) : nil
+            let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodType.rawValue, defaultColor: false)
+            
+            let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: nil)
+            return data
+        }
+        return paymentViewData
+    }
+    
     #warning("Desacoplar payment data del VC de Congrats")
     func getPaymentData() -> PXPaymentData? {
         // TODO
@@ -270,5 +295,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             }
         }
         return result
+    }
+}
+
+extension String {
+    func truncated() -> String {
+        return String(prefix(3))
     }
 }
