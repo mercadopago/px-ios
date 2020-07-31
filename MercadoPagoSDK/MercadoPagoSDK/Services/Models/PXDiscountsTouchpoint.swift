@@ -33,6 +33,14 @@ public class PXDiscountsTouchpoint: NSObject, Decodable {
             self.additionalEdgeInsets = nil
         }
     }
+    
+    init(id: String, type: String, content: PXCodableDictionary, tracking: PXCodableDictionary?, additionalEdgeInsets: PXCodableDictionary?) {
+        self.id = id
+        self.type = type
+        self.content = content
+        self.tracking = tracking
+        self.additionalEdgeInsets = additionalEdgeInsets
+    }
 
     enum CodingKeys: String, CodingKey {
         case id
