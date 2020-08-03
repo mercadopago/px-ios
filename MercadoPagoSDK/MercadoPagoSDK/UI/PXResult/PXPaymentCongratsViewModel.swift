@@ -136,7 +136,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     ////TOP TEXT BOX
     func getTopTextBox() -> PXText? {
-        return paymentCongrats.topTextBox
+        return nil
     }
     
     ////CUSTOM ORDER

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PXCodableDictionary: Codable, CustomStringConvertible {
+public class PXCodableDictionary: Codable, CustomStringConvertible {
     private var value: [String: Any]
 
     init(value: [String: Any]) {
@@ -79,7 +79,7 @@ class PXCodableDictionary: Codable, CustomStringConvertible {
         }
     }
 
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
 
         var dict: [String: Any] = [:]
@@ -113,7 +113,7 @@ class PXCodableDictionary: Codable, CustomStringConvertible {
         value = dict
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: DynamicCodingKeys.self)
 
         for (key, value) in value {
@@ -174,7 +174,7 @@ class PXCodableDictionary: Codable, CustomStringConvertible {
         }
     }
 
-    var description: String {
+    public var description: String {
         return "[".appending(keys.sorted().map { "\"\($0)\": \(toString(value: rawValue[$0] ?? ""))" }.joined(separator: ", ").appending("]"))
     }
 }
