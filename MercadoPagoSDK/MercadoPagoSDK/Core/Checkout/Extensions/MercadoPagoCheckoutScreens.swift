@@ -172,6 +172,9 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
+        let paymentcongrats = PXPaymentCongrats().withHeaderColor(viewModel.resultViewModel().primaryResultColor())
+        paymentcongrats.start(using: viewModel.pxNavigationHandler.navigationController)
+        return
         let viewController = PXNewResultViewController(viewModel: viewModel.resultViewModel(), callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
@@ -239,6 +242,14 @@ extension MercadoPagoCheckout {
         }
 
         let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        
+        let conStat = businessResult.getBusinessStatus()
+        let nav = viewModel.pxNavigationHandler
+        
+        let paymentCongrats = PXPaymentCongrats()
+            .withStatus(conStat)
+            .start(using: nav.navigationController)
+        
         let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
             self?.finish()
         })

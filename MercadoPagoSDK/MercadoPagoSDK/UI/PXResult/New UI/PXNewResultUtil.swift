@@ -121,7 +121,7 @@ extension PXNewResultUtil {
         let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
         let currency = SiteManager.shared.getCurrency()
         
-        let firstString: NSAttributedString = getPMFirstString(currency: currency, paymentData: paymentData, amountHelper: amountHelper)
+        let firstString: NSAttributedString = getPMFirstStringORIG(currency: currency, paymentData: paymentData, amountHelper: amountHelper)
         let secondString: NSAttributedString? = getPMSecondString(paymentData: paymentData)
         let thirdString: NSAttributedString? = getPMThirdString(paymentData: paymentData)
         
@@ -130,23 +130,11 @@ extension PXNewResultUtil {
     }
     
     // PM First String
-    class func getPMFirstString(currency: PXCurrency, paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> NSAttributedString {
-        
-        let totalAmountAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
-        ]
-        
-        let interestRateAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
-        ]
-        
-        let discountAmountAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45),
-            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
-        ]
+    class func getPMFirstStringORIG(currency: PXCurrency, paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> NSAttributedString {
+        let attributes = createStringAttributes()
+        let totalAmountAttributes = attributes.totalAmountAtributes
+        let interestRateAttributes = attributes.interestRateAttributes
+        let discountAmountAttributes = attributes.discountAmountAttributes
         
         let firstString: NSMutableAttributedString = NSMutableAttributedString()
         
@@ -199,6 +187,85 @@ extension PXNewResultUtil {
         }
         
         return firstString
+    }
+        
+    class func getPMFFistString(installmentsCount: Int, installmentsAmount: String, installmentRate: Double, totalAmount: String, splitAccountMoneyAmount: String, amountToPay: String, hasDiscount: Bool, transactionAmount: String?, discountName: String) -> NSAttributedString {
+        let attributes = createStringAttributes()
+        let totalAmountAttributes = attributes.totalAmountAtributes
+        let interestRateAttributes = attributes.interestRateAttributes
+        let discountAmountAttributes = attributes.discountAmountAttributes
+        
+        let firstString: NSMutableAttributedString = NSMutableAttributedString()
+        
+//        if let payerCost = paymentData.payerCost {
+            if installmentsCount > 1 {
+                let titleString = String(installmentsCount) + "x " + /*Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)*/ installmentsAmount
+                let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
+                firstString.append(attributedTitle)
+                
+                // Installment Rate
+                if installmentRate == 0.0 {
+                    let interestRateString = " " + "Sin interés".localized.lowercased()
+                    let attributedInsterest = NSAttributedString(string: interestRateString, attributes: interestRateAttributes)
+                    firstString.appendWithSpace(attributedInsterest)
+                }
+                
+                // Total Amount
+                let totalString = /*Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true)*/ totalAmount
+                let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
+                firstString.appendWithSpace(attributedTotal)
+            } else {
+                let titleString = /*Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency)*/ totalAmount
+                let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
+                firstString.append(attributedTitle)
+            }
+//        } else {
+//            // Caso account money
+//            if let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
+//                let string = /*Utils.getAmountFormated(amount: splitAccountMoneyAmount, forCurrency: currency)*/ splitAccountMoneyAmount
+//                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+//                firstString.append(attributed)
+//            } else {
+//                let string = /*Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)*/ amountToPay
+//                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+//                firstString.append(attributed)
+//            }
+//        }
+        
+        // Discount
+        if hasDiscount, let transactionAmount = transactionAmount {
+            let transactionAmount = /*Utils.getAmountFormated(amount: transactionAmount.doubleValue, forCurrency: currency)*/ transactionAmount
+            let attributedAmount = NSAttributedString(string: transactionAmount, attributes: discountAmountAttributes)
+            
+            firstString.appendWithSpace(attributedAmount)
+            
+            let discountString = /*discount.getDiscountDescription()*/ discountName
+            let attributedString = NSAttributedString(string: discountString, attributes: interestRateAttributes)
+            
+            firstString.appendWithSpace(attributedString)
+        }
+        
+        return firstString
+    }
+    
+    class func createStringAttributes() -> (totalAmountAtributes: [NSAttributedString.Key: Any], interestRateAttributes: [NSAttributedString.Key: Any], discountAmountAttributes: [NSAttributedString.Key: Any]) {
+        let totalAmountAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
+        ]
+        
+        let interestRateAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+            NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+        ]
+        
+        let discountAmountAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45),
+            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
+        ]
+        
+        return (totalAmountAttributes, interestRateAttributes, discountAmountAttributes)
     }
     
     // PM Second String

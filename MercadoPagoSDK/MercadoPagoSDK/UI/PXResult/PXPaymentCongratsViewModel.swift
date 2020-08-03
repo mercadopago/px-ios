@@ -169,9 +169,16 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         guard let paymentViewData = paymentCongrats.paymentViewData else {
             // This will be excecuted only for external integrators whom doesn't have access to paymentViewData
             guard let paymentInfo = paymentCongrats.paymentInfo else { return nil }
-            //firstString.append(getPMFirstString("\(totalAmount)"))
 
-            let firstString = NSAttributedString(string: paymentInfo.amount, attributes: PXNewCustomView.titleAttributes)
+            let firstString = PXNewResultUtil.getPMFFistString(installmentsCount: paymentInfo.installmentsCount,
+                                                               installmentsAmount: paymentInfo.installmentAmount!,
+                                                               installmentRate: paymentInfo.installmentsRate!,
+                                                               totalAmount: paymentInfo.paidAmount,
+                                                            splitAccountMoneyAmount: "120",
+                                                            amountToPay: "amountToPay",
+                                                            hasDiscount: paymentInfo.hasDiscount,
+                                                            transactionAmount: paymentInfo.rawAmount,
+                                                            discountName: paymentInfo.discountName!)
             
             var secondString: NSAttributedString?
             if let intermediateSecondString = PXNewResultUtil.assembleSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits.truncated(), paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue) {

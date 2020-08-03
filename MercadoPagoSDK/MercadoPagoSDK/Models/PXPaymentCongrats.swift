@@ -380,20 +380,44 @@ extension PXPaymentCongrats {
 //TODO: Move to another file
 @objcMembers
 public class PXPaymentInfo: NSObject {
-    let amount: String
+    // Payment
+    let paidAmount: String
+    let rawAmount: String?
+    
+    // Method
     let paymentMethodName: String
     let paymentMethodLastFourDigits: String
     let paymentMethodExtraInfo: String?
     let paymentMethodId: String
     let paymentMethodType: PXPaymentTypes
     
-    public init(amount: String, paymentMethodName: String, paymentMethodLastFourDigits: String, paymentMethodExtraInfo: String, paymentMethodId: String, paymentMethodType: PXPaymentTypes) {
-        self.amount = amount
+    // Installments
+    let hasInstallments: Bool
+    let installmentsRate: Double?
+    let installmentsCount: Int
+    let installmentAmount: String?
+    
+    // Discount
+    let hasDiscount: Bool
+    let discountName: String? // Por ejemplo 70% off
+    
+    public init(amount: String, transactionAmount: String, paymentMethodName: String, paymentMethodLastFourDigits: String, paymentMethodExtraInfo: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, hasInstallments: Bool = false, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentAmount: String? = nil, hasDiscount: Bool = false, discountName: String? = nil) {
+        self.paidAmount = amount
+        self.rawAmount = transactionAmount
+        
         self.paymentMethodName = paymentMethodName
         self.paymentMethodLastFourDigits = paymentMethodLastFourDigits
         self.paymentMethodExtraInfo = paymentMethodExtraInfo
         self.paymentMethodId = paymentMethodId
         self.paymentMethodType = paymentMethodType
+        
+        self.hasInstallments = hasInstallments
+        self.installmentsRate = installmentsRate
+        self.installmentsCount = installmentsCount
+        self.installmentAmount = installmentAmount
+        
+        self.hasDiscount = hasDiscount
+        self.discountName = discountName
         super.init()
     }
 }
