@@ -36,7 +36,7 @@ extension PXPaymentData {
             // extraInfo["balance"] =
             // properties["extra_info"] = extraInfo
         } else if paymentMethod.isDigitalCurrency {
-            extraInfo["selected_installment"] = payerCost?.getPayerCostForTracking(isDigitalCurrency: paymentMethod.paymentTypeId == PXPaymentTypes.DIGITAL_CURRENCY.rawValue)
+            extraInfo["selected_installment"] = payerCost?.getPayerCostForTracking(isDigitalCurrency: true)
             properties["extra_info"] = extraInfo
         }
         return properties
