@@ -206,8 +206,8 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withCrossSelling(crossSellingItems: [PXCrossSellingItem] ) -> PXPaymentCongrats {
-        self.crossSelling = crossSellingItems
+    public func withCrossSelling(_ items: [PXCrossSellingItem] ) -> PXPaymentCongrats {
+        self.crossSelling = items
         return self
     }
     
