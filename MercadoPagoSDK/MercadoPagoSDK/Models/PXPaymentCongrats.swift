@@ -71,6 +71,9 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var paymentViewData: PXNewCustomViewData?
     private(set) var paymentInfo: PXPaymentInfo?
     
+    // Split
+    private(set) var splitPaymentInfo: PXPaymentInfo?
+    
     // Tracking
     private(set) var trackingPath: String = "" //TODO
     private(set) var trackingValues: [String : Any] = [:] //TODO
@@ -340,6 +343,17 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withPaymentMethodInfo(_ paymentInfo: PXPaymentInfo) -> PXPaymentCongrats {
         self.paymentInfo = paymentInfo
+        return self
+    }
+    
+    /**
+     Data containing all of the information for displaying the split payment method .
+     - parameter paymentInfo: a DTO for creating a `PXPaymentInfo` representing the payment method
+     - returns: tihs builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func withSplitPaymenInfo(_ splitPaymentInfo: PXPaymentInfo) -> PXPaymentCongrats {
+        self.splitPaymentInfo = splitPaymentInfo
         return self
     }
     

@@ -74,6 +74,7 @@ protocol PXNewResultViewModelInterface {
     func getAmountHelper() -> PXAmountHelper?
 
     //SPLIT PAYMENT METHOD
+    func getSplitPaymentViewData() -> PXNewCustomViewData?
     func getSplitPaymentData() -> PXPaymentData?
     func getSplitAmountHelper() -> PXAmountHelper?
 

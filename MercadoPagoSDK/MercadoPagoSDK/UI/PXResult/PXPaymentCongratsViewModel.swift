@@ -185,7 +185,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     // TODO refinar esto.
     // Como el Checkout va a setear directamente el paymentViewData, tenemos que chequear si hay paymentViewData, devolvemos ese, sino, hay que armarlo
-    // con los datos que el integrador externo nos provea. un title, seconTitle, thirdTitle y ver si pasamos un paymentMethodTypeId para calcular el icono
+    // con los datos que el integrador externo nos provea. un title, secondTitle, thirdTitle y ver si pasamos un paymentMethodTypeId para calcular el icono
     func getPaymentViewData() -> PXNewCustomViewData? {
         guard let paymentViewData = paymentCongrats.paymentViewData else {
             // This will be excecuted only for external integrators whom doesn't have access to paymentViewData
@@ -210,6 +210,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     // SPLIT PAYMENT METHOD
+    func getSplitPaymentViewData() -> PXNewCustomViewData? {
+        guard let paymentInfo = paymentCongrats.splitPaymentInfo else { return nil }
+        return createPaymentMethodReceiptData(from: paymentInfo)
+    }
+    
     #warning("Desacoplar payment data del VC de Congrats")
     func getSplitPaymentData() -> PXPaymentData? {
         // TODO

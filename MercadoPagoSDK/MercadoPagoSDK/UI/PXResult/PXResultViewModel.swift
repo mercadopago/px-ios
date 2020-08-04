@@ -281,6 +281,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
             return nil
     }
     
+    func getSplitPaymentViewData() -> PXNewCustomViewData? {
+            return nil
+    }
+    
     func getHeaderColor() -> UIColor {
         return primaryResultColor()
     }
