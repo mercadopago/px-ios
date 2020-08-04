@@ -607,18 +607,28 @@ extension PXNewResultViewController {
 
     //PAYMENT METHOD
     func buildPaymentMethodView() -> UIView? {
-        guard let paymentData = viewModel.getPaymentData(),
-            let amountHelper = viewModel.getAmountHelper(),
-            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
-            return nil
-        }
+        guard let paymentData = viewModel.getPaymentViewData() else { return nil }
 
-        if paymentData.paymentMethod?.id == "consumer_credits", let creditsExpectationView = viewModel.getCreditsExpectationView() {
-            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
-        }
+//        if paymentData.paymentMethod?.id == "consumer_credits", let creditsExpectationView = viewModel.getCreditsExpectationView() {
+//            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
+//        }
 
-        return PXNewCustomView(data: data)
+        return PXNewCustomView(data: paymentData)
     }
+    
+//    func buildPaymentMethodViewORIG() -> UIView? {
+//        guard let paymentData = viewModel.getPaymentData(),
+//            let amountHelper = viewModel.getAmountHelper(),
+//            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
+//            return nil
+//        }
+//
+//        if paymentData.paymentMethod?.id == "consumer_credits", let creditsExpectationView = viewModel.getCreditsExpectationView() {
+//            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
+//        }
+//
+//        return PXNewCustomView(data: data)
+//    }
 
     //SPLIT PAYMENT METHOD
     func buildSplitPaymentMethodView() -> UIView? {
@@ -626,25 +636,18 @@ extension PXNewResultViewController {
             return nil
         }
         
-        if let creditsExpectationView = viewModel.getCreditsExpectationView() {
-            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
-        }
-        
         return PXNewCustomView(data: data)
     }
     
-    func buildSplitPaymentMethodViewORIG() -> UIView? {
-        guard let paymentData = viewModel.getSplitPaymentData(),
-            let amountHelper = viewModel.getSplitAmountHelper(),
-            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
-            return nil
-        }
-        // TODO, esta logica ahora la van a tener que hacer PXNewResult y PXBusinessResult para devolver creditsExpectationView en el caso de que el id sea "consumer_credits"
-        if paymentData.paymentMethod?.id == "consumer_credits", let creditsExpectationView = viewModel.getCreditsExpectationView() {
-            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
-        }
-        return PXNewCustomView(data: data)
-    }
+//    func buildSplitPaymentMethodViewORIG() -> UIView? {
+//        guard let paymentData = viewModel.getSplitPaymentData(),
+//            let amountHelper = viewModel.getSplitAmountHelper(),
+//            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
+//            return nil
+//        }
+//        
+//        return PXNewCustomView(data: data)
+//    }
 
     //FOOTER
     func buildFooterView() -> UIView {
