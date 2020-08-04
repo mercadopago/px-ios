@@ -114,7 +114,7 @@ extension PXNewResultUtil {
     
     //PAYMENT METHOD DATA
     #warning("This should be removed or reused to return the first second and third attributedStrings and the image")
-    class func getDataForPaymentMethodViewORIG(paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> PXNewCustomViewData? {
+    class func getDataForPaymentMethodView(paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> PXNewCustomViewData? {
         guard let paymentMethod = paymentData.paymentMethod else {
             return nil
         }
@@ -191,7 +191,7 @@ extension PXNewResultUtil {
         return firstString
     }
     
-    class func getPMFFistString(installmentsCount: Int, installmentsAmount: String?, installmentRate: Double?, totalAmount: String, splitAccountMoneyAmount: String, amountToPay: String, hasDiscount: Bool, transactionAmount: String?, discountName: String?, splitTransactionAmountWithDiscount: String?) -> NSAttributedString {
+    class func getPMFFistString(totalAmount: String, transactionAmount: String?, hasInstallments: Bool, installmentsCount: Int, installmentsAmount: String?, installmentRate: Double?, hasDiscount: Bool, discountName: String?, splitTransactionAmountWithDiscount: String?) -> NSAttributedString {
         let attributes = firstStringAttributes()
         let totalAmountAttributes = attributes.totalAmountAtributes
         let interestRateAttributes = attributes.interestRateAttributes
@@ -199,10 +199,9 @@ extension PXNewResultUtil {
         
         let firstString: NSMutableAttributedString = NSMutableAttributedString()
         
-//        if let payerCost = paymentData.payerCost {
-        if 1 == 1 {
-            if installmentsCount > 1 {
-                let titleString = String(installmentsCount) + "x " + installmentsAmount!
+        if hasInstallments {
+            if installmentsCount > 1, let installmentsAmount = installmentsAmount {
+                let titleString = String(installmentsCount) + "x " + installmentsAmount
                 let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
                 firstString.append(attributedTitle)
                 
@@ -229,8 +228,7 @@ extension PXNewResultUtil {
                 let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
                 firstString.append(attributed)
             } else {
-                let string = amountToPay
-                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+                let attributed = NSAttributedString(string: totalAmount, attributes: PXNewCustomView.titleAttributes)
                 firstString.append(attributed)
             }
         }

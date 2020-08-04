@@ -632,22 +632,14 @@ extension PXNewResultViewController {
 
     //SPLIT PAYMENT METHOD
     func buildSplitPaymentMethodView() -> UIView? {
-        guard let data = viewModel.getPaymentViewData() else {
+        guard let paymentData = viewModel.getSplitPaymentData(),
+            let amountHelper = viewModel.getSplitAmountHelper(),
+            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
             return nil
         }
         
         return PXNewCustomView(data: data)
     }
-    
-//    func buildSplitPaymentMethodViewORIG() -> UIView? {
-//        guard let paymentData = viewModel.getSplitPaymentData(),
-//            let amountHelper = viewModel.getSplitAmountHelper(),
-//            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
-//            return nil
-//        }
-//        
-//        return PXNewCustomView(data: data)
-//    }
 
     //FOOTER
     func buildFooterView() -> UIView {

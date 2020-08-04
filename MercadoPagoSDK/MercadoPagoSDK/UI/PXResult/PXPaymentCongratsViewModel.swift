@@ -22,21 +22,20 @@ class PXPaymentCongratsViewModel {
     
     //MARK: Private methods
     private func createPaymentMethodReceiptData(from paymentInfo: PXPaymentInfo) -> PXNewCustomViewData {
-        let firstString = PXNewResultUtil.getPMFFistString(installmentsCount: paymentInfo.installmentsCount,
+        let firstString = PXNewResultUtil.getPMFFistString(totalAmount: paymentInfo.paidAmount,
+                                                           transactionAmount: paymentInfo.rawAmount,
+                                                           hasInstallments: paymentInfo.hasInstallments,
+                                                           installmentsCount: paymentInfo.installmentsCount,
                                                            installmentsAmount: paymentInfo.installmentAmount,
                                                            installmentRate: paymentInfo.installmentsRate,
-                                                           totalAmount: paymentInfo.paidAmount,
-                                                           splitAccountMoneyAmount: "120",
-                                                           amountToPay: "amountToPay",
                                                            hasDiscount: paymentInfo.hasDiscount,
-                                                           transactionAmount: paymentInfo.rawAmount,
                                                            discountName: paymentInfo.discountName,
                                                            splitTransactionAmountWithDiscount: nil)
         
-        let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits.truncated(), paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
+        let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits, paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
         
         let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodExtraInfo)
-        let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodType.rawValue, defaultColor: false)
+        let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodId, defaultColor: false)
         
         let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
         return data
@@ -304,11 +303,5 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             }
         }
         return result
-    }
-}
-
-extension String {
-    func truncated() -> String {
-        return String(prefix(4))
     }
 }

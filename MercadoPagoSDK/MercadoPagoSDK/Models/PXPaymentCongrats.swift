@@ -381,13 +381,17 @@ extension PXPaymentCongrats {
 @objcMembers
 public class PXPaymentInfo: NSObject {
     // Payment
+    /// What the user paid, it has to include the currency.
     let paidAmount: String
+    /// What the should have paid, it has to include the currency.
+    /// This amount represents the original price.
     let rawAmount: String?
     
     // Method
     let paymentMethodName: String
     let paymentMethodLastFourDigits: String
     let paymentMethodExtraInfo: String?
+    /// Used to show the issues logo. Defined at PaymentMethodSearch
     let paymentMethodId: String
     let paymentMethodType: PXPaymentTypes
     
@@ -399,14 +403,15 @@ public class PXPaymentInfo: NSObject {
     
     // Discount
     let hasDiscount: Bool
-    let discountName: String? // Por ejemplo 70% off
+    // Some friendly message to be shown
+    let discountName: String?
     
-    public init(amount: String, transactionAmount: String, paymentMethodName: String, paymentMethodLastFourDigits: String, paymentMethodExtraInfo: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, hasInstallments: Bool = false, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentAmount: String? = nil, hasDiscount: Bool = false, discountName: String? = nil) {
-        self.paidAmount = amount
+    public init(paidAmount: String, transactionAmount: String, paymentMethodName: String, paymentMethodLastFourDigits: String, paymentMethodExtraInfo: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, hasInstallments: Bool = false, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentAmount: String? = nil, hasDiscount: Bool = false, discountName: String? = nil) {
+        self.paidAmount = paidAmount
         self.rawAmount = transactionAmount
         
         self.paymentMethodName = paymentMethodName
-        self.paymentMethodLastFourDigits = paymentMethodLastFourDigits
+        self.paymentMethodLastFourDigits = String(paymentMethodLastFourDigits.prefix(4))
         self.paymentMethodExtraInfo = paymentMethodExtraInfo
         self.paymentMethodId = paymentMethodId
         self.paymentMethodType = paymentMethodType
