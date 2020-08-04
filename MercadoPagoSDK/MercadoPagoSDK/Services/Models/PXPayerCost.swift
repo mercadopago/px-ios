@@ -13,6 +13,7 @@ open class PXPayerCost: NSObject, Codable {
 
     open var installmentRate: Double = 0
     open var labels: [String] = []
+    open var interestRate: PXText?
     open var minAllowedAmount: Double = 0
     open var maxAllowedAmount: Double = 0
     open var recommendedMessage: String?
@@ -23,9 +24,10 @@ open class PXPayerCost: NSObject, Codable {
     open var paymentMethodOptionId: String?
     open var agreements: [PXAgreement] = []
 
-    public init(installmentRate: Double, labels: [String], minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String?, installmentAmount: Double, totalAmount: Double, installments: Int, processingMode: String?, paymentMethodOptionId: String?, agreements: [PXAgreement] = []) {
+    public init(installmentRate: Double, labels: [String], interestRate: PXText?, minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String?, installmentAmount: Double, totalAmount: Double, installments: Int, processingMode: String?, paymentMethodOptionId: String?, agreements: [PXAgreement] = []) {
         self.installmentRate = installmentRate
         self.labels = labels
+        self.interestRate = interestRate
         self.minAllowedAmount = minAllowedAmount
         self.maxAllowedAmount = maxAllowedAmount
         self.recommendedMessage = recommendedMessage
@@ -40,6 +42,7 @@ open class PXPayerCost: NSObject, Codable {
     public enum PXPayerCostKeys: String, CodingKey {
         case installmentRate = "installment_rate"
         case labels
+        case interestRate = "interest_rate"
         case minAllowedAmount = "min_allowed_amount"
         case maxAllowedAmount = "max_allowed_amount"
         case recommendedMessage = "recommended_message"
@@ -55,6 +58,7 @@ open class PXPayerCost: NSObject, Codable {
         let container = try decoder.container(keyedBy: PXPayerCostKeys.self)
         let installmentRate: Double = try container.decodeIfPresent(Double.self, forKey: .installmentRate) ?? 0
         let labels: [String] = try container.decodeIfPresent([String].self, forKey: .labels) ?? []
+        let interestRate: PXText? = try container.decodeIfPresent(PXText.self, forKey: .interestRate)
         let minAllowedAmount: Double = try container.decodeIfPresent(Double.self, forKey: .minAllowedAmount) ?? 0
         let maxAllowedAmount: Double = try container.decodeIfPresent(Double.self, forKey: .maxAllowedAmount) ?? 0
         let recommendedMessage: String? = try container.decodeIfPresent(String.self, forKey: .recommendedMessage)
@@ -65,13 +69,14 @@ open class PXPayerCost: NSObject, Codable {
         let paymentMethodOptionId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodOptionId)
         let agreements: [PXAgreement] = try container.decodeIfPresent([PXAgreement].self, forKey: .agreements) ?? []
 
-        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments,processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements)
+        self.init(installmentRate: installmentRate, labels: labels, interestRate: interestRate, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments,processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = try encoder.container(keyedBy: PXPayerCostKeys.self)
         try container.encodeIfPresent(self.installmentRate, forKey: .installmentRate)
         try container.encodeIfPresent(self.labels, forKey: .labels)
+        try container.encodeIfPresent(self.interestRate, forKey: .interestRate)
         try container.encodeIfPresent(self.minAllowedAmount, forKey: .minAllowedAmount)
         try container.encodeIfPresent(self.maxAllowedAmount, forKey: .maxAllowedAmount)
         try container.encodeIfPresent(self.recommendedMessage, forKey: .recommendedMessage)
