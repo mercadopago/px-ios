@@ -11,6 +11,7 @@ import Foundation
 /**
  This object declares custom preferences (customizations) for "Review and Confirm" screen.
  */
+@available(*, deprecated, message: "Groups flow will no longer be available")
 @objcMembers open class PXReviewConfirmConfiguration: NSObject {
     private static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
     private static let DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized

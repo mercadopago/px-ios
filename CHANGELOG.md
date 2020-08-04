@@ -1,3 +1,18 @@
+# v4.34.9 
+🚀Private Release - 4.34.9 🚀
+MercadoPagoSDKV4 - Private Version
+- Add new values to Pref additional info
+- Deprecate Groups models
+- Fix oneTap crash
+
+# v4.34.8 
+🚀Private Release - 4.34.8 🚀
+MercadoPagoSDKV4 - Private Version
+- Discounts enhancements
+- Melidata fix
+- Remedy title fix
+- Ifpe backoffice fix
+
 # v4.34.7 
 🚀Private Release - 4.34.7 🚀
 MercadoPagoSDKV4 - Private Version

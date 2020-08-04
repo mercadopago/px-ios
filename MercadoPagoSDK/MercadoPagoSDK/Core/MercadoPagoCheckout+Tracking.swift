@@ -70,7 +70,7 @@ extension MercadoPagoCheckout {
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
-    
+
     private func getCheckoutPrefForTracking(checkoutPreference: PXCheckoutPreference) -> [String: Any] {
         var checkoutPrefDic: [String: Any] = [:]
 
@@ -87,7 +87,7 @@ extension MercadoPagoCheckout {
         checkoutPrefDic["payment_methods"] = getPaymentPreferenceForTracking(paymentPreference: checkoutPreference.paymentPreference)
         return checkoutPrefDic
     }
-    
+
     func getPaymentPreferenceForTracking(paymentPreference: PXPaymentPreference) -> [String: Any] {
         var paymentPrefDic: [String: Any] = [:]
         paymentPrefDic["installments"] = paymentPreference.maxAcceptedInstallments

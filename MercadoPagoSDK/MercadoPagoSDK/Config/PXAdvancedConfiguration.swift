@@ -33,21 +33,25 @@ open class PXAdvancedConfiguration: NSObject {
     /**
      Add the possibility to enabled/disabled express checkout.
      */
+    @available(*, deprecated, message: "Groups flow will no longer be available")
     open var expressEnabled: Bool = false
 
     /**
     Instores usage / money in usage. - Use case: Not all bank deals apply right now to all preferences.
      */
+    @available(*, deprecated, message: "Groups flow will no longer be available")
     open var bankDealsEnabled: Bool = true
 
     /**
      Loyalty usage. - Use case: Show/hide bottom amount row.
      */
+    @available(*, deprecated, message: "Groups flow will no longer be available")
     open var amountRowEnabled: Bool = true
 
     /**
      Enable to preset configurations to customize visualization on the 'Review and Confirm screen'
      */
+    @available(*, deprecated, message: "Groups flow will no longer be available")
     open var reviewConfirmConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration()
 
     /**
@@ -58,6 +62,7 @@ open class PXAdvancedConfiguration: NSObject {
      /**
      Add dynamic custom views on 'Review and Confirm screen'.
      */
+    @available(*, deprecated, message: "Groups flow will no longer be available")
     open var reviewConfirmDynamicViewsConfiguration: PXReviewConfirmDynamicViewsConfiguration?
 
      /**

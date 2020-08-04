@@ -567,6 +567,22 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return configurations
     }
 
+    internal func updateCustomTexts() {
+        // If AdditionalInfo has custom texts override the ones set by MercadoPagoCheckoutBuilder
+        if let customTexts = checkoutPreference.pxAdditionalInfo?.pxCustomTexts {
+            if let translation = customTexts.payButton {
+                Localizator.sharedInstance.addCustomTranslation(.pay_button, translation)
+            }
+            if let translation = customTexts.payButtonProgress {
+                Localizator.sharedInstance.addCustomTranslation(.pay_button_progress, translation)
+            }
+            if let translation = customTexts.totalDescription {
+                Localizator.sharedInstance.addCustomTranslation(.total_to_pay, translation)
+                Localizator.sharedInstance.addCustomTranslation(.total_to_pay_onetap, translation)
+            }
+        }
+    }
+
     public func updateCheckoutModel(paymentMethodSearch: PXInitDTO) {
         let configurations = getPaymentOptionConfigurations(paymentMethodSearch: paymentMethodSearch)
         self.paymentConfigurationService.setConfigurations(configurations)

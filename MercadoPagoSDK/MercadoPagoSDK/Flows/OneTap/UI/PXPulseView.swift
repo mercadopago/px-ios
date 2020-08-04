@@ -14,7 +14,7 @@ final class PXPulseView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
         layer.cornerRadius = 16
-        layer.borderColor = MLBusinessAppDataService().getAppIdentifier() == .mp ? UIColor(red: 0, green: 158, blue: 227).withAlphaComponent(0.3).cgColor : UIColor(red: 52, green: 131, blue: 250).withAlphaComponent(0.3).cgColor
+        layer.borderColor = MLBusinessAppDataService().isMp() ? UIColor(red: 0, green: 158, blue: 227).withAlphaComponent(0.3).cgColor : UIColor(red: 52, green: 131, blue: 250).withAlphaComponent(0.3).cgColor
         layer.borderWidth = 8.5
         setupAnimations()
     }

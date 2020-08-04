@@ -77,6 +77,7 @@ extension PXOneTapViewModel {
             properties["review_type"] = "one_tap"
             var extraInfo: [String: Any] = [:]
             extraInfo["balance"] = selectedCard.accountMoneyBalance
+            extraInfo["selected_installment"] = amountHelper.getPaymentData().payerCost?.getPayerCostForTracking(isDigitalCurrency: paymentMethod.isDigitalCurrency)
             properties["extra_info"] = extraInfo
         }
         return properties
@@ -110,6 +111,20 @@ extension PXOneTapViewModel {
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
         var extraDic: [String: Any] = [:]
         extraDic["api_url"] =  error.requestOrigin
+        properties["extra_info"] = extraDic
+        return properties
+    }
+    
+    func getSelectCardEventProperties(index: Int, count: Int) -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()
+        properties["style"] = Tracking.Style.noScreen
+        properties["id"] = Tracking.Error.Id.genericError
+        properties["message"] = "No se pudo seleccionar la tarjeta ingresada"
+        properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
+        var extraDic: [String: Any] = [:]
+        extraDic["index"] =  index
+        extraDic["count"] =  count
         properties["extra_info"] = extraDic
         return properties
     }

@@ -53,12 +53,12 @@ extension PXPayerCost: Cellable {
         return getLabels()["TEA"]
     }
 
-    func getPayerCostForTracking() -> [String: Any] {
+    func getPayerCostForTracking(isDigitalCurrency: Bool = false) -> [String: Any] {
         var installmentDic: [String: Any] = [:]
         installmentDic["quantity"] = installments
         installmentDic["installment_amount"] = installmentAmount
         installmentDic["interest_rate"] = installmentRate
-        if hasInstallmentsRate() {
+        if hasInstallmentsRate() || isDigitalCurrency {
             installmentDic["visible_total_price"] = totalAmount
         }
         return installmentDic

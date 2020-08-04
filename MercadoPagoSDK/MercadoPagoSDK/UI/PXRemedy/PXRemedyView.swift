@@ -101,7 +101,7 @@ class PXRemedyView: UIView {
             ])
 
             //Hint Label
-            if let hint = getRemedyHintMessage() {
+            if let hint = getRemedyFieldTitle() {
                 let hintLabel = buildHintLabel(with: hint)
                 addSubview(hintLabel)
                 let height = UILabel.requiredHeight(forText: hint, withFont: hintLabel.font, inWidth: screenWidth)
@@ -145,7 +145,7 @@ class PXRemedyView: UIView {
     }
 
     private func buildTextField() -> MLCardFormField {
-        let title = getRemedyPlaceholder()
+        let title = getRemedyHintMessage()
         let lenght = getRemedyMaxLength()
         let cardFormFieldSetting = PXCardFormFieldSetting(lenght: lenght, title: title)
         let textField = MLCardFormField(fieldProperty: PXCardSecurityCodeFormFieldProperty(fieldSetting: cardFormFieldSetting))
@@ -386,18 +386,18 @@ extension PXRemedyView {
         return ""
     }
 
-    private func getRemedyPlaceholder() -> String {
+    private func getRemedyFieldTitle() -> String? {
         if let cvv = getCVVRemedy(), let text = cvv.fieldSetting?.title {
             return text
         }
-        return ""
+        return nil
     }
 
-    private func getRemedyHintMessage() -> String? {
+    private func getRemedyHintMessage() -> String {
         if let cvv = getCVVRemedy(), let text = cvv.fieldSetting?.hintMessage {
             return text
         }
-        return nil
+        return ""
     }
 
     private func getRemedyMaxLength() -> Int {
