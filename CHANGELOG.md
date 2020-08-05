@@ -13,7 +13,7 @@ MercadoPagoSDKV4 - Private Version
 - Deprecate Groups models
 - Fix oneTap crash
 
-# v4.34.8
+# v4.34.8 
 🚀Private Release - 4.34.8 🚀
 MercadoPagoSDKV4 - Private Version
 - Discounts enhancements
