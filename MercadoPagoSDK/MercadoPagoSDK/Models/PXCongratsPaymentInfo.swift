@@ -13,7 +13,7 @@ public class PXCongratsPaymentInfo: NSObject {
     /// What the user paid, it has to include the currency.
     let paidAmount: String
     
-    /// What the should have paid, it has to include the currency.
+	/// What the should have paid, it has to include the currency.
     /// This amount represents the original price.
     let rawAmount: String?
     

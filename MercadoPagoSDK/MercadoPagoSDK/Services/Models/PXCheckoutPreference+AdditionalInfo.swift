@@ -10,7 +10,7 @@ import Foundation
 internal extension PXCheckoutPreference {
     func populateAdditionalInfoModel() {
         if let additionalInfo = additionalInfo,
-            !additionalInfo.isEmpty, 
+            !additionalInfo.isEmpty,
             let data = additionalInfo.data(using: .utf8) {
             do {
                 pxAdditionalInfo = try PXAdditionalInfo.fromJSON(data: data)

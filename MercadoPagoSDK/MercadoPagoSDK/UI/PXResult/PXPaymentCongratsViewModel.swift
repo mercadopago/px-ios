@@ -38,13 +38,13 @@ class PXPaymentCongratsViewModel {
         
         let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodDescription)
         let icon = PXNewResultUtil.getPaymentMethodIcon(paymentTypeId: paymentInfo.paymentMethodType.rawValue, paymentMethodId: paymentInfo.paymentMethodId, externalPaymentMethodImage: paymentInfo.externalPaymentMethodImage)
-        
         let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
         return data
     }
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
+    
     // HEADER
     func getHeaderColor() -> UIColor {
         guard let color = paymentCongrats.headerColor else {
@@ -298,5 +298,20 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             }
         }
         return result
+    }
+    
+    #warning("TBD")
+    func shouldAutoReturn() -> Bool {
+        return false
+    }
+    
+    #warning("TBD")
+    func getBackUrl() -> URL? {
+        return nil
+    }
+    
+    #warning("TBD")
+    func getRedirectUrl() -> URL? {
+        return nil
     }
 }
