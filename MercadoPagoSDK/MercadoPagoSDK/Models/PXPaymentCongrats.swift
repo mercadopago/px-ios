@@ -186,7 +186,6 @@ extension PXPaymentCongrats {
     }
     
     /**
-<<<<<<< HEAD
      Defines the discounts data in the discounts seccions of the congrats.
      - parameter discounts: some PXDiscounts
      - returns: tihs builder `PXPaymentCongrats`
