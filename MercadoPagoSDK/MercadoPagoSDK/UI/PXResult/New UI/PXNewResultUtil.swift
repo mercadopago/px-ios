@@ -200,7 +200,8 @@ extension PXNewResultUtil {
         let firstString: NSMutableAttributedString = NSMutableAttributedString()
         
         if hasInstallments {
-            if installmentsCount > 1, let installmentsAmount = installmentsAmount {
+            if installmentsCount > 1 {
+                let installmentsAmount = installmentsAmount ?? ""
                 let titleString = String(installmentsCount) + "x " + installmentsAmount
                 let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
                 firstString.append(attributedTitle)

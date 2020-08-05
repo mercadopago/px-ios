@@ -68,10 +68,10 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var creditsExpectationView: UIView?
     
     // Payment Info
-    private(set) var paymentInfo: PXPaymentInfo?
+    private(set) var paymentInfo: PXCongratsPaymentInfo?
     
     // Split
-    private(set) var splitPaymentInfo: PXPaymentInfo?
+    private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
     
     // Tracking
     private(set) var trackingPath: String = "" //TODO
@@ -201,8 +201,8 @@ extension PXPaymentCongrats {
      */
     #warning("Check if backgroundColor, textColor, weight should be customized from the outside")
     @discardableResult
-    public func withExpenseSplit(_ message: String?, backgroundColor: String?, textColor: String?, weight: String?, actionLabel: String, actionTarget: String?, imageURL: String) -> PXPaymentCongrats {
-        self.expenseSplit = PXExpenseSplit(title: PXText(message: message, backgroundColor: nil, textColor: nil, weight: weight), action: PXRemoteAction(label: actionLabel, target: actionTarget), imageUrl: imageURL)
+    public func withExpenseSplit(_ text: PXText, action: PXRemoteAction, imageURL: String) -> PXPaymentCongrats {
+        self.expenseSplit = PXExpenseSplit(title: text, action: action, imageUrl: imageURL)
         return self
     }
     
@@ -328,7 +328,7 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withPaymentMethodInfo(_ paymentInfo: PXPaymentInfo) -> PXPaymentCongrats {
+    public func withPaymentMethodInfo(_ paymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
         self.paymentInfo = paymentInfo
         return self
     }
@@ -339,7 +339,7 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withSplitPaymenInfo(_ splitPaymentInfo: PXPaymentInfo) -> PXPaymentCongrats {
+    public func withSplitPaymenInfo(_ splitPaymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
         self.splitPaymentInfo = splitPaymentInfo
         return self
     }
@@ -375,55 +375,5 @@ extension PXPaymentCongrats {
         let viewModel = PXPaymentCongratsViewModel(paymentCongrats: self)
         viewModel.launch()
         return self
-    }
-}
-
-//TODO: Move to another file
-@objcMembers
-public class PXPaymentInfo: NSObject {
-    // Payment
-    /// What the user paid, it has to include the currency.
-    let paidAmount: String
-    /// What the should have paid, it has to include the currency.
-    /// This amount represents the original price.
-    let rawAmount: String?
-    
-    // Method
-    let paymentMethodName: String
-    let paymentMethodLastFourDigits: String
-    let paymentMethodExtraInfo: String?
-    /// Used to show the issues logo. Defined at PaymentMethodSearch
-    let paymentMethodId: String
-    let paymentMethodType: PXPaymentTypes
-    
-    // Installments
-    let hasInstallments: Bool
-    let installmentsRate: Double?
-    let installmentsCount: Int
-    let installmentAmount: String?
-    
-    // Discount
-    let hasDiscount: Bool
-    // Some friendly message to be shown
-    let discountName: String?
-    
-    public init(paidAmount: String, transactionAmount: String, paymentMethodName: String, paymentMethodLastFourDigits: String, paymentMethodExtraInfo: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, hasInstallments: Bool = false, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentAmount: String? = nil, hasDiscount: Bool = false, discountName: String? = nil) {
-        self.paidAmount = paidAmount
-        self.rawAmount = transactionAmount
-        
-        self.paymentMethodName = paymentMethodName
-        self.paymentMethodLastFourDigits = String(paymentMethodLastFourDigits.prefix(4))
-        self.paymentMethodExtraInfo = paymentMethodExtraInfo
-        self.paymentMethodId = paymentMethodId
-        self.paymentMethodType = paymentMethodType
-        
-        self.hasInstallments = hasInstallments
-        self.installmentsRate = installmentsRate
-        self.installmentsCount = installmentsCount
-        self.installmentAmount = installmentAmount
-        
-        self.hasDiscount = hasDiscount
-        self.discountName = discountName
-        super.init()
     }
 }

@@ -183,7 +183,6 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     func getPaymentViewData() -> PXNewCustomViewData? {
-        // This will be excecuted only for external integrators whom doesn't have access to paymentViewData
         guard let paymentInfo = paymentCongrats.paymentInfo else { return nil }
         return createPaymentMethodReceiptData(from: paymentInfo)
     }
@@ -257,6 +256,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     func getCreditsExpectationView() -> UIView? {
+        guard paymentCongrats.paymentInfo?.paymentMethodId == "consumer_credits" else { return nil }
         return paymentCongrats.creditsExpectationView
     }
     

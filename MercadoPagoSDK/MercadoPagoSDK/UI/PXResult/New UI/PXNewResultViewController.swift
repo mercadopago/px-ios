@@ -608,12 +608,8 @@ extension PXNewResultViewController {
     //PAYMENT METHOD
     func buildPaymentMethodView() -> UIView? {
         guard let paymentData = viewModel.getPaymentViewData() else { return nil }
-
-//        if paymentData.paymentMethod?.id == "consumer_credits", let creditsExpectationView = viewModel.getCreditsExpectationView() {
-//            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
-//        }
-
-        return PXNewCustomView(data: paymentData)
+        let creditsExpectationView = viewModel.getCreditsExpectationView()
+        return PXNewCustomView(data: paymentData, bottomView: creditsExpectationView)
     }
     
 //    func buildPaymentMethodViewORIG() -> UIView? {
