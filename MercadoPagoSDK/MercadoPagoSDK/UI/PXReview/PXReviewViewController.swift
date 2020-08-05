@@ -315,7 +315,7 @@ extension PXReviewViewController {
 
     private func getCFTComponentView() -> UIView? {
         guard viewModel.hasPayerCostAddionalInfo() else { return nil }
-        return PXCFTComponentView(withCFTValue: viewModel.amountHelper.getPaymentData().payerCost?.interestRate, backgroundColor: ThemeManager.shared.highlightBackgroundColor())
+        return PXCFTComponentView(withCFTValue: viewModel.amountHelper.getPaymentData().payerCost?.interestRate)
     }
 
     private func getFloatingButtonView() -> PXContainedActionButtonView {

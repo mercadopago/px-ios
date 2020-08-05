@@ -14,9 +14,9 @@ final class PXCFTComponentView: PXComponentView {
     fileprivate lazy var MATCH_WIDTH_PERCENT: CGFloat = 95
     fileprivate let cftLabel = UILabel()
 
-    init(withCFTValue: PXText?, backgroundColor: UIColor) {
+    init(withCFTValue: PXText?) {
         super.init()
-        self.backgroundColor = backgroundColor
+        backgroundColor = ThemeManager.shared.highlightBackgroundColor()
 
         if let cftText = withCFTValue {
             cftLabel.translatesAutoresizingMaskIntoConstraints = false

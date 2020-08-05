@@ -13,7 +13,6 @@ open class PXPayerCost: NSObject, Codable {
 
     open var installmentRate: Double = 0
     open var labels: [String] = []
-    open var interestRate: PXText?
     open var minAllowedAmount: Double = 0
     open var maxAllowedAmount: Double = 0
     open var recommendedMessage: String?
@@ -23,11 +22,11 @@ open class PXPayerCost: NSObject, Codable {
     open var processingMode: String?
     open var paymentMethodOptionId: String?
     open var agreements: [PXAgreement] = []
+    open var interestRate: PXText?
 
-    public init(installmentRate: Double, labels: [String], interestRate: PXText?, minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String?, installmentAmount: Double, totalAmount: Double, installments: Int, processingMode: String?, paymentMethodOptionId: String?, agreements: [PXAgreement] = []) {
+    public init(installmentRate: Double, labels: [String], minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String?, installmentAmount: Double, totalAmount: Double, installments: Int, processingMode: String?, paymentMethodOptionId: String?, agreements: [PXAgreement] = [], interestRate: PXText? = nil) {
         self.installmentRate = installmentRate
         self.labels = labels
-        self.interestRate = interestRate
         self.minAllowedAmount = minAllowedAmount
         self.maxAllowedAmount = maxAllowedAmount
         self.recommendedMessage = recommendedMessage
@@ -37,12 +36,12 @@ open class PXPayerCost: NSObject, Codable {
         self.processingMode = processingMode
         self.paymentMethodOptionId = paymentMethodOptionId
         self.agreements = agreements
+        self.interestRate = interestRate
     }
 
     public enum PXPayerCostKeys: String, CodingKey {
         case installmentRate = "installment_rate"
         case labels
-        case interestRate = "interest_rate"
         case minAllowedAmount = "min_allowed_amount"
         case maxAllowedAmount = "max_allowed_amount"
         case recommendedMessage = "recommended_message"
@@ -52,6 +51,7 @@ open class PXPayerCost: NSObject, Codable {
         case processingMode = "processing_mode"
         case paymentMethodOptionId = "payment_method_option_id"
         case agreements
+        case interestRate = "interest_rate"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -69,7 +69,7 @@ open class PXPayerCost: NSObject, Codable {
         let paymentMethodOptionId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodOptionId)
         let agreements: [PXAgreement] = try container.decodeIfPresent([PXAgreement].self, forKey: .agreements) ?? []
 
-        self.init(installmentRate: installmentRate, labels: labels, interestRate: interestRate, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments,processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements)
+        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments,processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements, interestRate: interestRate)
     }
 
     public func encode(to encoder: Encoder) throws {
