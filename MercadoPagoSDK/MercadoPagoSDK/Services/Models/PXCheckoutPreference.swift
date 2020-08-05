@@ -74,11 +74,13 @@ import Foundation
     }
 
     /**
-            Collector ID
-        */
+    Collector ID
+    */
     open var collectorId: String?
 
     open var backUrls: PXBackUrls?
+    open var redirectUrls: PXBackUrls?
+    open var autoReturn: String?
     /**
      Order id
      */
@@ -150,6 +152,8 @@ import Foundation
         case marketplace
         case additionalInfo = "additional_info"
         case backUrls = "back_urls"
+        case redirectUrls = "redirect_urls"
+        case autoReturn = "auto_return"
         case branchId = "branch_id"
         case processingModes = "processing_modes"
         case collectorId = "collector_id"
@@ -181,6 +185,8 @@ import Foundation
         self.additionalInfo = try container.decodeIfPresent(String.self, forKey: .additionalInfo)
         populateAdditionalInfoModel()
         self.backUrls = try container.decodeIfPresent(PXBackUrls.self, forKey: .backUrls)
+        self.redirectUrls = try container.decodeIfPresent(PXBackUrls.self, forKey: .redirectUrls)
+        self.autoReturn = try container.decodeIfPresent(String.self, forKey: .autoReturn)
     }
 }
 
