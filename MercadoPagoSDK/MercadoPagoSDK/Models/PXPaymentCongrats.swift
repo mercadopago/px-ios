@@ -64,6 +64,9 @@ public final class PXPaymentCongrats: NSObject {
     // Remedies
     private(set) var hasPaymentBeenRejectedWithRemedy: Bool = false
     private(set) var remedyButtonAction: ((String?) -> ())?
+    private(set) var remedyView: UIView?
+    
+    private(set) var callback: ((PaymentResult.CongratsState, String?) -> Void)?
     
     private(set) var creditsExpectationView: UIView?
     
@@ -296,20 +299,40 @@ extension PXPaymentCongrats {
     
     
     /**
-     - ToDo: Fill this
+     If the congrats has remedy, recieves a custom view to be displayed.
+     - Parameters:
+        - hasRemedies: some `Bool`
+        - remedyView: some `UIView`
+     - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func paymentHasBeenRejectedWithRemedy(_ hasRemedies: Bool) -> PXPaymentCongrats {
+    internal func paymentHasBeenRejectedWithRemedy(_ hasRemedies: Bool, remedyView: UIView?) -> PXPaymentCongrats {
         self.hasPaymentBeenRejectedWithRemedy = hasRemedies
+        self.remedyView = remedyView
         return self
     }
     
     /**
-     - ToDo: Fill this
-     */
+    If the congrats has remedy, recieves a button action.
+    - Parameters:
+       - action: some closure
+    - returns: tihs builder `PXPaymentCongrats`
+    */
     @discardableResult
-    public func withRemedyButtonAction(_ action: @escaping (String?) -> ()) -> PXPaymentCongrats {
+    internal func withRemedyButtonAction(_ action: @escaping (String?) -> ()) -> PXPaymentCongrats {
         self.remedyButtonAction = action
+        return self
+    }
+    
+    /**
+    A callback that can be executed in any other method.
+    - Parameters:
+       - callback: some closure
+    - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    internal func withCallback(_ callback: @escaping ((PaymentResult.CongratsState, String?) -> Void)) -> PXPaymentCongrats {
+        self.callback = callback
         return self
     }
     

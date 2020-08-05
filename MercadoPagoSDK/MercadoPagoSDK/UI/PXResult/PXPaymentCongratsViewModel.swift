@@ -10,7 +10,7 @@ import Foundation
 class PXPaymentCongratsViewModel {
     
     private let paymentCongrats: PXPaymentCongrats
-    
+
     init(paymentCongrats: PXPaymentCongrats) {
         self.paymentCongrats = paymentCongrats
     }
@@ -226,9 +226,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     // REMEDY
-    #warning("Chequear como resolver esto donde se le pasa parametros a esta funcion para que ejecute una accion en particular. Tener en cuenta que PXBusinessResult y PXResult tienen implementaciones distintas")
+    #warning("Chequear como la vista pasada va a recibir esos protocols que deberia ser la misma clase PXNewResultViewController")
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
-        // TODO
+         if isPaymentResultRejectedWithRemedy() {
+            return paymentCongrats.remedyView
+        }
         return nil
     }
     
@@ -269,6 +271,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     //CALLBACKS & TRACKING
     // TODO
+    #warning("remove this when checkout uses payment congrats")
     func setCallback(callback: @escaping (PaymentResult.CongratsState, String?) -> Void) {
     }
     
