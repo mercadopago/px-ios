@@ -32,6 +32,7 @@ final class PXInitDTO: NSObject, Decodable {
     public var site: PXSite
     public var generalCoupon: String
     public var coupons: [String: PXDiscountConfiguration]
+    @available(*, deprecated, message: "Groups flow will no longer be available")
     public var groups: [PXPaymentMethodSearchItem] = []
     public var payerPaymentMethods: [PXCustomOptionSearchItem] = []
     public var availablePaymentMethods: [PXPaymentMethod] = []

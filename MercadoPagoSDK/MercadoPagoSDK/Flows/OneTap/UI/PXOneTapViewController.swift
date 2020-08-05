@@ -578,8 +578,16 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func selectCardInSliderAtIndex(_ index: Int) {
         let cardSliderViewModel = viewModel.getCardSliderViewModel()
-        if cardSliderViewModel.count - 1 >= index && index >= 0 {
-            slider.goToItemAt(index: index, animated: false)
+        if (0 ... cardSliderViewModel.count - 1).contains(index) {
+            do {
+                try slider.goToItemAt(index: index, animated: false)
+            } catch {
+                // We shouldn't reach this line. Track friction
+                let properties = viewModel.getSelectCardEventProperties(index: index, count: cardSliderViewModel.count)
+                trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+                selectFirstCardInSlider()
+                return
+            }
             let card = cardSliderViewModel[index]
             newCardDidSelected(targetModel: card)
         }

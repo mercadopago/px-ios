@@ -88,7 +88,7 @@ class PXRemedyView: UIView {
 
         if shouldShowTextField() {
             // TextField
-            let textField = buildTextField(placeholder: getRemedyPlaceholder())
+            let textField = buildTextField(placeholder: getRemedyHintMessage())
             self.textField = textField
             let lastView = subviews.last ?? titleLabel
             addSubview(textField)
@@ -100,7 +100,7 @@ class PXRemedyView: UIView {
             ])
 
             //Hint Label
-            if let hint = getRemedyHintMessage() {
+            if let hint = getRemedyFieldTitle() {
                 let hintLabel = buildHintLabel(with: hint)
                 addSubview(hintLabel)
                 let height = UILabel.requiredHeight(forText: hint, withFont: hintLabel.font, inWidth: screenWidth)
@@ -401,18 +401,18 @@ extension PXRemedyView {
         return ""
     }
 
-    private func getRemedyPlaceholder() -> String {
+    private func getRemedyFieldTitle() -> String? {
         if let cvv = getCVVRemedy(), let text = cvv.fieldSetting?.title {
             return text
         }
-        return ""
+        return nil
     }
 
-    private func getRemedyHintMessage() -> String? {
+    private func getRemedyHintMessage() -> String {
         if let cvv = getCVVRemedy(), let text = cvv.fieldSetting?.hintMessage {
             return text
         }
-        return nil
+        return ""
     }
 
     private func getRemedyMaxLength() -> Int {

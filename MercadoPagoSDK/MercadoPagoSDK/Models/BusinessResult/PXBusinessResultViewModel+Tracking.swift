@@ -110,7 +110,7 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
     }
 
     func hasExpenseSplitView() -> Bool {
-        return getExpenseSplit() != nil && MLBusinessAppDataService().getAppIdentifier() == .mp ? true : false
+        return getExpenseSplit() != nil && MLBusinessAppDataService().isMp() ? true : false
     }
 
     func getScoreLevel() -> Int? {
