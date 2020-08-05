@@ -175,7 +175,6 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     // PAYMENT METHOD
-    // TODO Para que muestre el payment method, tenemos que devolver ademas paymentData
     #warning("logica especifica para comparar PXBusinessResultStatus con PXPaymentStatus")
     func shouldShowPaymentMethod() -> Bool {
         // TODO checkear comparación de este status (BusinessStatus) pero puede ser que venga por PXResultViewModel que tiene otra logica
@@ -183,29 +182,21 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return !hasInstructions() && isApproved
     }
     
-    // TODO refinar esto.
-    // Como el Checkout va a setear directamente el paymentViewData, tenemos que chequear si hay paymentViewData, devolvemos ese, sino, hay que armarlo
-    // con los datos que el integrador externo nos provea. un title, secondTitle, thirdTitle y ver si pasamos un paymentMethodTypeId para calcular el icono
     func getPaymentViewData() -> PXNewCustomViewData? {
-        guard let paymentViewData = paymentCongrats.paymentViewData else {
-            // This will be excecuted only for external integrators whom doesn't have access to paymentViewData
-            guard let paymentInfo = paymentCongrats.paymentInfo else { return nil }
-            return createPaymentMethodReceiptData(from: paymentInfo)
-        }
-        return paymentViewData
+        // This will be excecuted only for external integrators whom doesn't have access to paymentViewData
+        guard let paymentInfo = paymentCongrats.paymentInfo else { return nil }
+        return createPaymentMethodReceiptData(from: paymentInfo)
     }
     
     #warning("Desacoplar payment data del VC de Congrats")
     func getPaymentData() -> PXPaymentData? {
         // TODO
-        //        return paymentData
         return nil
     }
     
     #warning("Desacoplar ammount helper del VC de Congrats")
     func getAmountHelper() -> PXAmountHelper? {
         // TODO
-        //        return amountHelper
         return nil
     }
     
@@ -218,14 +209,12 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     #warning("Desacoplar payment data del VC de Congrats")
     func getSplitPaymentData() -> PXPaymentData? {
         // TODO
-        //        return amountHelper.splitAccountMoney
         return nil
     }
     
     #warning("Desacoplar ammount helper del VC de Congrats")
     func getSplitAmountHelper() -> PXAmountHelper? {
         // TODO
-        //        return amountHelper
         return nil
     }
     

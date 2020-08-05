@@ -68,7 +68,6 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var creditsExpectationView: UIView?
     
     // Payment Info
-    private(set) var paymentViewData: PXNewCustomViewData?
     private(set) var paymentInfo: PXPaymentInfo?
     
     // Split
@@ -321,17 +320,6 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withCreditsExpectationView(_ view: UIView) -> PXPaymentCongrats {
         self.creditsExpectationView = view
-        return self
-    }
-    
-    /**
-     Data containing all of the information for displaying the payment method. This should be used ONLY internally
-     - parameter viewData: a DTO for creating a `PXNewCustomView` representing the payment method
-     - returns: tihs builder `PXPaymentCongrats`
-     */
-    @discardableResult
-    internal func withPaymentViewData(_ viewData: PXNewCustomViewData) -> PXPaymentCongrats {
-        self.paymentViewData = viewData
         return self
     }
     
