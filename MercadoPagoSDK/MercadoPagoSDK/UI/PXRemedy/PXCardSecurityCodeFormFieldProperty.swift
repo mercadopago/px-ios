@@ -13,32 +13,25 @@ struct PXCardFormFieldSetting {
 }
 
 struct PXCardSecurityCodeFormFieldProperty: MLCardFormFieldPropertyProtocol {
-    let fieldSetting: PXCardFormFieldSetting?
-
-    init(fieldSetting: PXCardFormFieldSetting? = nil) {
-        self.fieldSetting = fieldSetting
-    }
+    let fieldSetting: PXCardFormFieldSetting
 
     func fieldId() -> String {
         return "securityCode"
     }
 
     func fieldTitle() -> String {
-        if let title = fieldSetting?.title {
-            return title
-        }
-        return ""
+        return fieldSetting.title
     }
 
     func minLenght() -> Int {
-        if let lenght = fieldSetting?.lenght {
+        if let lenght = fieldSetting.lenght {
             return lenght
         }
         return 3
     }
 
     func maxLenght() -> Int {
-        if let lenght = fieldSetting?.lenght {
+        if let lenght = fieldSetting.lenght {
             return lenght
         }
         return 4
@@ -53,10 +46,7 @@ struct PXCardSecurityCodeFormFieldProperty: MLCardFormFieldPropertyProtocol {
     }
 
     func patternMask() -> String? {
-        if let lenght = fieldSetting?.lenght {
-            return String(repeating: "$", count: lenght)
-        }
-        return String(repeating: "$", count: 3)
+        return String(repeating: "$", count: maxLenght())
     }
 
     func validationPattern() -> String? {
