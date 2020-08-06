@@ -1,3 +1,11 @@
+# v4.35.0 
+🚀Private Release - 4.35.0 🚀
+MercadoPagoSDKV4 - Private Version
+- Use MLCardFormField as Remedy textfield
+- Add extraInfo for consumer credits
+- Fix oneTap crash
+- Swap remedy textfield title and help texts
+
 # v4.34.9 
 🚀Private Release - 4.34.9 🚀
 MercadoPagoSDKV4 - Private Version
