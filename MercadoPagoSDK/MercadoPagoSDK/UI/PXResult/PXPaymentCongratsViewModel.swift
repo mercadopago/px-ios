@@ -30,7 +30,7 @@ class PXPaymentCongratsViewModel {
                                                            installmentRate: paymentInfo.installmentsRate,
                                                            hasDiscount: paymentInfo.hasDiscount,
                                                            discountName: paymentInfo.discountName,
-                                                           splitTransactionAmountWithDiscount: nil)
+                                                           splitTransactionAmountWithDiscount: "$66666666666")
         
         let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits, paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
         

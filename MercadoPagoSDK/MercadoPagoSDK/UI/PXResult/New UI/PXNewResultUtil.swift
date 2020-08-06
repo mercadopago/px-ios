@@ -214,7 +214,7 @@ extension PXNewResultUtil {
                 }
                 
                 // Total Amount
-                let totalString = totalAmount
+                let totalString = Utils.addParenthesis(totalAmount)
                 let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
                 firstString.appendWithSpace(attributedTotal)
             } else {
