@@ -6,14 +6,14 @@ MercadoPagoSDKV4 - Private Version
 - Fix oneTap crash
 - Swap remedy textfield title and help texts
 
-# v4.34.9 
+# v4.34.9
 🚀Private Release - 4.34.9 🚀
 MercadoPagoSDKV4 - Private Version
 - Add new values to Pref additional info
 - Deprecate Groups models
 - Fix oneTap crash
 
-# v4.34.8 
+# v4.34.8
 🚀Private Release - 4.34.8 🚀
 MercadoPagoSDKV4 - Private Version
 - Discounts enhancements
