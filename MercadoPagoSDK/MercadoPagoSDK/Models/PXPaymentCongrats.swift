@@ -325,7 +325,8 @@ extension PXPaymentCongrats {
     }
     
     /**
-    A callback that can be executed in any other method.
+    A callback that can be executed in any other method, this callback is used in the remedies flow
+    and also is triggered when headerCloseAction is triggered, is part of the checkout process.
     - Parameters:
        - callback: some closure
     - returns: tihs builder `PXPaymentCongrats`
