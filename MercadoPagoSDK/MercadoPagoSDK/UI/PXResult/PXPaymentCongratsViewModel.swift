@@ -21,7 +21,7 @@ class PXPaymentCongratsViewModel {
     }
     
     //MARK: Private methods
-    private func createPaymentMethodReceiptData(from paymentInfo: PXPaymentInfo) -> PXNewCustomViewData {
+    private func createPaymentMethodReceiptData(from paymentInfo: PXCongratsPaymentInfo) -> PXNewCustomViewData {
         let firstString = PXNewResultUtil.getPMFFistString(totalAmount: paymentInfo.paidAmount,
                                                            transactionAmount: paymentInfo.rawAmount,
                                                            hasInstallments: paymentInfo.hasInstallments,

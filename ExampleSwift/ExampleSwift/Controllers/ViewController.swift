@@ -58,8 +58,8 @@ class ViewController: UIViewController {
             })
             .withCustomViews(important: nil, top: nil, bottom: nil)
             .withCreditsExpectationView(UILabel())
-            .withPaymentMethodInfo(PXPaymentInfo(paidAmount: "$100", transactionAmount: "$1000", paymentMethodName: "Mastercard", paymentMethodLastFourDigits: "1234", paymentMethodExtraInfo: "Mercado Pago Wallet", paymentMethodId: "consumer_credits", paymentMethodType: .CREDIT_CARD, hasInstallments: false, installmentsRate: 52.3, installmentsCount: 0, installmentAmount: "$430", hasDiscount: true, discountName: "70% OFF"))
-            .withSplitPaymenInfo(PXPaymentInfo(paidAmount: "$500", transactionAmount: "$5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodExtraInfo: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY))
+            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "$100", transactionAmount: "$1000", paymentMethodName: "Mastercard", paymentMethodLastFourDigits: "1234", paymentMethodExtraInfo: "Mercado Pago Wallet", paymentMethodId: "consumer_credits", paymentMethodType: .CREDIT_CARD, hasInstallments: false, installmentsRate: 52.3, installmentsCount: 0, installmentAmount: "$430", hasDiscount: true, discountName: "70% OFF"))
+            .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$500", transactionAmount: "$5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodExtraInfo: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY))
             .start(using: navController)
     }
     

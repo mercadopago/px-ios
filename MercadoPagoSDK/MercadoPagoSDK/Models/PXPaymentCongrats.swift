@@ -324,7 +324,7 @@ extension PXPaymentCongrats {
     
     /**
      Data containing all of the information for displaying the payment method .
-     - parameter paymentInfo: a DTO for creating a `PXPaymentInfo` representing the payment method
+     - parameter paymentInfo: a DTO for creating a `PXCongratsPaymentInfo` representing the payment method
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
@@ -335,7 +335,7 @@ extension PXPaymentCongrats {
     
     /**
      Data containing all of the information for displaying the split payment method .
-     - parameter paymentInfo: a DTO for creating a `PXPaymentInfo` representing the payment method
+     - parameter paymentInfo: a DTO for creating a `PXCongratsPaymentInfo` representing the payment method
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
@@ -355,7 +355,7 @@ extension PXPaymentCongrats {
     
     /**
      An error view to be displayed when a failure congrats is shown
-     - parameter shouldShow: a `Bool` indicating if
+     - parameter shouldShow: a `Bool` indicating if the error screen should be shown.
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
