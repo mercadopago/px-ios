@@ -22,15 +22,14 @@ class PXPaymentCongratsViewModel {
     
     //MARK: Private methods
     private func createPaymentMethodReceiptData(from paymentInfo: PXCongratsPaymentInfo) -> PXNewCustomViewData {
-        let firstString = PXNewResultUtil.getPMFFistString(totalAmount: paymentInfo.paidAmount,
-                                                           transactionAmount: paymentInfo.rawAmount,
-                                                           hasInstallments: paymentInfo.hasInstallments,
-                                                           installmentsCount: paymentInfo.installmentsCount,
-                                                           installmentsAmount: paymentInfo.installmentAmount,
-                                                           installmentRate: paymentInfo.installmentsRate,
-                                                           hasDiscount: paymentInfo.hasDiscount,
-                                                           discountName: paymentInfo.discountName,
-                                                           splitTransactionAmountWithDiscount: "$66666666666")
+        let firstString = PXNewResultUtil.formatPaymentMethodFirstString(totalAmount: paymentInfo.paidAmount,
+                                                                         transactionAmount: paymentInfo.rawAmount,
+                                                                         hasInstallments: paymentInfo.hasInstallments,
+                                                                         installmentsCount: paymentInfo.installmentsCount,
+                                                                         installmentsAmount: paymentInfo.installmentAmount,
+                                                                         installmentRate: paymentInfo.installmentsRate,
+                                                                         hasDiscount: paymentInfo.hasDiscount,
+                                                                         discountName: paymentInfo.discountName)
         
         let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits, paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
         

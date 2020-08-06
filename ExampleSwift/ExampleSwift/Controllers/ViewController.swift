@@ -58,7 +58,7 @@ class ViewController: UIViewController {
             })
             .withCustomViews(important: nil, top: nil, bottom: nil)
             .withCreditsExpectationView(UILabel())
-            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "$ 1,133.64", transactionAmount: nil, paymentMethodName: "Mastercard", paymentMethodLastFourDigits: "1151", paymentMethodExtraInfo: "Mercado Pago Integrador", paymentMethodId: "mastercard", paymentMethodType: .CREDIT_CARD, hasInstallments: true, installmentsRate: 52.3, installmentsCount: 18, installmentAmount: "$ 562.98", hasDiscount: false, discountName: nil))
+            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "$ 10,133.64", transactionAmount: nil, paymentMethodName: "American Express", paymentMethodLastFourDigits: "1151", paymentMethodExtraInfo: nil, paymentMethodId: "amex", paymentMethodType: .CREDIT_CARD, hasInstallments: true, installmentsRate: 52.3, installmentsCount: 18, installmentAmount: "$ 562.98", hasDiscount: false, discountName: nil))
             .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodExtraInfo: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY))
             .start(using: navController)
     }

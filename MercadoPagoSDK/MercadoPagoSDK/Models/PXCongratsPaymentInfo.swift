@@ -20,7 +20,7 @@ public class PXCongratsPaymentInfo: NSObject {
     let paymentMethodName: String
     let paymentMethodLastFourDigits: String?
     let paymentMethodExtraInfo: String?
-    /// Used to show the issues logo. Defined at PaymentMethodSearch
+    /// Used to show the issues logo. Defined at `PaymentMethodSearch`
     let paymentMethodId: String
     let paymentMethodType: PXPaymentTypes
     

@@ -113,7 +113,8 @@ extension PXNewResultUtil {
     }
     
     //PAYMENT METHOD DATA
-    #warning("This should be removed or reused to return the first second and third attributedStrings and the image")
+    // This is kept just for refrence and will be removed soon
+    @available(*, deprecated, message: "Do not use this, it's just for reference.")
     class func getDataForPaymentMethodView(paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> PXNewCustomViewData? {
         guard let paymentMethod = paymentData.paymentMethod else {
             return nil
@@ -131,7 +132,7 @@ extension PXNewResultUtil {
     }
     
     // PM First String
-    #warning("This should be deleted since businessresult should call directly to the other function")
+    @available(*, deprecated, message: "Do not use this, it's just for reference. Use `formatPaymentMethodFirstString()`")
     class func getPMFirstStringORIG(currency: PXCurrency, paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> NSAttributedString {
         let attributes = firstStringAttributes()
         let totalAmountAttributes = attributes.totalAmountAtributes
@@ -191,7 +192,7 @@ extension PXNewResultUtil {
         return firstString
     }
     
-    class func getPMFFistString(totalAmount: String, transactionAmount: String?, hasInstallments: Bool, installmentsCount: Int, installmentsAmount: String?, installmentRate: Double?, hasDiscount: Bool, discountName: String?, splitTransactionAmountWithDiscount: String?) -> NSAttributedString {
+    class func formatPaymentMethodFirstString(totalAmount: String, transactionAmount: String?, hasInstallments: Bool, installmentsCount: Int, installmentsAmount: String?, installmentRate: Double?, hasDiscount: Bool, discountName: String?) -> NSAttributedString {
         let attributes = firstStringAttributes()
         let totalAmountAttributes = attributes.totalAmountAtributes
         let interestRateAttributes = attributes.interestRateAttributes
@@ -224,14 +225,8 @@ extension PXNewResultUtil {
             }
         } else {
             // Caso account money
-            if let splitAccountMoneyAmount = splitTransactionAmountWithDiscount {
-                let string = splitAccountMoneyAmount
-                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributed)
-            } else {
-                let attributed = NSAttributedString(string: totalAmount, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributed)
-            }
+            let attributed = NSAttributedString(string: totalAmount, attributes: PXNewCustomView.titleAttributes)
+            firstString.append(attributed)
         }
         
         // Discount
@@ -276,7 +271,7 @@ extension PXNewResultUtil {
         return secondStringAttributed(description)
     }
     
-    #warning("This should be deleted since businessresult should call directly to formatPaymentMethodSecondString()")
+    @available(*, deprecated, message: "Do not use this, it's just for reference. Use `formatPaymentMethodSecondString()`")
     class func getPMSecondString(paymentData: PXPaymentData) -> NSAttributedString? {
         guard let paymentMethod = paymentData.paymentMethod else {
             return nil
@@ -322,7 +317,7 @@ extension PXNewResultUtil {
         return thirdStringAttributed(paymentMethodDisplayDescription)
     }
     
-    #warning("This should be deleted since businessresult should call directly to formatPaymentMethodThirdString()")
+    @available(*, deprecated, message: "Do not use this, it's just for reference. Use `formatPaymentMethodThirdString()`")
     class func getPMThirdString(paymentData: PXPaymentData) -> NSAttributedString? {
         guard let paymentMethodDisplayDescription = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message else {
             return nil
