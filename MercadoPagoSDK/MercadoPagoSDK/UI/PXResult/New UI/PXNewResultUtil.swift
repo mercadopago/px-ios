@@ -97,6 +97,23 @@ class PXNewResultUtil {
         }
         return data
     }
+    
+    //URL logic
+    internal enum PXAutoReturnTypes: String {
+        case APPROVED = "approved"
+        case ALL = "all"
+    }
+    
+    internal class func openURL(url: URL, success: @escaping (Bool) -> Void) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: { result in
+                sleep(1)
+                success(result)
+            })
+        } else {
+            success(false)
+        }
+    }
 }
 
 // MARK: Payment Method Logic

@@ -245,36 +245,6 @@ extension PXResultViewModel {
     }
 }
 
-// MARK: URL logic
-extension PXResultViewModel {
-    func getBackUrl() -> URL? {
-        if let status = PXPaymentStatus(rawValue: getPaymentStatus()) {
-            switch status {
-            case .APPROVED:
-                return URL(string: amountHelper.preference.backUrls?.success ?? "")
-            case .PENDING:
-                return URL(string: amountHelper.preference.backUrls?.pending ?? "")
-            case .REJECTED:
-                return URL(string: amountHelper.preference.backUrls?.failure ?? "")
-            default:
-                return nil
-            }
-        }
-        return nil
-    }
-
-    func openURL(url: URL, success: @escaping (Bool) -> Void) {
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: { result in
-                sleep(1)
-                success(result)
-            })
-        } else {
-            success(false)
-        }
-    }
-}
-
 // MARK: New Result View Model Interface
 extension PXResultViewModel: PXNewResultViewModelInterface {
     func getHeaderColor() -> UIColor {
@@ -301,7 +271,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         let action = { [weak self] in
             if let callback = self?.callback {
                 if let url = self?.getBackUrl() {
-                    self?.openURL(url: url, success: { (_) in
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
                         callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
@@ -508,5 +478,35 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
             return preference.getBottomCustomView()
         }
         return nil
+    }
+
+    func shouldAutoReturn() -> Bool {
+        guard let autoReturn = amountHelper.preference.autoReturn,
+            let fieldId = PXNewResultUtil.PXAutoReturnTypes(rawValue: autoReturn),
+            getBackUrl() != nil else {
+            return false
+        }
+
+        let status = PXPaymentStatus(rawValue: getPaymentStatus())
+        switch status {
+        case .APPROVED:
+            return fieldId == .APPROVED
+        default:
+            return fieldId == .ALL
+        }
+    }
+
+    func getBackUrl() -> URL? {
+        let status = PXPaymentStatus(rawValue: getPaymentStatus())
+        switch status {
+        case .APPROVED:
+            return URL(string: amountHelper.preference.backUrls?.success ?? "")
+        case .PENDING:
+            return URL(string: amountHelper.preference.backUrls?.pending ?? "")
+        case .REJECTED:
+            return URL(string: amountHelper.preference.backUrls?.failure ?? "")
+        default:
+            return nil
+        }
     }
 }

@@ -15,12 +15,11 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     private lazy var elasticHeader = UIView()
     private let statusBarHeight = PXLayout.getStatusBarHeight()
     private var contentViewHeightConstraint: NSLayoutConstraint?
-
     let scrollView = UIScrollView()
     let viewModel: PXNewResultViewModelInterface
     private var finishButtonAnimation: (() -> Void)?
-
     private var touchpointView: MLBusinessTouchpointsView?
+    private var autoReturnWorkItem: DispatchWorkItem?
 
     init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void, finishButtonAnimation: (() -> Void)? = nil) {
         self.viewModel = viewModel
@@ -51,6 +50,16 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             let behaviourProtocol = PXConfiguratorManager.flowBehaviourProtocol
             behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())
         }
+        if viewModel.shouldAutoReturn() {
+            autoReturnWorkItem = DispatchWorkItem { [weak self] in
+                if let action = self?.viewModel.getHeaderCloseAction() {
+                    action()
+                }
+            }
+            if let autoReturnWorkItem = autoReturnWorkItem {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: autoReturnWorkItem)
+            }
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,6 +68,8 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         unsubscribeFromAnimatedButtonNotifications()
         // remove keyboard observer
         unsubscribeFromKeyboardNotifications()
+        // Cancel the work item so it doesn't run
+        autoReturnWorkItem?.cancel()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
