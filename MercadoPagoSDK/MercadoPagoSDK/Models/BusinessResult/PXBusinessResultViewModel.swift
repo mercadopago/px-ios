@@ -281,7 +281,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
             getBackUrl() != nil else {
             return false
         }
-        
+
         let status = businessResult.getBusinessStatus()
         switch status {
         case .APPROVED:
@@ -290,16 +290,24 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
             return fieldId == .ALL
         }
     }
-    
+
     func getBackUrl() -> URL? {
+        return getBackUrl(backUrls: amountHelper.preference.backUrls)
+    }
+
+    func getRedirectUrl() -> URL? {
+        return getBackUrl(backUrls: amountHelper.preference.redirectUrls)
+    }
+
+    private func getBackUrl(backUrls: PXBackUrls?) -> URL? {
         let status = businessResult.getBusinessStatus()
         switch status {
         case .APPROVED:
-            return URL(string: amountHelper.preference.backUrls?.success ?? "")
+            return URL(string: backUrls?.success ?? "")
         case .PENDING:
-            return URL(string: amountHelper.preference.backUrls?.pending ?? "")
+            return URL(string: backUrls?.pending ?? "")
         case .REJECTED:
-            return URL(string: amountHelper.preference.backUrls?.failure ?? "")
+            return URL(string: backUrls?.failure ?? "")
         default:
             return nil
         }

@@ -43,13 +43,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         super.viewDidAppear(animated)
         animateScrollView()
         animateRing()
-        let path = viewModel.getTrackingPath()
-        if !path.isEmpty {
-            trackScreen(path: path, properties: viewModel.getTrackingProperties())
-
-            let behaviourProtocol = PXConfiguratorManager.flowBehaviourProtocol
-            behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())
-        }
+        PXNewResultUtil.trackScreenAndConversion(viewModel: viewModel)
         if viewModel.shouldAutoReturn() {
             autoReturnWorkItem = DispatchWorkItem { [weak self] in
                 if let action = self?.viewModel.getHeaderCloseAction() {
