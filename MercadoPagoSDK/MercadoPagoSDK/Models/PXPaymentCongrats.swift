@@ -62,8 +62,10 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var bottomView: UIView?
     
     // Remedies
-    private(set) var hasPaymentBeenRejectedWithRemedy: Bool = false
     private(set) var remedyButtonAction: ((String?) -> ())?
+    private(set) var remedyView: UIView?
+    
+    private(set) var callback: ((PaymentResult.CongratsState, String?) -> Void)?
     
     private(set) var creditsExpectationView: UIView?
     
@@ -96,8 +98,8 @@ extension PXPaymentCongrats {
     /**
      Indicates status Success, Failure, for more info check `PXBusinessResultStatus`.
      - parameter status: the result stats
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withStatus(_ status: PXBusinessResultStatus) -> PXPaymentCongrats {
         self.status = status
@@ -107,8 +109,8 @@ extension PXPaymentCongrats {
     /**
      Any color for showing in the congrats' header. This should be used ONLY internally
      - parameter color: a color
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     internal func withHeaderColor(_ color: UIColor) -> PXPaymentCongrats {
         self.headerColor = color
@@ -118,8 +120,8 @@ extension PXPaymentCongrats {
     /**
      Fills the header view with a message.
      - parameter title: some message
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withHeaderTitle(_ title: String) -> PXPaymentCongrats {
         self.headerTitle = title
@@ -130,8 +132,8 @@ extension PXPaymentCongrats {
      Collector image shown in congrats' header. Can receive an `UIImage` or a `URL`.
      - parameter image: an image in `UIImage` format
      - parameter url: an `URL` for the image
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withHeaderImage(_ image: UIImage?, orURL url: String?) -> PXPaymentCongrats {
         self.headerImage = image
@@ -142,8 +144,8 @@ extension PXPaymentCongrats {
     /**
      Collector badge image shown in congrats' header. This should be used ONLY internally
      - parameter image: an image in `UIImage` format
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     internal func withHeaderBadgeImage(_ image: UIImage) -> PXPaymentCongrats {
         self.headerBadgeImage = image
@@ -153,8 +155,8 @@ extension PXPaymentCongrats {
     /**
      Top left close button configuration.
      - parameter action: a closure to excecute
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withHeaderCloseAction(_ action: @escaping () -> ()) -> PXPaymentCongrats {
         self.headerCloseAction = action
@@ -165,8 +167,8 @@ extension PXPaymentCongrats {
      Defines if the receipt view should be shown, in affirmative case, the receiptId must be supplied.
      - parameter shouldShow: the boolean value that defines if the view will be show or not.
      - parameter receiptId: ID of the receipt
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func shouldShowReceipt(_ shouldShow: Bool, receiptId: String?) -> PXPaymentCongrats {
         self.shouldShowReceipt = shouldShow
@@ -177,7 +179,7 @@ extension PXPaymentCongrats {
     /**
       Defines the points data in the points seccions of the congrats.
      - parameter points: some PXPoints
-     - returns: tihs builder `PXPaymentCongrats`
+     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
     public func withPoints(_ points: PXPoints) -> PXPaymentCongrats {
@@ -188,7 +190,7 @@ extension PXPaymentCongrats {
     /**
      Defines the discounts data in the discounts seccions of the congrats.
      - parameter discounts: some PXDiscounts
-     - returns: tihs builder `PXPaymentCongrats`
+     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
     public func withDiscounts(_ discounts: PXDiscounts) -> PXPaymentCongrats {
@@ -209,7 +211,7 @@ extension PXPaymentCongrats {
     /**
      Defines the cross selling data in the cross selling seccions of the congrats.
      - parameter crossSellingItems: an array of PXCrossSellingItem
-     - returns: tihs builder `PXPaymentCongrats`
+     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
     public func withCrossSelling(_ items: [PXCrossSellingItem] ) -> PXPaymentCongrats {
@@ -258,8 +260,8 @@ extension PXPaymentCongrats {
      Top button configuration.
      - parameter label: button display text
      - parameter action: a closure to excecute
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withMainAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
         self.mainAction = PXAction(label: label, action: action)
@@ -270,8 +272,8 @@ extension PXPaymentCongrats {
      Bottom button configuration.
      - parameter label: button display text
      - parameter action: a closure to excecute
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withSecondaryAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
         self.secondaryAction = PXAction(label: label, action: action)
@@ -281,11 +283,11 @@ extension PXPaymentCongrats {
     /**
      Custom views to be displayed.
      - Parameters:
-     - important: some `UIView`
-     - top: some `UIView`
-     - bottom: some `UIView`
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+        - important: some `UIView`
+        - top: some `UIView`
+        - bottom: some `UIView`
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withCustomViews(important: UIView?, top: UIView?, bottom: UIView?) -> PXPaymentCongrats {
         self.importantView = important
@@ -296,20 +298,29 @@ extension PXPaymentCongrats {
     
     
     /**
-     - ToDo: Fill this
+     If the congrats has remedy, recieves a custom view to be displayed.
+     - Parameters:
+        - remedyView: some `UIView`
+        - remedyButtonAction: some `closure`
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func paymentHasBeenRejectedWithRemedy(_ hasRemedies: Bool) -> PXPaymentCongrats {
-        self.hasPaymentBeenRejectedWithRemedy = hasRemedies
+    internal func withRemedyView(remedyView: UIView?, _ remedyButtonAction: ((String?) -> ())?) -> PXPaymentCongrats {
+        self.remedyView = remedyView
+        self.remedyButtonAction = remedyButtonAction
         return self
     }
     
     /**
-     - ToDo: Fill this
-     */
+    A callback that can be executed in any other method, this callback is used in the remedies flow
+    and also is triggered when headerCloseAction or the extra buttons in the footer view are triggered, is part of the checkout process.
+    - Parameters:
+       - callback: some closure
+    - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
-    public func withRemedyButtonAction(_ action: @escaping (String?) -> ()) -> PXPaymentCongrats {
-        self.remedyButtonAction = action
+    internal func withCallback(_ callback: @escaping ((PaymentResult.CongratsState, String?) -> Void)) -> PXPaymentCongrats {
+        self.callback = callback
         return self
     }
     
@@ -356,7 +367,7 @@ extension PXPaymentCongrats {
     /**
      An error view to be displayed when a failure congrats is shown
      - parameter shouldShow: a `Bool` indicating if the error screen should be shown.
-     - returns: tihs builder `PXPaymentCongrats`
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
     public func withErrorBodyView(_ view: UIView) -> PXPaymentCongrats {
@@ -367,8 +378,8 @@ extension PXPaymentCongrats {
     /**
      Shows the congrats' view.
      - parameter navController: a `UINavigationController`
-     - returns: tihs builder `PXPaymentCongrats`
-     */
+     - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func start(using navController: UINavigationController) -> PXPaymentCongrats {
         self.navigationController = navController
