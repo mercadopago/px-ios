@@ -607,28 +607,15 @@ extension PXNewResultViewController {
 
     //PAYMENT METHOD
     func buildPaymentMethodView() -> UIView? {
-        guard let paymentData = viewModel.getPaymentData(),
-            let amountHelper = viewModel.getAmountHelper(),
-            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
-            return nil
-        }
-
-        if paymentData.paymentMethod?.id == "consumer_credits", let creditsExpectationView = viewModel.getCreditsExpectationView() {
-            return PXNewCustomView(data: data, bottomView: creditsExpectationView)
-        }
-
-        return PXNewCustomView(data: data)
+        guard let paymentData = viewModel.getPaymentViewData() else { return nil }
+        let creditsExpectationView = viewModel.getCreditsExpectationView()
+        return PXNewCustomView(data: paymentData, bottomView: creditsExpectationView)
     }
-
+    
     //SPLIT PAYMENT METHOD
     func buildSplitPaymentMethodView() -> UIView? {
-        guard let paymentData = viewModel.getSplitPaymentData(),
-            let amountHelper = viewModel.getSplitAmountHelper(),
-            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
-            return nil
-        }
-
-        return PXNewCustomView(data: data)
+        guard let paymentData = viewModel.getSplitPaymentViewData() else { return nil }
+        return PXNewCustomView(data: paymentData)
     }
 
     //FOOTER

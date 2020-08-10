@@ -8,9 +8,9 @@
 import Foundation
 
 /**
-This class holds all the information a congrats' view needs to consume (specified at `PXNewResultViewModelInterface`).
-This also acts as an entry point for congrats withouth having to go through the entire checkout flow.
-*/
+ This class holds all the information a congrats' view needs to consume (specified at `PXNewResultViewModelInterface`).
+ This also acts as an entry point for congrats withouth having to go through the entire checkout flow.
+ */
 @objcMembers
 public final class PXPaymentCongrats: NSObject {
     
@@ -67,6 +67,12 @@ public final class PXPaymentCongrats: NSObject {
     
     private(set) var creditsExpectationView: UIView?
     
+    // Payment Info
+    private(set) var paymentInfo: PXCongratsPaymentInfo?
+    
+    // Split
+    private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
+    
     // Tracking
     private(set) var trackingPath: String = "" //TODO
     private(set) var trackingValues: [String : Any] = [:] //TODO
@@ -91,7 +97,7 @@ extension PXPaymentCongrats {
      Indicates status Success, Failure, for more info check `PXBusinessResultStatus`.
      - parameter status: the result stats
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withStatus(_ status: PXBusinessResultStatus) -> PXPaymentCongrats {
         self.status = status
@@ -102,7 +108,7 @@ extension PXPaymentCongrats {
      Any color for showing in the congrats' header. This should be used ONLY internally
      - parameter color: a color
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     internal func withHeaderColor(_ color: UIColor) -> PXPaymentCongrats {
         self.headerColor = color
@@ -113,7 +119,7 @@ extension PXPaymentCongrats {
      Fills the header view with a message.
      - parameter title: some message
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withHeaderTitle(_ title: String) -> PXPaymentCongrats {
         self.headerTitle = title
@@ -125,7 +131,7 @@ extension PXPaymentCongrats {
      - parameter image: an image in `UIImage` format
      - parameter url: an `URL` for the image
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withHeaderImage(_ image: UIImage?, orURL url: String?) -> PXPaymentCongrats {
         self.headerImage = image
@@ -137,7 +143,7 @@ extension PXPaymentCongrats {
      Collector badge image shown in congrats' header. This should be used ONLY internally
      - parameter image: an image in `UIImage` format
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     internal func withHeaderBadgeImage(_ image: UIImage) -> PXPaymentCongrats {
         self.headerBadgeImage = image
@@ -148,19 +154,19 @@ extension PXPaymentCongrats {
      Top left close button configuration.
      - parameter action: a closure to excecute
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withHeaderCloseAction(_ action: @escaping () -> ()) -> PXPaymentCongrats {
         self.headerCloseAction = action
         return self
     }
-
+    
     /**
      Defines if the receipt view should be shown, in affirmative case, the receiptId must be supplied.
      - parameter shouldShow: the boolean value that defines if the view will be show or not.
      - parameter receiptId: ID of the receipt
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func shouldShowReceipt(_ shouldShow: Bool, receiptId: String?) -> PXPaymentCongrats {
         self.shouldShowReceipt = shouldShow
@@ -178,7 +184,7 @@ extension PXPaymentCongrats {
         self.points = points
         return self
     }
-
+    
     /**
      Defines the discounts data in the discounts seccions of the congrats.
      - parameter discounts: some PXDiscounts
@@ -192,14 +198,14 @@ extension PXPaymentCongrats {
     
     /**
      - ToDo: Fill this
-    */
+     */
     #warning("Check if backgroundColor, textColor, weight should be customized from the outside")
     @discardableResult
-    public func withExpenseSplit(_ message: String?, backgroundColor: String?, textColor: String?, weight: String?, actionLabel: String, actionTarget: String?, imageURL: String) -> PXPaymentCongrats {
-        self.expenseSplit = PXExpenseSplit(title: PXText(message: message, backgroundColor: nil, textColor: nil, weight: weight), action: PXRemoteAction(label: actionLabel, target: actionTarget), imageUrl: imageURL)
+    public func withExpenseSplit(_ text: PXText, action: PXRemoteAction, imageURL: String) -> PXPaymentCongrats {
+        self.expenseSplit = PXExpenseSplit(title: text, action: action, imageUrl: imageURL)
         return self
     }
-
+    
     /**
      Defines the cross selling data in the cross selling seccions of the congrats.
      - parameter crossSellingItems: an array of PXCrossSellingItem
@@ -213,7 +219,7 @@ extension PXPaymentCongrats {
     
     /**
      - ToDo: Fill this
-    */
+     */
     @discardableResult
     public func withViewReceiptAction(action: PXRemoteAction) -> PXPaymentCongrats {
         self.viewReceiptAction = action
@@ -222,7 +228,7 @@ extension PXPaymentCongrats {
     
     /**
      - ToDo: Fill this
-    */
+     */
     @discardableResult
     public func shouldHaveCustomOrder(_ customOrder: Bool) -> PXPaymentCongrats {
         self.hasCustomOrder = customOrder
@@ -231,7 +237,7 @@ extension PXPaymentCongrats {
     
     /**
      - ToDo: Fill this
-    */
+     */
     @discardableResult
     public func shouldShowInstructionView(_ shouldShow: Bool) -> PXPaymentCongrats {
         self.shouldShowInstructions = shouldShow
@@ -240,20 +246,20 @@ extension PXPaymentCongrats {
     
     /**
      - ToDo: Fill this
-    */
+     */
     @discardableResult
     public func withInstructionView(_ view: UIView) -> PXPaymentCongrats {
         self.instructionsView = view
         return self
     }
     
-        
+    
     /**
      Top button configuration.
      - parameter label: button display text
      - parameter action: a closure to excecute
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withMainAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
         self.mainAction = PXAction(label: label, action: action)
@@ -265,21 +271,21 @@ extension PXPaymentCongrats {
      - parameter label: button display text
      - parameter action: a closure to excecute
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withSecondaryAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
         self.secondaryAction = PXAction(label: label, action: action)
         return self
     }
-
+    
     /**
      Custom views to be displayed.
      - Parameters:
-        - important: some `UIView`
-        - top: some `UIView`
-        - bottom: some `UIView`
+     - important: some `UIView`
+     - top: some `UIView`
+     - bottom: some `UIView`
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func withCustomViews(important: UIView?, top: UIView?, bottom: UIView?) -> PXPaymentCongrats {
         self.importantView = important
@@ -317,6 +323,28 @@ extension PXPaymentCongrats {
     }
     
     /**
+     Data containing all of the information for displaying the payment method .
+     - parameter paymentInfo: a DTO for creating a `PXCongratsPaymentInfo` representing the payment method
+     - returns: tihs builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func withPaymentMethodInfo(_ paymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
+        self.paymentInfo = paymentInfo
+        return self
+    }
+    
+    /**
+     Data containing all of the information for displaying the split payment method .
+     - parameter paymentInfo: a DTO for creating a `PXCongratsPaymentInfo` representing the payment method
+     - returns: tihs builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func withSplitPaymenInfo(_ splitPaymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
+        self.splitPaymentInfo = splitPaymentInfo
+        return self
+    }
+    
+    /**
      - ToDo: Fill this
      */
     @discardableResult
@@ -327,7 +355,7 @@ extension PXPaymentCongrats {
     
     /**
      An error view to be displayed when a failure congrats is shown
-     - parameter shouldShow: a `Bool` indicating if
+     - parameter shouldShow: a `Bool` indicating if the error screen should be shown.
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
@@ -340,7 +368,7 @@ extension PXPaymentCongrats {
      Shows the congrats' view.
      - parameter navController: a `UINavigationController`
      - returns: tihs builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     public func start(using navController: UINavigationController) -> PXPaymentCongrats {
         self.navigationController = navController
