@@ -7,6 +7,7 @@
 
 import UIKit
 import MLCardDrawer
+import MLCardForm
 
 protocol PXRemedyViewProtocol: class {
     func remedyViewButtonTouchUpInside(_ sender: PXAnimatedButton)
@@ -46,7 +47,7 @@ class PXRemedyView: UIView {
     let HINT_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let BUTTON_HEIGHT: CGFloat = 50.0
 
-    var textField: HoshiTextField?
+    var textField: MLCardFormField?
     public var button: PXAnimatedButton?
 
     private func render() {
@@ -88,7 +89,7 @@ class PXRemedyView: UIView {
 
         if shouldShowTextField() {
             // TextField
-            let textField = buildTextField(placeholder: getRemedyHintMessage())
+            let textField = buildTextField()
             self.textField = textField
             let lastView = subviews.last ?? titleLabel
             addSubview(textField)
@@ -143,17 +144,13 @@ class PXRemedyView: UIView {
         return label
     }
 
-    private func buildTextField(placeholder: String) -> HoshiTextField {
-        let textField = HoshiTextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = placeholder
-        textField.borderActiveColor = ThemeManager.shared.secondaryColor()
-        textField.borderInactiveColor = ThemeManager.shared.secondaryColor()
-        textField.font = Utils.getFont(size: TEXTFIELD_FONT_SIZE)
-        textField.autocorrectionType = UITextAutocorrectionType.no
-        textField.keyboardType = UIKeyboardType.numberPad
-        textField.keyboardAppearance = .light
-        textField.delegate = self
+    private func buildTextField() -> MLCardFormField {
+        let title = getRemedyHintMessage()
+        let lenght = getRemedyMaxLength()
+        let cardFormFieldSetting = PXCardFormFieldSetting(lenght: lenght, title: title)
+        let textField = MLCardFormField(fieldProperty: PXCardSecurityCodeFormFieldProperty(fieldSetting: cardFormFieldSetting))
+        textField.notifierProtocol = self
+        textField.render()
         return textField
     }
 
@@ -346,7 +343,7 @@ class PXRemedyView: UIView {
         button.layer.cornerRadius = 4
         button.add(for: .touchUpInside, { [weak self] in
             if let remedyButtonTapped = self?.data.remedyButtonTapped {
-                remedyButtonTapped(self?.textField?.text)
+                remedyButtonTapped(self?.textField?.getValue())
             }
             if let button = self?.button {
                 self?.data.remedyViewProtocol?.remedyViewButtonTouchUpInside(button)
@@ -359,25 +356,13 @@ class PXRemedyView: UIView {
     }
 }
 
-extension PXRemedyView: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if !string.isNumber {
-            return false
+extension PXRemedyView: MLCardFormFieldNotifierProtocol {
+    func didChangeValue(newValue: String?, from: MLCardFormField) {
+        if from.property.isValid(value: newValue) {
+            button?.setEnabled()
+        } else {
+            button?.setDisabled()
         }
-        if let text = textField.text as NSString? {
-            let newString = text.replacingCharacters(in: range, with: string)
-            if newString.count > getRemedyMaxLength() {
-                return false
-            }
-            if newString.count == getRemedyMaxLength() {
-                button?.setEnabled()
-            } else {
-                button?.setDisabled()
-            }
-            let num = Int(newString)
-            return (num != nil)
-        }
-        return true
     }
 }
 
@@ -438,7 +423,7 @@ extension PXRemedyView {
         }
         return false
     }
-    
+
     private func getCVVRemedy() -> PXInvalidCVV? {
         if let cvv = data.remedy.cvv {
             return cvv
