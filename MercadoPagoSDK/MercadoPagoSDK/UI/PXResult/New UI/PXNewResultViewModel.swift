@@ -67,10 +67,14 @@ protocol PXNewResultViewModelInterface {
 
     //PAYMENT METHOD
     func shouldShowPaymentMethod() -> Bool
+    func getPaymentViewData() -> PXNewCustomViewData?
+    #warning("Remove this method")
     func getPaymentData() -> PXPaymentData?
+    #warning("Remove this method")
     func getAmountHelper() -> PXAmountHelper?
 
     //SPLIT PAYMENT METHOD
+    func getSplitPaymentViewData() -> PXNewCustomViewData?
     func getSplitPaymentData() -> PXPaymentData?
     func getSplitAmountHelper() -> PXAmountHelper?
 
