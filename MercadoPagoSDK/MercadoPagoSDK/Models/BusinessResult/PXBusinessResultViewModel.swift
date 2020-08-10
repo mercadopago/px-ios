@@ -76,6 +76,14 @@ class PXBusinessResultViewModel: NSObject {
 
 // MARK: New Result View Model Interface
 extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
+    func getPaymentViewData() -> PXNewCustomViewData? {
+        return nil
+    }
+    
+    func getSplitPaymentViewData() -> PXNewCustomViewData? {
+        return nil
+    }
+    
     func getHeaderColor() -> UIColor {
         return primaryResultColor()
     }

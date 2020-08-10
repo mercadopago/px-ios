@@ -19,6 +19,26 @@ class PXPaymentCongratsViewModel {
         let vc = PXNewResultViewController(viewModel: self, callback:{_,_ in })
         paymentCongrats.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    //MARK: Private methods
+    private func createPaymentMethodReceiptData(from paymentInfo: PXCongratsPaymentInfo) -> PXNewCustomViewData {
+        let firstString = PXNewResultUtil.formatPaymentMethodFirstString(totalAmount: paymentInfo.paidAmount,
+                                                                         transactionAmount: paymentInfo.rawAmount,
+                                                                         hasInstallments: paymentInfo.hasInstallments,
+                                                                         installmentsCount: paymentInfo.installmentsCount,
+                                                                         installmentsAmount: paymentInfo.installmentAmount,
+                                                                         installmentRate: paymentInfo.installmentsRate,
+                                                                         hasDiscount: paymentInfo.hasDiscount,
+                                                                         discountName: paymentInfo.discountName)
+        
+        let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits, paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
+        
+        let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodExtraInfo)
+        let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodId, defaultColor: false)
+        
+        let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
+        return data
+    }
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
@@ -154,7 +174,6 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     // PAYMENT METHOD
-    // TODO Para que muestre el payment method, tenemos que devolver ademas paymentData
     #warning("logica especifica para comparar PXBusinessResultStatus con PXPaymentStatus")
     func shouldShowPaymentMethod() -> Bool {
         // TODO checkear comparación de este status (BusinessStatus) pero puede ser que venga por PXResultViewModel que tiene otra logica
@@ -162,32 +181,38 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return !hasInstructions() && isApproved
     }
     
+    func getPaymentViewData() -> PXNewCustomViewData? {
+        guard let paymentInfo = paymentCongrats.paymentInfo else { return nil }
+        return createPaymentMethodReceiptData(from: paymentInfo)
+    }
+    
     #warning("Desacoplar payment data del VC de Congrats")
     func getPaymentData() -> PXPaymentData? {
         // TODO
-        //        return paymentData
         return nil
     }
     
     #warning("Desacoplar ammount helper del VC de Congrats")
     func getAmountHelper() -> PXAmountHelper? {
         // TODO
-        //        return amountHelper
         return nil
     }
     
     // SPLIT PAYMENT METHOD
+    func getSplitPaymentViewData() -> PXNewCustomViewData? {
+        guard let paymentInfo = paymentCongrats.splitPaymentInfo else { return nil }
+        return createPaymentMethodReceiptData(from: paymentInfo)
+    }
+    
     #warning("Desacoplar payment data del VC de Congrats")
     func getSplitPaymentData() -> PXPaymentData? {
         // TODO
-        //        return amountHelper.splitAccountMoney
         return nil
     }
     
     #warning("Desacoplar ammount helper del VC de Congrats")
     func getSplitAmountHelper() -> PXAmountHelper? {
         // TODO
-        //        return amountHelper
         return nil
     }
     
@@ -230,6 +255,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     func getCreditsExpectationView() -> UIView? {
+        guard paymentCongrats.paymentInfo?.paymentMethodId == "consumer_credits" else { return nil }
         return paymentCongrats.creditsExpectationView
     }
     
