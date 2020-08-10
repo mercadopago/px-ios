@@ -13,6 +13,7 @@
 		23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13D2147DFC90085CA7A /* Assets.xcassets */; };
 		23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13F2147DFC90085CA7A /* LaunchScreen.storyboard */; };
 		3BF796944AEC371EF5E3193D /* Pods_ExampleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */; };
+		A36F0F1B24DC3E7D00F3457D /* CongratsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F0F1A24DC3E7D00F3457D /* CongratsSelectorViewController.swift */; };
 		F9DF596424803FFD00B1FDBF /* CustomCheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		23EDA1422147DFC90085CA7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99370F01A1046BF2A7CF23EC /* Pods-ExampleSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.release.xcconfig"; sourceTree = "<group>"; };
+		A36F0F1A24DC3E7D00F3457D /* CongratsSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsSelectorViewController.swift; sourceTree = "<group>"; };
 		DFDCC3FA5A49D0CD1D1BD714 /* Pods-ExampleSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCheckoutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +96,7 @@
 			children = (
 				23EDA1382147DFC90085CA7A /* ViewController.swift */,
 				F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */,
+				A36F0F1A24DC3E7D00F3457D /* CongratsSelectorViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A36F0F1B24DC3E7D00F3457D /* CongratsSelectorViewController.swift in Sources */,
 				23EDA1392147DFC90085CA7A /* ViewController.swift in Sources */,
 				23EDA1372147DFC90085CA7A /* AppDelegate.swift in Sources */,
 				F9DF596424803FFD00B1FDBF /* CustomCheckoutViewController.swift in Sources */,
