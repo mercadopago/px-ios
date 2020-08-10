@@ -239,7 +239,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     func isPaymentResultRejectedWithRemedy() -> Bool {
-        return paymentCongrats.hasPaymentBeenRejectedWithRemedy
+        return paymentCongrats.remedyView != nil
     }
     
     // FOOTER
