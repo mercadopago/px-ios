@@ -95,7 +95,7 @@ class CongratsSelectorViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        fillCongratsData()
         let gradient = CAGradientLayer()
         gradient.frame = tableView.bounds
         let col1 = UIColor(red: 34.0/255.0, green: 211/255.0, blue: 198/255.0, alpha: 1)
