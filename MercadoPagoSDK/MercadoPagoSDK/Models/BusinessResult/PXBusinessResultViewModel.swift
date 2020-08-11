@@ -32,6 +32,15 @@ class PXBusinessResultViewModel: NSObject {
         guard let firstPaymentId = businessResult.getReceiptIdList()?.first else { return businessResult.getReceiptId() }
         return firstPaymentId
     }
+    
+    func headerCloseAction() -> (() -> Void) {
+        let action = { [weak self] in
+            if let callback = self?.callback {
+                callback(PaymentResult.CongratsState.EXIT, nil)
+            }
+        }
+        return action
+    }
 
     func primaryResultColor() -> UIColor {
         return ResourceManager.shared.getResultColorWith(status: self.businessResult.getBusinessStatus().getDescription())
@@ -79,6 +88,16 @@ class PXBusinessResultViewModel: NSObject {
         }
         return nil
     }
+    
+    func creditsExpectationView() -> UIView? {
+        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
+            let title = resultInfo.title,
+            let subtitle = resultInfo.subtitle,
+            businessResult.isApproved() {
+            return PXCreditsExpectationView(title: title, subtitle: subtitle)
+        }
+        return nil
+    }
 }
 
 // MARK: New Result View Model Interface
@@ -112,12 +131,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getHeaderCloseAction() -> (() -> Void)? {
-        let action = { [weak self] in
-            if let callback = self?.callback {
-                callback(PaymentResult.CongratsState.EXIT, nil)
-            }
-        }
-        return action
+        return headerCloseAction()
     }
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
@@ -239,10 +253,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getErrorBodyView() -> UIView? {
-        if let errorComponent = getErrorComponent() {
-            return errorComponent.render()
-        }
-        return nil
+        return errorBodyView()
     }
 
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
@@ -267,13 +278,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getCreditsExpectationView() -> UIView? {
-        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
-            let title = resultInfo.title,
-            let subtitle = resultInfo.subtitle,
-            businessResult.isApproved() {
-            return PXCreditsExpectationView(title: title, subtitle: subtitle)
-        }
-        return nil
+        return creditsExpectationView()
     }
 
     func getTopCustomView() -> UIView? {
@@ -288,31 +293,20 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
 extension PXBusinessResultViewModel {
         func ToPaymentCongrats() -> PXPaymentCongrats {
             let paymentCongratsData = PXPaymentCongrats()
-            //status
-            paymentCongratsData.withStatus(businessResult.getBusinessStatus())
-            //title
-            paymentCongratsData.withHeaderTitle(getAttributedTitle().string)
-
-            paymentCongratsData.withHeaderColor(primaryResultColor())
-
-            //header icon
-            paymentCongratsData.withHeaderImage(getHeaderDefaultIcon(), orURL: businessResult.getImageUrl())
-
+                                                        .withStatus(businessResult.getBusinessStatus())
+                                                        .withHeaderTitle(getAttributedTitle().string)
+                                                        .withHeaderColor(primaryResultColor())
+                                                        .withHeaderImage(getHeaderDefaultIcon(), orURL: businessResult.getImageUrl())
+                                                        .withHeaderCloseAction(headerCloseAction())
             //Badge Image this is not necessary to call because the paymentCongrats have this default implementation
     //        if let badgeImage = ResourceManager.shared.getBadgeImageWith(status: businessResult.getBusinessStatus().getDescription()) {
     //            paymentCongratsData.withHeaderBadgeImage(badgeImage)
     //        }
             
-            //Header Close Action
-            paymentCongratsData.withHeaderCloseAction() { [weak self] in
-                
-            }
-
             //Recepit
             if businessResult.mustShowReceipt() {
                 paymentCongratsData.shouldShowReceipt(receiptId: businessResult.getReceiptId())
             }
-            
 
             //Points and Discounts
             paymentCongratsData.withPoints(pointsAndDiscounts?.points)
@@ -325,31 +319,26 @@ extension PXBusinessResultViewModel {
                 paymentCongratsData.withExpenseSplit(expenseSplit.title, action: expenseSplit.action, imageURL: expenseSplit.imageUrl)
             }
             
+            //Payment Info
 
             #warning("validate to connect the correct data")
 
             let pmTypeID = businessResult.getPaymentMethodTypeId()!
             let pmID = businessResult.getPaymentMethodId()!
             paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: pmTypeID, paymentMethodId: pmID))
-
-            paymentCongratsData.withErrorBodyView(errorBodyView())
+            //TODO Split Payment? and shouldShowPaymentMethod
             
-            if let label = businessResult.getMainAction()?.label, let action = businessResult.getMainAction()?.action {
-            paymentCongratsData.withMainAction(label: label, action: action)
-            }
+            
+            //Actions
+            paymentCongratsData.withMainAction(businessResult.getMainAction())
 
             let linkAction = businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
+            paymentCongratsData.withSecondaryAction(linkAction)
 
-            paymentCongratsData.withSecondaryAction(label: linkAction!.label, action: linkAction!.action)
-
+            //Views
             paymentCongratsData.withCustomViews(important: businessResult.getImportantCustomView(), top: businessResult.getTopCustomView(), bottom: businessResult.getBottomCustomView())
-
-            if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
-                let title = resultInfo.title,
-                let subtitle = resultInfo.subtitle,
-                businessResult.isApproved() {
-                paymentCongratsData.withCreditsExpectationView(PXCreditsExpectationView(title: title, subtitle: subtitle))
-            }
+                               .withCreditsExpectationView(creditsExpectationView())
+                               .withErrorBodyView(errorBodyView())
             return paymentCongratsData
         }
 
