@@ -281,7 +281,7 @@ private extension PXOneTapSummaryRowView {
         NSLayoutConstraint.activate([
             brief.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             brief.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            brief.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 4)
+            brief.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5)
         ])
     }
 
