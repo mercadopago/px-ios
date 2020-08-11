@@ -250,8 +250,8 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withMainAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
-        self.mainAction = PXAction(label: label, action: action)
+    public func withMainAction(_ action: PXAction) -> PXPaymentCongrats {
+        self.mainAction = action
         return self
     }
     
@@ -262,8 +262,8 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withSecondaryAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
-        self.secondaryAction = PXAction(label: label, action: action)
+    public func withSecondaryAction(_ action: PXAction) -> PXPaymentCongrats {
+        self.secondaryAction = action
         return self
     }
     
