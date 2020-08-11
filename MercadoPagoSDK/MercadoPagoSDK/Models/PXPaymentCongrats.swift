@@ -26,7 +26,6 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var headerCloseAction: (() -> ())?
     
     // Receipt
-    private(set) var shouldShowReceipt: Bool = false
     private(set) var receiptId: String?
     
     /* --- Points & Discounts --- */
@@ -49,7 +48,6 @@ public final class PXPaymentCongrats: NSObject {
     /* --- Ponints & Discounts --- */
     
     // Instructions
-    private(set) var shouldShowInstructions: Bool = false
     private(set) var instructionsView: UIView?
     
     // Footer Buttons
@@ -170,8 +168,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func shouldShowReceipt(_ shouldShow: Bool, receiptId: String?) -> PXPaymentCongrats {
-        self.shouldShowReceipt = shouldShow
+    public func shouldShowReceipt(receiptId: String?) -> PXPaymentCongrats {
         self.receiptId = receiptId
         return self
     }
@@ -182,7 +179,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withPoints(_ points: PXPoints) -> PXPaymentCongrats {
+    public func withPoints(_ points: PXPoints?) -> PXPaymentCongrats {
         self.points = points
         return self
     }
@@ -193,7 +190,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withDiscounts(_ discounts: PXDiscounts) -> PXPaymentCongrats {
+    public func withDiscounts(_ discounts: PXDiscounts?) -> PXPaymentCongrats {
         self.discounts = discounts
         return self
     }
@@ -214,7 +211,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withCrossSelling(_ items: [PXCrossSellingItem] ) -> PXPaymentCongrats {
+    public func withCrossSelling(_ items: [PXCrossSellingItem]? ) -> PXPaymentCongrats {
         self.crossSelling = items
         return self
     }
@@ -223,7 +220,7 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
      */
     @discardableResult
-    public func withViewReceiptAction(action: PXRemoteAction) -> PXPaymentCongrats {
+    public func withViewReceiptAction(action: PXRemoteAction?) -> PXPaymentCongrats {
         self.viewReceiptAction = action
         return self
     }
@@ -232,7 +229,7 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
      */
     @discardableResult
-    public func shouldHaveCustomOrder(_ customOrder: Bool) -> PXPaymentCongrats {
+    public func shouldHaveCustomOrder(_ customOrder: Bool?) -> PXPaymentCongrats {
         self.hasCustomOrder = customOrder
         return self
     }
@@ -241,20 +238,10 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
      */
     @discardableResult
-    public func shouldShowInstructionView(_ shouldShow: Bool) -> PXPaymentCongrats {
-        self.shouldShowInstructions = shouldShow
-        return self
-    }
-    
-    /**
-     - ToDo: Fill this
-     */
-    @discardableResult
-    public func withInstructionView(_ view: UIView) -> PXPaymentCongrats {
+    public func withInstructionView(_ view: UIView?) -> PXPaymentCongrats {
         self.instructionsView = view
         return self
     }
-    
     
     /**
      Top button configuration.
@@ -296,7 +283,6 @@ extension PXPaymentCongrats {
         return self
     }
     
-    
     /**
      If the congrats has remedy, recieves a custom view to be displayed.
      - Parameters:
@@ -328,7 +314,7 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
      */
     @discardableResult
-    public func withCreditsExpectationView(_ view: UIView) -> PXPaymentCongrats {
+    public func withCreditsExpectationView(_ view: UIView?) -> PXPaymentCongrats {
         self.creditsExpectationView = view
         return self
     }
@@ -370,7 +356,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withErrorBodyView(_ view: UIView) -> PXPaymentCongrats {
+    public func withErrorBodyView(_ view: UIView?) -> PXPaymentCongrats {
         self.errorBodyView = view
         return self
     }

@@ -31,7 +31,7 @@ class CongratsSelectorViewController: UITableViewController {
                                 .withHeaderCloseAction {
                                     self.navigationController?.popViewController(animated: true)
                                 }
-                                .shouldShowReceipt(true, receiptId: "123")
+                                .shouldShowReceipt(receiptId: "123")
                                 .withMainAction(label: "Continuar", action: {
                                     self.navigationController?.popViewController(animated: true)
                                 })
@@ -52,7 +52,7 @@ class CongratsSelectorViewController: UITableViewController {
             .withHeaderCloseAction {
                 self.navigationController?.popViewController(animated: true)
         }
-            .shouldShowReceipt(true, receiptId: "123")
+            .shouldShowReceipt( receiptId: "123")
             .withMainAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
             })

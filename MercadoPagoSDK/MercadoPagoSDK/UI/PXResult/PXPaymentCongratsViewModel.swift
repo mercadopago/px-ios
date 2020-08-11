@@ -76,7 +76,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     //RECEIPT
     func mustShowReceipt() -> Bool {
-        return paymentCongrats.shouldShowReceipt
+        return paymentCongrats.receiptId != nil
     }
     
     func getReceiptId() -> String? {
@@ -166,7 +166,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     //INSTRUCTIONS
     func hasInstructions() -> Bool {
-        return paymentCongrats.shouldShowInstructions
+        return paymentCongrats.instructionsView != nil
     }
     
     func getInstructionsView() -> UIView? {

@@ -17,7 +17,7 @@
                                                 withStatus:PXBusinessResultStatusAPPROVED]
                                                withHeaderTitle: @"¡Listo! Ya le pagaste a SuperMarket"]
                                               withHeaderImage: nil orURL: @"https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg"]
-                                              shouldShowReceipt: TRUE receiptId: @"123"]
+                                              shouldShowReceiptWithReceiptId: @"123"]
                                              withMainActionWithLabel: @"Continuar" action:^{
         NSLog(@"Continuar");
     }]
