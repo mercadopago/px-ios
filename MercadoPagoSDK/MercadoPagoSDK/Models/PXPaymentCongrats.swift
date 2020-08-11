@@ -250,7 +250,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withMainAction(_ action: PXAction) -> PXPaymentCongrats {
+    public func withMainAction(_ action: PXAction?) -> PXPaymentCongrats {
         self.mainAction = action
         return self
     }
@@ -262,7 +262,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withSecondaryAction(_ action: PXAction) -> PXPaymentCongrats {
+    public func withSecondaryAction(_ action: PXAction?) -> PXPaymentCongrats {
         self.secondaryAction = action
         return self
     }

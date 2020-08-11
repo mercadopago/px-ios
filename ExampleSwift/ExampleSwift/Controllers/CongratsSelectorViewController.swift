@@ -32,12 +32,12 @@ class CongratsSelectorViewController: UITableViewController {
                                     self.navigationController?.popViewController(animated: true)
                                 }
                                 .shouldShowReceipt(receiptId: "123")
-                                .withMainAction(label: "Continuar", action: {
+                                .withMainAction(PXAction(label: "Continuar", action: {
                                     self.navigationController?.popViewController(animated: true)
-                                })
-                                .withSecondaryAction(label: "Tuve un problema", action: {
+                                }))
+                                .withSecondaryAction(PXAction(label: "Tuve un problema", action: {
                                     self.navigationController?.popViewController(animated: true)
-                                })
+                                }))
                                 .withPoints(points)
                                 .withDiscounts(discounts)
                                 .withCrossSelling(crosseling)
@@ -53,12 +53,12 @@ class CongratsSelectorViewController: UITableViewController {
                 self.navigationController?.popViewController(animated: true)
         }
             .shouldShowReceipt( receiptId: "123")
-            .withMainAction(label: "Continuar", action: {
+            .withMainAction(PXAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
-            })
-            .withSecondaryAction(label: "Tuve un problema", action: {
+            }))
+            .withSecondaryAction(PXAction(label: "Tuve un problema", action: {
                 self.navigationController?.popViewController(animated: true)
-            })
+            }))
             .withCrossSelling([PXCrossSellingItem(title: "Gane 200 pesos por sus pagos diarios", icon: "https://mobile.mercadolibre.com/remote_resources/image/merchengine_mgm_icon_ml?density=xxhdpi&locale=es_AR", contentId: "cross_selling_mgm_ml", action: PXRemoteAction(label: "Invita a más amigos a usar la aplicación", target: "meli://invite/wallet"))])
             .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodExtraInfo: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
     }()
@@ -80,12 +80,12 @@ class CongratsSelectorViewController: UITableViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         .withInstructionView(instructionView)
-            .withMainAction(label: "Continuar", action: {
-                self.navigationController?.popViewController(animated: true)
-            })
-            .withSecondaryAction(label: "Tuve un problema", action: {
+            .withMainAction(PXAction(label: "Continuar", action: {
                 self.navigationController?.popViewController(animated: true)
             }))
+            .withSecondaryAction(PXAction(label: "Tuve un problema", action: {
+                self.navigationController?.popViewController(animated: true)
+            })))
     }()
     
     func fillCongratsData() {
