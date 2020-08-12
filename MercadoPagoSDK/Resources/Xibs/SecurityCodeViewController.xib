@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecurityCodeViewController" customModule="MercadoPagoSDKV4" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecurityCodeViewController" customModule="MercadoPagoSDKResources" customModuleProvider="target">
             <connections>
                 <outlet property="cardCvvThumbnail" destination="UPL-NB-jmA" id="xHs-Im-60h"/>
                 <outlet property="keyboardHeightConstraint" destination="LgY-Gh-UiA" id="NOT-ih-v6D"/>
@@ -33,7 +31,7 @@
                                 <constraint firstAttribute="height" constant="38" id="cLl-Ec-3ML"/>
                             </constraints>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Código de seguridad" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="CLV-K5-LXP" customClass="HoshiTextField" customModule="MercadoPagoSDKV4" customModuleProvider="target">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Código de seguridad" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="CLV-K5-LXP" customClass="HoshiTextField" customModule="MercadoPagoSDKResources" customModuleProvider="target">
                             <rect key="frame" x="30" y="13" width="240" height="50"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="sRGB"/>
                             <accessibility key="accessibilityConfiguration" identifier="security_code"/>

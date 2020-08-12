@@ -31,8 +31,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 internal class Utils {
 
-    private static let kSdkSettingsFile = "mpsdk_settings"
-
     class func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
         let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
         NSLayoutConstraint.activate(widthConstraints)
@@ -535,16 +533,6 @@ internal class Utils {
             return mm
         }
         return 0
-    }
-
-    internal static func getSetting<T>(identifier: String) -> T? {
-        let dictPM = ResourceManager.shared.getDictionaryForResource(named: Utils.kSdkSettingsFile)
-        return dictPM![identifier] as? T
-    }
-
-    static func isTesting() -> Bool {
-        let environment = ProcessInfo.processInfo.environment
-        return environment["testing"] != nil
     }
 
     static func getFormatedStringDate(_ date: Date, addTime: Bool = false) -> String {
