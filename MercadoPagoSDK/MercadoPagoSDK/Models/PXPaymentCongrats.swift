@@ -15,7 +15,7 @@ import Foundation
 public final class PXPaymentCongrats: NSObject {
     
     // Header
-    private(set) var status: PXBusinessResultStatus = .REJECTED
+    private(set) var type: PXCongratsType = .REJECTED
     // This field is ment to be used only by Checkout
     private(set) var headerColor: UIColor?
     private(set) var headerTitle: String = ""
@@ -26,7 +26,6 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var headerCloseAction: (() -> ())?
     
     // Receipt
-    private(set) var shouldShowReceipt: Bool = false
     private(set) var receiptId: String?
     
     /* --- Points & Discounts --- */
@@ -43,13 +42,12 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var crossSelling: [PXCrossSellingItem]?
     
     // View Receipt action
-    private(set) var viewReceiptAction: PXRemoteAction?
+    private(set) var receiptAction: PXRemoteAction?
     
-    private(set) var hasCustomOrder: Bool?
+    private(set) var hasCustomSorting: Bool?
     /* --- Ponints & Discounts --- */
     
     // Instructions
-    private(set) var shouldShowInstructions: Bool = false
     private(set) var instructionsView: UIView?
     
     // Footer Buttons
@@ -71,6 +69,7 @@ public final class PXPaymentCongrats: NSObject {
     
     // Payment Info
     private(set) var paymentInfo: PXCongratsPaymentInfo?
+    private(set) var statementDescription : String?
     
     // Split
     private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
@@ -96,13 +95,13 @@ public final class PXPaymentCongrats: NSObject {
 // MARK: Setters
 extension PXPaymentCongrats {
     /**
-     Indicates status Success, Failure, for more info check `PXBusinessResultStatus`.
-     - parameter status: the result stats
+     Indicates status Success, Failure, for more info check `PXCongratsType`.
+     - parameter type: the result status
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withStatus(_ status: PXBusinessResultStatus) -> PXPaymentCongrats {
-        self.status = status
+    public func withCongratsType(_ type: PXCongratsType) -> PXPaymentCongrats {
+        self.type = type
         return self
     }
     
@@ -120,24 +119,26 @@ extension PXPaymentCongrats {
     /**
      Fills the header view with a message.
      - parameter title: some message
+     - parameter imageURL: an `URL` for the image
+     - parameter action: a closure to excecute when the top exit button is pressed.
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withHeaderTitle(_ title: String) -> PXPaymentCongrats {
+    public func withHeader(title: String, imageURL: String?, closeAction: @escaping () -> ()) -> PXPaymentCongrats {
         self.headerTitle = title
+        self.headerURL = imageURL
+        self.headerCloseAction = closeAction
         return self
     }
     
     /**
      Collector image shown in congrats' header. Can receive an `UIImage` or a `URL`.
      - parameter image: an image in `UIImage` format
-     - parameter url: an `URL` for the image
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withHeaderImage(_ image: UIImage?, orURL url: String?) -> PXPaymentCongrats {
+    internal func withHeaderImage(_ image: UIImage?) -> PXPaymentCongrats {
         self.headerImage = image
-        self.headerURL = url
         return self
     }
     
@@ -151,28 +152,16 @@ extension PXPaymentCongrats {
         self.headerBadgeImage = image
         return self
     }
-    
-    /**
-     Top left close button configuration.
-     - parameter action: a closure to excecute
-     - returns: this builder `PXPaymentCongrats`
-    */
-    @discardableResult
-    public func withHeaderCloseAction(_ action: @escaping () -> ()) -> PXPaymentCongrats {
-        self.headerCloseAction = action
-        return self
-    }
-    
     /**
      Defines if the receipt view should be shown, in affirmative case, the receiptId must be supplied.
-     - parameter shouldShow: the boolean value that defines if the view will be show or not.
      - parameter receiptId: ID of the receipt
+     - parameter action: action when the receipt view is pressed.
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func shouldShowReceipt(_ shouldShow: Bool, receiptId: String?) -> PXPaymentCongrats {
-        self.shouldShowReceipt = shouldShow
+    public func withReceipt(receiptId: String?, action: PXRemoteAction?) -> PXPaymentCongrats {
         self.receiptId = receiptId
+        self.receiptAction = action
         return self
     }
     
@@ -182,7 +171,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withPoints(_ points: PXPoints) -> PXPaymentCongrats {
+    public func withLoyalty(_ points: PXPoints?) -> PXPaymentCongrats {
         self.points = points
         return self
     }
@@ -193,7 +182,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withDiscounts(_ discounts: PXDiscounts) -> PXPaymentCongrats {
+    public func withDiscounts(_ discounts: PXDiscounts?) -> PXPaymentCongrats {
         self.discounts = discounts
         return self
     }
@@ -203,8 +192,8 @@ extension PXPaymentCongrats {
      */
     #warning("Check if backgroundColor, textColor, weight should be customized from the outside")
     @discardableResult
-    public func withExpenseSplit(_ text: PXText, action: PXRemoteAction, imageURL: String) -> PXPaymentCongrats {
-        self.expenseSplit = PXExpenseSplit(title: text, action: action, imageUrl: imageURL)
+    public func withExpenseSplit(expenseSplit: PXExpenseSplit? ) -> PXPaymentCongrats {
+        self.expenseSplit = expenseSplit
         return self
     }
     
@@ -214,7 +203,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withCrossSelling(_ items: [PXCrossSellingItem] ) -> PXPaymentCongrats {
+    public func withCrossSelling(_ items: [PXCrossSellingItem]? ) -> PXPaymentCongrats {
         self.crossSelling = items
         return self
     }
@@ -223,8 +212,8 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
      */
     @discardableResult
-    public func withViewReceiptAction(action: PXRemoteAction) -> PXPaymentCongrats {
-        self.viewReceiptAction = action
+    internal func withCustomSorting(_ customSorting: Bool?) -> PXPaymentCongrats {
+        self.hasCustomSorting = customSorting
         return self
     }
     
@@ -232,29 +221,10 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
      */
     @discardableResult
-    public func shouldHaveCustomOrder(_ customOrder: Bool) -> PXPaymentCongrats {
-        self.hasCustomOrder = customOrder
-        return self
-    }
-    
-    /**
-     - ToDo: Fill this
-     */
-    @discardableResult
-    public func shouldShowInstructionView(_ shouldShow: Bool) -> PXPaymentCongrats {
-        self.shouldShowInstructions = shouldShow
-        return self
-    }
-    
-    /**
-     - ToDo: Fill this
-     */
-    @discardableResult
-    public func withInstructionView(_ view: UIView) -> PXPaymentCongrats {
+    public func withInstructionView(_ view: UIView?) -> PXPaymentCongrats {
         self.instructionsView = view
         return self
     }
-    
     
     /**
      Top button configuration.
@@ -263,8 +233,8 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withMainAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
-        self.mainAction = PXAction(label: label, action: action)
+    public func withFooterMainAction(_ action: PXAction?) -> PXPaymentCongrats {
+        self.mainAction = action
         return self
     }
     
@@ -275,8 +245,8 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withSecondaryAction(label: String, action: @escaping () -> ()) -> PXPaymentCongrats {
-        self.secondaryAction = PXAction(label: label, action: action)
+    public func withFooterSecondaryAction(_ action: PXAction?) -> PXPaymentCongrats {
+        self.secondaryAction = action
         return self
     }
     
@@ -295,7 +265,6 @@ extension PXPaymentCongrats {
         self.bottomView = bottom
         return self
     }
-    
     
     /**
      If the congrats has remedy, recieves a custom view to be displayed.
@@ -328,7 +297,7 @@ extension PXPaymentCongrats {
      - ToDo: Fill this
      */
     @discardableResult
-    public func withCreditsExpectationView(_ view: UIView) -> PXPaymentCongrats {
+    public func withCreditsExpectationView(_ view: UIView?) -> PXPaymentCongrats {
         self.creditsExpectationView = view
         return self
     }
@@ -356,6 +325,17 @@ extension PXPaymentCongrats {
     }
     
     /**
+    If the paymentMehotd will be shown, and it is a credit card, this statemetnDescrption will be shown on the payment method view.
+    - parameter statementDescription: some String
+    - returns: tihs builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func withStatementDescription(statementDescription: String?) -> PXPaymentCongrats {
+        self.statementDescription = statementDescription
+        return self
+    }
+    
+    /**
      - ToDo: Fill this
      */
     @discardableResult
@@ -370,7 +350,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withErrorBodyView(_ view: UIView) -> PXPaymentCongrats {
+    public func withErrorBodyView(_ view: UIView?) -> PXPaymentCongrats {
         self.errorBodyView = view
         return self
     }
