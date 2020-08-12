@@ -16,7 +16,7 @@ class PXPaymentCongratsViewModel {
     }
     
     func launch() {
-        let vc = PXNewResultViewController(viewModel: self, callback:{_,_ in })
+        let vc = PXNewResultViewController(viewModel: self)
         paymentCongrats.navigationController?.pushViewController(vc, animated: true)
     }
     
