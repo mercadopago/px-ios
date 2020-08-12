@@ -192,7 +192,7 @@ extension PXPaymentCongrats {
      */
     #warning("Check if backgroundColor, textColor, weight should be customized from the outside")
     @discardableResult
-    public func withExpenseSplit(expenseSplit: PXExpenseSplit) -> PXPaymentCongrats {
+    public func withExpenseSplit(expenseSplit: PXExpenseSplit? ) -> PXPaymentCongrats {
         self.expenseSplit = expenseSplit
         return self
     }
@@ -324,6 +324,11 @@ extension PXPaymentCongrats {
         return self
     }
     
+    /**
+    If the paymentMehotd will be shown, and it is a credit card, this statemetnDescrption will be shown on the payment method view.
+    - parameter statementDescription: some String
+    - returns: tihs builder `PXPaymentCongrats`
+    */
     @discardableResult
     public func withStatementDescription(statementDescription: String?) -> PXPaymentCongrats {
         self.statementDescription = statementDescription
