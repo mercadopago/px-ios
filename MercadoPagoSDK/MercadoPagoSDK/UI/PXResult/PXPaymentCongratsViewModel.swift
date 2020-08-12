@@ -33,7 +33,7 @@ class PXPaymentCongratsViewModel {
         
         let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits, paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
         
-        let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodExtraInfo)
+        let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodDescription)
         let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodId, defaultColor: false)
         
         let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
@@ -46,7 +46,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     #warning("PXResultViewModel also sends a status description to calculate the congrats color, a solution could be to expose only to the checkout a headerColor, and let PXBusinessResult and PXResultViewModel to set it. While external integrators should not care about header color because it should be calculated by relying in status. Validate this solution")
     func getHeaderColor() -> UIColor {
         guard let color = paymentCongrats.headerColor else {
-            return ResourceManager.shared.getResultColorWith(status: paymentCongrats.status.getDescription())
+            return ResourceManager.shared.getResultColorWith(status: paymentCongrats.type.getDescription())
         }
         return color
     }
@@ -65,7 +65,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     func getHeaderBadgeImage() -> UIImage? {
         guard let image = paymentCongrats.headerBadgeImage else {
-            return ResourceManager.shared.getBadgeImageWith(status: paymentCongrats.status.getDescription())
+            return ResourceManager.shared.getBadgeImageWith(status: paymentCongrats.type.getDescription())
         }
         return image
     }
@@ -151,7 +151,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     ////VIEW RECEIPT ACTION
     func getViewReceiptAction() -> PXRemoteAction? {
-        return paymentCongrats.viewReceiptAction
+        return paymentCongrats.receiptAction
     }
     
     ////TOP TEXT BOX
@@ -161,7 +161,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     ////CUSTOM ORDER
     func getCustomOrder() -> Bool? {
-        return paymentCongrats.hasCustomOrder
+        return paymentCongrats.hasCustomSorting
     }
     
     //INSTRUCTIONS
@@ -177,7 +177,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     #warning("logica especifica para comparar PXBusinessResultStatus con PXPaymentStatus")
     func shouldShowPaymentMethod() -> Bool {
         // TODO checkear comparación de este status (BusinessStatus) pero puede ser que venga por PXResultViewModel que tiene otra logica
-        let isApproved = paymentCongrats.status.getDescription().lowercased() == PXPaymentStatus.APPROVED.rawValue.lowercased()
+        let isApproved = paymentCongrats.type.getDescription().lowercased() == PXPaymentStatus.APPROVED.rawValue.lowercased()
         return !hasInstructions() && isApproved
     }
     
@@ -287,7 +287,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     func getFlowBehaviourResult() -> PXResultKey {
         guard let result = paymentCongrats.flowBehaviourResult else {
-            switch paymentCongrats.status {
+            switch paymentCongrats.type {
             case .APPROVED:
                 return .SUCCESS
             case .REJECTED:

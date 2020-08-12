@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct PXExpenseSplit: Codable {
+@objcMembers
+public class PXExpenseSplit: NSObject, Codable {
     let title: PXText
     let action: PXRemoteAction
     let imageUrl: String
 
+    public init(title: PXText, action: PXRemoteAction, imageUrl: String) {
+        self.title = title
+        self.action = action
+        self.imageUrl = imageUrl
+    }
+    
     enum CodingKeys: String, CodingKey {
         case title
         case action

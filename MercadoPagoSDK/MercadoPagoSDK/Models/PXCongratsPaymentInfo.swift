@@ -19,7 +19,7 @@ public class PXCongratsPaymentInfo: NSObject {
     // Method
     let paymentMethodName: String
     let paymentMethodLastFourDigits: String?
-    let paymentMethodExtraInfo: String?
+    let paymentMethodDescription: String?
     /// Used to show the issues logo. Defined at `PaymentMethodSearch`
     let paymentMethodId: String
     let paymentMethodType: PXPaymentTypes
@@ -35,7 +35,7 @@ public class PXCongratsPaymentInfo: NSObject {
     // Some friendly message to be shown
     let discountName: String?
     
-    public init(paidAmount: String, transactionAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String?, paymentMethodExtraInfo: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, hasInstallments: Bool = false, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentAmount: String? = nil, hasDiscount: Bool = false, discountName: String? = nil) {
+    public init(paidAmount: String, transactionAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String?, paymentMethodDescription: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, hasInstallments: Bool = false, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentAmount: String? = nil, hasDiscount: Bool = false, discountName: String? = nil) {
         self.paidAmount = paidAmount
         self.rawAmount = transactionAmount
         
@@ -45,7 +45,7 @@ public class PXCongratsPaymentInfo: NSObject {
         } else {
             self.paymentMethodLastFourDigits = nil
         }
-        self.paymentMethodExtraInfo = paymentMethodExtraInfo
+        self.paymentMethodDescription = paymentMethodDescription
         self.paymentMethodId = paymentMethodId
         self.paymentMethodType = paymentMethodType
         

@@ -25,42 +25,38 @@ class CongratsSelectorViewController: UITableViewController {
         let crosseling: [PXCrossSellingItem] = [PXCrossSellingItem(title: "Gane 200 pesos por sus pagos diarios", icon: "https://mobile.mercadolibre.com/remote_resources/image/merchengine_mgm_icon_ml?density=xxhdpi&locale=es_AR", contentId: "cross_selling_mgm_ml", action: PXRemoteAction(label: "Invita a más amigos a usar la aplicación", target: "meli://invite/wallet"))]
         
         return CongratsType(congratsName: "Congrats Comun", congratsData: PXPaymentCongrats()
-                                .withStatus(.APPROVED)
-                                .withHeaderTitle("¡Listo! Ya le pagaste a SuperMarket")
-                                .withHeaderImage(nil, orURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
-                                .withHeaderCloseAction {
+                                .withCongratsType(.APPROVED)
+                                .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
                                     self.navigationController?.popViewController(animated: true)
                                 }
-                                .shouldShowReceipt(receiptId: "123")
-                                .withMainAction(PXAction(label: "Continuar", action: {
+                                .withReceipt(receiptId: "123", action: nil)
+                                .withFooterMainAction(PXAction(label: "Continuar", action: {
                                     self.navigationController?.popViewController(animated: true)
                                 }))
-                                .withSecondaryAction(PXAction(label: "Tuve un problema", action: {
+                                .withFooterSecondaryAction(PXAction(label: "Tuve un problema", action: {
                                     self.navigationController?.popViewController(animated: true)
                                 }))
-                                .withPoints(points)
+                                .withLoyalty(points)
                                 .withDiscounts(discounts)
                                 .withCrossSelling(crosseling)
-                                .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodExtraInfo: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
+                                .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
     }()
     
     private lazy var congratsWithOutDiscountsAndPoints : CongratsType = {
         return CongratsType(congratsName: "Congrats sin puntos ni descuentos", congratsData: PXPaymentCongrats()
-            .withStatus(.APPROVED)
-            .withHeaderTitle("¡Listo! Ya le pagaste a SuperMarket")
-            .withHeaderImage(nil, orURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
-            .withHeaderCloseAction {
+            .withCongratsType(.APPROVED)
+            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
                 self.navigationController?.popViewController(animated: true)
-        }
-            .shouldShowReceipt( receiptId: "123")
-            .withMainAction(PXAction(label: "Continuar", action: {
+            }
+        .withReceipt( receiptId: "123", action: nil)
+            .withFooterMainAction(PXAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
             }))
-            .withSecondaryAction(PXAction(label: "Tuve un problema", action: {
+            .withFooterSecondaryAction(PXAction(label: "Tuve un problema", action: {
                 self.navigationController?.popViewController(animated: true)
             }))
             .withCrossSelling([PXCrossSellingItem(title: "Gane 200 pesos por sus pagos diarios", icon: "https://mobile.mercadolibre.com/remote_resources/image/merchengine_mgm_icon_ml?density=xxhdpi&locale=es_AR", contentId: "cross_selling_mgm_ml", action: PXRemoteAction(label: "Invita a más amigos a usar la aplicación", target: "meli://invite/wallet"))])
-            .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodExtraInfo: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
+            .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
     }()
     
     private lazy var congratsWithInstructionsView : CongratsType = {
@@ -73,17 +69,15 @@ class CongratsSelectorViewController: UITableViewController {
         
         return CongratsType(congratsName: "Congrats con instrucciones",
          congratsData: PXPaymentCongrats()
-            .withStatus(.APPROVED)
-            .withHeaderTitle("¡Listo! Ya le pagaste a SuperMarket")
-            .withHeaderImage(nil, orURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg")
-            .withHeaderCloseAction {
+            .withCongratsType(.APPROVED)
+            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
                 self.navigationController?.popViewController(animated: true)
             }
         .withInstructionView(instructionView)
-            .withMainAction(PXAction(label: "Continuar", action: {
+            .withFooterMainAction(PXAction(label: "Continuar", action: {
                 self.navigationController?.popViewController(animated: true)
             }))
-            .withSecondaryAction(PXAction(label: "Tuve un problema", action: {
+            .withFooterSecondaryAction(PXAction(label: "Tuve un problema", action: {
                 self.navigationController?.popViewController(animated: true)
             })))
     }()
