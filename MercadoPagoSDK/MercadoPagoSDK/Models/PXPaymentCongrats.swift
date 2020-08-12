@@ -63,8 +63,6 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var remedyButtonAction: ((String?) -> ())?
     private(set) var remedyView: UIView?
     
-    private(set) var callback: ((PaymentResult.CongratsState, String?) -> Void)?
-    
     private(set) var creditsExpectationView: UIView?
     
     // Payment Info
@@ -188,11 +186,12 @@ extension PXPaymentCongrats {
     }
     
     /**
-     - ToDo: Fill this
+     Defines the Expense Split data in the expense split seccions of the congrats.
+     - parameter expenseSplit: some PXExpenseSplit
+     - returns: this builder `PXPaymentCongrats`
      */
-    #warning("Check if backgroundColor, textColor, weight should be customized from the outside")
     @discardableResult
-    public func withExpenseSplit(expenseSplit: PXExpenseSplit? ) -> PXPaymentCongrats {
+    public func withExpenseSplit(_ expenseSplit: PXExpenseSplit? ) -> PXPaymentCongrats {
         self.expenseSplit = expenseSplit
         return self
     }
@@ -209,7 +208,9 @@ extension PXPaymentCongrats {
     }
     
     /**
-     - ToDo: Fill this
+     Defines how will be the sort of the component in the Congrats
+     - parameter customSorting: a boolean
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
     internal func withCustomSorting(_ customSorting: Bool?) -> PXPaymentCongrats {
@@ -218,10 +219,12 @@ extension PXPaymentCongrats {
     }
     
     /**
-     - ToDo: Fill this
+     This is used in paymentResult on checkout Process, define
+     - parameter view: some UIView
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withInstructionView(_ view: UIView?) -> PXPaymentCongrats {
+    internal func withInstructionView(_ view: UIView?) -> PXPaymentCongrats {
         self.instructionsView = view
         return self
     }
@@ -281,20 +284,10 @@ extension PXPaymentCongrats {
     }
     
     /**
-    A callback that can be executed in any other method, this callback is used in the remedies flow
-    and also is triggered when headerCloseAction or the extra buttons in the footer view are triggered, is part of the checkout process.
-    - Parameters:
-       - callback: some closure
-    - returns: this builder `PXPaymentCongrats`
-    */
-    @discardableResult
-    internal func withCallback(_ callback: @escaping ((PaymentResult.CongratsState, String?) -> Void)) -> PXPaymentCongrats {
-        self.callback = callback
-        return self
-    }
-    
-    /**
-     - ToDo: Fill this
+     this view is shown if there has been a payment with credit.
+     - Parameters:
+        - view: some `UIView`
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
     public func withCreditsExpectationView(_ view: UIView?) -> PXPaymentCongrats {
@@ -336,7 +329,9 @@ extension PXPaymentCongrats {
     }
     
     /**
-     - ToDo: Fill this
+    This is used to track how the flow finished,
+    - parameter result: some PXResultKey
+    - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
     internal func withFlowBehaviorResult(_ result: PXResultKey) -> PXPaymentCongrats {
