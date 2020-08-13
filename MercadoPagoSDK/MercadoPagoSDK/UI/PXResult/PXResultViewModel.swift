@@ -501,10 +501,10 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getRedirectUrl() -> URL? {
-        return getUrl(backUrls: amountHelper.preference.redirectUrls, forLanding: true)
+        return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
     }
 
-    private func getUrl(backUrls: PXBackUrls?, forLanding: Bool = false) -> URL? {
+    private func getUrl(backUrls: PXBackUrls?, appendLanding: Bool = false) -> URL? {
         var urlString: String?
         let status = PXPaymentStatus(rawValue: getPaymentStatus())
         switch status {
@@ -518,11 +518,8 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
             return nil
         }
         if let urlString = urlString {
-            if forLanding,
-                (MLBusinessAppDataService().isMeli() || MLBusinessAppDataService().isMp()),
-                !["meli://", "mercadopago://"].contains(where: urlString.contains) {
-                let prefix = MLBusinessAppDataService().isMeli() ? "meli://" : "mercadopago://"
-                let landingURL = "\(prefix)webview/?url=\(urlString)"
+            if appendLanding {
+                let landingURL = MLBusinessAppDataService().appendLandingURLToString(urlString)
                 return URL(string: landingURL)
             }
             return URL(string: urlString)

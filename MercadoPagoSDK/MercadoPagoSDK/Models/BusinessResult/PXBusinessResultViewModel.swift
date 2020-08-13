@@ -292,24 +292,33 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getBackUrl() -> URL? {
-        return getBackUrl(backUrls: amountHelper.preference.backUrls)
+        return getUrl(backUrls: amountHelper.preference.backUrls)
     }
 
     func getRedirectUrl() -> URL? {
-        return getBackUrl(backUrls: amountHelper.preference.redirectUrls)
+        return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
     }
 
-    private func getBackUrl(backUrls: PXBackUrls?) -> URL? {
+    private func getUrl(backUrls: PXBackUrls?, appendLanding: Bool = false) -> URL? {
+        var urlString: String?
         let status = businessResult.getBusinessStatus()
         switch status {
         case .APPROVED:
-            return URL(string: backUrls?.success ?? "")
+            urlString = backUrls?.success
         case .PENDING:
-            return URL(string: backUrls?.pending ?? "")
+            urlString = backUrls?.pending
         case .REJECTED:
-            return URL(string: backUrls?.failure ?? "")
+            urlString = backUrls?.failure
         default:
             return nil
         }
+        if let urlString = urlString {
+            if appendLanding {
+                let landingURL = MLBusinessAppDataService().appendLandingURLToString(urlString)
+                return URL(string: landingURL)
+            }
+            return URL(string: urlString)
+        }
+        return nil
     }
 }
