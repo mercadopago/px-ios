@@ -497,24 +497,36 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getBackUrl() -> URL? {
-        return getBackUrl(backUrls: amountHelper.preference.backUrls)
+        return getUrl(backUrls: amountHelper.preference.backUrls)
     }
 
     func getRedirectUrl() -> URL? {
-        return getBackUrl(backUrls: amountHelper.preference.redirectUrls)
+        return getUrl(backUrls: amountHelper.preference.redirectUrls, forLanding: true)
     }
 
-    private func getBackUrl(backUrls: PXBackUrls?) -> URL? {
+    private func getUrl(backUrls: PXBackUrls?, forLanding: Bool = false) -> URL? {
+        var urlString: String?
         let status = PXPaymentStatus(rawValue: getPaymentStatus())
         switch status {
         case .APPROVED:
-            return URL(string: backUrls?.success ?? "")
+            urlString = backUrls?.success
         case .PENDING:
-            return URL(string: backUrls?.pending ?? "")
+            urlString = backUrls?.pending
         case .REJECTED:
-            return URL(string: backUrls?.failure ?? "")
+            urlString = backUrls?.failure
         default:
             return nil
         }
+        if let urlString = urlString {
+            if forLanding,
+                (MLBusinessAppDataService().isMeli() || MLBusinessAppDataService().isMp()),
+                !["meli://", "mercadopago://"].contains(where: urlString.contains) {
+                let prefix = MLBusinessAppDataService().isMeli() ? "meli://" : "mercadopago://"
+                let landingURL = "\(prefix)webview/?url=\(urlString)"
+                return URL(string: landingURL)
+            }
+            return URL(string: urlString)
+        }
+        return nil
     }
 }
