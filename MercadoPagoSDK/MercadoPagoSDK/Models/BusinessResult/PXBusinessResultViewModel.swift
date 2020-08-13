@@ -32,6 +32,21 @@ class PXBusinessResultViewModel: NSObject {
         guard let firstPaymentId = businessResult.getReceiptIdList()?.first else { return businessResult.getReceiptId() }
         return firstPaymentId
     }
+    
+    func headerCloseAction() -> (() -> Void) {
+        let action = { [weak self] in
+            if let callback = self?.callback {
+                if let url = self?.getBackUrl() {
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                        callback(PaymentResult.CongratsState.EXIT, nil)
+                    })
+                } else {
+                    callback(PaymentResult.CongratsState.EXIT, nil)
+                }
+            }
+        }
+        return action
+    }
 
     func primaryResultColor() -> UIColor {
         return ResourceManager.shared.getResultColorWith(status: businessResult.getBusinessStatus().getDescription())
@@ -63,12 +78,29 @@ class PXBusinessResultViewModel: NSObject {
 
         return PXErrorComponent(props: props)
     }
+    
+    func errorBodyView() -> UIView?  {
+        if let errorComponent = getErrorComponent() {
+            return errorComponent.render()
+        }
+        return nil
+    }
 
     func getHeaderDefaultIcon() -> UIImage? {
         if let brIcon = businessResult.getIcon() {
              return brIcon
         } else if let defaultImage = ResourceManager.shared.getImage(approvedIconName) {
             return defaultImage
+        }
+        return nil
+    }
+    
+    func creditsExpectationView() -> UIView? {
+        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
+            let title = resultInfo.title,
+            let subtitle = resultInfo.subtitle,
+            businessResult.isApproved() {
+            return PXCreditsExpectationView(title: title, subtitle: subtitle)
         }
         return nil
     }
@@ -105,18 +137,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getHeaderCloseAction() -> (() -> Void)? {
-        let action = { [weak self] in
-            if let callback = self?.callback {
-                if let url = self?.getBackUrl() {
-                    PXNewResultUtil.openURL(url: url, success: { (_) in
-                        callback(PaymentResult.CongratsState.EXIT, nil)
-                    })
-                } else {
-                    callback(PaymentResult.CongratsState.EXIT, nil)
-                }
-            }
-        }
-        return action
+        return headerCloseAction()
     }
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
@@ -238,10 +259,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getErrorBodyView() -> UIView? {
-        if let errorComponent = getErrorComponent() {
-            return errorComponent.render()
-        }
-        return nil
+        return errorBodyView()
     }
 
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
@@ -266,13 +284,7 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getCreditsExpectationView() -> UIView? {
-        if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
-            let title = resultInfo.title,
-            let subtitle = resultInfo.subtitle,
-            businessResult.isApproved() {
-            return PXCreditsExpectationView(title: title, subtitle: subtitle)
-        }
-        return nil
+        return creditsExpectationView()
     }
 
     func getTopCustomView() -> UIView? {
@@ -331,3 +343,83 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         return nil
     }
 }
+
+//extension PXBusinessResultViewModel {
+//        func ToPaymentCongrats() -> PXPaymentCongrats {
+//            let paymentCongratsData = PXPaymentCongrats()
+//            switch businessResult.getBusinessStatus() {
+//            case .APPROVED:
+//                paymentCongratsData.withCongratsType(.APPROVED)
+//            case .REJECTED:
+//                paymentCongratsData.withCongratsType(.REJECTED)
+//                
+//            case .IN_PROGRESS:
+//                paymentCongratsData.withCongratsType(.IN_PROGRESS)
+//            case .PENDING:
+//                paymentCongratsData.withCongratsType(.PENDING)
+//            default:
+//                paymentCongratsData.withCongratsType(.PENDING)
+//            }
+//            
+//                                        paymentCongratsData
+//                                                        .withHeader(title: getAttributedTitle().string, imageURL: businessResult.getImageUrl(), closeAction: headerCloseAction())
+//                                                        .withHeaderColor(primaryResultColor())
+//                                                        .withHeaderImage(getHeaderDefaultIcon())
+//            //Badge Image this is not necessary to call because the paymentCongrats have this default implementation
+//    //        if let badgeImage = ResourceManager.shared.getBadgeImageWith(status: businessResult.getBusinessStatus().getDescription()) {
+//    //            paymentCongratsData.withHeaderBadgeImage(badgeImage)
+//    //        }
+//            
+//            //Recepit
+//            if businessResult.mustShowReceipt() {
+//                paymentCongratsData.withReceipt(receiptId: businessResult.getReceiptId(), action: pointsAndDiscounts?.viewReceiptAction)
+//            }
+//
+//            //Points and Discounts
+//            paymentCongratsData.withLoyalty(pointsAndDiscounts?.points)
+//                               .withDiscounts(pointsAndDiscounts?.discounts)
+//                               .withCrossSelling(pointsAndDiscounts?.crossSelling)
+//                               .withCustomSorting(pointsAndDiscounts?.customOrder)
+//                               .withExpenseSplit(expenseSplit: pointsAndDiscounts?.expenseSplit)
+//            
+//            
+//            //Payment Info
+//
+//            #warning("validate to connect the correct data")
+//
+//            let pmTypeID = businessResult.getPaymentMethodTypeId()!
+//            let pmID = businessResult.getPaymentMethodId()!
+//            paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: pmTypeID, paymentMethodId: pmID))
+//            //TODO Split Payment?
+//            
+//            
+//            //Actions
+//            paymentCongratsData.withFooterMainAction(businessResult.getMainAction())
+//
+//            let linkAction = businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
+//            paymentCongratsData.withFooterSecondaryAction(linkAction)
+//
+//            //Views
+//            paymentCongratsData.withCustomViews(important: businessResult.getImportantCustomView(), top: businessResult.getTopCustomView(), bottom: businessResult.getBottomCustomView())
+//                               .withCreditsExpectationView(creditsExpectationView())
+//                               .withErrorBodyView(errorBodyView())
+//            return paymentCongratsData
+//        }
+//
+//        private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentMethodTypeId: String, paymentMethodId: String) -> PXCongratsPaymentInfo {
+//            let paidAmount = "\(paymentData.getTransactionAmountWithDiscount())"
+//            let paymentMethodName = paymentData.paymentMethod?.name ?? ""
+//            let lastFourDigits = paymentData.token?.lastFourDigits
+//            let transactionAmount = "\(paymentData.transactionAmount)"
+//            let hasInstallments = paymentData.payerCost != nil
+//            let installmentRate = paymentData.payerCost?.installmentRate
+//            let paidAmountPosta = paymentData.payerCost?.totalAmount
+//            let installments = paymentData.payerCost?.installments ?? 0
+//            let installmentAmount = "\(paymentData.payerCost?.installmentAmount)"
+//            let amountToPay = amountHelper.amountToPay
+//            let paymentMethodExtraInfo = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message
+//                //getTransactionAmountWithDiscount()
+//            // TODO format prices with currency
+//            return PXCongratsPaymentInfo(paidAmount: paidAmount, transactionAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: PXPaymentTypes(rawValue: paymentMethodTypeId)!, hasInstallments: hasInstallments, installmentsRate: installmentRate, installmentsCount: installments, installmentAmount: installmentAmount, hasDiscount: false, discountName: nil)
+//        }
+//}
