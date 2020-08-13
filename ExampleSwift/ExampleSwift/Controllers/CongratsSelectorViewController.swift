@@ -59,33 +59,9 @@ class CongratsSelectorViewController: UITableViewController {
             .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
     }()
     
-    private lazy var congratsWithInstructionsView : CongratsType = {
-        let instructionView = UIView(frame: .zero)
-        let instructionLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 50, height: 50))
-        instructionLabel.text = "TEST"
-        instructionLabel.contentMode = .scaleToFill
-        instructionLabel.textColor = .black
-        instructionView.addSubview(instructionLabel)
-        
-        return CongratsType(congratsName: "Congrats con instrucciones",
-         congratsData: PXPaymentCongrats()
-            .withCongratsType(.APPROVED)
-            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
-                self.navigationController?.popViewController(animated: true)
-            }
-        .withInstructionView(instructionView)
-            .withFooterMainAction(PXAction(label: "Continuar", action: {
-                self.navigationController?.popViewController(animated: true)
-            }))
-            .withFooterSecondaryAction(PXAction(label: "Tuve un problema", action: {
-                self.navigationController?.popViewController(animated: true)
-            })))
-    }()
-    
     func fillCongratsData() {
         congratsData.append(commonCongrats)
         congratsData.append(congratsWithOutDiscountsAndPoints)
-        congratsData.append(congratsWithInstructionsView)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
