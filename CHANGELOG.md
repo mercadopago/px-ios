@@ -1,3 +1,8 @@
+# v4.35.2 
+🚀Private Release - 4.35.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix redirect bug
+
 # v4.35.1 
 🚀Private Release - 4.35.1 🚀
 MercadoPagoSDKV4 - Private Version
