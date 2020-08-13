@@ -525,7 +525,8 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         default:
             return nil
         }
-        if let urlString = urlString {
+        if let urlString = urlString,
+            !urlString.isEmpty {
             if appendLanding {
                 let landingURL = MLBusinessAppDataService().appendLandingURLToString(urlString)
                 return URL(string: landingURL)
