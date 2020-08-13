@@ -53,12 +53,13 @@ extension MLBusinessAppDataService {
         let url = URL(fileURLWithPath: mpDeeplink)
         return UIApplication.shared.canOpenURL(url)
     }
-    
+
     func appendLandingURLToString(_ urlString: String) -> String {
         if (isMeli() || isMp()),
-            !["meli://", "mercadopago://"].contains(where: urlString.contains) {
+            !["meli://", "mercadopago://"].contains(where: urlString.contains),
+            let encodedURL = urlString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
             let prefix = MLBusinessAppDataService().isMeli() ? "meli://" : "mercadopago://"
-            let landingURL = "\(prefix)webview/?url=\(urlString)"
+            let landingURL = "\(prefix)webview/?url=\(encodedURL)"
             return landingURL
         }
         return urlString

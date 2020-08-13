@@ -166,7 +166,13 @@ extension MercadoPagoCheckout {
     private func redirectAndFinish(viewModel: PXNewResultViewModelInterface, redirectUrl: URL) {
         PXNewResultUtil.trackScreenAndConversion(viewModel: viewModel)
         PXNewResultUtil.openURL(url: redirectUrl, success: { [weak self] _ in
-            self?.finish()
+            guard let self = self else {
+                return
+            }
+            if self.viewModel.pxNavigationHandler.isLoadingPresented() {
+                self.viewModel.pxNavigationHandler.dismissLoading()
+            }
+            self.finish()
         })
     }
 
