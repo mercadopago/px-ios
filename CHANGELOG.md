@@ -1,3 +1,11 @@
+# v4.35.1 
+🚀Private Release - 4.35.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Feature CFT
+- Add backURL, redirectURL and autoreturn
+- Show discounts row for consumer credits
+- Discounts row improvements
+
 # v4.35.0 
 🚀Private Release - 4.35.0 🚀
 MercadoPagoSDKV4 - Private Version
