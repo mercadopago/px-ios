@@ -137,7 +137,7 @@ extension ThemeManager {
     }
 
     func discountBriefColorMP() -> UIColor {
-        return #colorLiteral(red: 237, green: 237, blue: 237, alpha: 0.8)
+        return UIColor.white.withAlphaComponent(0.8)
     }
 
     func disabledCardGray() -> UIColor {

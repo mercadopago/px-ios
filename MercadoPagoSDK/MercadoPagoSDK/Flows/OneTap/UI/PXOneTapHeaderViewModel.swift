@@ -49,7 +49,7 @@ class PXOneTapHeaderViewModel {
                 }
             }
         }
-        return (chargeFound && discountFound) || (discountHasDescription && subTitle != nil) || (discountHasDescription && isLargeTitle())
+        return (chargeFound && discountFound) || discountHasDescription
     }
 
     private func isMediumSummaryOrLarger() -> Bool {
@@ -59,9 +59,5 @@ class PXOneTapHeaderViewModel {
             }
         }
         return false
-    }
-
-    private func isLargeTitle() -> Bool {
-        return title.count > 30 ? true : false
     }
 }
