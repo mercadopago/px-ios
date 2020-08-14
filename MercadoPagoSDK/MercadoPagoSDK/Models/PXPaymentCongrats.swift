@@ -66,6 +66,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var creditsExpectationView: UIView?
     
     // Payment Info
+    private(set) var shouldShowPaymentMethod: Bool = false
     private(set) var paymentInfo: PXCongratsPaymentInfo?
     private(set) var statementDescription : String?
     
@@ -301,7 +302,8 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withPaymentMethodInfo(_ paymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
+    public func withPaymentMethodInfo(shouldShowPaymentMethod: Bool,paymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
+        self.shouldShowPaymentMethod = shouldShowPaymentMethod
         self.paymentInfo = paymentInfo
         return self
     }

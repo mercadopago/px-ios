@@ -69,7 +69,7 @@ class CongratsSelectorViewController: UITableViewController {
             .withFooterMainAction(PXAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
             }))
-            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Mastercard", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "master", paymentMethodType: .CREDIT_CARD, installmentsRate: 1, installmentsCount: 18, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 18.000", discountName: nil)))
+                                .withPaymentMethodInfo(shouldShowPaymentMethod: true, paymentInfo: PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Mastercard", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "master", paymentMethodType: .CREDIT_CARD, installmentsRate: 1, installmentsCount: 18, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 18.000", discountName: nil)))
     }()
     
     private lazy var congratsWithOneInstallments : CongratsType = {
@@ -82,7 +82,7 @@ class CongratsSelectorViewController: UITableViewController {
             .withFooterMainAction(PXAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
             }))
-            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Visa", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "visa", paymentMethodType: .CREDIT_CARD, installmentsRate: 1, installmentsCount: 1, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 100", discountName: nil)))
+            .withPaymentMethodInfo(shouldShowPaymentMethod: true, paymentInfo: PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Visa", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "visa", paymentMethodType: .CREDIT_CARD, installmentsRate: 1, installmentsCount: 1, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 100", discountName: nil)))
     }()
     
     private lazy var congratsWithConsumerCredits : CongratsType = {
@@ -95,7 +95,7 @@ class CongratsSelectorViewController: UITableViewController {
             .withFooterMainAction(PXAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
             }))
-                                .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "$ 2.476,22", rawAmount: nil, paymentMethodName: "", paymentMethodLastFourDigits: nil, paymentMethodDescription: nil, paymentMethodId: "consumer_credits", paymentMethodType: .CONSUMER_CREDITS, installmentsRate: nil, installmentsCount: 0, installmentsAmount: nil, installmentsTotalAmount: nil, discountName: nil)))
+                                .withPaymentMethodInfo(shouldShowPaymentMethod: true, paymentInfo: PXCongratsPaymentInfo(paidAmount: "$ 2.476,22", rawAmount: nil, paymentMethodName: "", paymentMethodLastFourDigits: nil, paymentMethodDescription: nil, paymentMethodId: "consumer_credits", paymentMethodType: .CONSUMER_CREDITS, installmentsRate: nil, installmentsCount: 0, installmentsAmount: nil, installmentsTotalAmount: nil, discountName: nil)))
     }()
     
     private lazy var congratsWithConsumerCreditsInstallments : CongratsType = {
@@ -108,7 +108,7 @@ class CongratsSelectorViewController: UITableViewController {
             .withFooterMainAction(PXAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
             }))
-                                .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "cualquiera", paymentMethodLastFourDigits: nil, paymentMethodDescription: nil, paymentMethodId: "consumer_credits", paymentMethodType: .CONSUMER_CREDITS, installmentsRate: 1.5, installmentsCount: 3, installmentsAmount: "$ 300", installmentsTotalAmount: "$ 900", discountName: nil)))
+                                .withPaymentMethodInfo(shouldShowPaymentMethod: true, paymentInfo: PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "cualquiera", paymentMethodLastFourDigits: nil, paymentMethodDescription: nil, paymentMethodId: "consumer_credits", paymentMethodType: .CONSUMER_CREDITS, installmentsRate: 1.5, installmentsCount: 3, installmentsAmount: "$ 300", installmentsTotalAmount: "$ 900", discountName: nil)))
     }()
     
     private lazy var congratsWithAccountMoney : CongratsType = {
@@ -121,7 +121,7 @@ class CongratsSelectorViewController: UITableViewController {
             .withFooterMainAction(PXAction(label: "Continuar", action: {
                self.navigationController?.popViewController(animated: true)
             }))
-            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "$ 25.000", rawAmount: nil, paymentMethodName: "dasdasd", paymentMethodLastFourDigits: nil, paymentMethodDescription: "Disponible en Mercado Pago", paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY, installmentsRate: nil, installmentsCount: 0, installmentsAmount: nil, installmentsTotalAmount: nil, discountName: nil)))
+            .withPaymentMethodInfo(shouldShowPaymentMethod: true, paymentInfo: PXCongratsPaymentInfo(paidAmount: "$ 25.000", rawAmount: nil, paymentMethodName: "dasdasd", paymentMethodLastFourDigits: nil, paymentMethodDescription: "Disponible en Mercado Pago", paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY, installmentsRate: nil, installmentsCount: 0, installmentsAmount: nil, installmentsTotalAmount: nil, discountName: nil)))
     }()
     
     func fillCongratsData() {

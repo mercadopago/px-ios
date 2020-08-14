@@ -177,11 +177,8 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     // PAYMENT METHOD
-    #warning("logica especifica para comparar PXBusinessResultStatus con PXPaymentStatus")
     func shouldShowPaymentMethod() -> Bool {
-        // TODO checkear comparación de este status (BusinessStatus) pero puede ser que venga por PXResultViewModel que tiene otra logica
-        let isApproved = paymentCongrats.type.getDescription().lowercased() == PXPaymentStatus.APPROVED.rawValue.lowercased()
-        return !hasInstructions() && isApproved
+        return paymentCongrats.shouldShowPaymentMethod
     }
     
     func getPaymentViewData() -> PXNewCustomViewData? {
