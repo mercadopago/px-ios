@@ -171,8 +171,8 @@ extension MercadoPagoCheckout {
         if viewModel.paymentResult == nil, let payment = viewModel.payment {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
-        
-        let viewController = PXNewResultViewController(viewModel: viewModel.resultViewModel(), callback: { [weak self] congratsState, remedyText in
+        let resultViewModel = viewModel.resultViewModel()
+        resultViewModel.setCallback(callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
@@ -226,7 +226,8 @@ extension MercadoPagoCheckout {
             default:
                 self.finish()
             }
-        }, finishButtonAnimation: { [weak self] in
+        })
+        let viewController = PXNewResultViewController(viewModel: resultViewModel, finishButtonAnimation: { [weak self] in
             // Remedy view has an animated button. This closure is called after the animation has finished
             self?.executeNextStep()
         })
@@ -239,10 +240,10 @@ extension MercadoPagoCheckout {
         }
 
         let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
-        
-        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
+        pxBusinessResultViewModel.setCallback(callback: { [weak self] _, _ in
             self?.finish()
         })
+        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel)
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 

@@ -22,9 +22,8 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
     private var touchpointView: MLBusinessTouchpointsView?
 
-    init(viewModel: PXNewResultViewModelInterface, callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void, finishButtonAnimation: (() -> Void)? = nil) {
+    init(viewModel: PXNewResultViewModelInterface, finishButtonAnimation: (() -> Void)? = nil) {
         self.viewModel = viewModel
-        self.viewModel.setCallback(callback: callback)
         self.finishButtonAnimation = finishButtonAnimation
         super.init(nibName: nil, bundle: nil)
         self.shouldHideNavigationBar = true
