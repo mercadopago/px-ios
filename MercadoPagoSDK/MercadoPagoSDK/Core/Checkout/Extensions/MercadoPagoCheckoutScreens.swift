@@ -246,7 +246,8 @@ extension MercadoPagoCheckout {
             default:
                 self.finish()
             }
-        }, finishButtonAnimation: { [weak self] in
+        })
+        let viewController = PXNewResultViewController(viewModel: resultViewModel, finishButtonAnimation: { [weak self] in
             // Remedy view has an animated button. This closure is called after the animation has finished
             self?.executeNextStep()
         })
@@ -267,6 +268,7 @@ extension MercadoPagoCheckout {
         let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
             self?.finish()
         })
+        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel)
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
