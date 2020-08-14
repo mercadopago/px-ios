@@ -219,8 +219,7 @@ extension PXNewResultUtil {
                 let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
                 firstString.appendWithSpace(attributedTotal)
             } else {
-                let titleString = installmentsTotalAmount ?? ""
-                let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
+                let attributedTitle = NSAttributedString(string: installmentsTotalAmount ?? "", attributes: PXNewCustomView.titleAttributes)
                 firstString.append(attributedTitle)
             }
         } else {
@@ -231,7 +230,6 @@ extension PXNewResultUtil {
         
         // Discount
         if hasDiscount, let transactionAmount = transactionAmount {
-            let transactionAmount = transactionAmount
             let attributedAmount = NSAttributedString(string: transactionAmount, attributes: discountAmountAttributes)
             
             firstString.appendWithSpace(attributedAmount)

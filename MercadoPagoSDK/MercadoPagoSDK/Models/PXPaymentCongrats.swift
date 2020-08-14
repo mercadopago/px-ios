@@ -295,6 +295,16 @@ extension PXPaymentCongrats {
         self.creditsExpectationView = view
         return self
     }
+    /**
+     Defines if the payment method (or split payment method) should be shown.
+     - parameter shouldShowPaymentMethod: a `boolean` indication if it should be shown.
+     - returns: tihs builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func shouldShowPaymentMethod(_ shouldShowPaymentMethod: Bool) -> PXPaymentCongrats {
+        self.shouldShowPaymentMethod = shouldShowPaymentMethod
+        return self
+    }
     
     /**
      Data containing all of the information for displaying the payment method .
@@ -302,8 +312,7 @@ extension PXPaymentCongrats {
      - returns: tihs builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withPaymentMethodInfo(shouldShowPaymentMethod: Bool,paymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
-        self.shouldShowPaymentMethod = shouldShowPaymentMethod
+    public func withPaymentMethodInfo(_ paymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
         self.paymentInfo = paymentInfo
         return self
     }
