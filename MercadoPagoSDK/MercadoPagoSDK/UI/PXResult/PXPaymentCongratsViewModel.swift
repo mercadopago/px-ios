@@ -37,7 +37,7 @@ class PXPaymentCongratsViewModel {
                                                                            paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
         
         let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodDescription)
-        let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodId, defaultColor: false)
+        let icon = PXNewResultUtil.getPaymentMethodIcon(paymentTypeId: paymentInfo.paymentMethodType.rawValue, paymentMethodId: paymentInfo.paymentMethodId)
         
         let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
         return data
