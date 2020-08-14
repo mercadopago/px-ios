@@ -103,16 +103,15 @@ class PXNewResultUtil {
 extension PXNewResultUtil {
     //PAYMENT METHOD ICON
     class func getPaymentMethodIcon(paymentMethod: PXPaymentMethod) -> UIImage? {
-        return getPaymentMethodIcon(paymentTypeId: paymentMethod.paymentTypeId, paymentMethodId: paymentMethod.id)
+        return getPaymentMethodIcon(paymentTypeId: paymentMethod.paymentTypeId, paymentMethodId: paymentMethod.id, externalPaymentMethodImage: paymentMethod.externalPaymentPluginImageData as? Data)
     }
     
-    class func getPaymentMethodIcon(paymentTypeId: String, paymentMethodId: String) -> UIImage? {
+    class func getPaymentMethodIcon(paymentTypeId: String, paymentMethodId: String, externalPaymentMethodImage: Data? = nil) -> UIImage? {
         let defaultColor = paymentTypeId == PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentTypeId != PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
-        if paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
-            #warning("Finish this")
-//            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
+        if paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue, let data = externalPaymentMethodImage {
+            paymentMethodImage = UIImage(data: data)
         }
         return paymentMethodImage
     }

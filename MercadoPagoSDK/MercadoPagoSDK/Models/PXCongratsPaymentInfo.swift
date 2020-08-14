@@ -52,7 +52,15 @@ public class PXCongratsPaymentInfo: NSObject {
     /// Some friendly message to be shown when a discount is applied
     let discountName: String?
     
-    public init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil) {
+    let externalPaymentMethodImage: Data?
+    
+    /// This public initializer hides the configuration for `externalPaymentMethodImage` despite the rest of the fields in the class.
+    public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil) {
+        self.init(paidAmount: paidAmount, rawAmount: rawAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentMethodLastFourDigits, paymentMethodDescription: paymentMethodDescription, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType, installmentsRate: installmentsRate, installmentsCount: installmentsCount, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: nil)
+    }
+    
+    /// This internal initializer makes available the configuration for `externalPaymentMethodImage` despite the rest of the fields in the class
+    internal init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil, externalPaymentMethodImage: Data?) {
         self.paidAmount = paidAmount
         self.rawAmount = rawAmount
         
@@ -72,6 +80,8 @@ public class PXCongratsPaymentInfo: NSObject {
         self.installmentsTotalAmount = installmentsTotalAmount
         
         self.discountName = discountName
+        
+        self.externalPaymentMethodImage = externalPaymentMethodImage
         super.init()
     }
 }
