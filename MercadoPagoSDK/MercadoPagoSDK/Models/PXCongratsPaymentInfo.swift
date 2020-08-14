@@ -33,6 +33,9 @@ public class PXCongratsPaymentInfo: NSObject {
     /// Type of payment method
     let paymentMethodType: PXPaymentTypes
     
+    /// External payment method logo in bytes format, only shown when `paymentMethodType` is `.PAYMENT_METHOD_PLUGIN`
+    let externalPaymentMethodImage: Data?
+    
     // Installments
     /// Interest rate applied to payment
     let installmentsRate: Double?
@@ -51,8 +54,6 @@ public class PXCongratsPaymentInfo: NSObject {
     // Discount
     /// Some friendly message to be shown when a discount is applied
     let discountName: String?
-    
-    let externalPaymentMethodImage: Data?
     
     /// This public initializer hides the configuration for `externalPaymentMethodImage` despite the rest of the fields in the class.
     public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil) {
