@@ -39,7 +39,7 @@ class CongratsSelectorViewController: UITableViewController {
                                 .withLoyalty(points)
                                 .withDiscounts(discounts)
                                 .withCrossSelling(crosseling)
-                                .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
+                                .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", rawAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
     }()
     
     private lazy var congratsWithOutDiscountsAndPoints : CongratsType = {
@@ -56,12 +56,80 @@ class CongratsSelectorViewController: UITableViewController {
                 self.navigationController?.popViewController(animated: true)
             }))
             .withCrossSelling([PXCrossSellingItem(title: "Gane 200 pesos por sus pagos diarios", icon: "https://mobile.mercadolibre.com/remote_resources/image/merchengine_mgm_icon_ml?density=xxhdpi&locale=es_AR", contentId: "cross_selling_mgm_ml", action: PXRemoteAction(label: "Invita a más amigos a usar la aplicación", target: "meli://invite/wallet"))])
-            .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", transactionAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
+            .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", rawAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
+    }()
+    
+    private lazy var congratsWithInstallments : CongratsType = {
+        return CongratsType(congratsName: "Payment many installments", congratsData: PXPaymentCongrats()
+            .withCongratsType(.APPROVED)
+            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .withReceipt( receiptId: "123", action: nil)
+            .withFooterMainAction(PXAction(label: "Continuar", action: {
+               self.navigationController?.popViewController(animated: true)
+            }))
+            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Mastercard", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "master", paymentMethodType: .CREDIT_CARD, installmentsRate: 1, installmentsCount: 18, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 18.000", discountName: nil)))
+    }()
+    
+    private lazy var congratsWithOneInstallments : CongratsType = {
+        return CongratsType(congratsName: "Payment 1 Installment", congratsData: PXPaymentCongrats()
+            .withCongratsType(.APPROVED)
+            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .withReceipt( receiptId: "123", action: nil)
+            .withFooterMainAction(PXAction(label: "Continuar", action: {
+               self.navigationController?.popViewController(animated: true)
+            }))
+            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Visa", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "visa", paymentMethodType: .CREDIT_CARD, installmentsRate: 1, installmentsCount: 1, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 100", discountName: nil)))
+    }()
+    
+    private lazy var congratsWithConsumerCredits : CongratsType = {
+        return CongratsType(congratsName: "Payment Consumer Credits", congratsData: PXPaymentCongrats()
+            .withCongratsType(.APPROVED)
+            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .withReceipt( receiptId: "123", action: nil)
+            .withFooterMainAction(PXAction(label: "Continuar", action: {
+               self.navigationController?.popViewController(animated: true)
+            }))
+                                .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "$ 2.476,22", rawAmount: nil, paymentMethodName: "", paymentMethodLastFourDigits: nil, paymentMethodDescription: nil, paymentMethodId: "consumer_credits", paymentMethodType: .CONSUMER_CREDITS, installmentsRate: nil, installmentsCount: 0, installmentsAmount: nil, installmentsTotalAmount: nil, discountName: nil)))
+    }()
+    
+    private lazy var congratsWithConsumerCreditsInstallments : CongratsType = {
+        return CongratsType(congratsName: "Payment Consumer Credits + Installments", congratsData: PXPaymentCongrats()
+            .withCongratsType(.APPROVED)
+            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .withReceipt( receiptId: "123", action: nil)
+            .withFooterMainAction(PXAction(label: "Continuar", action: {
+               self.navigationController?.popViewController(animated: true)
+            }))
+                                .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "cualquiera", paymentMethodLastFourDigits: nil, paymentMethodDescription: nil, paymentMethodId: "consumer_credits", paymentMethodType: .CONSUMER_CREDITS, installmentsRate: 1.5, installmentsCount: 3, installmentsAmount: "$ 300", installmentsTotalAmount: "$ 900", discountName: nil)))
+    }()
+    
+    private lazy var congratsWithAccountMoney : CongratsType = {
+        return CongratsType(congratsName: "Payment Account Money", congratsData: PXPaymentCongrats()
+            .withCongratsType(.APPROVED)
+            .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .withReceipt( receiptId: "123", action: nil)
+            .withFooterMainAction(PXAction(label: "Continuar", action: {
+               self.navigationController?.popViewController(animated: true)
+            }))
+            .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "$ 25.000", rawAmount: nil, paymentMethodName: "dasdasd", paymentMethodLastFourDigits: nil, paymentMethodDescription: "Disponible en Mercado Pago", paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY, installmentsRate: nil, installmentsCount: 0, installmentsAmount: nil, installmentsTotalAmount: nil, discountName: nil)))
     }()
     
     func fillCongratsData() {
-        congratsData.append(commonCongrats)
-        congratsData.append(congratsWithOutDiscountsAndPoints)
+        congratsData = [
+            commonCongrats, congratsWithOutDiscountsAndPoints, congratsWithInstallments,
+            congratsWithOneInstallments, congratsWithConsumerCredits, congratsWithConsumerCreditsInstallments,
+            congratsWithAccountMoney
+        ]
     }
     override func viewDidLoad() {
         super.viewDidLoad()

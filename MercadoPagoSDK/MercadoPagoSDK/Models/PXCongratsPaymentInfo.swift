@@ -12,32 +12,49 @@ public class PXCongratsPaymentInfo: NSObject {
     // Payment
     /// What the user paid, it has to include the currency.
     let paidAmount: String
+    
     /// What the should have paid, it has to include the currency.
     /// This amount represents the original price.
     let rawAmount: String?
     
     // Method
+    /// A user friendly name for the payment method. For instance: `Visa` `Mastercad`
     let paymentMethodName: String
+    
+    /// For credit cards, the last for digits of it.
     let paymentMethodLastFourDigits: String?
+    
+    
     let paymentMethodDescription: String?
+    
     /// Used to show the issues logo. Defined at `PaymentMethodSearch`
     let paymentMethodId: String
+    
+    /// Type of payment method
     let paymentMethodType: PXPaymentTypes
     
     // Installments
-    let hasInstallments: Bool
+    /// Interest rate applied to payment
     let installmentsRate: Double?
+    
+    /// Number of installments
     let installmentsCount: Int
-    let installmentAmount: String?
+    
+    /// Cost of each installment. Must be formatted with a curreny
+    let installmentsAmount: String?
+    
+    /// Total cost of payment with installments. Must be formatted with a curreny.
+    /// When setting `installmentsCount` bigger than 1, `paidAmount` is
+    /// ignored and `installmentsTotalAmount` is used.
+    let installmentsTotalAmount: String?
     
     // Discount
-    let hasDiscount: Bool
-    // Some friendly message to be shown
+    /// Some friendly message to be shown when a discount is applied
     let discountName: String?
     
-    public init(paidAmount: String, transactionAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String?, paymentMethodDescription: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, hasInstallments: Bool = false, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentAmount: String? = nil, hasDiscount: Bool = false, discountName: String? = nil) {
+    public init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil) {
         self.paidAmount = paidAmount
-        self.rawAmount = transactionAmount
+        self.rawAmount = rawAmount
         
         self.paymentMethodName = paymentMethodName
         if let lastFourDigits = paymentMethodLastFourDigits {
@@ -49,12 +66,11 @@ public class PXCongratsPaymentInfo: NSObject {
         self.paymentMethodId = paymentMethodId
         self.paymentMethodType = paymentMethodType
         
-        self.hasInstallments = hasInstallments
         self.installmentsRate = installmentsRate
         self.installmentsCount = installmentsCount
-        self.installmentAmount = installmentAmount
+        self.installmentsAmount = installmentsAmount
+        self.installmentsTotalAmount = installmentsTotalAmount
         
-        self.hasDiscount = hasDiscount
         self.discountName = discountName
         super.init()
     }

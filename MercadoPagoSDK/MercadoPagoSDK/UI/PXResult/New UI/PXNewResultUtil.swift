@@ -192,7 +192,7 @@ extension PXNewResultUtil {
         return firstString
     }
     
-    class func formatPaymentMethodFirstString(totalAmount: String, transactionAmount: String?, hasInstallments: Bool, installmentsCount: Int, installmentsAmount: String?, installmentRate: Double?, hasDiscount: Bool, discountName: String?) -> NSAttributedString {
+    class func formatPaymentMethodFirstString(paidAmount: String, transactionAmount: String?, hasInstallments: Bool, installmentsCount: Int, installmentsAmount: String?, installmentRate: Double?, installmentsTotalAmount: String?, hasDiscount: Bool, discountName: String?) -> NSAttributedString {
         let attributes = firstStringAttributes()
         let totalAmountAttributes = attributes.totalAmountAtributes
         let interestRateAttributes = attributes.interestRateAttributes
@@ -215,17 +215,17 @@ extension PXNewResultUtil {
                 }
                 
                 // Total Amount
-                let totalString = Utils.addParenthesis(totalAmount)
+                let totalString = Utils.addParenthesis(installmentsTotalAmount ?? "")
                 let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
                 firstString.appendWithSpace(attributedTotal)
             } else {
-                let titleString = totalAmount
+                let titleString = installmentsTotalAmount ?? ""
                 let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
                 firstString.append(attributedTitle)
             }
         } else {
             // Caso account money
-            let attributed = NSAttributedString(string: totalAmount, attributes: PXNewCustomView.titleAttributes)
+            let attributed = NSAttributedString(string: paidAmount, attributes: PXNewCustomView.titleAttributes)
             firstString.append(attributed)
         }
         
