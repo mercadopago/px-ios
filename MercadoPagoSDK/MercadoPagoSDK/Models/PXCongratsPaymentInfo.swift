@@ -13,7 +13,7 @@ public class PXCongratsPaymentInfo: NSObject {
     /// What the user paid, it has to include the currency.
     let paidAmount: String
     
-	/// What the should have paid, it has to include the currency.
+    /// What the user should have paid, it has to include the currency.
     /// This amount represents the original price.
     let rawAmount: String?
     
@@ -38,7 +38,7 @@ public class PXCongratsPaymentInfo: NSObject {
     
     // Installments
     /// Interest rate applied to payment
-    let installmentsRate: Double?
+    var installmentsRate: Double = 0
     
     /// Number of installments
     let installmentsCount: Int
@@ -55,13 +55,18 @@ public class PXCongratsPaymentInfo: NSObject {
     /// Some friendly message to be shown when a discount is applied
     let discountName: String?
     
+    /// This public initializer hides the configuration for `externalPaymentMethodImage` despite the rest of the fields in the class. Only for OBJC
+    @objc public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodId: String, paymentMethodType: PXPaymentOBJC, installmentsRate: Double, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
+        self.init(paidAmount: paidAmount, rawAmount: rawAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentMethodLastFourDigits, paymentMethodDescription: paymentMethodDescription, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType.getRealCase(), installmentsRate: installmentsRate, installmentsCount: installmentsCount, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: nil)
+    }
+    
     /// This public initializer hides the configuration for `externalPaymentMethodImage` despite the rest of the fields in the class.
-    public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil) {
+    @nonobjc public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
         self.init(paidAmount: paidAmount, rawAmount: rawAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentMethodLastFourDigits, paymentMethodDescription: paymentMethodDescription, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType, installmentsRate: installmentsRate, installmentsCount: installmentsCount, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: nil)
     }
     
     /// This internal initializer makes available the configuration for `externalPaymentMethodImage` despite the rest of the fields in the class
-    internal init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil, externalPaymentMethodImage: Data?) {
+    @nonobjc internal init(paidAmount: String, rawAmount: String?, paymentMethodName: String, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String? = nil, paymentMethodId: String, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = 0.0, installmentsCount: Int = 0, installmentsAmount: String? = nil, installmentsTotalAmount: String? = nil, discountName: String? = nil, externalPaymentMethodImage: Data?) {
         self.paidAmount = paidAmount
         self.rawAmount = rawAmount
         
@@ -75,7 +80,7 @@ public class PXCongratsPaymentInfo: NSObject {
         self.paymentMethodId = paymentMethodId
         self.paymentMethodType = paymentMethodType
         
-        self.installmentsRate = installmentsRate
+        self.installmentsRate = installmentsRate ?? 0.0
         self.installmentsCount = installmentsCount
         self.installmentsAmount = installmentsAmount
         self.installmentsTotalAmount = installmentsTotalAmount
@@ -87,3 +92,16 @@ public class PXCongratsPaymentInfo: NSObject {
     }
 }
 
+extension PXCongratsPaymentInfo {
+    var hasInstallments: Bool {
+        get {
+            return installmentsCount > 0
+        }
+    }
+    
+    var hasDiscount: Bool {
+        get {
+            return discountName != nil
+        }
+    }
+}

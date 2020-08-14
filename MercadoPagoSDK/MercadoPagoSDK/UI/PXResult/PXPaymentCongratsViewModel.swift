@@ -20,26 +20,19 @@ class PXPaymentCongratsViewModel {
         paymentCongrats.navigationController?.pushViewController(vc, animated: true)
     }
     
-    //MARK: Private methods
+    // MARK: Private methods
     private func createPaymentMethodReceiptData(from paymentInfo: PXCongratsPaymentInfo) -> PXNewCustomViewData {
-        let firstString = PXNewResultUtil.formatPaymentMethodFirstString(paidAmount: paymentInfo.paidAmount,
-                                                                         transactionAmount: paymentInfo.rawAmount,
-                                                                         hasInstallments: paymentInfo.installmentsCount > 0,
-                                                                         installmentsCount: paymentInfo.installmentsCount,
-                                                                         installmentsAmount: paymentInfo.installmentsAmount,
-                                                                         installmentRate: paymentInfo.installmentsRate,
-                                                                         installmentsTotalAmount: paymentInfo.installmentsTotalAmount,
-                                                                         hasDiscount: paymentInfo.discountName != nil,
-                                                                         discountName: paymentInfo.discountName)
+        let firstString = PXNewResultUtil.formatPaymentMethodFirstString(paymentInfo: paymentInfo)
         
         let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName,
                                                                            paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits,
                                                                            paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
         
         let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodDescription)
+        
         let icon = PXNewResultUtil.getPaymentMethodIcon(paymentTypeId: paymentInfo.paymentMethodType.rawValue, paymentMethodId: paymentInfo.paymentMethodId, externalPaymentMethodImage: paymentInfo.externalPaymentMethodImage)
-        let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
-        return data
+        
+        return PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
     }
 }
 

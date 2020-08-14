@@ -129,9 +129,27 @@ class PXNewResultUtil {
 
 // MARK: Payment Method Logic
 extension PXNewResultUtil {
+    
+    //ATTRIBUTES FOR DISPLAYING PAYMENT METHOD
+    static let totalAmountAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
+    ]
+    
+    static let interestRateAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+    ]
+    
+    static let discountAmountAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45),
+        NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
+    ]
+    
     //PAYMENT METHOD ICON
     class func getPaymentMethodIcon(paymentMethod: PXPaymentMethod) -> UIImage? {
-        return getPaymentMethodIcon(paymentTypeId: paymentMethod.paymentTypeId, paymentMethodId: paymentMethod.id, externalPaymentMethodImage: paymentMethod.externalPaymentPluginImageData as? Data)
+        return getPaymentMethodIcon(paymentTypeId: paymentMethod.paymentTypeId, paymentMethodId: paymentMethod.id, externalPaymentMethodImage: paymentMethod.externalPaymentPluginImageData as Data?)
     }
     
     class func getPaymentMethodIcon(paymentTypeId: String, paymentMethodId: String, externalPaymentMethodImage: Data? = nil) -> UIImage? {
@@ -145,75 +163,65 @@ extension PXNewResultUtil {
     }
     
     //PAYMENT METHOD DATA
-    class func formatPaymentMethodFirstString(paidAmount: String, transactionAmount: String?, hasInstallments: Bool, installmentsCount: Int, installmentsAmount: String?, installmentRate: Double?, installmentsTotalAmount: String?, hasDiscount: Bool, discountName: String?) -> NSAttributedString {
-        let attributes = firstStringAttributes()
-        let totalAmountAttributes = attributes.totalAmountAtributes
-        let interestRateAttributes = attributes.interestRateAttributes
-        let discountAmountAttributes = attributes.discountAmountAttributes
+    class func formatPaymentMethodFirstString(paymentInfo: PXCongratsPaymentInfo) -> NSAttributedString {
+        var firstString: NSMutableAttributedString = NSMutableAttributedString()
         
-        let firstString: NSMutableAttributedString = NSMutableAttributedString()
-        
-        if hasInstallments {
-            if installmentsCount > 1 {
-                let installmentsAmount = installmentsAmount ?? ""
-                let titleString = String(installmentsCount) + "x " + installmentsAmount
-                let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributedTitle)
-                
-                // Installment Rate
-                if installmentRate == 0.0 {
-                    let interestRateString = " " + "Sin interés".localized.lowercased()
-                    let attributedInsterest = NSAttributedString(string: interestRateString, attributes: interestRateAttributes)
-                    firstString.appendWithSpace(attributedInsterest)
-                }
-                
-                // Total Amount
-                let totalString = Utils.addParenthesis(installmentsTotalAmount ?? "")
-                let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
-                firstString.appendWithSpace(attributedTotal)
-            } else {
-                let attributedTitle = NSAttributedString(string: installmentsTotalAmount ?? "", attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributedTitle)
+        if paymentInfo.hasInstallments { // Pago en cuotas
+            if let installmentsAmount = paymentInfo.installmentsAmount, let installmentsTotalAmount = paymentInfo.installmentsTotalAmount {
+                firstString = textForInstallmentsPayment(installmentsCount: paymentInfo.installmentsCount, installmentsRate: paymentInfo.installmentsRate, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount)
             }
-        } else {
-            // Caso account money
-            let attributed = NSAttributedString(string: paidAmount, attributes: PXNewCustomView.titleAttributes)
-            firstString.append(attributed)
+        } else { // Caso account money
+            firstString.append(textForNonInstallmentPayment(paidAmount: paymentInfo.paidAmount))
         }
         
-        // Discount
-        if hasDiscount, let transactionAmount = transactionAmount {
-            let attributedAmount = NSAttributedString(string: transactionAmount, attributes: discountAmountAttributes)
-            
-            firstString.appendWithSpace(attributedAmount)
-            
-            let discountString = discountName ?? ""
-            let attributedString = NSAttributedString(string: discountString, attributes: interestRateAttributes)
-            
-            firstString.appendWithSpace(attributedString)
+        if paymentInfo.hasDiscount {
+            if let discountName = paymentInfo.discountName, let rawAmount = paymentInfo.rawAmount {
+                let message = discountMessage(discountName, transactionAmount: rawAmount)
+                firstString.append(message)
+            }
         }
         
         return firstString
     }
     
-    class func firstStringAttributes() -> (totalAmountAtributes: [NSAttributedString.Key: Any], interestRateAttributes: [NSAttributedString.Key: Any], discountAmountAttributes: [NSAttributedString.Key: Any]) {
-        let totalAmountAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
-        ]
+    class func textForInstallmentsPayment(installmentsCount: Int, installmentsRate: Double, installmentsAmount: String, installmentsTotalAmount: String) -> NSMutableAttributedString {
+        guard installmentsCount > 1 else {
+            return NSMutableAttributedString(string: installmentsTotalAmount, attributes: PXNewCustomView.titleAttributes)
+        }
+        let finalString: NSMutableAttributedString = NSMutableAttributedString()
+        let titleString = String(format: "%dx %@", installmentsCount, installmentsTotalAmount)
+        let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
+        finalString.append(attributedTitle)
         
-        let interestRateAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
-        ]
+        // Installment Rate
+        if installmentsRate == 0.0 {
+            let interestRateString = String(format: " %@", "Sin interés".localized.lowercased())
+            let attributedInsterest = NSAttributedString(string: interestRateString, attributes: interestRateAttributes)
+            finalString.appendWithSpace(attributedInsterest)
+        }
         
-        let discountAmountAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45),
-            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
-        ]
+        // Total Amount
+        let totalString = Utils.addParenthesis(installmentsTotalAmount)
+        let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
+        finalString.appendWithSpace(attributedTotal)
         
-        return (totalAmountAttributes, interestRateAttributes, discountAmountAttributes)
+        return finalString
+    }
+    
+    class func textForNonInstallmentPayment(paidAmount: String) -> NSAttributedString {
+        return NSAttributedString(string: paidAmount, attributes: PXNewCustomView.titleAttributes)
+    }
+    
+    class func discountMessage(_ text: String, transactionAmount: String) -> NSMutableAttributedString {
+        let discountString = NSMutableAttributedString()
+        
+        let attributedAmount = NSAttributedString(string: transactionAmount, attributes: discountAmountAttributes)
+        discountString.appendWithSpace(attributedAmount)
+        
+        let attributedMessage = NSAttributedString(string: text, attributes: interestRateAttributes)
+        discountString.append(attributedMessage)
+        
+        return discountString
     }
     
     // PM Second String
