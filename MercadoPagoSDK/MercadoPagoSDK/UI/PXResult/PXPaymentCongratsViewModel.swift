@@ -46,7 +46,6 @@ class PXPaymentCongratsViewModel {
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     // HEADER
-    #warning("PXResultViewModel also sends a status description to calculate the congrats color, a solution could be to expose only to the checkout a headerColor, and let PXBusinessResult and PXResultViewModel to set it. While external integrators should not care about header color because it should be calculated by relying in status. Validate this solution")
     func getHeaderColor() -> UIColor {
         guard let color = paymentCongrats.headerColor else {
             return ResourceManager.shared.getResultColorWith(status: paymentCongrats.type.getDescription())
