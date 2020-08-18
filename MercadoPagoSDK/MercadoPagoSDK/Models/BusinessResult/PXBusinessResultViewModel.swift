@@ -372,7 +372,7 @@ extension PXBusinessResultViewModel {
             
             //Recepit
             if businessResult.mustShowReceipt() {
-                paymentCongratsData.withReceipt(receiptId: businessResult.getReceiptId(), action: pointsAndDiscounts?.viewReceiptAction)
+                paymentCongratsData.withReceipt(shouldShowReceipt: true, receiptId: businessResult.getReceiptId(), action: pointsAndDiscounts?.viewReceiptAction)
             }
 
             //Points and Discounts
@@ -400,14 +400,19 @@ extension PXBusinessResultViewModel {
             paymentCongratsData.withFooterSecondaryAction(linkAction)
 
             //Views
-            paymentCongratsData.withCustomViews(important: businessResult.getImportantCustomView(), top: businessResult.getTopCustomView(), bottom: businessResult.getBottomCustomView())
+            paymentCongratsData.withTopView(businessResult.getTopCustomView())
+                               .withImportantView(businessResult.getImportantCustomView())
+                               .withBottomView(businessResult.getBottomCustomView())
                                .withCreditsExpectationView(creditsExpectationView())
                                .withErrorBodyView(errorBodyView())
             return paymentCongratsData
         }
 
         private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentMethodTypeId: String, paymentMethodId: String) -> PXCongratsPaymentInfo {
-            let paidAmount = "\(paymentData.getTransactionAmountWithDiscount())"
+            var paidAmount = ""
+            if let transactionAmount = paymentData.getTransactionAmountWithDiscount() {
+                paidAmount = "\(transactionAmount)"
+            }
             let paymentMethodName = paymentData.paymentMethod?.name ?? ""
             let lastFourDigits = paymentData.token?.lastFourDigits
             let transactionAmount = "\(paymentData.transactionAmount)"
