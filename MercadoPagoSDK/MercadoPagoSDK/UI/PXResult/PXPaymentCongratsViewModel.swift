@@ -22,19 +22,22 @@ class PXPaymentCongratsViewModel {
     
     //MARK: Private methods
     private func createPaymentMethodReceiptData(from paymentInfo: PXCongratsPaymentInfo) -> PXNewCustomViewData {
-        let firstString = PXNewResultUtil.formatPaymentMethodFirstString(totalAmount: paymentInfo.paidAmount,
+        let firstString = PXNewResultUtil.formatPaymentMethodFirstString(paidAmount: paymentInfo.paidAmount,
                                                                          transactionAmount: paymentInfo.rawAmount,
-                                                                         hasInstallments: paymentInfo.hasInstallments,
+                                                                         hasInstallments: paymentInfo.installmentsCount > 0,
                                                                          installmentsCount: paymentInfo.installmentsCount,
-                                                                         installmentsAmount: paymentInfo.installmentAmount,
+                                                                         installmentsAmount: paymentInfo.installmentsAmount,
                                                                          installmentRate: paymentInfo.installmentsRate,
-                                                                         hasDiscount: paymentInfo.hasDiscount,
+                                                                         installmentsTotalAmount: paymentInfo.installmentsTotalAmount,
+                                                                         hasDiscount: paymentInfo.discountName != nil,
                                                                          discountName: paymentInfo.discountName)
         
-        let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName, paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits, paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
+        let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName,
+                                                                           paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits,
+                                                                           paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
         
         let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodDescription)
-        let icon = ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentInfo.paymentMethodId, defaultColor: false)
+        let icon = PXNewResultUtil.getPaymentMethodIcon(paymentTypeId: paymentInfo.paymentMethodType.rawValue, paymentMethodId: paymentInfo.paymentMethodId, externalPaymentMethodImage: paymentInfo.externalPaymentMethodImage)
         
         let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
         return data
@@ -43,7 +46,6 @@ class PXPaymentCongratsViewModel {
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     // HEADER
-    #warning("PXResultViewModel also sends a status description to calculate the congrats color, a solution could be to expose only to the checkout a headerColor, and let PXBusinessResult and PXResultViewModel to set it. While external integrators should not care about header color because it should be calculated by relying in status. Validate this solution")
     func getHeaderColor() -> UIColor {
         guard let color = paymentCongrats.headerColor else {
             return ResourceManager.shared.getResultColorWith(status: paymentCongrats.type.getDescription())
@@ -174,11 +176,8 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     // PAYMENT METHOD
-    #warning("logica especifica para comparar PXBusinessResultStatus con PXPaymentStatus")
     func shouldShowPaymentMethod() -> Bool {
-        // TODO checkear comparación de este status (BusinessStatus) pero puede ser que venga por PXResultViewModel que tiene otra logica
-        let isApproved = paymentCongrats.type.getDescription().lowercased() == PXPaymentStatus.APPROVED.rawValue.lowercased()
-        return !hasInstructions() && isApproved
+        return paymentCongrats.shouldShowPaymentMethod
     }
     
     func getPaymentViewData() -> PXNewCustomViewData? {
