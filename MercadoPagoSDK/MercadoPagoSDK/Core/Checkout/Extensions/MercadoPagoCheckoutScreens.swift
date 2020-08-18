@@ -163,6 +163,19 @@ extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }
 
+    private func redirectAndFinish(viewModel: PXNewResultViewModelInterface, redirectUrl: URL) {
+        PXNewResultUtil.trackScreenAndConversion(viewModel: viewModel)
+        PXNewResultUtil.openURL(url: redirectUrl, success: { [weak self] _ in
+            guard let self = self else {
+                return
+            }
+            if self.viewModel.pxNavigationHandler.isLoadingPresented() {
+                self.viewModel.pxNavigationHandler.dismissLoading()
+            }
+            self.finish()
+        })
+    }
+
     func showPaymentResultScreen() {
         if viewModel.businessResult != nil {
             showBusinessResultScreen()
@@ -172,7 +185,14 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
-        let viewController = PXNewResultViewController(viewModel: viewModel.resultViewModel(), callback: { [weak self] congratsState, remedyText in
+        let resultViewModel = viewModel.resultViewModel()
+        if let url = resultViewModel.getRedirectUrl() {
+            // If preference has a redirect URL for the current result status, perform redirect and finish checkout
+            redirectAndFinish(viewModel: resultViewModel, redirectUrl: url)
+            return
+        }
+
+        let viewController = PXNewResultViewController(viewModel: resultViewModel, callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
@@ -239,6 +259,11 @@ extension MercadoPagoCheckout {
         }
 
         let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        if let url = pxBusinessResultViewModel.getRedirectUrl() {
+            // If preference has a redirect URL for the current result status, perform redirect and finish checkout
+            redirectAndFinish(viewModel: pxBusinessResultViewModel, redirectUrl: url)
+            return
+        }
         let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
             self?.finish()
         })

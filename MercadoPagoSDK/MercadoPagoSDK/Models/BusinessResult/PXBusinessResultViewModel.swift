@@ -34,7 +34,7 @@ class PXBusinessResultViewModel: NSObject {
     }
 
     func primaryResultColor() -> UIColor {
-        return ResourceManager.shared.getResultColorWith(status: self.businessResult.getBusinessStatus().getDescription())
+        return ResourceManager.shared.getResultColorWith(status: businessResult.getBusinessStatus().getDescription())
     }
 
     func setCallback(callback: @escaping ((PaymentResult.CongratsState, String?) -> Void)) {
@@ -42,7 +42,7 @@ class PXBusinessResultViewModel: NSObject {
     }
 
     func getBadgeImage() -> UIImage? {
-        return ResourceManager.shared.getBadgeImageWith(status: self.businessResult.getBusinessStatus().getDescription())
+        return ResourceManager.shared.getBadgeImageWith(status: businessResult.getBusinessStatus().getDescription())
     }
 
     func getAttributedTitle(forNewResult: Bool = false) -> NSAttributedString {
@@ -99,7 +99,13 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     func getHeaderCloseAction() -> (() -> Void)? {
         let action = { [weak self] in
             if let callback = self?.callback {
-                callback(PaymentResult.CongratsState.EXIT, nil)
+                if let url = self?.getBackUrl() {
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                        callback(PaymentResult.CongratsState.EXIT, nil)
+                    })
+                } else {
+                    callback(PaymentResult.CongratsState.EXIT, nil)
+                }
             }
         }
         return action
@@ -267,5 +273,53 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
 
     func getBottomCustomView() -> UIView? {
         return self.businessResult.getBottomCustomView()
+    }
+
+    func shouldAutoReturn() -> Bool {
+        guard let autoReturn = amountHelper.preference.autoReturn,
+            let fieldId = PXNewResultUtil.PXAutoReturnTypes(rawValue: autoReturn),
+            getBackUrl() != nil else {
+            return false
+        }
+
+        let status = businessResult.getBusinessStatus()
+        switch status {
+        case .APPROVED:
+            return fieldId == .APPROVED
+        default:
+            return fieldId == .ALL
+        }
+    }
+
+    func getBackUrl() -> URL? {
+        return getUrl(backUrls: amountHelper.preference.backUrls)
+    }
+
+    func getRedirectUrl() -> URL? {
+        return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
+    }
+
+    private func getUrl(backUrls: PXBackUrls?, appendLanding: Bool = false) -> URL? {
+        var urlString: String?
+        let status = businessResult.getBusinessStatus()
+        switch status {
+        case .APPROVED:
+            urlString = backUrls?.success
+        case .PENDING:
+            urlString = backUrls?.pending
+        case .REJECTED:
+            urlString = backUrls?.failure
+        default:
+            return nil
+        }
+        if let urlString = urlString,
+            !urlString.isEmpty {
+            if appendLanding {
+                let landingURL = MLBusinessAppDataService().appendLandingURLToString(urlString)
+                return URL(string: landingURL)
+            }
+            return URL(string: urlString)
+        }
+        return nil
     }
 }

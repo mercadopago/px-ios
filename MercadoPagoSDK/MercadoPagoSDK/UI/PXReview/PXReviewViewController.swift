@@ -314,11 +314,8 @@ extension PXReviewViewController {
     }
 
     private func getCFTComponentView() -> UIView? {
-        if viewModel.hasPayerCostAddionalInfo() {
-            let cftView = PXCFTComponentView(withCFTValue: self.viewModel.amountHelper.getPaymentData().payerCost?.getCFT(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
-            return cftView
-        }
-        return nil
+        guard viewModel.hasPayerCostAddionalInfo() else { return nil }
+        return PXCFTComponentView(withCFTValue: viewModel.amountHelper.getPaymentData().payerCost?.interestRate)
     }
 
     private func getFloatingButtonView() -> PXContainedActionButtonView {

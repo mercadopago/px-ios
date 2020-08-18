@@ -12,25 +12,19 @@ final class PXCFTComponentView: PXComponentView {
 
     fileprivate lazy var VIEW_HEIGHT: CGFloat = 44
     fileprivate lazy var MATCH_WIDTH_PERCENT: CGFloat = 95
+    fileprivate let cftLabel = UILabel()
 
-    fileprivate let cftLabel: UILabel = UILabel()
-
-    init(withCFTValue: String?, titleColor: UIColor, backgroundColor: UIColor) {
-
+    init(withCFTValue: PXText?) {
         super.init()
+        backgroundColor = ThemeManager.shared.highlightBackgroundColor()
 
-        self.backgroundColor = backgroundColor
-
-        if let cftValue = withCFTValue {
-
+        if let cftText = withCFTValue {
             cftLabel.translatesAutoresizingMaskIntoConstraints = false
             cftLabel.textAlignment = .center
             cftLabel.numberOfLines = 1
-            cftLabel.attributedText = NSAttributedString(string: cftValue, attributes: [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.M_FONT)])
-            cftLabel.textColor = titleColor
+            cftLabel.attributedText = cftText.getAttributedString(fontSize: PXLayout.M_FONT)
             cftLabel.accessibilityIdentifier = "CFT_label"
-            self.addSubview(cftLabel)
-
+            addSubview(cftLabel)
             PXLayout.pinTop(view: cftLabel, to: self).isActive = true
             PXLayout.centerHorizontally(view: cftLabel).isActive = true
             PXLayout.matchWidth(ofView: cftLabel, toView: self, withPercentage: MATCH_WIDTH_PERCENT).isActive = true

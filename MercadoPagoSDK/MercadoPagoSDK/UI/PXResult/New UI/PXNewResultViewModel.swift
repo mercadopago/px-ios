@@ -105,4 +105,9 @@ protocol PXNewResultViewModelInterface {
     func getTrackingProperties() -> [String: Any]
     func getTrackingPath() -> String
     func getFlowBehaviourResult() -> PXResultKey
+
+    //BACK URL, REDIRECT URL & AUTORETURN
+    func shouldAutoReturn() -> Bool
+    func getBackUrl() -> URL?
+    func getRedirectUrl() -> URL?
 }

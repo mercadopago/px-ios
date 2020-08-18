@@ -245,36 +245,6 @@ extension PXResultViewModel {
     }
 }
 
-// MARK: URL logic
-extension PXResultViewModel {
-    func getBackUrl() -> URL? {
-        if let status = PXPaymentStatus(rawValue: getPaymentStatus()) {
-            switch status {
-            case .APPROVED:
-                return URL(string: amountHelper.preference.backUrls?.success ?? "")
-            case .PENDING:
-                return URL(string: amountHelper.preference.backUrls?.pending ?? "")
-            case .REJECTED:
-                return URL(string: amountHelper.preference.backUrls?.failure ?? "")
-            default:
-                return nil
-            }
-        }
-        return nil
-    }
-
-    func openURL(url: URL, success: @escaping (Bool) -> Void) {
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: { result in
-                sleep(1)
-                success(result)
-            })
-        } else {
-            success(false)
-        }
-    }
-}
-
 // MARK: New Result View Model Interface
 extension PXResultViewModel: PXNewResultViewModelInterface {
     func getHeaderColor() -> UIColor {
@@ -301,7 +271,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         let action = { [weak self] in
             if let callback = self?.callback {
                 if let url = self?.getBackUrl() {
-                    self?.openURL(url: url, success: { (_) in
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
                         callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
@@ -506,6 +476,54 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     func getBottomCustomView() -> UIView? {
         if paymentResult.isApproved() {
             return preference.getBottomCustomView()
+        }
+        return nil
+    }
+
+    func shouldAutoReturn() -> Bool {
+        guard let autoReturn = amountHelper.preference.autoReturn,
+            let fieldId = PXNewResultUtil.PXAutoReturnTypes(rawValue: autoReturn),
+            getBackUrl() != nil else {
+            return false
+        }
+
+        let status = PXPaymentStatus(rawValue: getPaymentStatus())
+        switch status {
+        case .APPROVED:
+            return fieldId == .APPROVED
+        default:
+            return fieldId == .ALL
+        }
+    }
+
+    func getBackUrl() -> URL? {
+        return getUrl(backUrls: amountHelper.preference.backUrls)
+    }
+
+    func getRedirectUrl() -> URL? {
+        return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
+    }
+
+    private func getUrl(backUrls: PXBackUrls?, appendLanding: Bool = false) -> URL? {
+        var urlString: String?
+        let status = PXPaymentStatus(rawValue: getPaymentStatus())
+        switch status {
+        case .APPROVED:
+            urlString = backUrls?.success
+        case .PENDING:
+            urlString = backUrls?.pending
+        case .REJECTED:
+            urlString = backUrls?.failure
+        default:
+            return nil
+        }
+        if let urlString = urlString,
+            !urlString.isEmpty {
+            if appendLanding {
+                let landingURL = MLBusinessAppDataService().appendLandingURLToString(urlString)
+                return URL(string: landingURL)
+            }
+            return URL(string: urlString)
         }
         return nil
     }
