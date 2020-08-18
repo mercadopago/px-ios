@@ -13,7 +13,6 @@ Pod::Spec.new do |s|
 
   s.subspec 'Default' do |default|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
-    #default.resources = ['MercadoPagoSDK/Resources/**/*.xib']
     default.resource_bundles = {
       'MercadoPagoSDKResources' => [
         'MercadoPagoSDK/Resources/**/*.xcassets',
