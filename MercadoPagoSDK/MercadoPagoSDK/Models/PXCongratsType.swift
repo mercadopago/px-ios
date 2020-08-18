@@ -33,4 +33,13 @@ import Foundation
         case .IN_PROGRESS : return "IN PROGRESS"
         }
     }
+    
+    func getRawValue() -> String {
+        switch self {
+        case .APPROVED : return "approved"
+        case .REJECTED  : return "rejected"
+        case .PENDING   : return "pending"
+        case .IN_PROGRESS : return "in_process"
+        }
+    }
 }

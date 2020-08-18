@@ -281,23 +281,33 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     // TODO double check how this is used
     func getTrackingPath() -> String {
-        return paymentCongrats.trackingPath
+        let paymentStatus = paymentCongrats.type.getRawValue()
+        var screenPath = ""
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        }
+        return screenPath
     }
     
     func getFlowBehaviourResult() -> PXResultKey {
-        guard let result = paymentCongrats.flowBehaviourResult else {
-            switch paymentCongrats.type {
-            case .APPROVED:
-                return .SUCCESS
-            case .REJECTED:
-                return .FAILURE
-            case .PENDING:
-                return .PENDING
-            case .IN_PROGRESS:
-                return .PENDING
-            }
+        if let result = paymentCongrats.flowBehaviourResult {
+            return result
         }
-        return result
+        
+        switch paymentCongrats.type {
+        case .APPROVED:
+            return .SUCCESS
+        case .REJECTED:
+            return .FAILURE
+        case .PENDING:
+            return .PENDING
+        case .IN_PROGRESS:
+            return .PENDING
+        }
     }
     
     #warning("TBD")

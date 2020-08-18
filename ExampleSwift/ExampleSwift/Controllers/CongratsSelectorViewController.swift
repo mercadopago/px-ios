@@ -15,7 +15,15 @@ import MercadoPagoSDKV4
 import MercadoPagoSDK
 #endif
 
-class CongratsSelectorViewController: UITableViewController {
+class CongratsSelectorViewController: UITableViewController, PXTrackerListener {
+    func trackScreen(screenName: String, extraParams: [String : Any]?) {
+        return
+    }
+    
+    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String : Any]?) {
+        return
+    }
+    
     
     private var congratsData : [CongratsType] = []
     
@@ -41,6 +49,7 @@ class CongratsSelectorViewController: UITableViewController {
                                 .withCrossSelling(crosseling)
                                 .shouldShowPaymentMethod(true)
                                 .withSplitPaymenInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", rawAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodLastFourDigits: "", paymentMethodDescription: nil, paymentMethodId: "account_money", paymentMethodType: .ACCOUNT_MONEY)))
+            .withTracking(trackingProperties: PXPaymentCongratsTracking(paymentStatus: "APPROBED", paymentStatusDetail: "Because yes", totalAmount: 200, paymentId: "123", currencyId: "pesos"), trackingConfiguration: PXTrackingConfiguration(trackListener: self, flowName: "testAPP", flowDetails: nil, sessionId: nil)))
     }()
     
     private lazy var congratsWithOutDiscountsAndPoints : CongratsType = {

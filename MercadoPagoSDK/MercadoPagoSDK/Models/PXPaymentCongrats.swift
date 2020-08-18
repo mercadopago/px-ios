@@ -75,7 +75,6 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
     
     // Tracking
-    private(set) var trackingPath: String = "" //TODO
     private(set) var trackingValues: [String : Any] = [:] //TODO
     // This field is ment to be used only by Checkout
     private(set) var flowBehaviourResult: PXResultKey?
@@ -382,6 +381,42 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withErrorBodyView(_ view: UIView?) -> PXPaymentCongrats {
         self.errorBodyView = view
+        return self
+    }
+    
+    /**
+     An error view to be displayed when a failure congrats is shown
+     - parameter shouldShow: a `Bool` indicating if the error screen should be shown.
+     - returns: this builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func withTracking(trackingProperties: PXPaymentCongratsTracking, trackingConfiguration: PXTrackingConfiguration) -> PXPaymentCongrats {
+        var properties: [String: Any] = [:]
+        properties["style"] = "custom"
+        properties["payment_method_id"] = paymentInfo?.paymentMethodId
+        properties["payment_method_type"] = paymentInfo?.paymentMethodType.rawValue
+        properties["payment_id"] = trackingProperties.paymentId
+        properties["payment_status"] = trackingProperties.paymentStatus
+        properties["payment_status_detail"] = trackingProperties.paymentStatusDetail
+        properties["preference_amount"] = trackingProperties.totalAmount
+        properties["currency_id"] = trackingProperties.currencyId
+        properties["has_split_payment"] = splitPaymentInfo != nil
+        properties[PXCongratsTracking.TrackingKeys.hasBottomView.rawValue] = bottomView != nil
+        properties[PXCongratsTracking.TrackingKeys.hasTopView.rawValue] = topView != nil
+        properties[PXCongratsTracking.TrackingKeys.hasImportantView.rawValue] = importantView != nil
+        properties[PXCongratsTracking.TrackingKeys.hasExpenseSplitView.rawValue] = expenseSplit != nil
+        properties[PXCongratsTracking.TrackingKeys.scoreLevel.rawValue] = points?.progress.levelNumber
+        properties[PXCongratsTracking.TrackingKeys.discountsCount.rawValue] = discounts?.items.count
+        
+        trackingConfiguration.updateTracker()
+        
+        self.trackingValues = properties
+        return self
+    }
+    
+    @discardableResult
+    internal func withTrackingProperties(_ trackingProperties: [String: Any]) -> PXPaymentCongrats {
+        self.trackingValues = trackingProperties
         return self
     }
     
