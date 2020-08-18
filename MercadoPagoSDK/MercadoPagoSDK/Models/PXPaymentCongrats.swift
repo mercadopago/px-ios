@@ -27,6 +27,7 @@ public final class PXPaymentCongrats: NSObject {
     
     // Receipt
     private(set) var receiptId: String?
+    private(set) var shouldShowReceipt: Bool = false
     
     /* --- Points & Discounts --- */
     // Points
@@ -153,12 +154,14 @@ extension PXPaymentCongrats {
     }
     /**
      Defines if the receipt view should be shown, in affirmative case, the receiptId must be supplied.
+     - parameter shouldShowReceipt: a boolean indicating if the receipt view is displayed.
      - parameter receiptId: ID of the receipt
      - parameter action: action when the receipt view is pressed.
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withReceipt(receiptId: String?, action: PXRemoteAction?) -> PXPaymentCongrats {
+    public func withReceipt(shouldShowReceipt: Bool, receiptId: String?, action: PXRemoteAction?) -> PXPaymentCongrats {
+        self.shouldShowReceipt = shouldShowReceipt
         self.receiptId = receiptId
         self.receiptAction = action
         return self
@@ -253,20 +256,38 @@ extension PXPaymentCongrats {
         self.secondaryAction = action
         return self
     }
-    
+
     /**
-     Custom views to be displayed.
+     Top Custom view to be displayed.
      - Parameters:
-        - important: some `UIView`
-        - top: some `UIView`
-        - bottom: some `UIView`
+        - view: some `UIView`
      - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withCustomViews(important: UIView?, top: UIView?, bottom: UIView?) -> PXPaymentCongrats {
-        self.importantView = important
-        self.topView = top
-        self.bottomView = bottom
+    public func withTopView(_ view: UIView?)  -> PXPaymentCongrats {
+        self.topView = view
+        return self
+    }
+    /**
+     Important Custom view to be displayed.
+     - Parameters:
+        - view: some `UIView`
+     - returns: this builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func withImportantView(_ view: UIView?)  -> PXPaymentCongrats {
+        self.importantView = view
+        return self
+    }
+    /**
+     Bottom Custom view to be displayed.
+     - Parameters:
+        - view: some `UIView`
+     - returns: this builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    public func withBottomView(_ view: UIView?)  -> PXPaymentCongrats {
+        self.bottomView = view
         return self
     }
     

@@ -16,7 +16,7 @@ class PXPaymentCongratsViewModel {
     }
     
     func launch() {
-        let vc = PXNewResultViewController(viewModel: self, callback:{_,_ in })
+        let vc = PXNewResultViewController(viewModel: self)
         paymentCongrats.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -78,7 +78,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     //RECEIPT
     func mustShowReceipt() -> Bool {
-        return paymentCongrats.receiptId != nil
+        return paymentCongrats.shouldShowReceipt
     }
     
     func getReceiptId() -> String? {

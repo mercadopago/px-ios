@@ -18,7 +18,7 @@
                                                withHeaderWithTitle: @"¡Listo! Ya le pagaste a SuperMarket" imageURL: @"https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg" closeAction:^{
                                                    NSLog(@"Continuar");
                                                }]
-                                             withReceiptWithReceiptId: @"123" action: nil]
+                                             withReceiptWithShouldShowReceipt:true receiptId:@"123" action:nil]
                                              withFooterMainAction: [[PXAction alloc] initWithLabel:@"Continuar" action:^{
                                                  NSLog(@"Continuar");
                                              }]]

@@ -29,7 +29,7 @@ class CongratsSelectorViewController: UITableViewController {
                                 .withHeader(title: "¡Listo! Ya le pagaste a SuperMarket", imageURL: "https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg") {
                                     self.navigationController?.popViewController(animated: true)
                                 }
-                                .withReceipt(receiptId: "123", action: nil)
+                                .withReceipt(shouldShowReceipt: true, receiptId: "123", action: nil)
                                 .withFooterMainAction(PXAction(label: "Continuar", action: {
                                     self.navigationController?.popViewController(animated: true)
                                 }))
