@@ -396,10 +396,21 @@ extension PXPaymentCongrats {
         properties["payment_method_id"] = paymentInfo?.paymentMethodId
         properties["payment_method_type"] = paymentInfo?.paymentMethodType.rawValue
         properties["payment_id"] = trackingProperties.paymentId
-        properties["payment_status"] = trackingProperties.paymentStatus
-        properties["payment_status_detail"] = trackingProperties.paymentStatusDetail
+        properties["payment_status"] = type.getRawValue()
         properties["preference_amount"] = trackingProperties.totalAmount
-        properties["currency_id"] = trackingProperties.currencyId
+        
+        if let paymentStatusDetail = trackingProperties.paymentStatusDetail {
+            properties["payment_status_detail"] = paymentStatusDetail
+        }
+        
+        if let campaingId = trackingProperties.campaingId {
+            properties[PXCongratsTracking.TrackingKeys.campaignId.rawValue] = campaingId
+        }
+        
+        if let currency = trackingProperties.currencyId {
+            properties["currency_id"] = currency
+        }
+        
         properties["has_split_payment"] = splitPaymentInfo != nil
         properties[PXCongratsTracking.TrackingKeys.hasBottomView.rawValue] = bottomView != nil
         properties[PXCongratsTracking.TrackingKeys.hasTopView.rawValue] = topView != nil

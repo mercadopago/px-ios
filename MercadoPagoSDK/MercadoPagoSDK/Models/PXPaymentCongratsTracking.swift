@@ -9,15 +9,15 @@ import Foundation
 
 @objcMembers
 public class PXPaymentCongratsTracking: NSObject {
-    let currencyId: String
-    let paymentStatus: String
-    let paymentStatusDetail: String
-    let paymentId: String
-    let totalAmount: Double
+    let campaingId: String?
+    let currencyId: String?
+    let paymentStatusDetail: String?
+    let paymentId: Int64
+    let totalAmount: NSDecimalNumber
     
-    public init(paymentStatus: String, paymentStatusDetail: String, totalAmount: Double, paymentId: String, currencyId: String) {
+    public init(campaingId: String?, currencyId: String?, paymentStatusDetail: String?, totalAmount: NSDecimalNumber, paymentId: Int64) {
+        self.campaingId = campaingId
         self.currencyId = currencyId
-        self.paymentStatus = paymentStatus
         self.paymentStatusDetail = paymentStatusDetail
         self.paymentId = paymentId
         self.totalAmount = totalAmount
