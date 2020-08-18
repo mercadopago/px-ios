@@ -12,15 +12,14 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Default'
 
   s.subspec 'Default' do |default|
+    default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}', 'MercadoPagoSDK/Resources/**/*.xib']
     default.resource_bundles = {
       'MercadoPagoSDKResources' => [
         'MercadoPagoSDK/Resources/**/*.xcassets',
-        'MercadoPagoSDK/Resources/**/*.xib',
         'MercadoPagoSDK/Resources/**/*.{lproj,strings,stringsdict}',
         'MercadoPagoSDK/Resources/**/*.plist'
       ]
     }
-    default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     s.dependency 'MLUI', '~> 5.0'
     s.dependency 'MLCardDrawer', '~> 1.4'
     s.dependency 'MLBusinessComponents', '~> 1.0'
