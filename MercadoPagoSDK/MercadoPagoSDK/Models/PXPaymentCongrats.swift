@@ -109,7 +109,7 @@ extension PXPaymentCongrats {
      Any color for showing in the congrats' header. This should be used ONLY internally
      - parameter color: a color
      - returns: this builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     internal func withHeaderColor(_ color: UIColor) -> PXPaymentCongrats {
         self.headerColor = color
@@ -134,8 +134,9 @@ extension PXPaymentCongrats {
     /**
      Collector image shown in congrats' header. Can receive an `UIImage` or a `URL`.
      - parameter image: an image in `UIImage` format
+     - parameter url: an `URL` for the image
      - returns: this builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     internal func withHeaderImage(_ image: UIImage?) -> PXPaymentCongrats {
         self.headerImage = image
@@ -146,12 +147,13 @@ extension PXPaymentCongrats {
      Collector badge image shown in congrats' header. This should be used ONLY internally
      - parameter image: an image in `UIImage` format
      - returns: this builder `PXPaymentCongrats`
-    */
+     */
     @discardableResult
     internal func withHeaderBadgeImage(_ image: UIImage) -> PXPaymentCongrats {
         self.headerBadgeImage = image
         return self
     }
+    
     /**
      Defines if the receipt view should be shown, in affirmative case, the receiptId must be supplied.
      - parameter shouldShowReceipt: a boolean indicating if the receipt view is displayed.
@@ -279,6 +281,7 @@ extension PXPaymentCongrats {
         self.importantView = view
         return self
     }
+
     /**
      Bottom Custom view to be displayed.
      - Parameters:
@@ -319,7 +322,7 @@ extension PXPaymentCongrats {
     /**
      Defines if the payment method (or split payment method) should be shown.
      - parameter shouldShowPaymentMethod: a `boolean` indication if it should be shown.
-     - returns: tihs builder `PXPaymentCongrats`
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
     public func shouldShowPaymentMethod(_ shouldShowPaymentMethod: Bool) -> PXPaymentCongrats {
@@ -330,7 +333,7 @@ extension PXPaymentCongrats {
     /**
      Data containing all of the information for displaying the payment method .
      - parameter paymentInfo: a DTO for creating a `PXCongratsPaymentInfo` representing the payment method
-     - returns: tihs builder `PXPaymentCongrats`
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
     public func withPaymentMethodInfo(_ paymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
@@ -341,7 +344,7 @@ extension PXPaymentCongrats {
     /**
      Data containing all of the information for displaying the split payment method .
      - parameter paymentInfo: a DTO for creating a `PXCongratsPaymentInfo` representing the payment method
-     - returns: tihs builder `PXPaymentCongrats`
+     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
     public func withSplitPaymenInfo(_ splitPaymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
@@ -352,7 +355,7 @@ extension PXPaymentCongrats {
     /**
     If the paymentMehotd will be shown, and it is a credit card, this statemetnDescrption will be shown on the payment method view.
     - parameter statementDescription: some String
-    - returns: tihs builder `PXPaymentCongrats`
+    - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
     public func withStatementDescription(statementDescription: String?) -> PXPaymentCongrats {
@@ -363,7 +366,7 @@ extension PXPaymentCongrats {
     /**
     This is used to track how the flow finished,
     - parameter result: some PXResultKey
-    - returns: tihs builder `PXPaymentCongrats`
+    - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
     internal func withFlowBehaviorResult(_ result: PXResultKey) -> PXPaymentCongrats {
