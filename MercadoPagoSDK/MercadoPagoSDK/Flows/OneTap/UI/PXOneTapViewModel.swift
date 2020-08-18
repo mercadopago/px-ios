@@ -92,7 +92,7 @@ extension PXOneTapViewModel {
                 let viewModelCard = PXCardSliderViewModel(paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, accountMoney.getId(), false, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits, payerPaymentMethod: getPayerPaymentMethod(targetNode.paymentTypeId, nil), behaviours: targetNode.behaviours, displayInfo: targetNode.displayInfo)
 
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
-                let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
+                let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 viewModelCard.displayMessage = NSAttributedString(string: accountMoney.sliderTitle ?? "", attributes: attributes)
                 sliderModel.append(viewModelCard)
             } else if let targetCardData = targetNode.oneTapCard {
@@ -430,14 +430,9 @@ extension PXOneTapViewModel {
             }
 
             // Third attr
-            if let cftDisplayStr = payerCostData.getCFT(separator: ":") {
-                if (payerCostData.hasCFTValue() && (payerCostData.installments != 1)) || isDigitalCurrency {
-                    let thirdAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
-                    let thirdText = " \(cftDisplayStr)"
-                    let thirdAttributedString = NSAttributedString(string: thirdText, attributes: thirdAttributes)
-                    text.append(thirdAttributedString)
-                }
-
+            if let interestRate = payerCostData.interestRate,
+                let thirdAttributedString = interestRate.getAttributedString(fontSize: installmentsRowMessageFontSize) {
+                text.appendWithSpace(thirdAttributedString)
             }
         }
         return text
@@ -476,7 +471,7 @@ extension PXOneTapViewModel {
 
     func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
         var amount: String = ""
-        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
 
         amount = Utils.getAmountFormated(amount: amountToPay, forCurrency: SiteManager.shared.getCurrency())
         return NSAttributedString(string: amount, attributes: attributes)

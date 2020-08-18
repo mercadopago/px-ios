@@ -10,7 +10,18 @@ import MLBusinessComponents
 import AndesUI
 
 class PXNewResultUtil {
-    
+
+    //TRACKING
+    class func trackScreenAndConversion(viewModel: PXNewResultViewModelInterface) {
+        let path = viewModel.getTrackingPath()
+        if !path.isEmpty {
+            MPXTracker.sharedInstance.trackScreen(screenName: path, properties: viewModel.getTrackingProperties())
+
+            let behaviourProtocol = PXConfiguratorManager.flowBehaviourProtocol
+            behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())
+        }
+    }
+
     //RECEIPT DATA
     class func getDataForReceiptView(paymentId: String?) -> PXNewCustomViewData? {
         guard let paymentId = paymentId else {
@@ -96,6 +107,23 @@ class PXNewResultUtil {
             data.append(PXCrossSellingItemData(item: item))
         }
         return data
+    }
+
+    //URL logic
+    internal enum PXAutoReturnTypes: String {
+        case APPROVED = "approved"
+        case ALL = "all"
+    }
+
+    internal class func openURL(url: URL, success: @escaping (Bool) -> Void) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: { result in
+                sleep(1)
+                success(result)
+            })
+        } else {
+            success(false)
+        }
     }
 }
 

@@ -96,7 +96,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
             }
         }
 
-        let label = buildLabel(itemModel.text, UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT), .left)
+        let label = buildLabel(itemModel.text, nil, .left)
         let accessibilityMessage = getAccessibilityMessage(itemModel.text.string, benefitsText)
         cell.setAccessibilityMessage(accessibilityMessage)
         if index == 0 {
@@ -328,11 +328,13 @@ extension PXOneTapInstallmentInfoView {
 
 // MARK: Privates
 private extension PXOneTapInstallmentInfoView {
-    func buildLabel(_ attributedText: NSAttributedString, _ font: UIFont, _ textAlignment: NSTextAlignment, _ numberOfLines: Int = 1) -> UILabel {
+    func buildLabel(_ attributedText: NSAttributedString, _ font: UIFont? = nil, _ textAlignment: NSTextAlignment, _ numberOfLines: Int = 1) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = attributedText
-        label.font = font
+        if let font = font {
+            label.font = font
+        }
         label.textAlignment = textAlignment
         label.numberOfLines = numberOfLines
         return label

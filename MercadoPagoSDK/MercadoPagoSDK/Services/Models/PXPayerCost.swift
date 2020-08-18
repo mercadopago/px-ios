@@ -22,8 +22,9 @@ open class PXPayerCost: NSObject, Codable {
     open var processingMode: String?
     open var paymentMethodOptionId: String?
     open var agreements: [PXAgreement] = []
+    open var interestRate: PXText?
 
-    public init(installmentRate: Double, labels: [String], minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String?, installmentAmount: Double, totalAmount: Double, installments: Int, processingMode: String?, paymentMethodOptionId: String?, agreements: [PXAgreement] = []) {
+    public init(installmentRate: Double, labels: [String], minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String?, installmentAmount: Double, totalAmount: Double, installments: Int, processingMode: String?, paymentMethodOptionId: String?, agreements: [PXAgreement] = [], interestRate: PXText? = nil) {
         self.installmentRate = installmentRate
         self.labels = labels
         self.minAllowedAmount = minAllowedAmount
@@ -35,6 +36,7 @@ open class PXPayerCost: NSObject, Codable {
         self.processingMode = processingMode
         self.paymentMethodOptionId = paymentMethodOptionId
         self.agreements = agreements
+        self.interestRate = interestRate
     }
 
     public enum PXPayerCostKeys: String, CodingKey {
@@ -49,12 +51,14 @@ open class PXPayerCost: NSObject, Codable {
         case processingMode = "processing_mode"
         case paymentMethodOptionId = "payment_method_option_id"
         case agreements
+        case interestRate = "interest_rate"
     }
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostKeys.self)
         let installmentRate: Double = try container.decodeIfPresent(Double.self, forKey: .installmentRate) ?? 0
         let labels: [String] = try container.decodeIfPresent([String].self, forKey: .labels) ?? []
+        let interestRate: PXText? = try container.decodeIfPresent(PXText.self, forKey: .interestRate)
         let minAllowedAmount: Double = try container.decodeIfPresent(Double.self, forKey: .minAllowedAmount) ?? 0
         let maxAllowedAmount: Double = try container.decodeIfPresent(Double.self, forKey: .maxAllowedAmount) ?? 0
         let recommendedMessage: String? = try container.decodeIfPresent(String.self, forKey: .recommendedMessage)
@@ -65,13 +69,14 @@ open class PXPayerCost: NSObject, Codable {
         let paymentMethodOptionId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodOptionId)
         let agreements: [PXAgreement] = try container.decodeIfPresent([PXAgreement].self, forKey: .agreements) ?? []
 
-        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments,processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements)
+        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments,processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements, interestRate: interestRate)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = try encoder.container(keyedBy: PXPayerCostKeys.self)
         try container.encodeIfPresent(self.installmentRate, forKey: .installmentRate)
         try container.encodeIfPresent(self.labels, forKey: .labels)
+        try container.encodeIfPresent(self.interestRate, forKey: .interestRate)
         try container.encodeIfPresent(self.minAllowedAmount, forKey: .minAllowedAmount)
         try container.encodeIfPresent(self.maxAllowedAmount, forKey: .maxAllowedAmount)
         try container.encodeIfPresent(self.recommendedMessage, forKey: .recommendedMessage)
