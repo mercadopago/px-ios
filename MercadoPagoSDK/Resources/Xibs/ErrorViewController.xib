@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
-    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewController" customModule="MercadoPagoSDKResources" customModuleProvider="target">
             <connections>
                 <outlet property="errorIcon" destination="Lo5-cf-7x0" id="fmN-Th-915"/>
                 <outlet property="errorSubtitle" destination="TOU-E7-PRN" id="OhE-Wf-aIE"/>
@@ -29,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ODG-43-ocD" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ODG-43-ocD" customClass="MPLabel" customModule="MercadoPagoSDK">
                     <rect key="frame" x="20" y="320.5" width="335" height="26"/>
                     <attributedString key="attributedText">
                         <fragment content="Ha ocurrido un error">
@@ -42,8 +35,8 @@
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TOU-E7-PRN" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="20" y="358.5" width="335.5" height="16"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TOU-E7-PRN" customClass="MPLabel" customModule="MercadoPagoSDK">
+                    <rect key="frame" x="20" y="358.5" width="335" height="16.5"/>
                     <attributedString key="attributedText">
                         <fragment content="Vamos a solucionarlo. Intenta más tarde.">
                             <attributes>
@@ -76,7 +69,7 @@
                     </state>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error_sign" translatesAutoresizingMaskIntoConstraints="NO" id="Lo5-cf-7x0">
-                    <rect key="frame" x="148" y="221" width="80" height="80"/>
+                    <rect key="frame" x="147.5" y="220.5" width="80" height="80"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80" id="gqQ-qH-yFV"/>
                         <constraint firstAttribute="width" constant="80" id="xqz-Gu-ar5"/>

@@ -11,7 +11,7 @@ import UIKit
 
 internal class AdditionalStepViewModel {
 
-    var bundle: Bundle? = ResourceManager.shared.getBundle()
+    var bundle: Bundle? = MercadoPagoBundle.bundle()
 
     var screenTitle: String
 

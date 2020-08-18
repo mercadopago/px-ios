@@ -12,11 +12,8 @@ import UIKit
 class AdditionalStepCellFactory: NSObject {
 
     open class func buildCell(object: Cellable, width: Double, height: Double) -> UITableViewCell {
-
-        guard let bundle = ResourceManager.shared.getBundle() else { return UITableViewCell() }
-
+        let bundle = MercadoPagoBundle.bundle()
         if object.objectType == ObjectTypes.payerCost {
-
             guard let payerCost = object as? PXPayerCost else { return UITableViewCell() }
 
             if let cell = bundle.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as? PayerCostRowTableViewCell {

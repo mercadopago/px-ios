@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Courier.ttc">
-            <string>Courier</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardBackView">
             <connections>
@@ -32,7 +24,7 @@
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9eq-hA-2nt" userLabel="Banda negra">
-                    <rect key="frame" x="0.0" y="48" width="482" height="66.5"/>
+                    <rect key="frame" x="0.0" y="48" width="481.5" height="66.5"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="9eq-hA-2nt" secondAttribute="height" multiplier="80:11" id="La7-ps-4AD"/>
@@ -70,7 +62,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OC4-D3-Fd2">
                             <rect key="frame" x="309" y="0.0" width="80" height="48"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CVV" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-5j-2uD" customClass="PXMonospaceLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CVV" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-5j-2uD" customClass="PXMonospaceLabel" customModule="MercadoPagoSDK">
                                     <rect key="frame" x="0.0" y="3" width="80" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="Geu-5j-2uD" secondAttribute="height" multiplier="2:1" id="ghx-FG-3Td"/>
@@ -128,18 +120,18 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lr6-a3-2n1">
-                    <rect key="frame" x="0.0" y="0.0" width="482" height="48"/>
+                    <rect key="frame" x="0.0" y="0.0" width="481.5" height="48"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="lr6-a3-2n1" secondAttribute="height" multiplier="10:1" id="C5c-mQ-sJI"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sJ-BP-m3H">
-                    <rect key="frame" x="0.0" y="114.5" width="482" height="20"/>
+                    <rect key="frame" x="0.0" y="114.5" width="481.5" height="20"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HBn-ak-fcF">
-                    <rect key="frame" x="0.0" y="182.5" width="482" height="98.5"/>
+                    <rect key="frame" x="0.0" y="182.5" width="481.5" height="98.5"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="HBn-ak-fcF" secondAttribute="height" multiplier="240:49" id="oHT-aX-ajE"/>

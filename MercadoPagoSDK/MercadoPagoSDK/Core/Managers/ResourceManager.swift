@@ -13,10 +13,6 @@ internal class ResourceManager {
     static let shared = ResourceManager()
 
     let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"
-    
-    func getBundle() -> Bundle? {
-        return Bundle(for: ResourceManager.self)
-    }
 
     func getImage(_ name: String?) -> UIImage? {
         guard let name = name else {

@@ -60,7 +60,7 @@
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
 
     //ONE TAP
-    [advancedConfig setExpressEnabled:YES];
+    [advancedConfig setExpressEnabled:NO];
     
     //ESC
     [advancedConfig setEscEnabled:YES];

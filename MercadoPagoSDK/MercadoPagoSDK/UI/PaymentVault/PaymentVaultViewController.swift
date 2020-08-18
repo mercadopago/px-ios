@@ -42,7 +42,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
     var installments: Int?
     var viewModel: PaymentVaultViewModel!
 
-    var bundle = ResourceManager.shared.getBundle()
+    var bundle = MercadoPagoBundle.bundle()
 
     var titleSectionReference: PaymentVaultTitleCollectionViewCell?
 
