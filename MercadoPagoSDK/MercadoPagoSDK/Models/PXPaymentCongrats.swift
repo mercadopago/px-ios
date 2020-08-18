@@ -67,6 +67,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var creditsExpectationView: UIView?
     
     // Payment Info
+    private(set) var shouldShowPaymentMethod: Bool = false
     private(set) var paymentInfo: PXCongratsPaymentInfo?
     private(set) var statementDescription : String?
     
@@ -313,6 +314,16 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withCreditsExpectationView(_ view: UIView?) -> PXPaymentCongrats {
         self.creditsExpectationView = view
+        return self
+    }
+    /**
+     Defines if the payment method (or split payment method) should be shown.
+     - parameter shouldShowPaymentMethod: a `boolean` indication if it should be shown.
+     - returns: tihs builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func shouldShowPaymentMethod(_ shouldShowPaymentMethod: Bool) -> PXPaymentCongrats {
+        self.shouldShowPaymentMethod = shouldShowPaymentMethod
         return self
     }
     
