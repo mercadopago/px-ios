@@ -385,8 +385,13 @@ extension PXPaymentCongrats {
     }
     
     /**
-     An error view to be displayed when a failure congrats is shown
-     - parameter shouldShow: a `Bool` indicating if the error screen should be shown.
+     The data and the configuration that will be requested for tracking
+     - parameter trackingProperties: a `PXPaymentCongratsTracking`
+     - parameter trackingConfiguration: a `PXTrackingConfiguration` with the followed propertys:
+            flowName: The name of the flow using the congrats.
+            flowDetail:  Extradata that the user of the congrats wants to track
+            trackListener: a Class that conform the protocol TrackListener.
+            sessionId: Optional if the user want to use the sessionId.
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
@@ -425,6 +430,11 @@ extension PXPaymentCongrats {
         return self
     }
     
+    /**
+    The data that will be requested for internal tracking
+    - parameter trackingProperties: a `[String:Any]`
+    - returns: this builder `PXPaymentCongrats`
+    */
     @discardableResult
     internal func withTrackingProperties(_ trackingProperties: [String: Any]) -> PXPaymentCongrats {
         self.trackingValues = trackingProperties

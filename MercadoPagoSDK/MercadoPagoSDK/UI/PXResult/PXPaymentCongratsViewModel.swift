@@ -274,22 +274,23 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     func setCallback(callback: @escaping (PaymentResult.CongratsState, String?) -> Void) {
     }
     
-    // TODO double check how this is used
     func getTrackingProperties() -> [String : Any] {
         return paymentCongrats.trackingValues
     }
     
-    // TODO double check how this is used
     func getTrackingPath() -> String {
-        let paymentStatus = paymentCongrats.type.getRawValue()
         var screenPath = ""
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        if paymentCongrats.trackingValues != nil {
+            let paymentStatus = paymentCongrats.type.getRawValue()
+            if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+                screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+            } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+                screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+            } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+                screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+            }
         }
+        
         return screenPath
     }
     
