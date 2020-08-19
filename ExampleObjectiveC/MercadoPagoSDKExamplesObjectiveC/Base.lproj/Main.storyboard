@@ -97,7 +97,6 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnX-Gg-RJM">
                                                     <rect key="frame" x="16" y="11" width="343" height="78"/>
                                                     <connections>
-                                                        <action selector="checkoutFlow:" destination="Rgx-dD-8Cm" eventType="touchUpInside" id="b2I-Sw-udR"/>
                                                         <action selector="launchCongrats:" destination="Rgx-dD-8Cm" eventType="touchUpInside" id="IV2-Wf-SbU"/>
                                                     </connections>
                                                 </button>

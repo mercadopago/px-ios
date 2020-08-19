@@ -75,7 +75,6 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
     
     // Tracking
-    private(set) var trackingPath: String = "" //TODO
     private(set) var trackingValues: [String : Any] = [:] //TODO
     // This field is ment to be used only by Checkout
     private(set) var flowBehaviourResult: PXResultKey?
@@ -382,6 +381,63 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withErrorBodyView(_ view: UIView?) -> PXPaymentCongrats {
         self.errorBodyView = view
+        return self
+    }
+    
+    /**
+     The data and the configuration that will be requested for tracking
+     - parameter trackingProperties: a `PXPaymentCongratsTracking`
+     - parameter trackingConfiguration: a `PXTrackingConfiguration` with the followed propertys:
+            flowName: The name of the flow using the congrats.
+            flowDetail:  Extradata that the user of the congrats wants to track
+            trackListener: a Class that conform the protocol TrackListener.
+            sessionId: Optional if the user want to use the sessionId.
+     - returns: this builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func withTracking(trackingProperties: PXPaymentCongratsTracking, trackingConfiguration: PXTrackingConfiguration) -> PXPaymentCongrats {
+        var properties: [String: Any] = [:]
+        properties["style"] = "custom"
+        properties["payment_method_id"] = paymentInfo?.paymentMethodId
+        properties["payment_method_type"] = paymentInfo?.paymentMethodType.rawValue
+        properties["payment_id"] = trackingProperties.paymentId
+        properties["payment_status"] = type.getRawValue()
+        properties["preference_amount"] = trackingProperties.totalAmount
+        
+        if let paymentStatusDetail = trackingProperties.paymentStatusDetail {
+            properties["payment_status_detail"] = paymentStatusDetail
+        }
+        
+        if let campaingId = trackingProperties.campaingId {
+            properties[PXCongratsTracking.TrackingKeys.campaignId.rawValue] = campaingId
+        }
+        
+        if let currency = trackingProperties.currencyId {
+            properties["currency_id"] = currency
+        }
+        
+        properties["has_split_payment"] = splitPaymentInfo != nil
+        properties[PXCongratsTracking.TrackingKeys.hasBottomView.rawValue] = bottomView != nil
+        properties[PXCongratsTracking.TrackingKeys.hasTopView.rawValue] = topView != nil
+        properties[PXCongratsTracking.TrackingKeys.hasImportantView.rawValue] = importantView != nil
+        properties[PXCongratsTracking.TrackingKeys.hasExpenseSplitView.rawValue] = expenseSplit != nil
+        properties[PXCongratsTracking.TrackingKeys.scoreLevel.rawValue] = points?.progress.levelNumber
+        properties[PXCongratsTracking.TrackingKeys.discountsCount.rawValue] = discounts?.items.count
+        
+        trackingConfiguration.updateTracker()
+        
+        self.trackingValues = properties
+        return self
+    }
+    
+    /**
+    The data that will be requested for internal tracking
+    - parameter trackingProperties: a `[String:Any]`
+    - returns: this builder `PXPaymentCongrats`
+    */
+    @discardableResult
+    internal func withTrackingProperties(_ trackingProperties: [String: Any]) -> PXPaymentCongrats {
+        self.trackingValues = trackingProperties
         return self
     }
     
