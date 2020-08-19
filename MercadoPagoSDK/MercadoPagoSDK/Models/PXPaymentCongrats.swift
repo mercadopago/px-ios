@@ -148,7 +148,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withHeaderBadgeImage(_ image: UIImage) -> PXPaymentCongrats {
+    internal func withHeaderBadgeImage(_ image: UIImage?) -> PXPaymentCongrats {
         self.headerBadgeImage = image
         return self
     }
@@ -346,7 +346,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withSplitPaymenInfo(_ splitPaymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
+    public func withSplitPaymentInfo(_ splitPaymentInfo: PXCongratsPaymentInfo) -> PXPaymentCongrats {
         self.splitPaymentInfo = splitPaymentInfo
         return self
     }

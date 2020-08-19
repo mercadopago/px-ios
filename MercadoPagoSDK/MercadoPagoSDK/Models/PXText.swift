@@ -8,7 +8,7 @@
 import Foundation
 
 @objcMembers
-public class PXText: Codable, Equatable {
+public class PXText: NSObject, Codable {
 
     let message: String?
     let backgroundColor: String?
