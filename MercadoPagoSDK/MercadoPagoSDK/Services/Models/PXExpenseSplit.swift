@@ -17,6 +17,7 @@ public class PXExpenseSplit: NSObject, Codable {
         self.title = title
         self.action = action
         self.imageUrl = imageUrl
+        super.init()
     }
     
     enum CodingKeys: String, CodingKey {

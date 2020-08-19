@@ -9,6 +9,41 @@
 import Foundation
 
 /**
+ Only for objc compatibility
+ */
+@objc public enum PXPaymentOBJC: Int {
+    case DEBIT_CARD = 0
+    case CREDIT_CARD
+    case ACCOUNT_MONEY
+    case TICKET
+    case BANK_TRANSFER
+    case ATM
+    case DIGITAL_CURRENCY
+    case CONSUMER_CREDITS
+    case PREPAID_CARD
+    case BOLBRADESCO
+    case PEC
+    case PAYMENT_METHOD_PLUGIN
+    
+    public func getRealCase() -> PXPaymentTypes {
+        switch self {
+            case .DEBIT_CARD: return PXPaymentTypes.DEBIT_CARD
+            case .CREDIT_CARD: return PXPaymentTypes.CREDIT_CARD
+            case .ACCOUNT_MONEY: return PXPaymentTypes.ACCOUNT_MONEY
+            case .TICKET: return PXPaymentTypes.TICKET
+            case .BANK_TRANSFER: return PXPaymentTypes.BANK_TRANSFER
+            case .ATM: return PXPaymentTypes.ATM
+            case .DIGITAL_CURRENCY: return PXPaymentTypes.DIGITAL_CURRENCY
+            case .CONSUMER_CREDITS: return PXPaymentTypes.CONSUMER_CREDITS
+            case .PREPAID_CARD: return PXPaymentTypes.PREPAID_CARD
+            case .BOLBRADESCO: return PXPaymentTypes.BOLBRADESCO
+            case .PEC: return PXPaymentTypes.PEC
+            case .PAYMENT_METHOD_PLUGIN: return PXPaymentTypes.PAYMENT_METHOD_PLUGIN
+        }
+    }
+}
+
+/**
 Use this enum only for reference.
  */
 public enum PXPaymentTypes: String {
