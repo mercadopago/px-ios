@@ -20,6 +20,10 @@ open class PXConfiguratorManager: NSObject {
 
     // PX Flow Behaviour
     internal static var flowBehaviourProtocol: PXFlowBehaviourProtocol = PXFlowBehaviourDefault()
+    
+    // ESC
+    internal static var escProtocol: PXESCProtocol = PXESCDefault()
+    internal static var escConfig: PXESCConfig = PXESCConfig.createConfig()
 
     // MARK: Public
     // Set external implementation of PXBiometricProtocol
@@ -30,5 +34,10 @@ open class PXConfiguratorManager: NSObject {
     // Set external implementation of PXFlowBehaviourProtocol
     public static func with(flowBehaviourProtocol: PXFlowBehaviourProtocol) {
         self.flowBehaviourProtocol = flowBehaviourProtocol
+    }
+
+    // Set external implementation of PXESCProtocol
+    public static func with(escProtocol: PXESCProtocol) {
+        self.escProtocol = escProtocol
     }
 }

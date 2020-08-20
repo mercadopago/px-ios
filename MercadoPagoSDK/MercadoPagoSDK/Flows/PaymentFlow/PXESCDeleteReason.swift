@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc enum PXESCDeleteReason: Int, RawRepresentable {
+@objc public enum PXESCDeleteReason: Int, RawRepresentable {
     case INVALID_ESC
     case INVALID_FINGERPRINT
     case UNEXPECTED_TOKENIZATION_ERROR

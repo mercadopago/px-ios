@@ -21,7 +21,6 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.serviceAdapter = mercadoPagoServices
         initFlowProperties.advancedConfig = getAdvancedConfiguration()
         initFlowProperties.paymentConfigurationService = paymentConfigurationService
-        initFlowProperties.escManager = escManager
         initFlowProperties.privateKey = privateKey
         initFlowProperties.productId = getAdvancedConfiguration().productId
 

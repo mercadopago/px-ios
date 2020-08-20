@@ -26,7 +26,6 @@ internal extension MPXTracker {
             return
         }
         trackListener = listener
-        
     }
 
     func setFlowDetails(flowDetails: [String: Any]?) {
@@ -72,7 +71,7 @@ internal extension MPXTracker {
     func setExperiments(_ experiments: [PXExperiment]?) {
         MPXTracker.sharedInstance.experiments = experiments
     }
-    
+
     private func isPXAddonTrackListener() -> Bool {
         if let trackListener = trackListener,
             String(describing: trackListener.self).contains("PXAddon.PXTrack") {
