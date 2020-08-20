@@ -26,11 +26,11 @@ class PXPaymentCongratsViewModel {
         
         let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName,
                                                                            paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits,
-                                                                           paymentTypeIdValue: paymentInfo.paymentMethodType.rawValue)
+                                                                           paymentType: paymentInfo.paymentMethodType)
         
         let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodDescription)
         
-        let icon = PXNewResultUtil.getPaymentMethodIcon(paymentTypeId: paymentInfo.paymentMethodType.rawValue, paymentMethodId: paymentInfo.paymentMethodId, externalPaymentMethodImage: paymentInfo.externalPaymentMethodImage)
+        let icon = PXNewResultUtil.getPaymentMethodIcon(paymentType: paymentInfo.paymentMethodType, paymentMethodId: paymentInfo.paymentMethodId, externalPaymentMethodImage: paymentInfo.externalPaymentMethodImage)
         
         return PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: icon, iconURL: nil, action: nil, color: .white)
     }

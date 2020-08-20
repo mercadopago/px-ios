@@ -149,14 +149,15 @@ extension PXNewResultUtil {
     
     //PAYMENT METHOD ICON
     class func getPaymentMethodIcon(paymentMethod: PXPaymentMethod) -> UIImage? {
-        return getPaymentMethodIcon(paymentTypeId: paymentMethod.paymentTypeId, paymentMethodId: paymentMethod.id, externalPaymentMethodImage: paymentMethod.externalPaymentPluginImageData as Data?)
+        guard let paymentType = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) else { return nil }
+        return getPaymentMethodIcon(paymentType: paymentType, paymentMethodId: paymentMethod.id, externalPaymentMethodImage: paymentMethod.externalPaymentPluginImageData as Data?)
     }
     
-    class func getPaymentMethodIcon(paymentTypeId: String, paymentMethodId: String, externalPaymentMethodImage: Data? = nil) -> UIImage? {
-        let defaultColor = paymentTypeId == PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentTypeId != PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
+    class func getPaymentMethodIcon(paymentType: PXPaymentTypes, paymentMethodId: String, externalPaymentMethodImage: Data? = nil) -> UIImage? {
+        let defaultColor = paymentType == PXPaymentTypes.ACCOUNT_MONEY && paymentType != PXPaymentTypes.PAYMENT_METHOD_PLUGIN
         var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
-        if paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue, let data = externalPaymentMethodImage {
+        if paymentType == PXPaymentTypes.PAYMENT_METHOD_PLUGIN, let data = externalPaymentMethodImage {
             paymentMethodImage = UIImage(data: data)
         }
         return paymentMethodImage
@@ -225,18 +226,18 @@ extension PXNewResultUtil {
     }
     
     // PM Second String
-    class func formatPaymentMethodSecondString(paymentMethodName: String?, paymentMethodLastFourDigits lastFourDigits: String?, paymentTypeIdValue: String) -> NSAttributedString? {
-        guard let description = assembleSecondString(paymentMethodName: paymentMethodName ?? "", paymentMethodLastFourDigits: lastFourDigits, paymentTypeIdValue: paymentTypeIdValue) else { return nil }
+    class func formatPaymentMethodSecondString(paymentMethodName: String?, paymentMethodLastFourDigits lastFourDigits: String?, paymentType: PXPaymentTypes) -> NSAttributedString? {
+        guard let description = assembleSecondString(paymentMethodName: paymentMethodName ?? "", paymentMethodLastFourDigits: lastFourDigits, paymentType: paymentType) else { return nil }
         return secondStringAttributed(description)
     }
     
-    class func assembleSecondString(paymentMethodName: String, paymentMethodLastFourDigits lastFourDigits: String?, paymentTypeIdValue: String) -> String? {
+    class func assembleSecondString(paymentMethodName: String, paymentMethodLastFourDigits lastFourDigits: String?, paymentType: PXPaymentTypes) -> String? {
         var pmDescription: String = ""
-        if let paymentType = PXPaymentTypes(rawValue: paymentTypeIdValue), paymentType.isCard() {
+        if paymentType.isCard() {
             if let lastFourDigits = lastFourDigits {
                 pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
             }
-        } else if paymentTypeIdValue == "digital_currency" {
+        } else if paymentType == PXPaymentTypes.DIGITAL_CURRENCY {
             pmDescription = paymentMethodName
         } else {
             return nil
