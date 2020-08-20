@@ -218,12 +218,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Returns list with all cards ids with esc
     func getCardsIdsWithESC() -> [String] {
+        guard let customPaymentOptions = customPaymentOptions else { return [] }
         var cardIdsWithESC: [String] = []
-        if let customPaymentOptions = customPaymentOptions {
-            for customCard in customPaymentOptions {
-                if escManager?.getESC(cardId: customCard.getCardId(), firstSixDigits: customCard.getFirstSixDigits(), lastFourDigits: customCard.getCardLastForDigits()) != nil {
-                    cardIdsWithESC.append(customCard.getCardId())
-                }
+        let savedCardIds: [String] = initFlow?.initFlowModel.properties.savedCardIdsWithESC ?? []
+        let customPaymentOptionsWithESC = customPaymentOptions.filter { savedCardIds.contains($0.getCardId()) }
+        customPaymentOptionsWithESC.forEach {
+            if escManager?.getESC(cardId: $0.getCardId(), firstSixDigits: $0.getFirstSixDigits(), lastFourDigits: $0.getCardLastForDigits()) != nil {
+                cardIdsWithESC.append($0.getCardId())
             }
         }
         return cardIdsWithESC

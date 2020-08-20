@@ -24,6 +24,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.escManager = escManager
         initFlowProperties.privateKey = privateKey
         initFlowProperties.productId = getAdvancedConfiguration().productId
+        initFlowProperties.savedCardIdsWithESC = []
 
         configureBiometricModule()
 
