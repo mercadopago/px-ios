@@ -378,16 +378,19 @@ extension PXBusinessResultViewModel {
             
             //Payment Info
 
-            if let paymentMethodTypeId = businessResult.getPaymentMethodTypeId(), let paymentType = PXPaymentTypes(rawValue: paymentMethodTypeId), let paymentMethodId = businessResult.getPaymentMethodId() {
-                if amountHelper.isSplitPayment, let splitPaymentData = amountHelper.splitAccountMoney {
-                    paymentCongratsData.withSplitPaymentInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType, paymentMethodId: paymentMethodId))
-                   
-                } else {
-                    paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType, paymentMethodId: paymentMethodId))
+            if let paymentMethodTypeId = paymentData.paymentMethod?.paymentTypeId, let paymentType = PXPaymentTypes(rawValue: paymentMethodTypeId), let paymentMethodId = paymentData.paymentMethod?.getId() {
+                paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType, paymentMethodId: paymentMethodId))
+                }
+            
+             
+            //Split Payment info
+            if amountHelper.isSplitPayment, let splitPaymentData = amountHelper.splitAccountMoney {
+                if let splitPaymentMethodTypeId = splitPaymentData.paymentMethod?.paymentTypeId, let splitPaymentType = PXPaymentTypes(rawValue: splitPaymentMethodTypeId), let splitPaymentMethodId = splitPaymentData.paymentMethod?.getId() {
+                paymentCongratsData.withSplitPaymentInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: splitPaymentType, paymentMethodId: splitPaymentMethodId))
                 }
             }
-             paymentCongratsData.shouldShowPaymentMethod(shouldShowPaymentMethod())
             
+            paymentCongratsData.shouldShowPaymentMethod(shouldShowPaymentMethod())
             //Actions
             paymentCongratsData.withFooterMainAction(businessResult.getMainAction())
 
