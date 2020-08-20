@@ -94,7 +94,7 @@ class CongratsSelectorViewController: UITableViewController, PXTrackerListener {
                                     self.navigationController?.popViewController(animated: true)
                                 }))
                                 .shouldShowPaymentMethod(true)
-                                .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Visa", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "visa", paymentMethodType: .CREDIT_CARD, installmentsRate: 1, installmentsCount: 1, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 100", discountName: nil)))
+                                .withPaymentMethodInfo(PXCongratsPaymentInfo(paidAmount: "", rawAmount: nil, paymentMethodName: "Visa", paymentMethodLastFourDigits: "1234", paymentMethodDescription: nil, paymentMethodId: "visa", paymentMethodType: , installmentsRate: 1, installmentsCount: 1, installmentsAmount: "$ 100", installmentsTotalAmount: "$ 100", discountName: nil)))
     }()
     
     private lazy var congratsWithConsumerCredits : CongratsType = {

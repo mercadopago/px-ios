@@ -34,9 +34,9 @@ class PXBusinessResultViewModel: NSObject {
     }
     
     func headerCloseAction() -> (() -> Void) {
-        let action = { [weak self] in
-            if let callback = self?.callback {
-                if let url = self?.getBackUrl() {
+        let action = {
+            if let callback = self.callback {
+                if let url = self.getBackUrl() {
                     PXNewResultUtil.openURL(url: url, success: { (_) in
                         callback(PaymentResult.CongratsState.EXIT, nil)
                     })
@@ -352,7 +352,6 @@ extension PXBusinessResultViewModel {
                 paymentCongratsData.withCongratsType(.APPROVED)
             case .REJECTED:
                 paymentCongratsData.withCongratsType(.REJECTED)
-                
             case .IN_PROGRESS:
                 paymentCongratsData.withCongratsType(.IN_PROGRESS)
             case .PENDING:
@@ -361,14 +360,9 @@ extension PXBusinessResultViewModel {
                 paymentCongratsData.withCongratsType(.PENDING)
             }
             
-                                        paymentCongratsData
-                                                        .withHeader(title: getAttributedTitle().string, imageURL: businessResult.getImageUrl(), closeAction: headerCloseAction())
-                                                        .withHeaderColor(primaryResultColor())
-                                                        .withHeaderImage(getHeaderDefaultIcon())
-            //Badge Image this is not necessary to call because the paymentCongrats have this default implementation
-    //        if let badgeImage = ResourceManager.shared.getBadgeImageWith(status: businessResult.getBusinessStatus().getDescription()) {
-    //            paymentCongratsData.withHeaderBadgeImage(badgeImage)
-    //        }
+            paymentCongratsData.withHeader(title: getAttributedTitle().string, imageURL: businessResult.getImageUrl(), closeAction: headerCloseAction())
+                                .withHeaderColor(primaryResultColor())
+                                .withHeaderImage(getHeaderDefaultIcon())
             
             //Recepit
             if businessResult.mustShowReceipt() {
@@ -382,16 +376,17 @@ extension PXBusinessResultViewModel {
                                .withCustomSorting(pointsAndDiscounts?.customOrder)
                                .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
             
-            
             //Payment Info
 
-            #warning("validate to connect the correct data")
-
-            let pmTypeID = businessResult.getPaymentMethodTypeId()!
-            let pmID = businessResult.getPaymentMethodId()!
-            paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: pmTypeID, paymentMethodId: pmID))
-            //TODO Split Payment?
-            
+            if let paymentMethodTypeId = businessResult.getPaymentMethodTypeId(), let paymentMethodId = businessResult.getPaymentMethodId() {
+                if amountHelper.isSplitPayment, let splitPaymentData = amountHelper.splitAccountMoney {
+                    paymentCongratsData.withSplitPaymenInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: paymentMethodTypeId, paymentMethodId: paymentMethodId))
+                   
+                } else {
+                    paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: paymentMethodTypeId, paymentMethodId: paymentMethodId))
+                }
+            }
+             paymentCongratsData.shouldShowPaymentMethod(shouldShowPaymentMethod())
             
             //Actions
             paymentCongratsData.withFooterMainAction(businessResult.getMainAction())
@@ -405,6 +400,7 @@ extension PXBusinessResultViewModel {
                                .withBottomView(businessResult.getBottomCustomView())
                                .withCreditsExpectationView(creditsExpectationView())
                                .withErrorBodyView(errorBodyView())
+                               .withFlowBehaviorResult(getFlowBehaviourResult())
             return paymentCongratsData
         }
 
@@ -413,18 +409,18 @@ extension PXBusinessResultViewModel {
             if let transactionAmount = paymentData.getTransactionAmountWithDiscount() {
                 paidAmount = "\(transactionAmount)"
             }
+            
             let paymentMethodName = paymentData.paymentMethod?.name ?? ""
             let lastFourDigits = paymentData.token?.lastFourDigits
-            let transactionAmount = "\(paymentData.transactionAmount)"
-            let hasInstallments = paymentData.payerCost != nil
+            let transactionAmount = "\(String(describing: paymentData.transactionAmount))"
             let installmentRate = paymentData.payerCost?.installmentRate
-            let paidAmountPosta = paymentData.payerCost?.totalAmount
             let installments = paymentData.payerCost?.installments ?? 0
-            let installmentAmount = "\(paymentData.payerCost?.installmentAmount)"
-            let amountToPay = amountHelper.amountToPay
+            let installmentAmount = "\(String(describing: paymentData.payerCost?.installmentAmount))"
             let paymentMethodExtraInfo = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message
-                //getTransactionAmountWithDiscount()
+            let externalPaymentPluginImageData = paymentData.paymentMethod?.externalPaymentPluginImageData
+            let paymentMethodType: PXPaymentTypes = paymentData.pay
+            let discountName = paymentData.discount?.name
             // TODO format prices with currency
-            return PXCongratsPaymentInfo(paidAmount: paidAmount, transactionAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: PXPaymentTypes(rawValue: paymentMethodTypeId)!, hasInstallments: hasInstallments, installmentsRate: installmentRate, installmentsCount: installments, installmentAmount: installmentAmount, hasDiscount: false, discountName: nil)
+            return PXCongratsPaymentInfo(paidAmount: paidAmount, rawAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType, installmentsRate: installmentRate, installmentsCount: installments, installmentsAmount: installmentAmount, installmentsTotalAmount: transactionAmount, discountName: discountName, externalPaymentMethodImage: externalPaymentPluginImageData)
         }
 }
