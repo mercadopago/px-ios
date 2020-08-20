@@ -190,7 +190,7 @@ extension PXNewResultUtil {
             return NSMutableAttributedString(string: installmentsTotalAmount, attributes: PXNewCustomView.titleAttributes)
         }
         let finalString: NSMutableAttributedString = NSMutableAttributedString()
-        let titleString = String(format: "%dx %@", installmentsCount, installmentsTotalAmount)
+        let titleString = String(format: "%dx %@", installmentsCount, installmentsAmount)
         let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
         finalString.append(attributedTitle)
         

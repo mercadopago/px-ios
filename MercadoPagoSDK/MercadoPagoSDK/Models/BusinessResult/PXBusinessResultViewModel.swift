@@ -378,12 +378,12 @@ extension PXBusinessResultViewModel {
             
             //Payment Info
 
-            if let paymentMethodTypeId = businessResult.getPaymentMethodTypeId(), let paymentMethodId = businessResult.getPaymentMethodId() {
+            if let paymentMethodTypeId = businessResult.getPaymentMethodTypeId(), let paymentType = PXPaymentTypes(rawValue: paymentMethodTypeId), let paymentMethodId = businessResult.getPaymentMethodId() {
                 if amountHelper.isSplitPayment, let splitPaymentData = amountHelper.splitAccountMoney {
-                    paymentCongratsData.withSplitPaymenInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: paymentMethodTypeId, paymentMethodId: paymentMethodId))
+                    paymentCongratsData.withSplitPaymentInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType, paymentMethodId: paymentMethodId))
                    
                 } else {
-                    paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: paymentMethodTypeId, paymentMethodId: paymentMethodId))
+                    paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType, paymentMethodId: paymentMethodId))
                 }
             }
              paymentCongratsData.shouldShowPaymentMethod(shouldShowPaymentMethod())
@@ -400,27 +400,32 @@ extension PXBusinessResultViewModel {
                                .withBottomView(businessResult.getBottomCustomView())
                                .withCreditsExpectationView(creditsExpectationView())
                                .withErrorBodyView(errorBodyView())
+                               
+            
+            //tracking
+            paymentCongratsData.withTrackingProperties(getTrackingProperties())
                                .withFlowBehaviorResult(getFlowBehaviourResult())
             return paymentCongratsData
         }
 
-        private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentMethodTypeId: String, paymentMethodId: String) -> PXCongratsPaymentInfo {
+        private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentMethodType: PXPaymentTypes, paymentMethodId: String) -> PXCongratsPaymentInfo {
             var paidAmount = ""
-            if let transactionAmount = paymentData.getTransactionAmountWithDiscount() {
-                paidAmount = "\(transactionAmount)"
+            if let transactionAmountWithDiscount = paymentData.getTransactionAmountWithDiscount() {
+                 paidAmount = Utils.getAmountFormated(amount: transactionAmountWithDiscount, forCurrency: currency)
             }
             
             let paymentMethodName = paymentData.paymentMethod?.name ?? ""
             let lastFourDigits = paymentData.token?.lastFourDigits
-            let transactionAmount = "\(String(describing: paymentData.transactionAmount))"
+            let transactionAmount = Utils.getAmountFormated(amount: paymentData.transactionAmount?.doubleValue ?? 0.0, forCurrency: currency)
             let installmentRate = paymentData.payerCost?.installmentRate
-            let installments = paymentData.payerCost?.installments ?? 0
-            let installmentAmount = "\(String(describing: paymentData.payerCost?.installmentAmount))"
+            let installmentsCount = paymentData.payerCost?.installments ?? 0
+            let installmentAmount = Utils.getAmountFormated(amount: paymentData.payerCost?.installmentAmount ?? 0.0, forCurrency: currency)
+            let installmentsTotalAmount = Utils.getAmountFormated(amount:  paymentData.payerCost?.totalAmount ?? 0.0, forCurrency: currency)
             let paymentMethodExtraInfo = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message
             let externalPaymentPluginImageData = paymentData.paymentMethod?.externalPaymentPluginImageData
-            let paymentMethodType: PXPaymentTypes = paymentData.pay
             let discountName = paymentData.discount?.name
-            // TODO format prices with currency
-            return PXCongratsPaymentInfo(paidAmount: paidAmount, rawAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType, installmentsRate: installmentRate, installmentsCount: installments, installmentsAmount: installmentAmount, installmentsTotalAmount: transactionAmount, discountName: discountName, externalPaymentMethodImage: externalPaymentPluginImageData)
+            
+           
+            return PXCongratsPaymentInfo(paidAmount: paidAmount, rawAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType, installmentsRate: installmentRate, installmentsCount: installmentsCount, installmentsAmount: installmentAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: externalPaymentPluginImageData as Data?)
         }
 }
