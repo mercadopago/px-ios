@@ -371,6 +371,7 @@ extension PXBusinessResultViewModel {
         paymentCongratsData.withHeader(title: getAttributedTitle().string, imageURL: businessResult.getImageUrl(), closeAction: headerCloseAction())
             .withHeaderColor(primaryResultColor())
             .withHeaderImage(getHeaderDefaultIcon())
+            .withHeaderBadgeImage(getBadgeImage())
         
         //Recepit
         paymentCongratsData.withReceipt(shouldShowReceipt: businessResult.mustShowReceipt(), receiptId: businessResult.getReceiptId(), action: pointsAndDiscounts?.viewReceiptAction)
@@ -399,6 +400,7 @@ extension PXBusinessResultViewModel {
         }
         
         paymentCongratsData.shouldShowPaymentMethod(shouldShowPaymentMethod())
+            .withStatementDescription(businessResult.getStatementDescription())
         
         //Actions
         paymentCongratsData.withFooterMainAction(businessResult.getMainAction()).withFooterSecondaryAction(getLinkAction())

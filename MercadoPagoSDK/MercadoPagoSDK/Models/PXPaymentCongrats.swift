@@ -357,7 +357,7 @@ extension PXPaymentCongrats {
     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withStatementDescription(statementDescription: String?) -> PXPaymentCongrats {
+    public func withStatementDescription(_ statementDescription: String?) -> PXPaymentCongrats {
         self.statementDescription = statementDescription
         return self
     }
