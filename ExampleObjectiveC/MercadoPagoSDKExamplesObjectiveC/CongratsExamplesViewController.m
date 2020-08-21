@@ -63,7 +63,7 @@
                 shouldShowPaymentMethod:TRUE]
                withPaymentMethodInfo:CongratsUtils.paymentInfo]
               withSplitPaymentInfo:CongratsUtils.splitPaymentInfo]
-             withStatementDescriptionWithStatementDescription:@"Some description"]
+             withStatementDescription:@"Some description"]
             withTrackingWithTrackingProperties: CongratsUtils.trackingProperties trackingConfiguration: [CongratsUtils trackingConfiguration:self]];
 }
 
