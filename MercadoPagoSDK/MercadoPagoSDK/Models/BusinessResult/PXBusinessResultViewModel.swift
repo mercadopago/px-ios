@@ -422,7 +422,10 @@ extension PXBusinessResultViewModel {
         var paidAmount = ""
         if let transactionAmountWithDiscount = paymentData.getTransactionAmountWithDiscount() {
             paidAmount = Utils.getAmountFormated(amount: transactionAmountWithDiscount, forCurrency: currency)
+        } else {
+            paidAmount = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
         }
+        
         
         let paymentMethodName = paymentData.paymentMethod?.name ?? ""
         let lastFourDigits = paymentData.token?.lastFourDigits
