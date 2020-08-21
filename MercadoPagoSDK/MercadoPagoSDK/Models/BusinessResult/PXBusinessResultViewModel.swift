@@ -314,11 +314,11 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     func getBackUrl() -> URL? {
         return getUrl(backUrls: amountHelper.preference.backUrls)
     }
-
+    
     func getRedirectUrl() -> URL? {
         return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
     }
-
+    
     private func getUrl(backUrls: PXBackUrls?, appendLanding: Bool = false) -> URL? {
         var urlString: String?
         let status = businessResult.getBusinessStatus()
@@ -342,93 +342,97 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
         }
         return nil
     }
+    
+    func getCongratsType() -> PXCongratsType{
+        switch businessResult.getBusinessStatus() {
+        case .APPROVED:
+            return .APPROVED
+        case .REJECTED:
+            return .REJECTED
+        case .IN_PROGRESS:
+            return .IN_PROGRESS
+        case .PENDING:
+            return .PENDING
+        default:
+            return .PENDING
+        }
+    }
+    
+    func getLinkAction() -> PXAction? {
+        return businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
+    }
 }
 
 extension PXBusinessResultViewModel {
-        func ToPaymentCongrats() -> PXPaymentCongrats {
-            let paymentCongratsData = PXPaymentCongrats()
-            switch businessResult.getBusinessStatus() {
-            case .APPROVED:
-                paymentCongratsData.withCongratsType(.APPROVED)
-            case .REJECTED:
-                paymentCongratsData.withCongratsType(.REJECTED)
-            case .IN_PROGRESS:
-                paymentCongratsData.withCongratsType(.IN_PROGRESS)
-            case .PENDING:
-                paymentCongratsData.withCongratsType(.PENDING)
-            default:
-                paymentCongratsData.withCongratsType(.PENDING)
-            }
-            
-            paymentCongratsData.withHeader(title: getAttributedTitle().string, imageURL: businessResult.getImageUrl(), closeAction: headerCloseAction())
-                                .withHeaderColor(primaryResultColor())
-                                .withHeaderImage(getHeaderDefaultIcon())
-            
-            //Recepit
-            if businessResult.mustShowReceipt() {
-                paymentCongratsData.withReceipt(shouldShowReceipt: true, receiptId: businessResult.getReceiptId(), action: pointsAndDiscounts?.viewReceiptAction)
-            }
-
-            //Points and Discounts
-            paymentCongratsData.withLoyalty(pointsAndDiscounts?.points)
-                               .withDiscounts(pointsAndDiscounts?.discounts)
-                               .withCrossSelling(pointsAndDiscounts?.crossSelling)
-                               .withCustomSorting(pointsAndDiscounts?.customOrder)
-                               .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
-            
-            //Payment Info
-
-            if let paymentMethodTypeId = paymentData.paymentMethod?.paymentTypeId, let paymentType = PXPaymentTypes(rawValue: paymentMethodTypeId), let paymentMethodId = paymentData.paymentMethod?.getId() {
-                paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType, paymentMethodId: paymentMethodId))
-                }
-            
-             
-            //Split Payment info
-            if amountHelper.isSplitPayment, let splitPaymentData = amountHelper.splitAccountMoney {
-                if let splitPaymentMethodTypeId = splitPaymentData.paymentMethod?.paymentTypeId, let splitPaymentType = PXPaymentTypes(rawValue: splitPaymentMethodTypeId), let splitPaymentMethodId = splitPaymentData.paymentMethod?.getId() {
-                paymentCongratsData.withSplitPaymentInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: splitPaymentType, paymentMethodId: splitPaymentMethodId))
-                }
-            }
-            
-            paymentCongratsData.shouldShowPaymentMethod(shouldShowPaymentMethod())
-            //Actions
-            paymentCongratsData.withFooterMainAction(businessResult.getMainAction())
-
-            let linkAction = businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
-            paymentCongratsData.withFooterSecondaryAction(linkAction)
-
-            //Views
-            paymentCongratsData.withTopView(businessResult.getTopCustomView())
-                               .withImportantView(businessResult.getImportantCustomView())
-                               .withBottomView(businessResult.getBottomCustomView())
-                               .withCreditsExpectationView(creditsExpectationView())
-                               .withErrorBodyView(errorBodyView())
-                               
-            
-            //tracking
-            paymentCongratsData.withTrackingProperties(getTrackingProperties())
-                               .withFlowBehaviorResult(getFlowBehaviourResult())
-            return paymentCongratsData
+    func toPaymentCongrats() -> PXPaymentCongrats {
+        let paymentCongratsData = PXPaymentCongrats()
+            .withCongratsType(getCongratsType())
+        
+        paymentCongratsData.withHeader(title: getAttributedTitle().string, imageURL: businessResult.getImageUrl(), closeAction: headerCloseAction())
+            .withHeaderColor(primaryResultColor())
+            .withHeaderImage(getHeaderDefaultIcon())
+        
+        //Recepit
+        paymentCongratsData.withReceipt(shouldShowReceipt: businessResult.mustShowReceipt(), receiptId: businessResult.getReceiptId(), action: pointsAndDiscounts?.viewReceiptAction)
+        
+        //Points and Discounts
+        paymentCongratsData.withLoyalty(pointsAndDiscounts?.points)
+            .withDiscounts(pointsAndDiscounts?.discounts)
+            .withCrossSelling(pointsAndDiscounts?.crossSelling)
+            .withCustomSorting(pointsAndDiscounts?.customOrder)
+            .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
+        
+        //Payment Info
+        
+        if let paymentMethodTypeId = paymentData.paymentMethod?.paymentTypeId, let paymentType = PXPaymentTypes(rawValue: paymentMethodTypeId), let paymentMethodId = paymentData.paymentMethod?.getId() {
+            paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType, paymentMethodId: paymentMethodId))
         }
-
-        private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentMethodType: PXPaymentTypes, paymentMethodId: String) -> PXCongratsPaymentInfo {
-            var paidAmount = ""
-            if let transactionAmountWithDiscount = paymentData.getTransactionAmountWithDiscount() {
-                 paidAmount = Utils.getAmountFormated(amount: transactionAmountWithDiscount, forCurrency: currency)
-            }
-            
-            let paymentMethodName = paymentData.paymentMethod?.name ?? ""
-            let lastFourDigits = paymentData.token?.lastFourDigits
-            let transactionAmount = Utils.getAmountFormated(amount: paymentData.transactionAmount?.doubleValue ?? 0.0, forCurrency: currency)
-            let installmentRate = paymentData.payerCost?.installmentRate
-            let installmentsCount = paymentData.payerCost?.installments ?? 0
-            let installmentAmount = Utils.getAmountFormated(amount: paymentData.payerCost?.installmentAmount ?? 0.0, forCurrency: currency)
-            let installmentsTotalAmount = Utils.getAmountFormated(amount:  paymentData.payerCost?.totalAmount ?? 0.0, forCurrency: currency)
-            let paymentMethodExtraInfo = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message
-            let externalPaymentPluginImageData = paymentData.paymentMethod?.externalPaymentPluginImageData
-            let discountName = paymentData.discount?.name
-            
-           
-            return PXCongratsPaymentInfo(paidAmount: paidAmount, rawAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType, installmentsRate: installmentRate, installmentsCount: installmentsCount, installmentsAmount: installmentAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: externalPaymentPluginImageData as Data?)
+        
+        
+        //Split Payment info
+        if amountHelper.isSplitPayment,
+            let splitPaymentData = amountHelper.splitAccountMoney,
+            let splitPaymentMethodTypeId = splitPaymentData.paymentMethod?.paymentTypeId,
+            let splitPaymentType = PXPaymentTypes(rawValue: splitPaymentMethodTypeId),
+            let splitPaymentMethodId = splitPaymentData.paymentMethod?.getId() {
+            paymentCongratsData.withSplitPaymentInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: splitPaymentType, paymentMethodId: splitPaymentMethodId))
         }
+        
+        paymentCongratsData.shouldShowPaymentMethod(shouldShowPaymentMethod())
+        
+        //Actions
+        paymentCongratsData.withFooterMainAction(businessResult.getMainAction()).withFooterSecondaryAction(getLinkAction())
+        
+        //Views
+        paymentCongratsData.withTopView(businessResult.getTopCustomView())
+            .withImportantView(businessResult.getImportantCustomView())
+            .withBottomView(businessResult.getBottomCustomView())
+            .withCreditsExpectationView(creditsExpectationView())
+            .withErrorBodyView(errorBodyView())
+        
+        //tracking
+        paymentCongratsData.withTrackingProperties(getTrackingProperties())
+            .withFlowBehaviorResult(getFlowBehaviourResult())
+        return paymentCongratsData
+    }
+    
+    private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentMethodType: PXPaymentTypes, paymentMethodId: String) -> PXCongratsPaymentInfo {
+        var paidAmount = ""
+        if let transactionAmountWithDiscount = paymentData.getTransactionAmountWithDiscount() {
+            paidAmount = Utils.getAmountFormated(amount: transactionAmountWithDiscount, forCurrency: currency)
+        }
+        
+        let paymentMethodName = paymentData.paymentMethod?.name ?? ""
+        let lastFourDigits = paymentData.token?.lastFourDigits
+        let transactionAmount = Utils.getAmountFormated(amount: paymentData.transactionAmount?.doubleValue ?? 0.0, forCurrency: currency)
+        let installmentRate = paymentData.payerCost?.installmentRate
+        let installmentsCount = paymentData.payerCost?.installments ?? 0
+        let installmentAmount = Utils.getAmountFormated(amount: paymentData.payerCost?.installmentAmount ?? 0.0, forCurrency: currency)
+        let installmentsTotalAmount = Utils.getAmountFormated(amount:  paymentData.payerCost?.totalAmount ?? 0.0, forCurrency: currency)
+        let paymentMethodExtraInfo = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message
+        let externalPaymentPluginImageData = paymentData.paymentMethod?.externalPaymentPluginImageData
+        let discountName = paymentData.discount?.name
+        
+        return PXCongratsPaymentInfo(paidAmount: paidAmount, rawAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: paymentMethodType, installmentsRate: installmentRate, installmentsCount: installmentsCount, installmentsAmount: installmentAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: externalPaymentPluginImageData as Data?)
+    }
 }
