@@ -247,7 +247,9 @@ extension MercadoPagoCheckout {
             }
         })
         
-        let viewController = PXNewResultViewController(viewModel: resultViewModel, finishButtonAnimation: { [weak self] in
+        let paymentCongrats = resultViewModel.toPaymentCongrats()
+        let congratsViewModel = PXPaymentCongratsViewModel(paymentCongrats: paymentCongrats)
+        let viewController = PXNewResultViewController(viewModel: congratsViewModel, finishButtonAnimation: { [weak self] in
             // Remedy view has an animated button. This closure is called after the animation has finished
             self?.executeNextStep()
         })

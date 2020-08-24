@@ -217,21 +217,21 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.errorBodyView
     }
     
-    // REMEDY
-    #warning("Chequear como la vista pasada va a recibir esos protocols que deberia ser la misma clase PXNewResultViewController")
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, remedyViewProtocol: PXRemedyViewProtocol?) -> UIView? {
-         if isPaymentResultRejectedWithRemedy() {
-            return paymentCongrats.remedyView
+        if isPaymentResultRejectedWithRemedy(), var remedyViewData = paymentCongrats.remedyViewData {
+            remedyViewData.animatedButtonDelegate = animatedButtonDelegate
+            remedyViewData.remedyViewProtocol = remedyViewProtocol
+            return PXRemedyView(data: remedyViewData)
         }
         return nil
     }
-    
+    #warning("Remove this when checkout uses paymentCongrats")
     func getRemedyButtonAction() -> ((String?) -> Void)? {
-        return paymentCongrats.remedyButtonAction
+        return nil
     }
     
     func isPaymentResultRejectedWithRemedy() -> Bool {
-        return paymentCongrats.remedyView != nil
+        return paymentCongrats.remedyViewData != nil
     }
     
     // FOOTER
