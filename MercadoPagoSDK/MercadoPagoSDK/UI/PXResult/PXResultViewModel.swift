@@ -323,15 +323,13 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
-        let action = { [weak self] (text: String?) in
-            if let properties = self?.getRemedyProperties() {
-                MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: properties)
-            }
+        let action = { (text: String?) in
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: self.getRemedyProperties())
 
-            if let callback = self?.callback {
-                if self?.remedy?.cvv != nil {
+            if let callback = self.callback {
+                if self.remedy?.cvv != nil {
                     callback(PaymentResult.CongratsState.RETRY_SECURITY_CODE, text)
-                } else if self?.remedy?.suggestedPaymentMethod != nil {
+                } else if self.remedy?.suggestedPaymentMethod != nil {
                     callback(PaymentResult.CongratsState.RETRY_SILVER_BULLET, text)
                 } else {
                     callback(PaymentResult.CongratsState.RETRY, text)
@@ -468,6 +466,20 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
         }
         return nil
     }
+    
+    func getRemedyViewData() -> PXRemedyViewData? {
+        if isPaymentResultRejectedWithRemedy(),
+            let remedy = remedy {
+            return PXRemedyViewData(oneTapDto: oneTapDto,
+                                    paymentData: getPaymentData(),
+                                    amountHelper: getAmountHelper(),
+                                    remedy: remedy,
+                                    animatedButtonDelegate: nil,
+                                    remedyViewProtocol: nil,
+                                    remedyButtonTapped: getRemedyButtonAction())
+        }
+        return nil
+    }
 
     func isPaymentResultRejectedWithRemedy() -> Bool {
         if paymentResult.isRejectedWithRemedy(),
@@ -576,7 +588,7 @@ extension PXResultViewModel {
             .withImportantView(getImportantView())
             .withTopView(getTopCustomView())
             .withBottomView(getBottomCustomView())
-//            .withRemedyView(remedyView: "·"·, !"·!"·"!·$)
+            .withRemedyViewData(getRemedyViewData())
             .withCreditsExpectationView(creditsExpectationView())
             .shouldShowPaymentMethod(paymentMethodShouldBeShown())
         
