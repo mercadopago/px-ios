@@ -61,8 +61,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var bottomView: UIView?
     
     // Remedies
-    private(set) var remedyButtonAction: ((String?) -> ())?
-    private(set) var remedyView: UIView?
+    private(set) var remedyViewData: PXRemedyViewData?
     
     private(set) var creditsExpectationView: UIView?
     
@@ -301,9 +300,8 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withRemedyView(remedyView: UIView?, _ remedyButtonAction: ((String?) -> ())?) -> PXPaymentCongrats {
-        self.remedyView = remedyView
-        self.remedyButtonAction = remedyButtonAction
+    internal func withRemedyViewData(_ remedyViewData: PXRemedyViewData?) -> PXPaymentCongrats {
+        self.remedyViewData = remedyViewData
         return self
     }
     
