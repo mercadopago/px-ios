@@ -220,13 +220,25 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let customPaymentOptions = customPaymentOptions else { return [] }
         var cardIdsWithESC: [String] = []
         let savedCardIds: [String] = PXConfiguratorManager.escProtocol.getSavedCardIds(config: PXConfiguratorManager.escConfig)
-        let customPaymentOptionsWithESC = customPaymentOptions.filter { savedCardIds.contains($0.getCardId()) }
+        let customPaymentOptionsWithESC = customPaymentOptions.filter { containsSavedId(savedCardIds, $0) }
         customPaymentOptionsWithESC.forEach {
             if PXConfiguratorManager.escProtocol.getESC(config: PXConfiguratorManager.escConfig, cardId: $0.getCardId(), firstSixDigits: $0.getFirstSixDigits(), lastFourDigits: $0.getCardLastForDigits()) != nil {
                 cardIdsWithESC.append($0.getCardId())
             }
         }
         return cardIdsWithESC
+    }
+
+    private func containsSavedId(_ savedCardIds: [String] , _ customerPaymentMethod: CustomerPaymentMethod) -> Bool {
+        guard !savedCardIds.isEmpty else { return false }
+        if savedCardIds.contains(customerPaymentMethod.getCardId()) {
+            return true
+        }
+        let savedId = "esc_card" + "_" + customerPaymentMethod.getFirstSixDigits() + "_" + customerPaymentMethod.getCardLastForDigits()
+        if savedCardIds.contains(savedId) {
+            return true
+        }
+        return false
     }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {
