@@ -308,9 +308,9 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     func shouldAutoReturn() -> Bool {
         paymentCongrats.shouldAutoReturn
     }
-    
+    #warning("remove this when checkout uses paymentCongrats")
     func getBackUrl() -> URL? {
-        paymentCongrats.backURL
+        nil
     }
     
     func getRedirectUrl() -> URL? {

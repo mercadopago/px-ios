@@ -85,7 +85,6 @@ public final class PXPaymentCongrats: NSObject {
     
     //URLs
     private(set) var shouldAutoReturn: Bool = false
-    private(set) var backURL: URL?
     private(set) var redirectURL: URL?
 
     
@@ -445,8 +444,7 @@ extension PXPaymentCongrats {
         return self
     }
     
-    internal func withURLs(backURL: URL?, redirectURL: URL?) -> PXPaymentCongrats {
-        self.backURL = backURL
+    internal func withRedirectURLs(_ redirectURL: URL?) -> PXPaymentCongrats {
         self.redirectURL = redirectURL
         return self
     }

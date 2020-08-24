@@ -263,17 +263,18 @@ extension MercadoPagoCheckout {
         }
 
         let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
-        if let url = pxBusinessResultViewModel.getRedirectUrl() {
-            // If preference has a redirect URL for the current result status, perform redirect and finish checkout
-            redirectAndFinish(viewModel: pxBusinessResultViewModel, redirectUrl: url)
-            return
-        }
-
         pxBusinessResultViewModel.setCallback(callback: { [weak self] _, _ in
             self?.finish()
         })
-        let model = pxBusinessResultViewModel.toPaymentCongrats()
-        let congratsViewController = PXNewResultViewController(viewModel: PXPaymentCongratsViewModel(paymentCongrats: model))
+        let paymentCongrats = pxBusinessResultViewModel.toPaymentCongrats()
+        let paymentCongratsViewModel: PXNewResultViewModelInterface = PXPaymentCongratsViewModel(paymentCongrats: paymentCongrats)
+        if let url = paymentCongratsViewModel.getRedirectUrl() {
+            // If preference has a redirect URL for the current result status, perform redirect and finish checkout
+            redirectAndFinish(viewModel: paymentCongratsViewModel, redirectUrl: url)
+            return
+        }
+        
+        let congratsViewController = PXNewResultViewController(viewModel: paymentCongratsViewModel)
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 
