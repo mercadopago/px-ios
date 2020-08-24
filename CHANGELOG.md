@@ -1,3 +1,8 @@
+# v4.35.3 
+🚀Private Release - 4.35.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Move ESC code to PXAddons
+
 # v4.35.2 
 🚀Private Release - 4.35.2 🚀
 MercadoPagoSDKV4 - Private Version
