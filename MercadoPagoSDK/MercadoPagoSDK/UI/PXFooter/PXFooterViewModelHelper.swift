@@ -98,33 +98,6 @@ internal extension PXResultViewModel {
             }
         }
     }
-    
-    private func getButtonActionORIG() -> Action {
-        return { [weak self] in
-            guard let self = self else { return }
-            guard let callback = self.callback else { return }
-            if self.paymentResult.isAccepted() {
-                 callback(PaymentResult.CongratsState.EXIT, nil)
-            } else if self.paymentResult.isError() {
-                if self.paymentResult.isHighRisk(), let deepLink = self.remedy?.highRisk?.deepLink {
-                    callback(PaymentResult.CongratsState.DEEPLINK, deepLink)
-                } else {
-                    callback(PaymentResult.CongratsState.SELECT_OTHER, nil)
-                }
-            } else if self.paymentResult.isBadFilled() {
-                callback(PaymentResult.CongratsState.SELECT_OTHER, nil)
-            } else if self.paymentResult.isWarning() {
-                switch self.paymentResult.statusDetail {
-                case PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue:
-                    callback(PaymentResult.CongratsState.CALL_FOR_AUTH, nil)
-                case PXRejectedStatusDetail.CARD_DISABLE.rawValue:
-                    callback(PaymentResult.CongratsState.RETRY, nil)
-                default:
-                    callback(PaymentResult.CongratsState.SELECT_OTHER, nil)
-                }
-            }
-        }
-    }
 
     private func getLinkAction() -> Action {
         return { [weak self] in

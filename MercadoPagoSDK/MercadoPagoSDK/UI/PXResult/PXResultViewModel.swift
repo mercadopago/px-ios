@@ -62,19 +62,17 @@ internal class PXResultViewModel: NSObject {
     }
     
     func headerCloseAction() -> () -> () {
-//        let action = { [weak self] in
-//            if let callback = self?.callback {
-//                if let url = self?.getBackUrl() {
-//                    self?.openURL(url: url, success: { (_) in
-//                        callback(PaymentResult.CongratsState.EXIT, nil)
-//                    })
-//                } else {
-//                    callback(PaymentResult.CongratsState.EXIT, nil)
-//                }
-//            }
-//        }
-//        return action
-        return {}
+        return {
+            if let callback = self.callback {
+                if let url = self.getBackUrl() {
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                        callback(PaymentResult.CongratsState.EXIT, nil)
+                    })
+                } else {
+                    callback(PaymentResult.CongratsState.EXIT, nil)
+                }
+            }
+        }
     }
     
     func creditsExpectationView() -> UIView? {
@@ -321,18 +319,7 @@ extension PXResultViewModel: PXNewResultViewModelInterface {
     }
 
     func getHeaderCloseAction() -> (() -> Void)? {
-        let action = { [weak self] in
-            if let callback = self?.callback {
-                if let url = self?.getBackUrl() {
-                    PXNewResultUtil.openURL(url: url, success: { (_) in
-                        callback(PaymentResult.CongratsState.EXIT, nil)
-                    })
-                } else {
-                    callback(PaymentResult.CongratsState.EXIT, nil)
-                }
-            }
-        }
-        return action
+        headerCloseAction()
     }
 
     func getRemedyButtonAction() -> ((String?) -> Void)? {
@@ -611,18 +598,18 @@ extension PXResultViewModel {
     
     private func getPaymentMethod(paymentData: PXPaymentData?, amountHelper: PXAmountHelper) -> PXCongratsPaymentInfo? {
         guard let paymentData = paymentData,
-        let paymentTypeId = paymentData.getPaymentMethod()?.paymentTypeId,
-        let paymentId = paymentData.getPaymentMethod()?.id
+            let paymentTypeIdString = paymentData.getPaymentMethod()?.paymentTypeId,
+            let paymentType = PXPaymentTypes(rawValue: paymentTypeIdString),
+            let paymentId = paymentData.getPaymentMethod()?.id
         else { return nil }
         
-        return assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodTypeId: paymentTypeId, paymentMethodId: paymentId, externalPaymentMethodInfo: paymentData.getPaymentMethod()?.externalPaymentPluginImageData as Data?)
+        return assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentType: paymentType, paymentMethodId: paymentId, externalPaymentMethodInfo: paymentData.getPaymentMethod()?.externalPaymentPluginImageData as Data?)
     }
     
     private func getSplitPayment() -> PXCongratsPaymentInfo? {nil}
     
-    private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentMethodTypeId: String, paymentMethodId: String, externalPaymentMethodInfo: Data?) -> PXCongratsPaymentInfo {
-        // Paid amount debería ser calculado para ver si hubieron descuentos o no paymentData.getTransactionAmountWithDiscount()
-        var paidAmount: String!
+    private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentType: PXPaymentTypes, paymentMethodId: String, externalPaymentMethodInfo: Data?) -> PXCongratsPaymentInfo {
+        var paidAmount: String
         if let transactionAmountWithDiscount = paymentData.getTransactionAmountWithDiscount() {
             paidAmount = Utils.getAmountFormated(amount: transactionAmountWithDiscount, forCurrency: currency)
         } else {
@@ -639,9 +626,6 @@ extension PXResultViewModel {
         let valorTotalCuotas = paymentData.payerCost?.totalAmount
         let installmentsTotalAmount: String? = (valorTotalCuotas != nil) ? Utils.getAmountFormated(amount: valorTotalCuotas!, forCurrency: currency) : nil
         
-        
-        let paymentTypeId = PXPaymentTypes(rawValue: paymentMethodTypeId)!
-        
         var installmentAmount: String?
         if let amount = paymentData.payerCost?.installmentAmount {
             installmentAmount = Utils.getAmountFormated(amount: amount, forCurrency: currency)
@@ -653,7 +637,7 @@ extension PXResultViewModel {
         let externalPaymentMethodLogo = externalPaymentMethodInfo
         
         
-        return PXCongratsPaymentInfo(paidAmount: paidAmount, rawAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: paymentTypeId, installmentsRate: installmentRate, installmentsCount: installmentsCount, installmentsAmount: installmentAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: externalPaymentMethodLogo)
+        return PXCongratsPaymentInfo(paidAmount: paidAmount, rawAmount: transactionAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: lastFourDigits, paymentMethodDescription: paymentMethodExtraInfo, paymentMethodId: paymentMethodId, paymentMethodType: paymentType, installmentsRate: installmentRate, installmentsCount: installmentsCount, installmentsAmount: installmentAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, externalPaymentMethodImage: externalPaymentMethodLogo)
     }
     
     private func congratsType(fromResultStatus stringStatus: String) -> PXCongratsType {
