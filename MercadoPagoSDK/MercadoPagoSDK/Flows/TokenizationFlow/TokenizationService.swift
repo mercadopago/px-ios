@@ -10,15 +10,13 @@ import Foundation
 internal class TokenizationService {
     var paymentOptionSelected: PaymentMethodOption?
     var cardToken: PXCardToken?
-    var escManager: MercadoPagoESC?
     var pxNavigationHandler: PXNavigationHandler
     var needToShowLoading: Bool
     var mercadoPagoServices: MercadoPagoServices
     weak var resultHandler: TokenizationServiceResultHandler?
 
-    init(paymentOptionSelected: PaymentMethodOption?, cardToken: PXCardToken?, escManager: MercadoPagoESC?, pxNavigationHandler: PXNavigationHandler, needToShowLoading: Bool, mercadoPagoServices: MercadoPagoServices, gatewayFlowResultHandler: TokenizationServiceResultHandler) {
+    init(paymentOptionSelected: PaymentMethodOption?, cardToken: PXCardToken?, pxNavigationHandler: PXNavigationHandler, needToShowLoading: Bool, mercadoPagoServices: MercadoPagoServices, gatewayFlowResultHandler: TokenizationServiceResultHandler) {
         self.paymentOptionSelected = paymentOptionSelected
-        self.escManager = escManager
         self.pxNavigationHandler = pxNavigationHandler
         self.needToShowLoading = needToShowLoading
         self.mercadoPagoServices = mercadoPagoServices
@@ -44,15 +42,16 @@ internal class TokenizationService {
         }
 
         // Saved card with esc token
-        if let escManager = escManager, escManager.hasESCEnable() {
+        let requireESC = PXConfiguratorManager.escProtocol.hasESCEnable()
+        if requireESC {
             var savedESCCardToken: PXSavedESCCardToken
 
-            let esc = escManager.getESC(cardId: cardInfo.getCardId(), firstSixDigits: cardInfo.getFirstSixDigits(), lastFourDigits: cardInfo.getCardLastForDigits())
+            let esc = PXConfiguratorManager.escProtocol.getESC(config: PXConfiguratorManager.escConfig, cardId: cardInfo.getCardId(), firstSixDigits: cardInfo.getFirstSixDigits(), lastFourDigits: cardInfo.getCardLastForDigits())
 
             if !String.isNullOrEmpty(esc) {
-                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: escManager.hasESCEnable())
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: requireESC)
             } else {
-                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: escManager.hasESCEnable())
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: requireESC)
             }
             createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 
@@ -129,7 +128,7 @@ internal class TokenizationService {
         }, failure: { (error) in
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.trackInvalidESC(error: error, cardId: savedESCCardToken.cardId, esc_length: savedESCCardToken.esc?.count)
-            self.escManager?.deleteESC(cardId: savedESCCardToken.cardId, reason: .UNEXPECTED_TOKENIZATION_ERROR, detail: error.toJSONString())
+            PXConfiguratorManager.escProtocol.deleteESC(config: PXConfiguratorManager.escConfig, cardId: savedESCCardToken.cardId, reason: .UNEXPECTED_TOKENIZATION_ERROR, detail: error.toJSONString())
             self.resultHandler?.finishWithESCError()
         })
     }

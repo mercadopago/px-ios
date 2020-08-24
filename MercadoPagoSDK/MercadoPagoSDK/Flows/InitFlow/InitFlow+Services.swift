@@ -11,8 +11,7 @@ import Foundation
 extension InitFlow {
 
     func getInitSearch() {
-        let cardIdsWithEsc = initFlowModel.getESCService()?.getSavedCardIds() ?? []
-        initFlowModel.properties.savedCardIdsWithESC = cardIdsWithEsc
+        let cardIdsWithEsc = PXConfiguratorManager.escProtocol.getSavedCardIds(config: PXConfiguratorManager.escConfig)
 
         let discountParamsConfiguration = initFlowModel.properties.advancedConfig.discountParamsConfiguration
         let flowName: String? = MPXTracker.sharedInstance.getFlowName() ?? nil

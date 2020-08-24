@@ -25,7 +25,7 @@ import UIKit
     }
 
     func loadViewFromNib() {
-        let bundle = Bundle(for: type(of: self))
+        let bundle = MercadoPagoBundle.bundle()
         let nib = UINib(nibName: "CardBackView", bundle: bundle)
         if let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
             view.frame = bounds

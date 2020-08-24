@@ -10,10 +10,18 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.0'
   s.requires_arc = true
   s.default_subspec = 'Default'
+  #s.static_framework = true
 
   s.subspec 'Default' do |default|
-    default.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets','MercadoPagoSDK/MercadoPagoSDK/*/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf', 'MercadoPagoSDK/MercadoPagoSDK/**/**.{xib,strings,stringsdict}', 'MercadoPagoSDK/MercadoPagoSDK/Translations/**/**.{plist,strings}', 'MercadoPagoSDK/MercadoPagoSDK/Plist/*.plist', 'MercadoPagoSDK/MercadoPagoSDK/*.lproj']
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
+    default.resource_bundles = {
+      'MercadoPagoSDKResources' => [
+        'MercadoPagoSDK/Resources/**/*.xcassets',
+        'MercadoPagoSDK/Resources/**/*.xib',
+        'MercadoPagoSDK/Resources/**/*.{lproj,strings,stringsdict}',
+        'MercadoPagoSDK/Resources/**/*.plist'
+      ]
+    }
     s.dependency 'MLUI', '~> 5.0'
     s.dependency 'MLCardDrawer', '~> 1.4'
     s.dependency 'MLBusinessComponents', '~> 1.0'
@@ -24,14 +32,6 @@ Pod::Spec.new do |s|
 
   s.subspec 'ESC' do |esc|
     esc.dependency 'MercadoPagoSDKV4/Default'
-    esc.dependency 'MLESCManager', '~> 2.0.3'
-    esc.pod_target_xcconfig = {
-      'OTHER_SWIFT_FLAGS[config=Debug]' => '-D PX_PRIVATE_POD',
-      'OTHER_SWIFT_FLAGS[config=Release]' => '-D PX_PRIVATE_POD',
-      'OTHER_SWIFT_FLAGS[config=MDS-Custom]' => '-D PX_PRIVATE_POD',
-      'OTHER_SWIFT_FLAGS[config=MDS-Nightly]' => '-D PX_PRIVATE_POD',
-      'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D PX_PRIVATE_POD'
-    }
   end
 
   #s.test_spec do |test_spec|

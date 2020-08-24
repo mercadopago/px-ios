@@ -81,7 +81,7 @@ internal extension Localizator {
 // MARK: Localization Paths
 extension Localizator {
     func getLocalizedID() -> String {
-        let bundle = ResourceManager.shared.getBundle() ?? Bundle.main
+        let bundle = MercadoPagoBundle.bundle()
         let currentLanguage = getLanguage()
         let currentLanguageSeparated = currentLanguage.components(separatedBy: "-").first
         if bundle.path(forResource: currentLanguage, ofType: "lproj") != nil {
@@ -98,13 +98,13 @@ extension Localizator {
     }
 
     func getLocalizedPath() -> String {
-        let bundle = ResourceManager.shared.getBundle() ?? Bundle.main
+        let bundle = MercadoPagoBundle.bundle()
         let pathID = getLocalizedID()
         return bundle.path(forResource: pathID, ofType: "lproj")!
     }
 
     private func getParentLocalizedPath() -> String {
-        let bundle = ResourceManager.shared.getBundle() ?? Bundle.main
+        let bundle = MercadoPagoBundle.bundle()
         let pathID = getParentLanguageID()
         if let parentPath = bundle.path(forResource: pathID, ofType: "lproj") {
             return parentPath
@@ -146,7 +146,7 @@ internal extension String {
         if let customTrans = Localizator.sharedInstance.getCustomTrans(self) {
             return customTrans
         }
-        var bundle: Bundle? = ResourceManager.shared.getBundle()
+        var bundle: Bundle? = MercadoPagoBundle.bundle()
         if bundle == nil {
             bundle = Bundle.main
         }

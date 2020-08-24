@@ -69,7 +69,7 @@ extension PXToken: PXCardInformationForm {
         return !String.isNullOrEmpty(esc)
     }
 
-    func hasCardId() -> Bool {
+    public func hasCardId() -> Bool {
         return !String.isNullOrEmpty(cardId)
     }
 }

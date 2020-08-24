@@ -100,7 +100,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
 
-    var escManager: MercadoPagoESC?
     var invalidESCReason: PXESCDeleteReason?
 
     // Discounts bussines service.
@@ -141,8 +140,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
         }
 
-        escManager = PXESCManager(enabled: getAdvancedConfiguration().isESCEnabled(), sessionId: MPXTracker.sharedInstance.getSessionID(), flow: MPXTracker.sharedInstance.getFlowName() ?? "PX")
-
+        PXConfiguratorManager.escConfig = PXESCConfig.createConfig()
+        
         // Create Init Flow
         createInitFlow()
     }
@@ -220,10 +219,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func getCardsIdsWithESC() -> [String] {
         guard let customPaymentOptions = customPaymentOptions else { return [] }
         var cardIdsWithESC: [String] = []
-        let savedCardIds: [String] = initFlow?.initFlowModel.properties.savedCardIdsWithESC ?? []
+        let savedCardIds: [String] = PXConfiguratorManager.escProtocol.getSavedCardIds(config: PXConfiguratorManager.escConfig)
         let customPaymentOptionsWithESC = customPaymentOptions.filter { savedCardIds.contains($0.getCardId()) }
         customPaymentOptionsWithESC.forEach {
-            if escManager?.getESC(cardId: $0.getCardId(), firstSixDigits: $0.getFirstSixDigits(), lastFourDigits: $0.getCardLastForDigits()) != nil {
+            if PXConfiguratorManager.escProtocol.getESC(config: PXConfiguratorManager.escConfig, cardId: $0.getCardId(), firstSixDigits: $0.getFirstSixDigits(), lastFourDigits: $0.getCardLastForDigits()) != nil {
                 cardIdsWithESC.append($0.getCardId())
             }
         }
@@ -289,14 +288,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let paymentMethod = paymentData.paymentMethod else {
             fatalError("Don't have paymentData to open Security View Controller")
         }
-        let escEnabled = escManager?.hasESCEnable() ?? false
-        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth, escEnabled: escEnabled)
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
         disableChangePaymentMethodIfNeed()
-        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, advancedConfig: advancedConfig, userLogged: !String.isNullOrEmpty(privateKey), escProtocol: self.escManager)
+        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, advancedConfig: advancedConfig, userLogged: !String.isNullOrEmpty(privateKey))
     }
 
     func resultViewModel() -> PXResultViewModel {
@@ -622,9 +620,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     public func updateCheckoutModel(token: PXToken) {
         if let esc = token.esc, !String.isNullOrEmpty(esc) {
-            escManager?.saveESC(token: token, esc: esc)
+            PXConfiguratorManager.escProtocol.saveESC(config: PXConfiguratorManager.escConfig, token: token, esc: esc)
         } else {
-            escManager?.deleteESC(token: token, reason: .NO_ESC, detail: nil)
+            PXConfiguratorManager.escProtocol.deleteESC(config: PXConfiguratorManager.escConfig, token: token, reason: .NO_ESC, detail: nil)
         }
         self.paymentData.updatePaymentDataWith(token: token)
     }
@@ -875,7 +873,7 @@ extension MercadoPagoCheckoutViewModel {
             readyToPay = true
             if let cardId = paymentData.getToken()?.cardId, cardId.isNotEmpty {
                 savedESCCardToken = PXSavedESCCardToken(cardId: cardId, esc: nil, requireESC: getAdvancedConfiguration().isESCEnabled())
-                escManager?.deleteESC(cardId: cardId, reason: reason, detail: nil)
+                PXConfiguratorManager.escProtocol.deleteESC(config: PXConfiguratorManager.escConfig, cardId: cardId, reason: reason, detail: nil)
             }
         }
         self.paymentData.cleanToken()
@@ -916,7 +914,7 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
         guard let paymentFlow = paymentFlow else {
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServices: mercadoPagoServices, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, amountHelper: amountHelper, checkoutPreference: checkoutPreference, escManager: escManager, ESCBlacklistedStatus: search?.configurations?.ESCBlacklistedStatus)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServices: mercadoPagoServices, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, amountHelper: amountHelper, checkoutPreference: checkoutPreference, ESCBlacklistedStatus: search?.configurations?.ESCBlacklistedStatus)
             if let productId = advancedConfig.productId {
                 paymentFlow.setProductIdForPayment(productId)
             }

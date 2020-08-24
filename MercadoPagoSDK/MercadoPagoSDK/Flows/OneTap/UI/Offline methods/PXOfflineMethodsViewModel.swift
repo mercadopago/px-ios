@@ -21,7 +21,7 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
         self.paymentMethods = paymentMethods
         self.payerCompliance = payerCompliance
         self.displayInfo = displayInfo
-        super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged, escProtocol: nil)
+        super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfig, userLogged: userLogged)
     }
 
     func getTotalTitle() -> PXText {

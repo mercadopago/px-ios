@@ -50,7 +50,6 @@ final internal class OneTapFlowModel: PXFlowModel {
         return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
     }
 
-    let escManager: MercadoPagoESC?
     let advancedConfiguration: PXAdvancedConfiguration
     let mercadoPagoServices: MercadoPagoServices
     let paymentConfigurationService: PXPaymentConfigurationServices
@@ -66,7 +65,6 @@ final internal class OneTapFlowModel: PXFlowModel {
         advancedConfiguration = checkoutViewModel.getAdvancedConfiguration()
         chargeRules = checkoutViewModel.chargeRules
         mercadoPagoServices = checkoutViewModel.mercadoPagoServices
-        escManager = checkoutViewModel.escManager
         paymentConfigurationService = checkoutViewModel.paymentConfigurationService
         disabledOption = checkoutViewModel.disabledOption
 
@@ -114,13 +112,12 @@ internal extension OneTapFlowModel {
             fatalError("Don't have paymentData to open Security View Controller")
         }
 
-        let ESCEnabled = escManager?.hasESCEnable() ?? false
-        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, escEnabled: ESCEnabled)
+        let reason = SecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason)
         return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
     func oneTapViewModel() -> PXOneTapViewModel {
-        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, escProtocol: escManager, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
+        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
         viewModel.publicKey = publicKey
         viewModel.privateKey = privateKey
         viewModel.siteId = siteId
@@ -258,7 +255,7 @@ internal extension OneTapFlowModel {
 
     func hasSavedESC() -> Bool {
         if let card = paymentOptionSelected as? PXCardInformation {
-            return escManager?.getESC(cardId: card.getCardId(), firstSixDigits: card.getFirstSixDigits(), lastFourDigits: card.getCardLastForDigits()) == nil ? false : true
+            return PXConfiguratorManager.escProtocol.getESC(config: PXConfiguratorManager.escConfig, cardId: card.getCardId(), firstSixDigits: card.getFirstSixDigits(), lastFourDigits: card.getCardLastForDigits()) == nil ? false : true
         }
         return false
     }

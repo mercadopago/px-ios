@@ -51,6 +51,7 @@ GEM
       nap (~> 1.0)
       ruby-macho (~> 1.4)
       xcodeproj (>= 1.11.1, < 2.0)
+    cocoapods-clean_build_phases_scripts (0.0.2)
     cocoapods-core (1.8.4)
       activesupport (>= 4.0.2, < 6)
       algoliasearch (~> 1.0)
@@ -249,6 +250,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (~> 1.8.4)
+  cocoapods-clean_build_phases_scripts (~> 0.0.1)
   fastlane (~> 2.55)
   octokit (~> 4.7.0)
   rake
@@ -256,4 +258,4 @@ DEPENDENCIES
   xcpretty-json-formatter (~> 0.1)
 
 BUNDLED WITH
-   2.0.1
+   2.1.4

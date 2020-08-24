@@ -31,7 +31,7 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     }
 
     public init(viewModel: SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: PXCardInformationForm, _ securityCode: String) -> Void ) {
-        super.init(nibName: "SecurityCodeViewController", bundle: ResourceManager.shared.getBundle())
+        super.init(nibName: "SecurityCodeViewController", bundle: MercadoPagoBundle.bundle())
         self.viewModel = viewModel
         self.viewModel.callback = collectSecurityCodeCallback
     }

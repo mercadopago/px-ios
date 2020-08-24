@@ -14,29 +14,18 @@ internal class ResourceManager {
 
     let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"
 
-    func getBundle() -> Bundle? {
-        return Bundle(for: ResourceManager.self)
-    }
-
     func getImage(_ name: String?) -> UIImage? {
-        guard let name = name, let bundle = ResourceManager.shared.getBundle() else {
+        guard let name = name else {
             return nil
         }
-        return UIImage(named: name, in: bundle, compatibleWith: nil)
+        return UIImage(named: name, in: MercadoPagoBundle.bundle(), compatibleWith: nil)
     }
 }
 
 // MARK: Payment Method Resources
 extension ResourceManager {
-    func getBundlePathForPlistResource(named resource: String) -> String? {
-        guard let bundle = ResourceManager.shared.getBundle() else {
-            return nil
-        }
-        return bundle.path(forResource: resource, ofType: "plist")
-    }
-
     func getDictionaryForResource(named resource: String) -> NSDictionary? {
-        guard let path = getBundlePathForPlistResource(named: resource) else {
+        guard let path = MercadoPagoBundle.bundle().path(forResource: resource, ofType: "plist") else {
             return nil
         }
         return NSDictionary(contentsOfFile: path)

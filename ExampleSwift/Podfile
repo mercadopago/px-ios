@@ -1,12 +1,16 @@
+source 'https://cdn.cocoapods.org/'
 
 # Uncomment the next line to define a global platform for your project
 platform :ios, '10.0'
+
+# This plugin removes input and output files from 'Copy Pods Resources' build phases
+# because this issue https://github.com/CocoaPods/CocoaPods/issues/7042
+plugin 'cocoapods-clean_build_phases_scripts'
 
 target 'ExampleSwift' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for ExampleSwift
-  # pod 'MLUI', '~> 5.0'
   pod 'MercadoPagoSDK', :path => '../'
 end

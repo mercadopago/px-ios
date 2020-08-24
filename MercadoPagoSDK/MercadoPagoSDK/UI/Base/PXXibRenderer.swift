@@ -10,14 +10,13 @@ import Foundation
 
 class PXXibRenderer: UIView, PXXibComponentizable {
     func loadXib(rendererComponentizableClass: PXXibComponentizable) {
-        if let bundle = ResourceManager.shared.getBundle() {
-            bundle.loadNibNamed(rendererComponentizableClass.xibName(), owner: rendererComponentizableClass, options: nil)
-            if let classView = rendererComponentizableClass as? UIView {
-                let contentView = rendererComponentizableClass.containerView()
-                classView.addSubview(contentView)
-                contentView.frame = classView.bounds
-                contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            }
+        let bundle = MercadoPagoBundle.bundle()
+        bundle.loadNibNamed(rendererComponentizableClass.xibName(), owner: rendererComponentizableClass, options: nil)
+        if let classView = rendererComponentizableClass as? UIView {
+            let contentView = rendererComponentizableClass.containerView()
+            classView.addSubview(contentView)
+            contentView.frame = classView.bounds
+            contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         }
     }
 

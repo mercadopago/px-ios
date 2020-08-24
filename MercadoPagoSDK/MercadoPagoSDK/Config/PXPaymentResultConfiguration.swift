@@ -65,7 +65,7 @@ import Foundation
     internal var approvedSubtitle = ""
     internal var approvedURLImage: String?
     internal var approvedIconName = "default_item_icon"
-    internal var approvedIconBundle = ResourceManager.shared.getBundle()!
+    internal var approvedIconBundle = MercadoPagoBundle.bundle()
 
     // MARK: Pending
     // To deprecate post v4. SP integration.
@@ -76,7 +76,7 @@ import Foundation
     internal lazy var pendingContentTitle = PXPaymentResultConfiguration.PENDING_CONTENT_TITLE.localized
     internal var pendingContentText = ""
     internal var pendingIconName = "default_item_icon"
-    internal var pendingIconBundle = ResourceManager.shared.getBundle()!
+    internal var pendingIconBundle = MercadoPagoBundle.bundle()
     internal var pendingURLImage: String?
     internal var hidePendingContentText = false
     internal var hidePendingContentTitle = false
@@ -90,7 +90,7 @@ import Foundation
     internal lazy var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
     internal var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
     internal var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
-    internal var rejectedIconBundle = ResourceManager.shared.getBundle()!
+    internal var rejectedIconBundle = MercadoPagoBundle.bundle()
     internal var rejectedDefaultIconName: String?
     internal var rejectedURLImage: String?
     internal var rejectedIconName: String?
@@ -105,7 +105,7 @@ import Foundation
     internal var showLabelText = true
     internal var pmDefaultIconName = "card_icon"
     internal var pmBolbradescoIconName = "boleto_icon"
-    internal var pmIconBundle = ResourceManager.shared.getBundle()!
+    internal var pmIconBundle = MercadoPagoBundle.bundle()
     internal var statusBackgroundColor: UIColor?
     internal var hideApprovedPaymentBodyCell = false
     internal var hideContentCell = false

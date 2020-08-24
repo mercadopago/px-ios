@@ -75,12 +75,12 @@ internal class SecurityCodeViewModel {
 
 // MARK: Static methods
 extension SecurityCodeViewModel {
-    static func getSecurityCodeReason(invalidESCReason: PXESCDeleteReason?, isCallForAuth: Bool = false, escEnabled: Bool = true) -> SecurityCodeViewModel.Reason {
+    static func getSecurityCodeReason(invalidESCReason: PXESCDeleteReason?, isCallForAuth: Bool = false) -> SecurityCodeViewModel.Reason {
         if isCallForAuth {
             return .CALL_FOR_AUTH
         }
 
-        if !escEnabled {
+        if !PXConfiguratorManager.escProtocol.hasESCEnable() {
             return .ESC_DISABLED
         }
 

@@ -10,10 +10,18 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.0'
   s.requires_arc = true
   s.default_subspec = 'Default'
+  #s.static_framework = true
 
   s.subspec 'Default' do |default|
-    default.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets','MercadoPagoSDK/MercadoPagoSDK/*/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf', 'MercadoPagoSDK/MercadoPagoSDK/**/**.{xib,strings,stringsdict}', 'MercadoPagoSDK/MercadoPagoSDK/Translations/**/**.{plist,strings}', 'MercadoPagoSDK/MercadoPagoSDK/Plist/*.plist', 'MercadoPagoSDK/MercadoPagoSDK/*.lproj']
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
+    default.resource_bundles = {
+      'MercadoPagoSDKResources' => [
+        'MercadoPagoSDK/Resources/**/*.xcassets',
+        'MercadoPagoSDK/Resources/**/*.xib',
+        'MercadoPagoSDK/Resources/**/*.{lproj,strings,stringsdict}',
+        'MercadoPagoSDK/Resources/**/*.plist'
+      ]
+    }
     default.dependency 'MLUI', '~> 5.0'
     default.dependency 'MLCardDrawer', '~> 1.4'
     s.dependency 'MLBusinessComponents', '~> 1.0'
