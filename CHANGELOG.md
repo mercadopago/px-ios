@@ -1,9 +1,15 @@
-# v4.35.2 
+# v4.35.3
+🚀Private Release - 4.35.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Create resources bundle
+- Move ESC to PXAddons
+
+# v4.35.2
 🚀Private Release - 4.35.2 🚀
 MercadoPagoSDKV4 - Private Version
 - Fix redirect bug
 
-# v4.35.1 
+# v4.35.1
 🚀Private Release - 4.35.1 🚀
 MercadoPagoSDKV4 - Private Version
 - Feature CFT
@@ -11,7 +17,7 @@ MercadoPagoSDKV4 - Private Version
 - Show discounts row for consumer credits
 - Discounts row improvements
 
-# v4.35.0 
+# v4.35.0
 🚀Private Release - 4.35.0 🚀
 MercadoPagoSDKV4 - Private Version
 - Use MLCardFormField as Remedy textfield
