@@ -575,7 +575,7 @@ extension PXResultViewModel {
             .withHeaderColor(primaryResultColor())
             .withHeader(title: titleHeader(forNewResult: true).string, imageURL: nil, closeAction: headerCloseAction())
             .withHeaderImage(iconImageHeader())
-            .withHeaderBadgeImage(badgeImage()!)
+            .withHeaderBadgeImage(badgeImage())
             .withReceipt(shouldShowReceipt: hasReceiptComponent(), receiptId: paymentResult.paymentId, action: pointsAndDiscounts?.viewReceiptAction)
             .withLoyalty(pointsAndDiscounts?.points)
             .withDiscounts(pointsAndDiscounts?.discounts)
@@ -596,13 +596,16 @@ extension PXResultViewModel {
             paymentcongrats.withPaymentMethodInfo(paymentInfo)
         }
         
-        if let splitPaymentInfo = getSplitPayment() {
+        if amountHelper.isSplitPayment ,
+        let splitPaymentData = amountHelper.splitAccountMoney,
+        let splitPaymentInfo = getPaymentMethod(paymentData: splitPaymentData, amountHelper: amountHelper) {
             paymentcongrats.withSplitPaymentInfo(splitPaymentInfo)
         }
         
-        paymentcongrats.withStatementDescription(statementDescription: "Some description") // Finish this
+        paymentcongrats.withStatementDescription(paymentResult.statementDescription)
         
         paymentcongrats.withFlowBehaviorResult(getFlowBehaviourResult())
+                .withTrackingProperties(getTrackingProperties())
                 .withErrorBodyView(errorBodyView())
         
         return paymentcongrats
@@ -617,8 +620,6 @@ extension PXResultViewModel {
         
         return assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentType: paymentType, paymentMethodId: paymentId, externalPaymentMethodInfo: paymentData.getPaymentMethod()?.externalPaymentPluginImageData as Data?)
     }
-    
-    private func getSplitPayment() -> PXCongratsPaymentInfo? {nil}
     
     private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentType: PXPaymentTypes, paymentMethodId: String, externalPaymentMethodInfo: Data?) -> PXCongratsPaymentInfo {
         var paidAmount: String
