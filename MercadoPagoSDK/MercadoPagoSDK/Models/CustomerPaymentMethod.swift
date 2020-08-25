@@ -148,4 +148,8 @@ import UIKit
     func getPaymentType() -> String {
         return paymentMethodTypeId
     }
+
+    func containsSavedId(_ savedCardIds: [String]) -> Bool {
+        return savedCardIds.contains(getCardId()) || savedCardIds.contains("esc_card" + "_" + getFirstSixDigits() + "_" + getCardLastForDigits())
+    }
 }
