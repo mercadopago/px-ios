@@ -21,6 +21,17 @@ class PXNewResultUtil {
         }
     }
 
+    //TRACKING
+    class func trackScreenAndConversion(viewModel: PXNewResultViewModelInterface) {
+        let path = viewModel.getTrackingPath()
+        if !path.isEmpty {
+            MPXTracker.sharedInstance.trackScreen(screenName: path, properties: viewModel.getTrackingProperties())
+
+            let behaviourProtocol = PXConfiguratorManager.flowBehaviourProtocol
+            behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())
+        }
+    }
+
     //RECEIPT DATA
     class func getDataForReceiptView(paymentId: String?) -> PXNewCustomViewData? {
         guard let paymentId = paymentId else {
