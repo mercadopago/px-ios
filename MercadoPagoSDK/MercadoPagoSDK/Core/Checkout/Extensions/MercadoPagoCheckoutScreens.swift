@@ -186,11 +186,6 @@ extension MercadoPagoCheckout {
         }
         
         let resultViewModel = viewModel.resultViewModel()
-        if let url = resultViewModel.getRedirectUrl() {
-            // If preference has a redirect URL for the current result status, perform redirect and finish checkout
-            redirectAndFinish(viewModel: resultViewModel, redirectUrl: url)
-            return
-        }
         
         resultViewModel.setCallback(callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
@@ -247,9 +242,15 @@ extension MercadoPagoCheckout {
                     self.finish()
             }
         })
-        
         let paymentCongrats = resultViewModel.toPaymentCongrats()
         let congratsViewModel = PXPaymentCongratsViewModel(paymentCongrats: paymentCongrats)
+        
+        if let url = congratsViewModel.getRedirectUrl() {
+            // If preference has a redirect URL for the current result status, perform redirect and finish checkout
+            redirectAndFinish(viewModel: congratsViewModel, redirectUrl: url)
+            return
+        }
+       
         let viewController = PXNewResultViewController(viewModel: congratsViewModel, finishButtonAnimation: { [weak self] in
             // Remedy view has an animated button. This closure is called after the animation has finished
             self?.executeNextStep()
