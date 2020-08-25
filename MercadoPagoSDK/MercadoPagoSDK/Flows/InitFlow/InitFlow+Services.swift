@@ -40,6 +40,26 @@ extension InitFlow {
     }
 
     func callback(_ search: PXInitDTO) {
+        /// Hack para corregir un issue cuando hay un descuento para un medio de pago particular
+        /// El nodo coupons no trae el valor de generalCoupon y cuando usa MercadoPagoCheckoutViewModel.getPaymentOptionConfigurations
+        /// se rompe todo al no encontrar el payer_costs correspondiente al coupon
+        let generalCoupon = search.generalCoupon
+        if !generalCoupon.isEmpty,
+            !search.coupons.keys.contains(generalCoupon),
+            let json = "{\"is_available\": true}".data(using: .utf8) {
+            do {
+                let discountConfiguration = try JSONDecoder().decode(PXDiscountConfiguration.self, from: json)
+                search.coupons[generalCoupon] = discountConfiguration
+            } catch {
+                printDebug("Se produjo un error al intentar crear el PXDiscountConfiguration")
+            }
+        }
+        if search.selectedDiscountConfiguration == nil,
+            let selectedDiscountConfiguration = search.coupons[search.generalCoupon] {
+            search.selectedDiscountConfiguration = selectedDiscountConfiguration
+        }
+        /// Fin del hack
+
         initFlowModel.updateInitModel(paymentMethodsResponse: search)
 
         //Tracking Experiments
