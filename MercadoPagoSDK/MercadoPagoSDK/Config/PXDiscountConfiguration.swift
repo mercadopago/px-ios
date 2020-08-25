@@ -50,6 +50,11 @@ open class PXDiscountConfiguration: NSObject, Codable {
         self.discountOverview = discountOverview
     }
 
+    internal convenience init(isAvailable: Bool) {
+        self.init()
+        self.isAvailable = isAvailable
+    }
+
     public enum CodingKeys: String, CodingKey {
         case discount
         case campaign

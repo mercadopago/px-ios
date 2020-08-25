@@ -45,14 +45,8 @@ extension InitFlow {
         /// se rompe todo al no encontrar el payer_costs correspondiente al coupon
         let generalCoupon = search.generalCoupon
         if !generalCoupon.isEmpty,
-            !search.coupons.keys.contains(generalCoupon),
-            let json = "{\"is_available\": true}".data(using: .utf8) {
-            do {
-                let discountConfiguration = try JSONDecoder().decode(PXDiscountConfiguration.self, from: json)
-                search.coupons[generalCoupon] = discountConfiguration
-            } catch {
-                printDebug("Se produjo un error al intentar crear el PXDiscountConfiguration")
-            }
+            !search.coupons.keys.contains(generalCoupon) {
+            search.coupons[generalCoupon] = PXDiscountConfiguration(isAvailable: true)
         }
         if search.selectedDiscountConfiguration == nil,
             let selectedDiscountConfiguration = search.coupons[search.generalCoupon] {
