@@ -23,6 +23,10 @@
 		81488CC11FE93E0C003C35B1 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81488CC01FE93E0C003C35B1 /* TestComponent.swift */; };
 		81488CC21FE94196003C35B1 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81488CC01FE93E0C003C35B1 /* TestComponent.swift */; };
 		898B901F599A3542DC2DB3B7 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002BDC48D4BE7B195108A9C2 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */; };
+		CE1BAD5324F59350003E921A /* CongratsExamplesViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = CEA2D0F624EC535B0061EBEA /* CongratsExamplesViewController.h */; };
+		CE1BAD5424F59350003E921A /* CongratsExamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2D0F524EC535B0061EBEA /* CongratsExamplesViewController.m */; };
+		CE1BAD5524F59383003E921A /* CongratsUtils.h in Sources */ = {isa = PBXBuildFile; fileRef = CEA2D0F824EC535B0061EBEA /* CongratsUtils.h */; };
+		CE1BAD5624F59383003E921A /* CongratsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2D0F724EC535B0061EBEA /* CongratsUtils.m */; };
 		FC5B5AA6217E0F9F000B83E6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B5AA5217E0F9F000B83E6 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -398,14 +402,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1BAD5524F59383003E921A /* CongratsUtils.h in Sources */,
+				CE1BAD5624F59383003E921A /* CongratsUtils.m in Sources */,
+				CE1BAD5324F59350003E921A /* CongratsExamplesViewController.h in Sources */,
+				CE1BAD5424F59350003E921A /* CongratsExamplesViewController.m in Sources */,
 				76EF7EC51D2559140087C785 /* AppDelegate.m in Sources */,
-				CEA2D0FA24EC535B0061EBEA /* CongratsUtils.m in Sources */,
 				156526C9209F76E600852D39 /* CustomComponentText.swift in Sources */,
 				81488CC11FE93E0C003C35B1 /* TestComponent.swift in Sources */,
 				76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */,
 				2385C5DA20125871002C147D /* MeliTheme.swift in Sources */,
 				FC5B5AA6217E0F9F000B83E6 /* Extensions.swift in Sources */,
-				CEA2D0F924EC535B0061EBEA /* CongratsExamplesViewController.m in Sources */,
 				23CF4ECE20994D1A00EC9399 /* MPTheme.swift in Sources */,
 				76EF7EC21D2559140087C785 /* main.m in Sources */,
 				23346C341FE83734005FD8C9 /* PaymentPluginViewController.m in Sources */,
