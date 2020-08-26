@@ -26,7 +26,7 @@ import UIKit
 
     func loadViewFromNib() {
         let bundle = MercadoPagoBundle.bundle()
-        let nib = UINib(nibName: "CardBackView", bundle: bundle)
+        let nib = UINib(nibName: "CardBackView", bundle: ResourceManager.shared.getBundle())
         if let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
             view.frame = bounds
             view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

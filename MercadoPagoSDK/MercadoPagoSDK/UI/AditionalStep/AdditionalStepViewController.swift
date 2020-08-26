@@ -13,7 +13,7 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController {
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: Defs
-    var bundle: Bundle? = MercadoPagoBundle.bundle()
+    var bundle: Bundle? = ResourceManager.shared.getBundle()
     let viewModel: AdditionalStepViewModel!
     override var maxFontSize: CGFloat { return self.viewModel.maxFontSize }
 

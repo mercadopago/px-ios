@@ -43,7 +43,7 @@
                                 <action selector="setType:" destination="-1" eventType="touchUpInside" id="Rbd-f6-1Ra"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Número" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7N3-XK-uvA" customClass="HoshiTextField" customModule="MercadoPagoSDK">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Número" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7N3-XK-uvA" customClass="HoshiTextField" customModule="MercadoPagoSDKResources" customModuleProvider="target">
                             <rect key="frame" x="100" y="10" width="183" height="45"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
@@ -67,7 +67,7 @@
                                 <outlet property="delegate" destination="-1" id="FCI-mg-7GZ"/>
                             </connections>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tipo" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Zck-A3-VIw" customClass="HoshiTextField" customModule="MercadoPagoSDK">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tipo" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Zck-A3-VIw" customClass="HoshiTextField" customModule="MercadoPagoSDKResources" customModuleProvider="target">
                             <rect key="frame" x="20" y="10" width="70" height="45"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>

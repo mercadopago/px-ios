@@ -10,7 +10,7 @@ import MLCardDrawer
 class PXCardSliderPagerCell: FSPagerViewCell {
     static let identifier = "PXCardSliderPagerCell"
     static func getCell() -> UINib {
-        return UINib(nibName: PXCardSliderPagerCell.identifier, bundle: MercadoPagoBundle.bundle())
+        return UINib(nibName: PXCardSliderPagerCell.identifier, bundle: ResourceManager.shared.getBundle())
     }
 
     private lazy var bottomMessageViewHeight: CGFloat = 24

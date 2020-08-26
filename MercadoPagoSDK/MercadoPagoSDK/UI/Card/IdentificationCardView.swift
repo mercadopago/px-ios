@@ -33,7 +33,7 @@ internal class IdentificationCardView: UIView, Updatable {
     }
 
     func loadViewFromNib() {
-        let bundle = MercadoPagoBundle.bundle()
+        let bundle = ResourceManager.shared.getBundle()
         let nib = UINib(nibName: "IdentificationCardView", bundle: bundle)
         if let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
             view.frame = bounds

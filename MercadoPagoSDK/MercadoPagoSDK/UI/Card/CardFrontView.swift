@@ -54,7 +54,7 @@ import UIKit
     }
 
     func loadViewFromNib() {
-        let nib = UINib(nibName: "CardFrontView", bundle: MercadoPagoBundle.bundle())
+        let nib = UINib(nibName: "CardFrontView", bundle: ResourceManager.shared.getBundle())
         if let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
             view.frame = bounds
             self.addSubview(view)
