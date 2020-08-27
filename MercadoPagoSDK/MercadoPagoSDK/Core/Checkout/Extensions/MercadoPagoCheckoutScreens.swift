@@ -191,62 +191,66 @@ extension MercadoPagoCheckout {
             redirectAndFinish(viewModel: resultViewModel, redirectUrl: url)
             return
         }
-
-        let viewController = PXNewResultViewController(viewModel: resultViewModel, callback: { [weak self] congratsState, remedyText in
+        
+        resultViewModel.setCallback(callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
-            case .CALL_FOR_AUTH:
-                if self.viewModel.remedy != nil {
+                case .CALL_FOR_AUTH:
+                    if self.viewModel.remedy != nil {
+                        // Update PaymentOptionSelected if needed
+                        self.viewModel.updatePaymentOptionSelectedWithRemedy()
+                        // CVV Remedy. Create new card token
+                        self.viewModel.prepareForClone()
+                        // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
+                        self.viewModel.readyToPay = true
+                    } else {
+                        self.viewModel.prepareForClone()
+                    }
+                    self.collectSecurityCodeForRetry()
+                case .RETRY,
+                     .SELECT_OTHER:
+                    if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(),
+                        congratsState == .SELECT_OTHER {
+                        changePaymentMethodAction()
+                    } else {
+                        self.viewModel.prepareForNewSelection()
+                        self.executeNextStep()
+                }
+                case .RETRY_SECURITY_CODE:
+                    if let remedyText = remedyText, remedyText.isNotEmpty {
+                        // Update PaymentOptionSelected if needed
+                        self.viewModel.updatePaymentOptionSelectedWithRemedy()
+                        // CVV Remedy. Create new card token
+                        self.viewModel.prepareForClone()
+                        // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
+                        self.viewModel.readyToPay = true
+                        // Set needToShowLoading to false so the button animation can be shown
+                        self.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: remedyText)
+                    } else {
+                        self.finish()
+                }
+                case .RETRY_SILVER_BULLET:
                     // Update PaymentOptionSelected if needed
                     self.viewModel.updatePaymentOptionSelectedWithRemedy()
-                    // CVV Remedy. Create new card token
+                    // Silver Bullet remedy
                     self.viewModel.prepareForClone()
                     // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
                     self.viewModel.readyToPay = true
-                } else {
-                    self.viewModel.prepareForClone()
-                }
-                self.collectSecurityCodeForRetry()
-            case .RETRY,
-                 .SELECT_OTHER:
-                if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(),
-                    congratsState == .SELECT_OTHER {
-                    changePaymentMethodAction()
-                } else {
-                    self.viewModel.prepareForNewSelection()
                     self.executeNextStep()
-                }
-            case .RETRY_SECURITY_CODE:
-                if let remedyText = remedyText, remedyText.isNotEmpty {
-                    // Update PaymentOptionSelected if needed
-                    self.viewModel.updatePaymentOptionSelectedWithRemedy()
-                    // CVV Remedy. Create new card token
-                    self.viewModel.prepareForClone()
-                    // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
-                    self.viewModel.readyToPay = true
-                    // Set needToShowLoading to false so the button animation can be shown
-                    self.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: remedyText)
-                } else {
+                case .DEEPLINK:
+                    if let remedyText = remedyText, remedyText.isNotEmpty {
+                        PXDeepLinkManager.open(remedyText)
+                    }
                     self.finish()
-                }
-            case .RETRY_SILVER_BULLET:
-                // Update PaymentOptionSelected if needed
-                self.viewModel.updatePaymentOptionSelectedWithRemedy()
-                // Silver Bullet remedy
-                self.viewModel.prepareForClone()
-                // Set readyToPay back to true. Otherwise it will go to Review and Confirm as at this moment we only has 1 payment option
-                self.viewModel.readyToPay = true
-                self.executeNextStep()
-            case .DEEPLINK:
-                if let remedyText = remedyText, remedyText.isNotEmpty {
-                    PXDeepLinkManager.open(remedyText)
-                }
-                self.finish()
-            default:
-                self.finish()
+                default:
+                    self.finish()
             }
-        }, finishButtonAnimation: { [weak self] in
+        })
+        
+        let paymentCongrats = resultViewModel.toPaymentCongrats()
+        let congratsViewModel = PXPaymentCongratsViewModel(paymentCongrats: paymentCongrats)
+        let viewController = PXNewResultViewController(viewModel: congratsViewModel, finishButtonAnimation: { [weak self] in
             // Remedy view has an animated button. This closure is called after the animation has finished
             self?.executeNextStep()
         })
@@ -264,9 +268,12 @@ extension MercadoPagoCheckout {
             redirectAndFinish(viewModel: pxBusinessResultViewModel, redirectUrl: url)
             return
         }
-        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
+
+        pxBusinessResultViewModel.setCallback(callback: { [weak self] _, _ in
             self?.finish()
         })
+        let model = pxBusinessResultViewModel.toPaymentCongrats()
+        let congratsViewController = PXNewResultViewController(viewModel: PXPaymentCongratsViewModel(paymentCongrats: model))
         viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
     }
 

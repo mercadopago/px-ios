@@ -190,9 +190,13 @@ internal class Utils {
             amountFotmated = symbol + " " + amountFotmated
         }
         if addingParenthesis {
-            amountFotmated = "(\(amountFotmated))"
+            amountFotmated = addParenthesis(amountFotmated)
         }
         return amountFotmated
+    }
+    
+    class func addParenthesis(_ string: String) -> String {
+        return "(\(string))"
     }
 
     class func getStrikethroughAmount(amount: Double, forCurrency currency: PXCurrency, addingParenthesis: Bool = false) -> NSMutableAttributedString {
