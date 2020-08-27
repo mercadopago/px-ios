@@ -7,10 +7,15 @@
 //
 
 #import "MainExamplesViewController.h"
-#import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentPluginViewController.h"
+#import "CongratsExamplesViewController.h"
+#import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
   
 @implementation MainExamplesViewController
+
+- (IBAction)launchCongrats:(id)sender {
+    [self.navigationController pushViewController:[[CongratsExamplesViewController alloc] init] animated:TRUE];
+}
 
 - (IBAction)checkoutFlow:(id)sender {
     

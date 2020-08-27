@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="SOP-J7-wnf">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="SOP-J7-wnf">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,7 +12,7 @@
             <objects>
                 <navigationController id="SOP-J7-wnf" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ych-Lf-gaP">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
@@ -38,10 +36,10 @@
                             <tableViewSection id="lIv-5z-GjF">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="isW-Fg-w7L">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="isW-Fg-w7L" id="8zM-HR-Uvt">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlugNplay" translatesAutoresizingMaskIntoConstraints="NO" id="Byb-pF-4nL">
@@ -73,6 +71,45 @@
                                                 <constraint firstItem="NLR-IY-vgG" firstAttribute="top" secondItem="8zM-HR-Uvt" secondAttribute="topMargin" id="aUp-mE-Tgy"/>
                                                 <constraint firstItem="NLR-IY-vgG" firstAttribute="leading" secondItem="8zM-HR-Uvt" secondAttribute="leadingMargin" id="pUk-QR-p5T"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="NLR-IY-vgG" secondAttribute="bottom" id="wT2-OP-h3e"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="YGF-in-hiB">
+                                        <rect key="frame" x="0.0" y="128" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YGF-in-hiB" id="HDl-Tv-Vyy">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlugNplay" translatesAutoresizingMaskIntoConstraints="NO" id="9l9-gT-gfD">
+                                                    <rect key="frame" x="26" y="24" width="66" height="52"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="66" id="s3k-dw-Z0Y"/>
+                                                        <constraint firstAttribute="height" constant="52" id="zGE-9L-3Da"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congrats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sN-yM-voE">
+                                                    <rect key="frame" x="102" y="40" width="70" height="20"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnX-Gg-RJM">
+                                                    <rect key="frame" x="16" y="11" width="343" height="78"/>
+                                                    <connections>
+                                                        <action selector="launchCongrats:" destination="Rgx-dD-8Cm" eventType="touchUpInside" id="IV2-Wf-SbU"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="UnX-Gg-RJM" firstAttribute="top" secondItem="HDl-Tv-Vyy" secondAttribute="topMargin" id="6VN-U9-1lz"/>
+                                                <constraint firstItem="2sN-yM-voE" firstAttribute="centerY" secondItem="HDl-Tv-Vyy" secondAttribute="centerY" id="ReM-JB-hJD"/>
+                                                <constraint firstItem="9l9-gT-gfD" firstAttribute="centerY" secondItem="HDl-Tv-Vyy" secondAttribute="centerY" id="Scl-Oi-kgP"/>
+                                                <constraint firstItem="9l9-gT-gfD" firstAttribute="leading" secondItem="HDl-Tv-Vyy" secondAttribute="leadingMargin" constant="10" id="VFe-rd-xVp"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="UnX-Gg-RJM" secondAttribute="trailing" id="Vbh-Qb-slb"/>
+                                                <constraint firstItem="UnX-Gg-RJM" firstAttribute="leading" secondItem="HDl-Tv-Vyy" secondAttribute="leadingMargin" id="Zy4-tS-pMI"/>
+                                                <constraint firstItem="2sN-yM-voE" firstAttribute="leading" secondItem="9l9-gT-gfD" secondAttribute="trailing" constant="10" id="sA2-bV-9xb"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="UnX-Gg-RJM" secondAttribute="bottom" id="vkh-sx-Aw6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
