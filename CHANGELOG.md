@@ -1,3 +1,8 @@
+# v4.35.5 
+🚀Private Release - 4.35.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix bundle selection
+
 # v4.35.4 
 🚀Private Release - 4.35.4 🚀
 MercadoPagoSDKV4 - Private Version
