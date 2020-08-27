@@ -7,7 +7,8 @@
 
 import Foundation
 
-public class PXText: Codable, Equatable {
+@objcMembers
+public class PXText: NSObject, Codable {
 
     let message: String?
     let backgroundColor: String?
@@ -23,7 +24,7 @@ public class PXText: Codable, Equatable {
         case weight
     }
 
-    init(message: String?, backgroundColor: String?, textColor: String?, weight: String?) {
+    public init(message: String?, backgroundColor: String?, textColor: String?, weight: String?) {
         self.message = message
         self.backgroundColor = backgroundColor
         self.textColor = textColor
@@ -32,14 +33,6 @@ public class PXText: Codable, Equatable {
 
     public static func == (lhs: PXText, rhs: PXText) -> Bool {
         return lhs.message == rhs.message && lhs.backgroundColor == rhs.backgroundColor && lhs.textColor == rhs.textColor && lhs.weight == rhs.weight && lhs.defaultTextColor == rhs.defaultTextColor && lhs.defaultBackgroundColor == rhs.defaultBackgroundColor
-    }
-
-    func setDefaultBackgroundColor(_ color: UIColor) {
-        self.defaultBackgroundColor = color
-    }
-
-    func setDefaultTextColor(_ color: UIColor) {
-        self.defaultTextColor = color
     }
 
     internal func getTextColor() -> UIColor {

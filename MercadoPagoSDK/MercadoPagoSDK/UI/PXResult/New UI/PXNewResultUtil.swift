@@ -20,24 +20,24 @@ class PXNewResultUtil {
             behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())
         }
     }
-
+    
     //RECEIPT DATA
     class func getDataForReceiptView(paymentId: String?) -> PXNewCustomViewData? {
         guard let paymentId = paymentId else {
             return nil
         }
-
+        
         let attributedTitle = NSAttributedString(string: ("Operación #{0}".localized as NSString).replacingOccurrences(of: "{0}", with: "\(paymentId)"), attributes: PXNewCustomView.titleAttributes)
-
+        
         let date = Date()
         let attributedSubtitle = NSAttributedString(string: Utils.getFormatedStringDate(date, addTime: true), attributes: PXNewCustomView.subtitleAttributes)
-
+        
         let icon = ResourceManager.shared.getImage("receipt_icon")
-
+        
         let data = PXNewCustomViewData(firstString: attributedTitle, secondString: attributedSubtitle, thirdString: nil, icon: icon, iconURL: nil, action: nil, color: nil)
         return data
     }
-
+    
     //POINTS DATA
     class func getDataForPointsView(points: PXPoints?) -> MLBusinessLoyaltyRingData? {
         guard let points = points else {
@@ -46,7 +46,7 @@ class PXNewResultUtil {
         let data = PXRingViewData(points: points)
         return data
     }
-
+    
     //DISCOUNTS DATA
     class func getDataForDiscountsView(discounts: PXDiscounts?) -> MLBusinessDiscountBoxData? {
         guard let discounts = discounts else {
@@ -55,7 +55,7 @@ class PXNewResultUtil {
         let data = PXDiscountsBoxData(discounts: discounts)
         return data
     }
-
+    
     class func getDataForTouchpointsView(discounts: PXDiscounts?) -> MLBusinessTouchpointsData? {
         guard let touchpoint = discounts?.touchpoint else {
             return nil
@@ -63,13 +63,13 @@ class PXNewResultUtil {
         let data = PXDiscountsTouchpointsData(touchpoint: touchpoint)
         return data
     }
-
+    
     //DISCOUNTS ACCESSORY VIEW
     class func getDataForDiscountsAccessoryViewData(discounts: PXDiscounts?) -> ResultViewData? {
         guard let discounts = discounts else {
             return nil
         }
-
+        
         let dataService = MLBusinessAppDataService()
         if dataService.isMpAlreadyInstalled() {
             let button = AndesButton(text: discounts.discountsAction.label, hierarchy: .quiet, size: .large)
@@ -90,12 +90,12 @@ class PXNewResultUtil {
             return ResultViewData(view: downloadAppView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN)
         }
     }
-
+    
     //EXPENSE SPLIT DATA
     class func getDataForExpenseSplitView(expenseSplit: PXExpenseSplit) -> MLBusinessActionCardViewData {
         return PXExpenseSplitData(expenseSplitData: expenseSplit)
     }
-
+    
     //CROSS SELLING VIEW
     class func getDataForCrossSellingView(crossSellingItems: [PXCrossSellingItem]?) -> [MLBusinessCrossSellingBoxData]? {
         guard let crossSellingItems = crossSellingItems else {
@@ -128,134 +128,133 @@ class PXNewResultUtil {
 
 // MARK: Payment Method Logic
 extension PXNewResultUtil {
+    
+    //ATTRIBUTES FOR DISPLAYING PAYMENT METHOD
+    static let totalAmountAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
+    ]
+    
+    static let interestRateAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+    ]
+    
+    static let discountAmountAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
+        NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45),
+        NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
+    ]
+    
     //PAYMENT METHOD ICON
     class func getPaymentMethodIcon(paymentMethod: PXPaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.id, defaultColor: defaultColor)
+        guard let paymentType = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) else { return nil }
+        return getPaymentMethodIcon(paymentType: paymentType, paymentMethodId: paymentMethod.id, externalPaymentMethodImage: paymentMethod.externalPaymentPluginImageData as Data?)
+    }
+    
+    class func getPaymentMethodIcon(paymentType: PXPaymentTypes, paymentMethodId: String, externalPaymentMethodImage: Data? = nil) -> UIImage? {
+        let defaultColor = paymentType == PXPaymentTypes.ACCOUNT_MONEY && paymentType != PXPaymentTypes.PAYMENT_METHOD_PLUGIN
+        var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
-        if paymentMethod.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
-            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
+        if paymentType == PXPaymentTypes.PAYMENT_METHOD_PLUGIN, let data = externalPaymentMethodImage {
+            paymentMethodImage = UIImage(data: data)
         }
         return paymentMethodImage
     }
-
+    
     //PAYMENT METHOD DATA
-    class func getDataForPaymentMethodView(paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> PXNewCustomViewData? {
-        guard let paymentMethod = paymentData.paymentMethod else {
-            return nil
-        }
-
-        let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
-        let currency = SiteManager.shared.getCurrency()
-
-        let firstString: NSAttributedString = getPMFirstString(currency: currency, paymentData: paymentData, amountHelper: amountHelper)
-        let secondString: NSAttributedString? = getPMSecondString(paymentData: paymentData)
-        let thirdString: NSAttributedString? = getPMThirdString(paymentData: paymentData)
-
-        let data = PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: image, iconURL: nil, action: nil, color: .white)
-        return data
-    }
-
-    // PM First String
-    class func getPMFirstString(currency: PXCurrency, paymentData: PXPaymentData, amountHelper: PXAmountHelper) -> NSAttributedString {
-
-        let totalAmountAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
-        ]
-
-        let interestRateAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()
-        ]
-
-        let discountAmountAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45),
-            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
-        ]
-
-        let firstString: NSMutableAttributedString = NSMutableAttributedString()
-
-        if let payerCost = paymentData.payerCost {
-            if payerCost.installments > 1 {
-                let titleString = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
-                let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributedTitle)
-
-                // Installment Rate
-                if payerCost.installmentRate == 0.0 {
-                    let interestRateString = " " + "Sin interés".localized.lowercased()
-                    let attributedInsterest = NSAttributedString(string: interestRateString, attributes: interestRateAttributes)
-                    firstString.appendWithSpace(attributedInsterest)
-                }
-
-                // Total Amount
-                let totalString = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true)
-                let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
-                firstString.appendWithSpace(attributedTotal)
-            } else {
-                let titleString = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency)
-                let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributedTitle)
+    class func formatPaymentMethodFirstString(paymentInfo: PXCongratsPaymentInfo) -> NSAttributedString {
+        var firstString: NSMutableAttributedString = NSMutableAttributedString()
+        
+        if paymentInfo.hasInstallments { // Pago en cuotas
+            if let installmentsAmount = paymentInfo.installmentsAmount, let installmentsTotalAmount = paymentInfo.installmentsTotalAmount {
+                firstString = textForInstallmentsPayment(installmentsCount: paymentInfo.installmentsCount, installmentsRate: paymentInfo.installmentsRate, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount)
             }
-        } else {
-            // Caso account money
-            if let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
-                let string = Utils.getAmountFormated(amount: splitAccountMoneyAmount, forCurrency: currency)
-                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributed)
-            } else {
-                let string = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
-                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributed)
+        } else { // Caso account money
+            firstString.append(textForNonInstallmentPayment(paidAmount: paymentInfo.paidAmount))
+        }
+        
+        if paymentInfo.hasDiscount {
+            if let discountName = paymentInfo.discountName, let rawAmount = paymentInfo.rawAmount {
+                let message = discountMessage(discountName, transactionAmount: rawAmount)
+                firstString.append(message)
             }
         }
-
-        // Discount
-        if let discount = paymentData.getDiscount(), let transactionAmount = paymentData.transactionAmount {
-            let transactionAmount = Utils.getAmountFormated(amount: transactionAmount.doubleValue, forCurrency: currency)
-            let attributedAmount = NSAttributedString(string: transactionAmount, attributes: discountAmountAttributes)
-
-            firstString.appendWithSpace(attributedAmount)
-
-            let discountString = discount.getDiscountDescription()
-            let attributedString = NSAttributedString(string: discountString, attributes: interestRateAttributes)
-
-            firstString.appendWithSpace(attributedString)
-        }
-
+        
         return firstString
     }
-
-    // PM Second String
-    class func getPMSecondString(paymentData: PXPaymentData) -> NSAttributedString? {
-        guard let paymentMethod = paymentData.paymentMethod else {
-            return nil
+    
+    class func textForInstallmentsPayment(installmentsCount: Int, installmentsRate: Double, installmentsAmount: String, installmentsTotalAmount: String) -> NSMutableAttributedString {
+        guard installmentsCount > 1 else {
+            return NSMutableAttributedString(string: installmentsTotalAmount, attributes: PXNewCustomView.titleAttributes)
         }
+        let finalString: NSMutableAttributedString = NSMutableAttributedString()
+        let titleString = String(format: "%dx %@", installmentsCount, installmentsAmount)
+        let attributedTitle = NSAttributedString(string: titleString, attributes: PXNewCustomView.titleAttributes)
+        finalString.append(attributedTitle)
+        
+        // Installment Rate
+        if installmentsRate == 0.0 {
+            let interestRateString = String(format: " %@", "Sin interés".localized.lowercased())
+            let attributedInsterest = NSAttributedString(string: interestRateString, attributes: interestRateAttributes)
+            finalString.appendWithSpace(attributedInsterest)
+        }
+        
+        // Total Amount
+        let totalString = Utils.addParenthesis(installmentsTotalAmount)
+        let attributedTotal = NSAttributedString(string: totalString, attributes: totalAmountAttributes)
+        finalString.appendWithSpace(attributedTotal)
+        
+        return finalString
+    }
+    
+    class func textForNonInstallmentPayment(paidAmount: String) -> NSAttributedString {
+        return NSAttributedString(string: paidAmount, attributes: PXNewCustomView.titleAttributes)
+    }
+    
+    class func discountMessage(_ text: String, transactionAmount: String) -> NSMutableAttributedString {
+        let discountString = NSMutableAttributedString()
+        
+        let attributedAmount = NSAttributedString(string: transactionAmount, attributes: discountAmountAttributes)
+        discountString.appendWithSpace(attributedAmount)
+        
+        let attributedMessage = NSAttributedString(string: text, attributes: interestRateAttributes)
+        discountString.append(attributedMessage)
+        
+        return discountString
+    }
+    
+    // PM Second String
+    class func formatPaymentMethodSecondString(paymentMethodName: String?, paymentMethodLastFourDigits lastFourDigits: String?, paymentType: PXPaymentTypes) -> NSAttributedString? {
+        guard let description = assembleSecondString(paymentMethodName: paymentMethodName ?? "", paymentMethodLastFourDigits: lastFourDigits, paymentType: paymentType) else { return nil }
+        return secondStringAttributed(description)
+    }
+    
+    class func assembleSecondString(paymentMethodName: String, paymentMethodLastFourDigits lastFourDigits: String?, paymentType: PXPaymentTypes) -> String? {
         var pmDescription: String = ""
-        let paymentMethodName = paymentMethod.name ?? ""
-
-        if paymentMethod.isCard {
-            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
+        if paymentType.isCard() {
+            if let lastFourDigits = lastFourDigits {
                 pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
             }
-        } else if paymentMethod.paymentTypeId == "digital_currency" {
+        } else if paymentType == PXPaymentTypes.DIGITAL_CURRENCY {
             pmDescription = paymentMethodName
         } else {
             return nil
         }
-
-        let attributedSecond = NSMutableAttributedString(string: pmDescription, attributes: PXNewCustomView.subtitleAttributes)
-        return attributedSecond
+        return pmDescription
     }
-
+    
+    class func secondStringAttributed(_ string: String) -> NSAttributedString {
+        return NSMutableAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
+    }
+    
     // PM Third String
-    class func getPMThirdString(paymentData: PXPaymentData) -> NSAttributedString? {
-        guard let paymentMethodDisplayDescription = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message else {
-            return nil
-        }
-        let thirdAttributed = NSMutableAttributedString(string: paymentMethodDisplayDescription, attributes: PXNewCustomView.subtitleAttributes)
-        return thirdAttributed
+    class func formatPaymentMethodThirdString(_ string: String?) -> NSAttributedString? {
+        guard let paymentMethodDisplayDescription = string else { return nil }
+        return thirdStringAttributed(paymentMethodDisplayDescription)
+    }
+    
+    class func thirdStringAttributed(_ string: String) -> NSAttributedString {
+        return NSMutableAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
     }
 }

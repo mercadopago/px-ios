@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct PXDiscounts: Decodable {
+@objcMembers
+public class PXDiscounts: NSObject , Decodable {
 
     let title: String?
     let subtitle: String?
@@ -15,6 +16,15 @@ struct PXDiscounts: Decodable {
     let downloadAction: PXDownloadAction
     let items: [PXDiscountsItem]
     let touchpoint: PXDiscountsTouchpoint?
+
+    public init(title: String?, subtitle: String?, discountsAction: PXRemoteAction, downloadAction: PXDownloadAction, items: [PXDiscountsItem], touchpoint: PXDiscountsTouchpoint?) {
+        self.title = title
+        self.subtitle = subtitle
+        self.discountsAction = discountsAction
+        self.downloadAction = downloadAction
+        self.items = items
+        self.touchpoint = touchpoint
+    }
 
     enum CodingKeys: String, CodingKey {
         case title
