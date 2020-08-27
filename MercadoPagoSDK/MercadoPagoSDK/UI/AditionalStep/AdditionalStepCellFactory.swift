@@ -12,7 +12,7 @@ import UIKit
 class AdditionalStepCellFactory: NSObject {
 
     open class func buildCell(object: Cellable, width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPagoBundle.bundle()
+        let bundle = ResourceManager.shared.getBundle()
         if object.objectType == ObjectTypes.payerCost {
             guard let payerCost = object as? PXPayerCost else { return UITableViewCell() }
 

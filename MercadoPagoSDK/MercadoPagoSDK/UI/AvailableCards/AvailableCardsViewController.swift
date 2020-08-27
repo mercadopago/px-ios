@@ -19,13 +19,13 @@ internal class AvailableCardsViewController: MercadoPagoUIViewController {
     var viewModel: AvailableCardsViewModel!
 
     init(paymentMethods: [PXPaymentMethod], callbackCancel: (() -> Void)? = nil) {
-        super.init(nibName: "AvailableCardsViewController", bundle: MercadoPagoBundle.bundle())
+        super.init(nibName: "AvailableCardsViewController", bundle: ResourceManager.shared.getBundle())
         self.callbackCancel = callbackCancel
         self.viewModel = AvailableCardsViewModel(paymentMethods: paymentMethods)
     }
 
     init(viewModel: AvailableCardsViewModel, callbackCancel: (() -> Void)? = nil) {
-        super.init(nibName: "AvailableCardsViewController", bundle: MercadoPagoBundle.bundle())
+        super.init(nibName: "AvailableCardsViewController", bundle: ResourceManager.shared.getBundle())
         self.callbackCancel = callbackCancel
         self.viewModel = viewModel
     }

@@ -10,7 +10,7 @@ import Foundation
 
 class PXXibRenderer: UIView, PXXibComponentizable {
     func loadXib(rendererComponentizableClass: PXXibComponentizable) {
-        let bundle = MercadoPagoBundle.bundle()
+        let bundle = ResourceManager.shared.getBundle()
         bundle.loadNibNamed(rendererComponentizableClass.xibName(), owner: rendererComponentizableClass, options: nil)
         if let classView = rendererComponentizableClass as? UIView {
             let contentView = rendererComponentizableClass.containerView()

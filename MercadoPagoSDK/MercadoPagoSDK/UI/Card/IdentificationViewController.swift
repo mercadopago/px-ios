@@ -41,7 +41,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
 
     public init(identificationTypes: [PXIdentificationType], paymentMethod: PXPaymentMethod?, callback : @escaping (( _ identification: PXIdentification) -> Void), errorExitCallback: (() -> Void)?) {
         self.paymentMethod = paymentMethod
-        super.init(nibName: "IdentificationViewController", bundle: MercadoPagoBundle.bundle())
+        super.init(nibName: "IdentificationViewController", bundle: ResourceManager.shared.getBundle())
         self.callback = callback
         self.identificationTypes = identificationTypes
         self.errorExitCallback = errorExitCallback

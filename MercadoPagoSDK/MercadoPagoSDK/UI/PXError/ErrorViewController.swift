@@ -22,7 +22,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
     internal static var defaultErrorCancel: (() -> Void)?
 
     public init(error: MPSDKError!, callback: (() -> Void)?, callbackCancel: (() -> Void)? = nil) {
-        super.init(nibName: "ErrorViewController", bundle: MercadoPagoBundle.bundle())
+        super.init(nibName: "ErrorViewController", bundle: ResourceManager.shared.getBundle())
         self.error = error
         self.exitErrorCallback = {
             self.dismiss(animated: true, completion: {
