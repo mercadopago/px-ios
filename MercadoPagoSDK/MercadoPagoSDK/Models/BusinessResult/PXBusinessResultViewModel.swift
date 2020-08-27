@@ -415,6 +415,10 @@ extension PXBusinessResultViewModel {
         //tracking
         paymentCongratsData.withTrackingProperties(getTrackingProperties())
             .withFlowBehaviorResult(getFlowBehaviourResult())
+
+        //Url Managment
+        paymentCongratsData.withRedirectURLs(getRedirectUrl())
+            .shouldAutoReturn(shouldAutoReturn())
         return paymentCongratsData
     }
     

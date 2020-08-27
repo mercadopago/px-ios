@@ -83,6 +83,11 @@ public final class PXPaymentCongrats: NSObject {
     
     private(set) var navigationController: UINavigationController?
     
+    //URLs
+    private(set) var shouldAutoReturn: Bool = false
+    private(set) var redirectURL: URL?
+
+
     // MARK: API
     
     public override init() {
@@ -439,6 +444,15 @@ extension PXPaymentCongrats {
         return self
     }
     
+    internal func withRedirectURLs(_ redirectURL: URL?) -> PXPaymentCongrats {
+        self.redirectURL = redirectURL
+        return self
+    }
+
+    internal func shouldAutoReturn(_ shouldAutoReturn: Bool) -> PXPaymentCongrats {
+        self.shouldAutoReturn = shouldAutoReturn
+        return self
+    }
     /**
      Shows the congrats' view.
      - parameter navController: a `UINavigationController`

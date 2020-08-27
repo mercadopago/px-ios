@@ -591,6 +591,8 @@ extension PXResultViewModel {
             .withRemedyViewData(getRemedyViewData())
             .withCreditsExpectationView(creditsExpectationView())
             .shouldShowPaymentMethod(paymentMethodShouldBeShown())
+            .withRedirectURLs(getRedirectUrl())
+            .shouldAutoReturn(shouldAutoReturn())
         
         if let paymentInfo = getPaymentMethod(paymentData: paymentResult.paymentData, amountHelper: amountHelper) {
             paymentcongrats.withPaymentMethodInfo(paymentInfo)
