@@ -304,18 +304,16 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         }
     }
     
-    #warning("TBD")
+    //URLs, and AutoReturn
     func shouldAutoReturn() -> Bool {
-        return false
+        paymentCongrats.shouldAutoReturn
     }
-    
-    #warning("TBD")
+    #warning("remove this when checkout uses paymentCongrats")
     func getBackUrl() -> URL? {
-        return nil
+        nil
     }
     
-    #warning("TBD")
     func getRedirectUrl() -> URL? {
-        return nil
+        paymentCongrats.redirectURL
     }
 }
