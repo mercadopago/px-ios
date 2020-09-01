@@ -35,7 +35,7 @@ final class PXOfflineMethodsCell: UITableViewCell {
             indicatorImageView.widthAnchor.constraint(equalToConstant: INDICATOR_IMAGE_SIZE)
         ])
 
-        let iconImageView = UIImageView(imageUrl: data.imageUrl)
+        let iconImageView = PXUIImageView(image: PXUIImage(url: data.imageUrl), size: ICON_SIZE)
         contentView.addSubview(iconImageView)
 
         NSLayoutConstraint.activate([
