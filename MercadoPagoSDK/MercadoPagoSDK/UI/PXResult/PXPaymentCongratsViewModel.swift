@@ -37,7 +37,6 @@ class PXPaymentCongratsViewModel {
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
-    
     // HEADER
     func getHeaderColor() -> UIColor {
         guard let color = paymentCongrats.headerColor else {
@@ -84,7 +83,6 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.points
     }
     
-    // This implementation is the same accross PXBusinessResultViewModel and PXResultViewModel, so it's ok to do it here
     func getPointsTapAction() -> ((String) -> Void)? {
         let action: (String) -> Void = { (deepLink) in
             //open deep link
@@ -99,7 +97,6 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.discounts
     }
     
-    // This implementation is the same accross PXBusinessResultViewModel and PXResultViewModel, so it's ok to do it here
     func getDiscountsTapAction() -> ((Int, String?, String?) -> Void)? {
         let action: (Int, String?, String?) -> Void = { (index, deepLink, trackId) in
             //open deep link
@@ -109,7 +106,6 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return action
     }
     
-    // This implementation is the same accross PXBusinessResultViewModel and PXResultViewModel, so it's ok to do it here
     func didTapDiscount(index: Int, deepLink: String?, trackId: String?) {
         PXDeepLinkManager.open(deepLink)
         PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
@@ -178,34 +174,10 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return createPaymentMethodReceiptData(from: paymentInfo)
     }
     
-    #warning("Desacoplar payment data del VC de Congrats")
-    func getPaymentData() -> PXPaymentData? {
-        // TODO
-        return nil
-    }
-    
-    #warning("Desacoplar ammount helper del VC de Congrats")
-    func getAmountHelper() -> PXAmountHelper? {
-        // TODO
-        return nil
-    }
-    
     // SPLIT PAYMENT METHOD
     func getSplitPaymentViewData() -> PXNewCustomViewData? {
         guard let paymentInfo = paymentCongrats.splitPaymentInfo else { return nil }
         return createPaymentMethodReceiptData(from: paymentInfo)
-    }
-    
-    #warning("Desacoplar payment data del VC de Congrats")
-    func getSplitPaymentData() -> PXPaymentData? {
-        // TODO
-        return nil
-    }
-    
-    #warning("Desacoplar ammount helper del VC de Congrats")
-    func getSplitAmountHelper() -> PXAmountHelper? {
-        // TODO
-        return nil
     }
     
     // REJECTED BODY
@@ -225,7 +197,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         }
         return nil
     }
-    #warning("Remove this when checkout uses paymentCongrats")
+    
     func getRemedyButtonAction() -> ((String?) -> Void)? {
         return nil
     }
@@ -262,26 +234,19 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     //CALLBACKS & TRACKING
-    // TODO
-    #warning("remove this when checkout uses payment congrats")
-    func setCallback(callback: @escaping (PaymentResult.CongratsState, String?) -> Void) {
-    }
-    
     func getTrackingProperties() -> [String : Any] {
         return paymentCongrats.trackingValues
     }
     
     func getTrackingPath() -> String {
         var screenPath = ""
-        if paymentCongrats.trackingValues != nil {
-            let paymentStatus = paymentCongrats.type.getRawValue()
-            if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-            } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-            } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
-            }
+        let paymentStatus = paymentCongrats.type.getRawValue()
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
         
         return screenPath
@@ -306,14 +271,14 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     //URLs, and AutoReturn
     func shouldAutoReturn() -> Bool {
-        paymentCongrats.shouldAutoReturn
+        return paymentCongrats.shouldAutoReturn
     }
-    #warning("remove this when checkout uses paymentCongrats")
+    
     func getBackUrl() -> URL? {
-        nil
+        return nil
     }
     
     func getRedirectUrl() -> URL? {
-        paymentCongrats.redirectURL
+        return paymentCongrats.redirectURL
     }
 }

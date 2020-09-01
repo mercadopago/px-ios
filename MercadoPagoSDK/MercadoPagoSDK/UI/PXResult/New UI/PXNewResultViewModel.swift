@@ -68,15 +68,9 @@ protocol PXNewResultViewModelInterface {
     //PAYMENT METHOD
     func shouldShowPaymentMethod() -> Bool
     func getPaymentViewData() -> PXNewCustomViewData?
-    #warning("Remove this method")
-    func getPaymentData() -> PXPaymentData?
-    #warning("Remove this method")
-    func getAmountHelper() -> PXAmountHelper?
 
     //SPLIT PAYMENT METHOD
     func getSplitPaymentViewData() -> PXNewCustomViewData?
-    func getSplitPaymentData() -> PXPaymentData?
-    func getSplitAmountHelper() -> PXAmountHelper?
 
     //REJECTED BODY
     func shouldShowErrorBody() -> Bool
@@ -105,7 +99,6 @@ protocol PXNewResultViewModelInterface {
     func getBottomCustomView() -> UIView?
 
     //CALLBACKS & TRACKING
-    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void)
     func getTrackingProperties() -> [String: Any]
     func getTrackingPath() -> String
     func getFlowBehaviourResult() -> PXResultKey
