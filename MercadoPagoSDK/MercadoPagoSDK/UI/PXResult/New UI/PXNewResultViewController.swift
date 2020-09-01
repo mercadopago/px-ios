@@ -614,7 +614,7 @@ extension PXNewResultViewController {
     func buildPaymentMethodView() -> UIView? {
         guard let paymentData = viewModel.getPaymentData(),
             let amountHelper = viewModel.getAmountHelper(),
-            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
+            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper, paymentMethodsImageURLs: viewModel.getPaymentMethodsImageURLs()) else {
             return nil
         }
 
@@ -629,7 +629,7 @@ extension PXNewResultViewController {
     func buildSplitPaymentMethodView() -> UIView? {
         guard let paymentData = viewModel.getSplitPaymentData(),
             let amountHelper = viewModel.getSplitAmountHelper(),
-            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper) else {
+            let data = PXNewResultUtil.getDataForPaymentMethodView(paymentData: paymentData, amountHelper: amountHelper, paymentMethodsImageURLs: viewModel.getPaymentMethodsImageURLs()) else {
             return nil
         }
 

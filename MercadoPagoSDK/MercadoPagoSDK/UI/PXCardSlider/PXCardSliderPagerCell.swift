@@ -373,19 +373,6 @@ class PXAddMethodView: UIView {
 
     func buildCircleImage(with image: UIImage?) -> PXUIImageView {
         let iconSize = data.compactMode ? COMPACT_ICON_SIZE : DEFAULT_ICON_SIZE
-        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: iconSize, height: iconSize))
-        circleImage.layer.masksToBounds = false
-        circleImage.layer.cornerRadius = circleImage.frame.height / 2
-        circleImage.layer.borderWidth = 1
-        circleImage.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
-        circleImage.clipsToBounds = true
-        circleImage.translatesAutoresizingMaskIntoConstraints = false
-        circleImage.enableFadeIn()
-        circleImage.contentMode = .scaleAspectFit
-        circleImage.image = image
-        circleImage.backgroundColor = .clear
-        PXLayout.setHeight(owner: circleImage, height: iconSize).isActive = true
-        PXLayout.setWidth(owner: circleImage, width: iconSize).isActive = true
-        return circleImage
+        return PXUIImageView(image: image, size: iconSize)
     }
 }

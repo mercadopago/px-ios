@@ -39,6 +39,33 @@ class PXUIImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    convenience init(image: UIImage?,
+                     size: CGFloat = 48.0,
+                     showAsCircle: Bool = true,
+                     showBorder: Bool = true,
+                     borderWidth: CGFloat = 1,
+                     borderColor: CGColor = UIColor.black.withAlphaComponent(0.1).cgColor,
+                     contentMode: UIView.ContentMode = .scaleAspectFit) {
+
+        self.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        if showAsCircle {
+            layer.masksToBounds = false
+            layer.cornerRadius = size / 2
+        }
+        if showBorder {
+            layer.borderWidth = 1
+            layer.borderColor = borderColor
+        }
+        enableFadeIn()
+        clipsToBounds = true
+        self.contentMode = contentMode
+        self.image = image
+        backgroundColor = .clear
+        translatesAutoresizingMaskIntoConstraints = false
+        PXLayout.setHeight(owner: self, height: size).isActive = true
+        PXLayout.setWidth(owner: self, width: size).isActive = true
+    }
+
     private func loadImage(image: UIImage?) {
         if let pxImage = image as? PXUIImage {
             let placeholder = buildPlaceholderView(image: pxImage)

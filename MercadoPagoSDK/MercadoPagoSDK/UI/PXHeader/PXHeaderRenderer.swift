@@ -86,18 +86,7 @@ internal final class PXHeaderRenderer: NSObject {
     }
 
     func buildCircleImage(with image: UIImage?) -> PXUIImageView {
-        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: IMAGE_WIDTH, height: IMAGE_HEIGHT))
-        circleImage.layer.masksToBounds = false
-        circleImage.layer.cornerRadius = circleImage.frame.height / 2
-        circleImage.clipsToBounds = true
-        circleImage.translatesAutoresizingMaskIntoConstraints = false
-        circleImage.enableFadeIn()
-        circleImage.contentMode = .scaleAspectFill
-        circleImage.image = image
-        circleImage.backgroundColor = .clear
-        PXLayout.setHeight(owner: circleImage, height: IMAGE_WIDTH).isActive = true
-        PXLayout.setWidth(owner: circleImage, width: IMAGE_HEIGHT).isActive = true
-        return circleImage
+        return PXUIImageView(image: image, size: IMAGE_WIDTH, showBorder: false, contentMode: .scaleAspectFill)
     }
 
     func buildBadgeImage(with image: UIImage?) -> PXAnimatedImageView {

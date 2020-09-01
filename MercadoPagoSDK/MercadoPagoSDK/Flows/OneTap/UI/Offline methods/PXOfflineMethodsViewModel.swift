@@ -48,10 +48,10 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
         let isSelected: Bool = selectedIndexPath == indexPath
         let model = paymentTypes[indexPath.section].paymentMethods[indexPath.row]
 
-        let paymentTypeId = paymentTypes[indexPath.section].id
-        let imageKey = model.instructionId != paymentTypeId ? model.id + "_" + model.instructionId : model.id
-        let image = ResourceManager.shared.getImageForPaymentMethod(withDescription: imageKey)
-        return PXOfflineMethodsCellData(title: model.name, subtitle: model.description, image: image, isSelected: isSelected)
+        //let paymentTypeId = paymentTypes[indexPath.section].id
+        //let imageKey = model.instructionId != paymentTypeId ? model.id + "_" + model.instructionId : model.id
+        //let image = ResourceManager.shared.getImageForPaymentMethod(withDescription: imageKey)
+        return PXOfflineMethodsCellData(title: model.name, subtitle: model.description, imageUrl: model.imageUrl, isSelected: isSelected)
     }
 
     func headerTitleForSection(_ section: Int) -> PXText? {

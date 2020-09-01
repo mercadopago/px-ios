@@ -7,7 +7,7 @@
 
 import Foundation
 
-internal typealias PXOfflineMethodsCellData = (title: PXText?, subtitle: PXText?, image: UIImage?, isSelected: Bool)
+internal typealias PXOfflineMethodsCellData = (title: PXText?, subtitle: PXText?, imageUrl: String?, isSelected: Bool)
 
 final class PXOfflineMethodsCell: UITableViewCell {
     static let identifier = "PXOfflineMethodsCell"
@@ -35,7 +35,7 @@ final class PXOfflineMethodsCell: UITableViewCell {
             indicatorImageView.widthAnchor.constraint(equalToConstant: INDICATOR_IMAGE_SIZE)
         ])
 
-        let iconImageView = buildCircleImage(with: data.image)
+        let iconImageView = UIImageView(imageUrl: data.imageUrl)
         contentView.addSubview(iconImageView)
 
         NSLayoutConstraint.activate([
@@ -69,22 +69,4 @@ final class PXOfflineMethodsCell: UITableViewCell {
             labelsContainerView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
-
-    func buildCircleImage(with image: UIImage?) -> PXUIImageView {
-        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: ICON_SIZE, height: ICON_SIZE))
-        circleImage.layer.masksToBounds = false
-        circleImage.layer.cornerRadius = circleImage.frame.height / 2
-        circleImage.layer.borderWidth = 1
-        circleImage.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
-        circleImage.clipsToBounds = true
-        circleImage.translatesAutoresizingMaskIntoConstraints = false
-        circleImage.enableFadeIn()
-        circleImage.contentMode = .scaleAspectFit
-        circleImage.image = image
-        circleImage.backgroundColor = .clear
-        PXLayout.setHeight(owner: circleImage, height: ICON_SIZE).isActive = true
-        PXLayout.setWidth(owner: circleImage, width: ICON_SIZE).isActive = true
-        return circleImage
-    }
-
 }

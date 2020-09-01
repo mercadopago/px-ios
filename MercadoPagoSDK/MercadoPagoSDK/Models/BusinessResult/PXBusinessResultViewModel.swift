@@ -195,6 +195,10 @@ extension PXBusinessResultViewModel: PXNewResultViewModelInterface {
     func getCustomOrder() -> Bool? {
         return pointsAndDiscounts?.customOrder
     }
+    
+    func getPaymentMethodsImageURLs() -> [String: String]? {
+        return pointsAndDiscounts?.paymentMethodsImages
+    }
 
     func hasInstructions() -> Bool {
         return false

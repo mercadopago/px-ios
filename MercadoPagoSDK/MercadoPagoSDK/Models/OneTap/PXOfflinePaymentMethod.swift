@@ -11,6 +11,7 @@ public class PXOfflinePaymentMethod: Codable {
     let id: String
     let instructionId: String
     let name: PXText?
+    let imageUrl: String
     let description: PXText?
     let hasAdditionalInfoNeeded: Bool
     let status: PXStatus
@@ -19,6 +20,7 @@ public class PXOfflinePaymentMethod: Codable {
         case id
         case instructionId = "instruction_id"
         case name
+        case imageUrl = "image_url"
         case description
         case hasAdditionalInfoNeeded = "has_additional_info_needed"
         case status
