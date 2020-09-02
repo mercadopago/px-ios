@@ -79,12 +79,13 @@ class PXNewCustomView: UIView {
         }
 
         // Icon
+        var image: UIImage?
         if let imageURL = data.iconURL, imageURL.isNotEmpty {
-            let pximage = PXUIImage(url: imageURL)
-            iconView = buildCircleImage(with: pximage)
+            image = PXUIImage(url: imageURL)
         } else {
-            iconView = buildCircleImage(with: data.icon)
+            image = data.icon
         }
+        iconView = PXUIImageView(image: image, size: IMAGE_HEIGHT, borderColor: UIColor.black.withAlphaComponent(0.08).cgColor, shouldAddInsets: true)
 
         let labelsView = PXComponentView()
         labelsView.clipsToBounds = true
@@ -185,35 +186,6 @@ class PXNewCustomView: UIView {
 
 // MARK: UI Builders
 private extension PXNewCustomView {
-    func buildCircleImage(with image: UIImage?) -> UIView {
-        let RADIUS_DELTA_FROM_ICON_TO_BACKGROUND: CGFloat = 58
-
-        let iconView = UIView()
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-        iconView.backgroundColor = .white
-        iconView.layer.cornerRadius = IMAGE_HEIGHT/2
-        iconView.layer.masksToBounds = true
-        iconView.layer.borderWidth = 1
-        iconView.layer.borderColor = UIColor.black.withAlphaComponent(0.08).cgColor
-        PXLayout.setHeight(owner: iconView, height: IMAGE_HEIGHT)
-        PXLayout.setWidth(owner: iconView, width: IMAGE_WIDTH)
-
-        let imageView = PXUIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = image
-        imageView.clipsToBounds = true
-        imageView.enableFadeIn()
-        imageView.contentMode = .scaleAspectFill
-        iconView.addSubview(imageView)
-
-        PXLayout.matchWidth(ofView: imageView, withPercentage: RADIUS_DELTA_FROM_ICON_TO_BACKGROUND).isActive = true
-        PXLayout.matchHeight(ofView: imageView, withPercentage: RADIUS_DELTA_FROM_ICON_TO_BACKGROUND).isActive = true
-        PXLayout.centerVertically(view: imageView).isActive = true
-        PXLayout.centerHorizontally(view: imageView).isActive = true
-
-        return iconView
-    }
-
     func buildLabel(_ string: NSAttributedString) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

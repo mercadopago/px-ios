@@ -35,7 +35,14 @@ final class PXOfflineMethodsCell: UITableViewCell {
             indicatorImageView.widthAnchor.constraint(equalToConstant: INDICATOR_IMAGE_SIZE)
         ])
 
-        let iconImageView = PXUIImageView(image: PXUIImage(url: data.imageUrl), size: ICON_SIZE)
+        //Image
+        var image: UIImage?
+        if let imageURL = data.imageUrl, imageURL.isNotEmpty {
+            image = PXUIImage(url: imageURL)
+        } else {
+            image = ResourceManager.shared.getImage("PaymentGeneric")
+        }
+        let iconImageView = PXUIImageView(image: image, size: ICON_SIZE, shouldAddInsets: true)
         contentView.addSubview(iconImageView)
 
         NSLayoutConstraint.activate([

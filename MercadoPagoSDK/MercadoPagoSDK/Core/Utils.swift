@@ -579,7 +579,7 @@ internal class Utils {
 
     static let imageCache = NSCache<NSString, AnyObject>()
 
-    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, fadeInEnabled: Bool = false, didFinish: ((UIImage) -> Void)? = nil) {
+    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, fadeInEnabled: Bool = false, shouldAddInsets: Bool = false, didFinish: ((UIImage) -> Void)? = nil) {
 
         guard let urlString = urlStr else {
             if let fallbackView = fallbackView {
@@ -619,7 +619,12 @@ internal class Utils {
                 }
 
                 DispatchQueue.main.async {
-                    if let remoteData = data, let image = UIImage(data: remoteData) {
+                    if let remoteData = data, let imageFromData = UIImage(data: remoteData) {
+                        var image = imageFromData
+                        if shouldAddInsets,
+                            let imageWithInset = imageFromData.addInset(percentage: 58) {
+                            image = imageWithInset
+                        }
                         //Save image to cache
                         Utils.imageCache.setObject(image, forKey: urlString as NSString)
 

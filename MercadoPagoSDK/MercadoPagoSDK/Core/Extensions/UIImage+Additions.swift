@@ -92,4 +92,26 @@ internal extension UIImage {
         UIGraphicsEndImageContext()
         return newImage!
     }
+    
+    func addInset(percentage: CGFloat) -> UIImage? {
+        if !(self.cgImage == nil && self.ciImage == nil),
+            (0...100).contains(percentage) {
+            let size = max(self.size.width, self.size.height)
+            let imageSize = (size * percentage) / 100.0
+            let imageInset = (size - imageSize) / 2
+            return self.withInset(UIEdgeInsets(top: imageInset, left: imageInset, bottom: imageInset, right: imageInset))
+        }
+        return self
+    }
+
+    func withInset(_ insets: UIEdgeInsets) -> UIImage? {
+        let cgSize = CGSize(width: self.size.width + insets.left * self.scale + insets.right * self.scale,
+                            height: self.size.height + insets.top * self.scale + insets.bottom * self.scale)
+        UIGraphicsBeginImageContextWithOptions(cgSize, false, self.scale)
+        defer { UIGraphicsEndImageContext() }
+
+        let origin = CGPoint(x: insets.left * self.scale, y: insets.top * self.scale)
+        self.draw(at: origin)
+        return UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(self.renderingMode)
+    }
 }

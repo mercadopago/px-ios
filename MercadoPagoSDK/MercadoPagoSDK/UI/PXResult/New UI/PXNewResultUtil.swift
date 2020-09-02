@@ -145,7 +145,7 @@ extension PXNewResultUtil {
             return nil
         }
 
-        let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
+        let image = ResourceManager.shared.getImage("PaymentGeneric")
         let currency = SiteManager.shared.getCurrency()
 
         var iconURL: String?

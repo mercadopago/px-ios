@@ -19,6 +19,7 @@ class PXUIImageView: UIImageView {
             return currentImage
         }
     }
+    private var shouldAddInsets: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,8 +46,8 @@ class PXUIImageView: UIImageView {
                      showBorder: Bool = true,
                      borderWidth: CGFloat = 1,
                      borderColor: CGColor = UIColor.black.withAlphaComponent(0.1).cgColor,
-                     contentMode: UIView.ContentMode = .scaleAspectFit) {
-
+                     contentMode: UIView.ContentMode = .scaleAspectFit,
+                     shouldAddInsets: Bool = false) {
         self.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
         if showAsCircle {
             layer.masksToBounds = false
@@ -59,6 +60,7 @@ class PXUIImageView: UIImageView {
         enableFadeIn()
         clipsToBounds = true
         self.contentMode = contentMode
+        self.shouldAddInsets = shouldAddInsets
         self.image = image
         backgroundColor = .clear
         translatesAutoresizingMaskIntoConstraints = false
@@ -70,12 +72,19 @@ class PXUIImageView: UIImageView {
         if let pxImage = image as? PXUIImage {
             let placeholder = buildPlaceholderView(image: pxImage)
             let fallback = buildFallbackView(image: pxImage)
-            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback, fadeInEnabled: fadeInEnabled) { [weak self] newImage in
-                self?.currentImage = newImage
+            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback, fadeInEnabled: fadeInEnabled, shouldAddInsets: shouldAddInsets) { [weak self] image in
+                self?.currentImage = image
             }
         } else {
-            self.currentImage = image
+            currentImage = resizedImage(image: image)
         }
+    }
+
+    private func resizedImage(image: UIImage?) -> UIImage? {
+        if shouldAddInsets {
+            return image?.addInset(percentage: 58)
+        }
+        return image
     }
 
     private func buildPlaceholderView(image: PXUIImage) -> UIView? {
