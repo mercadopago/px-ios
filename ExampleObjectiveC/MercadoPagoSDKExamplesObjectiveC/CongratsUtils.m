@@ -34,12 +34,8 @@
     return [[PXCongratsPaymentInfo alloc] initWithPaidAmount:@"100" rawAmount:nil paymentMethodName:@"American Express" paymentMethodLastFourDigits:@"1234" paymentMethodDescription:nil paymentMethodId:@"amex" paymentMethodType:PXPaymentOBJCCREDIT_CARD installmentsRate:0 installmentsCount:0 installmentsAmount:nil installmentsTotalAmount:nil discountName:@"Split"];
 }
 
-+(PXPaymentCongratsTracking *)trackingProperties {
-    return [[PXPaymentCongratsTracking alloc] initWithCampaingId: nil currencyId:@"ARS" paymentStatusDetail:@"The payment has been approved succesfully" totalAmount:[[NSDecimalNumber alloc] initWithInt:123] paymentId:123];
-}
-
-+(PXTrackingConfiguration *)trackingConfiguration:(id<PXTrackerListener>) trackListener {
-    return [[PXTrackingConfiguration alloc] initWithTrackListener:trackListener flowName:@"testAPP objc" flowDetails:nil sessionId:nil];
++(PXPaymentCongratsTracking *)trackingProperties:(id<PXTrackerListener>) trackListener {
+    return [[PXPaymentCongratsTracking alloc] initWithCampaingId:nil currencyId:@"ARS" paymentStatusDetail:@"The payment has been approved succesfully" totalAmount:[[NSDecimalNumber alloc] initWithInt:123] paymentId:123 trackListener:trackListener flowName:nil flowDetails:nil sessionId:nil];
 }
 
 @end

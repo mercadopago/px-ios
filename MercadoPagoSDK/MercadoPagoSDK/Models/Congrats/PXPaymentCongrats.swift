@@ -397,7 +397,7 @@ extension PXPaymentCongrats {
     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    public func withStatementDescription(_ statementDescription: String?) -> PXPaymentCongrats {
+    internal func withStatementDescription(_ statementDescription: String?) -> PXPaymentCongrats {
         self.statementDescription = statementDescription
         return self
     }
@@ -424,7 +424,8 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    public func withTracking(trackingProperties: PXPaymentCongratsTracking, trackingConfiguration: PXTrackingConfiguration) -> PXPaymentCongrats {
+    public func withTracking(trackingProperties: PXPaymentCongratsTracking) -> PXPaymentCongrats {
+        let trackingConfiguration = PXTrackingConfiguration(trackListener: trackingProperties.trackListener, flowName: trackingProperties.flowName, flowDetails: trackingProperties.flowDetails, sessionId: trackingProperties.sessionId)
         var properties: [String: Any] = [:]
         properties["style"] = "custom"
         properties["payment_method_id"] = paymentInfo?.paymentMethodId
@@ -432,10 +433,7 @@ extension PXPaymentCongrats {
         properties["payment_id"] = trackingProperties.paymentId
         properties["payment_status"] = type.getRawValue()
         properties["preference_amount"] = trackingProperties.totalAmount
-        
-        if let paymentStatusDetail = trackingProperties.paymentStatusDetail {
-            properties["payment_status_detail"] = paymentStatusDetail
-        }
+        properties["payment_status_detail"] = trackingProperties.paymentStatusDetail
         
         if let campaingId = trackingProperties.campaingId {
             properties[PXCongratsTracking.TrackingKeys.campaignId.rawValue] = campaingId

@@ -20,8 +20,7 @@
 +(PXExpenseSplit *)expenseSplit;
 +(PXCongratsPaymentInfo *)paymentInfo;
 +(PXCongratsPaymentInfo *)splitPaymentInfo;
-+(PXPaymentCongratsTracking *)trackingProperties;
-+(PXTrackingConfiguration *)trackingConfiguration:(id<PXTrackerListener>)trackListener;
++(PXPaymentCongratsTracking *)trackingProperties:(id<PXTrackerListener>)trackListener;
 
 @end
 
