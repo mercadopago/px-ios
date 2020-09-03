@@ -1,4 +1,10 @@
-# v4.35.6 
+# v4.35.7
+🚀Private Release - 4.35.7 🚀
+MercadoPagoSDKV4 - Private Version
+- MoneyIn MLB en Onetap
+- Remote assets para medios off
+
+# v4.35.6
 🚀Private Release - 4.35.6 🚀
 MercadoPagoSDKV4 - Private Version
 - Fix issuer
