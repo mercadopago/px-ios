@@ -147,11 +147,11 @@ extension PXNewResultUtil {
     ]
     
     //PAYMENT METHOD ICON URL
-    class func getPaymentMethodIconURL(for paymentMethodId: String, using paymentMethodsImageURLs: [String: String]) -> URL? {
+    class func getPaymentMethodIconURL(for paymentMethodId: String, using paymentMethodsImageURLs: [String: String]) -> String? {
         guard paymentMethodsImageURLs.keys.contains(paymentMethodId), let iconURLString = paymentMethodsImageURLs[paymentMethodId] else {
             return nil
         }
-        return URL(string: iconURLString)
+        return iconURLString
     }
     
     class func formatPaymentMethodFirstString(paymentInfo: PXCongratsPaymentInfo) -> NSAttributedString {
@@ -225,7 +225,7 @@ extension PXNewResultUtil {
         var pmDescription: String = ""
         if paymentType.isCard() {
             if let lastFourDigits = lastFourDigits {
-                pmDescription = paymentMethodName + " " + "terminada en".localized + " " + lastFourDigits
+                pmDescription = paymentMethodName.capitalized + " " + "terminada en".localized + " " + lastFourDigits
             }
         } else if paymentType == PXPaymentTypes.DIGITAL_CURRENCY {
             pmDescription = paymentMethodName

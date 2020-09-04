@@ -33,17 +33,11 @@ class PXPaymentCongratsViewModel {
         let defaultIcon = ResourceManager.shared.getImage("PaymentGeneric")
         let iconURL = paymentInfo.paymentMethodIconURL
         
-        return PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: defaultIcon, iconURL: iconURL?.absoluteString, action: nil, color: .white)
+        return PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: defaultIcon, iconURL: iconURL, action: nil, color: .white)
     }
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
-    //WIP
-    #warning("Fix this")
-    func getPaymentMethodsImageURLs() -> [String : String]? {
-        return nil
-    }
-    
     // HEADER
     func getHeaderColor() -> UIColor {
         guard let color = paymentCongrats.headerColor else {
@@ -228,8 +222,6 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     func getCreditsExpectationView() -> UIView? {
-        #warning("mover esto al integrador")
-        //guard paymentCongrats.paymentInfo?.paymentMethodId == "consumer_credits" else { return nil }
         return paymentCongrats.creditsExpectationView
     }
     
@@ -261,19 +253,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
     
     func getFlowBehaviourResult() -> PXResultKey {
-        if let result = paymentCongrats.flowBehaviourResult {
-            return result
-        }
-        
+        if let result = paymentCongrats.flowBehaviourResult { return result }
         switch paymentCongrats.type {
-        case .APPROVED:
-            return .SUCCESS
-        case .REJECTED:
-            return .FAILURE
-        case .PENDING:
-            return .PENDING
-        case .IN_PROGRESS:
-            return .PENDING
+        case .approved: return .SUCCESS
+        case .rejected: return .FAILURE
+        case .pending, .inProgress: return .PENDING
         }
     }
     

@@ -46,7 +46,7 @@
 
 - (PXPaymentCongrats *)fullCongrats {
     __weak CongratsExamplesViewController *weakSelf = self;
-    return [[[[[[[[[[[[[[[[PXPaymentCongrats alloc] init] withCongratsType:PXCongratsTypeAPPROVED]
+    return [[[[[[[[[[[[[[[[PXPaymentCongrats alloc] init] withCongratsType: PXCongratsTypeApproved]
                          withHeaderWithTitle:@"¡Listo! Ya le pagaste a SuperMarket" imageURL:@"https://mla-s2-p.mlstatic.com/600619-MLA32239048138_092019-O.jpg" closeAction:^{
         [weakSelf.navigationController popViewControllerAnimated:TRUE];
     }]

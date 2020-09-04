@@ -61,9 +61,6 @@ protocol PXNewResultViewModelInterface {
     ////CUSTOM ORDER
     func getCustomOrder() -> Bool?
     
-    ////PAYMENT METHOD IMAGES
-    func getPaymentMethodsImageURLs() -> [String: String]?
-
     //INSTRUCTIONS
     func hasInstructions() -> Bool
     func getInstructionsView() -> UIView?

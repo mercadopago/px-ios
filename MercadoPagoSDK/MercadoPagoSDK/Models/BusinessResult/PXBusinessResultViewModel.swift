@@ -96,6 +96,7 @@ class PXBusinessResultViewModel: NSObject {
     }
     
     func creditsExpectationView() -> UIView? {
+        guard paymentData.paymentMethod?.id == "consumer_credits" else { return nil}
         if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
             let title = resultInfo.title,
             let subtitle = resultInfo.subtitle,
@@ -107,16 +108,11 @@ class PXBusinessResultViewModel: NSObject {
     
     private func getCongratsType() -> PXCongratsType {
         switch businessResult.getBusinessStatus() {
-            case .APPROVED:
-                return .APPROVED
-            case .REJECTED:
-                return .REJECTED
-            case .IN_PROGRESS:
-                return .IN_PROGRESS
-            case .PENDING:
-                return .PENDING
-            default:
-                return .PENDING
+            case .APPROVED: return PXCongratsType.approved
+            case .REJECTED: return PXCongratsType.rejected
+            case .IN_PROGRESS: return PXCongratsType.inProgress
+            case .PENDING: return PXCongratsType.pending
+            default: return PXCongratsType.pending
         }
     }
     
@@ -202,8 +198,9 @@ extension PXBusinessResultViewModel {
             .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
         
         // Payment Info
-        if let paymentMethodTypeId = paymentData.paymentMethod?.paymentTypeId, let paymentType = PXPaymentTypes(rawValue: paymentMethodTypeId), let paymentMethodId = paymentData.paymentMethod?.getId() {
-            paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType/*, paymentMethodId: paymentMethodId*/))
+        if let paymentMethodTypeId = paymentData.paymentMethod?.paymentTypeId,
+            let paymentType = PXPaymentTypes(rawValue: paymentMethodTypeId) {
+            paymentCongratsData.withPaymentMethodInfo(assemblePaymentMethodInfo(paymentData: paymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: paymentType))
         }
         
         
@@ -211,9 +208,8 @@ extension PXBusinessResultViewModel {
         if amountHelper.isSplitPayment,
             let splitPaymentData = amountHelper.splitAccountMoney,
             let splitPaymentMethodTypeId = splitPaymentData.paymentMethod?.paymentTypeId,
-            let splitPaymentType = PXPaymentTypes(rawValue: splitPaymentMethodTypeId),
-            let splitPaymentMethodId = splitPaymentData.paymentMethod?.getId() {
-            paymentCongratsData.withSplitPaymentInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: splitPaymentType/*, paymentMethodId: splitPaymentMethodId*/))
+            let splitPaymentType = PXPaymentTypes(rawValue: splitPaymentMethodTypeId) {
+            paymentCongratsData.withSplitPaymentInfo(assemblePaymentMethodInfo(paymentData: splitPaymentData, amountHelper: amountHelper, currency: SiteManager.shared.getCurrency(), paymentMethodType: splitPaymentType))
         }
         
         paymentCongratsData.shouldShowPaymentMethod(paymentMethodShouldBeShown())
@@ -247,7 +243,6 @@ extension PXBusinessResultViewModel {
             paidAmount = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
         }
         
-        let paymentMethodName = paymentData.paymentMethod?.name ?? ""
         let lastFourDigits = paymentData.token?.lastFourDigits
         let transactionAmount = Utils.getAmountFormated(amount: paymentData.transactionAmount?.doubleValue ?? 0.0, forCurrency: currency)
         let installmentRate = paymentData.payerCost?.installmentRate
@@ -257,12 +252,17 @@ extension PXBusinessResultViewModel {
         let paymentMethodExtraInfo = paymentData.paymentMethod?.creditsDisplayInfo?.description?.message
         let discountName = paymentData.discount?.name
         
+        var iconURL: String? = nil
+        if let paymentMethod = paymentData.paymentMethod, let paymentMethodsImageURLs = getPaymentMethodsImageURLs(), !paymentMethodsImageURLs.isEmpty {
+            iconURL = PXNewResultUtil.getPaymentMethodIconURL(for: paymentMethod.id, using: paymentMethodsImageURLs)
+        }
+        
         return PXCongratsPaymentInfo(paidAmount: paidAmount,
                                      rawAmount: transactionAmount,
-                                     paymentMethodName: paymentMethodName,
+                                     paymentMethodName: paymentData.paymentMethod?.name,
                                      paymentMethodLastFourDigits: lastFourDigits,
                                      paymentMethodDescription: paymentMethodExtraInfo,
-                                     paymentMethodIconURL: URL(string:"https://www.google.com"),
+                                     paymentMethodIconURL: iconURL,
                                      paymentMethodType: paymentMethodType,
                                      installmentsRate: installmentRate,
                                      installmentsCount: installmentsCount,

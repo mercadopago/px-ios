@@ -24,8 +24,8 @@ public class PXCongratsPaymentInfo: NSObject {
     /// For credit cards, the last for digits of it.
     let paymentMethodLastFourDigits: String?
     
-    /// A URL containing the payment method icon
-    let paymentMethodIconURL: URL?
+    /// A String representing the payment method icon
+    let paymentMethodIconURL: String?
     
     let paymentMethodDescription: String?
     
@@ -52,12 +52,12 @@ public class PXCongratsPaymentInfo: NSObject {
     let discountName: String?
     
     /// Objc version
-    @objc public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: URL?, paymentMethodType: PXPaymentOBJC, installmentsRate: Double, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
+    @objc public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentOBJC, installmentsRate: Double, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
         self.init(paidAmount: paidAmount, rawAmount: rawAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentMethodLastFourDigits, paymentMethodDescription: paymentMethodDescription, paymentMethodIconURL: paymentMethodIconURL, paymentMethodType: paymentMethodType.getRealCase(), installmentsRate: installmentsRate, installmentsCount: installmentsCount, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName)
     }
     
     /// Swift version
-    @nonobjc public init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: URL?, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
+    @nonobjc public init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
         self.paidAmount = paidAmount
         self.rawAmount = rawAmount
         

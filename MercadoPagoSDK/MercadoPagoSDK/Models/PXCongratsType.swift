@@ -8,38 +8,23 @@
 import Foundation
 
 @objc public enum PXCongratsType: Int {
-    /**
-     APPROVED payment.
-     */
-    case APPROVED
-    /**
-     REJECTED payment.
-     */
-    case REJECTED
-    /**
-     PENDING payment.
-     */
-    case PENDING
-    /**
-     IN_PROGRESS payment.
-     */
-    case IN_PROGRESS
+    case approved, rejected, pending, inProgress
 
     func getDescription() -> String {
         switch self {
-        case .APPROVED : return "APPROVED"
-        case .REJECTED  : return "REJECTED"
-        case .PENDING   : return "PENDING"
-        case .IN_PROGRESS : return "IN PROGRESS"
+        case .approved : return "APPROVED"
+        case .rejected  : return "REJECTED"
+        case .pending   : return "PENDING"
+        case .inProgress : return "IN PROGRESS"
         }
     }
     
     func getRawValue() -> String {
         switch self {
-        case .APPROVED : return "approved"
-        case .REJECTED  : return "rejected"
-        case .PENDING   : return "pending"
-        case .IN_PROGRESS : return "in_process"
+        case .approved : return "approved"
+        case .rejected  : return "rejected"
+        case .pending   : return "pending"
+        case .inProgress : return "in_process"
         }
     }
 }

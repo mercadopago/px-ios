@@ -76,6 +76,7 @@ internal class PXResultViewModel: NSObject {
     }
     
     func creditsExpectationView() -> UIView? {
+        guard paymentResult.paymentData?.paymentMethod?.id == "consumer_credits" else { return nil }
         if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
             let title = resultInfo.title,
             let subtitle = resultInfo.subtitle {
@@ -473,7 +474,7 @@ extension PXResultViewModel {
             installmentsTotalAmount = Utils.getAmountFormated(amount: totalForInstallments, forCurrency: currency)
         }
         
-        var iconURL: URL? = nil
+        var iconURL: String? = nil
         if let paymentMethod = paymentData.paymentMethod, let paymentMethodsImageURLs = getPaymentMethodsImageURLs(), !paymentMethodsImageURLs.isEmpty {
             iconURL = PXNewResultUtil.getPaymentMethodIconURL(for: paymentMethod.id, using: paymentMethodsImageURLs)
         }
@@ -493,22 +494,12 @@ extension PXResultViewModel {
     }
     
     private func congratsType(fromResultStatus stringStatus: String) -> PXCongratsType {
-        if stringStatus == PXPaymentStatus.APPROVED.rawValue {
-            return PXCongratsType.APPROVED
+        switch stringStatus {
+            case PXPaymentStatus.APPROVED.rawValue: return PXCongratsType.approved
+            case PXPaymentStatus.PENDING.rawValue: return PXCongratsType.pending
+            case PXPaymentStatus.IN_PROCESS.rawValue: return PXCongratsType.inProgress
+            case PXPaymentStatus.REJECTED.rawValue: return PXCongratsType.rejected
+            default: return PXCongratsType.rejected
         }
-
-        if stringStatus == PXPaymentStatus.PENDING.rawValue {
-            return PXCongratsType.PENDING
-        }
-
-        if stringStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            return PXCongratsType.IN_PROGRESS
-        }
-
-        if stringStatus == PXPaymentStatus.REJECTED.rawValue {
-            return PXCongratsType.REJECTED
-        }
-        
-        return PXCongratsType.REJECTED
     }
 }

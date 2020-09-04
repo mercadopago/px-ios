@@ -15,7 +15,7 @@ import Foundation
 public final class PXPaymentCongrats: NSObject {
     
     // Header
-    private(set) var type: PXCongratsType = .REJECTED
+    private(set) var type: PXCongratsType = .rejected
     private(set) var headerColor: UIColor?
     private(set) var headerTitle: String = ""
     private(set) var headerURL: String?
@@ -69,7 +69,13 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
     
     // Tracking
-    private(set) var trackingValues: [String : Any] = [:]
+    private var internalTrackingValues: [String : Any]?
+    private var externalTrackingValues: PXPaymentCongratsTracking?
+    var trackingValues: [String : Any] {
+        get {
+            resolveTracking()
+        }
+    }
     
     private(set) var flowBehaviourResult: PXResultKey?
     
@@ -86,6 +92,48 @@ public final class PXPaymentCongrats: NSObject {
     
     public override init() {
         super.init()
+    }
+    
+    // MARK: Private Methods
+    
+    func resolveTracking() -> [String : Any] {
+        if let internalData = internalTrackingValues {
+            return internalData
+        } else {
+            guard let extConf = externalTrackingValues else { return [:] }
+            let trackingConfiguration = PXTrackingConfiguration(trackListener: extConf.trackListener,
+                                                                flowName: extConf.flowName,
+                                                                flowDetails: extConf.flowDetails,
+                                                                sessionId: extConf.sessionId)
+            trackingConfiguration.updateTracker()
+            
+            var properties: [String: Any] = [:]
+            properties["style"] = "custom"
+            properties["payment_method_id"] = extConf.paymentMethodId
+            properties["payment_method_type"] = paymentInfo?.paymentMethodType.rawValue
+            properties["payment_id"] = extConf.paymentId
+            properties["payment_status"] = type.getRawValue()
+            properties["preference_amount"] = extConf.totalAmount
+            properties["payment_status_detail"] = extConf.paymentStatusDetail
+            
+            if let campaingId = extConf.campaingId {
+                properties[PXCongratsTracking.TrackingKeys.campaignId.rawValue] = campaingId
+            }
+            
+            if let currency = extConf.currencyId {
+                properties["currency_id"] = currency
+            }
+            
+            properties["has_split_payment"] = splitPaymentInfo != nil
+            properties[PXCongratsTracking.TrackingKeys.hasBottomView.rawValue] = bottomView != nil
+            properties[PXCongratsTracking.TrackingKeys.hasTopView.rawValue] = topView != nil
+            properties[PXCongratsTracking.TrackingKeys.hasImportantView.rawValue] = importantView != nil
+            properties[PXCongratsTracking.TrackingKeys.hasExpenseSplitView.rawValue] = expenseSplit != nil
+            properties[PXCongratsTracking.TrackingKeys.scoreLevel.rawValue] = points?.progress.levelNumber
+            properties[PXCongratsTracking.TrackingKeys.discountsCount.rawValue] = discounts?.items.count
+            
+            return properties
+        }
     }
 }
 
@@ -178,7 +226,7 @@ extension PXPaymentCongrats {
     */
     @discardableResult
     internal func withTrackingProperties(_ trackingProperties: [String: Any]) -> PXPaymentCongrats {
-        self.trackingValues = trackingProperties
+        self.internalTrackingValues = trackingProperties
         return self
     }
     
@@ -425,35 +473,7 @@ extension PXPaymentCongrats {
      */
     @discardableResult
     public func withTracking(trackingProperties: PXPaymentCongratsTracking) -> PXPaymentCongrats {
-        let trackingConfiguration = PXTrackingConfiguration(trackListener: trackingProperties.trackListener, flowName: trackingProperties.flowName, flowDetails: trackingProperties.flowDetails, sessionId: trackingProperties.sessionId)
-        var properties: [String: Any] = [:]
-//        properties["style"] = "custom"
-//        properties["payment_method_id"] = paymentInfo?.paymentMethodId
-//        properties["payment_method_type"] = paymentInfo?.paymentMethodType.rawValue
-//        properties["payment_id"] = trackingProperties.paymentId
-//        properties["payment_status"] = type.getRawValue()
-//        properties["preference_amount"] = trackingProperties.totalAmount
-//        properties["payment_status_detail"] = trackingProperties.paymentStatusDetail
-//        
-//        if let campaingId = trackingProperties.campaingId {
-//            properties[PXCongratsTracking.TrackingKeys.campaignId.rawValue] = campaingId
-//        }
-//        
-//        if let currency = trackingProperties.currencyId {
-//            properties["currency_id"] = currency
-//        }
-//        
-//        properties["has_split_payment"] = splitPaymentInfo != nil
-//        properties[PXCongratsTracking.TrackingKeys.hasBottomView.rawValue] = bottomView != nil
-//        properties[PXCongratsTracking.TrackingKeys.hasTopView.rawValue] = topView != nil
-//        properties[PXCongratsTracking.TrackingKeys.hasImportantView.rawValue] = importantView != nil
-//        properties[PXCongratsTracking.TrackingKeys.hasExpenseSplitView.rawValue] = expenseSplit != nil
-//        properties[PXCongratsTracking.TrackingKeys.scoreLevel.rawValue] = points?.progress.levelNumber
-//        properties[PXCongratsTracking.TrackingKeys.discountsCount.rawValue] = discounts?.items.count
-//        
-//        trackingConfiguration.updateTracker()
-        
-        self.trackingValues = properties
+        self.externalTrackingValues = trackingProperties
         return self
     }
     
