@@ -62,7 +62,8 @@ internal class PXResultViewModel: NSObject {
     }
     
     func headerCloseAction() -> () -> () {
-        return {
+        return { [weak self] in
+            guard let self = self else { return }
             if let callback = self.callback {
                 if let url = self.getBackUrl() {
                     PXNewResultUtil.openURL(url: url, success: { (_) in

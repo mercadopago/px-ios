@@ -259,15 +259,19 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        self.busininessResultVM = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        guard let pxBusinessResultViewModel = self.busininessResultVM else { return }
+        
         pxBusinessResultViewModel.setCallback(callback: { [weak self] _, _ in
             self?.finish()
         })
+        
         if let url = pxBusinessResultViewModel.getRedirectUrl() {
             // If preference has a redirect URL for the current result status, perform redirect and finish checkout
             redirectAndFinish(viewModel: pxBusinessResultViewModel, redirectUrl: url)
             return
         }
+        
         pxBusinessResultViewModel.toPaymentCongrats().start(using: viewModel.pxNavigationHandler) { [weak self] in
             self?.finish()
         }

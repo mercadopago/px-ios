@@ -34,7 +34,8 @@ class PXBusinessResultViewModel: NSObject {
     }
     
     func headerCloseAction() -> (() -> Void) {
-        let action = {
+        let action = {  [weak self] in
+            guard let self = self else { return }
             if let callback = self.callback {
                 if let url = self.getBackUrl() {
                     PXNewResultUtil.openURL(url: url, success: { (_) in

@@ -74,7 +74,8 @@ internal extension PXResultViewModel {
     }
 
     private func getButtonAction() -> Action {
-        return {
+        return { [weak self] in
+            guard let self = self else { return }
             guard let callback = self.callback else { return }
             if self.paymentResult.isAccepted() {
                 callback(PaymentResult.CongratsState.EXIT, nil)

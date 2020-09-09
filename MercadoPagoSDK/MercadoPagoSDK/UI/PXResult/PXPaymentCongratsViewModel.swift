@@ -10,7 +10,7 @@ import Foundation
 class PXPaymentCongratsViewModel {
     
     private let paymentCongrats: PXPaymentCongrats
-
+    
     init(paymentCongrats: PXPaymentCongrats) {
         self.paymentCongrats = paymentCongrats
     }
