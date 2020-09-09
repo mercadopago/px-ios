@@ -185,7 +185,8 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
-        let resultViewModel = viewModel.resultViewModel()
+        self.genericResultVM = viewModel.resultViewModel()
+        guard let resultViewModel = self.genericResultVM else { return }
         if let url = resultViewModel.getRedirectUrl() {
             // If preference has a redirect URL for the current result status, perform redirect and finish checkout
             redirectAndFinish(viewModel: resultViewModel, redirectUrl: url)
