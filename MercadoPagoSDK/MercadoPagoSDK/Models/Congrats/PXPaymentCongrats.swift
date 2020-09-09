@@ -69,20 +69,13 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
     
     // Tracking
-    private var internalTrackingValues: [String : Any]?
-    private var externalTrackingValues: PXPaymentCongratsTracking?
-    var trackingValues: [String : Any] {
-        get {
-            resolveTracking()
-        }
-    }
-    
-    private(set) var flowBehaviourResult: PXResultKey?
+    private(set) var internalTrackingValues: [String : Any]?
+    private(set) var externalTrackingValues: PXPaymentCongratsTracking?
+    private(set) var internalTrackingPath: String?
+    private(set) var internalFlowBehaviourResult: PXResultKey?
     
     // Error
     private(set) var errorBodyView: UIView?
-    
-    private(set) var navigationController: UINavigationController?
     
     // URLs
     private(set) var shouldAutoReturn: Bool = false
@@ -92,48 +85,6 @@ public final class PXPaymentCongrats: NSObject {
     
     public override init() {
         super.init()
-    }
-    
-    // MARK: Private Methods
-    
-    func resolveTracking() -> [String : Any] {
-        if let internalData = internalTrackingValues {
-            return internalData
-        } else {
-            guard let extConf = externalTrackingValues else { return [:] }
-            let trackingConfiguration = PXTrackingConfiguration(trackListener: extConf.trackListener,
-                                                                flowName: extConf.flowName,
-                                                                flowDetails: extConf.flowDetails,
-                                                                sessionId: extConf.sessionId)
-            trackingConfiguration.updateTracker()
-            
-            var properties: [String: Any] = [:]
-            properties["style"] = "custom"
-            properties["payment_method_id"] = extConf.paymentMethodId
-            properties["payment_method_type"] = paymentInfo?.paymentMethodType.rawValue
-            properties["payment_id"] = extConf.paymentId
-            properties["payment_status"] = type.getRawValue()
-            properties["preference_amount"] = extConf.totalAmount
-            properties["payment_status_detail"] = extConf.paymentStatusDetail
-            
-            if let campaingId = extConf.campaingId {
-                properties[PXCongratsTracking.TrackingKeys.campaignId.rawValue] = campaingId
-            }
-            
-            if let currency = extConf.currencyId {
-                properties["currency_id"] = currency
-            }
-            
-            properties["has_split_payment"] = splitPaymentInfo != nil
-            properties[PXCongratsTracking.TrackingKeys.hasBottomView.rawValue] = bottomView != nil
-            properties[PXCongratsTracking.TrackingKeys.hasTopView.rawValue] = topView != nil
-            properties[PXCongratsTracking.TrackingKeys.hasImportantView.rawValue] = importantView != nil
-            properties[PXCongratsTracking.TrackingKeys.hasExpenseSplitView.rawValue] = expenseSplit != nil
-            properties[PXCongratsTracking.TrackingKeys.scoreLevel.rawValue] = points?.progress.levelNumber
-            properties[PXCongratsTracking.TrackingKeys.discountsCount.rawValue] = discounts?.items.count
-            
-            return properties
-        }
     }
 }
 
@@ -215,7 +166,7 @@ extension PXPaymentCongrats {
      */
     @discardableResult
     internal func withFlowBehaviorResult(_ result: PXResultKey) -> PXPaymentCongrats {
-        self.flowBehaviourResult = result
+        self.internalFlowBehaviourResult = result
         return self
     }
     
@@ -227,6 +178,12 @@ extension PXPaymentCongrats {
     @discardableResult
     internal func withTrackingProperties(_ trackingProperties: [String: Any]) -> PXPaymentCongrats {
         self.internalTrackingValues = trackingProperties
+        return self
+    }
+    
+    @discardableResult
+    internal func withTrackingPath(_ path: String) -> PXPaymentCongrats {
+        self.internalTrackingPath = path
         return self
     }
     
@@ -250,6 +207,16 @@ extension PXPaymentCongrats {
     internal func shouldAutoReturn(_ shouldAutoReturn: Bool) -> PXPaymentCongrats {
         self.shouldAutoReturn = shouldAutoReturn
         return self
+    }
+    
+    /**
+    Sets the navigation handler used by checkout. Internal use only.
+    - parameter navHandler: a `PXNavigationHandler`
+    */
+    @discardableResult
+    internal func start(using navHandler: PXNavigationHandler, with finishButtonAnimation: (() -> Void)?) {
+        let viewModel = PXPaymentCongratsViewModel(paymentCongrats: self)
+        viewModel.launch(navigationHandler: navHandler, showWithAnimation: false, finishButtonAnimation: finishButtonAnimation)
     }
 }
 
@@ -480,13 +447,9 @@ extension PXPaymentCongrats {
     /**
      Shows the congrats' view.
      - parameter navController: a `UINavigationController`
-     - returns: this builder `PXPaymentCongrats`
     */
-    @discardableResult
-    public func start(using navController: UINavigationController) -> PXPaymentCongrats {
-        self.navigationController = navController
+    public func start(using navController: UINavigationController) {
         let viewModel = PXPaymentCongratsViewModel(paymentCongrats: self)
-        viewModel.launch()
-        return self
+        viewModel.launch(navigationHandler: PXNavigationHandler(navigationController: navController), showWithAnimation: true)
     }
 }

@@ -179,49 +179,6 @@ extension PXResultViewModel: PXCongratsTrackingDataProtocol {
 
 // MARK: Tracking
 extension PXResultViewModel {
-    func getTrackingProperties() -> [String: Any] {
-        var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
-        properties["style"] = "generic"
-        if let paymentId = getPaymentId() {
-            properties["payment_id"] = Int64(paymentId)
-        }
-        properties["payment_status"] = paymentResult.status
-        properties["payment_status_detail"] = paymentResult.statusDetail
-
-        properties["has_split_payment"] = amountHelper.isSplitPayment
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
-        properties["discount_coupon_amount"] = amountHelper.getDiscountCouponAmountForTracking()
-        properties = PXCongratsTracking.getProperties(dataProtocol: self, properties: properties)
-
-        if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
-            properties["preference_amount"] = rawAmount.decimalValue
-        }
-
-        let paymentStatus = paymentResult.status
-        if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            var remedies: [[String: Any]] = []
-            if let remedy = remedy,
-                !(remedy.isEmpty) {
-                if remedy.suggestedPaymentMethod != nil {
-                    remedies.append(["index": 0,
-                                     "type": "payment_method_suggestion",
-                                     "extra_info": remedy.trackingData ?? ""])
-                } else if remedy.cvv != nil {
-                    remedies.append(["index": 0,
-                                     "type": "cvv_request",
-                                     "extra_info": remedy.trackingData ?? ""])
-                } else if remedy.highRisk != nil {
-                    remedies.append(["index": 0,
-                                     "type": "kyc_request",
-                                     "extra_info": remedy.trackingData ?? ""])
-                }
-            }
-            properties["remedies"] = remedies
-        }
-
-        return properties
-    }
-
     func getRemedyProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["payment_status"] = paymentResult.status
@@ -245,32 +202,6 @@ extension PXResultViewModel {
         }
 
         return properties
-    }
-
-    func getTrackingPath() -> String {
-        let paymentStatus = paymentResult.status
-        var screenPath = ""
-
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
-        }
-        return screenPath
-    }
-
-    func getFlowBehaviourResult() -> PXResultKey {
-        let isApprovedOfflinePayment = PXPayment.Status.PENDING.elementsEqual(paymentResult.status) && PXPayment.StatusDetails.PENDING_WAITING_PAYMENT.elementsEqual(paymentResult.statusDetail)
-
-        if paymentResult.isApproved() || isApprovedOfflinePayment {
-            return .SUCCESS
-        } else if paymentResult.isRejected() {
-            return .FAILURE
-        } else {
-            return .PENDING
-        }
     }
 
     func getFooterPrimaryActionTrackingPath() -> String {
@@ -342,7 +273,7 @@ extension PXResultViewModel {
         return nil
     }
     
-    private func getRedirectUrl() -> URL? {
+    internal func getRedirectUrl() -> URL? {
         return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
     }
     
@@ -399,6 +330,78 @@ extension PXResultViewModel {
     }
 }
 
+extension PXResultViewModel: PXViewModelTrackingDataProtocol {
+    func getTrackingPath() -> String {
+        let paymentStatus = paymentResult.status
+        var screenPath = ""
+
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        }
+        return screenPath
+    }
+
+    func getFlowBehaviourResult() -> PXResultKey {
+        let isApprovedOfflinePayment = PXPayment.Status.PENDING.elementsEqual(paymentResult.status) && PXPayment.StatusDetails.PENDING_WAITING_PAYMENT.elementsEqual(paymentResult.statusDetail)
+
+        if paymentResult.isApproved() || isApprovedOfflinePayment {
+            return .SUCCESS
+        } else if paymentResult.isRejected() {
+            return .FAILURE
+        } else {
+            return .PENDING
+        }
+    }
+    
+    func getTrackingProperties() -> [String: Any] {
+        var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
+        properties["style"] = "generic"
+        if let paymentId = getPaymentId() {
+            properties["payment_id"] = Int64(paymentId)
+        }
+        properties["payment_status"] = paymentResult.status
+        properties["payment_status_detail"] = paymentResult.statusDetail
+
+        properties["has_split_payment"] = amountHelper.isSplitPayment
+        properties["currency_id"] = SiteManager.shared.getCurrency().id
+        properties["discount_coupon_amount"] = amountHelper.getDiscountCouponAmountForTracking()
+        properties = PXCongratsTracking.getProperties(dataProtocol: self, properties: properties)
+
+        if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
+            properties["preference_amount"] = rawAmount.decimalValue
+        }
+
+        let paymentStatus = paymentResult.status
+        if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            var remedies: [[String: Any]] = []
+            if let remedy = remedy,
+                !(remedy.isEmpty) {
+                if remedy.suggestedPaymentMethod != nil {
+                    remedies.append(["index": 0,
+                                     "type": "payment_method_suggestion",
+                                     "extra_info": remedy.trackingData ?? ""])
+                } else if remedy.cvv != nil {
+                    remedies.append(["index": 0,
+                                     "type": "cvv_request",
+                                     "extra_info": remedy.trackingData ?? ""])
+                } else if remedy.highRisk != nil {
+                    remedies.append(["index": 0,
+                                     "type": "kyc_request",
+                                     "extra_info": remedy.trackingData ?? ""])
+                }
+            }
+            properties["remedies"] = remedies
+        }
+
+        return properties
+    }
+
+}
+
 extension PXResultViewModel {
     func toPaymentCongrats() -> PXPaymentCongrats {
         let paymentcongrats = PXPaymentCongrats()
@@ -439,6 +442,7 @@ extension PXResultViewModel {
         
         paymentcongrats.withFlowBehaviorResult(getFlowBehaviourResult())
                 .withTrackingProperties(getTrackingProperties())
+                .withTrackingPath(getTrackingPath())
                 .withErrorBodyView(errorBodyView())
         
         return paymentcongrats

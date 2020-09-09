@@ -128,7 +128,7 @@ class PXBusinessResultViewModel: NSObject {
         return businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
     }
     
-    private func getRedirectUrl() -> URL? {
+    internal func getRedirectUrl() -> URL? {
         return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
     }
     
@@ -228,6 +228,7 @@ extension PXBusinessResultViewModel {
         // Tracking
         paymentCongratsData.withTrackingProperties(getTrackingProperties())
             .withFlowBehaviorResult(getFlowBehaviourResult())
+            .withTrackingPath(getTrackingPath())
 
         // URL Managment
         paymentCongratsData.withRedirectURLs(getRedirectUrl())

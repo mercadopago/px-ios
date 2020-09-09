@@ -15,9 +15,9 @@ class PXPaymentCongratsViewModel {
         self.paymentCongrats = paymentCongrats
     }
     
-    func launch() {
-        let vc = PXNewResultViewController(viewModel: self)
-        paymentCongrats.navigationController?.pushViewController(vc, animated: true)
+    func launch(navigationHandler: PXNavigationHandler, showWithAnimation animated: Bool, finishButtonAnimation: (() -> Void)? = nil) {
+        let viewController = PXNewResultViewController(viewModel: self, finishButtonAnimation: finishButtonAnimation)
+        navigationHandler.pushViewController(viewController: viewController, animated: animated)
     }
     
     // MARK: Private methods
@@ -235,30 +235,72 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     //CALLBACKS & TRACKING
     func getTrackingProperties() -> [String : Any] {
-        return paymentCongrats.trackingValues
+        if let internalTrackingValues = paymentCongrats.internalTrackingValues {
+            return internalTrackingValues
+        } else {
+            guard let extConf = paymentCongrats.externalTrackingValues else { return [:] }
+            let trackingConfiguration = PXTrackingConfiguration(trackListener: extConf.trackListener,
+                                                                flowName: extConf.flowName,
+                                                                flowDetails: extConf.flowDetails,
+                                                                sessionId: extConf.sessionId)
+            trackingConfiguration.updateTracker()
+            
+            var properties: [String: Any] = [:]
+            properties["style"] = "custom"
+            properties["payment_method_id"] = extConf.paymentMethodId
+            properties["payment_method_type"] = paymentCongrats.paymentInfo?.paymentMethodType.rawValue
+            properties["payment_id"] = extConf.paymentId
+            properties["payment_status"] = paymentCongrats.type.getRawValue()
+            properties["preference_amount"] = extConf.totalAmount
+            properties["payment_status_detail"] = extConf.paymentStatusDetail
+            
+            if let campaingId = extConf.campaingId {
+                properties[PXCongratsTracking.TrackingKeys.campaignId.rawValue] = campaingId
+            }
+            
+            if let currency = extConf.currencyId {
+                properties["currency_id"] = currency
+            }
+            
+            properties["has_split_payment"] = paymentCongrats.splitPaymentInfo != nil
+            properties[PXCongratsTracking.TrackingKeys.hasBottomView.rawValue] = paymentCongrats.bottomView != nil
+            properties[PXCongratsTracking.TrackingKeys.hasTopView.rawValue] = paymentCongrats.topView != nil
+            properties[PXCongratsTracking.TrackingKeys.hasImportantView.rawValue] = paymentCongrats.importantView != nil
+            properties[PXCongratsTracking.TrackingKeys.hasExpenseSplitView.rawValue] = paymentCongrats.expenseSplit != nil
+            properties[PXCongratsTracking.TrackingKeys.scoreLevel.rawValue] = paymentCongrats.points?.progress.levelNumber
+            properties[PXCongratsTracking.TrackingKeys.discountsCount.rawValue] = paymentCongrats.discounts?.items.count
+            
+            return properties
+        }
     }
     
     func getTrackingPath() -> String {
-        var screenPath = ""
-        let paymentStatus = paymentCongrats.type.getRawValue()
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        if let internalTrackingPath = paymentCongrats.internalTrackingPath {
+            return internalTrackingPath
+        } else {
+            var screenPath = ""
+            let paymentStatus = paymentCongrats.type.getRawValue()
+            if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+                screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+            } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+                screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+            } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+                screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+            }
+            
+            return screenPath
         }
-        
-        return screenPath
     }
     
     func getFlowBehaviourResult() -> PXResultKey {
-        if let result = paymentCongrats.flowBehaviourResult { return result }
-        switch paymentCongrats.type {
-        case .approved: return .SUCCESS
-        case .rejected: return .FAILURE
-        case .pending, .inProgress: return .PENDING
+        guard let internalResult = paymentCongrats.internalFlowBehaviourResult else {
+            switch paymentCongrats.type {
+            case .approved: return .SUCCESS
+            case .rejected: return .FAILURE
+            case .pending, .inProgress: return .PENDING
+            }
         }
+        return internalResult
     }
     
     //URLs, and AutoReturn
@@ -268,9 +310,5 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     
     func getBackUrl() -> URL? {
         return nil
-    }
-    
-    func getRedirectUrl() -> URL? {
-        return paymentCongrats.redirectURL
     }
 }

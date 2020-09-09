@@ -21,7 +21,7 @@ struct ResultViewData {
     }
 }
 
-protocol PXNewResultViewModelInterface {
+protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
     //HEADER
     func getHeaderColor() -> UIColor
     func getHeaderTitle() -> String
@@ -98,13 +98,7 @@ protocol PXNewResultViewModelInterface {
     ///BOTTOM CUSTOM
     func getBottomCustomView() -> UIView?
 
-    //CALLBACKS & TRACKING
-    func getTrackingProperties() -> [String: Any]
-    func getTrackingPath() -> String
-    func getFlowBehaviourResult() -> PXResultKey
-
-    //BACK URL, REDIRECT URL & AUTORETURN
+    //BACK URL & AUTORETURN
     func shouldAutoReturn() -> Bool
     func getBackUrl() -> URL?
-    func getRedirectUrl() -> URL?
 }

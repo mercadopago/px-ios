@@ -11,7 +11,7 @@ import AndesUI
 
 class PXNewResultUtil {
     //TRACKING
-    class func trackScreenAndConversion(viewModel: PXNewResultViewModelInterface) {
+    class func trackScreenAndConversion(viewModel: PXViewModelTrackingDataProtocol) {
         let path = viewModel.getTrackingPath()
         if !path.isEmpty {
             MPXTracker.sharedInstance.trackScreen(screenName: path, properties: viewModel.getTrackingProperties())
