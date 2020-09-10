@@ -40,6 +40,9 @@ open class MercadoPagoCheckout: NSObject {
             countRetries = 0
         }
     }
+    
+    internal(set) var busininessResultVM: PXBusinessResultViewModel?
+    internal(set) var genericResultVM: PXResultViewModel?
 
     // MARK: Initialization
     /**

@@ -8,53 +8,6 @@
 import Foundation
 // MARK: Tracking
 extension PXBusinessResultViewModel {
-
-    func getTrackingProperties() -> [String: Any] {
-       var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
-       properties["style"] = "custom"
-       if let paymentId = getPaymentId() {
-           properties["payment_id"] = Int64(paymentId)
-       }
-       properties["payment_status"] = businessResult.paymentStatus
-       properties["payment_status_detail"] = businessResult.paymentStatusDetail
-       properties["has_split_payment"] = amountHelper.isSplitPayment
-       properties["currency_id"] = SiteManager.shared.getCurrency().id
-       properties["discount_coupon_amount"] = amountHelper.getDiscountCouponAmountForTracking()
-       properties = PXCongratsTracking.getProperties(dataProtocol: self, properties: properties)
-
-       if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
-           properties["preference_amount"] = rawAmount.decimalValue
-       }
-
-       return properties
-    }
-
-    func getTrackingPath() -> String {
-        let paymentStatus = businessResult.paymentStatus
-        var screenPath = ""
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
-        }
-        return screenPath
-    }
-
-    func getFlowBehaviourResult() -> PXResultKey {
-        switch businessResult.getBusinessStatus() {
-        case .APPROVED:
-            return .SUCCESS
-        case .REJECTED:
-            return .FAILURE
-        case .PENDING:
-            return .PENDING
-        case .IN_PROGRESS:
-            return .PENDING
-        }
-    }
-
     func getFooterPrimaryActionTrackingPath() -> String {
         let paymentStatus = businessResult.paymentStatus
         var screenPath = ""
@@ -98,19 +51,19 @@ extension PXBusinessResultViewModel {
 // MARK: PXCongratsTrackingDataProtocol Implementation
 extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
     func hasBottomView() -> Bool {
-        return getBottomCustomView() != nil
+        return businessResult.getBottomCustomView() != nil
     }
 
     func hasTopView() -> Bool {
-        return getTopCustomView() != nil
+        return businessResult.getTopCustomView() != nil
     }
 
     func hasImportantView() -> Bool {
-        return getImportantView() != nil
+        return businessResult.getImportantCustomView() != nil
     }
 
     func hasExpenseSplitView() -> Bool {
-        return getExpenseSplit() != nil && MLBusinessAppDataService().isMp() ? true : false
+        return pointsAndDiscounts?.expenseSplit != nil && MLBusinessAppDataService().isMp() ? true : false
     }
 
     func getScoreLevel() -> Int? {
@@ -136,5 +89,53 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
     func getCampaignId() -> String? {
         guard let campaignId = amountHelper.campaign?.id else { return nil }
         return "\(campaignId)"
+    }
+}
+
+extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
+    func getTrackingPath() -> String {
+        let paymentStatus = businessResult.paymentStatus
+        var screenPath = ""
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        }
+        return screenPath
+    }
+
+    func getFlowBehaviourResult() -> PXResultKey {
+        switch businessResult.getBusinessStatus() {
+        case .APPROVED:
+            return .SUCCESS
+        case .REJECTED:
+            return .FAILURE
+        case .PENDING:
+            return .PENDING
+        case .IN_PROGRESS:
+            return .PENDING
+        }
+    }
+    
+    func getTrackingProperties() -> [String: Any] {
+       var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
+       properties["style"] = "custom"
+       if let paymentId = getPaymentId() {
+           properties["payment_id"] = Int64(paymentId)
+       }
+       properties["payment_status"] = businessResult.paymentStatus
+       properties["payment_status_detail"] = businessResult.paymentStatusDetail
+       properties["has_split_payment"] = amountHelper.isSplitPayment
+       properties["currency_id"] = SiteManager.shared.getCurrency().id
+       properties["discount_coupon_amount"] = amountHelper.getDiscountCouponAmountForTracking()
+       properties = PXCongratsTracking.getProperties(dataProtocol: self, properties: properties)
+
+       if let rawAmount = amountHelper.getPaymentData().getRawAmount() {
+           properties["preference_amount"] = rawAmount.decimalValue
+       }
+
+       return properties
     }
 }

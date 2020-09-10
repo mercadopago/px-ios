@@ -21,7 +21,7 @@ struct ResultViewData {
     }
 }
 
-protocol PXNewResultViewModelInterface {
+protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
     //HEADER
     func getHeaderColor() -> UIColor
     func getHeaderTitle() -> String
@@ -61,21 +61,16 @@ protocol PXNewResultViewModelInterface {
     ////CUSTOM ORDER
     func getCustomOrder() -> Bool?
     
-    ////PAYMENT METHOD IMAGES
-    func getPaymentMethodsImageURLs() -> [String: String]?
-
     //INSTRUCTIONS
     func hasInstructions() -> Bool
     func getInstructionsView() -> UIView?
 
     //PAYMENT METHOD
     func shouldShowPaymentMethod() -> Bool
-    func getPaymentData() -> PXPaymentData?
-    func getAmountHelper() -> PXAmountHelper?
+    func getPaymentViewData() -> PXNewCustomViewData?
 
     //SPLIT PAYMENT METHOD
-    func getSplitPaymentData() -> PXPaymentData?
-    func getSplitAmountHelper() -> PXAmountHelper?
+    func getSplitPaymentViewData() -> PXNewCustomViewData?
 
     //REJECTED BODY
     func shouldShowErrorBody() -> Bool
@@ -103,14 +98,7 @@ protocol PXNewResultViewModelInterface {
     ///BOTTOM CUSTOM
     func getBottomCustomView() -> UIView?
 
-    //CALLBACKS & TRACKING
-    func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState, String?) -> Void)
-    func getTrackingProperties() -> [String: Any]
-    func getTrackingPath() -> String
-    func getFlowBehaviourResult() -> PXResultKey
-
-    //BACK URL, REDIRECT URL & AUTORETURN
+    //BACK URL & AUTORETURN
     func shouldAutoReturn() -> Bool
     func getBackUrl() -> URL?
-    func getRedirectUrl() -> URL?
 }

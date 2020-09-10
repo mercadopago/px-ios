@@ -18,6 +18,12 @@ protocol PXCongratsTrackingDataProtocol: NSObjectProtocol {
     func getCampaignId() -> String?
 }
 
+protocol PXViewModelTrackingDataProtocol {
+    func getTrackingPath() -> String
+    func getFlowBehaviourResult() -> PXResultKey
+    func getTrackingProperties() -> [String: Any]
+}
+
 final class PXCongratsTracking {
     enum TrackingKeys: String {
         case hasBottomView  = "has_bottom_view"

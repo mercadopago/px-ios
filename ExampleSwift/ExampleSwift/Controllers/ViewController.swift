@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         // runMercadoPagoCheckout()
         runMercadoPagoCheckoutWithLifecycle()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

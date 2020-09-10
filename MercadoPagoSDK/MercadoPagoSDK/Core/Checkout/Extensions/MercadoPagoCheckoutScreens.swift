@@ -163,7 +163,7 @@ extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }
 
-    private func redirectAndFinish(viewModel: PXNewResultViewModelInterface, redirectUrl: URL) {
+    private func redirectAndFinish(viewModel: PXViewModelTrackingDataProtocol, redirectUrl: URL) {
         PXNewResultUtil.trackScreenAndConversion(viewModel: viewModel)
         PXNewResultUtil.openURL(url: redirectUrl, success: { [weak self] _ in
             guard let self = self else {
@@ -185,14 +185,15 @@ extension MercadoPagoCheckout {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
 
-        let resultViewModel = viewModel.resultViewModel()
+        self.genericResultVM = viewModel.resultViewModel()
+        guard let resultViewModel = self.genericResultVM else { return }
         if let url = resultViewModel.getRedirectUrl() {
             // If preference has a redirect URL for the current result status, perform redirect and finish checkout
             redirectAndFinish(viewModel: resultViewModel, redirectUrl: url)
             return
         }
 
-        let viewController = PXNewResultViewController(viewModel: resultViewModel, callback: { [weak self] congratsState, remedyText in
+        resultViewModel.setCallback(callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
             self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
@@ -246,28 +247,35 @@ extension MercadoPagoCheckout {
             default:
                 self.finish()
             }
-        }, finishButtonAnimation: { [weak self] in
+        })
+        
+        resultViewModel.toPaymentCongrats().start(using: viewModel.pxNavigationHandler) { [weak self] in
             // Remedy view has an animated button. This closure is called after the animation has finished
             self?.executeNextStep()
-        })
-        viewModel.pxNavigationHandler.pushViewController(viewController: viewController, animated: false)
+        }
     }
-
+    
     func showBusinessResultScreen() {
         guard let businessResult = viewModel.businessResult else {
             return
         }
 
-        let pxBusinessResultViewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        self.busininessResultVM = PXBusinessResultViewModel(businessResult: businessResult, paymentData: viewModel.paymentData, amountHelper: viewModel.amountHelper, pointsAndDiscounts: viewModel.pointsAndDiscounts)
+        guard let pxBusinessResultViewModel = self.busininessResultVM else { return }
+        
+        pxBusinessResultViewModel.setCallback(callback: { [weak self] _, _ in
+            self?.finish()
+        })
+        
         if let url = pxBusinessResultViewModel.getRedirectUrl() {
             // If preference has a redirect URL for the current result status, perform redirect and finish checkout
             redirectAndFinish(viewModel: pxBusinessResultViewModel, redirectUrl: url)
             return
         }
-        let congratsViewController = PXNewResultViewController(viewModel: pxBusinessResultViewModel, callback: { [weak self] _, _ in
+        
+        pxBusinessResultViewModel.toPaymentCongrats().start(using: viewModel.pxNavigationHandler) { [weak self] in
             self?.finish()
-        })
-        viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
+        }
     }
 
     func showErrorScreen() {
