@@ -123,17 +123,6 @@ extension PXPaymentCongrats {
         self.headerBadgeImage = image
         return self
     }
-    
-    /**
-     Defines how will be the sort of the component in the Congrats
-     - parameter customSorting: a boolean
-     - returns: this builder `PXPaymentCongrats`
-     */
-    @discardableResult
-    internal func withCustomSorting(_ customSorting: Bool?) -> PXPaymentCongrats {
-        self.hasCustomSorting = customSorting ?? false
-        return self
-    }
 
     /**
      This is used in paymentResult on checkout Process, define
@@ -304,6 +293,17 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withCrossSelling(_ items: [PXCrossSellingItem]? ) -> PXPaymentCongrats {
         self.crossSelling = items
+        return self
+    }
+    
+    /**
+     Defines how will be the sort of the component in the Congrats
+     - parameter customSorting: a boolean
+     - returns: this builder `PXPaymentCongrats`
+     */
+    @discardableResult
+    public func withCustomSorting(_ customSorting: Bool?) -> PXPaymentCongrats {
+        self.hasCustomSorting = customSorting ?? false
         return self
     }
     
