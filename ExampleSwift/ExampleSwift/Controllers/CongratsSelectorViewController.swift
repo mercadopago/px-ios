@@ -49,7 +49,7 @@ class CongratsSelectorViewController: UITableViewController, PXTrackerListener {
                                 .withCrossSelling(crosseling)
                                 .shouldShowPaymentMethod(true)
             .withSplitPaymentInfo(PXCongratsPaymentInfo(paidAmount: "$ 500", rawAmount: "$ 5000", paymentMethodName: "Dinero en cuenta", paymentMethodDescription: nil, paymentMethodIconURL: "https://www.google.com", paymentMethodType: .ACCOUNT_MONEY, installmentsCount: 1, installmentsAmount: "$ 500", installmentsTotalAmount: "$ 500", discountName: nil))
-            .withTracking(trackingProperties: PXPaymentCongratsTracking(campaingId: nil, currencyId: "ARS", paymentStatusDetail: "The payment has been approved succesfully", totalAmount: 200, paymentId: 123, paymentMethodId: "account_money", paymentMethodTypeId: "account_money", trackListener: self, flowName: "testAPP", flowDetails: nil, sessionId: nil)))
+            .withTracking(trackingProperties: PXPaymentCongratsTracking(campaingId: nil, currencyId: "ARS", paymentStatusDetail: "The payment has been approved succesfully", totalAmount: 200, paymentId: 123, paymentMethodId: "account_money", paymentMethodType: "account_money", trackListener: self, flowName: "testAPP", flowDetails: nil, sessionId: nil)))
     }()
     
     private lazy var congratsWithOutDiscountsAndPoints : CongratsType = {

@@ -248,7 +248,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             var properties: [String: Any] = [:]
             properties["style"] = "custom"
             properties["payment_method_id"] = extConf.paymentMethodId
-            properties["payment_method_type"] = extConf.paymentMethodTypeId
+            properties["payment_method_type"] = extConf.paymentMethodType
             properties["payment_id"] = extConf.paymentId
             properties["payment_status"] = paymentCongrats.type.getRawValue()
             properties["preference_amount"] = extConf.totalAmount

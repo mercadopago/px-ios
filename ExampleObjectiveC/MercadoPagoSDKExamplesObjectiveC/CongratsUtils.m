@@ -35,7 +35,7 @@
 }
 
 +(PXPaymentCongratsTracking *)trackingProperties:(id<PXTrackerListener>) trackListener {
-    return [[PXPaymentCongratsTracking alloc] initWithCampaingId:nil currencyId:@"ARS" paymentStatusDetail:@"approved" totalAmount:[[NSDecimalNumber alloc] initWithInt:123] paymentId:1231231 paymentMethodId:@"account_money" paymentMethodTypeId:@"account_money" trackListener:trackListener flowName:@"instore" flowDetails:nil sessionId:nil];
+    return [[PXPaymentCongratsTracking alloc] initWithCampaingId:nil currencyId:@"ARS" paymentStatusDetail:@"approved" totalAmount:[[NSDecimalNumber alloc] initWithInt:123] paymentId:1231231 paymentMethodId:@"account_money" paymentMethodType:@"account_money" trackListener:trackListener flowName:@"instore" flowDetails:nil sessionId:nil];
 }
 
 +(NSString *)paymentIconURL {
