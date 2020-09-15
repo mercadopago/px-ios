@@ -38,10 +38,6 @@ extension TrackingPaths {
             return TrackingPaths.pxTrack + payments + "/card_issuer"
         }
 
-        static func getInternalIssuersPath() -> String {
-            return "/payment_congrats" + payments + "/card_issuer"
-        }
-
         
         // Installments Paths
         static func getInstallmentsPath() -> String {
