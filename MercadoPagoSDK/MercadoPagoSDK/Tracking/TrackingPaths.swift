@@ -9,11 +9,12 @@
 import Foundation
 
 internal struct TrackingPaths {
-
     static let pxTrack = "/px_checkout"
     static let payments = "/payments"
     static let selectMethod = "/select_method"
     static let addPaymentMethod = "/add_payment_method"
+    /// When not making use of PX's checkout, and instead goes directly into congrats
+    static let paymentCongrats = "/payment_congrats"
 }
 
 internal struct Tracking {

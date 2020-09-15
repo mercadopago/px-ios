@@ -248,7 +248,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             var properties: [String: Any] = [:]
             properties["style"] = "custom"
             properties["payment_method_id"] = extConf.paymentMethodId
-            properties["payment_method_type"] = paymentCongrats.paymentInfo?.paymentMethodType.rawValue
+            properties["payment_method_type"] = extConf.paymentMethodTypeId
             properties["payment_id"] = extConf.paymentId
             properties["payment_status"] = paymentCongrats.type.getRawValue()
             properties["preference_amount"] = extConf.totalAmount
@@ -281,11 +281,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             var screenPath = ""
             let paymentStatus = paymentCongrats.type.getRawValue()
             if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+                screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath(basePath: TrackingPaths.paymentCongrats)
             } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+                screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath(basePath: TrackingPaths.paymentCongrats)
             } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+                screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath(basePath: TrackingPaths.paymentCongrats)
             }
             
             return screenPath

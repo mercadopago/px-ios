@@ -38,6 +38,11 @@ extension TrackingPaths {
             return TrackingPaths.pxTrack + payments + "/card_issuer"
         }
 
+        static func getInternalIssuersPath() -> String {
+            return "/payment_congrats" + payments + "/card_issuer"
+        }
+
+        
         // Installments Paths
         static func getInstallmentsPath() -> String {
             return TrackingPaths.pxTrack + payments + "/installments"
@@ -134,10 +139,10 @@ extension TrackingPaths.Screens {
         private static let changePaymentMethod = "/change_payment_method"
         private static let remedy = "/remedy"
 
-        private static let result = TrackingPaths.pxTrack + "/result"
+        private static let result = "/result"
 
-        static func getSuccessPath() -> String {
-            return result + success
+        static func getSuccessPath(basePath: String = TrackingPaths.pxTrack) -> String {
+            return basePath + result + success
         }
 
         static func getSuccessAbortPath() -> String {
@@ -156,8 +161,8 @@ extension TrackingPaths.Screens {
             return getSuccessPath() + secondaryAction
         }
 
-        static func getFurtherActionPath() -> String {
-            return result + furtherAction
+        static func getFurtherActionPath(basePath: String = TrackingPaths.pxTrack) -> String {
+            return basePath + result + furtherAction
         }
 
         static func getFurtherActionAbortPath() -> String {
@@ -176,8 +181,8 @@ extension TrackingPaths.Screens {
             return getFurtherActionPath() + secondaryAction
         }
 
-        static func getErrorPath() -> String {
-            return result + error
+        static func getErrorPath(basePath: String = TrackingPaths.pxTrack) -> String {
+            return basePath + result + error
         }
 
         static func getErrorAbortPath() -> String {
