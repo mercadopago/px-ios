@@ -3,7 +3,7 @@
 MercadoPagoSDKV4 - Private Version
 - Tracking path distinto cuando se instancia Congrats desde afuera.
 
-# v4.35.9 
+# v4.35.9
 🚀Private Release - 4.35.9 🚀
 MercadoPagoSDKV4 - Private Version
 - Congrats desacopladas del checkout
