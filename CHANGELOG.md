@@ -1,5 +1,6 @@
-# Not published
-
+# v4.36.0
+🚀Private Release - 4.36.0 🚀
+MercadoPagoSDKV4 - Private Version
 - Tracking path distinto cuando se instancia Congrats desde afuera.
 
 # v4.35.9 
