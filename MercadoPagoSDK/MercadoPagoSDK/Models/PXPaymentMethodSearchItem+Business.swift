@@ -30,17 +30,6 @@ extension PXPaymentMethodSearchItem: PaymentOptionDrawable {
     func getTitle() -> String {
         return _description ?? ""
     }
-
-    func getSubtitle() -> String? {
-        if id == PXPaymentTypes.CREDIT_CARD.rawValue || id == PXPaymentTypes.DEBIT_CARD.rawValue || id == PXPaymentTypes.PREPAID_CARD.rawValue {
-            return nil
-        }
-        return comment
-    }
-
-    func getImage() -> UIImage? {
-        return ResourceManager.shared.getImageForPaymentMethod(withDescription: id)
-    }
 }
 
 extension PXPaymentMethodSearchItem: PaymentMethodOption {
@@ -66,13 +55,5 @@ extension PXPaymentMethodSearchItem: PaymentMethodOption {
 
     func isCustomerPaymentMethod() -> Bool {
         return false
-    }
-
-    func getDescription() -> String {
-        return _description ?? ""
-    }
-
-    func getComment() -> String {
-        return comment ?? ""
     }
 }

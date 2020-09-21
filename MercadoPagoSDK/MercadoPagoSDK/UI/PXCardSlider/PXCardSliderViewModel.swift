@@ -63,14 +63,6 @@ extension PXCardSliderViewModel: PaymentMethodOption {
         return paymentMethodId
     }
 
-    func getDescription() -> String {
-        return ""
-    }
-
-    func getComment() -> String {
-        return ""
-    }
-
     func hasChildren() -> Bool {
         return false
     }

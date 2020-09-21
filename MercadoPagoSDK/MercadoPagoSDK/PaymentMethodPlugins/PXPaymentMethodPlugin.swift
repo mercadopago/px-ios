@@ -89,14 +89,6 @@ extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
         return paymentMethodPluginId
     }
 
-    public func getDescription() -> String {
-        return name
-    }
-
-    public func getComment() -> String {
-        return ""
-    }
-
     public func hasChildren() -> Bool {
         return false
     }
@@ -119,10 +111,6 @@ extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
 
     public func getTitle() -> String {
         return name
-    }
-
-    public func getSubtitle() -> String? {
-        return nil
     }
 
     public func setDescription(_ text: String?) {

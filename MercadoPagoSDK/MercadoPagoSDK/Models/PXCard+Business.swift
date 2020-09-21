@@ -86,14 +86,6 @@ extension PXCard: PaymentOptionDrawable {
     func getTitle() -> String {
         return getCardDescription()
     }
-
-    func getSubtitle() -> String? {
-        return nil
-    }
-
-    func getImage() -> UIImage? {
-        return ResourceManager.shared.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
-    }
 }
 /// :nodoc:
 extension PXCard: PaymentMethodOption {
@@ -119,13 +111,5 @@ extension PXCard: PaymentMethodOption {
 
     func isCustomerPaymentMethod() -> Bool {
         return true
-    }
-
-    func getDescription() -> String {
-        return ""
-    }
-
-    func getComment() -> String {
-        return ""
     }
 }
