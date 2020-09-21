@@ -77,7 +77,7 @@ internal class PXResultViewModel: NSObject {
     }
 
     func creditsExpectationView() -> UIView? {
-        guard paymentResult.paymentData?.paymentMethod?.id == "consumer_credits" else { return nil }
+        guard paymentResult.paymentData?.paymentMethod?.id == PXPaymentTypes.CONSUMER_CREDITS.rawValue else { return nil }
         if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
             let title = resultInfo.title,
             let subtitle = resultInfo.subtitle {

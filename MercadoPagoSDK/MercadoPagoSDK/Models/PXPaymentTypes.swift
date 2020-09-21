@@ -24,21 +24,33 @@ import Foundation
     case BOLBRADESCO
     case PEC
     case PAYMENT_METHOD_PLUGIN
-    
+
     public func getRealCase() -> PXPaymentTypes {
         switch self {
-            case .DEBIT_CARD: return PXPaymentTypes.DEBIT_CARD
-            case .CREDIT_CARD: return PXPaymentTypes.CREDIT_CARD
-            case .ACCOUNT_MONEY: return PXPaymentTypes.ACCOUNT_MONEY
-            case .TICKET: return PXPaymentTypes.TICKET
-            case .BANK_TRANSFER: return PXPaymentTypes.BANK_TRANSFER
-            case .ATM: return PXPaymentTypes.ATM
-            case .DIGITAL_CURRENCY: return PXPaymentTypes.DIGITAL_CURRENCY
-            case .CONSUMER_CREDITS: return PXPaymentTypes.CONSUMER_CREDITS
-            case .PREPAID_CARD: return PXPaymentTypes.PREPAID_CARD
-            case .BOLBRADESCO: return PXPaymentTypes.BOLBRADESCO
-            case .PEC: return PXPaymentTypes.PEC
-            case .PAYMENT_METHOD_PLUGIN: return PXPaymentTypes.PAYMENT_METHOD_PLUGIN
+        case .DEBIT_CARD:
+            return PXPaymentTypes.DEBIT_CARD
+        case .CREDIT_CARD:
+            return PXPaymentTypes.CREDIT_CARD
+        case .ACCOUNT_MONEY:
+            return PXPaymentTypes.ACCOUNT_MONEY
+        case .TICKET:
+            return PXPaymentTypes.TICKET
+        case .BANK_TRANSFER:
+            return PXPaymentTypes.BANK_TRANSFER
+        case .ATM:
+            return PXPaymentTypes.ATM
+        case .DIGITAL_CURRENCY:
+            return PXPaymentTypes.DIGITAL_CURRENCY
+        case .CONSUMER_CREDITS:
+            return PXPaymentTypes.CONSUMER_CREDITS
+        case .PREPAID_CARD:
+            return PXPaymentTypes.PREPAID_CARD
+        case .BOLBRADESCO:
+            return PXPaymentTypes.BOLBRADESCO
+        case .PEC:
+            return PXPaymentTypes.PEC
+        case .PAYMENT_METHOD_PLUGIN:
+            return PXPaymentTypes.PAYMENT_METHOD_PLUGIN
         }
     }
 }
@@ -128,11 +140,11 @@ public enum PXPaymentTypes: String {
     }
 
     internal static func onlinePaymentTypes() -> [String] {
-        return [DEBIT_CARD.rawValue, CREDIT_CARD.rawValue, ACCOUNT_MONEY.rawValue, PREPAID_CARD.rawValue, PAYMENT_METHOD_PLUGIN.rawValue]
+        return [DEBIT_CARD.rawValue, CREDIT_CARD.rawValue, ACCOUNT_MONEY.rawValue, CONSUMER_CREDITS.rawValue, PREPAID_CARD.rawValue, PAYMENT_METHOD_PLUGIN.rawValue, DIGITAL_CURRENCY.rawValue, PREPAID_CARD.rawValue]
     }
 
     internal static func offlinePaymentTypes() -> [String] {
-        return [ATM.rawValue, TICKET.rawValue, BANK_TRANSFER.rawValue]
+        return [ATM.rawValue, TICKET.rawValue, BANK_TRANSFER.rawValue, BOLBRADESCO.rawValue, PEC.rawValue]
     }
 
     internal static func isCard(paymentTypeId: String) -> Bool {

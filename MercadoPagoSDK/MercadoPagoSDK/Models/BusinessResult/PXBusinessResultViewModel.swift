@@ -97,7 +97,7 @@ class PXBusinessResultViewModel: NSObject {
     }
 
     func creditsExpectationView() -> UIView? {
-        guard paymentData.paymentMethod?.id == "consumer_credits" else { return nil}
+        guard paymentData.paymentMethod?.id == PXPaymentTypes.CONSUMER_CREDITS.rawValue else { return nil}
         if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
             let title = resultInfo.title,
             let subtitle = resultInfo.subtitle,
