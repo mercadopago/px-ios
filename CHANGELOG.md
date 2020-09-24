@@ -1,3 +1,9 @@
+# v4.36.1
+🚀Private Release - 4.36.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix an issue with ObjC allowing to set a nil preference
+- Fix an issue with some payment methods trying to fetch instructions
+
 # v4.36.0
 🚀Private Release - 4.36.0 🚀
 MercadoPagoSDKV4 - Private Version
