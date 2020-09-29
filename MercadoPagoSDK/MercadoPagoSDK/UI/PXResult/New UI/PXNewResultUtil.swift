@@ -210,7 +210,7 @@ extension PXNewResultUtil {
         discountString.appendWithSpace(attributedAmount)
 
         let attributedMessage = NSAttributedString(string: text, attributes: interestRateAttributes)
-        discountString.append(attributedMessage)
+        discountString.appendWithSpace(attributedMessage)
 
         return discountString
     }
