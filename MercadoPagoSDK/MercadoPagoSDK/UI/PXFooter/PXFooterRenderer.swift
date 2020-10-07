@@ -23,15 +23,8 @@ final class PXFooterRenderer: NSObject {
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .white
 
-        if let buttonAction = footer.props.buttonAction {
-            let principalButton = self.buildAnimatedButton(with: buttonAction, color: footer.props.primaryColor)
-            principalButton.add(for: .touchUpInside) {
-                fooView.delegate?.didTapPrimaryAction()
-            }
-
-            principalButton.layer.shadowRadius = 4
+        if let principalButton = buildAnimatedButton(props: footer.props, delegate: fooView.delegate) {
             fooView.principalButton = principalButton
-            fooView.principalButton?.animationDelegate = footer.props.animationDelegate
             fooView.addSubview(principalButton)
 
             var principalButtonTopConstraint: NSLayoutConstraint?
@@ -80,18 +73,25 @@ final class PXFooterRenderer: NSObject {
         return fooView
     }
 
-    func buildAnimatedButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXAnimatedButton {
-        let button = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
-        button.backgroundColor = color
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(footerAction.label, for: .normal)
-        button.layer.cornerRadius = 4
-        button.add(for: .touchUpInside, footerAction.action)
-        return button
+    internal func buildAnimatedButton(props: PXFooterProps, delegate: PXFooterTrackingProtocol?) -> PXAnimatedButton? {
+        guard let buttonAction = props.buttonAction else { return nil }
+
+        let mainButton = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
+        mainButton.animationDelegate = props.animationDelegate
+        mainButton.backgroundColor = props.primaryColor ?? .pxBlueMp
+        mainButton.setTitle(buttonAction.label, for: .normal)
+        mainButton.layer.cornerRadius = 4
+        mainButton.layer.shadowRadius = 4
+        mainButton.add(for: .touchUpInside, buttonAction.action)
+        mainButton.add(for: .touchUpInside) {
+            delegate?.didTapPrimaryAction()
+        }
+        mainButton.translatesAutoresizingMaskIntoConstraints = false
+        return mainButton
     }
 
-    func buildLinkButton(props: PXFooterProps) -> UIControl? {
-        guard let linkAction = props.linkAction  else { return nil }
+    private func buildLinkButton(props: PXFooterProps) -> UIControl? {
+        guard let linkAction = props.linkAction else { return nil }
 
         let linkButton: UIControl
         if props.useAndesButtonForLinkAction {

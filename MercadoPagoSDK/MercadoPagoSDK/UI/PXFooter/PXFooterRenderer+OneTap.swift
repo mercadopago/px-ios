@@ -13,8 +13,7 @@ extension PXFooterRenderer {
         let fooView = PXFooterAnimatedView()
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .clear
-        if let principalAction = footer.props.buttonAction {
-            let animatedButton = self.buildAnimatedButton(with: principalAction, color: footer.props.primaryColor)
+        if let animatedButton = buildAnimatedButton(props: footer.props, delegate: nil) {
             fooView.animatedButton = animatedButton
             fooView.addSubview(animatedButton)
             PXLayout.pinTop(view: animatedButton, withMargin: PXLayout.M_MARGIN).isActive = true

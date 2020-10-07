@@ -33,7 +33,7 @@ public final class PXPaymentCongrats: NSObject {
 
     // Discounts
     private(set) var discounts: PXDiscounts?
-    
+
     // Expense split
     private(set) var expenseSplit: PXExpenseSplit?
 
@@ -64,7 +64,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var shouldShowPaymentMethod: Bool = false
     private(set) var paymentInfo: PXCongratsPaymentInfo?
     private(set) var statementDescription: String?
-    
+
     // Split
     private(set) var splitPaymentInfo: PXCongratsPaymentInfo?
 
@@ -134,7 +134,7 @@ extension PXPaymentCongrats {
         self.instructionsView = view
         return self
     }
-    
+
     /**
      If the congrats has remedy, recieves a custom view to be displayed.
      - Parameters:
@@ -197,7 +197,7 @@ extension PXPaymentCongrats {
         self.shouldAutoReturn = shouldAutoReturn
         return self
     }
-    
+
     /**
     Sets the navigation handler used by checkout. Internal use only.
     - parameter navHandler: a `PXNavigationHandler`
@@ -261,7 +261,7 @@ extension PXPaymentCongrats {
         self.points = points
         return self
     }
-    
+
     /**
      Defines the discounts data in the discounts seccions of the congrats.
      - parameter discounts: some PXDiscounts
@@ -305,7 +305,7 @@ extension PXPaymentCongrats {
         self.hasCustomSorting = customSorting ?? false
         return self
     }
-    
+
     /**
      Top button configuration.
      - parameter label: button display text

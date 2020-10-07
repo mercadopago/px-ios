@@ -64,7 +64,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         }
         return image
     }
-    
+
     func getHeaderCloseAction() -> (() -> Void)? {
         return paymentCongrats.headerCloseAction
     }

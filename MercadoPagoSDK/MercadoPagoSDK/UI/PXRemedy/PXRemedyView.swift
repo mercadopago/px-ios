@@ -58,7 +58,7 @@ class PXRemedyView: UIView {
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
         let height = UILabel.requiredHeight(forText: getRemedyMessage(), withFont: titleLabel.font, inWidth: screenWidth)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: PXLayout.L_MARGIN),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: PXLayout.M_MARGIN),
             titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: CONTENT_WIDTH_PERCENT  / 100),
             titleLabel.heightAnchor.constraint(equalToConstant: height),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
@@ -80,7 +80,7 @@ class PXRemedyView: UIView {
             let lastView = subviews.last ?? titleLabel
             addSubview(totalAmountView)
             NSLayoutConstraint.activate([
-                totalAmountView.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: PXLayout.M_MARGIN),
+                totalAmountView.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: PXLayout.S_MARGIN),
                 totalAmountView.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
                 totalAmountView.heightAnchor.constraint(equalToConstant: 40),
                 totalAmountView.centerXAnchor.constraint(equalTo: centerXAnchor)
@@ -414,7 +414,7 @@ extension PXRemedyView {
         return false
     }
 
-    private func shouldShowButton() -> Bool {
+    public func shouldShowButton() -> Bool {
         let remedy = data.remedy
         if (remedy.cvv != nil || remedy.suggestedPaymentMethod != nil) &&
             data.animatedButtonDelegate != nil &&
