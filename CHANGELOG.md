@@ -1,3 +1,9 @@
+# v4.36.2 
+🚀Private Release - 4.36.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix button location an view constraints
+- Add whitespace in discount label
+
 # v4.36.1 
 🚀Private Release - 4.36.1 🚀
 MercadoPagoSDKV4 - Private Version
