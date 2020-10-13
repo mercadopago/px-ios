@@ -18,32 +18,45 @@
 }
 
 - (IBAction)checkoutFlow:(id)sender {
+    // Datos basicos para iniciar el checkout
+    // publicKey y preferenceId de quien recibe el pago
+    NSString *publicKey = @"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1";
+    NSString *preferenceId = @"181794596-79127f41-cf23-4aff-952e-7d8f75121084";
+    // privateKey de quien hace el pago
+    NSString *privateKey = @"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636";
     
-    //CHECKOUT PREFERENCE
-    [self setCheckoutPref];
-    [self setCheckoutPrefAdditionalInfo];
-
-
+    // Una preferencia abierta es cuando se le pasa al builder un objeto PXCheckoutPreference en vez del id
+    // Las preferencias abiertas solo pueden pagarse si usa PaymentPlugin
+    BOOL useOpenPreference = NO;
+    // Si usa PaymentPlugin el pago lo hace el integrador
+    BOOL usePaymentPlugin = YES;
+    
     //BUILDER
-    //  PREF ABIERTA - Procesadora
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+    if (useOpenPreference) {
+        // Arma una preferencia abierta
+        [self setCheckoutPref];
+        [self setCheckoutPrefAdditionalInfo];
+        if (usePaymentPlugin) {
+            //  PREF ABIERTA - Procesadora
+            self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:publicKey checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+        } else {
+            //  No se puede
+            NSLog(@"checkoutFlow - No se puede pagar una preferencia abierta sin una procesadora");
+        }
+    } else {
+        if (usePaymentPlugin) {
+            //  PREF CERRADA - Procesadora
+            self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:publicKey preferenceId:preferenceId paymentConfiguration:[self getPaymentConfiguration]];
+        } else {
+            //  PREF CERRADA - SIN Procesadora
+            self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:publicKey preferenceId:preferenceId];
+        }
+    }
 
-    //  PREF CERRADA - Procesadora
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" preferenceId:@"181794596-79127f41-cf23-4aff-952e-7d8f75121084" paymentConfiguration:[self getPaymentConfiguration]];
+    //ACCESS TOKEN
+    [self.checkoutBuilder setPrivateKeyWithKey:privateKey];
 
-    //  PREF CERRADA - SIN PROCESADORA
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1" preferenceId:@"181794596-79127f41-cf23-4aff-952e-7d8f75121084"];
-
-
-    //ACCESS TOKENS
-    //  Brasil
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1505-092415-b89a7cdcec6cc6c3916deab0c56c7136-472129472"];
-
-    //  Argentina
-    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636"];
-    
-    // self.checkoutBuilder = [self moneyInMLBCheckoutBuilder];
-
+    //TRACKING
     PXTrackingConfiguration *trackingConfig = [[PXTrackingConfiguration alloc] initWithTrackListener: self flowName:@"instore" flowDetails:nil sessionId:@"3783874"];
     [self.checkoutBuilder setTrackingConfigurationWithConfig: trackingConfig];
 
@@ -61,16 +74,6 @@
 
     //LAZY INIT
     [mpCheckout startWithLazyInitProtocol:self];
-}
-    
-- (MercadoPagoCheckoutBuilder*)moneyInMLBCheckoutBuilder {
-    MercadoPagoCheckoutBuilder* checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-4c86acfb-467a-4d0f-8506-b8f13756d153"
-                                                                                           preferenceId:@"500229512-8dc69e3c-1494-4d93-8743-1d32e01cae71"
-                                                                                   paymentConfiguration:[self getPaymentConfiguration]];
-    
-    [checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1311377052931992-072817-7dd4b6e44e92add08adefd312fba4490-500229512"];
-    
-    return checkoutBuilder;
 }
 
 -(PXAdvancedConfiguration *)getAdvancedConfiguration {
