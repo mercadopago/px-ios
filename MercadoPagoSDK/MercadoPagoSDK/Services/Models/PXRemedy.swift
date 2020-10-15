@@ -80,7 +80,7 @@ struct PXRemedyPaymentMethod: Codable {
     let paymentTypeId: String?
     let escStatus: String
     let issuerName: String?
-    let lastFourDigit: String
+    let lastFourDigit: String?
     let securityCodeLocation: String?
     let securityCodeLength: Int?
     let installmentsList: [PXPaymentMethodInstallment]?

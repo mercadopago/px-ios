@@ -30,11 +30,7 @@ extension MercadoPagoCheckoutViewModel {
             guard let customerPaymentMethods = customPaymentOptions else {
                 return nil
             }
-            let customOptionsFound = customerPaymentMethods.filter { return $0.getCardId() == cardId }
-
-            if let customerPaymentMethod = customOptionsFound.first {
-                return customerPaymentMethod
-            }
+            return customerPaymentMethods.first(where: { return $0.getCardId() == cardId })
         }
 
         return nil

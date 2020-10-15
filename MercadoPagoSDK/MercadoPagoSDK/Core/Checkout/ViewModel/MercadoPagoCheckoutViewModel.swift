@@ -296,13 +296,15 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
         var oneTapDto: PXOneTapDto?
         if paymentResult.isRejectedWithRemedy(), let oneTap = search?.oneTap, let remedy = remedy {
-            var cardId = remedy.suggestedPaymentMethod?.alternativePaymentMethod?.customOptionId
-            if cardId == nil {
-                cardId = paymentResult.cardId
-            }
-            oneTapDto = oneTap.first(where: { $0.oneTapCard?.cardId == cardId })
-            if oneTapDto == nil {
-                oneTapDto = oneTap.first(where: { $0.paymentMethodId == cardId })
+            let paymentMethodId = remedy.suggestedPaymentMethod?.alternativePaymentMethod?.paymentMethodId ?? paymentResult.paymentMethodId
+            if paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue {
+                oneTapDto = oneTap.first(where: { $0.paymentMethodId == paymentMethodId })
+            } else {
+                let cardId = remedy.suggestedPaymentMethod?.alternativePaymentMethod?.customOptionId ?? paymentResult.cardId
+                oneTapDto = oneTap.first(where: { $0.oneTapCard?.cardId == cardId })
+                if oneTapDto == nil {
+                    oneTapDto = oneTap.first(where: { $0.paymentMethodId == cardId })
+                }
             }
         }
 
@@ -400,9 +402,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updatePaymentOptionSelectedWithRemedy() {
-        guard let paymentMethod = remedy?.suggestedPaymentMethod?.alternativePaymentMethod,
-            let customOptionSearchItem = search?.payerPaymentMethods.first(where: { $0.id == paymentMethod.customOptionId}),
-            customOptionSearchItem.isCustomerPaymentMethod() else { return }
+        let alternativePaymentMethod = remedy?.suggestedPaymentMethod?.alternativePaymentMethod
+        let payerPaymentMethod = search?.getPayerPaymentMethod(id: alternativePaymentMethod?.customOptionId)
+        guard let customOptionSearchItem = payerPaymentMethod,
+              customOptionSearchItem.isCustomerPaymentMethod() else { return }
         updateCheckoutModel(paymentOptionSelected: customOptionSearchItem.getCustomerPaymentMethod())
 
         if let payerCosts = paymentConfigurationService.getPayerCostsForPaymentMethod(customOptionSearchItem.getId()) {
@@ -932,14 +935,23 @@ extension MercadoPagoCheckoutViewModel {
 private extension MercadoPagoCheckoutViewModel {
     func updatePaymentData(_ suggestedPaymentMethod: PXSuggestedPaymentMethod) {
         if let alternativePaymentMethod = suggestedPaymentMethod.alternativePaymentMethod,
-            let paymentResult = paymentResult {
-            if let newPaymentMethod = onetapFlow?.model.pxOneTapViewModel?.getPaymentMethod(targetId: alternativePaymentMethod.paymentMethodId ?? "") {
-                paymentResult.paymentData?.paymentMethod = newPaymentMethod
+            let paymentResult = paymentResult,
+            let sliderViewModel = onetapFlow?.model.pxOneTapViewModel?.getCardSliderViewModel() {
+
+            var cardId = alternativePaymentMethod.customOptionId ?? paymentResult.cardId
+            let paymentMethodId = alternativePaymentMethod.paymentMethodId ?? paymentResult.paymentMethodId
+            if paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue {
+                cardId = paymentMethodId
             }
-            if let installments = alternativePaymentMethod.installmentsList?.first?.installments {
-                paymentResult.paymentData?.payerCost?.installments = installments
-            } else {
-                paymentResult.paymentData?.payerCost = nil
+            if let targetModel = sliderViewModel.first(where: { $0.cardId == cardId && $0.paymentMethodId == paymentMethodId }),
+               let newPaymentMethod = onetapFlow?.model.pxOneTapViewModel?.getPaymentMethod(targetId: targetModel.paymentMethodId) {
+                paymentResult.paymentData?.payerCost = targetModel.selectedPayerCost
+                paymentResult.paymentData?.paymentMethod = newPaymentMethod
+                paymentResult.paymentData?.issuer = targetModel.payerPaymentMethod?.issuer ?? PXIssuer(id: targetModel.issuerId, name: nil)
+                if let installments = alternativePaymentMethod.installmentsList?.first?.installments,
+                   let newPayerCost = targetModel.payerCost.first(where: { $0.installments == installments }) {
+                    paymentResult.paymentData?.payerCost = newPayerCost
+                }
             }
         }
     }

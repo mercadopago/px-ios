@@ -310,11 +310,11 @@ extension PXOneTapViewController {
             let vc = PXOfflineMethodsViewController(viewModel: offlineViewModel, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, finishButtonAnimation: finishButtonAnimation) { [weak self] in
                     self?.navigationController?.popViewController(animated: false)
             }
-            
+
             let sheet = PXOfflineMethodsSheetViewController(viewController: vc,
                                                             offlineViewModel: offlineViewModel,
                                                             whiteViewHeight: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self))
-            
+
             self.present(sheet, animated: true, completion: nil)
         }
     }

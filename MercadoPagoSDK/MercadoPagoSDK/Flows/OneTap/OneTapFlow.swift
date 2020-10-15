@@ -123,7 +123,7 @@ extension OneTapFlow {
             } else if let oneTapDto = search.oneTap?.first {
                 let customOptionsFound = customerPaymentMethods.filter {
                     if let oneTapCard = oneTapDto.oneTapCard {
-                        return $0.getPaymentMethodId() == oneTapDto.paymentMethodId && $0.id == oneTapCard.cardId
+                        return $0.getPaymentMethodId() == oneTapDto.paymentMethodId && $0.getCardId() == oneTapCard.cardId
                     }
                     return $0.getPaymentMethodId() == oneTapDto.paymentMethodId
                 }
@@ -160,11 +160,10 @@ extension OneTapFlow {
         return selectedPaymentOption
     }
 
-    func getCustomerPaymentOption(forId: String) -> PaymentMethodOption? {
+    func getCustomerPaymentMethodOption(cardId: String) -> PaymentMethodOption? {
         guard let customerPaymentMethods = model.customerPaymentOptions else {
             return nil
         }
-        let customOptionsFound = customerPaymentMethods.filter { return $0.id == forId }
-        return customOptionsFound.first
+        return customerPaymentMethods.first(where: { $0.getCardId() == cardId })
     }
 }

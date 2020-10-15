@@ -10,36 +10,31 @@ import Foundation
 
 extension OneTapFlow {
     func showOneTapViewController() {
-        let callbackPaymentData: ((PXPaymentData) -> Void) = {
-            [weak self] (paymentData: PXPaymentData) in
+        let callbackPaymentData: ((PXPaymentData) -> Void) = { [weak self] (paymentData: PXPaymentData) in
             self?.cancelFlowForNewPaymentSelection()
         }
-        let callbackConfirm: ((PXPaymentData, Bool) -> Void) = {
-            [weak self] (paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) in
+        let callbackConfirm: ((PXPaymentData, Bool) -> Void) = { [weak self] (paymentData, splitAccountMoneyEnabled) in
             guard let self = self else { return }
             self.model.updateCheckoutModel(paymentData: paymentData, splitAccountMoneyEnabled: splitAccountMoneyEnabled)
             // Deletes default one tap option in payment method search
             self.executeNextStep()
         }
-        let callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void) = {
-            [weak self] (newPaymentOption: PaymentMethodOption) in
-            if let card = newPaymentOption as? PXCardSliderViewModel, let newPaymentOptionSelected = self?.getCustomerPaymentOption(forId: card.cardId ?? "") {
+        let callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void) = { [weak self] paymentMethodOption in
+            if let cardSliderViewModel = paymentMethodOption as? PXCardSliderViewModel,
+               let customerPaymentMethodOption = self?.getCustomerPaymentMethodOption(cardId: cardSliderViewModel.cardId ?? "") {
                 // Customer card.
-                self?.model.paymentOptionSelected = newPaymentOptionSelected
+                self?.model.paymentOptionSelected = customerPaymentMethodOption
             } else {
-                self?.model.paymentOptionSelected = newPaymentOption
+                self?.model.paymentOptionSelected = paymentMethodOption
             }
         }
-        let callbackRefreshInit: ((String) -> Void) = {
-            [weak self] cardId in
+        let callbackRefreshInit: ((String) -> Void) = { [weak self] cardId in
             self?.refreshInitFlow(cardId: cardId)
         }
-        let callbackExit: (() -> Void) = {
-            [weak self] in
+        let callbackExit: (() -> Void) = { [weak self] in
             self?.cancelFlow()
         }
-        let finishButtonAnimation: (() -> Void) = {
-            [weak self] in
+        let finishButtonAnimation: (() -> Void) = { [weak self] in
             self?.executeNextStep()
         }
         let viewModel = model.oneTapViewModel()

@@ -194,6 +194,10 @@ class PXRemedyView: UIView {
                 templateCard.bankImageUrl = issuerImageUrl
             }
             cardUI = templateCard
+        } else if let consumerCredits = oneTapDto.oneTapCreditsInfo {
+            let creditsViewModel = PXCreditsViewModel(consumerCredits)
+            cardData = PXCardDataFactory()
+            cardUI = ConsumerCreditsCard(creditsViewModel, isDisabled: oneTapDto.status.isDisabled())
         } else {
             return nil
         }
@@ -208,6 +212,18 @@ class PXRemedyView: UIView {
         if oneTapDto.accountMoney != nil {
             let view = controller.getCardView()
             AccountMoneyCard.render(containerView: view, isDisabled: false, size: view.bounds.size)
+        } else if let consumerCreditsCard = cardUI as? ConsumerCreditsCard,
+                  let consumerCredits = oneTapDto.oneTapCreditsInfo {
+            let customConsumerCredits = PXOneTapCreditsDto(displayInfo: PXDisplayInfoDto(color: consumerCredits.displayInfo.color,
+                                                                                         gradientColors: consumerCredits.displayInfo.gradientColors,
+                                                                                         topText: PXTermsDto(text: "",
+                                                                                            textColor: nil,
+                                                                                            linkablePhrases: nil,
+                                                                                            links: nil),
+                                                                                         bottomText: consumerCredits.displayInfo.bottomText))
+            let creditsViewModel = PXCreditsViewModel(customConsumerCredits)
+            let view = controller.getCardView()
+                consumerCreditsCard.render(containerView: view, creditsViewModel: creditsViewModel, isDisabled: false, size: view.bounds.size, selectedInstallments: data.paymentData?.payerCost?.installments)
         }
 
         return controller.view
