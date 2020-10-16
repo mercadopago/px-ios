@@ -48,21 +48,23 @@ extension MercadoPagoCheckout {
     }
 
     func getRemedy() {
-        guard let paymentId = viewModel.paymentResult?.paymentId,
-            let payerCost = viewModel.paymentResult?.paymentData?.payerCost else {
+        guard let paymentResult = viewModel.paymentResult,
+            let paymentId = paymentResult.paymentId,
+            let paymentData = paymentResult.paymentData else {
             viewModel.updateCheckoutModel(remedy: PXRemedy())
             executeNextStep()
             return
         }
 
-        var cardId = viewModel.paymentResult?.cardId ?? viewModel.paymentResult?.paymentData?.token?.cardId
-        var oneTapCard: PXOneTapCardDto?
+        var cardId = paymentResult.cardId ?? paymentData.token?.cardId
+        var securityCode: PXSecurityCode?
         if let cardId = cardId {
             // oneTapCard has the info about securityCode location and length
-            oneTapCard = getOneTapCard(cardId: cardId)
+            let oneTapCard = getOneTapCard(cardId: cardId)
+            securityCode = oneTapCard?.cardUI?.securityCode
         }
 
-        let paymentMethodId = viewModel.paymentResult?.paymentData?.paymentMethod?.id
+        let paymentMethodId = paymentData.paymentMethod?.id
         if [PXPaymentTypes.ACCOUNT_MONEY.rawValue, PXPaymentTypes.CONSUMER_CREDITS.rawValue].contains(paymentMethodId) {
             // ACCOUNT_MONEY and CONSUMER_CREDITS have no cardId and should be searched by paymentMethodId
             cardId = paymentMethodId
@@ -80,10 +82,10 @@ extension MercadoPagoCheckout {
                                                                       paymentTypeId: customOptionSearchItem.paymentTypeId,
                                                                       issuerName: customOptionSearchItem.issuer?.name,
                                                                       lastFourDigit: customOptionSearchItem.lastFourDigits,
-                                                                      securityCodeLocation: oneTapCard?.cardUI?.securityCode?.cardLocation,
-                                                                      securityCodeLength: oneTapCard?.cardUI?.securityCode?.length,
-                                                                      totalAmount: payerCost.totalAmount,
-                                                                      installments: payerCost.installments,
+                                                                      securityCodeLocation: securityCode?.cardLocation,
+                                                                      securityCodeLength: securityCode?.length,
+                                                                      totalAmount: paymentData.payerCost?.totalAmount,
+                                                                      installments: paymentData.payerCost?.installments,
                                                                       escStatus: customOptionSearchItem.escStatus)
 
         let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != cardId }

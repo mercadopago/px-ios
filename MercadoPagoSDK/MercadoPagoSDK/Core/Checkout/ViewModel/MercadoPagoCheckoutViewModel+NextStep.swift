@@ -131,11 +131,11 @@ extension MercadoPagoCheckoutViewModel {
 
     func needGetRemedy() -> Bool {
         if let paymentResult = paymentResult,
-            let paymentId = paymentResult.paymentId,
-            !paymentId.isEmpty,
-            paymentResult.paymentData?.payerCost != nil,
-            paymentResult.isRejectedWithRemedy(),
-            remedy == nil {
+           paymentResult.isRejectedWithRemedy(),
+           let paymentId = paymentResult.paymentId,
+           !paymentId.isEmpty,
+           paymentResult.paymentData != nil,
+           remedy == nil {
             return true
         }
         return false
