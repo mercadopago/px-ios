@@ -41,7 +41,6 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
         let lastViewController = pxNavigationHandler.navigationController.viewControllers.last
         if let oneTapViewController = lastViewController as? PXOneTapViewController {
             oneTapViewController.resetButton(error: error)
-        // TODO: Probar que funcione el fix de MoneyIn
         } else if let securityCodeVC = lastViewController as? PXSecurityCodeViewController {
             if pxNavigationHandler.isLoadingPresented() {
                 pxNavigationHandler.dismissLoading(animated: true, finishCallback: { [weak self] in
