@@ -1,3 +1,8 @@
+# v4.36.5
+🚀Private Release - 4.36.5 🚀
+MercadoPagoSDKV4 - Private Version
+- New SecurityCode screen
+
 # v4.36.4
 🚀Private Release - 4.36.4 🚀
 MercadoPagoSDKV4 - Private Version
