@@ -209,6 +209,7 @@ private extension PXSecurityCodeViewController {
         titleLabel.numberOfLines = 2
         titleLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         titleLabel.alpha = 0
+        // zPosition is set to 1 because in the wallet the title in the animation moves behind the navBar, making the title to appear, then it disappears when it moves behind the navBar and finally appears again below the navBar. zPosition is set to 0 again in animation completion
         titleLabel.layer.zPosition = 1
         view.addSubview(titleLabel)
 
