@@ -1,3 +1,8 @@
+# v4.36.4 
+🚀Private Release - 4.36.4 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix a bug in remedies not showing credits, and fixed amount shown
+
 # v4.36.3 
 🚀Private Release - 4.36.3 🚀
 MercadoPagoSDKV4 - Private Version
