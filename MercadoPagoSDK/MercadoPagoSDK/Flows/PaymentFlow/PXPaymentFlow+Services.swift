@@ -24,6 +24,7 @@ internal extension PXPaymentFlow {
 
     func createPayment() {
         guard model.amountHelper?.getPaymentData() != nil, model.checkoutPreference != nil else {
+            showError()
             return
         }
 
@@ -61,7 +62,11 @@ internal extension PXPaymentFlow {
             } else if apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
                 self.paymentErrorHandler?.escError(reason: .ESC_CAP)
             } else if apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
-                self.paymentErrorHandler?.identificationError?()
+                if self.paymentErrorHandler?.identificationError != nil {
+                    self.paymentErrorHandler?.identificationError?()
+                } else {
+                    self.showError(error: mpError)
+                }
             } else {
                 self.showError(error: mpError)
             }
