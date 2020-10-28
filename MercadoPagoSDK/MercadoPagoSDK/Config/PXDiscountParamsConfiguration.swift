@@ -24,7 +24,7 @@ open class PXDiscountParamsConfiguration: NSObject, Codable {
     }
 
     /// Add additional params for obtaining a discount.
-    public func addAdditionalParam(_ param: [String: String]) {
+    public func addAdditionalParams(_ param: [String: String]) {
         for (key, value) in param {
             self.additionalParams[key] = value
         }
