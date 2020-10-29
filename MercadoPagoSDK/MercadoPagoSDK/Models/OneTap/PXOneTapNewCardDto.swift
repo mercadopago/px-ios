@@ -11,10 +11,12 @@ open class PXOneTapNewCardDto: NSObject, Codable {
     let version: String?
     let label: PXText
     let descriptionText: PXText?
+    let sheetOptions: [PXOneTapSheetOptionsDto]?
 
     enum CodingKeys: String, CodingKey {
         case version
         case label
         case descriptionText = "description"
+        case sheetOptions = "sheet_options"
     }
 }
