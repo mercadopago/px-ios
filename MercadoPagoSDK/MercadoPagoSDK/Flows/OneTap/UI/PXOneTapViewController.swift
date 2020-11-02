@@ -632,20 +632,59 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
-            let siteId = viewModel.siteId
-            let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
-            let builder: MLCardFormBuilder
-            if let privateKey = viewModel.privateKey {
-                builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-            } else {
-                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-            }
-            builder.setLanguage(Localizator.sharedInstance.getLanguage())
-            builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
-            builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
-            builder.setAnimated(true)
-            let cardFormVC = MLCardForm(builder: builder).setupController()
-            navigationController?.pushViewController(cardFormVC, animated: true)
+//            let siteId = viewModel.siteId
+//            let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
+//            let builder: MLCardFormBuilder
+//            if let privateKey = viewModel.privateKey {
+//                builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+//            } else {
+//                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+//            }
+//            builder.setLanguage(Localizator.sharedInstance.getLanguage())
+//            builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
+//            builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
+//            builder.setAnimated(true)
+//            let cardFormVC = MLCardForm(builder: builder).setupController()
+//            navigationController?.pushViewController(cardFormVC, animated: true)
+            
+            let viewController = UIViewController()
+            viewController.view.backgroundColor = .white
+            let stackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.axis = .vertical
+            stackView.alignment = .fill // .leading .firstBaseline .center .trailing .lastBaseline
+            stackView.distribution = .fill // .fillEqually .fillProportionally .equalSpacing .equalCentering
+
+            let label = UILabel()
+            label.text = "Text1"
+            stackView.addArrangedSubview(label)
+            let label2 = UILabel()
+            label2.text = "Text2"
+            stackView.addArrangedSubview(label2)
+            
+            viewController.view.addSubview(stackView)
+            NSLayoutConstraint.activate([
+                stackView.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor),
+                stackView.topAnchor.constraint(equalTo: viewController.view.topAnchor),
+                stackView.bottomAnchor.constraint(lessThanOrEqualTo: viewController.view.bottomAnchor)
+            ])
+            
+            
+//            let button = UIButton(type: .custom)
+//            button.translatesAutoresizingMaskIntoConstraints = false
+//            button.setTitle("Dismiss View Controller", for: .normal)
+//            button.add(for: .touchUpInside) {
+//                viewController.dismiss(animated: true, completion: nil)
+//            }
+//            viewController.view.addSubview(button)
+//
+//            NSLayoutConstraint(item: button, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: viewController.view, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1.0, constant: 0).isActive = true
+//
+//            NSLayoutConstraint(item: button, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: viewController.view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1.0, constant: 0).isActive = true
+            let sheet = PXOneTapSheetViewController(viewController: viewController,
+                                                    whiteViewHeight: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self))
+            present(sheet, animated: true, completion: nil)
         }
     }
 
