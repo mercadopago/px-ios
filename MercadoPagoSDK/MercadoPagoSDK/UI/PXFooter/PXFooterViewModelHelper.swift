@@ -102,12 +102,19 @@ internal extension PXResultViewModel {
 
     private func getLinkAction() -> Action {
         return { [weak self] in
-            if let url = self?.getBackUrl() {
-                PXNewResultUtil.openURL(url: url, success: { [weak self] (_) in
-                    self?.pressLink()
+            guard let self = self else { return }
+            if let action = self.pointsAndDiscounts?.primaryButton?.action, let url = URL(string: action) {
+                PXNewResultUtil.openURL(url: url, success: { (_) in
+                    self.callback?(PaymentResult.CongratsState.EXIT, nil)
                 })
             } else {
-                self?.pressLink()
+                if let url = self.getBackUrl() {
+                    PXNewResultUtil.openURL(url: url, success: { [weak self] (_) in
+                        self?.pressLink()
+                    })
+                } else {
+                    self.pressLink()
+                }
             }
         }
     }

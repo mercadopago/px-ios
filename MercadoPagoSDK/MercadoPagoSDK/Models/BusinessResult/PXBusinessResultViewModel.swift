@@ -37,8 +37,15 @@ class PXBusinessResultViewModel: NSObject {
         let action = {  [weak self] in
             guard let self = self else { return }
             if let callback = self.callback {
-                if let url = self.getBackUrl() {
-                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                var autoReturnUrl: URL?
+                if let backUrl = self.pointsAndDiscounts?.backUrl, let url = URL(string: backUrl) {
+                    autoReturnUrl = url
+                } else if let url = self.getBackUrl() {
+                    autoReturnUrl = url
+                }
+
+                if let autoReturnUrl = autoReturnUrl {
+                    PXNewResultUtil.openURL(url: autoReturnUrl, success: { (_) in
                         callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
@@ -131,6 +138,17 @@ class PXBusinessResultViewModel: NSObject {
     }
 
     private func getLinkAction() -> PXAction? {
+        if let primaryButton = pointsAndDiscounts?.primaryButton {
+            let action = PXAction(label: primaryButton.label) { [weak self] in
+                guard let self = self else { return }
+                if let callback = self.callback, let url = URL(string: self.pointsAndDiscounts?.primaryButton?.action ?? "") {
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                        callback(PaymentResult.CongratsState.EXIT, nil)
+                    })
+                }
+            }
+            return action
+        }
         return businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
     }
 
@@ -202,6 +220,8 @@ extension PXBusinessResultViewModel {
             .withCrossSelling(pointsAndDiscounts?.crossSelling)
             .withCustomSorting(pointsAndDiscounts?.customOrder)
             .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
+            .withAutoReturn(pointsAndDiscounts?.autoReturn)
+            .withPrimaryButton(pointsAndDiscounts?.primaryButton)
 
         // Payment Info
         if let paymentMethodTypeId = paymentData.paymentMethod?.paymentTypeId,

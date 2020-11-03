@@ -415,6 +415,8 @@ extension PXResultViewModel {
             .withLoyalty(pointsAndDiscounts?.points)
             .withDiscounts(pointsAndDiscounts?.discounts)
             .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
+            .withAutoReturn(pointsAndDiscounts?.autoReturn)
+            .withPrimaryButton(pointsAndDiscounts?.primaryButton)
             .withCrossSelling(pointsAndDiscounts?.crossSelling)
             .withCustomSorting(pointsAndDiscounts?.customOrder)
             .withInstructionView(instructionsView())
