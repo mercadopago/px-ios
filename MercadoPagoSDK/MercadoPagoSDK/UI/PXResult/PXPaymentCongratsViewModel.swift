@@ -303,6 +303,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return internalResult
     }
 
+    // BUTTONS
+    func getPrimaryButton() -> PXButton? {
+        return paymentCongrats.primaryButton
+    }
+
     //URLs, and AutoReturn
     func shouldAutoReturn() -> Bool {
         return paymentCongrats.shouldAutoReturn
@@ -310,5 +315,9 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
 
     func getBackUrl() -> URL? {
         return nil
+    }
+
+    func getAutoReturn() -> PXAutoReturn? {
+        return paymentCongrats.autoReturn
     }
 }
