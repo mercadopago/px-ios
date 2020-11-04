@@ -373,7 +373,6 @@ extension PXNewResultViewController {
 
         //AutoReturn view
         if let autoReturnView = buildAutoReturnView() {
-            autoReturnView.backgroundColor = .lightGray
             views.append(ResultViewData(view: autoReturnView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
         }
 
@@ -601,8 +600,9 @@ extension PXNewResultViewController {
         spinner.setUpWith(config)
         autoReturnView.addSubview(spinner)
         NSLayoutConstraint.activate([
-            spinner.centerYAnchor.constraint(equalTo: autoReturnView.centerYAnchor),
-            spinner.leadingAnchor.constraint(equalTo: autoReturnView.leadingAnchor)
+            spinner.leadingAnchor.constraint(equalTo: autoReturnView.leadingAnchor),
+            spinner.topAnchor.constraint(equalTo: autoReturnView.topAnchor),
+            spinner.bottomAnchor.constraint(lessThanOrEqualTo: autoReturnView.bottomAnchor, constant: -PXLayout.XXXS_MARGIN)
         ])
         spinner.show()
 
@@ -610,14 +610,15 @@ extension PXNewResultViewController {
         autoReturnCounter = autoReturnData.seconds
 
         autoReturnlabel.translatesAutoresizingMaskIntoConstraints = false
-        autoReturnlabel.text = autoReturnData.label + "\(viewModel.getAutoReturn()?.seconds ?? 5)"
+        autoReturnlabel.text = autoReturnData.label.replacingOccurrences(of: "{0}", with: "\(viewModel.getAutoReturn()?.seconds ?? 5)")
         autoReturnlabel.textAlignment = .left
         autoReturnlabel.numberOfLines = 0
         autoReturnView.addSubview(autoReturnlabel)
         NSLayoutConstraint.activate([
-            autoReturnlabel.centerYAnchor.constraint(equalTo: spinner.centerYAnchor),
-            autoReturnlabel.leftAnchor.constraint(equalTo: spinner.rightAnchor, constant: 16),
-            autoReturnlabel.trailingAnchor.constraint(equalTo: autoReturnView.trailingAnchor)
+            autoReturnlabel.leftAnchor.constraint(equalTo: spinner.rightAnchor, constant: PXLayout.S_MARGIN),
+            autoReturnlabel.trailingAnchor.constraint(equalTo: autoReturnView.trailingAnchor),
+            autoReturnlabel.topAnchor.constraint(equalTo: autoReturnView.topAnchor),
+            autoReturnlabel.bottomAnchor.constraint(lessThanOrEqualTo: autoReturnView.bottomAnchor, constant: -PXLayout.XXXS_MARGIN)
         ])
         return autoReturnView
     }
@@ -625,7 +626,7 @@ extension PXNewResultViewController {
     @objc func timerAction() {
         if autoReturnCounter > 0 {
             autoReturnCounter -= 1
-            autoReturnlabel.text = (viewModel.getAutoReturn()?.label ?? "") + "\(autoReturnCounter)"
+            autoReturnlabel.text = (viewModel.getAutoReturn()?.label ?? "").replacingOccurrences(of: "{0}", with: "\(autoReturnCounter)")
         }
     }
 
