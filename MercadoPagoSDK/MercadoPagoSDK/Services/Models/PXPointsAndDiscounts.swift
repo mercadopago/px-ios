@@ -18,10 +18,12 @@ struct PXPointsAndDiscounts: Decodable {
     let expenseSplit: PXExpenseSplit?
     let paymentMethodsImages: [String: String]?
     let primaryButton: PXButton?
+    let secondaryButton: PXButton?
+    let redirectUrl: String?
     let backUrl: String?
     let autoReturn: PXAutoReturn?
 
-    init(points: PXPoints?, discounts: PXDiscounts?, crossSelling: [PXCrossSellingItem]?, viewReceiptAction: PXRemoteAction?, topTextBox: PXText?, customOrder: Bool?, expenseSplit: PXExpenseSplit?, paymentMethodsImages: [String: String]?, primaryButton: PXButton?, backUrl: String?, autoReturn: PXAutoReturn?) {
+    init(points: PXPoints?, discounts: PXDiscounts?, crossSelling: [PXCrossSellingItem]?, viewReceiptAction: PXRemoteAction?, topTextBox: PXText?, customOrder: Bool?, expenseSplit: PXExpenseSplit?, paymentMethodsImages: [String: String]?, primaryButton: PXButton?, secondaryButton: PXButton?, redirectUrl: String?, backUrl: String?, autoReturn: PXAutoReturn?) {
         self.points = points
         self.discounts = discounts
         self.crossSelling = crossSelling
@@ -31,6 +33,8 @@ struct PXPointsAndDiscounts: Decodable {
         self.expenseSplit = expenseSplit
         self.paymentMethodsImages = paymentMethodsImages
         self.primaryButton = primaryButton
+        self.secondaryButton = secondaryButton
+        self.redirectUrl = redirectUrl
         self.backUrl = backUrl
         self.autoReturn = autoReturn
     }
@@ -45,6 +49,8 @@ struct PXPointsAndDiscounts: Decodable {
         case expenseSplit = "expense_split"
         case paymentMethodsImages = "payment_methods_images"
         case primaryButton = "primary_button"
+        case secondaryButton = "secondary_button"
+        case redirectUrl = "redirect_url"
         case backUrl = "back_url"
         case autoReturn = "auto_return"
     }
@@ -60,8 +66,10 @@ struct PXPointsAndDiscounts: Decodable {
         let expenseSplit: PXExpenseSplit? = try container.decodeIfPresent(PXExpenseSplit.self, forKey: .expenseSplit)
         let paymentMethodsImages: [String: String]? = try container.decodeIfPresent([String: String].self, forKey: .paymentMethodsImages)
         let primaryButton: PXButton? = try container.decodeIfPresent(PXButton.self, forKey: .primaryButton)
+        let secondaryButton: PXButton? = try container.decodeIfPresent(PXButton.self, forKey: .secondaryButton)
+        let redirectUrl: String? = try container.decodeIfPresent(String.self, forKey: .redirectUrl)
         let backUrl: String? = try container.decodeIfPresent(String.self, forKey: .backUrl)
         let autoReturn: PXAutoReturn? = try container.decodeIfPresent(PXAutoReturn.self, forKey: .autoReturn)
-        self.init(points: points, discounts: discounts, crossSelling: crossSelling, viewReceiptAction: viewReceiptAction, topTextBox: topTextBox, customOrder: customOrder, expenseSplit: expenseSplit, paymentMethodsImages: paymentMethodsImages, primaryButton: primaryButton, backUrl: backUrl, autoReturn: autoReturn)
+        self.init(points: points, discounts: discounts, crossSelling: crossSelling, viewReceiptAction: viewReceiptAction, topTextBox: topTextBox, customOrder: customOrder, expenseSplit: expenseSplit, paymentMethodsImages: paymentMethodsImages, primaryButton: primaryButton, secondaryButton: secondaryButton, redirectUrl: redirectUrl, backUrl: backUrl, autoReturn: autoReturn)
     }
 }
