@@ -366,14 +366,15 @@ extension PXNewResultViewController {
             views.append(ResultViewData(view: viewReceiptActionView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
         }
 
-        //AutoReturn view
-        if let autoReturnView = buildAutoReturnView() {
-            views.append(ResultViewData(view: autoReturnView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
-        }
-
         //Bottom Custom View
         if let view = viewModel.getBottomCustomView() {
             views.append(ResultViewData(view: view, verticalMargin: isActionCardViewLastView(views) ? PXLayout.M_MARGIN : 0))
+        }
+
+        //AutoReturn view
+        if let autoReturnView = buildAutoReturnView() {
+            autoReturnView.backgroundColor = .lightGray
+            views.append(ResultViewData(view: autoReturnView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
         }
 
         return views
