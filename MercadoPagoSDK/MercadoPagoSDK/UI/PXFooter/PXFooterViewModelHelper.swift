@@ -65,6 +65,9 @@ internal extension PXResultViewModel {
     }
 
     private func getLinkLabel() -> String? {
+        if let primaryButton = pointsAndDiscounts?.primaryButton {
+            return primaryButton.label
+        }
         if paymentResult.hasSecondaryButton() || (paymentResult.isHighRisk() && remedy?.highRisk != nil) {
             return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
         } else if paymentResult.isAccepted() {
