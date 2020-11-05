@@ -141,10 +141,17 @@ class PXBusinessResultViewModel: NSObject {
         if let primaryButton = pointsAndDiscounts?.primaryButton {
             let action = PXAction(label: primaryButton.label) { [weak self] in
                 guard let self = self else { return }
-                if let callback = self.callback, let url = URL(string: self.pointsAndDiscounts?.primaryButton?.action ?? "") {
-                    PXNewResultUtil.openURL(url: url, success: { (_) in
-                        callback(PaymentResult.CongratsState.EXIT, nil)
-                    })
+                if let callback = self.callback {
+                    if let action = primaryButton.action, action == "continue",
+                        let backUrl = self.pointsAndDiscounts?.backUrl, let url = URL(string: backUrl) {
+                        PXNewResultUtil.openURL(url: url, success: { (_) in
+                            callback(PaymentResult.CongratsState.EXIT, nil)
+                        })
+                    } else if let target = primaryButton.target, let url = URL(string: target) {
+                        PXNewResultUtil.openURL(url: url, success: { (_) in
+                            callback(PaymentResult.CongratsState.EXIT, nil)
+                        })
+                    }
                 }
             }
             return action
