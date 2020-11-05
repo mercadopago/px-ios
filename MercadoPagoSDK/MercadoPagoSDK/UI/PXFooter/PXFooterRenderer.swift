@@ -97,9 +97,9 @@ final class PXFooterRenderer: NSObject {
         if props.useAndesButtonForLinkAction {
             linkButton = AndesButton(text: linkAction.label, hierarchy: props.andesButtonConfig.hierarchy, size: props.andesButtonConfig.size, icon: nil)
         } else {
-            let primaryButton = PXPrimaryButton()
-            primaryButton.buttonTitle = linkAction.label
-            linkButton = primaryButton
+            let secondaryButton = PXSecondaryButton()
+            secondaryButton.buttonTitle = linkAction.label
+            linkButton = secondaryButton
         }
         linkButton.add(for: .touchUpInside, linkAction.action)
         linkButton.translatesAutoresizingMaskIntoConstraints = false
