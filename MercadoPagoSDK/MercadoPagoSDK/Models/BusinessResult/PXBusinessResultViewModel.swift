@@ -139,21 +139,7 @@ class PXBusinessResultViewModel: NSObject {
 
     private func getLinkAction() -> PXAction? {
         if let primaryButton = pointsAndDiscounts?.primaryButton {
-            let action = PXAction(label: primaryButton.label) { [weak self] in
-                guard let self = self else { return }
-                if let callback = self.callback {
-                    if let action = primaryButton.action, action == "continue",
-                        let backUrl = self.pointsAndDiscounts?.backUrl, let url = URL(string: backUrl) {
-                        PXNewResultUtil.openURL(url: url, success: { (_) in
-                            callback(PaymentResult.CongratsState.EXIT, nil)
-                        })
-                    } else if let target = primaryButton.target, let url = URL(string: target) {
-                        PXNewResultUtil.openURL(url: url, success: { (_) in
-                            callback(PaymentResult.CongratsState.EXIT, nil)
-                        })
-                    }
-                }
-            }
+            let action = PXAction(label: primaryButton.label, action: getPrimaryButtonAction())
             return action
         }
         return businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
@@ -180,6 +166,25 @@ class PXBusinessResultViewModel: NSObject {
         default:
             return fieldId == .ALL
         }
+    }
+
+    private func getPrimaryButtonAction() -> (() -> Void) {
+        let action = { [weak self] in
+            guard let self = self else { return }
+            if let callback = self.callback {
+                if let action = self.pointsAndDiscounts?.primaryButton?.action, action == "continue",
+                    let backUrl = self.pointsAndDiscounts?.backUrl, let url = URL(string: backUrl) {
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                        callback(PaymentResult.CongratsState.EXIT, nil)
+                    })
+                } else if let target = self.pointsAndDiscounts?.primaryButton?.target, let url = URL(string: target) {
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                        callback(PaymentResult.CongratsState.EXIT, nil)
+                    })
+                }
+            }
+        }
+        return action
     }
 
     private func getUrl(url: String, appendLanding: Bool = false) -> URL? {

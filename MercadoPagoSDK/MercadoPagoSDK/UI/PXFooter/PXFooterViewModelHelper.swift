@@ -107,15 +107,8 @@ internal extension PXResultViewModel {
         return { [weak self] in
             guard let self = self else { return }
 
-            var backUrl: URL?
-            if let primaryButton = self.pointsAndDiscounts?.primaryButton {
-                if let action = primaryButton.action, action == "continue",
-                    let backURL = self.pointsAndDiscounts?.backUrl, let url = URL(string: backURL) {
-                    backUrl = url
-                } else if let target = primaryButton.target, let url = URL(string: target) {
-                    backUrl = url
-                }
-                if let url = backUrl {
+            if self.pointsAndDiscounts?.primaryButton != nil {
+                if let url = self.getPrimaryButtonBackUrl() {
                     PXNewResultUtil.openURL(url: url, success: { (_) in
                         self.callback?(PaymentResult.CongratsState.EXIT, nil)
                     })
@@ -130,6 +123,16 @@ internal extension PXResultViewModel {
                 }
             }
         }
+    }
+
+    private func getPrimaryButtonBackUrl() -> URL? {
+        if let action = pointsAndDiscounts?.primaryButton?.action, action == "continue",
+            let backURL = pointsAndDiscounts?.backUrl, let url = URL(string: backURL) {
+            return url
+        } else if let target = pointsAndDiscounts?.primaryButton?.target, let url = URL(string: target) {
+            return url
+        }
+        return nil
     }
 
     private func pressLink() {
