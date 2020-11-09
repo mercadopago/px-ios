@@ -610,7 +610,7 @@ extension PXNewResultViewController {
         autoReturnCounter = autoReturnData.seconds
 
         autoReturnlabel.translatesAutoresizingMaskIntoConstraints = false
-        autoReturnlabel.text = autoReturnData.label.replacingOccurrences(of: "{0}", with: "\(viewModel.getAutoReturn()?.seconds ?? 5)")
+        autoReturnlabel.text = autoReturnData.label.replacingOccurrences(of: "{0}", with: "00:0\(viewModel.getAutoReturn()?.seconds ?? 5)")
         autoReturnlabel.textAlignment = .left
         autoReturnlabel.numberOfLines = 0
         autoReturnView.addSubview(autoReturnlabel)
@@ -626,7 +626,7 @@ extension PXNewResultViewController {
     @objc func timerAction() {
         if autoReturnCounter > 0 {
             autoReturnCounter -= 1
-            autoReturnlabel.text = (viewModel.getAutoReturn()?.label ?? "").replacingOccurrences(of: "{0}", with: "\(autoReturnCounter)")
+            autoReturnlabel.text = (viewModel.getAutoReturn()?.label ?? "").replacingOccurrences(of: "{0}", with: "00:0\(autoReturnCounter)")
         }
     }
 
