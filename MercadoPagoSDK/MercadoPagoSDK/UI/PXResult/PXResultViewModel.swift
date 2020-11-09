@@ -275,6 +275,9 @@ extension PXResultViewModel {
     }
 
     internal func getRedirectUrl() -> URL? {
+        if let redirectURL = pointsAndDiscounts?.redirectUrl, !redirectURL.isEmpty {
+            return getUrl(url: redirectURL, appendLanding: true)
+        }
         return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
     }
 
@@ -296,6 +299,14 @@ extension PXResultViewModel {
 
     func getBackUrl() -> URL? {
         return getUrl(backUrls: amountHelper.preference.backUrls)
+    }
+
+    private func getUrl(url: String, appendLanding: Bool = false) -> URL? {
+        if appendLanding {
+            let landingURL = MLBusinessAppDataService().appendLandingURLToString(url)
+            return URL(string: landingURL)
+        }
+        return URL(string: url)
     }
 
     private func getUrl(backUrls: PXBackUrls?, appendLanding: Bool = false) -> URL? {
