@@ -1,3 +1,9 @@
+# v4.36.7 
+🚀Private Release - 4.36.7 🚀
+MercadoPagoSDKV4 - Private Version
+- Autoreturn improvements
+- Tracking fix (total_amount)
+
 # v4.36.6 
 🚀Private Release - 4.36.6 🚀
 MercadoPagoSDKV4 - Private Version
