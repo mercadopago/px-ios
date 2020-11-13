@@ -6,7 +6,6 @@
 //  Copyright © 2018 Juan Sebastian Sanzone. All rights reserved.
 // Check full documentation: http://mercadopago.github.io/px-ios/v4/
 //
-
 import UIKit
 
 #if PX_PRIVATE_POD

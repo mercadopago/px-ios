@@ -1,3 +1,15 @@
+# v4.36.7 
+🚀Private Release - 4.36.7 🚀
+MercadoPagoSDKV4 - Private Version
+- Autoreturn improvements
+- Tracking fix (total_amount)
+
+# v4.36.6 
+🚀Private Release - 4.36.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Make lib static
+- Add additional discount params
+
 # v4.36.5
 🚀Private Release - 4.36.5 🚀
 MercadoPagoSDKV4 - Private Version

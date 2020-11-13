@@ -90,6 +90,11 @@
 
     //DISCOUNT PARAMS
     PXDiscountParamsConfiguration* discountParamsConfig = [[PXDiscountParamsConfiguration alloc] initWithLabels:[NSArray arrayWithObjects: @"1", @"2", nil] productId:@"bh31umv10flg01nmhg60"];
+
+    NSMutableDictionary *additionalParams = [NSMutableDictionary dictionary];
+    [additionalParams setObject: @"Prueba1"  forKey: @"test1"];
+    [additionalParams setObject: @"Prueba2"  forKey: @"test2"];
+    [discountParamsConfig addAdditionalParams:additionalParams];
     [advancedConfig setDiscountParamsConfiguration: discountParamsConfig];
 
     //THEME

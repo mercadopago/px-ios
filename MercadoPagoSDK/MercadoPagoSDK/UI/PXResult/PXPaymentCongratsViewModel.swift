@@ -251,7 +251,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             properties["payment_method_type"] = extConf.paymentMethodType
             properties["payment_id"] = extConf.paymentId
             properties["payment_status"] = paymentCongrats.type.getRawValue()
-            properties["preference_amount"] = extConf.totalAmount
+            properties["total_amount"] = extConf.totalAmount
             properties["payment_status_detail"] = extConf.paymentStatusDetail
 
             if let campaingId = extConf.campaingId {
@@ -303,6 +303,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return internalResult
     }
 
+    // BUTTONS
+    func getPrimaryButton() -> PXButton? {
+        return paymentCongrats.primaryButton
+    }
+
     //URLs, and AutoReturn
     func shouldAutoReturn() -> Bool {
         return paymentCongrats.shouldAutoReturn
@@ -310,5 +315,9 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
 
     func getBackUrl() -> URL? {
         return nil
+    }
+
+    func getAutoReturn() -> PXAutoReturn? {
+        return paymentCongrats.autoReturn
     }
 }

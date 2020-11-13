@@ -20,7 +20,7 @@ extension PXReviewViewModel {
         var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
 
         properties["discount"] = amountHelper.getDiscountForTracking()
-        properties["preference_amount"] = amountHelper.preferenceAmount
+        properties["total_amount"] = amountHelper.preferenceAmount
         var itemsDic: [Any] = []
         for item in amountHelper.preference.items {
             itemsDic.append(item.getItemForTracking())

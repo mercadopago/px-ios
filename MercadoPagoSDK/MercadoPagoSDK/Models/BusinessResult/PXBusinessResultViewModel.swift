@@ -37,8 +37,15 @@ class PXBusinessResultViewModel: NSObject {
         let action = {  [weak self] in
             guard let self = self else { return }
             if let callback = self.callback {
-                if let url = self.getBackUrl() {
-                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                var autoReturnUrl: URL?
+                if let backUrl = self.pointsAndDiscounts?.backUrl, let url = URL(string: backUrl) {
+                    autoReturnUrl = url
+                } else if let url = self.getBackUrl() {
+                    autoReturnUrl = url
+                }
+
+                if let autoReturnUrl = autoReturnUrl {
+                    PXNewResultUtil.openURL(url: autoReturnUrl, success: { (_) in
                         callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
@@ -135,6 +142,9 @@ class PXBusinessResultViewModel: NSObject {
     }
 
     internal func getRedirectUrl() -> URL? {
+        if let redirectURL = pointsAndDiscounts?.redirectUrl, !redirectURL.isEmpty {
+            return getUrl(url: redirectURL, appendLanding: true)
+        }
         return getUrl(backUrls: amountHelper.preference.redirectUrls, appendLanding: true)
     }
 
@@ -152,6 +162,14 @@ class PXBusinessResultViewModel: NSObject {
         default:
             return fieldId == .ALL
         }
+    }
+
+    private func getUrl(url: String, appendLanding: Bool = false) -> URL? {
+        if appendLanding {
+            let landingURL = MLBusinessAppDataService().appendLandingURLToString(url)
+            return URL(string: landingURL)
+        }
+        return URL(string: url)
     }
 
     private func getUrl(backUrls: PXBackUrls?, appendLanding: Bool = false) -> URL? {
@@ -202,6 +220,7 @@ extension PXBusinessResultViewModel {
             .withCrossSelling(pointsAndDiscounts?.crossSelling)
             .withCustomSorting(pointsAndDiscounts?.customOrder)
             .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
+            .withAutoReturn(pointsAndDiscounts?.autoReturn)
 
         // Payment Info
         if let paymentMethodTypeId = paymentData.paymentMethod?.paymentTypeId,
