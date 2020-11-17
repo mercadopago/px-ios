@@ -9,7 +9,7 @@
 import UIKit
 import MLCardForm
 import MLUI
-import MLBusinessComponents
+import AndesUI
 
 final class PXOneTapViewController: PXComponentContainerViewController {
 
@@ -44,6 +44,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var cardSliderMarginConstraint: NSLayoutConstraint?
     private var navigationBarTapGesture: UITapGestureRecognizer?
     var installmentRow = PXOneTapInstallmentInfoView()
+    private var andesBottomSheet: AndesBottomSheetViewController?
 
     // MARK: Lifecycle/Publics
     init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
@@ -632,60 +633,46 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
-//            let siteId = viewModel.siteId
-//            let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
-//            let builder: MLCardFormBuilder
-//            if let privateKey = viewModel.privateKey {
-//                builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-//            } else {
-//                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-//            }
-//            builder.setLanguage(Localizator.sharedInstance.getLanguage())
-//            builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
-//            builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
-//            builder.setAnimated(true)
-//            let cardFormVC = MLCardForm(builder: builder).setupController()
-//            navigationController?.pushViewController(cardFormVC, animated: true)
-            
-            let viewController = UIViewController()
-            viewController.view.backgroundColor = .white
-            let stackView = UIStackView()
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.axis = .vertical
-            stackView.alignment = .fill // .leading .firstBaseline .center .trailing .lastBaseline
-            stackView.distribution = .fill // .fillEqually .fillProportionally .equalSpacing .equalCentering
-
-            let label = UILabel()
-            label.text = "Text1"
-            stackView.addArrangedSubview(label)
-            let label2 = UILabel()
-            label2.text = "Text2"
-            stackView.addArrangedSubview(label2)
-            
-            viewController.view.addSubview(stackView)
-            NSLayoutConstraint.activate([
-                stackView.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor),
-                stackView.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor),
-                stackView.topAnchor.constraint(equalTo: viewController.view.topAnchor),
-                stackView.bottomAnchor.constraint(lessThanOrEqualTo: viewController.view.bottomAnchor)
-            ])
-            
-            
-//            let button = UIButton(type: .custom)
-//            button.translatesAutoresizingMaskIntoConstraints = false
-//            button.setTitle("Dismiss View Controller", for: .normal)
-//            button.add(for: .touchUpInside) {
-//                viewController.dismiss(animated: true, completion: nil)
-//            }
-//            viewController.view.addSubview(button)
-//
-//            NSLayoutConstraint(item: button, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: viewController.view, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1.0, constant: 0).isActive = true
-//
-//            NSLayoutConstraint(item: button, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: viewController.view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1.0, constant: 0).isActive = true
-            let sheet = PXOneTapSheetViewController(viewController: viewController,
-                                                    whiteViewHeight: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self))
-            present(sheet, animated: true, completion: nil)
+            if let newCard = viewModel.expressData?.first(where: { $0.paymentMethodId == "new_card" })?.newCard,
+               newCard.sheetOptions != nil {
+                // Present sheet to pick standard card form or webpay
+                let sheet = buildBottomSheet(newCard: newCard)
+                present(sheet, animated: true, completion: nil)
+            } else {
+                // Add new card using new card form
+                addNewCard()
+            }
         }
+    }
+
+    internal func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
+        if let andesBottomSheet = andesBottomSheet {
+            return andesBottomSheet
+        }
+        let viewController = PXOneTapSheetViewController(newCard: newCard)
+        viewController.delegate = self
+        let sheet = AndesBottomSheetViewController(rootViewController: viewController)
+        sheet.titleBar.text = newCard.label.message
+        sheet.titleBar.textAlignment = .center
+        andesBottomSheet = sheet
+        return sheet
+    }
+
+    internal func addNewCard() {
+        let siteId = viewModel.siteId
+        let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
+        let builder: MLCardFormBuilder
+        if let privateKey = viewModel.privateKey {
+            builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+        } else {
+            builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+        }
+        builder.setLanguage(Localizator.sharedInstance.getLanguage())
+        builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
+        builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
+        builder.setAnimated(true)
+        let cardFormVC = MLCardForm(builder: builder).setupController()
+        navigationController?.pushViewController(cardFormVC, animated: true)
     }
 
     func addNewOfflineDidTap() {
@@ -702,6 +689,19 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func didEndScrollAnimation() {
         installmentInfoRow?.didEndScrollAnimation()
+    }
+}
+
+extension PXOneTapViewController: PXOneTapSheetViewControllerProtocol {
+    func didTapOneTapSheetOption(sheetOption: PXOneTapSheetOptionsDto) {
+        andesBottomSheet?.dismiss(animated: true, completion: { [weak self] in
+            switch sheetOption.cardFormInitType {
+            case "webpay_tbk":
+                self?.addNewCard()
+            default:
+                self?.addNewCard()
+            }
+        })
     }
 }
 

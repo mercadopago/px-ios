@@ -7,117 +7,136 @@
 
 import Foundation
 
-import MLBusinessComponents
+internal protocol PXOneTapSheetViewControllerProtocol: class {
+    func didTapOneTapSheetOption(sheetOption: PXOneTapSheetOptionsDto)
+}
 
-class PXOneTapSheetViewController: SheetViewController {
-    private let sizes: [SheetSize]
-    private var totalView: UIView?
+internal class PXOneTapSheetViewController: UIViewController {
+    weak var delegate: PXOneTapSheetViewControllerProtocol?
+    private let rowHeight: CGFloat = 80.0
+    private let iconSize: CGFloat = 48.0
+    private let newCard: PXOneTapNewCardDto
 
-    init(viewController: UIViewController, whiteViewHeight: CGFloat) {
-        self.sizes = PXOneTapSheetViewController.getSizes(whiteViewHeight: whiteViewHeight)
-        super.init(rootViewController: viewController, sizes: self.sizes, configuration: PXOneTapSheetViewController.getConfiguration())
+    init(newCard: PXOneTapNewCardDto) {
+        self.newCard = newCard
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupSheetDelegate()
-        setupTotalView()
+        view.backgroundColor = .white
+        buildScrollView()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    private func buildScrollView() {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
 
-        if animated {
-            UIView.animate(withDuration: 0.1) {
-                self.totalView?.alpha = 0.0
+        NSLayoutConstraint.activate([
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        buildStackView(scrollView: scrollView)
+        view.addSubview(scrollView)
+    }
+
+    private func buildStackView(scrollView: UIScrollView) {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+
+        scrollView.addSubview(stackView)
+
+        if let sheetOptions = newCard.sheetOptions {
+            for sheetOption in sheetOptions {
+                let view = buildOptionView(sheetOption: sheetOption)
+                stackView.addArrangedSubview(view)
             }
         }
-    }
-
-    private func setupSheetDelegate() {
-        delegate = self
-    }
-
-    private func setupTotalView() {
-        let totalView = UIView()
-        totalView.translatesAutoresizingMaskIntoConstraints = false
-        totalView.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
-        totalView.alpha = 0.0
-
-        view.addSubview(totalView)
 
         NSLayoutConstraint.activate([
-            totalView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            totalView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            totalView.topAnchor.constraint(equalTo: view.topAnchor),
-            totalView.heightAnchor.constraint(equalToConstant: PXOneTapSheetViewController.topBarHeight())
+            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
+    }
 
-        let totalLabel = UILabel()
-        totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.attributedText = PXText(message: "TEST", backgroundColor: nil, textColor: nil, weight: "semi_bold").getAttributedString(fontSize: PXLayout.M_FONT, textColor: ThemeManager.shared.navigationBar().getTintColor())
-        totalLabel.textAlignment = .right
+    private func buildOptionView(sheetOption: PXOneTapSheetOptionsDto) -> UIView {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
 
-        totalView.addSubview(totalLabel)
+        let tap = PXOneTapSheetTapGesture(target: self, action: #selector(self.handleTap(sender:)), sheetOption: sheetOption)
+        view.addGestureRecognizer(tap)
+        view.isUserInteractionEnabled = true
 
+        let spacerView = UIView()
+        spacerView.backgroundColor = UIColor.gray.withAlphaComponent(0.3)
+        spacerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spacerView)
         NSLayoutConstraint.activate([
-            totalLabel.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -14.0),
-            totalLabel.bottomAnchor.constraint(greaterThanOrEqualTo: totalView.bottomAnchor)
+            spacerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            spacerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            spacerView.topAnchor.constraint(equalTo: view.topAnchor),
+            spacerView.heightAnchor.constraint(equalToConstant: 1)
         ])
 
-        let closeButton = UIButton(type: .custom)
-        let closeImage = ResourceManager.shared.getImage("result-close-button")?.imageWithOverlayTint(tintColor: ThemeManager.shared.navigationBar().getTintColor())
-        closeButton.setImage(closeImage, for: .normal)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.add(for: .touchUpInside) { [weak self] in
-            PXFeedbackGenerator.mediumImpactFeedback()
-            self?.presentingViewController?.dismiss(animated: true)
+        var image: UIImage?
+        if let imageURL = sheetOption.imageUrl, imageURL.isNotEmpty {
+            image = PXUIImage(url: imageURL)
+        } else {
+            image = ResourceManager.shared.getImage("PaymentGeneric")
         }
-
-        totalView.addSubview(closeButton)
+        let iconImageView = PXUIImageView(image: image, size: iconSize, showAsCircle: false, showBorder: false, shouldAddInsets: true)
+        view.addSubview(iconImageView)
 
         NSLayoutConstraint.activate([
-            closeButton.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 2.0),
-            closeButton.bottomAnchor.constraint(equalTo: totalView.bottomAnchor),
-            closeButton.heightAnchor.constraint(equalToConstant: 44),
-            closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
-            closeButton.trailingAnchor.constraint(equalTo: totalLabel.leadingAnchor),
-            totalLabel.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor)
+            iconImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
 
-        view.sendSubviewToBack(totalView)
-        self.totalView = totalView
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let attributedText = NSMutableAttributedString()
+        if let attributedTitle = sheetOption.title.getAttributedString(fontSize: PXLayout.S_FONT) {
+            attributedText.append(attributedTitle)
+        }
+        if let attributedSubtitle = sheetOption.subtitle?.getAttributedString(fontSize: PXLayout.XS_FONT) {
+            attributedText.append(attributedSubtitle)
+        }
+        label.attributedText = attributedText
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            label.heightAnchor.constraint(equalToConstant: rowHeight),
+            label.topAnchor.constraint(equalTo: view.topAnchor),
+            label.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor)
+        ])
+        return view
     }
 
-    private static func getSizes(whiteViewHeight: CGFloat) -> [SheetSize] {
-        return [
-            .fixed(whiteViewHeight),
-            .fixedFromTop(topBarHeight())
-        ]
-    }
-
-    private static func topBarHeight() -> CGFloat {
-        return PXLayout.NAV_BAR_HEIGHT + PXLayout.getSafeAreaTopInset()
-    }
-
-    private static func getConfiguration() -> SheetConfiguration {
-        var configuration = SheetConfiguration.default
-        configuration.backgroundAlpha = 0.0
-        configuration.handle.height = 0.0
-        return configuration
+    @objc fileprivate func handleTap(sender: PXOneTapSheetTapGesture) {
+        delegate?.didTapOneTapSheetOption(sheetOption: sender.sheetOption)
     }
 }
 
-extension PXOneTapSheetViewController: SheetViewControllerDelegate {
-    func sheetViewController(_ sheetViewController: SheetViewController, sheetHeightDidChange height: CGFloat) {
-        let highest = view.bounds.height - PXOneTapSheetViewController.topBarHeight()
-        let difference = highest - height
+fileprivate class PXOneTapSheetTapGesture: UITapGestureRecognizer {
+    let sheetOption: PXOneTapSheetOptionsDto
 
-        if (difference < 100) {
-            totalView?.alpha = 1 - min(max(difference / 100, 0.0), 1.0)
-        } else {
-            totalView?.alpha = 0.0
-        }
+    init(target: Any?, action: Selector?, sheetOption: PXOneTapSheetOptionsDto) {
+        self.sheetOption = sheetOption
+        super.init(target: target, action: action)
     }
 }
