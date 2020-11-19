@@ -658,7 +658,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         return sheet
     }
 
-    internal func addNewCard() {
+    internal func addNewCard(initType: String? = "standard") {
         let siteId = viewModel.siteId
         let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
         let builder: MLCardFormBuilder
@@ -671,7 +671,13 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
         builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
         builder.setAnimated(true)
-        let cardFormVC = MLCardForm(builder: builder).setupController()
+        var cardFormVC: UIViewController
+        switch initType {
+        case "webpay_tbk":
+            cardFormVC = MLCardForm(builder: builder).setupController()
+        default:
+            cardFormVC = MLCardForm(builder: builder).setupController()
+        }
         navigationController?.pushViewController(cardFormVC, animated: true)
     }
 
@@ -695,12 +701,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 extension PXOneTapViewController: PXOneTapSheetViewControllerProtocol {
     func didTapOneTapSheetOption(sheetOption: PXOneTapSheetOptionsDto) {
         andesBottomSheet?.dismiss(animated: true, completion: { [weak self] in
-            switch sheetOption.cardFormInitType {
-            case "webpay_tbk":
-                self?.addNewCard()
-            default:
-                self?.addNewCard()
-            }
+            self?.addNewCard(initType: sheetOption.cardFormInitType)
         })
     }
 }

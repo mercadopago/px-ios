@@ -14,6 +14,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         case screenOneTap
         case screenSecurityCode
         case serviceCreateESCCardToken
+        case serviceCreateWebPayCardToken
         case screenKyC
         case payment
     }
@@ -90,6 +91,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
         if needCreateESCToken() {
             return .serviceCreateESCCardToken
+        }
+        if needCreateWebPayToken() {
+            return .serviceCreateWebPayCardToken
         }
         if needKyC() {
             return .screenKyC
@@ -215,8 +219,12 @@ internal extension OneTapFlowModel {
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
         let paymentOptionSelectedId = paymentOptionSelected.getId()
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
+        // Debit cards in Chile created by webpay return 0 security code length and shouldn't ask for CVV
 
-        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded {
+        if isCustomerCard &&
+            !paymentData.hasToken() &&
+            hasInstallmentsIfNeeded &&
+            hasSecurityCode() {
             if let customOptionSearchItem = search.getPayerPaymentMethod(id: paymentOptionSelectedId) {
                 if hasSavedESC() {
                     if customOptionSearchItem.escStatus == PXESCStatus.REJECTED.rawValue {
@@ -246,6 +254,17 @@ internal extension OneTapFlowModel {
         return savedCardWithESC
     }
 
+    func needCreateWebPayToken() -> Bool {
+        guard let paymentMethod = self.paymentData.getPaymentMethod(),
+              !hasSecurityCode() else {
+            return false
+        }
+
+        let needToCreateWebPayToken = !paymentData.hasToken() && paymentMethod.isCard
+
+        return needToCreateWebPayToken
+    }
+
     func needKyC() -> Bool {
         return !(search.payerCompliance?.offlineMethods.isCompliant ?? true) && paymentOptionSelected?.additionalInfoNeeded?() ?? false
     }
@@ -271,7 +290,8 @@ internal extension OneTapFlowModel {
         if let paymentFlow = paymentFlow, paymentMethod.isAccountMoney || hasSavedESC() {
             return paymentFlow.hasPaymentPluginScreen()
         }
-        return true
+        // Debit cards in Chile created by webpay should tokenize and pay whithout loading screen
+        return hasSecurityCode()
     }
 
     func getTimeoutForOneTapReviewController() -> TimeInterval {
@@ -286,5 +306,18 @@ internal extension OneTapFlowModel {
 
     func getKyCDeepLink() -> String? {
         return search.payerCompliance?.offlineMethods.turnComplianceDeepLink
+    }
+
+    func hasSecurityCode() -> Bool {
+        guard let paymentOptionSelected = paymentOptionSelected,
+              let cardInformation = paymentOptionSelected as? PXCardInformation,
+              let paymentMethod = paymentData.paymentMethod,
+              cardInformation.getPaymentMethodId() == paymentMethod.getId() else {
+            return false
+        }
+        cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
+        // Debit cards in Chile created by webpay return 0 security code length
+        var hasSecurityCode = cardInformation.getCardSecurityCode()?.length ?? 1 > 0
+        return hasSecurityCode
     }
 }

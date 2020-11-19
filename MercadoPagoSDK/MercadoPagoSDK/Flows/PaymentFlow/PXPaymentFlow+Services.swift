@@ -42,9 +42,7 @@ internal extension PXPaymentFlow {
 
         model.mercadoPagoServices.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_PAYMENTS_URI, paymentDataJSON: paymentBody, query: nil, headers: headers, callback: { [weak self] (payment) in
             self?.handlePayment(payment: payment)
-
         }, failure: { [weak self] (error) in
-
             guard let self = self else { return }
             self.trackPaymentsApiError()
             let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)

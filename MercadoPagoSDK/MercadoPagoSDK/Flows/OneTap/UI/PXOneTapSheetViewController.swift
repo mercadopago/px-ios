@@ -127,12 +127,12 @@ internal class PXOneTapSheetViewController: UIViewController {
         return view
     }
 
-    @objc fileprivate func handleTap(sender: PXOneTapSheetTapGesture) {
+    @objc private func handleTap(sender: PXOneTapSheetTapGesture) {
         delegate?.didTapOneTapSheetOption(sheetOption: sender.sheetOption)
     }
 }
 
-fileprivate class PXOneTapSheetTapGesture: UITapGestureRecognizer {
+private class PXOneTapSheetTapGesture: UITapGestureRecognizer {
     let sheetOption: PXOneTapSheetOptionsDto
 
     init(target: Any?, action: Selector?, sheetOption: PXOneTapSheetOptionsDto) {
