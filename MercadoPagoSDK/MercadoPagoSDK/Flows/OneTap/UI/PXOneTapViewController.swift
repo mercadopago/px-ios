@@ -629,7 +629,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapDisabledModalPath(), treatAsViewController: false)
     }
 
-    func addNewCardDidTap() {
+    internal func addNewCardDidTap() {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
@@ -651,7 +651,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         }
     }
 
-    internal func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
+    private func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
         if let andesBottomSheet = andesBottomSheet {
             return andesBottomSheet
         }
@@ -664,7 +664,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         return sheet
     }
 
-    internal func addNewCard(initType: String? = "standard") {
+    private func addNewCard(initType: String? = "standard") {
         let siteId = viewModel.siteId
         let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
         let builder: MLCardFormBuilder
