@@ -633,15 +633,20 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
-            if let newCard = viewModel.expressData?.first(where: { $0.paymentMethodId == "new_card" })?.newCard,
-               newCard.sheetOptions != nil {
-                // Present sheet to pick standard card form or webpay
-                let sheet = buildBottomSheet(newCard: newCard)
-                present(sheet, animated: true, completion: nil)
-            } else {
-                // Add new card using new card form
-                addNewCard()
+            if let newCard = viewModel.expressData?.first(where: { $0.paymentMethodId == "new_card" })?.newCard {
+                if newCard.sheetOptions != nil {
+                    // Present sheet to pick standard card form or webpay
+                    let sheet = buildBottomSheet(newCard: newCard)
+                    present(sheet, animated: true, completion: nil)
+                } else {
+                    // Add new card using card form based on init type
+                    // There might be cases when there's a different option besides standard type
+                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
+                    addNewCard(initType: newCard.cardFormInitType)
+                }
             }
+            // Add new card using standard card form
+            addNewCard()
         }
     }
 
