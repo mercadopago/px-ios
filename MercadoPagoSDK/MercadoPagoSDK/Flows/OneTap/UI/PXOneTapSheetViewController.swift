@@ -14,7 +14,7 @@ internal protocol PXOneTapSheetViewControllerProtocol: class {
 internal class PXOneTapSheetViewController: UIViewController {
     weak var delegate: PXOneTapSheetViewControllerProtocol?
     private let rowHeight: CGFloat = 80.0
-    private let iconSize: CGFloat = 48.0
+    private let iconSize: CGFloat = 24.0
     private let newCard: PXOneTapNewCardDto
 
     init(newCard: PXOneTapNewCardDto) {
@@ -107,12 +107,14 @@ internal class PXOneTapSheetViewController: UIViewController {
         ])
 
         let label = UILabel()
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         let attributedText = NSMutableAttributedString()
-        if let attributedTitle = sheetOption.title.getAttributedString(fontSize: PXLayout.S_FONT) {
+        if let attributedTitle = sheetOption.title.getAttributedString(fontSize: PXLayout.XS_FONT) {
             attributedText.append(attributedTitle)
         }
-        if let attributedSubtitle = sheetOption.subtitle?.getAttributedString(fontSize: PXLayout.XS_FONT) {
+        if let attributedSubtitle = sheetOption.subtitle?.getAttributedString(fontSize: PXLayout.XXS_FONT) {
+            attributedText.append(NSAttributedString(string: "\n"))
             attributedText.append(attributedSubtitle)
         }
         label.attributedText = attributedText

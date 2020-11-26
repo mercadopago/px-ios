@@ -16,7 +16,7 @@ open class PXOneTapSheetOptionsDto: NSObject, Codable {
     enum CodingKeys: String, CodingKey {
         case cardFormInitType = "card_form_init_type"
         case title
-        case subtitle = "description"
+        case subtitle
         case imageUrl = "image_url"
     }
 }
