@@ -634,7 +634,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
             // TODO: Uncomment below code after CardForm with webpay support release
-//            if let newCard = viewModel.expressData?.first(where: { $0.paymentMethodId == "new_card" })?.newCard {
+//            if let newCard = viewModel.expressData?.compactMap({ $0.newCard }).first {
 //                if newCard.sheetOptions != nil {
 //                    // Present sheet to pick standard card form or webpay
 //                    let sheet = buildBottomSheet(newCard: newCard)
