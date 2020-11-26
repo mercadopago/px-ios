@@ -1,4 +1,10 @@
-# v4.36.7 
+# v4.36.8
+🚀Private Release - 4.36.8 🚀
+MercadoPagoSDKV4 - Private Version
+- Support WebPay cards payments
+- Fix crash adding a new card
+
+# v4.36.7
 🚀Private Release - 4.36.7 🚀
 MercadoPagoSDKV4 - Private Version
 - Autoreturn improvements
