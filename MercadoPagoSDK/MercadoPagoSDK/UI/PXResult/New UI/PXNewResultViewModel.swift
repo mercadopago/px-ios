@@ -84,6 +84,7 @@ protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
     //FOOTER
     func getFooterMainAction() -> PXAction?
     func getFooterSecondaryAction() -> PXAction?
+    func getPrimaryButton() -> PXButton?
 
     //CUSTOM VIEWS
     ///IMPORTANT
@@ -101,4 +102,5 @@ protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
     //BACK URL & AUTORETURN
     func shouldAutoReturn() -> Bool
     func getBackUrl() -> URL?
+    func getAutoReturn() -> PXAutoReturn?
 }

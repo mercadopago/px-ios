@@ -37,4 +37,5 @@ internal struct ApiParam {
     static let CAMPAIGN_ID = "campaign_id"
     static let FLOW_NAME = "flow_name"
     static let IFPE = "ifpe"
+    static let PREF_ID = "pref_id"
 }

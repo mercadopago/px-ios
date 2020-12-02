@@ -160,6 +160,7 @@ class CongratsSelectorViewController: UITableViewController, PXTrackerListener {
             congratsWithAccountMoney, congratsWithDiscount
         ]
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fillCongratsData()

@@ -3,7 +3,7 @@ source 'https://cdn.cocoapods.org/'
 # Uncomment the next line to define a global platform for your project
 platform :ios, '10.0'
 
-# This plugin removes input and output files from 'Copy Pods Resources' build phases 
+# This plugin removes input and output files from 'Copy Pods Resources' build phases
 # because this issue https://github.com/CocoaPods/CocoaPods/issues/7042
 plugin 'cocoapods-clean_build_phases_scripts'
 
@@ -13,8 +13,8 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
 
   # Pods for MercadoPagoSDKExamplesObjectiveC
   # UI Meli Lib
-    pod 'MLUI', '~> 5.0'
     pod 'MercadoPagoSDK', :path => '../'
+    pod 'AndesUI/AndesBottomSheet', '~> 3.0'
 
   #target 'MercadoPagoSDKExamplesObjectiveCTests' do
    # inherit! :search_paths

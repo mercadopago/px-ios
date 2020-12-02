@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MLUI
 
 internal class PXAnimatedButton: UIButton {
     weak var animationDelegate: PXAnimatedButtonDelegate?
@@ -17,6 +18,7 @@ internal class PXAnimatedButton: UIButton {
     let normalText: String
     let loadingText: String
     let retryText: String
+    var snackbar: MLSnackbar?
 
     private var buttonColor: UIColor?
 
@@ -135,14 +137,24 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         progressView?.doReset()
     }
 
-    func showErrorToast() {
-        self.status = .normal
-        self.resetButton()
-        self.isUserInteractionEnabled = false
-        PXComponentFactory.SnackBar.showShortDurationMessage(message: "review_and_confirm_toast_error".localized) {
-            self.animationDelegate?.shakeDidFinish()
-            self.isUserInteractionEnabled = true
+    func showErrorToast(title: String, actionTitle: String?, type: MLSnackbarType, duration: MLSnackbarDuration, action: (() -> Void)?) {
+        status = .normal
+        resetButton()
+        isUserInteractionEnabled = false
+        if action == nil {
+            PXComponentFactory.SnackBar.showShortDurationMessage(message: title, type: type) {
+                self.completeSnackbarDismiss()
+            }
+        } else {
+            snackbar = PXComponentFactory.SnackBar.showSnackbar(title: title, actionTitle: actionTitle, type: type, duration: duration, action: action) {
+                self.completeSnackbarDismiss()
+            }
         }
+    }
+
+    func completeSnackbarDismiss() {
+        isUserInteractionEnabled = true
+        animationDelegate?.shakeDidFinish()
     }
 
     // MARK: Uncomment for Shake button
@@ -199,6 +211,10 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         UIView.animate(withDuration: duration) { [weak self] in
             self?.alpha = 0
         }
+    }
+
+    func dismissSnackbar() {
+        snackbar?.dismiss()
     }
 }
 

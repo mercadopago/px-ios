@@ -104,7 +104,7 @@
 "payer_info_placeholder_cpf" = "NAME AND SURNAME";
 "payer_info_placeholder_cnpj" = "BUSINESS NAME";
 "review_change_payment_method_action" = "Pay using a different method";
-"review_change_payer_action" = "Modify";
+"review_change_payer_action" = "Edit";
 "bank_deal_details_title" = "Conditions";
 "bank_deal_details_date_format" = "To the {0}";
 "bank_deals_screen_title" = "Promotions";
@@ -160,3 +160,10 @@
 "atrás" = "back";
 "botón" = "button";
 "cerrar" = "close";
+"px_security_code_screen_title" = "Enter the security code";
+"px_dynamic_security_code" = "Dynamic Security Code";
+"px_connectivity_neutral_error" = "There was a connection error. Please, try to pay again.";
+"px_connectivity_error" = "No connection. Please, try to pay later.";
+"px_snackbar_error_action" = "Go back";
+"px_security_code_subtitle_front" = "The {0} digits are on the front of your card.";
+"px_security_code_subtitle_back" = "The {0} digits are on the back of your card.";

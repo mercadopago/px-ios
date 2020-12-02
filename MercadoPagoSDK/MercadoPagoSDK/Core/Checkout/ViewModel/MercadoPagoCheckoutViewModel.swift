@@ -214,6 +214,27 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethods: search?.availablePaymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServices: mercadoPagoServices, advancedConfiguration: advancedConfig, disabledOption: disabledOption)
     }
 
+    public func getPXSecurityCodeViewModel(isCallForAuth: Bool = false) -> PXSecurityCodeViewModel {
+        let cardInformation: PXCardInformationForm
+        if let paymentOptionSelected = paymentOptionSelected as? PXCardInformationForm {
+            cardInformation = paymentOptionSelected
+        } else if isCallForAuth, let token = paymentData.token {
+            cardInformation = token
+        } else {
+            fatalError("Cannot convert payment option selected to CardInformation")
+        }
+        guard let paymentMethod = paymentData.paymentMethod else {
+            fatalError("Don't have paymentData to open Security View Controller")
+        }
+
+        let reason = PXSecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth)
+        let cardSliderViewModel = onetapFlow?.model.pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())
+        let cardUI = cardSliderViewModel?.cardUI ?? TemplateCard()
+        let cardData = cardSliderViewModel?.cardData ?? PXCardDataFactory()
+
+        return PXSecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason, cardUI: cardUI, cardData: cardData, internetProtocol: mercadoPagoServices)
+    }
+
     public func getSecurityCodeViewModel(isCallForAuth: Bool = false) -> SecurityCodeViewModel {
         let cardInformation: PXCardInformationForm
         if let paymentOptionSelected = paymentOptionSelected as? PXCardInformationForm {
@@ -715,6 +736,10 @@ extension MercadoPagoCheckoutViewModel {
         self.resetGroupSelection()
         self.applyDefaultDiscountOrClear()
         self.rootVC = true
+    }
+
+    func isPXSecurityCodeViewControllerLastVC() -> Bool {
+        return pxNavigationHandler.navigationController.viewControllers.last is PXSecurityCodeViewController
     }
 
     func prepareForInvalidPaymentWithESC(reason: PXESCDeleteReason) {

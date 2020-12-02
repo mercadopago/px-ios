@@ -28,7 +28,12 @@ extension OneTapFlow: TokenizationServiceResultHandler {
     }
 
     func finishWithESCError() {
-        executeNextStep()
+        if let securityCodeVC = pxNavigationHandler.navigationController.viewControllers.last as? PXSecurityCodeViewController {
+            // there is no need to clean the token as it could not be created
+            securityCodeVC.resetButton()
+        } else {
+            executeNextStep()
+        }
     }
 
     func finishWithError(error: MPSDKError, securityCode: String? = nil) {
@@ -42,6 +47,7 @@ extension OneTapFlow: TokenizationServiceResultHandler {
     }
 
     func getTokenizationService() -> TokenizationService {
-        return TokenizationService(paymentOptionSelected: model.paymentOptionSelected, cardToken: nil, pxNavigationHandler: pxNavigationHandler, needToShowLoading: model.needToShowLoading(), mercadoPagoServices: model.mercadoPagoServices, gatewayFlowResultHandler: self)
+        let needToShowLoading = isPXSecurityCodeViewControllerLastVC() ? false : model.needToShowLoading()
+        return TokenizationService(paymentOptionSelected: model.paymentOptionSelected, cardToken: nil, pxNavigationHandler: pxNavigationHandler, needToShowLoading: needToShowLoading, mercadoPagoServices: model.mercadoPagoServices, gatewayFlowResultHandler: self)
     }
 }

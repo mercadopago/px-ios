@@ -160,3 +160,10 @@
 "atrás" = "atrás";
 "botón" = "botón";
 "cerrar" = "cerrar";
+"px_security_code_screen_title" = "Ingresá el código de seguridad";
+"px_dynamic_security_code" = "Código de seguridad dinámico";
+"px_connectivity_neutral_error" = "Hubo un error de conexión. Por favor, intenta pagar nuevamente.";
+"px_connectivity_error" = "No hay conexión. Intenta pagar más tarde.";
+"px_snackbar_error_action" = "Volver";
+"px_security_code_subtitle_front" = "Los {0} dígitos están al frente de tu tarjeta.";
+"px_security_code_subtitle_back" = "Los {0} dígitos están al dorso de tu tarjeta.";

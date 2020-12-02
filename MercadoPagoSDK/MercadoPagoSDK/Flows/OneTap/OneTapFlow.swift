@@ -52,6 +52,8 @@ final class OneTapFlow: NSObject, PXFlow {
             self.showSecurityCodeScreen()
         case .serviceCreateESCCardToken:
             self.getTokenizationService().createCardToken()
+        case .serviceCreateWebPayCardToken:
+            self.getTokenizationService().createCardToken(securityCode: "")
         case .screenKyC:
             self.showKyCScreen()
         case .payment:
@@ -101,6 +103,10 @@ final class OneTapFlow: NSObject, PXFlow {
     func needSecurityCodeValidation() -> Bool {
         model.readyToPay = true
         return model.nextStep() == .screenSecurityCode
+    }
+
+    func isPXSecurityCodeViewControllerLastVC() -> Bool {
+        return pxNavigationHandler.navigationController.viewControllers.last is PXSecurityCodeViewController
     }
 }
 

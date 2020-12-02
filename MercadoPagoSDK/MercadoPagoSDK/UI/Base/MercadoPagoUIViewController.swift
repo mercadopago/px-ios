@@ -105,7 +105,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
             backButton.image = ResourceManager.shared.getImage("back")
             backButton.style = .plain
             backButton.target = self
-            backButton.tintColor = ThemeManager.shared.navigationBar().getTintColor() //navBarTextColor
+            backButton.tintColor = navBarTextColor
             backButton.action = #selector(MercadoPagoUIViewController.executeBack)
             backButton.accessibilityLabel = "atrás".localized
             self.navigationItem.leftBarButtonItem = backButton
@@ -125,13 +125,13 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
                     callbackBackAction()
                 }
 
-                trackAbortEvent()
+                trackAbort()
                 PXNotificationManager.Post.attemptToClose()
                 return
             }
         }
         if treatBackAsAbort {
-            trackAbortEvent()
+            trackAbort()
         } else {
             trackBackEvent()
         }
@@ -207,12 +207,24 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         }
     }
 
+    private func trackAbort() {
+        if let securityCodeVC = self as? PXSecurityCodeViewController {
+            trackAbortEvent(properties: securityCodeVC.viewModel.getScreenProperties())
+        } else {
+            trackAbortEvent()
+        }
+    }
+
+    func setNavBarTextColor(color: UIColor) {
+        navBarTextColor = color
+    }
+
     func getNavigationBarTitle() -> String {
         return ""
     }
 
     func setNavBarBackgroundColor(color: UIColor) {
-        self.navBarBackgroundColor = color
+        navBarBackgroundColor = color
     }
 
     deinit {

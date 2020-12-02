@@ -65,6 +65,9 @@ internal extension PXResultViewModel {
     }
 
     private func getLinkLabel() -> String? {
+        if let primaryButton = pointsAndDiscounts?.primaryButton {
+            return primaryButton.label
+        }
         if paymentResult.hasSecondaryButton() || (paymentResult.isHighRisk() && remedy?.highRisk != nil) {
             return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
         } else if paymentResult.isAccepted() {
@@ -102,14 +105,34 @@ internal extension PXResultViewModel {
 
     private func getLinkAction() -> Action {
         return { [weak self] in
-            if let url = self?.getBackUrl() {
-                PXNewResultUtil.openURL(url: url, success: { [weak self] (_) in
-                    self?.pressLink()
-                })
+            guard let self = self else { return }
+
+            if self.pointsAndDiscounts?.primaryButton != nil {
+                if let url = self.getPrimaryButtonBackUrl() {
+                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                        self.callback?(PaymentResult.CongratsState.EXIT, nil)
+                    })
+                }
             } else {
-                self?.pressLink()
+                if let url = self.getBackUrl() {
+                    PXNewResultUtil.openURL(url: url, success: { [weak self] (_) in
+                        self?.pressLink()
+                    })
+                } else {
+                    self.pressLink()
+                }
             }
         }
+    }
+
+    private func getPrimaryButtonBackUrl() -> URL? {
+        if let action = pointsAndDiscounts?.primaryButton?.action, action == "continue",
+            let backURL = pointsAndDiscounts?.backUrl, let url = URL(string: backURL) {
+            return url
+        } else if let target = pointsAndDiscounts?.primaryButton?.target, let url = URL(string: target) {
+            return url
+        }
+        return nil
     }
 
     private func pressLink() {

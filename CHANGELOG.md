@@ -1,4 +1,32 @@
-# v4.36.3 
+# v4.36.8
+🚀Private Release - 4.36.8 🚀
+MercadoPagoSDKV4 - Private Version
+- Support WebPay cards payments
+- Fix crash adding a new card
+
+# v4.36.7
+🚀Private Release - 4.36.7 🚀
+MercadoPagoSDKV4 - Private Version
+- Autoreturn improvements
+- Tracking fix (total_amount)
+
+# v4.36.6 
+🚀Private Release - 4.36.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Make lib static
+- Add additional discount params
+
+# v4.36.5
+🚀Private Release - 4.36.5 🚀
+MercadoPagoSDKV4 - Private Version
+- New SecurityCode screen
+
+# v4.36.4
+🚀Private Release - 4.36.4 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix a bug in remedies not showing credits, and fixed amount shown
+
+# v4.36.3
 🚀Private Release - 4.36.3 🚀
 MercadoPagoSDKV4 - Private Version
 - Add merchantOrderId to payment body

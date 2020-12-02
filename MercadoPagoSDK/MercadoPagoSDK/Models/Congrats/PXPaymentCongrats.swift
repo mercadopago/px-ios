@@ -80,6 +80,10 @@ public final class PXPaymentCongrats: NSObject {
     // URLs
     private(set) var shouldAutoReturn: Bool = false
     private(set) var redirectURL: URL?
+    private(set) var autoReturn: PXAutoReturn?
+
+    // Buttons
+    private(set) var primaryButton: PXButton?
 
     // MARK: Initializer
 
@@ -270,6 +274,18 @@ extension PXPaymentCongrats {
     @discardableResult
     public func withDiscounts(_ discounts: PXDiscounts?) -> PXPaymentCongrats {
         self.discounts = discounts
+        return self
+    }
+
+    @discardableResult
+    public func withAutoReturn(_ autoReturn: PXAutoReturn?) -> PXPaymentCongrats {
+        self.autoReturn = autoReturn
+        return self
+    }
+
+    @discardableResult
+    public func withPrimaryButton(_ primaryButton: PXButton?) -> PXPaymentCongrats {
+        self.primaryButton = primaryButton
         return self
     }
 

@@ -47,13 +47,18 @@ extension OneTapFlow {
     func updateOneTapViewModel(cardId: String) {
         if let oneTapViewController = pxNavigationHandler.navigationController.viewControllers.first(where: { $0 is PXOneTapViewController }) as? PXOneTapViewController {
             let viewModel = model.oneTapViewModel()
+            model.pxOneTapViewModel = viewModel
             oneTapViewController.update(viewModel: viewModel, cardId: cardId)
         }
     }
 
     func showSecurityCodeScreen() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: model.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (_, securityCode) in
-            self?.getTokenizationService().createCardToken(securityCode: securityCode)
+        guard !isPXSecurityCodeViewControllerLastVC() else { return }
+        let securityCodeVc = PXSecurityCodeViewController(viewModel: model.savedCardSecurityCodeViewModel(),
+            finishButtonAnimationCallback: { [weak self] in
+                self?.executeNextStep()
+            }, collectSecurityCodeCallback: { [weak self] _, securityCode in
+                self?.getTokenizationService().createCardToken(securityCode: securityCode)
         })
         pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }

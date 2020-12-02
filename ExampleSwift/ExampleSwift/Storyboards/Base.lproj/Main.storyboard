@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nVh-4Y-Mjr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nVh-4Y-Mjr">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ik-LC-Wqd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ik-LC-Wqd">
                                 <rect key="frame" x="16" y="71" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-500"/>
                                 <constraints>
@@ -30,7 +31,7 @@
                                     <action selector="initDefault:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sh2-Tz-woH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yu-7c-2ky">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yu-7c-2ky">
                                 <rect key="frame" x="16" y="123" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-400"/>
                                 <constraints>
@@ -43,7 +44,7 @@
                                     <segue destination="zrt-Zz-h8w" kind="show" id="1D1-CH-h5u"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0VE-v2-udc">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0VE-v2-udc">
                                 <rect key="frame" x="16" y="175" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-500"/>
                                 <constraints>
@@ -57,6 +58,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0Yu-7c-2ky" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="46G-Ha-gHW"/>
@@ -71,7 +73,6 @@
                             <constraint firstItem="0VE-v2-udc" firstAttribute="leading" secondItem="0Yu-7c-2ky" secondAttribute="leading" id="ypB-YP-QQg"/>
                             <constraint firstItem="0Yu-7c-2ky" firstAttribute="top" secondItem="1Ik-LC-Wqd" secondAttribute="bottom" constant="8" id="zJp-vq-WDM"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="MercadoPagoSDK" id="jzK-YH-7gC">
                         <barButtonItem key="backBarButtonItem" title="Volver" id="XE9-3K-jSP"/>
@@ -88,7 +89,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gBG-iZ-MWa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="congratsRow" rowHeight="46" id="oRc-db-ieJ">
                                 <rect key="frame" x="0.0" y="28" width="375" height="46"/>
@@ -184,7 +185,7 @@
                                     <constraint firstAttribute="height" constant="31" id="6kE-rI-o7e"/>
                                 </constraints>
                             </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSv-5z-ciZ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSv-5z-ciZ">
                                 <rect key="frame" x="16" y="268" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-500"/>
                                 <accessibility key="accessibilityConfiguration" label="startButton"/>
@@ -198,7 +199,7 @@
                                     <action selector="iniciarCheckout:" destination="zrt-Zz-h8w" eventType="touchUpInside" id="Op0-0D-f8z"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0A-l3-JH8">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0A-l3-JH8">
                                 <rect key="frame" x="16" y="320" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-orange-500"/>
                                 <constraints>
@@ -212,7 +213,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="7VH-kj-eD4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="7VH-kj-eD4" firstAttribute="trailing" secondItem="mSv-5z-ciZ" secondAttribute="trailing" constant="16" id="22N-7L-Py8"/>
                             <constraint firstItem="xWW-3B-9f3" firstAttribute="top" secondItem="LKu-HW-2LE" secondAttribute="bottom" constant="8" id="2VE-UD-fLs"/>
@@ -239,7 +241,6 @@
                             <constraint firstItem="dPD-W0-adk" firstAttribute="leading" secondItem="7VH-kj-eD4" secondAttribute="leading" constant="16" id="tGL-zx-EHa"/>
                             <constraint firstItem="7VH-kj-eD4" firstAttribute="trailing" secondItem="Exj-zd-9jV" secondAttribute="trailing" constant="16" id="zkW-xF-CJy"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="7VH-kj-eD4"/>
                     </view>
                     <navigationItem key="navigationItem" title="Ajustes" id="FiK-Wt-VxR"/>
                     <connections>
@@ -296,5 +297,8 @@
         <namedColor name="andes-text-color-white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

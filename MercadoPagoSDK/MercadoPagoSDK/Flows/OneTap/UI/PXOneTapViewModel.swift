@@ -283,6 +283,10 @@ extension PXOneTapViewModel {
         return cardSliderViewModel
     }
 
+    func getCardSliderViewModel(cardId: String?) -> PXCardSliderViewModel? {
+        return cardSliderViewModel.first(where: { $0.cardId == cardId })
+    }
+
     func updateCardSliderModel(at index: Int, bottomMessage: PXCardBottomMessage?) {
         if cardSliderViewModel.indices.contains(index) {
             cardSliderViewModel[index].bottomMessage = bottomMessage

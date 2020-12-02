@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.36.3"
+  s.version          = "4.36.8"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.0'
   s.requires_arc = true
   s.default_subspec = 'Default'
-  #s.static_framework = true
+  s.static_framework = true
 
   s.subspec 'Default' do |default|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
     s.dependency 'MLCardDrawer', '~> 1.4'
     s.dependency 'MLBusinessComponents', '~> 1.0'
     s.dependency 'MLCardForm', '~> 0.7'
-    s.dependency 'AndesUI', '~> 3.0'
+    s.dependency 'AndesUI/AndesBottomSheet', '~> 3.0'
   end
 
 

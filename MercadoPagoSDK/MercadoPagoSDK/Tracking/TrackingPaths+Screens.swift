@@ -61,7 +61,7 @@ extension TrackingPaths {
 
         // Security Code Paths
         static func getSecurityCodePath(paymentTypeId: String) -> String {
-            return pxTrack + payments + selectMethod + "/" + paymentTypeId + "/cvv"
+            return pxTrack + "/security_code"
         }
     }
 }

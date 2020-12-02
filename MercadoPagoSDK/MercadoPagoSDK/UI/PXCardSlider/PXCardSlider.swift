@@ -15,12 +15,15 @@ typealias AccessibilityCardData = (paymentMethodId: String, paymentTypeId: Strin
 final class PXCardSlider: NSObject {
     private var pagerView = FSPagerView(frame: .zero)
     private var pageControl = ISPageControl(frame: .zero, numberOfPages: 0)
+    
     private var model: [PXCardSliderViewModel] = [] {
         didSet {
             self.pagerView.reloadData()
+            self.pagerView.layoutIfNeeded()
             self.pageControl.numberOfPages = self.model.count
         }
     }
+    
     private weak var delegate: PXCardSliderProtocol?
     private var selectedIndex: Int = 0
     private let cardSliderCornerRadius: CGFloat = 11
@@ -77,6 +80,10 @@ extension PXCardSlider: FSPagerViewDataSource {
             }
         }
         return FSPagerViewCell()
+    }
+
+    func getSelectedCell() -> PXCardSliderPagerCell? {
+        return pagerView.cellForItem(at: getSelectedIndex()) as? PXCardSliderPagerCell
     }
 
     func showBottomMessageIfNeeded(index: Int, targetIndex: Int) {
@@ -182,7 +189,11 @@ extension PXCardSlider {
     }
     
     func canScrollTo(index: Int) -> Bool {
-        return (0 ... (pagerView.dataSource?.numberOfItems(in: pagerView) ?? 1 - 1)).contains(index)
+        guard let dataSource = pagerView.dataSource else {
+            return false
+        }
+        
+        return (0 ..< dataSource.numberOfItems(in: pagerView)).contains(index)
     }
 
     func goToItemAt(index: Int, animated: Bool) throws {

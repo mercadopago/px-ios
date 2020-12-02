@@ -91,7 +91,7 @@ extension PXOneTapViewModel {
         properties["available_methods"] = availablePaymentMethods
         properties["available_methods_quantity"] = availablePMQuantity
         properties["disabled_methods_quantity"] = disabledPMQuantity
-        properties["preference_amount"] = amountHelper.preferenceAmount
+        properties["total_amount"] = amountHelper.preferenceAmount
         properties["discount"] = amountHelper.getDiscountForTracking()
 
         var itemsDic: [Any] = []

@@ -11,6 +11,7 @@ import Foundation
 extension OneTapFlow {
     func startPaymentFlow() {
         guard let paymentFlow = model.paymentFlow else {
+            model.paymentData.cleanToken()
             return
         }
         model.invalidESCReason = nil
@@ -39,23 +40,33 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(error: MPSDKError) {
         let lastViewController = pxNavigationHandler.navigationController.viewControllers.last
         if let oneTapViewController = lastViewController as? PXOneTapViewController {
-            oneTapViewController.resetButton(error: error)
-        } else if lastViewController is SecurityCodeViewController,
-            let oneTapViewController = pxNavigationHandler.navigationController.viewControllers.filter({$0 is PXOneTapViewController}).first as? PXOneTapViewController {
-            pxNavigationHandler.navigationController.popToViewController(oneTapViewController, animated: true)
-            if pxNavigationHandler.isLoadingPresented() {
-                pxNavigationHandler.dismissLoading(animated: true, finishCallback: { [weak self] in
-                    self?.resetButtonAndCleanToken(oneTapViewController: oneTapViewController, error: error)
-                })
-                return
-            }
-            resetButtonAndCleanToken(oneTapViewController: oneTapViewController, error: error)
+            dismissLoading(finishCallback: { 
+                oneTapViewController.resetButton(error: error)
+            })
+        } else if let securityCodeVC = lastViewController as? PXSecurityCodeViewController {
+            dismissLoading(finishCallback: { [weak self] in
+                self?.resetButtonAndCleanToken(securityCodeVC: securityCodeVC, error: error)
+            })
+        }
+    }
+    
+    private func dismissLoading(finishCallback:(() -> Void)? = nil) {
+        if pxNavigationHandler.isLoadingPresented() {
+            pxNavigationHandler.dismissLoading(animated: true, finishCallback: {
+                if let callback = finishCallback {
+                    callback()
+                }
+            })
+            return
+        }
+        if let callback = finishCallback {
+            callback()
         }
     }
 
-    private func resetButtonAndCleanToken(oneTapViewController: PXOneTapViewController, error: MPSDKError) {
+    private func resetButtonAndCleanToken(securityCodeVC: PXSecurityCodeViewController, error: MPSDKError) {
         model.paymentData.cleanToken()
-        oneTapViewController.resetButton(error: error)
+        securityCodeVC.resetButton()
     }
 
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?, pointsAndDiscounts: PXPointsAndDiscounts?) {

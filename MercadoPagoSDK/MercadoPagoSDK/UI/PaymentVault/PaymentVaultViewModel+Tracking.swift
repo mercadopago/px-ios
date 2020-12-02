@@ -36,7 +36,7 @@ extension PaymentVaultViewModel {
     func getScreenProperties() -> [String: Any] {
         var properties: [String: Any] = ["discount": amountHelper.getDiscountForTracking()]
         let availablePaymentMethods = getAvailablePaymentMethodForTracking()
-        properties["preference_amount"] = amountHelper.preferenceAmount
+        properties["total_amount"] = amountHelper.preferenceAmount
         properties["available_methods"] = availablePaymentMethods
         properties["available_methods_quantity"] = availablePaymentMethods.count
         var itemsDic: [Any] = []

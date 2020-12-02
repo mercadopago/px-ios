@@ -13,4 +13,5 @@ target 'ExampleSwift' do
 
   # Pods for ExampleSwift
   pod 'MercadoPagoSDK', :path => '../'
+  pod 'AndesUI/AndesBottomSheet', '~> 3.0'
 end

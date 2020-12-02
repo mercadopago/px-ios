@@ -8,6 +8,7 @@
 import UIKit
 import MLBusinessComponents
 import AndesUI
+import MLUI
 
 class PXNewResultViewController: MercadoPagoUIViewController {
 
@@ -20,6 +21,10 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     private var finishButtonAnimation: (() -> Void)?
     private var touchpointView: MLBusinessTouchpointsView?
     private var autoReturnWorkItem: DispatchWorkItem?
+
+    // Autoreturn
+    let autoReturnlabel = UILabel()
+    var autoReturnCounter = 5
 
     init(viewModel: PXNewResultViewModelInterface, finishButtonAnimation: (() -> Void)? = nil) {
         self.viewModel = viewModel
@@ -50,7 +55,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
                 }
             }
             if let autoReturnWorkItem = autoReturnWorkItem {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: autoReturnWorkItem)
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(viewModel.getAutoReturn()?.seconds ?? 5), execute: autoReturnWorkItem)
             }
         }
     }
@@ -366,6 +371,11 @@ extension PXNewResultViewController {
             views.append(ResultViewData(view: view, verticalMargin: isActionCardViewLastView(views) ? PXLayout.M_MARGIN : 0))
         }
 
+        //AutoReturn view
+        if let autoReturnView = buildAutoReturnView() {
+            views.append(ResultViewData(view: autoReturnView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
+        }
+
         return views
     }
 
@@ -578,6 +588,48 @@ extension PXNewResultViewController {
         return button
     }
 
+    /// AUTORETURN VIEW
+    func buildAutoReturnView() -> UIView? {
+        guard let autoReturnData = viewModel.getAutoReturn() else { return nil }
+
+        let autoReturnView = UIView()
+        autoReturnView.translatesAutoresizingMaskIntoConstraints = false
+
+        let config = MLSpinnerConfig(size: .small, primaryColor: ThemeManager.shared.getAccentColor(), secondaryColor: ThemeManager.shared.getAccentColor())
+        let spinner = PXComponentFactory.Spinner.new(color1: .blue, color2: .blue)
+        spinner.setUpWith(config)
+        autoReturnView.addSubview(spinner)
+        NSLayoutConstraint.activate([
+            spinner.leadingAnchor.constraint(equalTo: autoReturnView.leadingAnchor),
+            spinner.topAnchor.constraint(equalTo: autoReturnView.topAnchor),
+            spinner.bottomAnchor.constraint(lessThanOrEqualTo: autoReturnView.bottomAnchor, constant: -PXLayout.XXXS_MARGIN)
+        ])
+        spinner.show()
+
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        autoReturnCounter = autoReturnData.seconds
+
+        autoReturnlabel.translatesAutoresizingMaskIntoConstraints = false
+        autoReturnlabel.text = autoReturnData.label.replacingOccurrences(of: "{0}", with: "00:0\(viewModel.getAutoReturn()?.seconds ?? 5)")
+        autoReturnlabel.textAlignment = .left
+        autoReturnlabel.numberOfLines = 0
+        autoReturnView.addSubview(autoReturnlabel)
+        NSLayoutConstraint.activate([
+            autoReturnlabel.leftAnchor.constraint(equalTo: spinner.rightAnchor, constant: PXLayout.S_MARGIN),
+            autoReturnlabel.trailingAnchor.constraint(equalTo: autoReturnView.trailingAnchor),
+            autoReturnlabel.topAnchor.constraint(equalTo: autoReturnView.topAnchor),
+            autoReturnlabel.bottomAnchor.constraint(lessThanOrEqualTo: autoReturnView.bottomAnchor, constant: -PXLayout.XXXS_MARGIN)
+        ])
+        return autoReturnView
+    }
+
+    @objc func timerAction() {
+        if autoReturnCounter > 0 {
+            autoReturnCounter -= 1
+            autoReturnlabel.text = (viewModel.getAutoReturn()?.label ?? "").replacingOccurrences(of: "{0}", with: "00:0\(autoReturnCounter)")
+        }
+    }
+
     ////TOP TEXT BOX
     func buildTopTextBoxView() -> UIView? {
         guard let topTextBox = viewModel.getTopTextBox() else {
@@ -623,6 +675,12 @@ extension PXNewResultViewController {
 
     //FOOTER
     func buildFooterView() -> UIView {
+        if let primaryButton = viewModel.getPrimaryButton() {
+            let hierarchy: AndesButtonHierarchy = primaryButton.type.uppercased() == AndesButtonHierarchy.loud.toString() ? .loud : .quiet
+            let footerProps = PXFooterProps(buttonAction: viewModel.getFooterMainAction(), linkAction: viewModel.getFooterSecondaryAction(), useAndesButtonForLinkAction: true, andesButtonConfig: PXAndesButtonConfig(hierarchy: hierarchy, size: .large))
+            return PXFooterComponent(props: footerProps).render()
+        }
+
         let footerProps = PXFooterProps(buttonAction: viewModel.getFooterMainAction(), linkAction: viewModel.getFooterSecondaryAction(), useAndesButtonForLinkAction: viewModel.isPaymentResultRejectedWithRemedy())
         return PXFooterComponent(props: footerProps).render()
     }
@@ -660,7 +718,7 @@ extension PXNewResultViewController: PXAnimatedButtonDelegate {
 
     func progressButtonAnimationTimeOut() {
         if let button = getRemedyViewAnimatedButton() {
-            button.showErrorToast()
+            button.showErrorToast(title: "review_and_confirm_toast_error".localized, actionTitle: nil, type: MLSnackbarType.error(), duration: .short, action: nil)
         }
     }
 }

@@ -20,7 +20,7 @@
 "security_code" = "Código de segurança";
 "Ver promociones" = "Veja as promoções";
 "Número de tarjeta" = "Número do cartão";
-"NOMBRE APELLIDO" = "NOME SOBRENOME";
+"NOMBRE APELLIDO" = "NOME COMPLETO";
 "MM/AA" = "MM/AA";
 "Pagar" = "Pagar";
 "Fecha de expiración" = "Data de vencimento";
@@ -32,7 +32,7 @@
 "MAS INFO" = "MAIS INFO";
 "Ingresar otra tarjeta" = "Tentar com outro cartão";
 "No te preocupes" = "Não se preocupe, você ainda pode terminar o seu pagamento com:";
-"Nombre y apellido" = "Nome e sobrenome";
+"Nombre y apellido" = "Nome completo";
 "OK" = "OK";
 "DOCUMENTO DEL TITULAR DE LA TARJETA" = "DOCUMENTO DO TITULAR DO CARTÃO";
 "Número" = "Número";
@@ -54,7 +54,7 @@
 "Mora" = "Atraso";
 "Cargos" = "Tarifas";
 "Impuestos" = "Impostos";
-"Envío" = "Frete";
+"Envío" = "Envio";
 "¡Apúrate a pagar!" = "Não perca tempo!";
 "de" = "de";
 "Operación #{0}" = "Operação #{0}";
@@ -84,7 +84,7 @@
 "cc_rejected_call_for_authorize_button" = "Já autorizei o pagamento";
 "cc_rejected_duplicated_payment_button" = "Entendi";
 "cc_rejected_card_disabled_title" = "O seu cartão está bloqueado";
-"cc_rejected_insufficient_amount_title" = "O seu cartão recusou o pagamento";
+"cc_rejected_insufficient_amount_title" = "Seu cartão recusou o pagamento";
 "cc_rejected_duplicated_payment_title" = "Desculpe, o pagamento foi feito duas vezes, por isso recusamos a segunda vez";
 "cc_rejected_max_attempts_title" = "Recusamos o pagamento porque você atingiu o limite de tentativas";
 "cc_rejected_blacklist_title" = "Seu pagamento com cartão foi recusado";
@@ -101,7 +101,7 @@
 "payer_info_name" = "Nome";
 "payer_info_legal" = "Razão Social";
 "payer_info_surname" = "Sobrenome";
-"payer_info_placeholder_cpf" = "NOME E SOBRENOME";
+"payer_info_placeholder_cpf" = "NOME COMPLETO";
 "payer_info_placeholder_cnpj" = "RAZÃO SOCIAL";
 "review_change_payment_method_action" = "Alterar meio de pagamento";
 "review_change_payer_action" = "Alterar";
@@ -160,3 +160,10 @@
 "atrás" = "voltar";
 "botón" = "botão";
 "cerrar" = "fechar";
+"px_security_code_screen_title" = "Digite o código de segurança";
+"px_dynamic_security_code" = "Código de segurança dinâmico";
+"px_connectivity_neutral_error" = "Ocorreu um erro de conexão. Por favor, tente pagar novamente.";
+"px_connectivity_error" = "Não há conexão. Por favor, tente pagar mais tarde.";
+"px_snackbar_error_action" = "Voltar";
+"px_security_code_subtitle_front" = "Os {0} dígitos estão na parte da frente do seu cartão.";
+"px_security_code_subtitle_back" = "Os {0} dígitos estão no verso do seu cartão.";

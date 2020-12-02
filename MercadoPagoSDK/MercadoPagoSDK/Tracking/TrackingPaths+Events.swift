@@ -76,6 +76,22 @@ extension TrackingPaths.Events {
 }
 
 extension TrackingPaths.Events {
+    struct SecurityCode {
+        static func getConfirmPath() -> String {
+            return TrackingPaths.pxTrack + "/security_code/confirm"
+        }
+
+        static func getTokenFrictionPath() -> String {
+            return TrackingPaths.pxTrack + "/security_code/token_api_error"
+        }
+
+        static func getPaymentsFrictionPath() -> String {
+            return TrackingPaths.pxTrack + "/security_code/payments_api_error"
+        }
+    }
+}
+
+extension TrackingPaths.Events {
     internal struct ReviewConfirm {
 
         static func getChangePaymentMethodPath() -> String {

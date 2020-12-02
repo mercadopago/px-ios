@@ -21,9 +21,9 @@ extension MercadoPagoUIViewController {
         MPXTracker.sharedInstance.trackEvent(path: path, properties: properties)
     }
 
-    func trackAbortEvent() {
+    func trackAbortEvent(properties: [String: Any] = [:]) {
         if let screenPath = screenPath {
-            trackEvent(path: TrackingPaths.Events.getAbortPath(screen: screenPath))
+            trackEvent(path: TrackingPaths.Events.getAbortPath(screen: screenPath), properties: properties)
         }
     }
 

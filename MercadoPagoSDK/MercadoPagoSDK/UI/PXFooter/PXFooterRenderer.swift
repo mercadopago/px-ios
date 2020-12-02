@@ -95,7 +95,7 @@ final class PXFooterRenderer: NSObject {
 
         let linkButton: UIControl
         if props.useAndesButtonForLinkAction {
-            linkButton = AndesButton(text: linkAction.label, hierarchy: AndesButtonHierarchy.quiet, size: AndesButtonSize.large, icon: nil)
+            linkButton = AndesButton(text: linkAction.label, hierarchy: props.andesButtonConfig.hierarchy, size: props.andesButtonConfig.size, icon: nil)
         } else {
             let secondaryButton = PXSecondaryButton()
             secondaryButton.buttonTitle = linkAction.label

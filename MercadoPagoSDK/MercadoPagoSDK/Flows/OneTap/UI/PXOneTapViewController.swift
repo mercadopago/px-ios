@@ -9,7 +9,7 @@
 import UIKit
 import MLCardForm
 import MLUI
-import MLBusinessComponents
+import AndesUI
 
 final class PXOneTapViewController: PXComponentContainerViewController {
 
@@ -44,6 +44,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var cardSliderMarginConstraint: NSLayoutConstraint?
     private var navigationBarTapGesture: UITapGestureRecognizer?
     var installmentRow = PXOneTapInstallmentInfoView()
+    private var andesBottomSheet: AndesBottomSheetViewController?
 
     // MARK: Lifecycle/Publics
     init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
@@ -109,12 +110,16 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         slider.update(cardSliderViewModel)
         installmentInfoRow?.update(model: viewModel.getInstallmentInfoViewModel())
 
-        if let index = cardSliderViewModel.firstIndex(where: { $0.cardId == cardId }) {
-            selectCardInSliderAtIndex(index)
-        } else {
-            //Select first item
-            selectFirstCardInSlider()
+        DispatchQueue.main.async {
+            // Trick to wait for the slider to finish the update
+            if let index = cardSliderViewModel.firstIndex(where: { $0.cardId == cardId }) {
+                self.selectCardInSliderAtIndex(index)
+            } else {
+                //Select first item
+                self.selectFirstCardInSlider()
+            }
         }
+        
         if let navigationController = navigationController,
             let cardFormViewController = navigationController.viewControllers.first(where: { $0 is MLCardFormViewController }) as? MLCardFormViewController {
             cardFormViewController.dismissLoadingAndPop()
@@ -628,25 +633,66 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapDisabledModalPath(), treatAsViewController: false)
     }
 
-    func addNewCardDidTap() {
+    internal func addNewCardDidTap() {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
-            let siteId = viewModel.siteId
-            let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
-            let builder: MLCardFormBuilder
-            if let privateKey = viewModel.privateKey {
-                builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-            } else {
-                builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-            }
-            builder.setLanguage(Localizator.sharedInstance.getLanguage())
-            builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
-            builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
-            builder.setAnimated(true)
-            let cardFormVC = MLCardForm(builder: builder).setupController()
-            navigationController?.pushViewController(cardFormVC, animated: true)
+            // TODO: Uncomment below code after CardForm with webpay support release
+//            if let newCard = viewModel.expressData?.compactMap({ $0.newCard }).first {
+//                if newCard.sheetOptions != nil {
+//                    // Present sheet to pick standard card form or webpay
+//                    let sheet = buildBottomSheet(newCard: newCard)
+//                    present(sheet, animated: true, completion: nil)
+//                } else {
+//                    // Add new card using card form based on init type
+//                    // There might be cases when there's a different option besides standard type
+//                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
+//                    addNewCard(initType: newCard.cardFormInitType)
+//                }
+//            }
+            // Add new card using standard card form
+            addNewCard()
         }
+    }
+
+    private func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
+        if let andesBottomSheet = andesBottomSheet {
+            return andesBottomSheet
+        }
+        let viewController = PXOneTapSheetViewController(newCard: newCard)
+        viewController.delegate = self
+        let sheet = AndesBottomSheetViewController(rootViewController: viewController)
+        sheet.titleBar.text = newCard.label.message
+        sheet.titleBar.textAlignment = .center
+        andesBottomSheet = sheet
+        return sheet
+    }
+
+    private func addNewCard(initType: String? = "standard") {
+        let siteId = viewModel.siteId
+        let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
+        let builder: MLCardFormBuilder
+        
+        if let privateKey = viewModel.privateKey {
+            builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+        } else {
+            builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+        }
+        
+        builder.setLanguage(Localizator.sharedInstance.getLanguage())
+        builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
+        builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
+        builder.setAnimated(true)
+        var cardFormVC: UIViewController
+        switch initType {
+        case "webpay_tbk":
+            // TODO: Uncomment below code after CardForm with webpay support release
+            //cardFormVC = MLCardForm(builder: builder).setupWebPayController()
+            cardFormVC = MLCardForm(builder: builder).setupController()
+        default:
+            cardFormVC = MLCardForm(builder: builder).setupController()
+        }
+        navigationController?.pushViewController(cardFormVC, animated: true)
     }
 
     func addNewOfflineDidTap() {
@@ -663,6 +709,14 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func didEndScrollAnimation() {
         installmentInfoRow?.didEndScrollAnimation()
+    }
+}
+
+extension PXOneTapViewController: PXOneTapSheetViewControllerProtocol {
+    func didTapOneTapSheetOption(sheetOption: PXOneTapSheetOptionsDto) {
+        andesBottomSheet?.dismiss(animated: true, completion: { [weak self] in
+            self?.addNewCard(initType: sheetOption.cardFormInitType)
+        })
     }
 }
 
@@ -794,7 +848,7 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
     }
 
     func progressButtonAnimationTimeOut() {
-        loadingButtonComponent?.showErrorToast()
+        loadingButtonComponent?.showErrorToast(title: "review_and_confirm_toast_error".localized, actionTitle: nil, type: MLSnackbarType.error(), duration: .short, action: nil)
     }
 }
 
@@ -840,7 +894,7 @@ extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
 
 extension PXOneTapViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if fromVC is MLCardFormViewController || toVC is MLCardFormViewController {
+        if [fromVC, toVC].filter({$0 is MLCardFormViewController || $0 is PXSecurityCodeViewController}).count > 0 {
             return PXOneTapViewControllerTransition()
         }
         return nil

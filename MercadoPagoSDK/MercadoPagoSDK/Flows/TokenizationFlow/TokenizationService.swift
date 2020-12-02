@@ -74,8 +74,8 @@ internal class TokenizationService {
             self.resultHandler?.finishFlow(token: token, shouldResetESC: false)
 
         }, failure: { (error) in
+            self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-
             if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
                 self.resultHandler?.finishInvalidIdentificationNumber()
             } else {
@@ -102,8 +102,8 @@ internal class TokenizationService {
             }
             self.resultHandler?.finishFlow(token: token, shouldResetESC: true)
         }, failure: { (error) in
+            self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-
             self.resultHandler?.finishWithError(error: error, securityCode: securityCode)
         })
     }
@@ -126,6 +126,7 @@ internal class TokenizationService {
             }
             self.resultHandler?.finishFlow(token: token, shouldResetESC: shouldResetESC)
         }, failure: { (error) in
+            self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.trackInvalidESC(error: error, cardId: savedESCCardToken.cardId, esc_length: savedESCCardToken.esc?.count)
             PXConfiguratorManager.escProtocol.deleteESC(config: PXConfiguratorManager.escConfig, cardId: savedESCCardToken.cardId, reason: .UNEXPECTED_TOKENIZATION_ERROR, detail: error.toJSONString())
@@ -138,6 +139,7 @@ internal class TokenizationService {
         mercadoPagoServices.cloneToken(tokenId: token.id, securityCode: securityCode, callback: { (token) in
             self.resultHandler?.finishFlow(token: token, shouldResetESC: true)
         }, failure: { (error) in
+            self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.resultHandler?.finishWithError(error: error, securityCode: securityCode)
         })
@@ -145,5 +147,14 @@ internal class TokenizationService {
 
     func resetESCCap(cardId: String, onCompletion: @escaping () -> Void) {
         mercadoPagoServices.resetESCCap(cardId: cardId, onCompletion: onCompletion)
+    }
+}
+
+// MARK: Tracking
+private extension TokenizationService {
+    func trackTokenApiError() {
+        if let securityCodeVC = pxNavigationHandler.navigationController.viewControllers.last as? PXSecurityCodeViewController {
+            securityCodeVC.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: securityCodeVC.viewModel.getFrictionProperties(path: TrackingPaths.Events.SecurityCode.getTokenFrictionPath(), id: "token_api_error"))
+        }
     }
 }
