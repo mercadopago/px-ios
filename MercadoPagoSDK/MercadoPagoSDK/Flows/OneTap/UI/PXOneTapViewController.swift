@@ -120,10 +120,17 @@ final class PXOneTapViewController: PXComponentContainerViewController {
             }
         }
         
-        if let navigationController = navigationController,
-            let cardFormViewController = navigationController.viewControllers.first(where: { $0 is MLCardFormViewController }) as? MLCardFormViewController {
-            cardFormViewController.dismissLoadingAndPop()
+        if let viewControllers = navigationController?.viewControllers {
+            viewControllers.filter{ $0 is MLCardFormViewController || $0 is MLCardFormWebPayViewController }.forEach{
+                ($0 as? MLCardFormViewController)?.dismissLoadingAndPop()
+                ($0 as? MLCardFormWebPayViewController)?.dismissLoadingAndPop()
+            }
         }
+        
+//        if let navigationController = navigationController {
+//            if let cardFormViewController = navigationController.viewControllers.first(where: { $0 is MLCardFormViewController }) as? MLCardFormViewController { cardFormViewController.dismissLoadingAndPop() }
+//            if let cardFormViewController = navigationController.viewControllers.first(where: { $0 is MLCardFormWebPayViewController }) as? MLCardFormWebPayViewController { cardFormViewController.dismissLoadingAndPop() }
+//        }
     }
 
     func setupAutoDisplayOfflinePaymentMethods() {
@@ -672,13 +679,13 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         let siteId = viewModel.siteId
         let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
         let builder: MLCardFormBuilder
-        
+
         if let privateKey = viewModel.privateKey {
             builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
         } else {
             builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
         }
-        
+
         builder.setLanguage(Localizator.sharedInstance.getLanguage())
         builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
         builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
@@ -686,9 +693,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         var cardFormVC: UIViewController
         switch initType {
         case "webpay_tbk":
-            // TODO: Uncomment below code after CardForm with webpay support release
-            //cardFormVC = MLCardForm(builder: builder).setupWebPayController()
-            cardFormVC = MLCardForm(builder: builder).setupController()
+            cardFormVC = MLCardForm(builder: builder).setupWebPayController()
         default:
             cardFormVC = MLCardForm(builder: builder).setupController()
         }

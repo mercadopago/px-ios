@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.0'
   s.requires_arc = true
   s.default_subspec = 'Default'
-  #s.static_framework = true
+  s.static_framework = true
 
   s.subspec 'Default' do |default|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
