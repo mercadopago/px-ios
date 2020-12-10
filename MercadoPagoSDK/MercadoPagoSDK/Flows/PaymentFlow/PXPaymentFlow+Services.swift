@@ -101,9 +101,12 @@ internal extension PXPaymentFlow {
         let ifpe = false
 
         var headers: [String: String] = [:]
+        
         if let productId = model.productId {
             headers[MercadoPagoService.HeaderField.productId.rawValue] = productId
         }
+        
+        headers[MercadoPagoService.HeaderField.locationEnabled.rawValue] = LocationService.isLocationEnabled() ? "true" : "false"
 
         model.shouldSearchPointsAndDiscounts = false
         let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
