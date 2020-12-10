@@ -21,6 +21,7 @@ internal class MercadoPagoService: NSObject {
         case platform = "x-platform"
         case flowId = "x-flow-id"
         case security = "X-Security"
+        case locationEnabled = "X-Location-Enabled"
     }
 
     let MP_DEFAULT_TIME_OUT = 15.0
