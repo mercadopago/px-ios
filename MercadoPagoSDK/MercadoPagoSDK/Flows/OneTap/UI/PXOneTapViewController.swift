@@ -644,21 +644,22 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         if viewModel.shouldUseOldCardForm() {
             callbackPaymentData(viewModel.getClearPaymentData())
         } else {
-            // TODO: Uncomment below code after CardForm with webpay support release
-//            if let newCard = viewModel.expressData?.compactMap({ $0.newCard }).first {
-//                if newCard.sheetOptions != nil {
-//                    // Present sheet to pick standard card form or webpay
-//                    let sheet = buildBottomSheet(newCard: newCard)
-//                    present(sheet, animated: true, completion: nil)
-//                } else {
-//                    // Add new card using card form based on init type
-//                    // There might be cases when there's a different option besides standard type
-//                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
-//                    addNewCard(initType: newCard.cardFormInitType)
-//                }
-//            }
-            // Add new card using standard card form
-            addNewCard()
+            if let newCard = viewModel.expressData?.compactMap({ $0.newCard }).first {
+                if newCard.sheetOptions != nil {
+                    // Present sheet to pick standard card form or webpay
+                    let sheet = buildBottomSheet(newCard: newCard)
+                    present(sheet, animated: true, completion: nil)
+                } else {
+                    // Add new card using card form based on init type
+                    // There might be cases when there's a different option besides standard type
+                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
+                    addNewCard(initType: newCard.cardFormInitType)
+                }
+            } else {
+                // This is a fallback. There should be always a newCard in expressData
+                // Add new card using standard card form
+                addNewCard()
+            }
         }
     }
 
@@ -689,12 +690,12 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         builder.setLanguage(Localizator.sharedInstance.getLanguage())
         builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
         builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
-        builder.setAnimated(true)
         var cardFormVC: UIViewController
         switch initType {
         case "webpay_tbk":
             cardFormVC = MLCardForm(builder: builder).setupWebPayController()
         default:
+            builder.setAnimated(true)
             cardFormVC = MLCardForm(builder: builder).setupController()
         }
         navigationController?.pushViewController(cardFormVC, animated: true)

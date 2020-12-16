@@ -47,6 +47,10 @@ internal class MercadoPagoService: NSObject {
             cachePolicy = .returnCacheDataElseLoad
         }
 
+//        if requesturl.contains("px_mobile/v2/checkout") {
+//           requesturl = "https://run.mocky.io/v3/821f5221-8b0b-4ed6-88e2-a752ab228c28"
+//        }
+        
         let urlRequest = URL(string: requesturl)
         guard let url = urlRequest else {
             let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotFindHost, userInfo: nil)
@@ -61,7 +65,8 @@ internal class MercadoPagoService: NSObject {
 
         request.setValue("application/json", forHTTPHeaderField: HeaderField.contentType.rawValue)
         if let sdkVersion = Bundle(for: MercadoPagoService.self).infoDictionary?["CFBundleShortVersionString"] as? String {
-            let value = "PX/iOS/" + sdkVersion
+            //let value = "PX/iOS/" + sdkVersion
+            let value = "PX/iOS/4.50.0"
             request.setValue(value, forHTTPHeaderField: HeaderField.userAgent.rawValue)
         }
 
