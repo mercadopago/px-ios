@@ -126,19 +126,25 @@ extension PXCardSliderPagerCell {
         addNewMethodDelegate?.addNewOfflineMethod()
     }
 
-    func renderAccountMoneyCard(isDisabled: Bool, cardSize: CGSize, bottomMessage: PXCardBottomMessage? = nil, accessibilityData: AccessibilityCardData) {
+    func renderAccountMoneyOrHybridCard(cardUI: CustomCardDrawerUI, isDisabled: Bool, cardSize: CGSize, bottomMessage: PXCardBottomMessage? = nil, accessibilityData: AccessibilityCardData) {
         containerView.layer.masksToBounds = false
         containerView.backgroundColor = .clear
         containerView.removeAllSubviews()
         containerView.layer.cornerRadius = cornerRadius
-        cardHeader = MLCardDrawerController(AccountMoneyCard(), PXCardDataFactory(), isDisabled)
+        cardHeader = MLCardDrawerController(cardUI, PXCardDataFactory(), isDisabled)
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: cardSize)
         cardHeader?.animated(false)
         cardHeader?.show()
 
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
-            AccountMoneyCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
+            
+            if let amCard = cardUI as? AccountMoneyCard {
+                amCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
+            } else if let hybridCard = cardUI as? HybridAMCard {
+                hybridCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
+            }
+
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
@@ -211,18 +217,6 @@ extension PXCardSliderPagerCell {
 
         messageViewBottomConstraint = messageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: constraintsConstant)
         messageViewBottomConstraint?.isActive = true
-    }
-
-    func flipToBack() {
-        if !(cardHeader?.cardUI is AccountMoneyCard) {
-            cardHeader?.showSecurityCode()
-        }
-    }
-
-    func flipToFront() {
-        cardHeader?.animated(true)
-        cardHeader?.show()
-        cardHeader?.animated(false)
     }
 
     func showBottomMessageView(_ shouldShow: Bool) {

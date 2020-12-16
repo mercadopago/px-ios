@@ -162,9 +162,16 @@ class PXRemedyView: UIView {
 
         var cardData: CardData
         var cardUI: CardUI
-        if oneTapDto.accountMoney != nil {
+        
+        if let accountMoney = oneTapDto.accountMoney {
             cardData = PXCardDataFactory()
-            cardUI = AccountMoneyCard()
+            
+            if accountMoney.cardType == .defaultType {
+              cardUI = AccountMoneyCard(isDisabled: false, cardLogoImageUrl: accountMoney.paymentMethodImageURL, color: accountMoney.color, gradientColors: accountMoney.gradientColors)
+            } else {
+              cardUI = HybridAMCard(isDisabled: false, cardLogoImageUrl: accountMoney.paymentMethodImageURL, color: accountMoney.color, gradientColors: accountMoney.gradientColors)
+            }
+            
         } else if let oneTapCardUI = oneTapDto.oneTapCard?.cardUI,
             let cardName = oneTapCardUI.name,
             let cardNumber = oneTapCardUI.lastFourDigits,
@@ -209,9 +216,13 @@ class PXRemedyView: UIView {
         controller.animated(false)
         controller.show()
 
-        if oneTapDto.accountMoney != nil {
+        if let accountMoney = oneTapDto.accountMoney {
             let view = controller.getCardView()
-            AccountMoneyCard.render(containerView: view, isDisabled: false, size: view.bounds.size)
+            if accountMoney.cardType == .defaultType, let accountMoneyCard = cardUI as? AccountMoneyCard {
+              accountMoneyCard.render(containerView: view, isDisabled: false, size: view.bounds.size)
+            } else if let hybridAMCard = cardUI as? HybridAMCard {
+              hybridAMCard.render(containerView: view, isDisabled: false, size: view.bounds.size)
+            }
         } else if let consumerCreditsCard = cardUI as? ConsumerCreditsCard,
                   let consumerCredits = oneTapDto.oneTapCreditsInfo {
             let customConsumerCredits = PXOneTapCreditsDto(displayInfo: PXDisplayInfoDto(color: consumerCredits.displayInfo.color,

@@ -612,12 +612,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     func cardDidTap(status: PXStatus) {
-        if let selectedCard = getSuspendedCardSliderViewModel() {
-            if let tapCardBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.tapCard.rawValue] {
-                handleBehaviour(tapCardBehaviour, isSplit: false)
-            }
-        } else if status.isDisabled() {
+        if status.isDisabled() {
             showDisabledCardModal(status: status)
+        } else if let selectedCard = selectedCard, let tapCardBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.tapCard.rawValue] {
+            handleBehaviour(tapCardBehaviour, isSplit: false)
         }
     }
 
@@ -723,13 +721,7 @@ extension PXOneTapViewController: PXOneTapSheetViewControllerProtocol {
 // MARK: Installment Row Info delegate.
 extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapInstallmentsSelectorProtocol {
     func cardTapped(status: PXStatus) {
-        if let selectedCard = getSuspendedCardSliderViewModel() {
-            if let tapCardBehaviour = selectedCard.behaviours?[PXBehaviour.Behaviours.tapCard.rawValue] {
-                handleBehaviour(tapCardBehaviour, isSplit: false)
-            }
-        } else if status.isDisabled() {
-            showDisabledCardModal(status: status)
-        }
+      cardDidTap(status: status)
     }
 
     func payerCostSelected(_ payerCost: PXPayerCost) {
