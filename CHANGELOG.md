@@ -1,9 +1,9 @@
-# v4.37.0 
+# v4.37.0
 🚀Private Release - 4.37.0 🚀
 MercadoPagoSDKV4 - Private Version
 - Add hybrid card support
 
-# v4.36.9 
+# v4.36.9
 🚀Private Release - 4.36.9 🚀
 MercadoPagoSDKV4 - Private Version
 - Added location header to congrats
