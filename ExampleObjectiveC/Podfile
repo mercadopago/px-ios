@@ -13,8 +13,7 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
 
   # Pods for MercadoPagoSDKExamplesObjectiveC
   # UI Meli Lib
-    pod 'MercadoPagoSDK', :path => '../'
-    pod 'MLCardForm', :path => '../../card-form-ios'
+    pod 'MercadoPagoSDKV4', :path => '../'
 
   #target 'MercadoPagoSDKExamplesObjectiveCTests' do
    # inherit! :search_paths

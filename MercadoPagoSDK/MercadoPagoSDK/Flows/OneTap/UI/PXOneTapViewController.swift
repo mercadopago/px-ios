@@ -126,11 +126,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
                 ($0 as? MLCardFormWebPayViewController)?.dismissLoadingAndPop()
             }
         }
-        
-//        if let navigationController = navigationController {
-//            if let cardFormViewController = navigationController.viewControllers.first(where: { $0 is MLCardFormViewController }) as? MLCardFormViewController { cardFormViewController.dismissLoadingAndPop() }
-//            if let cardFormViewController = navigationController.viewControllers.first(where: { $0 is MLCardFormWebPayViewController }) as? MLCardFormWebPayViewController { cardFormViewController.dismissLoadingAndPop() }
-//        }
     }
 
     func setupAutoDisplayOfflinePaymentMethods() {
