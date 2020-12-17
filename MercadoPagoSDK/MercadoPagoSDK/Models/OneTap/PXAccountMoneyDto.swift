@@ -13,12 +13,31 @@ open class PXAccountMoneyDto: NSObject, Codable {
     open var invested: Bool = false
     open var cardTitle: String?
     open var sliderTitle: String?
+    open var cardType: PXAccountMoneyTypes?
+    open var color: String?
+    open var paymentMethodImageURL: String?
+    open var gradientColors: [String]?
+    
+    public enum PXAccountMoneyTypes: String {
+        case defaultType = "default"
+        case hybrid = "hybrid"
+    }
 
-    public init(availableBalance: Double, invested: Bool, sliderTitle: String?, cardTitle: String?) {
+    public init(availableBalance: Double, invested: Bool, sliderTitle: String?, cardTitle: String?, cardType: String?, color: String?, paymentMethodImageURL: String?, gradientColors: [String]?) {
         self.availableBalance = availableBalance
         self.invested = invested
         self.cardTitle = cardTitle
         self.sliderTitle = sliderTitle
+        
+        if let cardType = cardType {
+            self.cardType = PXAccountMoneyTypes(rawValue: cardType) ?? .defaultType
+        } else {
+            self.cardType = .defaultType
+        }
+        
+        self.color = color
+        self.paymentMethodImageURL = paymentMethodImageURL
+        self.gradientColors = gradientColors
     }
 
     public enum PXAccountMoneyKeys: String, CodingKey {
@@ -27,6 +46,10 @@ open class PXAccountMoneyDto: NSObject, Codable {
         case displayInfo = "display_info"
         case cardTitle = "message"
         case sliderTitle = "slider_title"
+        case cardType = "type"
+        case color = "color"
+        case paymentMethodImageURL = "payment_method_image_url"
+        case gradientColors = "gradient_colors"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -36,7 +59,11 @@ open class PXAccountMoneyDto: NSObject, Codable {
         let display_info = try container.nestedContainer(keyedBy: PXAccountMoneyKeys.self, forKey: .displayInfo)
         let cardTitle: String? = try display_info.decodeIfPresent(String.self, forKey: .cardTitle)
         let sliderTitle: String? = try display_info.decodeIfPresent(String.self, forKey: .sliderTitle)
-        self.init(availableBalance: availableBalance, invested: invested, sliderTitle: sliderTitle, cardTitle: cardTitle)
+        let cardType: String? = try display_info.decodeIfPresent(String.self, forKey: .cardType)
+        let color: String? = try display_info.decodeIfPresent(String.self, forKey: .color)
+        let paymentMethodImageURL: String? = try display_info.decodeIfPresent(String.self, forKey: .paymentMethodImageURL)
+        let gradientColors: [String]? = try display_info.decodeIfPresent([String].self, forKey: .gradientColors)
+        self.init(availableBalance: availableBalance, invested: invested, sliderTitle: sliderTitle, cardTitle: cardTitle, cardType: cardType, color: color, paymentMethodImageURL: paymentMethodImageURL, gradientColors: gradientColors)
     }
 
     public func encode(to encoder: Encoder) throws {

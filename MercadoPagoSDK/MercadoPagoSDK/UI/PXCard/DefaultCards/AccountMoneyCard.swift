@@ -13,7 +13,7 @@ class AccountMoneyCard: NSObject, CustomCardDrawerUI {
     var placeholderExpiration = ""
     var bankImage: UIImage?
     var cardPattern = [0]
-    var cardFontColor: UIColor = UIColor(red: 105 / 255, green: 105 / 255, blue: 105 / 255, alpha: 1)
+    var cardFontColor:  UIColor = UIColor(red: 105 / 255, green: 105 / 255, blue: 105 / 255, alpha: 1)
     var cardLogoImage: UIImage?
     var cardBackgroundColor: UIColor = UIColor(red: 0.00, green: 0.64, blue: 0.85, alpha: 1.0)
     var securityCodeLocation: MLCardSecurityCodeLocation = .back
@@ -21,10 +21,28 @@ class AccountMoneyCard: NSObject, CustomCardDrawerUI {
     var securityCodePattern = 3
     var fontType: String = "light"
     var ownOverlayImage: UIImage? = UIImage()
+    var cardLogoImageUrl: String?
+    
+    init(isDisabled: Bool = false, cardLogoImageUrl: String?, color: String?, gradientColors: [String]?) {
+        
+        let disabledColor = UIColor(red: 204 / 255, green: 204 / 255, blue: 204 / 255, alpha: 1.0)
+        
+        var backgroundColor : UIColor?
+        
+        if let color = color {
+            backgroundColor = UIColor.fromHex(color)
+        } else {
+            backgroundColor = UIColor(red: 0.00, green: 0.64, blue: 0.85, alpha: 1.0)
+        }
+        
+        self.cardBackgroundColor = isDisabled ? disabledColor : backgroundColor!
+        
+        self.cardLogoImageUrl = cardLogoImageUrl
+    }
 }
 
 extension AccountMoneyCard {
-    static func render(containerView: UIView, isDisabled: Bool, size: CGSize) {
+    func render(containerView: UIView, isDisabled: Bool, size: CGSize) {
         let amImage = UIImageView()
         amImage.backgroundColor = .clear
         amImage.contentMode = .scaleAspectFit
@@ -51,16 +69,26 @@ extension AccountMoneyCard {
             PXLayout.pinTop(view: patternView).isActive = true
             PXLayout.pinRight(view: patternView).isActive = true
         }
+        
+        // Logo
+        guard let imageURL = self.cardLogoImageUrl, imageURL.isNotEmpty else {
+           
+            let amLogo = UIImageView()
+            amLogo.backgroundColor = .clear
+            amLogo.contentMode = .scaleAspectFit
+            
+            let logoImage = ResourceManager.shared.getImage("amLogo")
+            amLogo.image = isDisabled ? logoImage?.imageGreyScale() : logoImage
+            
+            containerView.addSubview(amLogo)
+            
+            PXLayout.setWidth(owner: amLogo, width: size.height * 0.60).isActive = true
+            PXLayout.setHeight(owner: amLogo, height: size.height * 0.35).isActive = true
+            PXLayout.pinTop(view: amLogo, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinLeft(view: amLogo, withMargin: PXLayout.S_MARGIN).isActive = true
+            
+            return
+        }
 
-        let amLogo = UIImageView()
-        amLogo.backgroundColor = .clear
-        amLogo.contentMode = .scaleAspectFit
-        let logoImage = ResourceManager.shared.getImage("amLogo")
-        amLogo.image = isDisabled ? logoImage?.imageGreyScale() : logoImage
-        containerView.addSubview(amLogo)
-        PXLayout.setWidth(owner: amLogo, width: size.height * 0.60).isActive = true
-        PXLayout.setHeight(owner: amLogo, height: size.height * 0.35).isActive = true
-        PXLayout.pinTop(view: amLogo, withMargin: PXLayout.XXXS_MARGIN).isActive = true
-        PXLayout.pinLeft(view: amLogo, withMargin: PXLayout.S_MARGIN).isActive = true
     }
 }
