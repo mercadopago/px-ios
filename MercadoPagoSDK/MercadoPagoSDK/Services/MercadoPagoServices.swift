@@ -135,7 +135,7 @@ internal class MercadoPagoServices: NSObject {
                         token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
                         callback(token)
                     } else {
-                        let apiException = try PXApiException.fromJSON(data: data)
+                        let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
                         failure(PXError(domain: ApiDomain.GET_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
                     }
                 }
@@ -156,7 +156,7 @@ internal class MercadoPagoServices: NSObject {
                         token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
                         callback(token)
                     } else {
-                        let apiException = try PXApiException.fromJSON(data: data)
+                        let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
                         failure(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
                     }
                 }
@@ -196,58 +196,6 @@ internal class MercadoPagoServices: NSObject {
                 success(responseObject)
             } catch {
                 failure(PXError(domain: ApiDomain.GET_PROMOS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
-            }
-        }, failure: failure)
-    }
-
-    func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: IdentificationService = IdentificationService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey)
-        service.getIdentificationTypes(success: {(data: Data!) -> Void in do {
-            let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
-
-            if let error = jsonResult as? NSDictionary {
-                if (error["status"]! as? Int) == 404 {
-                    let apiException = try PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: ApiDomain.GET_IDENTIFICATION_TYPES, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
-                } else if error["error"] != nil {
-                    let apiException = try PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: ApiDomain.GET_IDENTIFICATION_TYPES, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
-                }
-            } else {
-                var identificationTypes : [PXIdentificationType] = [PXIdentificationType]()
-                identificationTypes = try PXIdentificationType.fromJSON(data: data)
-                callback(identificationTypes)
-            }
-        } catch {
-            failure(PXError(domain: ApiDomain.GET_IDENTIFICATION_TYPES, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los tipos de identificación"]))
-            }
-        }, failure: failure)
-    }
-
-    func getSummaryAmount(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, payment_type_id: String, differentialPricingId: String?, siteId: String?, marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer: PXPayer, defaultInstallments: Int?, charges: [PXPaymentTypeChargeRule]?,  maxInstallments: Int?, callback: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
-        service.getSummaryAmount(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, payment_type_id: payment_type_id, differential_pricing_id: differentialPricingId, siteId: siteId, marketplace: marketplace, discountParamsConfiguration: discountParamsConfiguration, payer: payer, defaultInstallments: defaultInstallments, charges: charges, maxInstallments: maxInstallments, success: callback, failure: failure)
-    }
-
-    func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
-        service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(data: Data) -> Void in
-            do {
-
-                let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-
-                if let errorDic = jsonResponse as? NSDictionary {
-                    if errorDic["error"] != nil {
-                        let apiException = try PXApiException.fromJSON(data: data)
-                        failure(PXError(domain: ApiDomain.GET_ISSUERS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: errorDic as? [String: Any], apiException: apiException))
-                    }
-                } else {
-                    var issuers : [PXIssuer] = [PXIssuer]()
-                    issuers = try PXIssuer.fromJSON(data: data)
-                    callback(issuers)
-                }
-            } catch {
-                failure(PXError(domain: ApiDomain.GET_ISSUERS, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los bancos"]))
             }
         }, failure: failure)
     }

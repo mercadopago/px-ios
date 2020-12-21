@@ -21,17 +21,4 @@ extension MercadoPagoCheckout {
 
         return true
     }
-
-    internal class func showBankInterestWarning() -> Bool {
-        let dictionary = ResourceManager.shared.getDictionaryForResource(named: "PayerCostPreferences")
-        let site = SiteManager.shared.getSiteId()
-
-        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
-            if let bankInsterestCell = siteDic.value(forKey: "bankInsterestCell") as? Bool {
-                return bankInsterestCell
-            }
-        }
-
-        return false
-    }
 }

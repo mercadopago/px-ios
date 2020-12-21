@@ -9,6 +9,7 @@
 import Foundation
 
 /** :nodoc: */
+@available(*, deprecated, message: "Not used in any flow")
 @objcMembers open class IdentificationType: NSObject {
     open var identificationTypeId: String?
     open var name: String?

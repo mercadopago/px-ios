@@ -8,9 +8,7 @@
 
 import Foundation
 
-internal class EntityType: NSObject, Cellable {
-
-    var objectType: ObjectTypes = ObjectTypes.entityType
+internal class EntityType: NSObject {
     var entityTypeId: String!
     var name: String!
 }

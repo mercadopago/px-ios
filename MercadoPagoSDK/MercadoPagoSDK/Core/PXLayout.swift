@@ -317,7 +317,7 @@ class ClosureSleeve {
 }
 
 extension UIControl {
-    func add (for controlEvents: UIControl.Event, _ closure: @escaping () -> Void) {
+    func add(for controlEvents: UIControl.Event, _ closure: @escaping () -> Void) {
         let sleeve = ClosureSleeve(closure)
         addTarget(sleeve, action: #selector(ClosureSleeve.invoke), for: controlEvents)
         objc_setAssociatedObject(self, String(format: "[%d]", arc4random()), sleeve, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)

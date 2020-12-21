@@ -34,7 +34,14 @@ open class PXAdvancedConfiguration: NSObject {
      Add the possibility to enabled/disabled express checkout.
      */
     @available(*, deprecated, message: "Groups flow will no longer be available")
-    open var expressEnabled: Bool = false
+    open var expressEnabled: Bool {
+        get {
+            return true
+        }
+        set(value) {
+            
+        }
+    }
 
     /**
     Instores usage / money in usage. - Use case: Not all bank deals apply right now to all preferences.

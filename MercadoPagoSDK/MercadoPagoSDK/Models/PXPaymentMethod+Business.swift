@@ -8,15 +8,7 @@
 import Foundation
 
 /// :nodoc:
-extension PXPaymentMethod: Cellable {
-    var objectType: ObjectTypes {
-        get {
-            return ObjectTypes.paymentMethod
-        }
-        set {
-            self.objectType = ObjectTypes.paymentMethod
-        }
-    }
+extension PXPaymentMethod {
 
     internal var isIssuerRequired: Bool {
         return isAdditionalInfoNeeded("issuer_id")
@@ -102,39 +94,8 @@ extension PXPaymentMethod: Cellable {
         return false
     }
 
-    internal func conformsToBIN(_ bin: String) -> Bool {
-        return (PXSetting.getSettingByBin(self.settings, bin: bin) != nil)
-    }
-    internal func cloneWithBIN(_ bin: String) -> PXPaymentMethod? {
-        guard let setting = PXSetting.getSettingByBin(settings, bin: bin) else {
-            return nil
-        }
-        let paymentMethod: PXPaymentMethod = PXPaymentMethod(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: setting, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions, description: paymentMethodDescription, processingModes: processingModes)
-        paymentMethod.id = id
-        paymentMethod.name = self.name
-        paymentMethod.paymentTypeId = self.paymentTypeId
-        paymentMethod.additionalInfoNeeded = self.additionalInfoNeeded
-        return paymentMethod
-    }
-
-    internal var isAmex: Bool {
-        return self.id == "amex"
-    }
-
     internal var isAccountMoney: Bool {
         return self.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue
-    }
-
-    internal func secCodeMandatory() -> Bool {
-        guard let firstSetting = settings.first, let firstSettingMode = firstSetting.securityCode?.mode  else {
-            return false //Si no tiene settings el codigo de seguridad no es mandatorio
-        }
-        let filterList = settings.filter({ return $0.securityCode?.mode == firstSettingMode })
-        if filterList.count == self.settings.count {
-            return firstSetting.securityCode?.mode == "mandatory"
-        } else {
-            return true // si para alguna de sus settings es mandatorio entonces el codigo es mandatorio
-        }
     }
 
     internal func secCodeLenght(_ bin: String? = nil) -> Int {

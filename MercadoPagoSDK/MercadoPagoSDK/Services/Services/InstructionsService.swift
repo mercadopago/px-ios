@@ -30,7 +30,7 @@ internal class InstructionsService: MercadoPagoService {
 
                 let error = jsonResult["error"] as? String
                 if error != nil && error!.count > 0 {
-                    let apiException = try PXApiException.fromJSON(data: data)
+                    let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
                     let e : PXError = PXError(domain: ApiDomain.GET_INSTRUCTIONS, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago", NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String], apiException: apiException)
                     failure!(e)
                 } else {

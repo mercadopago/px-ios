@@ -36,7 +36,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
                     let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
                     if let paymentSearchDic = jsonResult as? NSDictionary {
                         if paymentSearchDic["error"] != nil {
-                            let apiException = try PXApiException.fromJSON(data: data)
+                            let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
                             failure(PaymentMethodSearchService.getError(code: ErrorTypes.API_EXCEPTION_ERROR, apiException: apiException))
                         } else {
                             if paymentSearchDic.allKeys.count > 0 {

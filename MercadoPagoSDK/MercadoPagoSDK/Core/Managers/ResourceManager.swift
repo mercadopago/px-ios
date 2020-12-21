@@ -13,6 +13,8 @@ internal class ResourceManager {
     static let shared = ResourceManager()
 
     let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"
+    
+    let allPaymentIDs: Set<String> = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.CREDIT_CARD.rawValue, PXPaymentTypes.ACCOUNT_MONEY.rawValue, PXPaymentTypes.TICKET.rawValue, PXPaymentTypes.BANK_TRANSFER.rawValue, PXPaymentTypes.ATM.rawValue, PXPaymentTypes.DIGITAL_CURRENCY.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue, PXPaymentTypes.BOLBRADESCO.rawValue, PXPaymentTypes.PEC.rawValue]
 
     func getBundle() -> Bundle {
         return Bundle(for: ResourceManager.self)
@@ -33,38 +35,6 @@ extension ResourceManager {
             return nil
         }
         return NSDictionary(contentsOfFile: path)
-    }
-
-    func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
-        let dictPM = ResourceManager.shared.getDictionaryForResource(named: "PaymentMethodSearch")
-        var description = withDescription
-        let tintColorForIcons = ThemeManager.shared.getTintColorForIcons()
-
-        if defaultColor {
-            description += "Azul"
-        } else if (PaymentType.allPaymentIDs.contains(description) ||
-            description == "cards" ||
-            description.contains("bolbradesco") ||
-            description.contains("pec")) && tintColorForIcons == nil {
-            description += "Azul"
-        }
-
-        guard let itemSelected = dictPM?.value(forKey: description) as? NSDictionary else {
-            return nil
-        }
-        let image = ResourceManager.shared.getImage(itemSelected.object(forKey: "image_name") as? String)
-
-        let paymentMethods = ["credit_card", "prepaid_card", "debit_card", "bank_transfer", "ticket", "cards"]
-        if paymentMethods.contains(description) ||
-            description.contains("bolbradesco") ||
-            description.contains("pec") {
-            if let iconsTintColor = tintColorForIcons {
-                return image?.imageWithOverlayTint(tintColor: iconsTintColor)
-            }
-            return image
-        } else {
-            return image
-        }
     }
 
     func getImageFor(_ paymentMethod: PXPaymentMethod, forCell: Bool? = false) -> UIImage? {

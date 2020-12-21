@@ -12,11 +12,7 @@ import UIKit
 internal protocol PaymentOptionDrawable {
     func getId() -> String
 
-    func getImage() -> UIImage?
-
     func getTitle() -> String
-
-    func getSubtitle() -> String?
 
     func isDisabled() -> Bool
 }
@@ -24,10 +20,6 @@ internal protocol PaymentOptionDrawable {
 @objc
 internal protocol PaymentMethodOption {
     func getId() -> String
-
-    func getDescription() -> String
-
-    func getComment() -> String
 
     func hasChildren() -> Bool
 

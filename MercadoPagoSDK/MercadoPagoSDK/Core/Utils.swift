@@ -31,38 +31,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 internal class Utils {
 
-    class func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
-        let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
-        NSLayoutConstraint.activate(widthConstraints)
-    }
-
-    class func setContrainsVertical(label: UIView, previus: UIView?, constrain: CGFloat) {
-        if let previus = previus {
-            let heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: previus, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: constrain)]
-            NSLayoutConstraint.activate(heightConstraints)
-        }
-    }
-
-    class func getDateFromString(_ string: String!) -> Date! {
-        if string == nil {
-            return nil
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateArr = string.split { $0 == "T" }.map(String.init)
-        return dateFormatter.date(from: dateArr[0])
-    }
-
-    class func getStringFromDate(_ date: Date?) -> Any! {
-
-        if date == nil {
-            return JSONHandler.null
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: date!)
-    }
-
     class func getAttributedAmount(_ formattedString: String, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = .white, fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
@@ -144,38 +112,6 @@ internal class Utils {
         return finalAttributedString
     }
 
-    class func getAttributedPercentage(withAttributes attributes: [NSAttributedString.Key: Any], amount: Double, addPercentageSymbol: Bool, negativeAmount: Bool) -> NSMutableAttributedString {
-
-        let decimalSeparator = "."
-        var percentage = amount.stringValue
-        let range = percentage.range(of: decimalSeparator)
-
-        var cents = ""
-        if range != nil {
-            let centsIndex = percentage.index(range!.lowerBound, offsetBy: 1)
-            cents = String(percentage[centsIndex...])
-        }
-
-        if cents == "00" || cents == "0" {
-            percentage = percentage.replacingOccurrences(of: decimalSeparator + cents, with: "")
-        }
-
-        var symbols = ""
-        if negativeAmount {
-            symbols = "- "
-        }
-
-        let finalAttributedString = NSMutableAttributedString(string: symbols, attributes: attributes)
-        let attributedPercentage = NSMutableAttributedString(string: percentage, attributes: attributes)
-        finalAttributedString.append(attributedPercentage)
-
-        if addPercentageSymbol {
-            let percentageSymbolAttributedString = NSMutableAttributedString(string: "%", attributes: attributes)
-            finalAttributedString.append(percentageSymbolAttributedString)
-        }
-        return finalAttributedString
-    }
-
     class func getAmountFormatted(amount: Double, thousandSeparator: String, decimalSeparator: String, addingCurrencySymbol symbol: String? = nil, addingParenthesis: Bool = false) -> String {
         let amountString = String(format: "%.2f", amount)
         let cents = getCentsFormatted(amountString, decimalSeparator: ".")
@@ -199,12 +135,6 @@ internal class Utils {
         return "(\(string))"
     }
 
-    class func getStrikethroughAmount(amount: Double, forCurrency currency: PXCurrency, addingParenthesis: Bool = false) -> NSMutableAttributedString {
-        let formatedAttrAmount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis).toAttributedString()
-        formatedAttrAmount.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: formatedAttrAmount.string.count))
-        return formatedAttrAmount
-    }
-
     class func getAccreditationTimeAttributedString(from text: String, fontSize: CGFloat? = nil) -> NSAttributedString {
         let clockImage = NSTextAttachment()
         var attributes: [NSAttributedString.Key: Any]?
@@ -217,28 +147,6 @@ internal class Utils {
         labelAttributedString.insert(clockAttributedString, at: 0)
         let labelTitle = labelAttributedString
         return labelTitle
-    }
-
-    class func getTransactionInstallmentsDescription(_ installments: String, currency: PXCurrency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
-        let color = color ?? UIColor.lightBlue()
-        let currency = SiteManager.shared.getCurrency()
-
-        let descriptionAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: getFont(size: fontSize), NSAttributedString.Key.foregroundColor: color]
-
-        let stringToWrite = NSMutableAttributedString()
-
-        let installmentsValue = Int(installments)
-        if  installmentsValue > 1 {
-            stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
-        }
-
-        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset))
-
-        if additionalString != nil {
-            stringToWrite.append(additionalString!)
-        }
-
-        return stringToWrite
     }
 
     class func getFont(size: CGFloat) -> UIFont {
@@ -273,26 +181,6 @@ internal class Utils {
         return UIFont.systemFont(ofSize: size)
     }
 
-    class func getIdentificationFont(size: CGFloat) -> UIFont {
-        return UIFont(name: "KohinoorBangla-Regular", size: size) ?? UIFont.systemFont(ofSize: size)
-    }
-
-    class func append(firstJSON: String, secondJSON: String) -> String {
-        if firstJSON == "" && secondJSON == "" {
-            return ""
-        } else if secondJSON == "" {
-            return firstJSON
-        } else if firstJSON == "" {
-            return secondJSON
-        }
-        var firstJSON = firstJSON
-        var secondJSON = secondJSON
-
-        secondJSON.remove(at: secondJSON.startIndex)
-        firstJSON.remove(at: firstJSON.index(before: firstJSON.endIndex))
-
-        return firstJSON + secondJSON
-    }
     /**
      Returns cents string formatted
      Ex: formattedString = "100.2", decimalSeparator = "."
@@ -360,37 +248,6 @@ internal class Utils {
             return formattedString
         }
         return ""
-    }
-
-    class func getMasks(inDictionary dictID: String, withKey key: String) -> [TextMaskFormater]? {
-        let dictionary = ResourceManager.shared.getDictionaryForResource(named: "IdentificationTypes")
-
-        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
-            if let mask = IDtype.value(forKey: key) as? String, mask != ""{
-                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false)
-                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false, completeEmptySpacesWith: " ")
-                return[customInitialMask, customMask]
-            }
-        }
-        return nil
-    }
-
-    class func getMasks(forId typeId: PXIdentificationType?) -> [TextMaskFormater] {
-        let site = SiteManager.shared.getSiteId()
-        let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
-        let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
-
-        if typeId != nil {
-            if let masks = getMasks(inDictionary: site + "_" + (typeId?.id)!, withKey: "identification_mask") {
-                return masks
-            } else if let masks = getMasks(inDictionary: site, withKey: "identification_mask") {
-                return masks
-            } else {
-                return [defaultInitialMask, defaultMask]
-            }
-        } else {
-            return [defaultInitialMask, defaultMask]
-        }
     }
 
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXInitDTO, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
@@ -510,33 +367,6 @@ internal class Utils {
 
         paymentMethod[0].paymentTypeId = paymentTypeSelected
         return paymentMethod[0]
-    }
-
-    internal static func getExpirationYearFromLabelText(_ mmyy: String) -> Int {
-        let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
-        let validInt = Int(stringMMYY)
-        if validInt == nil || stringMMYY.count < 4 {
-            return 0
-        }
-        let floatMMYY = Float( validInt! / 100 )
-        let mm: Int = Int(floor(floatMMYY))
-        let yy = Int(stringMMYY)! - (mm * 100)
-        return yy
-
-    }
-
-    internal static func getExpirationMonthFromLabelText(_ mmyy: String) -> Int {
-        let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
-        let validInt = Int(stringMMYY)
-        if validInt == nil {
-            return 0
-        }
-        let floatMMYY = Float( validInt! / 100 )
-        let mm: Int = Int(floor(floatMMYY))
-        if mm >= 1 && mm <= 12 {
-            return mm
-        }
-        return 0
     }
 
     static func getFormatedStringDate(_ date: Date, addTime: Bool = false) -> String {

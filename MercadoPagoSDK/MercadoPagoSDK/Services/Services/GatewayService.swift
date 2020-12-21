@@ -40,7 +40,7 @@ internal class GatewayService: MercadoPagoService {
                         if tokenDic["error"] == nil {
                             token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
                         } else {
-                            let apiException = try PXApiException.fromJSON(data: data)
+                            let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
                             failure?(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
                             return
                         }

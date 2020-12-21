@@ -60,10 +60,6 @@ open class PXSavedCardToken: PXCardToken {
         return try encoder.encode(self)
     }
 
-    @objc open override func validate() -> Bool {
-        return self.validateCardId() && (!securityCodeRequired || self.validateSecurityCodeNumbers())
-    }
-
     open func validateCardId() -> Bool {
         return !String.isNullOrEmpty(cardId) && String.isDigitsOnly(cardId)
     }

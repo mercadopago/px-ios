@@ -150,32 +150,8 @@ extension MercadoPagoCheckout {
         switch self.viewModel.nextStep() {
         case .START :
             self.initialize()
-        case .SCREEN_PAYMENT_METHOD_SELECTION:
-            self.showPaymentMethodsScreen()
-        case .SCREEN_CARD_FORM:
-            self.showCardForm()
-        case .SCREEN_IDENTIFICATION:
-            self.showIdentificationScreen()
-        case .SCREEN_PAYER_INFO_FLOW:
-            self.showPayerInfoFlow()
-        case .SCREEN_ENTITY_TYPE:
-            self.showEntityTypesScreen()
-        case .SCREEN_FINANCIAL_INSTITUTIONS:
-            self.showFinancialInstitutionsScreen()
-        case .SERVICE_GET_ISSUERS:
-            self.getIssuers()
-        case .SCREEN_ISSUERS:
-            self.showIssuersScreen()
         case .SERVICE_CREATE_CARD_TOKEN:
             self.getTokenizationService().createCardToken()
-        case .SERVICE_GET_IDENTIFICATION_TYPES:
-            self.getIdentificationTypes()
-        case .SERVICE_GET_PAYER_COSTS:
-            self.getPayerCostsConfiguration()
-        case .SCREEN_PAYER_COST:
-            self.showPayerCostScreen()
-        case .SCREEN_REVIEW_AND_CONFIRM:
-            self.showReviewAndConfirmScreen()
         case .SCREEN_SECURITY_CODE:
             self.showSecurityCodeScreen()
         case .SERVICE_POST_PAYMENT:
@@ -188,12 +164,6 @@ extension MercadoPagoCheckout {
             self.finish()
         case .SCREEN_ERROR:
             self.showErrorScreen()
-        case .SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG:
-            self.showHookScreen(hookStep: .BEFORE_PAYMENT_METHOD_CONFIG)
-        case .SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG:
-            self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
-        case .SCREEN_HOOK_BEFORE_PAYMENT:
-            self.showHookScreen(hookStep: .BEFORE_PAYMENT)
         case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
             self.showPaymentMethodPluginConfigScreen()
         case .FLOW_ONE_TAP:

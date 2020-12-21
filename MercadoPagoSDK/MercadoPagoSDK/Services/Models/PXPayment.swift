@@ -313,19 +313,6 @@ import Foundation
     }
 
     /// :nodoc:
-    open func getDateFromString(_ string: String?) -> Date? {
-        if let dateString = string {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-            dateFormatter.locale = Locale(identifier: "en_US")
-            let date = dateFormatter.date(from: dateString)
-            return date
-        } else {
-            return nil
-        }
-    }
-
-    /// :nodoc:
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

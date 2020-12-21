@@ -82,6 +82,7 @@ final internal class OneTapFlowModel: PXFlowModel {
             }
         }
     }
+
     public func nextStep() -> Steps {
         if needShowOneTap() {
             return .screenOneTap

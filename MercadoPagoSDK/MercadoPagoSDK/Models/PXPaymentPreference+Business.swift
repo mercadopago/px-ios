@@ -59,17 +59,6 @@ extension PXPaymentPreference {
 
     }
 
-    internal func validate() -> Bool {
-        if maxAcceptedInstallments <= 0 {
-            return false
-        }
-        if PaymentType.allPaymentIDs.count <= excludedPaymentTypeIds.count {
-            return false
-        }
-
-        return true
-    }
-
     internal func getExcludedPaymentTypesIds() -> [String] {
             return excludedPaymentTypeIds
     }

@@ -32,14 +32,6 @@ extension PXOfflinePaymentMethod: PaymentMethodOption {
         return id
     }
 
-    func getDescription() -> String {
-        return name?.message ?? ""
-    }
-
-    func getComment() -> String {
-        return description?.message ?? ""
-    }
-
     func hasChildren() -> Bool {
         return false
     }

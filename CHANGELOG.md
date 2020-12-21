@@ -1,3 +1,8 @@
+# v4.37.1 
+🚀Private Release - 4.37.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Remove groups and unused assets
+
 # v4.37.0
 🚀Private Release - 4.37.0 🚀
 MercadoPagoSDKV4 - Private Version

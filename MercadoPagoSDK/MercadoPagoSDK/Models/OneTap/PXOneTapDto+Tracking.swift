@@ -15,14 +15,14 @@ extension PXOneTapDto {
         properties["payment_method_id"] = paymentMethodId
         return properties
     }
-    
+
     private func getBenefitsInfoForTracking() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["has_interest_free"] = benefits?.interestFree != nil ? true : false
         properties["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
         return properties
     }
-    
+
     func getAccountMoneyForTracking() -> [String: Any] {
         var accountMoneyDic = getPaymentInfoForTracking()
         var extraInfo = getBenefitsInfoForTracking()

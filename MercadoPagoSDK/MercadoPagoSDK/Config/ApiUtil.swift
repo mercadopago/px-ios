@@ -19,13 +19,8 @@ internal class ApiUtil {
 
     enum RequestOrigin: String {
         case GET_INIT
-        case GET_INSTALLMENTS
-        case GET_ISSUERS
         case CREATE_PAYMENT
         case CREATE_TOKEN
-        case GET_PAYMENT_METHODS
-        case GET_IDENTIFICATION_TYPES
         case GET_INSTRUCTIONS
-        case ASSOCIATE_TOKEN
     }
 }

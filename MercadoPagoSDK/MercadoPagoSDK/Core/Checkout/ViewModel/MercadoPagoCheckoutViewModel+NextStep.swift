@@ -46,23 +46,6 @@ extension MercadoPagoCheckoutViewModel {
     func showCongrats() -> Bool {
         return self.payment != nil
     }
-    func needGetIdentification() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod(), !pm.isBolbradesco && !pm.isPec else {
-            return false
-        }
-        return isIdentificationNeeded() && self.identificationTypes != nil
-    }
-
-    func needToGetIdentificationTypes() -> Bool {
-        return isIdentificationNeeded() && self.identificationTypes == nil
-    }
-
-    func needToGetPayerInfo() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod(), pm.isBolbradesco || pm.isPec else {
-            return false
-        }
-        return isIdentificationNeeded() && self.identificationTypes != nil
-    }
 
     func isIdentificationNeeded() -> Bool {
         guard let pm = self.paymentData.getPaymentMethod(), let option = self.paymentOptionSelected else {
@@ -85,50 +68,6 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
-    func needGetEntityTypes() -> Bool {
-        guard self.paymentOptionSelected != nil else {
-            return false
-        }
-        guard let pm = self.paymentData.getPaymentMethod() else {
-            return false
-        }
-        if paymentData.payer?.entityType == nil && pm.isEntityTypeRequired {
-            return true
-        }
-        return false
-    }
-
-    func needGetFinancialInstitutions() -> Bool {
-        guard self.paymentOptionSelected != nil else {
-            return false
-        }
-        guard let pm = self.paymentData.getPaymentMethod() else {
-            return false
-        }
-
-        if paymentData.transactionDetails?.financialInstitution == nil && !Array.isNullOrEmpty(pm.financialInstitutions) {
-           return true
-        }
-
-        return false
-    }
-
-    func needGetIssuers() -> Bool {
-        guard let selectedType = self.paymentOptionSelected else {
-            return false
-        }
-        guard let pm = self.paymentData.getPaymentMethod() else {
-            return false
-        }
-        if selectedType.isCustomerPaymentMethod() {
-            return false
-        }
-        if !paymentData.hasIssuer() && pm.isCard && Array.isNullOrEmpty(issuers) {
-            return true
-        }
-        return false
-    }
-
     func needGetRemedy() -> Bool {
         if let paymentResult = paymentResult,
            paymentResult.isRejectedWithRemedy(),
@@ -136,42 +75,6 @@ extension MercadoPagoCheckoutViewModel {
            !paymentId.isEmpty,
            paymentResult.paymentData != nil,
            remedy == nil {
-            return true
-        }
-        return false
-    }
-
-    func needIssuerSelectionScreen() -> Bool {
-        guard let selectedType = self.paymentOptionSelected else {
-            return false
-        }
-        guard let pm = self.paymentData.getPaymentMethod() else {
-            return false
-        }
-        if selectedType.isCustomerPaymentMethod() {
-            return false
-        }
-        if !paymentData.hasIssuer() && pm.isCard && !Array.isNullOrEmpty(issuers) {
-            return true
-        }
-        return false
-    }
-
-    func needChosePayerCost() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod() else {
-            return false
-        }
-        if pm.isCard && !paymentData.hasPayerCost() && payerCosts == nil {
-            return true
-        }
-        return false
-    }
-
-    func needPayerCostSelectionScreen() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod() else {
-            return false
-        }
-        if (pm.isCard || pm.isDigitalCurrency) && !paymentData.hasPayerCost() && payerCosts != nil {
             return true
         }
         return false
@@ -225,34 +128,6 @@ extension MercadoPagoCheckoutViewModel {
         let savedCardWithESC = !paymentData.hasToken() && pm.isCard && hasSavedESC() && hasInstallmentsIfNeeded
 
         return (newCard || savedCardWithESC)
-    }
-
-    func needReviewAndConfirm() -> Bool {
-        guard self.paymentOptionSelected != nil else {
-            return false
-        }
-
-        if readyToPay {
-            return false
-        }
-
-        if paymentResult != nil {
-            return false
-        }
-
-        if self.isCheckoutComplete() {
-            return false
-        }
-
-        if self.initWithPaymentData && paymentData.isComplete() {
-            initWithPaymentData = false
-            return true
-        }
-
-        if paymentData.isComplete() {
-            return true
-        }
-        return false
     }
 
     func needOneTapFlow() -> Bool {

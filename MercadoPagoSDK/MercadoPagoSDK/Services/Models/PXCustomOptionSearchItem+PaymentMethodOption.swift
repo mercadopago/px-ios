@@ -12,14 +12,6 @@ extension PXCustomOptionSearchItem: PaymentMethodOption {
         return self.id
     }
 
-    func getDescription() -> String {
-        return self._description ?? ""
-    }
-
-    func getComment() -> String {
-        return self.comment ?? ""
-    }
-
     func hasChildren() -> Bool {
         return false
     }

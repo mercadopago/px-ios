@@ -13,7 +13,7 @@ extension PaymentVaultViewModel {
         if isRoot {
             if let customerPaymentOptions = customerPaymentOptions {
                 for savedCard: CustomerPaymentMethod in customerPaymentOptions {
-                    dic.append(savedCard.getCustomerPaymentMethodForTrancking())
+                    dic.append(getCustomerPaymentMethodForTracking(customerPaymentMethod: savedCard))
                 }
             }
         }
@@ -57,5 +57,22 @@ extension PaymentVaultViewModel {
             }
         }
         return screenPath
+    }
+    
+    private func getCustomerPaymentMethodForTracking(customerPaymentMethod: CustomerPaymentMethod) -> [String: Any] {
+        let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
+
+        var savedCardDic: [String: Any] = [:]
+        savedCardDic["payment_method_type"] = customerPaymentMethod.getPaymentTypeId()
+        savedCardDic["payment_method_id"] = customerPaymentMethod.getPaymentMethodId()
+
+        var extraInfo: [String: Any] = [:]
+        extraInfo["card_id"] = customerPaymentMethod.getCardId()
+        extraInfo["has_esc"] = cardIdsEsc.contains(customerPaymentMethod.getCardId())
+        if let issuerId = customerPaymentMethod.getIssuer()?.id {
+            extraInfo["issuer_id"] = Int(issuerId)
+        }
+        savedCardDic["extra_info"] = extraInfo
+        return savedCardDic
     }
 }

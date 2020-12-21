@@ -18,17 +18,6 @@ extension PXAccountMoneyDto: PaymentMethodOption {
         return PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
 
-    func getDescription() -> String {
-        if let desc = sliderTitle {
-            return desc
-        }
-        return ""
-    }
-
-    func getComment() -> String {
-        return ""
-    }
-
     func hasChildren() -> Bool {
         return false
     }

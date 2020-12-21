@@ -20,7 +20,7 @@ open class PXConfiguratorManager: NSObject {
 
     // PX Flow Behaviour
     internal static var flowBehaviourProtocol: PXFlowBehaviourProtocol = PXFlowBehaviourDefault()
-    
+
     // ESC
     internal static var escProtocol: PXESCProtocol = PXESCDefault()
     internal static var escConfig: PXESCConfig = PXESCConfig.createConfig()

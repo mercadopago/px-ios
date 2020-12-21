@@ -20,8 +20,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     var shouldHideNavigationBar = false
     var shouldShowBackArrow = true
 
-    let STATUS_BAR_HEIGTH = ViewUtils.getStatusBarHeight()
-    let NAV_BAR_HEIGHT = 44.0
     var navBarFontSize: CGFloat = 18
 
     var loadingView: UIView?
@@ -69,19 +67,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }
-    }
-
-    func totalContentViewHeigth() -> CGFloat {
-        return UIScreen.main.bounds.height - getReserveSpace()
-    }
-
-    func getReserveSpace() -> CGFloat {
-        var totalReserveSpace: CGFloat = PXLayout.getStatusBarHeight()
-
-        if !shouldHideNavigationBar {
-            totalReserveSpace += CGFloat(NAV_BAR_HEIGHT)
-        }
-        return totalReserveSpace
     }
 
     internal func loadMPStyles() {

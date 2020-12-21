@@ -92,7 +92,7 @@ internal extension UIImage {
         UIGraphicsEndImageContext()
         return newImage!
     }
-    
+
     func addInset(percentage: CGFloat) -> UIImage? {
         if !(self.cgImage == nil && self.ciImage == nil),
             (0...100).contains(percentage) {

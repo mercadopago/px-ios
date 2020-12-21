@@ -32,7 +32,7 @@ internal class CustomService: MercadoPagoService {
                             inProcessPayment.statusDetail = PXPayment.StatusDetails.PENDING_CONTINGENCY
                             success(inProcessPayment)
                         } else {
-                            let apiException = try PXApiException.fromJSON(data: data)
+                            let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
                             failure?(PXError(domain: ApiDomain.CREATE_PAYMENT, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: paymentDic as? [String: Any], apiException: apiException))
                         }
                     } else {

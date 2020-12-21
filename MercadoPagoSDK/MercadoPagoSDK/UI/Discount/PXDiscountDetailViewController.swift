@@ -51,7 +51,7 @@ private extension PXDiscountDetailViewController {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: view.topAnchor, constant: PXLayout.M_MARGIN),
             title.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.M_MARGIN),
-            title.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN),
+            title.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN)
         ])
 
         // Subtitle
@@ -62,7 +62,7 @@ private extension PXDiscountDetailViewController {
             NSLayoutConstraint.activate([
                 subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: PXLayout.XXS_MARGIN),
                 subtitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.M_MARGIN),
-                subtitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN),
+                subtitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN)
             ])
         }
 
@@ -88,7 +88,7 @@ private extension PXDiscountDetailViewController {
         view.addSubview(summary)
         NSLayoutConstraint.activate([
             summary.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.M_MARGIN),
-            summary.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN),
+            summary.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN)
         ])
         var summaryTopConstraint = NSLayoutConstraint()
         if let badgeView = badgeView {
@@ -106,7 +106,7 @@ private extension PXDiscountDetailViewController {
         NSLayoutConstraint.activate([
             description.topAnchor.constraint(equalTo: summary.bottomAnchor, constant: PXLayout.XXXS_MARGIN),
             description.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PXLayout.M_MARGIN),
-            description.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN),
+            description.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PXLayout.M_MARGIN)
         ])
 
         // Legal terms

@@ -103,14 +103,6 @@ import UIKit
         return getCardDescription()
     }
 
-    func getSubtitle() -> String? {
-        return nil
-    }
-
-    func getImage() -> UIImage? {
-        return ResourceManager.shared.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
-    }
-
     /** PaymentMethodOption  implementation */
 
     func hasChildren() -> Bool {
@@ -131,14 +123,6 @@ import UIKit
 
     func isCard() -> Bool {
         return PXPaymentTypes.isCard(paymentTypeId: self.paymentMethodTypeId)
-    }
-
-    func getDescription() -> String {
-        return self.customerPaymentMethodDescription
-    }
-
-    func getComment() -> String {
-        return ""
     }
 
     func canBeClone() -> Bool {

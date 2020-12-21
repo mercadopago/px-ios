@@ -8,15 +8,7 @@
 
 import Foundation
 
-extension PXPayerCost: Cellable {
-    var objectType: ObjectTypes {
-        get {
-            return ObjectTypes.payerCost
-        }
-        set {
-            self.objectType = ObjectTypes.payerCost
-        }
-    }
+extension PXPayerCost {
 
     func hasInstallmentsRate() -> Bool {
         return installmentRate > 0.0 && installments > 1

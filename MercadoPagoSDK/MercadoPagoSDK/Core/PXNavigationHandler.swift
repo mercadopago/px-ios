@@ -21,7 +21,7 @@ internal class PXNavigationHandler: NSObject {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         if self.navigationController.viewControllers.count > 0 {
-            let newNavigationStack = self.navigationController.viewControllers.filter {!($0 is MercadoPagoUIViewController) || $0 is PXReviewViewController
+            let newNavigationStack = self.navigationController.viewControllers.filter {!($0 is MercadoPagoUIViewController)
             }
             viewControllerBase = newNavigationStack.last
         }
@@ -131,12 +131,7 @@ internal class PXNavigationHandler: NSObject {
     }
 
     func backToFirstPaymentVaultViewController() {
-        let mercadoPagoPaymentVaultViewController = self.navigationController.viewControllers.filter { $0.isKind(of: MercadoPagoUIViewController.self) && $0.isKind(of: PaymentVaultViewController.self) }
-        if !mercadoPagoPaymentVaultViewController.isEmpty {
-            self.navigationController.popToViewController(mercadoPagoPaymentVaultViewController[0], animated: true)
-        } else {
-            navigationController.popViewController(animated: true)
-        }
+        navigationController.popViewController(animated: true)
     }
 
     internal func removeRootLoading() {
@@ -147,7 +142,7 @@ internal class PXNavigationHandler: NSObject {
     }
 
     func cleanCompletedCheckoutsFromNavigationStack() {
-        let resultViewControllers = navigationController.viewControllers.filter { $0 is PXResultViewController || $0 is PXNewResultViewController }
+        let resultViewControllers = navigationController.viewControllers.filter { $0 is PXNewResultViewController }
         if let lastResultViewController = resultViewControllers.last {
             let index = self.navigationController.viewControllers.index(of: lastResultViewController)
             var  validViewControllers = self.navigationController.viewControllers.filter { (!$0.isKind(of: MercadoPagoUIViewController.self)) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
