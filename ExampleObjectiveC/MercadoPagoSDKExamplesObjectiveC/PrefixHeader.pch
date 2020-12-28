@@ -12,10 +12,10 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
-#if PX_PRIVATE_POD
+//#if PX_PRIVATE_POD
 @import MercadoPagoSDKV4;
-#else
-@import MercadoPagoSDK;
-#endif
+//#else
+//@import MercadoPagoSDK;
+//#endif
 
 #endif /* PrefixHeader_pch */

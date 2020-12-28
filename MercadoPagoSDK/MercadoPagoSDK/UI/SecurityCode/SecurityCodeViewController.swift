@@ -162,8 +162,8 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.text = errorMessage
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        securityCodeTextField.borderInactiveColor = ThemeManager.shared.rejectedColor()
-        securityCodeTextField.borderActiveColor = ThemeManager.shared.rejectedColor()
+//        securityCodeTextField.borderInactiveColor = ThemeManager.shared.rejectedColor()
+//        securityCodeTextField.borderActiveColor = ThemeManager.shared.rejectedColor()
         securityCodeTextField.inputAccessoryView = errorLabel
         securityCodeTextField.setNeedsDisplay()
         securityCodeTextField.resignFirstResponder()
@@ -173,8 +173,8 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     }
 
     open func hideErrorMessage() {
-        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.secondaryColor()
-        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.secondaryColor()
+//        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.secondaryColor()
+//        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.secondaryColor()
         self.securityCodeTextField.inputAccessoryView = self.toolbar
         self.securityCodeTextField.setNeedsDisplay()
         self.securityCodeTextField.resignFirstResponder()

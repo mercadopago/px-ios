@@ -20,16 +20,16 @@
 - (IBAction)checkoutFlow:(id)sender {
     // Datos basicos para iniciar el checkout
     // publicKey y preferenceId de quien recibe el pago
-    NSString *publicKey = @"TEST-391c666d-3757-4678-9ef6-d69c4d494cd1";
-    NSString *preferenceId = @"181794596-79127f41-cf23-4aff-952e-7d8f75121084";
+    NSString *publicKey = @"TEST-9c1cab76-c51d-46d0-840f-6665ab14d936";
+    NSString *preferenceId = @"564061896-e617f953-a332-4597-9877-77b868c5126e";
     // privateKey de quien hace el pago
-    NSString *privateKey = @"APP_USR-7092-091314-cc8f836a12b9bf78b16e77e4409ed873-470735636";
+    NSString *privateKey = @"TEST-2419260407828239-101317-ea55bf70890b2101b8f7c30bf5689891-509936543";
     
     // Una preferencia abierta es cuando se le pasa al builder un objeto PXCheckoutPreference en vez del id
     // Las preferencias abiertas solo pueden pagarse si usa PaymentPlugin
     BOOL useOpenPreference = NO;
     // Si usa PaymentPlugin el pago lo hace el integrador
-    BOOL usePaymentPlugin = YES;
+    BOOL usePaymentPlugin = NO;
     
     //BUILDER
     if (useOpenPreference) {
