@@ -11,25 +11,20 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showSecurityCodeScreen() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.getSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] _, securityCode in
-            self?.getTokenizationService().createCardToken(securityCode: securityCode)
-        })
-        viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToFirstPaymentVault: true)
-    }
-
-    func collectSecurityCodeForRetry() {
         guard !viewModel.isPXSecurityCodeViewControllerLastVC() else { return }
         let securityCodeViewModel = viewModel.getPXSecurityCodeViewModel(isCallForAuth: true)
 
-        let securityCodeVC = PXSecurityCodeViewController(viewModel: securityCodeViewModel, finishButtonAnimationCallback: { [weak self] in
-            self?.executeNextStep()
-        }, collectSecurityCodeCallback: { [weak self] cardInformation, securityCode in
-            if let token = cardInformation as? PXToken {
-                self?.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: securityCode, token: token)
-            } else {
-                self?.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: securityCode)
-            }
-        })
+        let securityCodeVC = PXSecurityCodeViewController(
+            viewModel: securityCodeViewModel,
+            finishButtonAnimationCallback: { [weak self] in
+                self?.executeNextStep()
+            }, collectSecurityCodeCallback: { [weak self] cardInformation, securityCode in
+                if let token = cardInformation as? PXToken {
+                    self?.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: securityCode, token: token)
+                } else {
+                    self?.getTokenizationService(needToShowLoading: false).createCardToken(securityCode: securityCode)
+                }
+            })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVC, animated: true)
     }
 
@@ -78,7 +73,7 @@ extension MercadoPagoCheckout {
                 } else {
                     self.viewModel.prepareForClone()
                 }
-                self.collectSecurityCodeForRetry()
+                self.showSecurityCodeScreen()
             case .RETRY,
                  .SELECT_OTHER:
                 if let changePaymentMethodAction = self.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(),

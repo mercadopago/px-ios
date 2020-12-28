@@ -49,7 +49,7 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
             })
         }
     }
-    
+
     private func dismissLoading(finishCallback:(() -> Void)? = nil) {
         if pxNavigationHandler.isLoadingPresented() {
             pxNavigationHandler.dismissLoading(animated: true, finishCallback: {
