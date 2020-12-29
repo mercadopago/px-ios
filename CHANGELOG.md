@@ -1,4 +1,4 @@
-# v4.37.2 
+# v4.37.2
 🚀Private Release - 4.37.2 🚀
 - Removed old CVV view
 - Fixed a bug where the loading indicator wouldn't be dismissed
