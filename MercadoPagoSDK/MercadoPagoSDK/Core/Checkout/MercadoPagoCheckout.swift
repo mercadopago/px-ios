@@ -151,7 +151,7 @@ extension MercadoPagoCheckout {
         case .START :
             self.initialize()
         case .SERVICE_CREATE_CARD_TOKEN:
-            self.getTokenizationService().createCardToken()
+            self.createCardToken()
         case .SCREEN_SECURITY_CODE:
             self.showSecurityCodeScreen()
         case .SERVICE_POST_PAYMENT:
@@ -228,6 +228,15 @@ extension MercadoPagoCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
         viewModel.startInitFlow()
+    }
+    
+    private func createCardToken() {
+        let lastViewController = viewModel.pxNavigationHandler.navigationController.viewControllers.last
+        if lastViewController is PXNewResultViewController || lastViewController is PXSecurityCodeViewController {
+            getTokenizationService(needToShowLoading: false).createCardToken()
+        } else {
+            getTokenizationService().createCardToken()
+        }
     }
 
     private func commonInit() {
