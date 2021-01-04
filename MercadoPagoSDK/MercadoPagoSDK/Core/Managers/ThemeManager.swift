@@ -34,7 +34,6 @@ extension ThemeManager {
         currentStylesheet = MLStyleSheetManager.styleSheet
         customizeNavigationBar(theme: currentTheme)
         customizeToolBar()
-        PXMonospaceLabel.appearance().font = UIFont(name: "Courier-Bold", size: 50.0)
     }
 
     func setDefaultColor(color: UIColor) {

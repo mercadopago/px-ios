@@ -41,6 +41,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
 
     override open func viewDidLoad() {
         super.viewDidLoad()
+        self.errorIcon.image = ResourceManager.shared.getImage("error_sign")
         self.errorTitle.text = error.message
         self.errorSubtitle.textColor = UIColor.pxBrownishGray
 
