@@ -16,4 +16,8 @@ internal class MercadoPagoBundle {
         }
         return bundle
     }
+
+    static func bundleShortVersionString() -> String? {
+        return bundle().infoDictionary?["CFBundleShortVersionString"] as? String
+    }
 }
