@@ -96,10 +96,9 @@ internal class SessionManager {
                 }()
 
                 let alamofireVersion: String = {
-                    guard
-                        let afInfo = Bundle(for: SessionManager.self).infoDictionary,
-                        let build = afInfo["CFBundleShortVersionString"]
-                    else { return "Unknown" }
+                    guard let build = MercadoPagoBundle.bundleShortVersionString() else {
+                        return "Unknown"
+                    }
 
                     return "Alamofire/\(build)"
                 }()

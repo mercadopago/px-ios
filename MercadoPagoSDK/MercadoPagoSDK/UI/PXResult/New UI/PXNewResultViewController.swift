@@ -475,6 +475,10 @@ extension PXNewResultViewController {
         if let tapAction = viewModel.getPointsTapAction() {
             pointsView.addTapAction(tapAction)
         }
+        
+        let broadcaster = MLBusinessLoyaltyBroadcaster.instance as MLBusinessLoyaltyBroadcaster
+        
+        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level:data.getRingNumber(),percentage:data.getRingPercentage() ,primaryColor:data.getRingHexaColor()))
 
         return pointsView
     }
