@@ -23,11 +23,6 @@ extension TrackingPaths {
             return TrackingPaths.pxTrack + payments + "/terms_and_conditions"
         }
 
-        // Bank Deaks Path
-        static func getBankDealsPath() -> String {
-            return TrackingPaths.pxTrack + addPaymentMethod + "/promotions"
-        }
-
         // Terms and Conditions deal Path
         static func getTermsAndConditionBankDealsPath() -> String {
             return TrackingPaths.pxTrack + addPaymentMethod + "/promotions/terms_and_conditions"
@@ -38,7 +33,6 @@ extension TrackingPaths {
             return TrackingPaths.pxTrack + payments + "/card_issuer"
         }
 
-        
         // Installments Paths
         static func getInstallmentsPath() -> String {
             return TrackingPaths.pxTrack + payments + "/installments"

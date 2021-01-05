@@ -89,7 +89,7 @@ internal extension String {
     func insert(_ string: String, ind: Int) -> String {
         return  String(self.prefix(ind)) + string + String(self.suffix(self.count - ind))
     }
-    
+
     var isNotEmpty: Bool {
         return !isEmpty
     }
