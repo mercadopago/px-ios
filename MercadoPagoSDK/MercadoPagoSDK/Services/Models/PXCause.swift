@@ -36,20 +36,4 @@ open class PXCause: NSObject, Codable {
 
         self.init(code: code, description: description)
     }
-
-    open func toJSONString() throws -> String? {
-        let encoder = JSONEncoder()
-        let data = try encoder.encode(self)
-        return String(data: data, encoding: .utf8)
-    }
-
-    open func toJSON() throws -> Data {
-        let encoder = JSONEncoder()
-        return try encoder.encode(self)
-    }
-
-    open class func fromJSON(data: Data) throws -> PXCause {
-        return try JSONDecoder().decode(PXCause.self, from: data)
-    }
-
 }
