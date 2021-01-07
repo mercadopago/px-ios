@@ -1,3 +1,11 @@
+# v4.37.3 
+🚀Private Release - 4.37.3 🚀
+- Add webpay for MLC
+- Fix bundle version
+- Removed unused classes, removed white spaces, moved files to the correct folder
+- Using Loyalty Broadcaster
+- Add merchant_order_id to congrats
+
 # v4.37.2 
 🚀Private Release - 4.37.2 🚀
 - Removed old CVV view
