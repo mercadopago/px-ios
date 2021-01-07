@@ -40,7 +40,7 @@ internal extension PXPaymentFlow {
         headers[MercadoPagoService.HeaderField.idempotencyKey.rawValue] =  model.generateIdempotecyKey()
         headers[MercadoPagoService.HeaderField.security.rawValue] = PXCheckoutStore.sharedInstance.getSecurityType()
 
-        model.mercadoPagoServices.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_PAYMENTS_URI, paymentDataJSON: paymentBody, query: nil, headers: headers, callback: { [weak self] (payment) in
+        model.mercadoPagoServices.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.shared().MP_PAYMENTS_URI, paymentDataJSON: paymentBody, query: nil, headers: headers, callback: { [weak self] (payment) in
             self?.handlePayment(payment: payment)
         }, failure: { [weak self] (error) in
             guard let self = self else { return }
@@ -104,7 +104,7 @@ internal extension PXPaymentFlow {
 
         model.shouldSearchPointsAndDiscounts = false
         let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
-        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_POINTS_URI, paymentIds: paymentIds, paymentMethodsIds: paymentMethodsIds, campaignId: campaignId, prefId: model.checkoutPreference?.id, platform: platform, ifpe: ifpe, headers: headers, callback: { [weak self] (pointsAndBenef) in
+        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.shared().MP_POINTS_URI, paymentIds: paymentIds, paymentMethodsIds: paymentMethodsIds, campaignId: campaignId, prefId: model.checkoutPreference?.id, platform: platform, ifpe: ifpe, merchantOrderId: model.checkoutPreference?.merchantOrderId, headers: headers, callback: { [weak self] (pointsAndBenef) in
                 guard let strongSelf = self else { return }
                 strongSelf.model.pointsAndDiscounts = pointsAndBenef
                 strongSelf.executeNextStep()

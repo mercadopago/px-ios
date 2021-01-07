@@ -119,7 +119,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
                 self.selectFirstCardInSlider()
             }
         }
-        
+
         if let viewControllers = navigationController?.viewControllers {
             viewControllers.filter{ $0 is MLCardFormViewController || $0 is MLCardFormWebPayViewController }.forEach{
                 ($0 as? MLCardFormViewController)?.dismissLoadingAndPop()

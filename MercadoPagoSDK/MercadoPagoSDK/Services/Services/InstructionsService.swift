@@ -24,7 +24,7 @@ internal class InstructionsService: MercadoPagoService {
         params.paramsAppend(key: ApiParam.PAYMENT_TYPE, value: paymentTypeId)
         params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
 
-        self.request(uri: PXServicesURLConfigs.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: HTTPMethod.get, cache: false, success: { (data: Data) -> Void in
+        self.request(uri: PXServicesURLConfigs.shared().MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: HTTPMethod.get, cache: false, success: { (data: Data) -> Void in
             do {
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
 

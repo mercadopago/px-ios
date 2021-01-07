@@ -23,7 +23,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
     private func getInit(prefId: String?, bodyJSON: Data?, headers: [String: String]?, success: @escaping (_ paymentMethodSearch: PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        var uri = PXServicesURLConfigs.MP_INIT_URI
+        var uri = PXServicesURLConfigs.shared().MP_INIT_URI
         if let prefId = prefId {
             uri.append("/\(prefId)")
         }

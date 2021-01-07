@@ -25,7 +25,7 @@ internal class RemedyService: MercadoPagoService {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         let body = try? encoder.encode(remedyBody)
 
-        let uri = PXServicesURLConfigs.MP_REMEDY_URI.replacingOccurrences(of: "${payment_id}", with: paymentMethodId)
+        let uri = PXServicesURLConfigs.shared().MP_REMEDY_URI.replacingOccurrences(of: "${payment_id}", with: paymentMethodId)
         self.request(uri: uri, params: params, body: body, method: HTTPMethod.post, success: success, failure: { _ in
             failure?(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })

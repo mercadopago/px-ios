@@ -9,11 +9,7 @@
 import Foundation
 import UIKit
 
-#if PX_PRIVATE_POD
 import MercadoPagoSDKV4
-#else
-import MercadoPagoSDK
-#endif
 
 class CongratsSelectorViewController: UITableViewController, PXTrackerListener {
     func trackScreen(screenName: String, extraParams: [String : Any]?) {

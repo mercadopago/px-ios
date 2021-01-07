@@ -38,3 +38,6 @@ ExampleSwift/Podfile.lock
 
 # CI
 mobile-cd
+
+# Swift DemoApp configurations
+ExampleSwift/ExampleSwift/Resources/*Config.xcconfig
