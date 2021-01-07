@@ -197,23 +197,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         .map { $0.getCardId() }
     }
 
-    func paymentVaultViewModel() -> PaymentVaultViewModel {
-        var groupName: String?
-        if let optionSelected = paymentOptionSelected {
-            groupName = optionSelected.getId()
-        }
-
-        populateCheckoutStore()
-
-        var customerOptions: [CustomerPaymentMethod]?
-
-        if inRootGroupSelection() { // Solo se muestran las opciones custom y los plugines en root
-            customerOptions = self.customPaymentOptions
-        }
-
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethods: search?.availablePaymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServices: mercadoPagoServices, advancedConfiguration: advancedConfig, disabledOption: disabledOption)
-    }
-
     public func getPXSecurityCodeViewModel(isCallForAuth: Bool = false) -> PXSecurityCodeViewModel {
         let cardInformation: PXCardInformationForm
         if let paymentOptionSelected = paymentOptionSelected as? PXCardInformationForm {
