@@ -22,7 +22,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var headerCloseAction: (() -> Void)?
     private(set) var headerImage: UIImage?
     private(set) var headerBadgeImage: UIImage?
-    
+
     // Receipt
     private(set) var shouldShowReceipt: Bool = false
     private(set) var receiptId: String?

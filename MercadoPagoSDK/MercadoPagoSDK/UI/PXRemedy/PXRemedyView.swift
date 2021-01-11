@@ -162,16 +162,16 @@ class PXRemedyView: UIView {
 
         var cardData: CardData
         var cardUI: CardUI
-        
+
         if let accountMoney = oneTapDto.accountMoney {
             cardData = PXCardDataFactory()
-            
+
             if accountMoney.cardType == .defaultType {
               cardUI = AccountMoneyCard(isDisabled: false, cardLogoImageUrl: accountMoney.paymentMethodImageURL, color: accountMoney.color, gradientColors: accountMoney.gradientColors)
             } else {
               cardUI = HybridAMCard(isDisabled: false, cardLogoImageUrl: accountMoney.paymentMethodImageURL, color: accountMoney.color, gradientColors: accountMoney.gradientColors)
             }
-            
+
         } else if let oneTapCardUI = oneTapDto.oneTapCard?.cardUI,
             let cardName = oneTapCardUI.name,
             let cardNumber = oneTapCardUI.lastFourDigits,

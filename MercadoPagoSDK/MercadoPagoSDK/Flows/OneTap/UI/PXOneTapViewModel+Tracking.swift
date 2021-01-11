@@ -114,7 +114,7 @@ extension PXOneTapViewModel {
         properties["extra_info"] = extraDic
         return properties
     }
-    
+
     func getSelectCardEventProperties(index: Int, count: Int) -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()

@@ -45,8 +45,8 @@ internal extension PXResultViewModel {
     }
 
     private func getWarningButtonLabel() -> String? {
-        if paymentResult.isRejectedWithRemedy() && remedy?.cvv != nil || remedy?.suggestedPaymentMethod != nil {
-            // These remedy types have its own animated button
+        if paymentResult.isRejectedWithRemedy(), let remedy = remedy, remedy.shouldShowAnimatedButton {
+            // Some remedy types have its own animated button
             return nil
         }
         if paymentResult.isCallForAuth() {
@@ -68,10 +68,15 @@ internal extension PXResultViewModel {
         if let primaryButton = pointsAndDiscounts?.primaryButton {
             return primaryButton.label
         }
-        if paymentResult.hasSecondaryButton() || (paymentResult.isHighRisk() && remedy?.highRisk != nil) {
+        if paymentResult.hasSecondaryButton() {
             return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
         } else if paymentResult.isAccepted() {
             return PXFooterResultConstants.APPROVED_LINK_TEXT.localized
+        }
+        if let remedy = remedy {
+            if remedy.shouldShowAnimatedButton || (paymentResult.isHighRisk() && remedy.highRisk != nil) {
+                return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
+            }
         }
         return nil
     }

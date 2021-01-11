@@ -25,6 +25,11 @@ extension PXRemedy {
         return cvv == nil && highRisk == nil && callForAuth == nil && suggestedPaymentMethod == nil
     }
     
+    var shouldShowAnimatedButton: Bool {
+        // These remedy types have its own animated button
+        return cvv != nil || suggestedPaymentMethod != nil
+    }
+    
     var title: String? {
         // Get title for remedy
         if let title = suggestedPaymentMethod?.title {

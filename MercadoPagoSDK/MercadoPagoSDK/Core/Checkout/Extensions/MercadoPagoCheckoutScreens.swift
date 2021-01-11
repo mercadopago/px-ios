@@ -46,6 +46,7 @@ extension MercadoPagoCheckout {
             showBusinessResultScreen()
             return
         }
+
         if viewModel.paymentResult == nil, let payment = viewModel.payment {
             viewModel.paymentResult = PaymentResult(payment: payment, paymentData: viewModel.paymentData)
         }
