@@ -21,6 +21,7 @@ internal class PXAnimatedButton: UIButton {
     var snackbar: MLSnackbar?
 
     private var buttonColor: UIColor?
+    private let disabledButtonColor = ThemeManager.shared.greyColor()
 
     init(normalText: String, loadingText: String, retryText: String) {
         self.normalText = normalText
@@ -232,7 +233,7 @@ extension PXAnimatedButton {
 extension PXAnimatedButton {
     func setEnabled(animated: Bool = true) {
         isUserInteractionEnabled = true
-        if backgroundColor == ThemeManager.shared.greyColor() {
+        if backgroundColor == disabledButtonColor {
             let duration = animated ? 0.3 : 0
             UIView.animate(withDuration: duration) { [weak self] in
                 self?.backgroundColor = self?.buttonColor
@@ -241,12 +242,12 @@ extension PXAnimatedButton {
     }
 
     func setDisabled(animated: Bool = true) {
-        if backgroundColor != ThemeManager.shared.greyColor() {
+        isUserInteractionEnabled = false
+        if backgroundColor != disabledButtonColor {
             buttonColor = backgroundColor
-            isUserInteractionEnabled = false
             let duration = animated ? 0.3 : 0
             UIView.animate(withDuration: duration) { [weak self] in
-                self?.backgroundColor = ThemeManager.shared.greyColor()
+                self?.backgroundColor = self?.disabledButtonColor
             }
         }
     }

@@ -69,6 +69,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         setupUI()
         isUIEnabled(true)
         addPulseViewNotifications()
+        setLoadingButtonState()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -216,10 +217,6 @@ extension PXOneTapViewController {
             PXLayout.pinBottom(view: footerView, withMargin: bottomMargin).isActive = true
         }
 
-        if let selectedCard = selectedCard, (selectedCard.status.isDisabled() || selectedCard.cardId == nil) {
-            loadingButtonComponent?.setDisabled(animated: false)
-        }
-
         view.layoutIfNeeded()
         let installmentRowWidth: CGFloat = slider.getItemSize(cardSliderContentView).width
         installmentRow.render(installmentRowWidth, experiment: viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
@@ -301,6 +298,12 @@ extension PXOneTapViewController {
         slider.render(containerView: inContainerView, cardSliderProtocol: self)
         slider.termsAndCondDelegate = self
         slider.update(viewModel.getCardSliderViewModel())
+    }
+
+    private func setLoadingButtonState() {
+        if let selectedCard = selectedCard, (selectedCard.status.isDisabled() || selectedCard.cardId == nil) {
+            loadingButtonComponent?.setDisabled(animated: false)
+        }
     }
 }
 
