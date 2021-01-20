@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.37.3"
+  s.version          = "4.37.4"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.default_subspec = 'Default'
   s.static_framework = true
-
   s.subspec 'Default' do |default|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     default.resources = ['MercadoPagoSDK/Resources/**/*.xib']
@@ -27,9 +26,14 @@ Pod::Spec.new do |s|
     s.dependency 'MLBusinessComponents', '~> 1.0'
     s.dependency 'MLCardForm', '~> 0.7'
     s.dependency 'AndesUI/AndesBottomSheet', '~> 3.0'
+    default.pod_target_xcconfig = {
+      'OTHER_SWIFT_FLAGS[config=Debug]' => '-D PX_PRIVATE_POD',
+      'OTHER_SWIFT_FLAGS[config=Release]' => '-D PX_PRIVATE_POD',
+      'OTHER_SWIFT_FLAGS[config=MDS-Custom]' => '-D PX_PRIVATE_POD',
+      'OTHER_SWIFT_FLAGS[config=MDS-Nightly]' => '-D PX_PRIVATE_POD',
+      'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D PX_PRIVATE_POD'
+    }
   end
-
-
   s.subspec 'ESC' do |esc|
     esc.dependency 'MercadoPagoSDKV4/Default'
     esc.pod_target_xcconfig = {
@@ -40,9 +44,8 @@ Pod::Spec.new do |s|
       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D PX_PRIVATE_POD'
     }
   end
-
-  #s.test_spec do |test_spec|
-    #test_spec.source_files = 'MercadoPagoSDK/MercadoPagoSDKTests/*'
-    #test_spec.frameworks = 'XCTest'
-  #end
+  s.test_spec 'UnitTests' do |test_spec|
+    test_spec.source_files = 'MercadoPagoSDK/MercadoPagoSDKTests/*'
+    test_spec.frameworks = 'XCTest'
+  end
 end
