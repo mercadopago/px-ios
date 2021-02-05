@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class PXInitConfigurations: Decodable {
+final class PXInitConfigurations: Codable {
     let ESCBlacklistedStatus: [String]?
 
     enum CodingKeys: String, CodingKey {

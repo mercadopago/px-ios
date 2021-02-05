@@ -24,6 +24,12 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
         }
         
         var request = URLRequest(url: url)
+        
+        do {
+            request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.headers)
+        } catch {
+            completionHandler(nil, NSError())
+        }
     
         do {
             request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.parameters)
@@ -61,6 +67,12 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
         var request = URLRequest(url: url)
         
         do {
+            request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.headers)
+        } catch {
+            completionHandler(nil, NSError())
+        }
+        
+        do {
             request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.parameters)
         } catch {
             completionHandler(nil, NSError())
@@ -94,6 +106,12 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
         }
         
         var request = URLRequest(url: url)
+        
+        do {
+            request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.headers)
+        } catch {
+            completionHandler(nil, NSError())
+        }
         
         do {
             request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.parameters)

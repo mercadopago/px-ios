@@ -26,6 +26,11 @@ extension RemedyRequestInfos: RequestInfos {
         }
     }
     
+    var headers: [String : String]? {
+        switch self {
+        case .getRemedy(_, _, _): return nil
+        }
+    }
     
     var parameters: [String : Any]? {
         switch self {

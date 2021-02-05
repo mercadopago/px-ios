@@ -14,7 +14,7 @@ enum HTTPMethodType: String {
     case delete  = "DELETE"
 }
 
-protocol RequestInfos {
+internal protocol RequestInfos {
     
     var baseURL: URL { get }
     
@@ -23,6 +23,8 @@ protocol RequestInfos {
     var method: HTTPMethodType { get }
     
     var parameters: [String: Any]? { get }
+    
+    var headers: [String: String]? { get }
     
     var body: Data? { get }
     

@@ -25,7 +25,7 @@ public struct PXModal: Codable {
 
 import Foundation
 /// :nodoc:
-final class PXInitDTO: NSObject, Decodable {
+final class PXInitDTO: NSObject, Codable {
     public var preference: PXCheckoutPreference?
     public var oneTap: [PXOneTapDto]?
     public var currency: PXCurrency

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PXVariant: Decodable {
+struct PXVariant: Codable {
     let id: Int
     let name: String
     let availableFeatures: [PXAvailableFeatures]
