@@ -24,12 +24,14 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
         }
         
         var request = URLRequest(url: url)
-        
+    
         do {
             request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.parameters)
         } catch {
             completionHandler(nil, NSError())
         }
+        
+        request.httpBody = target.body
         
         URLSession.shared.dataTask(with: request) { data, resp, error in
             if let error = error {
@@ -64,6 +66,8 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
             completionHandler(nil, NSError())
         }
         
+        request.httpBody = target.body
+        
         URLSession.shared.dataTask(with: request) { data, resp, error in
             if let error = error {
                 completionHandler(nil, error)
@@ -96,6 +100,8 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
         } catch {
             completionHandler(nil, NSError())
         }
+        
+        request.httpBody = target.body
         
         URLSession.shared.dataTask(with: request) { data, resp, error in
             if let error = error {
