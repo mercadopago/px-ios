@@ -24,13 +24,15 @@ protocol RequestInfos {
     
     var parameters: [String: Any]? { get }
     
+    var body: Data? { get }
+    
     var parameterEncoding: ParameterEncode { get }
 
 }
 
 extension RequestInfos {
     var baseURL: URL {
-        return URL(string: "https://api.mercadolibre.com/sites/MLA/")!
+        return URL(string: "https://api.mercadopago.com/")!
     }
     
     var parameterEncoding: ParameterEncode {
