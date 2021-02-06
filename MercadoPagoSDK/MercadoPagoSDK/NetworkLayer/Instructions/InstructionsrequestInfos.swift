@@ -12,7 +12,7 @@ enum InstructionsrequestInfos {
 extension InstructionsrequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .getInstructions(let paymentId, _, _): return "/checkout/payments/\(paymentId)/results"
+        case .getInstructions(let paymentId, _, _): return "checkout/payments/\(paymentId)/results"
         }
     }
     
