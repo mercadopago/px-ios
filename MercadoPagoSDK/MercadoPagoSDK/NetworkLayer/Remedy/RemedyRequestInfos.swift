@@ -12,7 +12,7 @@ enum RemedyRequestInfos {
 extension RemedyRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .getRemedy(let paymentId, _, _): return "/px_mobile/v1/remedies/\(paymentId)/"
+        case .getRemedy(let paymentId, _, _): return "px_mobile/v1/remedies/\(paymentId)/"
         }
     }
     

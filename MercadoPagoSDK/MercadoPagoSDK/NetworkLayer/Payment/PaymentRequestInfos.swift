@@ -14,7 +14,7 @@ enum PaymentRequestInfos {
 extension PaymentRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .getInit(let preferenceId, _, _, _): return "/px_mobile/v2/checkout/\(preferenceId ?? "")"
+        case .getInit(let preferenceId, _, _, _): return "px_mobile/v2/checkout/\(preferenceId ?? "")"
         }
     }
     
