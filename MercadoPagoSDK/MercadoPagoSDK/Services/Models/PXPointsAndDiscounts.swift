@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PXPointsAndDiscounts: Decodable {
+struct PXPointsAndDiscounts: Codable {
 
     let points: PXPoints?
     let discounts: PXDiscounts?

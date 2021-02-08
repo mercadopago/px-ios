@@ -8,7 +8,7 @@
 import Foundation
 
 @objcMembers
-public class PXPointsProgress: NSObject, Decodable {
+public class PXPointsProgress: NSObject, Codable {
 
     let percentage: Double
     let levelColor: String

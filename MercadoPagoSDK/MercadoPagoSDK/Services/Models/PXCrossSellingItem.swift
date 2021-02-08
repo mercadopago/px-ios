@@ -8,7 +8,7 @@
 import Foundation
 
 @objcMembers
-public class PXCrossSellingItem: NSObject ,Decodable {
+public class PXCrossSellingItem: NSObject, Codable {
 
     let title: String
     let icon: String

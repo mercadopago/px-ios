@@ -16,7 +16,7 @@ extension GatewayRequestInfos: RequestInfos {
         switch self {
         case .getToken(_, _, _): return "v1/card_tokens"
         case .cloneToken(let tokenId, _): return "\(tokenId)/clone"
-        case .validateToken(let tokenId, _, _): return "tokenId"
+        case .validateToken(let tokenId, _, _): return "\(tokenId)"
         }
     }
     

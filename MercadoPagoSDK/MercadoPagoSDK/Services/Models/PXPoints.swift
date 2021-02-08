@@ -8,7 +8,7 @@
 import Foundation
 
 @objcMembers
-public class PXPoints: NSObject, Decodable {
+public class PXPoints: NSObject, Codable {
 
     let progress: PXPointsProgress
     let title: String

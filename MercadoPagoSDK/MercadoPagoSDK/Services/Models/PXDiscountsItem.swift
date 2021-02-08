@@ -8,7 +8,7 @@
 import Foundation
 
 @objcMembers
-public class PXDiscountsItem: NSObject, Decodable {
+public class PXDiscountsItem: NSObject, Codable {
 
     let icon: String
     let title: String

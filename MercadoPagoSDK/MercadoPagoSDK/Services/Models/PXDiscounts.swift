@@ -8,7 +8,7 @@
 import Foundation
 
 @objcMembers
-public class PXDiscounts: NSObject , Decodable {
+public class PXDiscounts: NSObject , Codable {
 
     let title: String?
     let subtitle: String?
