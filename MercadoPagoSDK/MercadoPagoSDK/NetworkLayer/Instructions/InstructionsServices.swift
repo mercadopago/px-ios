@@ -7,6 +7,7 @@
 
 protocol InstructionsServices {
     func getInstructions(paymentId: String,
+                         paymentTypeId: String,
                          accessToken: String?,
                          publicKey: String,
                          completion: @escaping (PXInstructions?, PXError?) -> Void)
@@ -22,8 +23,8 @@ final class InstructionsServicesImpl: InstructionsServices {
     }
     
     // MARK: - Public methods
-    func getInstructions(paymentId: String, accessToken: String?, publicKey: String, completion: @escaping (PXInstructions?, PXError?) -> Void) {
-        service.requestObject(model: PXInstructions.self, .getInstructions(paymentId, accessToken, publicKey)) { instruction, error in
+    func getInstructions(paymentId: String, paymentTypeId: String, accessToken: String?, publicKey: String, completion: @escaping (PXInstructions?, PXError?) -> Void) {
+        service.requestObject(model: PXInstructions.self, .getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, privateKey: accessToken, publicKey: publicKey)) { instruction, error in
             if let _ = error {
                 completion(nil, PXError(domain: ApiDomain.GET_INSTRUCTIONS, code: ErrorTypes.NO_INTERNET_ERROR,
                                         userInfo: [

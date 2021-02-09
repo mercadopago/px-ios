@@ -6,13 +6,13 @@
 //
 
 enum RemedyRequestInfos {
-    case getRemedy(String, Bool, Data?)
+    case getRemedy(String?, Bool, Data?)
 }
 
 extension RemedyRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .getRemedy(let paymentId, _, _): return "px_mobile/v1/remedies/\(paymentId)/"
+        case .getRemedy(let paymentId, _, _): return paymentId == nil ? "px_mobile/v1/remedies/" : "px_mobile/v1/remedies/\(paymentId ?? "")/"
         }
     }
     
