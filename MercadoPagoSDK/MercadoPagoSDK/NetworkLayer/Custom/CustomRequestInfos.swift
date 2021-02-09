@@ -6,7 +6,7 @@
 //
 
 enum CustomRequestInfos {
-    case resetESCCap(privateKey: String)
+    case resetESCCap(cardId: String, privateKey: String?)
     case getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel)
     case createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String : String]?)
 }
@@ -14,7 +14,7 @@ enum CustomRequestInfos {
 extension CustomRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .resetESCCap(_): return "px_mobile/v1/esc_cap"
+        case .resetESCCap(let cardId, _): return "px_mobile/v1/esc_cap/\(cardId)"
         case .getPointsAndDiscounts(_, _): return "px_mobile/congrats"
         case .createPayment(_, _, _, _): return "px_mobile/payments"
         }
@@ -22,7 +22,7 @@ extension CustomRequestInfos: RequestInfos {
     
     var method: HTTPMethodType {
         switch self {
-        case .resetESCCap(_): return .delete
+        case .resetESCCap(_, _): return .delete
         case .getPointsAndDiscounts(_, _): return .get
         case .createPayment(_, _, _, _): return .post
         }
@@ -30,7 +30,7 @@ extension CustomRequestInfos: RequestInfos {
     
     var parameters: [String : Any]? {
         switch self {
-        case .resetESCCap(let privateKey): return ["access_token" : privateKey]
+        case .resetESCCap(_, let privateKey): if let privateKey = privateKey { return ["access_token" : privateKey] } else { return nil }
         case .getPointsAndDiscounts(_, let parameters): return [
             "payment_methods_ids" : parameters.paymentMethodIds,
             "payment_ids" : parameters.paymentiDS,

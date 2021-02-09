@@ -9,8 +9,8 @@ struct CustomParametersModel {
     let paymentMethodIds: String
     let paymentiDS: String
     let ifpe: String
-    let prefId: String
-    let campaignId: String
-    let flowName: String
-    let merchantOrderId: String
+    let prefId: String?
+    let campaignId: String?
+    let flowName: String?
+    let merchantOrderId: String?
 }

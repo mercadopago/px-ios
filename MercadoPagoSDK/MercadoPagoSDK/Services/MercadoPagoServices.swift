@@ -11,20 +11,28 @@ import Foundation
 import MLCardForm
 
 internal class MercadoPagoServices: NSObject {
-
-    open var publicKey: String
-    open var privateKey: String?
+    // MARK: - Private properties
     private var processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
     private var branchId: String?
     private var baseURL: String! = PXServicesURLConfigs.MP_API_BASE_URL
     private var gatewayBaseURL: String!
+    private var language: String = NSLocale.preferredLanguages[0]
+    
+    private let customService: CustomServices
+    
+    // MARK: - Internal properties
     var reachability: Reachability?
     var hasInternet: Bool = true
-    private var language: String = NSLocale.preferredLanguages[0]
+    
+    // MARK: - Open perperties
+    open var publicKey: String
+    open var privateKey: String?
 
-    init(publicKey: String, privateKey: String? = nil) {
+    // MARK: - Initialization
+    init(publicKey: String, privateKey: String? = nil, customService: CustomServices = CustomServicesImpl()) {
         self.publicKey = publicKey
         self.privateKey = privateKey
+        self.customService = customService
         super.init()
         addReachabilityObserver()
     }
@@ -43,15 +51,7 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func resetESCCap(cardId: String, onCompletion : @escaping () -> Void) {
-        var uri = PXServicesURLConfigs.shared().MP_RESET_ESC_CAP
-        uri.append("/\(cardId)")
-
-        let params = MercadoPagoServices.getParamsAccessToken(privateKey)
-
-        let service: CustomService = CustomService(baseURL: baseURL, URI: uri)
-        service.resetESCCap(params: params, success: {
-            onCompletion()
-        }) { (_) in
+        customService.resetESCCap(cardId: cardId, privateKey: privateKey) { _, _ in
             onCompletion()
         }
     }
@@ -76,41 +76,72 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, headers: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: CustomService = CustomService(baseURL: url, URI: uri)
-
-
-        var params = MercadoPagoServices.getParamsPublicKeyAndAcessToken(publicKey, privateKey)
-        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
-        if let queryParams = query as NSDictionary? {
-            params = queryParams.parseToQuery()
+        
+        customService.createPayment(privateKey: privateKey, publicKey: publicKey, data: paymentDataJSON, header: headers) { payment, error in
+            if let payment = payment {
+                callback(payment)
+            } else if let error = error {
+                failure(error)
+            }
         }
-
-        service.createPayment(headers: headers, body: paymentDataJSON, params: params, success: callback, failure: failure)
+        
+        
+//        let service: CustomService = CustomService(baseURL: url, URI: uri)
+//
+//
+//        var params = MercadoPagoServices.getParamsPublicKeyAndAcessToken(publicKey, privateKey)
+//        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
+//        if let queryParams = query as NSDictionary? {
+//            params = queryParams.parseToQuery()
+//        }
+//
+//        service.createPayment(headers: headers, body: paymentDataJSON, params: params, success: callback, failure: failure)
     }
 
     func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, paymentMethodsIds: [String]? = nil, campaignId: String?, prefId: String?, platform: String, ifpe: Bool, merchantOrderId: Int?, headers: [String: String], callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
-        let service: CustomService = CustomService(baseURL: url, URI: uri)
-
-        var params = MercadoPagoServices.getParamsAccessTokenAndPaymentIdsAndPlatform(privateKey, paymentIds, platform)
-        params.paramsAppend(key: ApiParam.PAYMENT_METHODS_IDS, value: MercadoPagoServices.getPaymentMethodsIds(paymentMethodsIds))
-
-        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
-        params.paramsAppend(key: ApiParam.IFPE, value: String(ifpe))
-        params.paramsAppend(key: ApiParam.PREF_ID, value: prefId)
-
-        if let campaignId = campaignId {
-            params.paramsAppend(key: ApiParam.CAMPAIGN_ID, value: campaignId)
-        }
-
-        if let flowName = MPXTracker.sharedInstance.getFlowName() {
-            params.paramsAppend(key: ApiParam.FLOW_NAME, value: flowName)
+        let parameters = CustomParametersModel(paymentMethodIds: getPaymentMethodsIds(paymentMethodsIds),
+                                               paymentiDS: getPaymentIds(paymentIds),
+                                               ifpe: String(ifpe),
+                                               prefId: prefId,
+                                               campaignId: campaignId,
+                                               flowName: MPXTracker.sharedInstance.getFlowName(),
+                                               merchantOrderId: merchantOrderId != nil ? String(merchantOrderId!) : nil)
+        customService.getPointsAndDiscounts(data: nil, parameters: parameters) { pointsAndDiscounts, error in
+            if let pointsAndDiscounts = pointsAndDiscounts {
+                callback(pointsAndDiscounts)
+            } else if let _ = error {
+                failure()
+            }
         }
         
-        if let merchantOrderId = merchantOrderId {
-            params.paramsAppend(key: ApiParam.MERCHANT_ORDER_ID, value: String(merchantOrderId))
-        }
-
-        service.getPointsAndDiscounts(headers: headers, body: nil, params: params, success: callback, failure: failure)
+        
+        
+        
+        
+        
+//
+//        let service: CustomService = CustomService(baseURL: url, URI: uri)
+//
+//        var params = MercadoPagoServices.getParamsAccessTokenAndPaymentIdsAndPlatform(privateKey, paymentIds, platform)
+//        params.paramsAppend(key: ApiParam.PAYMENT_METHODS_IDS, value: getPaymentMethodsIds(paymentMethodsIds))
+//
+//        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
+//        params.paramsAppend(key: ApiParam.IFPE, value: String(ifpe))
+//        params.paramsAppend(key: ApiParam.PREF_ID, value: prefId)
+//
+//        if let campaignId = campaignId {
+//            params.paramsAppend(key: ApiParam.CAMPAIGN_ID, value: campaignId)
+//        }
+//
+//        if let flowName = MPXTracker.sharedInstance.getFlowName() {
+//            params.paramsAppend(key: ApiParam.FLOW_NAME, value: flowName)
+//        }
+//
+//        if let merchantOrderId = merchantOrderId {
+//            params.paramsAppend(key: ApiParam.MERCHANT_ORDER_ID, value: String(merchantOrderId))
+//        }
+//
+//        service.getPointsAndDiscounts(headers: headers, body: nil, params: params, success: callback, failure: failure)
     }
 
     func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -228,12 +259,8 @@ internal class MercadoPagoServices: NSObject {
         return params
     }
 
-    class func getParamsAccessTokenAndPaymentIdsAndPlatform(_ payerAccessToken: String?, _ paymentIds: [String]?, _ platform: String?) -> String {
+    func getPaymentIds(_ paymentIds: [String]?) -> String {
         var params: String = ""
-
-        if let payerAccessToken = payerAccessToken, !payerAccessToken.isEmpty {
-            params.paramsAppend(key: ApiParam.PAYER_ACCESS_TOKEN, value: payerAccessToken)
-        }
 
         if let paymentIds = paymentIds, !paymentIds.isEmpty {
             var paymentIdsString = ""
@@ -245,15 +272,11 @@ internal class MercadoPagoServices: NSObject {
             }
             params.paramsAppend(key: ApiParam.PAYMENT_IDS, value: paymentIdsString)
         }
-
-        if let platform = platform {
-            params.paramsAppend(key: ApiParam.PLATFORM, value: platform)
-        }
-
+        
         return params
     }
 
-    class func getPaymentMethodsIds(_ paymentMethodsIds: [String]?) -> String {
+    func getPaymentMethodsIds(_ paymentMethodsIds: [String]?) -> String {
         var paymentMethodsIdsString = ""
         if let paymentMethodsIds = paymentMethodsIds {
             for (index, paymentMethodId) in paymentMethodsIds.enumerated() {
