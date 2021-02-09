@@ -6,13 +6,13 @@
 //
 
 enum InstructionsrequestInfos {
-    case getInstructions(String, String?, String)
+    case getInstructions(paymentId: String, paymentTypeId: String, privateKey: String?, publicKey: String)
 }
 
 extension InstructionsrequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .getInstructions(let paymentId, _, _): return "checkout/payments/\(paymentId)/results"
+        case .getInstructions(let paymentId, _, _, _): return "checkout/payments/\(paymentId)/results"
         }
     }
     
@@ -22,14 +22,18 @@ extension InstructionsrequestInfos: RequestInfos {
     
     var parameters: [String : Any]? {
         switch self {
-        case .getInstructions(_, let accessToken, let publicKey):
+        case .getInstructions(_, let paymentId, let accessToken, let publicKey):
             if let token = accessToken {
                 return [
                     "access_token" : token,
-                    "public_key" : publicKey
+                    "public_key" : publicKey,
+                    "payment_type" : paymentId
                 ]
             } else {
-                return [ "public_key" : publicKey ]
+                return [
+                    "public_key" : publicKey,
+                    "payment_type" : paymentId
+                ]
             }
         }
     }
@@ -41,6 +45,4 @@ extension InstructionsrequestInfos: RequestInfos {
     var body: Data? {
         return nil
     }
-    
-    
 }

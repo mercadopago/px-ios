@@ -6,11 +6,11 @@
 //
 
 protocol RemedyServices {
-    func getRemedy(privateKey: String,
+    func getRemedy(privateKey: String?,
                    oneTap: Bool,
                    payerPaymentMethodRejected: PXPayerPaymentMethodRejected,
                    alternativePayerPaymentMethods: [PXRemedyPaymentMethod]?,
-                   completion: @escaping (Data?, PXError?) -> Void)
+                   completion: @escaping (PXRemedy?, PXError?) -> Void)
 }
 
 final class RemedyServicesImpl: RemedyServices {
@@ -23,13 +23,13 @@ final class RemedyServicesImpl: RemedyServices {
     }
     
     // MARK: - Public methods
-    func getRemedy(privateKey: String, oneTap: Bool, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, alternativePayerPaymentMethods: [PXRemedyPaymentMethod]?, completion: @escaping (Data?, PXError?) -> Void) {
+    func getRemedy(privateKey: String?, oneTap: Bool, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, alternativePayerPaymentMethods: [PXRemedyPaymentMethod]?, completion: @escaping (PXRemedy?, PXError?) -> Void) {
         let remedyBody = PXRemedyBody(payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods)
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         let body = try? encoder.encode(remedyBody)
         
-        service.requestData(target: .getRemedy(privateKey, oneTap, body)) { data, error in
+        service.requestObject(model: PXRemedy.self, .getRemedy(privateKey, oneTap, body)) { remedy, error in
             if let _ = error {
                 completion(nil, PXError(domain: ApiDomain.GET_REMEDY,
                                         code: ErrorTypes.NO_INTERNET_ERROR,
@@ -38,7 +38,7 @@ final class RemedyServicesImpl: RemedyServices {
                                             NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"
                                         ]))
             } else {
-                completion(data, nil)
+                completion(remedy, nil)
             }
         }
     }

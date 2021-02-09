@@ -19,6 +19,8 @@ internal class MercadoPagoServices: NSObject {
     private var language: String = NSLocale.preferredLanguages[0]
     
     private let customService: CustomServices
+    private let remedyService: RemedyServices
+    private let instructionsService: InstructionsServices
     
     // MARK: - Internal properties
     var reachability: Reachability?
@@ -29,10 +31,16 @@ internal class MercadoPagoServices: NSObject {
     open var privateKey: String?
 
     // MARK: - Initialization
-    init(publicKey: String, privateKey: String? = nil, customService: CustomServices = CustomServicesImpl()) {
+    init(publicKey: String,
+         privateKey: String? = nil,
+         customService: CustomServices = CustomServicesImpl(),
+         remedyService: RemedyServices = RemedyServicesImpl(),
+         instructionsService: InstructionsServices = InstructionsServicesImpl()) {
         self.publicKey = publicKey
         self.privateKey = privateKey
         self.customService = customService
+        self.remedyService = remedyService
+        self.instructionsService = instructionsService
         super.init()
         addReachabilityObserver()
     }
@@ -57,10 +65,19 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func getInstructions(paymentId: Int64, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let instructionsService = InstructionsService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey)
-        instructionsService.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: { (instructionsInfo : PXInstructions) -> Void in
-            callback(instructionsInfo)
-        }, failure: failure)
+        instructionsService.getInstructions(paymentId: String(paymentId), paymentTypeId: paymentTypeId, accessToken: privateKey, publicKey: publicKey) { instructions, error in
+            if let instructions = instructions {
+                callback(instructions)
+            } else if let error = error {
+                failure(error)
+            }
+        }
+        
+        
+//        let instructionsService = InstructionsService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey)
+//        instructionsService.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: { (instructionsInfo : PXInstructions) -> Void in
+//            callback(instructionsInfo)
+//        }, failure: failure)
     }
 
     func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -202,22 +219,31 @@ internal class MercadoPagoServices: NSObject {
     }
     
     func getRemedy(for paymentMethodId: String, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, alternativePayerPaymentMethods: [PXRemedyPaymentMethod]?, oneTap: Bool, success : @escaping (PXRemedy) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service = RemedyService(baseURL: baseURL, payerAccessToken: privateKey)
+        
+        remedyService.getRemedy(privateKey: privateKey, oneTap: oneTap, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods) { remedy, error in
+            if let remedy = remedy {
+                success(remedy)
+            } else if let error = error {
+                failure(error)
+            }
+        }
+        
+//        let service = RemedyService(baseURL: baseURL, payerAccessToken: privateKey)
 
-        service.getRemedy(for: paymentMethodId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, oneTap: oneTap, success: { data -> Void in
-            guard let data = data else {
-                failure(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
-                return
-            }
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let responseObject = try decoder.decode(PXRemedy.self, from: data)
-                success(responseObject)
-            } catch {
-                failure(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
-            }
-        }, failure: failure)
+//        service.getRemedy(for: paymentMethodId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, oneTap: oneTap, success: { data -> Void in
+//            guard let data = data else {
+//                failure(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
+//                return
+//            }
+//            do {
+//                let decoder = JSONDecoder()
+//                decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                let responseObject = try decoder.decode(PXRemedy.self, from: data)
+//                success(responseObject)
+//            } catch {
+//                failure(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
+//            }
+//        }, failure: failure)
     }
 
     //SETS

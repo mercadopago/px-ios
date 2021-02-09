@@ -31,17 +31,7 @@ extension CustomRequestInfos: RequestInfos {
     var parameters: [String : Any]? {
         switch self {
         case .resetESCCap(_, let privateKey): if let privateKey = privateKey { return ["access_token" : privateKey] } else { return nil }
-        case .getPointsAndDiscounts(_, let parameters): return [
-            "payment_methods_ids" : parameters.paymentMethodIds,
-            "payment_ids" : parameters.paymentiDS,
-            "api_version" : "2.0",
-            "ifpe" : parameters.ifpe,
-            "pref_id" : parameters.prefId,
-            "campaign_id" : parameters.campaignId,
-            "flow_name" : parameters.flowName,
-            "merchant_order_id" : parameters.merchantOrderId,
-            "platform" : MLBusinessAppDataService().getAppIdentifier().rawValue
-        ]
+        case .getPointsAndDiscounts(_, let parameters): return organizeParameters(parameters: parameters)
         case .createPayment(let privateKey, let publicKey, _, _):
             if let token = privateKey {
                 return [
@@ -60,16 +50,51 @@ extension CustomRequestInfos: RequestInfos {
     
     var headers: [String : String]? {
         switch self {
-        case .resetESCCap(_), .getPointsAndDiscounts(_, _): return nil
+        case .resetESCCap(_, _), .getPointsAndDiscounts(_, _): return nil
         case .createPayment(_, _, _, let header): return header
         }
     }
     
     var body: Data? {
         switch self {
-        case .resetESCCap(_): return nil
+        case .resetESCCap(_, _): return nil
         case .getPointsAndDiscounts(let data, _): return data
         case .createPayment(_, _, let data, _): return data
         }
+    }
+}
+
+extension CustomRequestInfos {
+    func organizeParameters(parameters: CustomParametersModel) -> [String : Any] {
+        var filteredParameters: [String : Any] = [:]
+        
+        if parameters.paymentMethodIds != "" {
+            filteredParameters.updateValue(parameters.paymentMethodIds, forKey: "payment_methods_ids")
+        }
+        
+        if parameters.paymentiDS != "" {
+            filteredParameters.updateValue(parameters.paymentiDS, forKey: "payment_ids")
+        }
+        
+        if let prefId = parameters.prefId {
+            filteredParameters.updateValue(prefId, forKey: "pref_id")
+        }
+        
+        if let campaignId = parameters.campaignId {
+            filteredParameters.updateValue(campaignId, forKey: "campaign_id")
+        }
+        
+        if let flowName = parameters.flowName {
+            filteredParameters.updateValue(flowName, forKey: "flow_name")
+        }
+        
+        if let merchantOrderId = parameters.merchantOrderId {
+            filteredParameters.updateValue(merchantOrderId, forKey: "merchant_order_id")
+        }
+        
+        filteredParameters.updateValue("2.0", forKey: "api_version")
+        filteredParameters.updateValue(parameters.ifpe, forKey: "ifpe")
+        
+        return filteredParameters
     }
 }
