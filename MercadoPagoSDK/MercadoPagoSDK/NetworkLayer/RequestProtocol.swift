@@ -19,7 +19,7 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
     let MP_DEFAULT_PRODUCT_ID = "BJEO9TFBF6RG01IIIOU0"
     //MARK: - Public methods
     func requestObject<Model>(model: Model.Type, _ target: Target, completionHandler: @escaping (Model?, Error?) -> Void) where Model : Codable {
-        guard let url = URL(string: "\(target.baseURL)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
+        guard let url = URL(string: "\(target.baseURL)\(target.environment.rawValue)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
             completionHandler(nil, NSError())
             return
         }
@@ -99,7 +99,7 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
     }
     
     func requestArray<Model: Codable>(model: Model.Type, _ target: Target, completionHandler: @escaping (_ result: [Model]?, _ error: Error?) -> Void) {
-        guard let url = URL(string: "\(target.baseURL)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
+        guard let url = URL(string: "\(target.baseURL)\(target.environment.rawValue)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
             completionHandler(nil, NSError())
             return
         }
@@ -140,7 +140,7 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
     }
     
     func requestData(target: Target, completionHandler: @escaping (_ data: Data?, _ error: Error?) -> Void) {
-        guard let url = URL(string: "\(target.baseURL)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
+        guard let url = URL(string: "\(target.baseURL)\(target.environment.rawValue)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
             completionHandler(nil, NSError())
             return
         }
