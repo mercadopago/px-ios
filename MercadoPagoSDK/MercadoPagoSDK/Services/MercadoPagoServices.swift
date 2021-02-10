@@ -120,12 +120,6 @@ internal class MercadoPagoServices: NSObject {
                 failure(error)
             }
         }
-
-        
-        
-//        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
-//
-//        paymentMethodSearchService.getClosedPrefInit(preferenceId: preferenceId, cardsWithEsc: cardsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
     }
 
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, headers: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -218,28 +212,6 @@ internal class MercadoPagoServices: NSObject {
                 failure(error)
             }
         }
-        
-//        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
-//        guard let cardToken = cardToken else {
-//            return
-//        }
-//        service.getToken(cardTokenJSON: cardToken, success: {(data: Data) -> Void in
-//            do {
-//                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-//                var token : PXToken
-//                if let tokenDic = jsonResult as? NSDictionary {
-//                    if tokenDic["error"] == nil {
-//                        token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
-//                        callback(token)
-//                    } else {
-//                        let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
-//                        failure(PXError(domain: ApiDomain.GET_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
-//                    }
-//                }
-//            } catch {
-//                failure(PXError(domain: ApiDomain.GET_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido crear el token"]))
-//            }
-//        }, failure: failure)
     }
 
     func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {

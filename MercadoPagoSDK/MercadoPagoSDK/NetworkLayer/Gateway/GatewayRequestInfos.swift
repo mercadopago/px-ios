@@ -27,6 +27,13 @@ extension GatewayRequestInfos: RequestInfos {
         }
     }
     
+    var shouldSetEnvironment: Bool {
+        switch self {
+        case .getToken(_, _, _): return false
+        case .validateToken(_, _, _), .cloneToken(_, _): return true
+        }
+    }
+    
 
     var parameters: [String : Any]? {
         switch self {
