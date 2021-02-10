@@ -17,7 +17,7 @@ enum HTTPMethodType: String {
 enum BackendEnvironment: String {
     case alpha = "alpha/"
     case beta = "beta/"
-    case prod = "v1/"
+    case prod = "production/"
 }
 
 internal protocol RequestInfos {
@@ -25,6 +25,8 @@ internal protocol RequestInfos {
     var baseURL: URL { get }
     
     var environment: BackendEnvironment { get }
+    
+    var shouldSetEnvironment: Bool { get }
     
     var endpoint: String { get }
     
@@ -50,6 +52,10 @@ extension RequestInfos {
     }
     
     var environment: BackendEnvironment {
-        return .beta
+        return .prod
+    }
+    
+    var shouldSetEnvironment: Bool {
+        return true
     }
 }
