@@ -21,6 +21,8 @@ internal class MercadoPagoServices: NSObject {
     private let customService: CustomServices
     private let remedyService: RemedyServices
     private let instructionsService: InstructionsServices
+    private let gatewayService: GatewayServices
+    private let paymentService: PaymentServices
     
     // MARK: - Internal properties
     var reachability: Reachability?
@@ -35,12 +37,16 @@ internal class MercadoPagoServices: NSObject {
          privateKey: String? = nil,
          customService: CustomServices = CustomServicesImpl(),
          remedyService: RemedyServices = RemedyServicesImpl(),
-         instructionsService: InstructionsServices = InstructionsServicesImpl()) {
+         instructionsService: InstructionsServices = InstructionsServicesImpl(),
+         gatewayService: GatewayServices = GatewayServicesImpl(),
+         paymentService: PaymentServices = PaymentServicesImpl()) {
         self.publicKey = publicKey
         self.privateKey = privateKey
         self.customService = customService
         self.remedyService = remedyService
+        self.gatewayService = gatewayService
         self.instructionsService = instructionsService
+        self.paymentService = paymentService
         super.init()
         addReachabilityObserver()
     }
@@ -80,16 +86,46 @@ internal class MercadoPagoServices: NSObject {
 //        }, failure: failure)
     }
 
-    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
+    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        
+        
+        let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
+        let body = PXInitBody(preference: pref, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: discountParamsConfiguration, features: bodyFeatures)
 
-        paymentMethodSearchService.getOpenPrefInit(pref: pref, cardsWithEsc: cardsWithEsc, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
+        let bodyJSON = try? body.toJSON()
+        
+        paymentService.getInit(preferenceId: nil, privateKey: privateKey, body: bodyJSON, headers: headers) { dto, error in
+            if let dto = dto {
+                callback(dto)
+            } else if let error = error {
+                failure(error)
+            }
+        }
+        
+//        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
+//
+//        paymentMethodSearchService.getOpenPrefInit(pref: pref, cardsWithEsc: cardsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
     }
 
-    func getClosedPrefInitSearch(preferenceId: String, cardsWithEsc: [String], splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
+    func getClosedPrefInitSearch(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
+        let body = PXInitBody(preference: nil, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: discountParamsConfiguration, features: bodyFeatures)
 
-        paymentMethodSearchService.getClosedPrefInit(preferenceId: preferenceId, cardsWithEsc: cardsWithEsc, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
+        let bodyJSON = try? body.toJSON()
+
+        paymentService.getInit(preferenceId: preferenceId, privateKey: privateKey, body: bodyJSON, headers: headers) { dto, error in
+            if let dto = dto {
+                callback(dto)
+            } else if let error = error {
+                failure(error)
+            }
+        }
+
+        
+        
+//        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
+//
+//        paymentMethodSearchService.getClosedPrefInit(preferenceId: preferenceId, cardsWithEsc: cardsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
     }
 
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, headers: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -174,48 +210,70 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func createToken(cardToken: Data?, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
-        guard let cardToken = cardToken else {
-            return
-        }
-        service.getToken(cardTokenJSON: cardToken, success: {(data: Data) -> Void in
-            do {
-                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-                var token : PXToken
-                if let tokenDic = jsonResult as? NSDictionary {
-                    if tokenDic["error"] == nil {
-                        token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
-                        callback(token)
-                    } else {
-                        let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
-                        failure(PXError(domain: ApiDomain.GET_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
-                    }
-                }
-            } catch {
-                failure(PXError(domain: ApiDomain.GET_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido crear el token"]))
+        
+        gatewayService.getToken(accessToken: privateKey, publicKey: publicKey, cardTokenJSON: cardToken) { token, error in
+            if let token = token {
+                callback(token)
+            } else if let error = error {
+                failure(error)
             }
-        }, failure: failure)
+        }
+        
+//        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
+//        guard let cardToken = cardToken else {
+//            return
+//        }
+//        service.getToken(cardTokenJSON: cardToken, success: {(data: Data) -> Void in
+//            do {
+//                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+//                var token : PXToken
+//                if let tokenDic = jsonResult as? NSDictionary {
+//                    if tokenDic["error"] == nil {
+//                        token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
+//                        callback(token)
+//                    } else {
+//                        let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
+//                        failure(PXError(domain: ApiDomain.GET_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+//                    }
+//                }
+//            } catch {
+//                failure(PXError(domain: ApiDomain.GET_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido crear el token"]))
+//            }
+//        }, failure: failure)
     }
 
     func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
-        service.cloneToken(public_key: publicKey, tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
-            do {
-                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-                var token : PXToken
-                if let tokenDic = jsonResult as? NSDictionary {
-                    if tokenDic["error"] == nil {
-                        token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
-                        callback(token)
-                    } else {
-                        let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
-                        failure(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
-                    }
-                }
-            } catch {
-                failure(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
+        gatewayService.cloneToken(tokeniD: tokenId, publicKey: publicKey, securityCode: securityCode) { token, error in
+            if let token = token {
+                callback(token)
+            } else if let error = error {
+                failure(error)
             }
-        }, failure: failure)
+        }
+        
+        
+        
+        
+        
+        
+//        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
+//        service.cloneToken(public_key: publicKey, tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
+//            do {
+//                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+//                var token : PXToken
+//                if let tokenDic = jsonResult as? NSDictionary {
+//                    if tokenDic["error"] == nil {
+//                        token = try JSONDecoder().decode(PXToken.self, from: data) as PXToken
+//                        callback(token)
+//                    } else {
+//                        let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
+//                        failure(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+//                    }
+//                }
+//            } catch {
+//                failure(PXError(domain: ApiDomain.CLONE_TOKEN, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
+//            }
+//        }, failure: failure)
     }
     
     func getRemedy(for paymentMethodId: String, payerPaymentMethodRejected: PXPayerPaymentMethodRejected, alternativePayerPaymentMethods: [PXRemedyPaymentMethod]?, oneTap: Bool, success : @escaping (PXRemedy) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {

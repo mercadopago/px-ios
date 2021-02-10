@@ -8,11 +8,11 @@
 protocol GatewayServices {
     func getToken(accessToken: String?,
                   publicKey: String,
-                  cardTokenJSON: Data,
-                  completion: @escaping (Data?, PXError?) -> Void)
+                  cardTokenJSON: Data?,
+                  completion: @escaping (PXToken?, PXError?) -> Void)
     
-    func cloneToken(tokeniD: String, publicKey: String, securityCode: String, completion: @escaping (Data?, PXError?) -> Void)
-    func validateToken(tokenId: String, publicKey: String, body: Data, completion: @escaping (Data?, PXError?) -> Void)
+    func cloneToken(tokeniD: String, publicKey: String, securityCode: String, completion: @escaping (PXToken?, PXError?) -> Void)
+    func validateToken(tokenId: String, publicKey: String, body: Data, completion: @escaping (PXToken?, PXError?) -> Void)
 }
 
 final class GatewayServicesImpl: GatewayServices {
@@ -25,8 +25,8 @@ final class GatewayServicesImpl: GatewayServices {
     }
     
     // MARK: - Public methods
-    func getToken(accessToken: String?, publicKey: String, cardTokenJSON: Data, completion: @escaping (Data?, PXError?) -> Void) {
-        service.requestData(target: .getToken(accessToken, publicKey, cardTokenJSON)) { data, error in
+    func getToken(accessToken: String?, publicKey: String, cardTokenJSON: Data?, completion: @escaping (PXToken?, PXError?) -> Void) {
+        service.requestObject(model: PXToken.self, .getToken(accessToken, publicKey, cardTokenJSON)) { token, error in
             if let _ = error {
                 completion(nil, PXError(domain: ApiDomain.GET_TOKEN,
                                         code: ErrorTypes.NO_INTERNET_ERROR,
@@ -35,12 +35,12 @@ final class GatewayServicesImpl: GatewayServices {
                                             NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"])
                 )
             } else {
-                completion(data, nil)
+                completion(token, nil)
             }
         }
     }
     
-    func cloneToken(tokeniD: String, publicKey: String, securityCode: String, completion: @escaping (Data?, PXError?) -> Void) {
+    func cloneToken(tokeniD: String, publicKey: String, securityCode: String, completion: @escaping (PXToken?, PXError?) -> Void) {
         service.requestData(target: .cloneToken(tokeniD, publicKey)) { [weak self] data, error in
             if let data = data, let token = try? JSONDecoder().decode(PXToken.self , from: data) {
                 let secCodeDic : [String: Any] = ["security_code": securityCode]
@@ -65,8 +65,8 @@ final class GatewayServicesImpl: GatewayServices {
         }
     }
     
-    func validateToken(tokenId: String, publicKey: String, body: Data, completion: @escaping (Data?, PXError?) -> Void) {
-        service.requestData(target: .validateToken(tokenId, publicKey, body)) { data, error in
+    func validateToken(tokenId: String, publicKey: String, body: Data, completion: @escaping (PXToken?, PXError?) -> Void) {
+        service.requestObject(model: PXToken.self, .validateToken(tokenId, publicKey, body)) { token, error in
             if let _ = error {
                 completion(nil, PXError(domain: ApiDomain.CLONE_TOKEN,
                                         code: ErrorTypes.NO_INTERNET_ERROR,
@@ -75,7 +75,7 @@ final class GatewayServicesImpl: GatewayServices {
                                             NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"])
                 )
             } else {
-                completion(data, nil)
+                completion(token, nil)
             }
         }
     }

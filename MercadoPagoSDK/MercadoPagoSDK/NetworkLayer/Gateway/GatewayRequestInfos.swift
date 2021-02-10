@@ -6,7 +6,7 @@
 //
 
 enum GatewayRequestInfos {
-    case getToken(String?, String, Data)
+    case getToken(String?, String, Data?)
     case cloneToken(String, String)
     case validateToken(String, String, Data)
 }
