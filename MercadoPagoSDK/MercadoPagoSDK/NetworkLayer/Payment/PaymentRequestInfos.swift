@@ -19,7 +19,7 @@ extension PaymentRequestInfos: RequestInfos {
     }
     
     var method: HTTPMethodType {
-        .post
+        return .post
     }
     
     var body: Data? {
