@@ -7,7 +7,7 @@
 
 enum CustomRequestInfos {
     case resetESCCap(cardId: String, privateKey: String?)
-    case getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel)
+    case getCongrats(data: Data?, congratsModel: CustomParametersModel)
     case createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String : String]?)
 }
 
@@ -15,7 +15,7 @@ extension CustomRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
         case .resetESCCap(let cardId, _): return "px_mobile/v1/esc_cap/\(cardId)"
-        case .getPointsAndDiscounts(_, _): return "px_mobile/congrats"
+        case .getCongrats(_, _): return "px_mobile/congrats"
         case .createPayment(_, _, _, _): return "px_mobile/payments"
         }
     }
@@ -23,7 +23,7 @@ extension CustomRequestInfos: RequestInfos {
     var method: HTTPMethodType {
         switch self {
         case .resetESCCap(_, _): return .delete
-        case .getPointsAndDiscounts(_, _): return .get
+        case .getCongrats(_, _): return .get
         case .createPayment(_, _, _, _): return .post
         }
     }
@@ -31,7 +31,7 @@ extension CustomRequestInfos: RequestInfos {
     var parameters: [String : Any]? {
         switch self {
         case .resetESCCap(_, let privateKey): if let privateKey = privateKey { return ["access_token" : privateKey] } else { return nil }
-        case .getPointsAndDiscounts(_, let parameters): return organizeParameters(parameters: parameters)
+        case .getCongrats(_, let parameters): return organizeParameters(parameters: parameters)
         case .createPayment(let privateKey, let publicKey, _, _):
             if let token = privateKey {
                 return [
@@ -50,7 +50,7 @@ extension CustomRequestInfos: RequestInfos {
     
     var headers: [String : String]? {
         switch self {
-        case .resetESCCap(_, _), .getPointsAndDiscounts(_, _): return nil
+        case .resetESCCap(_, _), .getCongrats(_, _): return nil
         case .createPayment(_, _, _, let header): return header
         }
     }
@@ -58,7 +58,7 @@ extension CustomRequestInfos: RequestInfos {
     var body: Data? {
         switch self {
         case .resetESCCap(_, _): return nil
-        case .getPointsAndDiscounts(let data, _): return data
+        case .getCongrats(let data, _): return data
         case .createPayment(_, _, let data, _): return data
         }
     }
@@ -72,8 +72,8 @@ extension CustomRequestInfos {
             filteredParameters.updateValue(parameters.paymentMethodIds, forKey: "payment_methods_ids")
         }
         
-        if parameters.paymentiDS != "" {
-            filteredParameters.updateValue(parameters.paymentiDS, forKey: "payment_ids")
+        if parameters.paymentId != "" {
+            filteredParameters.updateValue(parameters.paymentId, forKey: "payment_ids")
         }
         
         if let prefId = parameters.prefId {

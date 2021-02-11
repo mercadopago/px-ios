@@ -45,23 +45,24 @@ final class OneTapFlow: NSObject, PXFlow {
     }
 
     func executeNextStep() {
-        switch self.model.nextStep() {
-        case .screenOneTap:
-            self.showOneTapViewController()
-        case .screenSecurityCode:
-            self.showSecurityCodeScreen()
-        case .serviceCreateESCCardToken:
-            self.getTokenizationService().createCardToken()
-        case .serviceCreateWebPayCardToken:
-            self.getTokenizationService().createCardToken(securityCode: "")
-        case .screenKyC:
-            self.showKyCScreen()
-        case .payment:
-            self.startPaymentFlow()
-        case .finish:
-            self.finishFlow()
+        DispatchQueue.main.async {
+            switch self.model.nextStep() {
+            case .screenOneTap:
+                self.showOneTapViewController()
+            case .screenSecurityCode:
+                self.showSecurityCodeScreen()
+            case .serviceCreateESCCardToken:
+                self.getTokenizationService().createCardToken()
+            case .serviceCreateWebPayCardToken:
+                self.getTokenizationService().createCardToken(securityCode: "")
+            case .screenKyC:
+                self.showKyCScreen()
+            case .payment:
+                self.startPaymentFlow()
+            case .finish:
+                self.finishFlow()
+            }
         }
-        print("")
     }
 
     func refreshInitFlow(cardId: String) {

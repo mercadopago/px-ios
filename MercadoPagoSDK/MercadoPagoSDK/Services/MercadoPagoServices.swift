@@ -147,7 +147,7 @@ internal class MercadoPagoServices: NSObject {
 
     func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, paymentMethodsIds: [String]? = nil, campaignId: String?, prefId: String?, platform: String, ifpe: Bool, merchantOrderId: Int?, headers: [String: String], callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
         let parameters = CustomParametersModel(paymentMethodIds: getPaymentMethodsIds(paymentMethodsIds),
-                                               paymentiDS: getPaymentIds(paymentIds),
+                                               paymentId: getPaymentIds(paymentIds),
                                                ifpe: String(ifpe),
                                                prefId: prefId,
                                                campaignId: campaignId,
