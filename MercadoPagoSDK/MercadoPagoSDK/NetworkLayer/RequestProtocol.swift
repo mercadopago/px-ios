@@ -26,10 +26,10 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
         
         var request = URLRequest(url: url)
         
-        do {
-            request = try target.parameterEncoding.encode(request: URLRequest(url: url), parameters: target.headers)
-        } catch {
-            completionHandler(nil, NSError())
+        if let headers = target.headers {
+            for header in headers {
+                request.setValue(header.key, forHTTPHeaderField: header.value)
+            }
         }
     
         do {
@@ -48,7 +48,7 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
             let value = "PX/iOS/" + sdkVersion
             request.setValue(value, forHTTPHeaderField: MercadoPagoService.HeaderField.userAgent.rawValue)
         }
-
+        
         // Add session id
         request.setValue(MPXTracker.sharedInstance.getRequestId(), forHTTPHeaderField: MercadoPagoService.HeaderField.requestId.rawValue)
         request.setValue(MPXTracker.sharedInstance.getSessionID(), forHTTPHeaderField: MercadoPagoService.HeaderField.sessionId.rawValue)
@@ -90,14 +90,9 @@ final class Requesting<Target: RequestInfos> : RequestProtocol {
             
             do {
                 let modelList = try JSONDecoder().decode(Model.self , from: data)
-                DispatchQueue.main.async {
-                    completionHandler(modelList, nil)
-                }
-                
+                completionHandler(modelList, nil)
             } catch {
-                DispatchQueue.main.async {
-                    completionHandler(nil, NSError())
-                }
+                completionHandler(nil, NSError())
             }
         }.resume()
     }

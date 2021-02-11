@@ -15,13 +15,13 @@ class ViewController: UIViewController {
     private var checkout: MercadoPagoCheckout?
     
     // Collector Public Key
-    private var publicKey : String = ""
+    private var publicKey : String = "TEST-e28d5a35-dece-45c9-9618-e8cc5dec6c42"
     
     // Payer private key
-    private var privateKey : String = ""
+    private var privateKey : String = "TEST-7215456036166479-101915-223c2540d9126044887a840cfae544a9-660760647"
     
     // Preference ID
-    private var preferenceId : String = ""
+    private var preferenceId : String = "656525290-d1ccf64a-3eb7-44b7-b7f6-bf29ed92ce1a"
     
     @IBAction func initDefault(_ sender: Any) {
         // runMercadoPagoCheckout()

@@ -7,7 +7,7 @@
 
 struct CustomParametersModel {
     let paymentMethodIds: String
-    let paymentiDS: String
+    let paymentId: String
     let ifpe: String
     let prefId: String?
     let campaignId: String?

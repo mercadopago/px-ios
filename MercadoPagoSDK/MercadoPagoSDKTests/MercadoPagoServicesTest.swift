@@ -14,9 +14,9 @@ class CustomServiceMock: CustomServices {
     var calledResetESCCap = false
     var calledCreatePayment = false
     
-    func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, response: @escaping (PXPointsAndDiscounts?, Void?) -> Void) {
+    func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, completion: @escaping (PXPointsAndDiscounts?, Void?) -> Void) {
         calledGetPointsAndDiscounts = true
-        successResponse ? response(PXPointsAndDiscounts(points: nil,
+        successResponse ? completion(PXPointsAndDiscounts(points: nil,
                                                         discounts: nil,
                                                         crossSelling: nil,
                                                         viewReceiptAction: nil,
@@ -28,7 +28,7 @@ class CustomServiceMock: CustomServices {
                                                         secondaryButton: nil,
                                                         redirectUrl: nil,
                                                         backUrl: nil,
-                                                        autoReturn: nil), nil) : response(nil, ())
+                                                        autoReturn: nil), nil) : completion(nil, ())
     }
     
     func resetESCCap(cardId: String, privateKey: String?, response: @escaping (Void?, PXError?) -> Void) {
@@ -126,6 +126,7 @@ class MercadoPagoServicesTest: XCTestCase {
         sut.resetESCCap(cardId: "") {
             hadCallback = true
         }
+        
         XCTAssertTrue(hadCallback == true)
         XCTAssertTrue(customService.calledResetESCCap == true)
     }
@@ -138,6 +139,7 @@ class MercadoPagoServicesTest: XCTestCase {
         } failure: {  _ in
             hasError = true
         }
+        
         XCTAssertTrue(customService.calledCreatePayment == true)
         XCTAssertTrue(hasError == false)
     }
@@ -151,6 +153,7 @@ class MercadoPagoServicesTest: XCTestCase {
         } failure: {  _ in
             hasError = true
         }
+        
         XCTAssertTrue(customService.calledCreatePayment == true)
         XCTAssertTrue(hasError == true)
     }
@@ -245,7 +248,6 @@ class MercadoPagoServicesTest: XCTestCase {
             hasError = true
         }
 
-        
         XCTAssertTrue(gatewayService.calledGetToken == true)
         XCTAssertTrue(hasError == false)
     }
@@ -259,7 +261,6 @@ class MercadoPagoServicesTest: XCTestCase {
         } failure: { _ in
             hasError = true
         }
-
         
         XCTAssertTrue(gatewayService.calledGetToken == true)
         XCTAssertTrue(hasError == true)
@@ -327,8 +328,6 @@ class MercadoPagoServicesTest: XCTestCase {
         } failure: { _ in
             hasError = true
         }
-
-
         
         XCTAssertTrue(paymentService.calledGetInit == true)
         XCTAssertTrue(hasError == false)
@@ -343,8 +342,6 @@ class MercadoPagoServicesTest: XCTestCase {
         } failure: { _ in
             hasError = true
         }
-
-
         
         XCTAssertTrue(paymentService.calledGetInit == true)
         XCTAssertTrue(hasError == true)

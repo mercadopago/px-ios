@@ -22,7 +22,7 @@ final class CustomServicesImpl: CustomServices {
     
     // MARK: - Public methods
     func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, response: @escaping (PXPointsAndDiscounts?, Void?) -> Void) {
-        service.requestObject(model: PXPointsAndDiscounts.self, .getPointsAndDiscounts(data: data, parameters: parameters)) { model, error in
+        service.requestObject(model: PXPointsAndDiscounts.self, .getCongrats(data: data, congratsModel: parameters)) { model, error in
             if let _ = error {
                 response(nil, ())
             } else {
@@ -32,9 +32,13 @@ final class CustomServicesImpl: CustomServices {
     }
     
     func resetESCCap(cardId:String, privateKey: String?, response: @escaping (Void?, PXError?) -> Void) {
+        guard let privateKey = privateKey else {
+            response(nil, PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: ["message": "Missing key"]))
+            return
+        }
         service.requestData(target: .resetESCCap(cardId: cardId, privateKey: privateKey)) { _, error in
-            if let _ = error {
-                response(nil, PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "Response cannot be decoded"]))
+            if let error = error {
+                response(nil, PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": error.localizedDescription]))
             } else {
                 response((), nil)
             }
