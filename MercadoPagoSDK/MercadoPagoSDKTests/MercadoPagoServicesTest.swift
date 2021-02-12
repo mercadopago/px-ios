@@ -14,7 +14,7 @@ class CustomServiceMock: CustomServices {
     var calledResetESCCap = false
     var calledCreatePayment = false
     
-    func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, completion: @escaping (PXPointsAndDiscounts?, Void?) -> Void) {
+    func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, response completion: @escaping (PXPointsAndDiscounts?, Void?) -> Void) {
         calledGetPointsAndDiscounts = true
         successResponse ? completion(PXPointsAndDiscounts(points: nil,
                                                         discounts: nil,
