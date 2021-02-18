@@ -13,10 +13,12 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(error: MPSDKError) {
         let lastViewController = viewModel.pxNavigationHandler.navigationController.viewControllers.last
         if lastViewController is PXNewResultViewController || lastViewController is PXSecurityCodeViewController {
-            if let newResultViewController = lastViewController as? PXNewResultViewController {
-                newResultViewController.progressButtonAnimationTimeOut()
-            } else if let securityCodeVC = lastViewController as? PXSecurityCodeViewController {
-                resetButtonAndCleanToken(securityCodeVC: securityCodeVC)
+            DispatchQueue.main.async {
+                if let newResultViewController = lastViewController as? PXNewResultViewController {
+                    newResultViewController.progressButtonAnimationTimeOut()
+                } else if let securityCodeVC = lastViewController as? PXSecurityCodeViewController {
+                    resetButtonAndCleanToken(securityCodeVC: securityCodeVC)
+                }
             }
         }
     }
