@@ -17,7 +17,7 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
                 if let newResultViewController = lastViewController as? PXNewResultViewController {
                     newResultViewController.progressButtonAnimationTimeOut()
                 } else if let securityCodeVC = lastViewController as? PXSecurityCodeViewController {
-                    resetButtonAndCleanToken(securityCodeVC: securityCodeVC)
+                    self.resetButtonAndCleanToken(securityCodeVC: securityCodeVC)
                 }
             }
         }
