@@ -38,15 +38,17 @@ extension OneTapFlow {
 
 extension OneTapFlow: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(error: MPSDKError) {
-        let lastViewController = pxNavigationHandler.navigationController.viewControllers.last
-        if let oneTapViewController = lastViewController as? PXOneTapViewController {
-            dismissLoading(finishCallback: { 
-                oneTapViewController.resetButton(error: error)
-            })
-        } else if let securityCodeVC = lastViewController as? PXSecurityCodeViewController {
-            dismissLoading(finishCallback: { [weak self] in
-                self?.resetButtonAndCleanToken(securityCodeVC: securityCodeVC, error: error)
-            })
+        DispatchQueue.main.async {
+            let lastViewController = pxNavigationHandler.navigationController.viewControllers.last
+            if let oneTapViewController = lastViewController as? PXOneTapViewController {
+                dismissLoading(finishCallback: {
+                    oneTapViewController.resetButton(error: error)
+                })
+            } else if let securityCodeVC = lastViewController as? PXSecurityCodeViewController {
+                dismissLoading(finishCallback: { [weak self] in
+                    self?.resetButtonAndCleanToken(securityCodeVC: securityCodeVC, error: error)
+                })
+            }
         }
     }
 
