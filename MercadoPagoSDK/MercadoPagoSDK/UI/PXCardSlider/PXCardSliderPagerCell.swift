@@ -21,7 +21,7 @@ class PXCardSliderPagerCell: FSPagerViewCell {
     private var consumerCreditCard: ConsumerCreditsCard?
 
     weak var delegate: PXTermsAndConditionViewDelegate?
-    weak var addNewMethodDelegate: AddNewMethodCardDelegate?
+    weak var cardSliderPagerCellDelegate: PXCardSliderPagerCellDelegate?
     @IBOutlet weak var containerView: UIView!
 
     private var bottomMessageFixed: Bool = false
@@ -29,61 +29,75 @@ class PXCardSliderPagerCell: FSPagerViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         cardHeader?.view.removeFromSuperview()
-        containerView.removeAllSubviews()
-        containerView.layer.masksToBounds = false
+        setupContainerView()
     }
 }
 
-protocol AddNewMethodCardDelegate: NSObjectProtocol {
+protocol PXCardSliderPagerCellDelegate: NSObjectProtocol {
     func addNewCard()
     func addNewOfflineMethod()
+    func switchDidChange(_ selectedOption: String)
 }
 
 // MARK: Publics.
 extension PXCardSliderPagerCell {
-    func render(withCard: CardUI, cardData: CardData, isDisabled: Bool, cardSize: CGSize, bottomMessage: PXCardBottomMessage? = nil, accessibilityData: AccessibilityCardData, switchInfo: SwitchModel?) {
-        
-        containerView.layer.masksToBounds = false
+    
+    private func setupContainerView(_ masksToBounds: Bool = false) {
+        containerView.layer.masksToBounds = masksToBounds
         containerView.removeAllSubviews()
-        containerView.layer.cornerRadius = cornerRadius
         containerView.backgroundColor = .clear
-        
-        cardHeader = MLCardDrawerController(withCard, cardData, isDisabled)
-        
+        containerView.layer.cornerRadius = cornerRadius
+    }
+    
+    private func setupCardHeader(cardDrawerController: MLCardDrawerController?, cardSize: CGSize) {
+        cardHeader = cardDrawerController
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: cardSize)
         cardHeader?.animated(false)
         cardHeader?.show()
+    }
+    
+    private func setupSwitchInfoView(switchInfo: SwitchModel?) {
+        guard let switchInfo = switchInfo else { return }
+        let comboSwitchView = ComboSwitchView()
+        comboSwitchView.setSwitchModel(switchInfo)
+        comboSwitchView.setSwitchDidChangeCallback() { [weak self] selectedOption in
+            self?.cardSliderPagerCellDelegate?.switchDidChange(selectedOption)
+        }
+        cardHeader?.setCustomView(comboSwitchView)
+    }
+    
+    func render(model: PXCardSliderViewModel, cardSize: CGSize, accessibilityData: AccessibilityCardData, delegate: PXCardSliderPagerCellDelegate?) {
+        cardSliderPagerCellDelegate = delegate
+        let cardUI = model.cardUI
+        let cardData = model.cardData ?? PXCardDataFactory()
+        let isDisabled = model.status.isDisabled()
+        let bottomMessage = model.bottomMessage
+        let switchInfo = model.displayInfo?.switchInfo
+        
+        setupContainerView()
+        setupCardHeader(cardDrawerController: MLCardDrawerController(cardUI, cardData, isDisabled), cardSize: cardSize)
 
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
+            if let accountMoneyCard = cardUI as? AccountMoneyCard {
+                accountMoneyCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
+            } else if let hybridAMCard = cardUI as? HybridAMCard {
+                hybridAMCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
+            }
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         
         addBottomMessageView(message: bottomMessage)
-        
         accessibilityLabel = getAccessibilityMessage(accessibilityData)
         
-        if let switchInfo = switchInfo {
-            let customView = ComboSwitchView()
-            
-            customView.setSwitchModel(switchInfo)
-            
-            customView.setSwitchDidChangeCallback() {
-                print("Switch did change \($0)")
-            }
-            
-            cardHeader?.setCustomView(customView)
-        }
+        setupSwitchInfoView(switchInfo: switchInfo)
     }
 
-    func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: AddNewMethodCardDelegate) {
-        self.addNewMethodDelegate = delegate
+    func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: PXCardSliderPagerCellDelegate) {
+        self.cardSliderPagerCellDelegate = delegate
 
-        containerView.backgroundColor = .clear
-        containerView.layer.masksToBounds = true
-        containerView.removeAllSubviews()
-        containerView.layer.cornerRadius = cornerRadius
+        setupContainerView(true)
 
         let bigSize = cardSize.height
         let smallSize = (cardSize.height - PXLayout.XS_MARGIN) / 2
@@ -134,68 +148,26 @@ extension PXCardSliderPagerCell {
 
     @objc
     func addNewCardTapped() {
-        addNewMethodDelegate?.addNewCard()
+        cardSliderPagerCellDelegate?.addNewCard()
     }
 
     @objc
     func addNewOfflineMethodTapped() {
         PXFeedbackGenerator.selectionFeedback()
-        addNewMethodDelegate?.addNewOfflineMethod()
+        cardSliderPagerCellDelegate?.addNewOfflineMethod()
     }
-
-    func renderAccountMoneyOrHybridCard(cardUI: CustomCardDrawerUI, isDisabled: Bool, cardSize: CGSize, bottomMessage: PXCardBottomMessage? = nil, accessibilityData: AccessibilityCardData, switchInfo: SwitchModel?) {
-        containerView.layer.masksToBounds = false
-        containerView.backgroundColor = .clear
-        containerView.removeAllSubviews()
-        containerView.layer.cornerRadius = cornerRadius
-        cardHeader = MLCardDrawerController(cardUI, PXCardDataFactory(), isDisabled)
-        cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: cardSize)
-        cardHeader?.animated(false)
-        cardHeader?.show()
-
-        if let headerView = cardHeader?.view {
-            containerView.addSubview(headerView)
-            
-            if let amCard = cardUI as? AccountMoneyCard {
-                amCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
-            } else if let hybridCard = cardUI as? HybridAMCard {
-                hybridCard.render(containerView: containerView, isDisabled: isDisabled, size: cardSize)
-            }
-
-            PXLayout.centerHorizontally(view: headerView).isActive = true
-            PXLayout.centerVertically(view: headerView).isActive = true
-        }
-        
-        addBottomMessageView(message: bottomMessage)
-        accessibilityLabel = getAccessibilityMessage(accessibilityData)
-        
-        if let switchInfo = switchInfo {
-            let customView = ComboSwitchView()
-            
-            customView.setSwitchModel(switchInfo)
-            
-            customView.setSwitchDidChangeCallback() {
-                print("Switch did change \($0)")
-            }
-            
-            cardHeader?.setCustomView(customView)
-        }
-    }
-
-    func renderConsumerCreditsCard(creditsViewModel: PXCreditsViewModel, isDisabled: Bool, cardSize: CGSize, bottomMessage: PXCardBottomMessage? = nil, creditsInstallmentSelected: Int? = nil, accessibilityData: AccessibilityCardData) {
+    
+    func renderConsumerCreditsCard(model: PXCardSliderViewModel, cardSize: CGSize, accessibilityData: AccessibilityCardData) {
+        guard let creditsViewModel = model.creditsViewModel else { return }
+        let cardData = PXCardDataFactory()
+        let isDisabled = model.status.isDisabled()
+        let bottomMessage = model.bottomMessage
+        let creditsInstallmentSelected = model.selectedPayerCost?.installments
         consumerCreditCard = ConsumerCreditsCard(creditsViewModel, isDisabled: isDisabled)
         guard let consumerCreditCard = consumerCreditCard else { return }
 
-        containerView.layer.masksToBounds = false
-        containerView.backgroundColor = .clear
-        containerView.removeAllSubviews()
-        containerView.layer.cornerRadius = cornerRadius
-
-        cardHeader = MLCardDrawerController(consumerCreditCard, PXCardDataFactory(), isDisabled)
-        cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: cardSize)
-
-        cardHeader?.animated(false)
-        cardHeader?.show()
+        setupContainerView()
+        setupCardHeader(cardDrawerController: MLCardDrawerController(consumerCreditCard, cardData, isDisabled), cardSize: cardSize)
 
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)

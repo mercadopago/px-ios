@@ -50,21 +50,16 @@ extension PXCardSlider: FSPagerViewDataSource {
                 accessibilityData = AccessibilityCardData(paymentMethodId: targetModel.paymentMethodId, paymentTypeId: targetModel.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "", cardName: targetModel.cardData?.name ?? "", index: index,  numberOfPages: pageControl.numberOfPages)
             }
 
-            if let cardData = targetModel.cardData, let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
-                let bottomMessage = targetModel.bottomMessage
-
-                if let amCard = targetModel.cardUI as? AccountMoneyCard {
-                    cell.renderAccountMoneyOrHybridCard(cardUI: amCard, isDisabled: targetModel.status.isDisabled(), cardSize: pagerView.itemSize, bottomMessage: bottomMessage, accessibilityData: accessibilityData, switchInfo: targetModel.displayInfo?.switchInfo)
-                } else if let hybridCard = targetModel.cardUI as? HybridAMCard {
-                    cell.renderAccountMoneyOrHybridCard(cardUI: hybridCard, isDisabled: targetModel.status.isDisabled(), cardSize: pagerView.itemSize, bottomMessage: bottomMessage, accessibilityData: accessibilityData, switchInfo: targetModel.displayInfo?.switchInfo)
-                } else if let oneTapCreditsInfo = targetModel.creditsViewModel, targetModel.cardUI is ConsumerCreditsCard {
+            if targetModel.cardData != nil,
+               let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
+                if targetModel.creditsViewModel != nil,
+                   targetModel.cardUI is ConsumerCreditsCard {
                     cell.delegate = self
-                    cell.renderConsumerCreditsCard(creditsViewModel: oneTapCreditsInfo, isDisabled: targetModel.status.isDisabled(), cardSize: pagerView.itemSize, bottomMessage: bottomMessage, creditsInstallmentSelected: targetModel.selectedPayerCost?.installments, accessibilityData: accessibilityData)
+                    cell.renderConsumerCreditsCard(model: targetModel, cardSize: pagerView.itemSize, accessibilityData: accessibilityData)
                 } else {
-                    // Other cards.
-                    cell.render(withCard: targetModel.cardUI, cardData: cardData, isDisabled: targetModel.status.isDisabled(), cardSize: pagerView.itemSize, bottomMessage: bottomMessage, accessibilityData: accessibilityData, switchInfo: targetModel.displayInfo?.switchInfo)
+                    // AccountMoney, Hybrid and Other cards.
+                    cell.render(model: targetModel, cardSize: pagerView.itemSize, accessibilityData: accessibilityData, delegate: self)
                 }
-                
                 return cell
             } else {
                 // Add new card scenario.
@@ -96,13 +91,22 @@ extension PXCardSlider: FSPagerViewDataSource {
 }
 
 // MARK: Add new methods delegate
-extension PXCardSlider: AddNewMethodCardDelegate {
+extension PXCardSlider: PXCardSliderPagerCellDelegate {
     func addNewCard() {
         delegate?.addNewCardDidTap()
     }
 
     func addNewOfflineMethod() {
         delegate?.addNewOfflineDidTap()
+    }
+
+    func switchDidChange(_ selectedOption: String) {
+        print("Switch did change \(selectedOption)")
+        
+//        if model.indices.contains(selectedIndex) {
+//            let modelData = model[selectedIndex]
+//            delegate?.newCardDidSelected(targetModel: modelData)
+//        }
     }
 }
 
