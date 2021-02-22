@@ -12,9 +12,8 @@ enum RemedyRequestInfos {
 extension RemedyRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .getRemedy(let paymentId, _, _):
-            let paymentId = paymentId ?? ""
-            return "px_mobile/v1/remedies/\(paymentId)/"
+        case .getRemedy(_, _, _):
+            return "px_mobile/v1/remedies/1234135506"
         }
     }
     
@@ -36,7 +35,10 @@ extension RemedyRequestInfos: RequestInfos {
     
     var parameters: [String : Any]? {
         switch self {
-        case .getRemedy(_, let oneTap, _): return [
+        case .getRemedy(let privateKey, let oneTap, _):
+            let key = privateKey ?? ""
+            return [
+            "access_token" : key,
             "one_tap" : oneTap ? "true" : "false"
         ]
         }

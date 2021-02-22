@@ -29,17 +29,28 @@ final class RemedyServicesImpl: RemedyServices {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         let body = try? encoder.encode(remedyBody)
         
-        service.requestObject(model: PXRemedy.self, .getRemedy(privateKey, oneTap, body)) { remedy, error in
-            if let _ = error {
-                completion(nil, PXError(domain: ApiDomain.GET_REMEDY,
-                                        code: ErrorTypes.NO_INTERNET_ERROR,
-                                        userInfo: [
-                                            NSLocalizedDescriptionKey: "Hubo un error",
-                                            NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"
-                                        ]))
-            } else {
-                completion(remedy, nil)
-            }
+        service.requestData(target: .getRemedy(privateKey, oneTap, body)) { [weak self] data, error in
+            guard let data = data else { return }
+            self?.buildRemedy(data: data, error: error, completion: { remedy, error in
+                completion(remedy, error)
+            })
+        }
+    }
+    
+    // MARK: - Private Methods
+    private func buildRemedy(data: Data?, error: Error?, completion: @escaping (PXRemedy?, PXError?) -> Void) {
+        if let data = data {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let responseObject = try? decoder.decode(PXRemedy.self, from: data)
+            completion(responseObject, nil)
+        } else if let error = error {
+            completion(nil, PXError(domain: ApiDomain.GET_REMEDY,
+                                    code: ErrorTypes.NO_INTERNET_ERROR,
+                                    userInfo: [
+                                        NSLocalizedDescriptionKey: "Hubo un error",
+                                        NSLocalizedFailureReasonErrorKey: error.localizedDescription
+                                    ]))
         }
     }
 }

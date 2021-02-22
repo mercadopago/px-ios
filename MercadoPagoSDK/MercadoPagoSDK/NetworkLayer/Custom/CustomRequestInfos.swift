@@ -16,7 +16,7 @@ extension CustomRequestInfos: RequestInfos {
         switch self {
         case .resetESCCap(let cardId, _): return "px_mobile/v1/esc_cap/\(cardId)"
         case .getCongrats(_, _): return "px_mobile/congrats"
-        case .createPayment(_, _, _, _): return "px_mobile/payments"
+        case .createPayment(_, _, _, _): return "v1/px_mobile/payments"
         }
     }
     
@@ -25,6 +25,13 @@ extension CustomRequestInfos: RequestInfos {
         case .resetESCCap(_, _): return .delete
         case .getCongrats(_, _): return .get
         case .createPayment(_, _, _, _): return .post
+        }
+    }
+    
+    var shouldSetEnvironment: Bool {
+        switch self {
+        case .resetESCCap(_, _), .getCongrats(_, _): return true
+        case .createPayment(_, _, _, _): return false
         }
     }
     

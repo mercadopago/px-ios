@@ -78,12 +78,6 @@ internal class MercadoPagoServices: NSObject {
                 failure(error)
             }
         }
-        
-        
-//        let instructionsService = InstructionsService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey)
-//        instructionsService.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: { (instructionsInfo : PXInstructions) -> Void in
-//            callback(instructionsInfo)
-//        }, failure: failure)
     }
 
     func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -101,10 +95,6 @@ internal class MercadoPagoServices: NSObject {
                 failure(error)
             }
         }
-        
-//        let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: publicKey, payerAccessToken: privateKey, processingModes: processingModes, branchId: branchId)
-//
-//        paymentMethodSearchService.getOpenPrefInit(pref: pref, cardsWithEsc: cardsWithEsc, oneTapEnabled: oneTapEnabled, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flow, charges: charges, headers: headers, success: callback, failure: failure)
     }
 
     func getClosedPrefInitSearch(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -131,18 +121,6 @@ internal class MercadoPagoServices: NSObject {
                 failure(error)
             }
         }
-        
-        
-//        let service: CustomService = CustomService(baseURL: url, URI: uri)
-//
-//
-//        var params = MercadoPagoServices.getParamsPublicKeyAndAcessToken(publicKey, privateKey)
-//        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
-//        if let queryParams = query as NSDictionary? {
-//            params = queryParams.parseToQuery()
-//        }
-//
-//        service.createPayment(headers: headers, body: paymentDataJSON, params: params, success: callback, failure: failure)
     }
 
     func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, paymentMethodsIds: [String]? = nil, campaignId: String?, prefId: String?, platform: String, ifpe: Bool, merchantOrderId: Int?, headers: [String: String], callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
@@ -160,35 +138,6 @@ internal class MercadoPagoServices: NSObject {
                 failure()
             }
         }
-        
-        
-        
-        
-        
-        
-//
-//        let service: CustomService = CustomService(baseURL: url, URI: uri)
-//
-//        var params = MercadoPagoServices.getParamsAccessTokenAndPaymentIdsAndPlatform(privateKey, paymentIds, platform)
-//        params.paramsAppend(key: ApiParam.PAYMENT_METHODS_IDS, value: getPaymentMethodsIds(paymentMethodsIds))
-//
-//        params.paramsAppend(key: ApiParam.API_VERSION, value: PXServicesURLConfigs.API_VERSION)
-//        params.paramsAppend(key: ApiParam.IFPE, value: String(ifpe))
-//        params.paramsAppend(key: ApiParam.PREF_ID, value: prefId)
-//
-//        if let campaignId = campaignId {
-//            params.paramsAppend(key: ApiParam.CAMPAIGN_ID, value: campaignId)
-//        }
-//
-//        if let flowName = MPXTracker.sharedInstance.getFlowName() {
-//            params.paramsAppend(key: ApiParam.FLOW_NAME, value: flowName)
-//        }
-//
-//        if let merchantOrderId = merchantOrderId {
-//            params.paramsAppend(key: ApiParam.MERCHANT_ORDER_ID, value: String(merchantOrderId))
-//        }
-//
-//        service.getPointsAndDiscounts(headers: headers, body: nil, params: params, success: callback, failure: failure)
     }
 
     func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -204,7 +153,6 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func createToken(cardToken: Data?, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        
         gatewayService.getToken(accessToken: privateKey, publicKey: publicKey, cardTokenJSON: cardToken) { token, error in
             if let token = token {
                 callback(token)
@@ -222,12 +170,7 @@ internal class MercadoPagoServices: NSObject {
                 failure(error)
             }
         }
-        
-        
-        
-        
-        
-        
+
 //        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: publicKey, payerAccessToken: privateKey)
 //        service.cloneToken(public_key: publicKey, tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
 //            do {
@@ -257,23 +200,6 @@ internal class MercadoPagoServices: NSObject {
                 failure(error)
             }
         }
-        
-//        let service = RemedyService(baseURL: baseURL, payerAccessToken: privateKey)
-
-//        service.getRemedy(for: paymentMethodId, payerPaymentMethodRejected: payerPaymentMethodRejected, alternativePayerPaymentMethods: alternativePayerPaymentMethods, oneTap: oneTap, success: { data -> Void in
-//            guard let data = data else {
-//                failure(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
-//                return
-//            }
-//            do {
-//                let decoder = JSONDecoder()
-//                decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                let responseObject = try decoder.decode(PXRemedy.self, from: data)
-//                success(responseObject)
-//            } catch {
-//                failure(PXError(domain: ApiDomain.GET_REMEDY, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener el remedy"]))
-//            }
-//        }, failure: failure)
     }
 
     //SETS
