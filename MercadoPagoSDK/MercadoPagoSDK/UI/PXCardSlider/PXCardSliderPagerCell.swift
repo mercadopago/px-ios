@@ -56,11 +56,12 @@ extension PXCardSliderPagerCell {
         cardHeader?.show()
     }
     
-    private func setupSwitchInfoView(switchInfo: SwitchModel?) {
-        guard let switchInfo = switchInfo else { return }
+    private func setupSwitchInfoView(model: PXCardSliderViewModel) {
+        guard let switchInfo = model.displayInfo?.switchInfo else { return }
         let comboSwitchView = ComboSwitchView()
         comboSwitchView.setSwitchModel(switchInfo)
         comboSwitchView.setSwitchDidChangeCallback() { [weak self] selectedOption in
+            model.selectedPaymentMethodTypeId = selectedOption
             self?.cardSliderPagerCellDelegate?.switchDidChange(selectedOption)
         }
         cardHeader?.setCustomView(comboSwitchView)
@@ -72,7 +73,6 @@ extension PXCardSliderPagerCell {
         let cardData = model.cardData ?? PXCardDataFactory()
         let isDisabled = model.status.isDisabled()
         let bottomMessage = model.bottomMessage
-        let switchInfo = model.displayInfo?.switchInfo
         
         setupContainerView()
         setupCardHeader(cardDrawerController: MLCardDrawerController(cardUI, cardData, isDisabled), cardSize: cardSize)
@@ -91,7 +91,7 @@ extension PXCardSliderPagerCell {
         addBottomMessageView(message: bottomMessage)
         accessibilityLabel = getAccessibilityMessage(accessibilityData)
         
-        setupSwitchInfoView(switchInfo: switchInfo)
+        setupSwitchInfoView(model: model)
     }
 
     func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: PXCardSliderPagerCellDelegate) {
