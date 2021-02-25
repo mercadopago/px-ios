@@ -33,6 +33,10 @@ jobs:
         - run:
             name: Install bundle
             command: bundle install
+            
+        - run:
+            name: Go to ExampleSwift
+            command: cd ExampleSwift
         
 #        - run:
 #            name: install pods needed
