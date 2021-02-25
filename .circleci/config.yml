@@ -34,9 +34,9 @@ jobs:
             name: Install bundle
             command: bundle install
         
-        - run:
-            name: install pods needed
-            command: bundle exec pod install
+#        - run:
+#            name: install pods needed
+#            command: bundle exec pod install
         
         - run:
             name: Build and run tests
