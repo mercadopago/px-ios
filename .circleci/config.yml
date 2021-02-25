@@ -70,6 +70,6 @@ workflows:
 #          - deploy:
 #              <<: *deployWorkflow
               
-        unit-tests:
+        build-and-test:
             jobs:
                 - build-and-test
