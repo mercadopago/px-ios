@@ -1,6 +1,7 @@
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
 fastlane_version "2.55.0"
+ENV["GYM_PROJECT"] = "ExampleSwift/ExampleSwift.xcworkspace"
 
 # Disable Fastlane crash reporting because we're using UI.* methods for our custom errors and those aren't Fastlane bugs.
 opt_out_usage
@@ -16,7 +17,7 @@ end
 
 desc 'Start here, this lane goes through the different ones'
 lane :start_deploy do
-    
+
     unless CIHelper::has_deploy_message?
         UI.message '[!] User did not request a deploy'
         next
@@ -48,7 +49,7 @@ end
 
 desc 'Publish public lib'
 lane :deploy_public do
-    
+
     UI.message 'Checking public pod version'
     # All submodules should have the same version, so I take the version from the first module
     pod_version = CIHelper::spec_version()
