@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <testsuites name='MercadoPagoSDKV4-Unit-MercadoPagoSDKTests.xctest' tests='25' failures='0'>
   <testsuite name='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' tests='8' failures='0'>
-    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCommonCongrats' time='0.006'/>
-    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithAccountMoney' time='0.027'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCommonCongrats' time='0.004'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithAccountMoney' time='0.032'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithConsumerCredits' time='0.001'/>
-    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithConsumerCreditsInstallments' time='0.004'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithConsumerCreditsInstallments' time='0.003'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithDiscount' time='0.003'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithInstallments' time='0.001'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithOneInstallments' time='0.001'/>
@@ -15,12 +15,12 @@
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testCloneTokenSuccess' time='0.001'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testCreatePaymentFailure' time='0.001'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testCreatePaymentSuccess' time='0.001'/>
-    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testCreateTokenFailure' time='0.013'/>
-    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testCreateTokenSuccess' time='0.003'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testCreateTokenFailure' time='0.010'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testCreateTokenSuccess' time='0.005'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetClosedPrefInitSearchFailure' time='0.001'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetClosedPrefInitSearchSuccess' time='0.001'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetInstructionsFailure' time='0.001'/>
-    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetInstructionsSuccess' time='0.001'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetInstructionsSuccess' time='0.002'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetOpenPrefInitSearchFailure' time='0.002'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetOpenPrefInitSearchSuccess' time='0.001'/>
     <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.MercadoPagoServicesTest' name='testGetPointsAndDiscountsFailure' time='0.001'/>
