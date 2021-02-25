@@ -65,7 +65,11 @@ jobs:
 # Define the full workflow.
 workflows:
   version: 2
-  test-lint:
-    jobs:
-      - deploy:
-          <<: *deployWorkflow
+#      test-lint:
+#        jobs:
+#          - deploy:
+#              <<: *deployWorkflow
+              
+        unit-tests:
+            jobs:
+                - build-and-test
