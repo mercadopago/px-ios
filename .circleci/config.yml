@@ -1,0 +1,84 @@
+####
+# Default job.
+# This job simply defines the iOS image, some environment variables
+# and stuff that all jobs should have
+##
+default: &defaultJob
+  # Set the xcode version this virtual machine will  use
+  macos:
+    xcode: "12.0.0"
+  # We need to set this for RVM.
+  shell: /bin/bash --login
+# Default workflow will run on all branches except releases
+deploy-workflow: &deployWorkflow
+  filters:
+    branches:
+      only:
+        - develop
+        - chore/pxNetworkLayer
+        - /release\/.*$/
+
+# Define the jobs we will be using
+version: 2
+jobs:
+
+  build-and-test:
+    macos:
+        xcode: "12.4.0"
+    environment:
+        FL_OUTPUT_DIR: FL_OUTPUT_DIR
+    steps:
+        - checkout
+        
+        - run:
+            name: Install bundle
+            command: bundle install
+            
+        - run:
+            name: Go to ExampleSwift
+            command: cd ExampleSwift
+        
+#        - run:
+#            name: install pods needed
+#            command: bundle exec pod install
+        
+        - run:
+            name: Build and run tests
+            command: bundle exec fastlane scan
+            environment:
+                SCAN_DEVICE: iPhone 8
+                SCAN_SCHEME: ExampleSwift
+                
+        - store_test_results:
+            path: output/scan
+        
+        - store_artifacts:
+            path: output
+        
+
+  deploy:
+    <<: *defaultJob
+    steps:
+      - checkout
+      - add_ssh_keys
+      - restore_cache:
+          key: gem-cache-{{ checksum "Gemfile.lock" }}-v2
+      - run:
+          name: Set Ruby Version
+          command: echo "ruby-2.6.5" > ~/.ruby-version
+      - run: bundle check || bundle install --path vendor/bundle
+      - run:
+          name: Run Deploy
+          command: ./scripts/run_deploy.sh
+      - save_cache:
+          key: gem-cache-{{ checksum "Gemfile.lock" }}-v2
+          paths:
+              - vendor/bundle
+# Define the full workflow.
+workflows:
+  version: 2
+  test-lint:
+    jobs:
+        - build-and-test
+#      - deploy:
+#          <<: *deployWorkflow
