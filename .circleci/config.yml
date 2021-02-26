@@ -22,13 +22,11 @@ deploy-workflow: &deployWorkflow
 version: 2
 jobs:
 
-  build-and-test:
+  build:
     macos:
         xcode: "12.4.0"
     environment:
         FL_OUTPUT_DIR: FL_OUTPUT_DIR
-    working_directory:
-        $CIRCLE_WORKING_DIRECTORY/ExampleSwift
     steps:
         - checkout
 
@@ -36,26 +34,33 @@ jobs:
             name: Install bundle
             command: bundle install
 
-        - run:
-            name: Go to ExampleSwift
-            command: cd ExampleSwift
-
 #        - run:
 #            name: install pods needed
 #            command: bundle exec pod install
 
+  tests:
+      macos:
+          xcode: "12.4.0"
+      environment:
+          FL_OUTPUT_DIR: FL_OUTPUT_DIR
+      working_directory:
+          $CIRCLE_WORKING_DIRECTORY/ExampleSwift
+      steps:
         - run:
             name: Build and run tests
             command: bundle exec fastlane scan
+
+
             environment:
-                SCAN_DEVICE: iPhone 8
-                SCAN_SCHEME: ExampleSwift
+              SCAN_DEVICE: iPhone 8
+              SCAN_SCHEME: ExampleSwift
 
-        - store_test_results:
-            path: output/scan
+              - store_test_results:
+                  path: output/scan
 
-        - store_artifacts:
-            path: output
+              - store_artifacts:
+                  path: output
+
 
 
   deploy:
@@ -81,6 +86,7 @@ workflows:
   version: 2
   test-lint:
     jobs:
-        - build-and-test
+        - build
+        - tests
 #      - deploy:
 #          <<: *deployWorkflow
