@@ -37,6 +37,19 @@ jobs:
 #        - run:
 #            name: install pods needed
 #            command: bundle exec pod install
+        #
+        # - run:
+        #     name: Build and run tests
+        #     command: bundle exec fastlane scan
+        #     environment:
+        #         SCAN_DEVICE: iPhone 8
+        #         SCAN_SCHEME: ExampleSwift
+        #
+        # - store_test_results:
+        #     path: output/scan
+        #
+        # - store_artifacts:
+        #     path: output
 
   tests:
       macos:
@@ -45,23 +58,19 @@ jobs:
           FL_OUTPUT_DIR: FL_OUTPUT_DIR
       working_directory:
           $CIRCLE_WORKING_DIRECTORY/ExampleSwift
-      steps:
+    steps:
         - run:
             name: Build and run tests
             command: bundle exec fastlane scan
-
-
             environment:
-              SCAN_DEVICE: iPhone 8
-              SCAN_SCHEME: ExampleSwift
+                SCAN_DEVICE: iPhone 8
+                SCAN_SCHEME: ExampleSwift
 
-              - store_test_results:
-                  path: output/scan
+        - store_test_results:
+            path: output/scan
 
-              - store_artifacts:
-                  path: output
-
-
+        - store_artifacts:
+            path: output
 
   deploy:
     <<: *defaultJob
