@@ -22,17 +22,17 @@ deploy-workflow: &deployWorkflow
 version: 2
 jobs:
 
-  build:
-    macos:
-        xcode: "12.4.0"
-    environment:
-        FL_OUTPUT_DIR: FL_OUTPUT_DIR
-    steps:
-        - checkout
-
-        - run:
-            name: Install bundle
-            command: bundle install
+  # build-and:
+  #   macos:
+  #       xcode: "12.4.0"
+  #   environment:
+  #       FL_OUTPUT_DIR: FL_OUTPUT_DIR
+  #   steps:
+  #       - checkout
+  #
+  #       - run:
+  #           name: Install bundle
+  #           command: bundle install
 
 #        - run:
 #            name: install pods needed
@@ -51,7 +51,7 @@ jobs:
         # - store_artifacts:
         #     path: output
 
-  tests:
+  build-and-test:
       macos:
           xcode: "12.4.0"
       environment:
@@ -61,22 +61,22 @@ jobs:
       steps:
         - checkout
 
-        # - run:
-        #     name: Install bundle
-        #     command: bundle install
-        #
-        # - run:
-        #     name: Build and run tests
-        #     command: bundle exec fastlane scan
-        #     environment:
-        #         SCAN_DEVICE: iPhone 8
-        #         SCAN_SCHEME: ExampleSwift
-        #
-        # - store_test_results:
-        #     path: output/scan
-        #
-        # - store_artifacts:
-        #     path: output
+        - run:
+            name: Install bundle
+            command: bundle install
+
+        - run:
+            name: Build and run tests
+            command: bundle exec fastlane scan
+            environment:
+                SCAN_DEVICE: iPhone 8
+                SCAN_SCHEME: ExampleSwift
+
+        - store_test_results:
+            path: output/scan
+
+        - store_artifacts:
+            path: output
 
   deploy:
     <<: *defaultJob
@@ -101,7 +101,7 @@ workflows:
   version: 2
   test-lint:
     jobs:
-        - build
-        - tests
+        - build-and-test
+        # - tests
 #      - deploy:
 #          <<: *deployWorkflow
