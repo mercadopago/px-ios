@@ -27,34 +27,36 @@ jobs:
         xcode: "12.4.0"
     environment:
         FL_OUTPUT_DIR: FL_OUTPUT_DIR
+    working_directory:
+        $CIRCLE_WORKING_DIRECTORY/ExampleSwift
     steps:
         - checkout
-        
+
         - run:
             name: Install bundle
             command: bundle install
-            
+
         - run:
             name: Go to ExampleSwift
             command: cd ExampleSwift
-        
+
 #        - run:
 #            name: install pods needed
 #            command: bundle exec pod install
-        
+
         - run:
             name: Build and run tests
             command: bundle exec fastlane scan
             environment:
                 SCAN_DEVICE: iPhone 8
                 SCAN_SCHEME: ExampleSwift
-                
+
         - store_test_results:
             path: output/scan
-        
+
         - store_artifacts:
             path: output
-        
+
 
   deploy:
     <<: *defaultJob

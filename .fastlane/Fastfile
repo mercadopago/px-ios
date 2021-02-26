@@ -11,6 +11,8 @@ require 'fastlane_core/ui/ui.rb'
 
 
 before_all do
+    ENV["GYM_PROJECT"] = /Users/mlmartins/Desktop/Projetos/px-ios/ExampleSwift/ExampleSwift.xcworkspace
+    ENV["GYM_WORKSPACE"] =  /Users/mlmartins/Desktop/Projetos/px-ios/ExampleSwift/ExampleSwift.xcworkspace
     require 'rake'
     require_relative 'helper/ci_helper.rb'
 end
