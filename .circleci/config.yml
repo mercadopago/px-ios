@@ -102,6 +102,6 @@ workflows:
   test-lint:
     jobs:
         - build
-        # - tests
+        - tests
 #      - deploy:
 #          <<: *deployWorkflow
