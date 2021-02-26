@@ -59,6 +59,7 @@ jobs:
       working_directory:
           $CIRCLE_WORKING_DIRECTORY/ExampleSwift
       steps:
+        - checkout
         - run:
             name: Install bundle
             command: bundle install
