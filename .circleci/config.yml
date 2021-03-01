@@ -69,9 +69,7 @@ jobs:
 
         - run:
             name: set tests paths
-            command:
-              working_directory:
-                  $CIRCLE_WORKING_DIRECTORY/ExampleSwift
+            command: $CIRCLE_WORKING_DIRECTORY/px-ios/ExampleSwift
 
         - run:
             name: Build and run tests
