@@ -57,8 +57,8 @@ jobs:
       environment:
           FL_OUTPUT_DIR: FL_OUTPUT_DIR
 
-      working_directory:
-          $CIRCLE_WORKING_DIRECTORY/ExampleSwift
+      # working_directory:
+      #     $CIRCLE_WORKING_DIRECTORY/ExampleSwift
 
       steps:
         - checkout
