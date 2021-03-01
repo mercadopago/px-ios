@@ -69,9 +69,9 @@ jobs:
 
         - run:
             name: set tests paths
+            command: cd ExampleSwift
             working_directory:
                 $CIRCLE_WORKING_DIRECTORY/ExampleSwift
-
         - run:
             name: Build and run tests
             command: bundle exec fastlane scan
