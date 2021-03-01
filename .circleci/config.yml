@@ -54,12 +54,15 @@ jobs:
   build-and-test:
       macos:
           xcode: "12.4.0"
+
       environment:
           FL_OUTPUT_DIR: FL_OUTPUT_DIR
+
       working_directory:
           $CIRCLE_WORKING_DIRECTORY/ExampleSwift
+
       steps:
-        - checkout
+        # - checkout
 
         - run:
             name: Install bundle
