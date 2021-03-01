@@ -101,16 +101,8 @@ extension PXCardSlider: PXCardSliderPagerCellDelegate {
     }
 
     func switchDidChange(_ selectedOption: String) {
-        print("Switch did change \(selectedOption)")
-
         if model.indices.contains(selectedIndex) {
             let modelData = model[selectedIndex]
-            print("\(modelData.selectedPaymentMethodTypeId) - \(selectedOption)")
-            //if let payerPaymentMethods = modelData.payerPaymentMethods,
-               //payerPaymentMethods.count > 1 {
-                //modelData.selectedPaymentMethodTypeId = selectedOption
-            //    print("\(modelData.selectedPaymentMethodTypeId) - \(selectedOption)")
-            //}
             delegate?.newCardDidSelected(targetModel: modelData)
         }
     }

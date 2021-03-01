@@ -568,10 +568,11 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func displayCard(targetModel: PXCardSliderViewModel) {
         // New payment method selected.
-        let newPaymentMethodId: String = targetModel.paymentMethodId
+        let newPaymentMethodId: String = targetModel.payerPaymentMethod?.paymentMethodId ?? targetModel.paymentMethodId
         let newPayerCost: PXPayerCost? = targetModel.selectedPayerCost
 
         let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
+        
         if let newPaymentMethod = viewModel.getPaymentMethod(paymentMethodId: newPaymentMethodId) {
             currentPaymentData.payerCost = newPayerCost
             currentPaymentData.paymentMethod = newPaymentMethod
@@ -587,9 +588,11 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
 
         headerView?.updateSplitPaymentView(splitConfiguration: selectedCard?.amountConfiguration?.splitConfiguration)
+        
+        let paymentTypeId = targetModel.payerPaymentMethod?.paymentTypeId ?? targetModel.paymentTypeId
 
         // If it's debit and has split, update split message
-        if let totalAmount = targetModel.selectedPayerCost?.totalAmount, targetModel.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
+        if let totalAmount = targetModel.selectedPayerCost?.totalAmount, paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
             targetModel.displayMessage = viewModel.getSplitMessageForDebit(amountToPay: totalAmount)
         }
     }

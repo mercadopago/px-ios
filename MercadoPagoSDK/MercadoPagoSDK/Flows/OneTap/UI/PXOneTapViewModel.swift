@@ -58,15 +58,11 @@ extension PXOneTapViewModel {
         // Rearrange disabled options
         let reArrangedNodes = rearrangeDisabledOption(oneTapNode, disabledOption: disabledOption)
         for targetNode in reArrangedNodes {
-            var payerPaymentMethods: [PXCustomOptionSearchItem]?
-            let options = ["debit_card", "credit_card"] // [SwitchOption(id: "debit_card", name: ""), SwitchOption(id: "credit_card", name: "")]
-            let defaultState = "debit_card"
+            var payerPaymentMethods: [PXCustomOptionSearchItem]? = []
+            
             if let switchInfo = targetNode.displayInfo?.switchInfo {
-                for option in options {
-                    if let payerPaymentMethod = getPayerPaymentMethod(option, targetNode.oneTapCard?.cardId) {
-                        if payerPaymentMethods == nil {
-                            payerPaymentMethods = []
-                        }
+                for option in switchInfo.options {
+                    if let payerPaymentMethod = getPayerPaymentMethod(option.id, targetNode.oneTapCard?.cardId) {
                         payerPaymentMethods?.append(payerPaymentMethod)
                     }
                 }
@@ -120,8 +116,9 @@ extension PXOneTapViewModel {
                     let templateCard = getCardUI(oneTapCard: oneTapCard)
 
                     var paymentTypeId = targetNode.paymentTypeId
+                    
                     if let switchInfo = targetNode.displayInfo?.switchInfo {
-                        paymentTypeId = defaultState
+                        paymentTypeId = switchInfo.defaultState
                     }
                     
                     let paymentOptionConfiguration = amountHelper.paymentConfigurationService.getPaymentOptionConfiguration(paymentOptionID: oneTapCard.cardId, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
@@ -384,7 +381,10 @@ extension PXOneTapViewModel {
     }
 
     func getChargeRuleViewController() -> UIViewController? {
-        let chargeRule = getChargeRule(paymentTypeId: amountHelper.getPaymentData().paymentMethod?.paymentTypeId)
+        
+        let paymentTypeId = amountHelper.getPaymentData().paymentMethod?.paymentTypeId
+        
+        let chargeRule = getChargeRule(paymentTypeId: paymentTypeId)
         let vc = chargeRule?.detailModal
         return vc
     }
