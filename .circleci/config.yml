@@ -63,16 +63,16 @@ jobs:
       steps:
         - checkout
 
-        # - run:
-        #     name: Install bundle
-        #     command: bundle install
+        - run:
+            name: Install bundle
+            command: bundle install
 
         - run:
             # working_directory:
             name: Build and run tests
             command: |
               cd ExampleSwift
-              ls
+              bundle exec fastlane scan
             environment:
                 SCAN_DEVICE: iPhone 8
                 SCAN_SCHEME: ExampleSwift
