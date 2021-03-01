@@ -70,7 +70,8 @@ jobs:
         - run:
             working_directory: $CIRCLE_WORKING_DIRECTORY/ExampleSwift
             name: Build and run tests
-            command: echo ls
+            command: |
+              ls -al
             environment:
                 SCAN_DEVICE: iPhone 8
                 SCAN_SCHEME: ExampleSwift
