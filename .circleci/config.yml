@@ -72,6 +72,7 @@ jobs:
             name: Build and run tests
             command: |
               cd ExampleSwift
+              bundle exec pod update && pod install
               bundle exec fastlane scan
             environment:
                 SCAN_DEVICE: iPhone 8
