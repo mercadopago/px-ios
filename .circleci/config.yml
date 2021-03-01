@@ -105,7 +105,7 @@ jobs:
 # Define the full workflow.
 workflows:
   version: 2
-  test-lint:
+  unit-tests:
     jobs:
         - build-and-test
         # - tests
