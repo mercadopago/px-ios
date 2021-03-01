@@ -68,7 +68,7 @@ jobs:
             command: bundle install
 
         - run:
-            # working_directory: $CIRCLE_WORKING_DIRECTORY/ExampleSwift
+            working_directory: ~/ExampleSwift
             name: Build and run tests
             command: |
               ls -al
