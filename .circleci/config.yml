@@ -62,11 +62,11 @@ jobs:
           $CIRCLE_WORKING_DIRECTORY/ExampleSwift
 
       steps:
-        # - checkout
+        - checkout
 
-        - run:
-            name: Install bundle
-            command: bundle install
+        # - run:
+        #     name: Install bundle
+        #     command: bundle install
 
         - run:
             name: Build and run tests
