@@ -66,12 +66,12 @@ jobs:
         - run:
             name: Install bundle
             command: bundle install
-            working_directory:
-                $CIRCLE_WORKING_DIRECTORY/ExampleSwift
 
         - run:
             name: Build and run tests
             command: bundle exec fastlane scan
+            working_directory:
+                $CIRCLE_WORKING_DIRECTORY/ExampleSwift
             environment:
                 SCAN_DEVICE: iPhone 8
                 SCAN_SCHEME: ExampleSwift
