@@ -24,6 +24,9 @@ open class PXConfiguratorManager: NSObject {
     // ESC
     internal static var escProtocol: PXESCProtocol = PXESCDefault()
     internal static var escConfig: PXESCConfig = PXESCConfig.createConfig()
+    
+    // 3DS
+    internal static var threeDSProtocol: PXThreeDSProtocol = PXThreeDSDefault()
 
     // MARK: Public
     // Set external implementation of PXBiometricProtocol
@@ -39,5 +42,10 @@ open class PXConfiguratorManager: NSObject {
     // Set external implementation of PXESCProtocol
     public static func with(escProtocol: PXESCProtocol) {
         self.escProtocol = escProtocol
+    }
+    
+    // Set external implementation of PXThreeDSProtocol
+    public static func with(threeDSProtocol: PXThreeDSProtocol) {
+        self.threeDSProtocol = threeDSProtocol
     }
 }
