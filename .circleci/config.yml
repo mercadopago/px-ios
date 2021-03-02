@@ -46,6 +46,12 @@ jobs:
                 SCAN_DEVICE: iPhone 8
                 SCAN_SCHEME: ExampleSwift
 
+        - store_test_results:
+            path: output/scan
+
+        - store_artifacts:
+            path: output
+
   deploy:
     <<: *defaultJob
     steps:
