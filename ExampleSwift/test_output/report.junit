@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='MercadoPagoSDKV4-Unit-MercadoPagoSDKTests.xctest' tests='8' failures='0'>
+  <testsuite name='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' tests='8' failures='0'>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCommonCongrats' time='0.010'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithAccountMoney' time='0.049'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithConsumerCredits' time='0.001'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithConsumerCreditsInstallments' time='0.080'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithDiscount' time='0.004'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithInstallments' time='0.001'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithOneInstallments' time='0.001'/>
+    <testcase classname='MercadoPagoSDKV4_Unit_MercadoPagoSDKTests.CongratsTests' name='testCongratsWithOutDiscountsAndPoints' time='0.004'/>
+  </testsuite>
+</testsuites>

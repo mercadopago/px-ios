@@ -29,11 +29,8 @@
 		23EDA1402147DFC90085CA7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		23EDA1422147DFC90085CA7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5AE825D2258BA664002C7F74 /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaymentProcessor.swift; sourceTree = "<group>"; };
 		5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPXDynamicComponent.swift; sourceTree = "<group>"; };
-		5AE8261F2590CED7002C7F74 /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
-		5AE826202590CEEC002C7F74 /* AlphaConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AlphaConfig.xcconfig; sourceTree = "<group>"; };
 		5AE826222590D100002C7F74 /* CustomPXDynamicComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomPXDynamicComponentView.xib; sourceTree = "<group>"; };
 		5AE9791B259B89BF00D32A84 /* Config.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.example.xcconfig; sourceTree = "<group>"; };
 		99370F01A1046BF2A7CF23EC /* Pods-ExampleSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.release.xcconfig"; sourceTree = "<group>"; };
@@ -99,9 +96,6 @@
 			isa = PBXGroup;
 			children = (
 				23EDA13D2147DFC90085CA7A /* Assets.xcassets */,
-				5AE825D2258BA664002C7F74 /* ReleaseConfig.xcconfig */,
-				5AE8261F2590CED7002C7F74 /* DebugConfig.xcconfig */,
-				5AE826202590CEEC002C7F74 /* AlphaConfig.xcconfig */,
 				23EDA1422147DFC90085CA7A /* Info.plist */,
 				5AE9791B259B89BF00D32A84 /* Config.example.xcconfig */,
 			);
@@ -316,7 +310,6 @@
 /* Begin XCBuildConfiguration section */
 		23EDA1432147DFC90085CA7A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AE8261F2590CED7002C7F74 /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -376,7 +369,6 @@
 		};
 		23EDA1442147DFC90085CA7A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AE825D2258BA664002C7F74 /* ReleaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -464,7 +456,6 @@
 		};
 		5AE8259D258B80AD002C7F74 /* Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AE826202590CEEC002C7F74 /* AlphaConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
