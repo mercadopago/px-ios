@@ -98,9 +98,8 @@ internal extension MPXTracker {
             metadata[SessionService.SESSION_ID_KEY] = getSessionID()
             metadata["security_enabled"] = PXConfiguratorManager.hasSecurityValidation()
             metadata["session_time"] = PXTrackingStore.sharedInstance.getSecondsAfterInit()
-            if let choType = PXTrackingStore.sharedInstance.getChoType() {
-                metadata["checkout_type"] = choType
-                print("checkout_type: \(choType) " + screenName)
+            if let checkoutType = PXTrackingStore.sharedInstance.getChoType() {
+                metadata["checkout_type"] = checkoutType
             }
             trackListenerInterfase.trackScreen(screenName: screenName, extraParams: metadata)
         }

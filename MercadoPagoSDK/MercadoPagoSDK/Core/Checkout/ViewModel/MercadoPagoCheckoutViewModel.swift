@@ -119,6 +119,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
         }
         PXConfiguratorManager.escConfig = PXESCConfig.createConfig()
+        PXConfiguratorManager.threeDSConfig = PXThreeDSConfig.createConfig(privateKey: privateKey)
 
         // Create Init Flow
         createInitFlow()

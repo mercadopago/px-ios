@@ -11,7 +11,7 @@ import Foundation
 Default PX implementation of ESC for public distribution. (No-validation)
  */
 final class PXThreeDSDefault: NSObject, PXThreeDSProtocol {
-    func authenticate(cardTokenID: String, completion: @escaping ((Bool) -> ())) {
+    func authenticate(config: PXThreeDSConfig, cardTokenID: String, cardHolderName: String, paymentMethodId: String, purchaseAmount: String, currencyId: String, decimalPlaces: Int, decimalSeparator: String, thousandsSeparator: String, siteId: String, completion: @escaping ((Bool) -> ())) {
         completion(true)
     }
 }

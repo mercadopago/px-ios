@@ -28,9 +28,9 @@ open class PXTrackingConfiguration: NSObject {
         //TODO: replace PXTracker internally with a better solution based on this class
         if let trackListener = trackListener {
             MPXTracker.sharedInstance.setTrack(listener: trackListener)
-            MPXTracker.sharedInstance.setFlowName(name: flowName)
-            MPXTracker.sharedInstance.setFlowDetails(flowDetails: flowDetails)
         }
+        MPXTracker.sharedInstance.setFlowName(name: flowName)
+        MPXTracker.sharedInstance.setFlowDetails(flowDetails: flowDetails)
         if let sessionId = sessionId {
             MPXTracker.sharedInstance.setCustomSessionId(sessionId)
         }

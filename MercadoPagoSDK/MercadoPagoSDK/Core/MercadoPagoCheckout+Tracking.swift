@@ -11,6 +11,7 @@ import Foundation
 extension MercadoPagoCheckout {
 
     internal func startTracking() {
+        viewModel.trackingConfig?.updateTracker()
         MPXTracker.sharedInstance.startNewSession()
 
         // Track init event

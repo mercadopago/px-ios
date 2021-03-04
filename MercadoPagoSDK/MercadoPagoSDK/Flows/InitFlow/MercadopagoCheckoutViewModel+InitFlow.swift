@@ -49,7 +49,6 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func startInitFlow() {
-        trackingConfig?.updateTracker()
         initFlow?.start()
     }
 
