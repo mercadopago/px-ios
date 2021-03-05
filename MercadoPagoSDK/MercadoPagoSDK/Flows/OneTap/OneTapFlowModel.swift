@@ -287,11 +287,13 @@ internal extension OneTapFlowModel {
     
     func need3DS() -> Bool {
         // TODO Validate against paymentMethod validation program
+        #if DEBUG
         if !threeDSAuthorization,
            needCreatePayment(),
            paymentData.paymentMethod?.getId() == "debmaster" {
             return true
         }
+        #endif
         return false
     }
 
