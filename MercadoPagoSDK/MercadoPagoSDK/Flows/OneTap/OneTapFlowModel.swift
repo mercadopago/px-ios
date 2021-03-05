@@ -16,6 +16,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         case serviceCreateESCCardToken
         case serviceCreateWebPayCardToken
         case screenKyC
+        case service3DS
         case payment
     }
     internal var publicKey: String = ""
@@ -25,6 +26,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption?
     let search: PXInitDTO
+    var threeDSAuthorization: Bool = false
     var readyToPay: Bool = false
     var paymentResult: PaymentResult?
     var instructionsInfo: PXInstructions?
@@ -100,6 +102,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
         if needKyC() {
             return .screenKyC
+        }
+        if need3DS() {
+            return .service3DS
         }
         if needCreatePayment() {
             return .payment
@@ -278,6 +283,16 @@ internal extension OneTapFlowModel {
 
     func needKyC() -> Bool {
         return !(search.payerCompliance?.offlineMethods.isCompliant ?? true) && paymentOptionSelected?.additionalInfoNeeded?() ?? false
+    }
+    
+    func need3DS() -> Bool {
+        // TODO Validate against paymentMethod validation program
+        if !threeDSAuthorization,
+           needCreatePayment(),
+           paymentData.paymentMethod?.getId() == "debmaster" {
+            return true
+        }
+        return false
     }
 
     func needCreatePayment() -> Bool {

@@ -56,6 +56,8 @@ final class OneTapFlow: NSObject, PXFlow {
             self.getTokenizationService().createCardToken(securityCode: "")
         case .screenKyC:
             self.showKyCScreen()
+        case .service3DS:
+            self.authorize3DS()
         case .payment:
             self.startPaymentFlow()
         case .finish:
@@ -171,5 +173,44 @@ extension OneTapFlow {
             return nil
         }
         return customerPaymentMethods.first(where: { $0.getCardId() == cardId })
+    }
+}
+
+// TODO: Maybe move this to its own Service and show a loading indicator while authorizing
+internal extension OneTapFlow {
+    func authorize3DS() {
+        if let cardTokenID = model.paymentData.token?.getId(),
+           let paymentMethod = model.paymentData.paymentMethod,
+           let oneTapDto = model.search.oneTap?.first(where: {
+                                                    $0.paymentTypeId == paymentMethod.paymentTypeId && $0.paymentMethodId == paymentMethod.getId()
+           }),
+           let oneTapCardDto = oneTapDto.oneTapCard,
+           let cardHolderName = oneTapCardDto.cardUI?.name,
+           let paymentMethodId = paymentMethod.getId() {
+            let currencyId = SiteManager.shared.getCurrency().getCurrencySymbolOrDefault()
+            let decimalPlaces = SiteManager.shared.getCurrency().getDecimalPlacesOrDefault()
+            let decimalSeparator = SiteManager.shared.getCurrency().getDecimalSeparatorOrDefault()
+            let thousandsSeparator = SiteManager.shared.getCurrency().getThousandsSeparatorOrDefault()
+            let purchaseAmount = Utils.getAmountFormatted(amount: model.amountHelper.amountToPay, thousandSeparator: thousandsSeparator, decimalSeparator: decimalSeparator, addingCurrencySymbol: nil, addingParenthesis: false)
+            let siteId = model.checkoutPreference.siteId
+            
+            PXConfiguratorManager.threeDSProtocol.authenticate(config: PXConfiguratorManager.threeDSConfig,
+                                                               cardTokenID: cardTokenID,
+                                                               cardHolderName: cardHolderName,
+                                                               paymentMethodId: paymentMethodId,
+                                                               purchaseAmount: purchaseAmount,
+                                                               currencyId: currencyId,
+                                                               decimalPlaces: decimalPlaces,
+                                                               decimalSeparator: decimalSeparator,
+                                                               thousandsSeparator: thousandsSeparator,
+                                                               siteId: siteId,
+                                                               completion: { [weak self] result in
+                                                                self?.model.threeDSAuthorization = result
+                                                                self?.executeNextStep()
+            })
+        } else {
+            model.threeDSAuthorization = false
+            executeNextStep()
+        }
     }
 }
