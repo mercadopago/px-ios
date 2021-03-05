@@ -191,6 +191,10 @@ internal extension OneTapFlowModel {
     func updateCheckoutModel(token: PXToken) {
         self.paymentData.updatePaymentDataWith(token: token)
     }
+    
+    func updateCheckoutModel(threeDSAuthorization: Bool) {
+        self.threeDSAuthorization = threeDSAuthorization
+    }
 
     func updateCheckoutModel(payerCost: PXPayerCost) {
         guard let paymentOptionSelected = paymentOptionSelected else {
@@ -286,7 +290,7 @@ internal extension OneTapFlowModel {
     }
     
     func need3DS() -> Bool {
-        // TODO Validate against paymentMethod validation program
+        // TODO Validate against paymentMethod applications node validation program
         #if DEBUG
         if !threeDSAuthorization,
            needCreatePayment(),
