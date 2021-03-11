@@ -1,0 +1,21 @@
+//
+//  AlphaConfig.xcconfig
+//  ExampleSwift
+//
+//  Created by Jonathan Scaramal on 17/12/2020.
+//  Copyright © 2020 Juan Sebastian Sanzone. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Use this file as example to generate needed config files
+
+//PX Environment - [alpha | beta | prod]
+PX_ENVIRONMENT=alpha
+
+// Collector public key
+PX_COLLECTOR_PUBLIC_KEY=TEST-XXXXXX-XXXXXX-XXXXXX-XXXXXX-XXXXXX
+
+// Payer private key
+PX_PAYER_PRIVATE_KEY=TEST-XXXXXXXXXXXXXXXX-XXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXXXXXXX
