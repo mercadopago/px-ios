@@ -14,7 +14,6 @@ deploy-workflow: &deployWorkflow
   filters:
     branches:
       only:
-        - develop
         - /release\/.*$/
 
 # Define the jobs we will be using
@@ -77,5 +76,8 @@ workflows:
   unit-tests:
     jobs:
         - build-and-test
-#      - deploy:
-#          <<: *deployWorkflow
+        
+  test-lint:
+    jobs:
+        - deploy:
+          <<: *deployWorkflow
