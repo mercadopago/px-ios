@@ -13,9 +13,9 @@
 		23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13D2147DFC90085CA7A /* Assets.xcassets */; };
 		23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13F2147DFC90085CA7A /* LaunchScreen.storyboard */; };
 		3BF796944AEC371EF5E3193D /* Pods_ExampleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */; };
-		5A82506825FAF63700B64357 /* Config.example.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A82506525FAF63600B64357 /* Config.example.xcconfig */; };
 		5A82506925FAF63700B64357 /* AlphaConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A82506625FAF63700B64357 /* AlphaConfig.xcconfig */; };
 		5A82506A25FAF63700B64357 /* DebugConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A82506725FAF63700B64357 /* DebugConfig.xcconfig */; };
+		5A82506E25FAF9DF00B64357 /* ReleaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A82506D25FAF9DF00B64357 /* ReleaseConfig.xcconfig */; };
 		5AE825FD2590C8D1002C7F74 /* CustomPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */; };
 		5AE826012590C8FB002C7F74 /* CustomPXDynamicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */; };
 		5AE826232590D100002C7F74 /* CustomPXDynamicComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE826222590D100002C7F74 /* CustomPXDynamicComponentView.xib */; };
@@ -32,9 +32,9 @@
 		23EDA1402147DFC90085CA7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		23EDA1422147DFC90085CA7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A82506525FAF63600B64357 /* Config.example.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.example.xcconfig; sourceTree = "<group>"; };
 		5A82506625FAF63700B64357 /* AlphaConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AlphaConfig.xcconfig; sourceTree = "<group>"; };
 		5A82506725FAF63700B64357 /* DebugConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
+		5A82506D25FAF9DF00B64357 /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaymentProcessor.swift; sourceTree = "<group>"; };
 		5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPXDynamicComponent.swift; sourceTree = "<group>"; };
 		5AE826222590D100002C7F74 /* CustomPXDynamicComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomPXDynamicComponentView.xib; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				5A82506625FAF63700B64357 /* AlphaConfig.xcconfig */,
-				5A82506525FAF63600B64357 /* Config.example.xcconfig */,
+				5A82506D25FAF9DF00B64357 /* ReleaseConfig.xcconfig */,
 				5A82506725FAF63700B64357 /* DebugConfig.xcconfig */,
 				23EDA13D2147DFC90085CA7A /* Assets.xcassets */,
 				23EDA1422147DFC90085CA7A /* Info.plist */,
@@ -210,13 +210,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A82506825FAF63700B64357 /* Config.example.xcconfig in Resources */,
 				23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */,
 				5A82506A25FAF63700B64357 /* DebugConfig.xcconfig in Resources */,
 				23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */,
 				5A82506925FAF63700B64357 /* AlphaConfig.xcconfig in Resources */,
 				5AE826232590D100002C7F74 /* CustomPXDynamicComponentView.xib in Resources */,
 				23EDA13C2147DFC90085CA7A /* Main.storyboard in Resources */,
+				5A82506E25FAF9DF00B64357 /* ReleaseConfig.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
