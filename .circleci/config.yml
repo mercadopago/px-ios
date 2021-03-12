@@ -53,6 +53,9 @@ jobs:
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.6.5" > ~/.ruby-version
+      - run:
+          name: Update fastlane version
+          command: bundle update fastlane
       - run: bundle check || bundle install --path vendor/bundle
       - run:
           name: Run Deploy
