@@ -15,25 +15,19 @@ deploy-workflow: &deployWorkflow
     branches:
       only:
         - /release\/.*$/
-
 # Define the jobs we will be using
 version: 2
 jobs:
-
   build-and-test:
       macos:
           xcode: "12.4.0"
-
       environment:
           FL_OUTPUT_DIR: FL_OUTPUT_DIR
-
       steps:
         - checkout
-
         - run:
             name: Install bundle
             command: bundle install
-
         - run:
             # working_directory:
             name: Build and run tests
@@ -45,13 +39,10 @@ jobs:
             environment:
                 SCAN_DEVICE: iPhone 8
                 SCAN_SCHEME: ExampleSwift
-
         - store_test_results:
             path: output/scan
-
         - store_artifacts:
             path: output
-
   deploy:
     <<: *defaultJob
     steps:
@@ -73,11 +64,10 @@ jobs:
 # Define the full workflow.
 workflows:
   version: 2
-  unit-tests:
+  unit-test:
     jobs:
-        - build-and-test
-        
-  test-lint:
-    jobs:
-        - deploy:
+      - build-and-test
+      - deploy:
+          requires:
+            - build-and-test
           <<: *deployWorkflow
