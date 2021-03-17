@@ -88,27 +88,13 @@ final internal class OneTapFlowModel: PXFlowModel {
     }
 
     public func nextStep() -> Steps {
-        if needShowOneTap() {
-            return .screenOneTap
-        }
-        if needSecurityCode() {
-            return .screenSecurityCode
-        }
-        if needCreateESCToken() {
-            return .serviceCreateESCCardToken
-        }
-        if needCreateWebPayToken() {
-            return .serviceCreateWebPayCardToken
-        }
-        if needKyC() {
-            return .screenKyC
-        }
-        if need3DS() {
-            return .service3DS
-        }
-        if needCreatePayment() {
-            return .payment
-        }
+        if needShowOneTap() { return .screenOneTap }
+        if needSecurityCode() { return .screenSecurityCode }
+        if needCreateESCToken() { return .serviceCreateESCCardToken }
+        if needCreateWebPayToken() { return .serviceCreateWebPayCardToken }
+        if needKyC() { return .screenKyC }
+        if need3DS() { return .service3DS }
+        if needCreatePayment() { return .payment }
         return .finish
     }
 }
@@ -290,14 +276,12 @@ internal extension OneTapFlowModel {
     }
     
     func need3DS() -> Bool {
-        // TODO Validate against paymentMethod applications node validation program
-        #if DEBUG
-        if !threeDSAuthorization,
-           needCreatePayment(),
+        // TODO: Integrate with switcher, that will gives us info needed to decide if the request should or should not be make
+        if needCreatePayment(),
            paymentData.paymentMethod?.getId() == "debmaster" {
             return true
         }
-        #endif
+        
         return false
     }
 

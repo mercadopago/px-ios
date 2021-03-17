@@ -63,7 +63,6 @@ final class OneTapFlow: NSObject, PXFlow {
         case .finish:
             self.finishFlow()
         }
-        print("")
     }
 
     func refreshInitFlow(cardId: String) {

@@ -59,11 +59,8 @@ internal class ThreeDSService {
                                                                completion: { result in
                                                                 switch result {
                                                                 case .success(let authorized):
-                                                                    if authorized {
-                                                                        self.resultHandler?.finishFlow(threeDSAuthorization: authorized)
-                                                                    } else {
-                                                                        self.resultHandler?.finishWithError(error: MPSDKError())
-                                                                    }
+                                                                    authorized ? self.resultHandler?.finishFlow(threeDSAuthorization: authorized) :
+                                                                                 self.resultHandler?.finishWithError(error: MPSDKError())
                                                                 case .failure(_):
                                                                     self.resultHandler?.finishWithError(error: MPSDKError())
                                                                 }
