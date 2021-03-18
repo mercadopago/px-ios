@@ -28,33 +28,61 @@ internal class PaymentMethodSearchService: MercadoPagoService {
             uri.append("/\(prefId)")
         }
         
-        let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
-
-        self.request(uri: uri, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
-            headers, cache: false, success: { (data) -> Void in
-                do {
-                    let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-                    if let paymentSearchDic = jsonResult as? NSDictionary {
-                        if paymentSearchDic["error"] != nil {
-                            let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
-                            failure(PaymentMethodSearchService.getError(code: ErrorTypes.API_EXCEPTION_ERROR, apiException: apiException))
-                        } else {
-                            if paymentSearchDic.allKeys.count > 0 {
-                                let initDTO = try JSONDecoder().decode(PXInitDTO.self, from: data) as PXInitDTO
-                                success(initDTO)
-                            } else {
-                                failure(PaymentMethodSearchService.getError())
-                            }
-                        }
+//        let params = MercadoPagoServices.getParamsAccessToken(payerAccessToken)
+        var path: URL?
+        for bundle in Bundle.allBundles {
+            if let url = bundle.url(forResource: "MockResponse", withExtension: "json") {
+                path = url
+            }
+        }
+//        guard let path = Bundle.main.url(forResource: "MockResponse", withExtension: "json") else { return }
+        guard let url = path, let data = try? Data(contentsOf: url) else { return }
+        do {
+            let jsonResult = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+            if let paymentSearchDic = jsonResult as? NSDictionary {
+                if paymentSearchDic["error"] != nil {
+                    let apiException = try? JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
+                    failure(PaymentMethodSearchService.getError(code: ErrorTypes.API_EXCEPTION_ERROR, apiException: apiException))
+                } else {
+                    if paymentSearchDic.allKeys.count > 0 {
+                        let initDTO = try? JSONDecoder().decode(PXInitDTO.self, from: data) as PXInitDTO
+                        success(initDTO!)
+                    } else {
+                        failure(PaymentMethodSearchService.getError())
                     }
-                } catch {
-                    printDebug("PaymentMethodSearchService getInit error: \(error).")
-                    failure(PaymentMethodSearchService.getError())
                 }
+            }
+        } catch {
+            printDebug("PaymentMethodSearchService getInit error: \(error).")
+            failure(PaymentMethodSearchService.getError())
+        }
+        
 
-        }, failure: { (_) -> Void in
-            failure(PaymentMethodSearchService.getError(code: ErrorTypes.NO_INTERNET_ERROR, reason: "Verifique su conexión a internet e intente nuevamente"))
-        })
+//        self.request(uri: uri, params: params, body: bodyJSON, method: HTTPMethod.post, headers:
+//            headers, cache: false, success: { (data) -> Void in
+//                do {
+//                    let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+//                    if let paymentSearchDic = jsonResult as? NSDictionary {
+//                        if paymentSearchDic["error"] != nil {
+//                            let apiException = try JSONDecoder().decode(PXApiException.self, from: data) as PXApiException
+//                            failure(PaymentMethodSearchService.getError(code: ErrorTypes.API_EXCEPTION_ERROR, apiException: apiException))
+//                        } else {
+//                            if paymentSearchDic.allKeys.count > 0 {
+//                                let initDTO = try JSONDecoder().decode(PXInitDTO.self, from: data) as PXInitDTO
+//                                success(initDTO)
+//                            } else {
+//                                failure(PaymentMethodSearchService.getError())
+//                            }
+//                        }
+//                    }
+//                } catch {
+//                    printDebug("PaymentMethodSearchService getInit error: \(error).")
+//                    failure(PaymentMethodSearchService.getError())
+//                }
+//
+//        }, failure: { (_) -> Void in
+//            failure(PaymentMethodSearchService.getError(code: ErrorTypes.NO_INTERNET_ERROR, reason: "Verifique su conexión a internet e intente nuevamente"))
+//        })
     }
     
     private static func getError(code: Int = ErrorTypes.API_UNKNOWN_ERROR,

@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     private var checkout: MercadoPagoCheckout?
     
     // Collector Public Key
-    private var publicKey : String = ""
+    private var publicKey : String = "TEST-e28d5a35-dece-45c9-9618-e8cc5dec6c42"
     
     // Payer private key
-    private var privateKey : String = ""
+    private var privateKey : String = "TEST-7215456036166479-101915-223c2540d9126044887a840cfae544a9-660760647"
     
     // Preference ID
     private var preferenceId : String = "656525290-7bda964b-26d9-4352-a04c-1b04801627ee"
@@ -39,11 +39,11 @@ class ViewController: UIViewController {
         gradient.colors = [col1.cgColor, col2.cgColor]
         view.layer.insertSublayer(gradient, at: 0)
                 
-        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"), let infoPlist = NSDictionary(contentsOfFile: path) {
-            // Initialize values from config
-            publicKey = infoPlist["PX_COLLECTOR_PUBLIC_KEY"] as? String ?? ""
-            privateKey = infoPlist["PX_PAYER_PRIVATE_KEY"] as? String ?? ""
-        }
+//        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"), let infoPlist = NSDictionary(contentsOfFile: path) {
+//            // Initialize values from config
+//            publicKey = infoPlist["PX_COLLECTOR_PUBLIC_KEY"] as? String ?? ""
+//            privateKey = infoPlist["PX_PAYER_PRIVATE_KEY"] as? String ?? ""
+//        }
     }
 
     private func runMercadoPagoCheckout() {

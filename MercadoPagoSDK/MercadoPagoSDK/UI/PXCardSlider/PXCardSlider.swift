@@ -10,6 +10,10 @@ public protocol ChangeCardAccessibilityProtocol: NSObjectProtocol {
     func scrollTo(direction: UIAccessibilityScrollDirection)
 }
 
+protocol PXCardSliderDelegate: class {
+    func indexDidChange(index: Int)
+}
+
 typealias AccessibilityCardData = (paymentMethodId: String, paymentTypeId: String, issuerName: String, description: String, cardName: String, index: Int, numberOfPages: Int)
 
 final class PXCardSlider: NSObject {
@@ -25,9 +29,14 @@ final class PXCardSlider: NSObject {
     }
     
     private weak var delegate: PXCardSliderProtocol?
-    private var selectedIndex: Int = 0
+    private var selectedIndex: Int = 0 {
+        didSet {
+            teste?.indexDidChange(index: selectedIndex)
+        }
+    }
     private let cardSliderCornerRadius: CGFloat = 11
     weak var termsAndCondDelegate: PXTermsAndConditionViewDelegate?
+    weak var teste: PXCardSliderDelegate?
 
     override init() {
         super.init()

@@ -22,6 +22,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     internal var publicKey: String = ""
     internal var privateKey: String?
     internal var siteId: String = ""
+    var cardIndex = 0
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption?
@@ -278,9 +279,10 @@ internal extension OneTapFlowModel {
     func need3DS() -> Bool {
         // TODO: Integrate with switcher, that will gives us info needed to decide if the request should or should not be make
         if needCreatePayment(),
-           paymentData.paymentMethod?.getId() == "debmaster" {
+           paymentData.paymentMethod?.getId() == "debmaster",
+           search.oneTap![cardIndex].applications!.first!.validationPrograms.first!.id == "stp" {
             return true
-        }
+        }   
         
         return false
     }

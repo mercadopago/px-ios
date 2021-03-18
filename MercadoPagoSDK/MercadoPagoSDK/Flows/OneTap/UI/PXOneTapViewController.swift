@@ -11,6 +11,10 @@ import MLCardForm
 import MLUI
 import AndesUI
 
+protocol PXOneTapDelegate: class {
+    func updateCardIndex(index: Int)
+}
+
 final class PXOneTapViewController: PXComponentContainerViewController {
 
     // MARK: Definitions
@@ -34,6 +38,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var headerView: PXOneTapHeaderView?
     var whiteView: UIView?
     var selectedCard: PXCardSliderViewModel?
+    
+    weak var delegate: PXOneTapDelegate?
 
     var currentModal: MLModal?
     var shouldTrackModal: Bool = false
@@ -65,6 +71,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        slider.teste = self
         setupNavigationBar()
         setupUI()
         isUIEnabled(true)
@@ -906,5 +913,11 @@ extension PXOneTapViewController: UINavigationControllerDelegate {
             return PXOneTapViewControllerTransition()
         }
         return nil
+    }
+}
+
+extension PXOneTapViewController: PXCardSliderDelegate {
+    func indexDidChange(index: Int) {
+        delegate?.updateCardIndex(index: index)
     }
 }
