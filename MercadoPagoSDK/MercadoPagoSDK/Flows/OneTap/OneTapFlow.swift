@@ -174,9 +174,3 @@ extension OneTapFlow {
         return customerPaymentMethods.first(where: { $0.getCardId() == cardId })
     }
 }
-
-extension OneTapFlow: PXOneTapDelegate {
-    func updateCardIndex(index: Int) {
-        model.cardIndex = index
-    }
-}

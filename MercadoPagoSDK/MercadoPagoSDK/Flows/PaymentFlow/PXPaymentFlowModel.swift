@@ -117,13 +117,14 @@ internal final class PXPaymentFlowModel: NSObject {
         return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId)
     }
 
-    func assignToCheckoutStore() {
+    func assignToCheckoutStore(programId: String? = nil) {
         if let amountHelper = amountHelper {
             PXCheckoutStore.sharedInstance.paymentDatas = [amountHelper.getPaymentData()]
             if let splitAccountMoney = amountHelper.splitAccountMoney {
                 PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
             }
         }
+        PXCheckoutStore.sharedInstance.validationProgramId = programId
         PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference
     }
 
@@ -159,9 +160,7 @@ internal extension PXPaymentFlowModel {
                 PXConfiguratorManager.escProtocol.saveESC(config: PXConfiguratorManager.escConfig, token: token, esc: esc)
             }
         } else {
-            guard let errorPaymentType = errorPaymentType else {
-                return
-            }
+            guard let errorPaymentType = errorPaymentType else { return }
 
             // If it has error Payment Type, check if the error was from a card
             if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {

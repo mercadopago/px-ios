@@ -20,6 +20,7 @@ extension OneTapFlow {
             pxNavigationHandler.presentLoading()
         }
         paymentFlow.setData(amountHelper: model.amountHelper, checkoutPreference: model.checkoutPreference, resultHandler: self, splitAccountMoney: model.splitAccountMoney)
+        paymentFlow.setupValidationProgramId(validationProgramId: model.getProgramValidation())
         paymentFlow.start()
     }
 

@@ -9,6 +9,7 @@
 import Foundation
 
 internal final class PXPaymentFlow: NSObject, PXFlow {
+    private var validationProgramId: String?
     let model: PXPaymentFlowModel
     weak var resultHandler: PXPaymentResultHandlerProtocol?
     weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
@@ -36,6 +37,10 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
             self.model.amountHelper?.getPaymentData().campaign?.id = discountToken
         }
     }
+    
+    func setupValidationProgramId(validationProgramId: String?) {
+        self.validationProgramId = validationProgramId
+    }
 
     func setProductIdForPayment(_ productId: String) {
         model.productId = productId
@@ -54,11 +59,11 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
     func executeNextStep() {
         switch self.model.nextStep() {
         case .createDefaultPayment:
-            createPayment()
+            createPayment(programId: validationProgramId)
         case .createPaymentPlugin:
-            createPaymentWithPlugin(plugin: model.paymentPlugin)
+            createPaymentWithPlugin(plugin: model.paymentPlugin, programId: validationProgramId)
         case .createPaymentPluginScreen:
-            showPaymentProcessor(paymentProcessor: model.paymentPlugin)
+            showPaymentProcessor(paymentProcessor: model.paymentPlugin, programId: validationProgramId)
         case .getPointsAndDiscounts:
             getPointsAndDiscounts()
         case .getInstructions:

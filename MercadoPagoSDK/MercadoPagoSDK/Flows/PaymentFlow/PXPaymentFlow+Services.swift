@@ -9,10 +9,14 @@
 import Foundation
 
 internal extension PXPaymentFlow {
-    func createPaymentWithPlugin(plugin: PXSplitPaymentProcessor?) {
+    func createPaymentWithPlugin(plugin: PXSplitPaymentProcessor?, programId: String?) {
         guard let plugin = plugin else {
             showError()
             return
+        }
+        
+        if let programId = programId {
+            PXCheckoutStore.sharedInstance.validationProgramId = programId
         }
 
         plugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
@@ -22,13 +26,16 @@ internal extension PXPaymentFlow {
         })
     }
 
-    func createPayment() {
+    func createPayment(programId: String?) {
         guard model.amountHelper?.getPaymentData() != nil, model.checkoutPreference != nil else {
             showError()
             return
         }
-
-        model.assignToCheckoutStore()
+        
+        if let programId = programId {
+            PXCheckoutStore.sharedInstance.validationProgramId = programId
+        }
+        
         guard let paymentBody = (try? JSONEncoder().encode(PXCheckoutStore.sharedInstance)) else {
             fatalError("Cannot make payment json body")
         }

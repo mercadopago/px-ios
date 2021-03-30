@@ -32,3 +32,12 @@ public struct PXStatus: Codable {
         return detail == "suspended"
     }
 }
+
+extension PXStatus {
+    init(applicationStatus: PXApplicationStatus) {
+        self.mainMessage = applicationStatus.mainMessage
+        self.secondaryMessage = applicationStatus.secondaryMessage
+        self.enabled = applicationStatus.enabled
+        self.detail = applicationStatus.detail
+    }
+}

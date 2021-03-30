@@ -22,7 +22,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     internal var publicKey: String = ""
     internal var privateKey: String?
     internal var siteId: String = ""
-    var cardIndex = 0
+    internal var called3DS = false
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption?
@@ -278,13 +278,23 @@ internal extension OneTapFlowModel {
     
     func need3DS() -> Bool {
         // TODO: Integrate with switcher, that will gives us info needed to decide if the request should or should not be make
-        if needCreatePayment(),
-           paymentData.paymentMethod?.getId() == "debmaster",
-           search.oneTap![cardIndex].applications!.first!.validationPrograms.first!.id == "stp" {
+        let shouldCall3DS = search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?
+            .applications?.first(where: { $0.paymentMethod.id == pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())?.selectedApplication?.paymentMethodId})?.validationPrograms.first?.id == "stp"
+        
+        if called3DS {
+            return false
+        }
+        
+        if shouldCall3DS {//needCreatePayment(), paymentData.paymentMethod?.getId() == "debmaster", shouldCall3DS {
+            called3DS = true
             return true
         }   
         
         return false
+    }
+    
+    func getProgramValidation() -> String? {
+        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?.applications?.first(where: { $0.paymentMethod.id == pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())?.selectedApplication?.paymentMethodId})?.validationPrograms.first?.id
     }
 
     func needCreatePayment() -> Bool {
