@@ -22,7 +22,6 @@ final internal class OneTapFlowModel: PXFlowModel {
     internal var publicKey: String = ""
     internal var privateKey: String?
     internal var siteId: String = ""
-    internal var called3DS = false
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption?
@@ -37,6 +36,9 @@ final internal class OneTapFlowModel: PXFlowModel {
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
     var pxOneTapViewModel: PXOneTapViewModel?
+    
+    // MARK: - Private properties
+    private var didCall3ds = false
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -278,18 +280,11 @@ internal extension OneTapFlowModel {
     
     func need3DS() -> Bool {
         // TODO: Integrate with switcher, that will gives us info needed to decide if the request should or should not be make
-        let shouldCall3DS = search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?
-            .applications?.first(where: { $0.paymentMethod.id == pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())?.selectedApplication?.paymentMethodId})?.validationPrograms.first?.id == "stp"
-        
-        if called3DS {
-            return false
-        }
-        
-        if shouldCall3DS {//needCreatePayment(), paymentData.paymentMethod?.getId() == "debmaster", shouldCall3DS {
-            called3DS = true
+        if getProgramValidation() == "stp", didCall3ds == false {
+            didCall3ds = true
             return true
-        }   
-        
+        }
+
         return false
     }
     

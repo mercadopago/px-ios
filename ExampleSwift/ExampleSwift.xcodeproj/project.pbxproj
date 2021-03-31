@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1245DD962603836F004092CB /* MockResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1245DD952603836F004092CB /* MockResponse.json */; };
+		129B9D462615195E00127DC6 /* DataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B9D452615195E00127DC6 /* DataExtensions.swift */; };
 		23EDA1372147DFC90085CA7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EDA1362147DFC90085CA7A /* AppDelegate.swift */; };
 		23EDA1392147DFC90085CA7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EDA1382147DFC90085CA7A /* ViewController.swift */; };
 		23EDA13C2147DFC90085CA7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13A2147DFC90085CA7A /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		1245DD952603836F004092CB /* MockResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockResponse.json; sourceTree = "<group>"; };
+		129B9D452615195E00127DC6 /* DataExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
 		23EDA1332147DFC90085CA7A /* ExampleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23EDA1362147DFC90085CA7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23EDA1382147DFC90085CA7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */,
 				5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */,
+				129B9D452615195E00127DC6 /* DataExtensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				A36F0F1B24DC3E7D00F3457D /* CongratsSelectorViewController.swift in Sources */,
 				23EDA1392147DFC90085CA7A /* ViewController.swift in Sources */,
 				23EDA1372147DFC90085CA7A /* AppDelegate.swift in Sources */,
+				129B9D462615195E00127DC6 /* DataExtensions.swift in Sources */,
 				5AE826012590C8FB002C7F74 /* CustomPXDynamicComponent.swift in Sources */,
 				F9DF596424803FFD00B1FDBF /* CustomCheckoutViewController.swift in Sources */,
 			);

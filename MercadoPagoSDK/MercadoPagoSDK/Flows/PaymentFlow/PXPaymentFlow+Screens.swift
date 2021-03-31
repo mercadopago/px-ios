@@ -14,7 +14,7 @@ extension PXPaymentFlow {
             return
         }
 
-        model.assignToCheckoutStore()
+        model.assignToCheckoutStore(programId: programId)
 
         paymentProcessor.didReceive?(navigationHandler: PXPaymentProcessorNavigationHandler(flow: self))
 
