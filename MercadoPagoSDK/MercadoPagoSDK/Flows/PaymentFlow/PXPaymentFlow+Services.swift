@@ -32,9 +32,7 @@ internal extension PXPaymentFlow {
             return
         }
         
-        if let programId = programId {
-            PXCheckoutStore.sharedInstance.validationProgramId = programId
-        }
+        model.assignToCheckoutStore(programId: programId)
         
         guard let paymentBody = (try? JSONEncoder().encode(PXCheckoutStore.sharedInstance)) else {
             fatalError("Cannot make payment json body")
