@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension Data {
     //MARK: - Support method, to debug requests
     func mapToJSON() throws -> Any {

@@ -14,24 +14,10 @@ public struct PXApplicationValidationProgram: Codable {
     var mandatory: Bool
 }
 
-public struct PXApplicationStatus: Codable {
-    var enabled: Bool
-    var mainMessage: PXText?
-    var secondaryMessage: PXText?
-    var detail: String
-
-    public enum CodingKeys: String, CodingKey {
-        case enabled = "enabled"
-        case mainMessage = "main_message"
-        case secondaryMessage = "secondary_message"
-        case detail = "detail"
-    }
-}
-
 public struct PXOneTapApplication: Codable {
     var paymentMethod: PXApplicationPaymentMethod
     var validationPrograms: [PXApplicationValidationProgram]
-    var status: PXApplicationStatus
+    var status: PXStatus
 
     public enum CodingKeys: String, CodingKey {
         case paymentMethod = "payment_method"

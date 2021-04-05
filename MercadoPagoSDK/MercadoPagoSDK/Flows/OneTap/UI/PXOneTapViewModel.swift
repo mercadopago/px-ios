@@ -126,7 +126,7 @@ extension PXOneTapViewModel {
                     
                     var applications : [PXOneTapApplication] = []
                     
-                    applications.append(PXOneTapApplication(paymentMethod: PXApplicationPaymentMethod(id: paymentMethodId, type: targetNode.paymentMethodId), validationPrograms: [], status: PXApplicationStatus(enabled: targetNode.status.enabled, mainMessage: targetNode.status.mainMessage, secondaryMessage: targetNode.status.secondaryMessage, detail: targetNode.status.detail ?? "") ))
+                    applications.append(PXOneTapApplication(paymentMethod: PXApplicationPaymentMethod(id: paymentMethodId, type: targetNode.paymentMethodId), validationPrograms: [], status: targetNode.status))
                     
                     viewModelCard = getCardSliderViewModelFor(targetNode: targetNode, oneTapCard: oneTapCard, cardData: cardData, applications: applications)
                     sliderModel.append(viewModelCard)
@@ -569,9 +569,9 @@ extension PXOneTapViewModel {
                 showArrow = false
             }
             
-            let statusConfig = getStatusConfig(currentStatus: PXStatus(applicationStatus: application.status), cardId: targetNode.oneTapCard?.cardId, paymentMethodId: targetNode.paymentMethodId)
+            let statusConfig = getStatusConfig(currentStatus: application.status, cardId: targetNode.oneTapCard?.cardId, paymentMethodId: targetNode.paymentMethodId)
 
-            let chargeRuleMessage = getCardBottomMessage(paymentTypeId: paymentMethodType, benefits: targetNode.benefits, status: PXStatus(applicationStatus: application.status), selectedPayerCost: selectedPayerCost, displayInfo: targetNode.displayInfo)
+            let chargeRuleMessage = getCardBottomMessage(paymentTypeId: paymentMethodType, benefits: targetNode.benefits, status: application.status, selectedPayerCost: selectedPayerCost, displayInfo: targetNode.displayInfo)
             
             let payerPaymentMethod = getPayerPaymentMethod(paymentMethodType, oneTapCard.cardId)
             
