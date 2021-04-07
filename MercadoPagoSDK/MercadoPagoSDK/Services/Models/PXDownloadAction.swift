@@ -8,7 +8,7 @@
 import Foundation
 
 @objcMembers
-public class PXDownloadAction: NSObject, Decodable {
+public class PXDownloadAction: NSObject, Codable {
     let title: String
     let action: PXRemoteAction
     

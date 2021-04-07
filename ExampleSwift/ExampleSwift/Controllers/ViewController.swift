@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     private var privateKey : String = ""
     
     // Preference ID
-    private var preferenceId : String = "656525290-7bda964b-26d9-4352-a04c-1b04801627ee"
+    private var preferenceId : String = ""
     
     @IBAction func initDefault(_ sender: Any) {
 //         runMercadoPagoCheckout()
