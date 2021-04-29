@@ -1,6 +1,7 @@
-# v4.37.8
-🚀Private Release - 4.37.8 🚀
-- Added Combo Cards Support 
+# v4.37.9
+🚀Private Release - 4.37.9 🚀
+- Added Combo Cards Support
+- Using default error message for unmapped errors
 
 # v4.37.7
 🚀Private Release - 4.37.7 🚀
