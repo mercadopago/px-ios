@@ -22,7 +22,7 @@ extension TokenizationService {
         extraDic["card_id"] = cardId
         extraDic["esc_length"] = esc_length
         properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        MPXTracker.sharedInstance.trackEvent(event: GeneralErrorTrackingEvents.error(properties))
     }
 
     private func getErrorId(error: MPSDKError) -> String {

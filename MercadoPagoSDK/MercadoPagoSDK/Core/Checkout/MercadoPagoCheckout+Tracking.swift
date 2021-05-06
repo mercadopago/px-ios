@@ -28,7 +28,7 @@ extension MercadoPagoCheckout {
         viewModel.populateCheckoutStore()
         properties["split_enabled"] = viewModel.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
 
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getInitPath(), properties: properties)
+        MPXTracker.sharedInstance.trackEvent(event: MercadoPagoCheckoutTrackingEvents.didInitFlow(properties))
     }
 
     internal func trackInitFlowFriction(flowError: InitFlowError) {
@@ -56,7 +56,7 @@ extension MercadoPagoCheckout {
         }
         extraDic["api_error"] = errorDic
         properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        MPXTracker.sharedInstance.trackEvent(event: GeneralErrorTrackingEvents.error(properties))
     }
 
     internal func trackInitFlowRefreshFriction(cardId: String) {
@@ -69,7 +69,7 @@ extension MercadoPagoCheckout {
         var extraDic: [String: Any] = [:]
         extraDic["cardId"] =  cardId
         properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        MPXTracker.sharedInstance.trackEvent(event: GeneralErrorTrackingEvents.error(properties))
     }
 
     private func getCheckoutPrefForTracking(checkoutPreference: PXCheckoutPreference) -> [String: Any] {

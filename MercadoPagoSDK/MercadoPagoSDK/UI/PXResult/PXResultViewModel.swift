@@ -117,7 +117,7 @@ internal class PXResultViewModel: NSObject {
 
     private func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { (text: String?) in
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.PaymentResult.getErrorRemedyPath(), properties: self.getRemedyProperties())
+            MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didShowRemedyError(self.getRemedyProperties()))
 
             if let callback = self.callback {
                 if self.remedy?.cvv != nil {

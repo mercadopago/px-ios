@@ -88,7 +88,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         let action: (String) -> Void = { (deepLink) in
             //open deep link
             PXDeepLinkManager.open(deepLink)
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapScorePath())
+            MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didTapOnScore)
         }
         return action
     }
@@ -121,7 +121,10 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     func getExpenseSplitTapAction() -> (() -> Void)? {
         let action: () -> Void = { [weak self] in
             PXDeepLinkManager.open(self?.paymentCongrats.expenseSplit?.action.target)
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapDeeplinkPath(), properties: PXCongratsTracking.getDeeplinkProperties(type: "money_split", deeplink: self?.paymentCongrats.expenseSplit?.action.target ?? ""))
+            
+            MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didTapOnDeeplink(
+                PXCongratsTracking.getDeeplinkProperties(type: "money_split", deeplink: self?.paymentCongrats.expenseSplit?.action.target ?? ""))
+            )
         }
         return action
     }
@@ -136,7 +139,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         let action: (String) -> Void = { (deepLink) in
             //open deep link
             PXDeepLinkManager.open(deepLink)
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.Congrats.getSuccessTapCrossSellingPath())
+            MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didTapOnCrossSelling)
         }
         return action
     }

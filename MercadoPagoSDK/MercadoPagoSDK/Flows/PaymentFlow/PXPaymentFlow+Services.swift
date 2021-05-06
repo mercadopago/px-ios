@@ -151,7 +151,10 @@ private extension PXPaymentFlow {
     func trackPaymentsApiError() {
         let lastVC = self.pxNavigationHandler.navigationController.viewControllers.last
         if let securityCodeVC = lastVC as? PXSecurityCodeViewController {
-            securityCodeVC.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: securityCodeVC.viewModel.getFrictionProperties(path: TrackingPaths.Events.SecurityCode.getPaymentsFrictionPath(), id: "payments_api_error"))
+            
+            securityCodeVC.trackEvent(event: GeneralErrorTrackingEvents.error(
+                securityCodeVC.viewModel.getFrictionProperties(path: TrackingPaths.Events.SecurityCode.getPaymentsFrictionPath(), id: "payments_api_error")
+            ))
         }
     }
 }

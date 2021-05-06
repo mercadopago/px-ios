@@ -14,10 +14,12 @@ open class PXTrackingConfiguration: NSObject {
     let flowDetails: [String: Any]?
     let sessionId: String?
 
-    public init(trackListener: PXTrackerListener? = nil,
-                flowName: String? = nil,
-                flowDetails: [String: Any]? = nil,
-                sessionId: String?) {
+    public init(
+        trackListener: PXTrackerListener? = nil,
+        flowName: String? = nil,
+        flowDetails: [String: Any]? = nil,
+        sessionId: String?
+    ) {
         self.trackListener = trackListener
         self.flowName = flowName
         self.flowDetails = flowDetails

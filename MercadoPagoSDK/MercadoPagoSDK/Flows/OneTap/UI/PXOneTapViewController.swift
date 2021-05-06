@@ -332,11 +332,11 @@ extension PXOneTapViewController {
     private func handleBehaviour(_ behaviour: PXBehaviour, isSplit: Bool) {
         if let target = behaviour.target {
             let properties = viewModel.getTargetBehaviourProperties(behaviour)
-            trackEvent(path: TrackingPaths.Events.OneTap.getTargetBehaviourPath(), properties: properties)
+            trackEvent(event: OneTapTrackingEvents.didGetTargetBehaviour(properties))
             openKyCDeeplinkWithoutCallback(target)
         } else if let modal = behaviour.modal, let modalConfig = viewModel.modals?[modal] {
             let properties = viewModel.getDialogOpenProperties(behaviour, modalConfig)
-            trackEvent(path: TrackingPaths.Events.OneTap.getDialogOpenPath(), properties: properties)
+            trackEvent(event: OneTapTrackingEvents.didOpenDialog(properties))
 
             let mainActionProperties = viewModel.getDialogActionProperties(behaviour, modalConfig, "main_action", modalConfig.mainButton)
             let secondaryActionProperties = viewModel.getDialogActionProperties(behaviour, modalConfig, "secondary_action", modalConfig.secondaryButton)
@@ -353,9 +353,9 @@ extension PXOneTapViewController {
     }
 
     func trackDialogEvent(trackingPath: String?, properties: [String: Any]?) {
-        if shouldTrackModal, let trackingPath = trackingPath, let properties = properties {
+        if shouldTrackModal, let _ = trackingPath, let properties = properties {
             shouldTrackModal = false
-            trackEvent(path: trackingPath, properties: properties)
+            trackEvent(event: OneTapTrackingEvents.didDismissDialog(properties))
         }
     }
 
@@ -415,7 +415,7 @@ extension PXOneTapViewController {
             }, onError: { [weak self] _ in
                 // User abort validation or validation fail.
                 self?.isUIEnabled(true)
-                self?.trackEvent(path: TrackingPaths.Events.getErrorPath())
+                self?.trackEvent(event: GeneralErrorTrackingEvents.error([:]))
             })
         } else {
             doPayment()
@@ -428,7 +428,7 @@ extension PXOneTapViewController {
         if let selectedCardItem = selectedCard, let selectedApplication = selectedCardItem.selectedApplication {
             viewModel.amountHelper.getPaymentData().payerCost = selectedApplication.selectedPayerCost
             let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem, selectedIndex: slider.getSelectedIndex())
-            trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
+            trackEvent(event: OneTapTrackingEvents.didConfirmPayment(properties))
         }
         let splitPayment = viewModel.splitPaymentEnabled
         hideBackButton()
@@ -443,7 +443,7 @@ extension PXOneTapViewController {
 
     func resetButton(error: MPSDKError) {
         progressButtonAnimationTimeOut()
-        trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: viewModel.getErrorProperties(error: error))
+        trackEvent(event: GeneralErrorTrackingEvents.error(viewModel.getErrorProperties(error: error)))
     }
 
     private func cancelPayment() {
@@ -551,7 +551,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
         selectedCard = targetModel
 
-        trackEvent(path: TrackingPaths.Events.OneTap.getSwipePath())
+        trackEvent(event: OneTapTrackingEvents.didSwipe)
 
         // Installments arrow animation
         if selectedApplication.shouldShowArrow {
@@ -622,7 +622,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             } catch {
                 // We shouldn't reach this line. Track friction
                 let properties = viewModel.getSelectCardEventProperties(index: index, count: cardSliderViewModel.count)
-                trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+                trackEvent(event: GeneralErrorTrackingEvents.error(properties))
                 selectFirstCardInSlider()
                 return
             }

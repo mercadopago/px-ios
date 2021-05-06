@@ -56,7 +56,7 @@ final class PXCardSliderViewModel {
     
     // MARK: - Public methods
     func trackCard(state: String) {
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getComboSwitch(), properties: ["option_selected" : state])
+        MPXTracker.sharedInstance.trackEvent(event: PXCardSliderTrackingEvents.comboSwitch(state))
     }
 }
 
