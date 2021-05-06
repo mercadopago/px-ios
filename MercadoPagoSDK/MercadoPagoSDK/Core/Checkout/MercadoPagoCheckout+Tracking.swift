@@ -10,7 +10,7 @@ import Foundation
 // MARK: Tracking
 extension MercadoPagoCheckout {
 
-    internal func startTracking() {
+    internal func startTracking(then: @escaping (() -> Void)) {
         viewModel.trackingConfig?.updateTracker()
         MPXTracker.sharedInstance.startNewSession()
 
@@ -29,6 +29,7 @@ extension MercadoPagoCheckout {
         properties["split_enabled"] = viewModel.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
 
         MPXTracker.sharedInstance.trackEvent(event: MercadoPagoCheckoutTrackingEvents.didInitFlow(properties))
+        then()
     }
 
     internal func trackInitFlowFriction(flowError: InitFlowError) {

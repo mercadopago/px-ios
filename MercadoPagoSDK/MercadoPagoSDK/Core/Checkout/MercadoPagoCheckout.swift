@@ -149,7 +149,10 @@ extension MercadoPagoCheckout {
     internal func executeNextStep() {
         switch self.viewModel.nextStep() {
         case .START :
-            self.initialize()
+            startTracking() { [weak self] in
+                guard let self = self else { return }
+                self.initialize()
+            }
         case .SERVICE_CREATE_CARD_TOKEN:
             self.createCardToken()
         case .SCREEN_SECURITY_CODE:
@@ -221,7 +224,6 @@ extension MercadoPagoCheckout {
 extension MercadoPagoCheckout {
 
     private func initialize() {
-        startTracking()
         MercadoPagoCheckout.currentCheckout = self
 
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
