@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
       ]
     }
     s.dependency 'MLUI', '~> 5.0'
-    s.dependency 'MLCardDrawer', '~> 1.5.7'
+    s.dependency 'MLCardDrawer', '~> 1.5'
     s.dependency 'MLBusinessComponents', '~> 1.0'
     s.dependency 'MLCardForm', '~> 0.7'
     s.dependency 'AndesUI/AndesBottomSheet', '~> 3.0'
