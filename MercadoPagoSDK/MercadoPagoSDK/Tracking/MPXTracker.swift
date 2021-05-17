@@ -83,9 +83,9 @@ internal extension MPXTracker {
 
 // MARK: Public interfase.
 internal extension MPXTracker {
-    func trackScreen(screenName: String, properties: [String: Any] = [:]) {
+    func trackScreen(event: TrackingEvents) {
         if let trackListenerInterfase = trackListener {
-            var metadata = properties
+            var metadata = event.properties
             if let flowDetails = flowDetails {
                 metadata["flow_detail"] = flowDetails
             }
@@ -101,7 +101,7 @@ internal extension MPXTracker {
             if let checkoutType = PXTrackingStore.sharedInstance.getChoType() {
                 metadata["checkout_type"] = checkoutType
             }
-            trackListenerInterfase.trackScreen(screenName: screenName, extraParams: metadata)
+            trackListenerInterfase.trackScreen(screenName: event.name, extraParams: metadata)
         }
     }
 

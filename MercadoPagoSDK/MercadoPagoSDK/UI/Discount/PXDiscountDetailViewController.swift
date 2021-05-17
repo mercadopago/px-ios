@@ -191,6 +191,6 @@ private extension PXDiscountDetailViewController {
     func trackScreen() {
         var properties: [String: Any] = [:]
         properties["discount"] = amountHelper.getDiscountForTracking()
-        trackScreen(path: TrackingPaths.Screens.getDiscountDetailPath(), properties: properties)
+        trackScreen(event: MercadoPagoUITrackingEvents.appliedDiscount(properties))
     }
 }

@@ -90,7 +90,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
         setupAutoDisplayOfflinePaymentMethods()
         UIAccessibility.post(notification: .layoutChanged, argument: headerView?.getMerchantView()?.getMerchantTitleLabel())
-        trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties(oneTapApplication: viewModel.applications))
+        trackScreen(event: MercadoPagoUITrackingEvents.reviewOneTap(viewModel.getOneTapScreenProperties(oneTapApplication: viewModel.applications)))
     }
 
     override func viewDidLayoutSubviews() {
@@ -648,7 +648,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
         self.currentModal = PXComponentFactory.Modal.show(viewController: vc, title: nil)
 
-        trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapDisabledModalPath(), treatAsViewController: false)
+        trackScreen(event: MercadoPagoUITrackingEvents.disabledPaymentMethods)
     }
 
     internal func addNewCardDidTap() {
@@ -796,7 +796,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 
         if let selectedCardItem = selectedCard {
             let properties = self.viewModel.getInstallmentsScreenProperties(installmentData: installmentData, selectedCard: selectedCardItem)
-            trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapInstallmentsPath(), properties: properties, treatAsViewController: false)
+            trackScreen(event: MercadoPagoUITrackingEvents.installments(properties), treatAsViewController: false)
         }
 
         PXFeedbackGenerator.selectionFeedback()

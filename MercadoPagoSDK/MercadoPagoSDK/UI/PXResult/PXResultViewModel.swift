@@ -343,16 +343,16 @@ extension PXResultViewModel {
 }
 
 extension PXResultViewModel: PXViewModelTrackingDataProtocol {
-    func getTrackingPath() -> String {
+    func getTrackingPath() -> PXResultTrackingEvents {
         let paymentStatus = paymentResult.status
-        var screenPath = ""
+        var screenPath: PXResultTrackingEvents
 
         if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+            screenPath = .paymentApproved(getTrackingProperties())
         } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+            screenPath = .paymentInProcess(getTrackingProperties())
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+            screenPath = .paymentRejected(getTrackingProperties())
         }
         return screenPath
     }

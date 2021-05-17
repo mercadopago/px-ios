@@ -13,8 +13,8 @@ class PXNewResultUtil {
     //TRACKING
     class func trackScreenAndConversion(viewModel: PXViewModelTrackingDataProtocol) {
         let path = viewModel.getTrackingPath()
-        if !path.isEmpty {
-            MPXTracker.sharedInstance.trackScreen(screenName: path, properties: viewModel.getTrackingProperties())
+        if path != nil {
+            MPXTracker.sharedInstance.trackScreen(event: path)
 
             let behaviourProtocol = PXConfiguratorManager.flowBehaviourProtocol
             behaviourProtocol.trackConversion(result: viewModel.getFlowBehaviourResult())

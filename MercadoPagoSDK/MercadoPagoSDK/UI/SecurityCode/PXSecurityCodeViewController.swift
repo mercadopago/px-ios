@@ -378,7 +378,6 @@ extension PXSecurityCodeViewController: AndesTextFieldCodeDelegate {
 // MARK: Tracking
 private extension PXSecurityCodeViewController {
     func trackScreenView() {
-        let screenPath = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
-        trackScreen(path: screenPath, properties: viewModel.getScreenProperties(), treatBackAsAbort: true)
+        trackScreen(event: MercadoPagoUITrackingEvents.secureCode(viewModel.getScreenProperties()), treatBackAsAbort: true)
     }
 }
