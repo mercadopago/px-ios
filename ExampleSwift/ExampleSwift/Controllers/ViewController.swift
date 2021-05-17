@@ -14,19 +14,19 @@ import MercadoPagoSDKV4
 class ViewController: UIViewController {
     private var checkout: MercadoPagoCheckout?
     
+    // Collector Public Key
     private var publicKey : String = ""
     
     // Payer private key
     private var privateKey : String = ""
     
     // Preference ID
-    private var preferenceId : String = "99997433-5f6141dc-0a60-4b64-96a8-ef781e5d7d76"
+    private var preferenceId : String = ""
     
     @IBAction func initDefault(_ sender: Any) {
 //         runMercadoPagoCheckout()
-//         runMercadoPagoCheckoutWithLifecycle()
-//         runMercadoPagoCheckoutWithLifecycle()
-        runMercadoPagoCheckoutWithLifecycleAndCustomProcessor()
+         runMercadoPagoCheckoutWithLifecycle()
+//        runMercadoPagoCheckoutWithLifecycleAndCustomProcessor()
     }
 
     override func viewDidLoad() {

@@ -75,7 +75,7 @@ final class PXSecurityCodeViewController: MercadoPagoUIViewController {
 // MARK: Privates
 private extension PXSecurityCodeViewController {
     func confirmPayment() {
-        trackEvent(path: TrackingPaths.Events.SecurityCode.getConfirmPath(), properties: viewModel.getScreenProperties())
+        trackEvent(event: PXSecurityCodeTrackingEvents.didConfirmCode(viewModel.getScreenProperties()))
         doPayment()
     }
 
@@ -87,7 +87,7 @@ private extension PXSecurityCodeViewController {
             loadingButtonComponent?.startLoading(timeOut: 15)
             collectSecurityCodeCallback(viewModel.cardInfo, andesTextFieldCode.text)
         } else {
-            trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: viewModel.getNoConnectionProperties())
+            trackEvent(event: GeneralErrorTrackingEvents.error(viewModel.getNoConnectionProperties()))
             attemptsWithInternetError += 1
             if attemptsWithInternetError < 4 {
                 loadingButtonComponent?.showErrorToast(title: "px_connectivity_neutral_error".localized, actionTitle: nil, type: MLSnackbarType.default(), duration: MLSnackbarDuration.short, action: nil)

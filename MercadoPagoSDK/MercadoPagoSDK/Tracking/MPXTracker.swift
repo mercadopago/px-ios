@@ -105,11 +105,11 @@ internal extension MPXTracker {
         }
     }
 
-    func trackEvent(path: String, properties: [String: Any] = [:]) {
+    func trackEvent(event: TrackingEvents) {
         if let trackListenerInterfase = trackListener {
-            var metadata = properties
+            var metadata = event.properties
             let checkoutType: String? = PXTrackingStore.sharedInstance.getChoType()
-            if path != TrackingPaths.Events.getErrorPath() {
+            if event.name != TrackingPaths.Events.getErrorPath() {
                 if let flowDetails = flowDetails {
                     metadata["flow_detail"] = flowDetails
                 }
@@ -140,7 +140,7 @@ internal extension MPXTracker {
             }
             metadata["security_enabled"] = PXConfiguratorManager.hasSecurityValidation()
             metadata["session_time"] = PXTrackingStore.sharedInstance.getSecondsAfterInit()
-            trackListenerInterfase.trackEvent(screenName: path, action: "", result: "", extraParams: metadata)
+            trackListenerInterfase.trackEvent(screenName: event.name, action: "", result: "", extraParams: metadata)
         }
     }
 }

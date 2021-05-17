@@ -17,19 +17,19 @@ extension MercadoPagoUIViewController {
         MPXTracker.sharedInstance.trackScreen(screenName: path, properties: properties)
     }
 
-    func trackEvent(path: String, properties: [String: Any] = [:]) {
-        MPXTracker.sharedInstance.trackEvent(path: path, properties: properties)
+    func trackEvent(event: TrackingEvents) {
+        MPXTracker.sharedInstance.trackEvent(event: event)
     }
 
     func trackAbortEvent(properties: [String: Any] = [:]) {
         if let screenPath = screenPath {
-            trackEvent(path: TrackingPaths.Events.getAbortPath(screen: screenPath), properties: properties)
+            trackEvent(event: MercadoPagoUITrackingEvents.didAbort(screenPath, properties))
         }
     }
 
     func trackBackEvent() {
         if let screenPath = screenPath {
-            trackEvent(path: TrackingPaths.Events.getBackPath(screen: screenPath))
+            trackEvent(event: MercadoPagoUITrackingEvents.didGoBack(screenPath))
         }
     }
 }

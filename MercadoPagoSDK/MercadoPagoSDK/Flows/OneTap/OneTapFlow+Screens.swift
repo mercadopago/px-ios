@@ -65,7 +65,7 @@ extension OneTapFlow {
     }
 
     func showKyCScreen() {
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.OneTap.getOfflineMethodStartKYCPath())
+        MPXTracker.sharedInstance.trackEvent(event: OneTapTrackingEvents.didTapOnOfflineMethods)
         PXDeepLinkManager.open(model.getKyCDeepLink())
     }
 }

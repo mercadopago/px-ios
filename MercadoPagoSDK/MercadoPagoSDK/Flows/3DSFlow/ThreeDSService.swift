@@ -41,7 +41,7 @@ internal class ThreeDSService {
             let thousandsSeparator = SiteManager.shared.getCurrency().getThousandsSeparatorOrDefault()
             let purchaseAmount = Utils.getAmountFormatted(amount: amountToPay, thousandSeparator: thousandsSeparator, decimalSeparator: decimalSeparator, addingCurrencySymbol: nil, addingParenthesis: false)
             
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getProgramValidation(), properties: ["validation_program_used" : programUsed.uppercased()])
+            MPXTracker.sharedInstance.trackEvent(event: ThreeDSTrackingEvents.didGetProgramValidation(["validation_program_used" : programUsed.uppercased()]))
             
             PXConfiguratorManager.threeDSProtocol.authenticate(config: PXConfiguratorManager.threeDSConfig,
                                                                cardTokenID: cardTokenID,

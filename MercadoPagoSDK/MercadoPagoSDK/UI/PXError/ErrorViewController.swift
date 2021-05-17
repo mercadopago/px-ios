@@ -104,7 +104,7 @@ extension ErrorViewController {
         var extraDic: [String: Any] = [:]
         extraDic["api_error"] = error.getErrorForTracking()
         properties["extra_info"] = extraDic
-        trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        trackEvent(event: GeneralErrorTrackingEvents.error(properties))
     }
 
     func trackScreenView() {
