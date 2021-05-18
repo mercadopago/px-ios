@@ -277,21 +277,21 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         }
     }
 
-    func getTrackingPath() -> String {
-        if let internalTrackingPath = paymentCongrats.internalTrackingPath {
+    func getTrackingPath() -> PXResultTrackingEvents {
+        if let internalTrackingPath = paymentCongrats.internalTrackingPath as? PXResultTrackingEvents {
             return internalTrackingPath
         } else {
-            var screenPath = ""
+            var screenPath: PXResultTrackingEvents?
             let paymentStatus = paymentCongrats.type.getRawValue()
             if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath(basePath: TrackingPaths.paymentCongrats)
+                screenPath = .congratsPaymentApproved(getTrackingProperties())
             } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath(basePath: TrackingPaths.paymentCongrats)
+                screenPath = .congratsPaymentInProcess(getTrackingProperties())
             } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath(basePath: TrackingPaths.paymentCongrats)
+                screenPath = .congratsPaymentRejected(getTrackingProperties())
             }
 
-            return screenPath
+            return screenPath!
         }
     }
 

@@ -345,16 +345,16 @@ extension PXResultViewModel {
 extension PXResultViewModel: PXViewModelTrackingDataProtocol {
     func getTrackingPath() -> PXResultTrackingEvents {
         let paymentStatus = paymentResult.status
-        var screenPath: PXResultTrackingEvents
+        var screenPath: PXResultTrackingEvents?
 
         if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = .paymentApproved(getTrackingProperties())
+            screenPath = .checkoutPaymentApproved(getTrackingProperties())
         } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = .paymentInProcess(getTrackingProperties())
+            screenPath = .checkoutPaymentInProcess(getTrackingProperties())
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = .paymentRejected(getTrackingProperties())
+            screenPath = .checkoutPaymentRejected(getTrackingProperties())
         }
-        return screenPath
+        return screenPath!
     }
 
     func getFlowBehaviourResult() -> PXResultKey {
