@@ -33,8 +33,5 @@ open class PXTrackingConfiguration: NSObject {
         }
         MPXTracker.sharedInstance.setFlowName(name: flowName)
         MPXTracker.sharedInstance.setFlowDetails(flowDetails: flowDetails)
-        if let sessionId = sessionId {
-            MPXTracker.sharedInstance.setCustomSessionId(sessionId)
-        }
     }
 }
