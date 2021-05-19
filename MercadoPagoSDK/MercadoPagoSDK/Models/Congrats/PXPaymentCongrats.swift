@@ -175,7 +175,7 @@ extension PXPaymentCongrats {
     }
 
     @discardableResult
-    internal func withTrackingPath(_ event: TrackingEvents) -> PXPaymentCongrats {
+    internal func withTrackingPath(_ event: TrackingEvents?) -> PXPaymentCongrats {
         self.internalTrackingPath = event
         return self
     }

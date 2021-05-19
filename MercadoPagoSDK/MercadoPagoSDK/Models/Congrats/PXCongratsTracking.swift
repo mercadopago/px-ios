@@ -19,7 +19,7 @@ protocol PXCongratsTrackingDataProtocol: NSObjectProtocol {
 }
 
 protocol PXViewModelTrackingDataProtocol {
-    func getTrackingPath() -> PXResultTrackingEvents
+    func getTrackingPath() -> PXResultTrackingEvents?
     func getFlowBehaviourResult() -> PXResultKey
     func getTrackingProperties() -> [String: Any]
 }

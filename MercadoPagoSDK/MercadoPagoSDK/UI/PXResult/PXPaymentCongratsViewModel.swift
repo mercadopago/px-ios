@@ -277,7 +277,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         }
     }
 
-    func getTrackingPath() -> PXResultTrackingEvents {
+    func getTrackingPath() -> PXResultTrackingEvents? {
         if let internalTrackingPath = paymentCongrats.internalTrackingPath as? PXResultTrackingEvents {
             return internalTrackingPath
         } else {
@@ -291,7 +291,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
                 screenPath = .congratsPaymentRejected(getTrackingProperties())
             }
 
-            return screenPath!
+            return screenPath
         }
     }
 

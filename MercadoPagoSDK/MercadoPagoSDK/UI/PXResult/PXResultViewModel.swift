@@ -343,7 +343,7 @@ extension PXResultViewModel {
 }
 
 extension PXResultViewModel: PXViewModelTrackingDataProtocol {
-    func getTrackingPath() -> PXResultTrackingEvents {
+    func getTrackingPath() -> PXResultTrackingEvents? {
         let paymentStatus = paymentResult.status
         var screenPath: PXResultTrackingEvents?
 
@@ -354,7 +354,7 @@ extension PXResultViewModel: PXViewModelTrackingDataProtocol {
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
             screenPath = .checkoutPaymentRejected(getTrackingProperties())
         }
-        return screenPath!
+        return screenPath
     }
 
     func getFlowBehaviourResult() -> PXResultKey {

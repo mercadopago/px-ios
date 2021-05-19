@@ -93,7 +93,7 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
 }
 
 extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
-    func getTrackingPath() -> PXResultTrackingEvents {
+    func getTrackingPath() -> PXResultTrackingEvents? {
         let paymentStatus = businessResult.paymentStatus
         var screenPath: PXResultTrackingEvents?
         if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
