@@ -93,17 +93,17 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
 }
 
 extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
-    func getTrackingPath() -> String {
+    func getTrackingPath() -> PXResultTrackingEvents? {
         let paymentStatus = businessResult.paymentStatus
-        var screenPath = ""
+        var screenPath: PXResultTrackingEvents?
         if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+            screenPath = .checkoutPaymentApproved(getTrackingProperties())
         } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+            screenPath = .checkoutPaymentInProcess(getTrackingProperties())
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+            screenPath = .checkoutPaymentRejected(getTrackingProperties())
         }
-        return screenPath
+        return screenPath!
     }
 
     func getFlowBehaviourResult() -> PXResultKey {

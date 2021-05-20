@@ -6,6 +6,7 @@
 //
 
 enum PXResultTrackingEvents: TrackingEvents {
+    // MARK: - Events
     case didTapOnAllDiscounts
     case didtapOnDownload
     case didTapOnReceipt
@@ -13,6 +14,15 @@ enum PXResultTrackingEvents: TrackingEvents {
     case didTapOnDeeplink([String:Any])
     case didTapOnCrossSelling
     case didShowRemedyError([String:Any])
+    
+    // MARK: - ScreenEvents
+    case checkoutPaymentApproved([String:Any])
+    case checkoutPaymentInProcess([String:Any])
+    case checkoutPaymentRejected([String:Any])
+    
+    case congratsPaymentApproved([String:Any])
+    case congratsPaymentInProcess([String:Any])
+    case congratsPaymentRejected([String:Any])
     
     var name: String {
         switch self {
@@ -23,14 +33,22 @@ enum PXResultTrackingEvents: TrackingEvents {
         case .didTapOnDeeplink(_): return "/px_checkout/result/success/deep_link"
         case .didTapOnCrossSelling: return "/px_checkout/result/success/tap_cross_selling"
         case .didShowRemedyError(_): return "/px_checkout/result/error/primary_action"
+        case .checkoutPaymentApproved(_): return "/px_checkout/result/success"
+        case .checkoutPaymentInProcess(_): return "/px_checkout/result/further_action_needed"
+        case .checkoutPaymentRejected(_): return "/px_checkout/result/error"
+        case .congratsPaymentApproved(_): return "/payment_congrats/result/success"
+        case .congratsPaymentInProcess(_): return "/payment_congrats/result/further_action_needed"
+        case .congratsPaymentRejected(_): return "/payment_congrats/result/error"
         }
     }
     
     var properties: [String : Any] {
         switch self {
         case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnCrossSelling: return [:]
-        case .didTapOnDeeplink(let properties): return properties
-        case .didShowRemedyError(let properties): return properties
+        case .didTapOnDeeplink(let properties), .didShowRemedyError(let properties), .checkoutPaymentApproved(let properties),
+             .checkoutPaymentInProcess(let properties), .checkoutPaymentRejected(let properties),
+             .congratsPaymentApproved(let properties), .congratsPaymentInProcess(let properties),
+             .congratsPaymentRejected(let properties): return properties
         }
     }
 }

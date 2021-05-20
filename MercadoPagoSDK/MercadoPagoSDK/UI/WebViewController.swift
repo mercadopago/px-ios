@@ -110,6 +110,6 @@ extension WebViewController {
     func trackScreen() {
         var properties: [String: Any] = [:]
         properties["url"] = url.absoluteString
-        trackScreen(path: TrackingPaths.Screens.getTermsAndCondiontionPath(), properties: properties)
+        trackScreen(event: MercadoPagoUITrackingEvents.termsAndConditions(properties))
     }
 }

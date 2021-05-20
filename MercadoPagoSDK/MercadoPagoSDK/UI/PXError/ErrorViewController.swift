@@ -111,6 +111,6 @@ extension ErrorViewController {
         var properties: [String: Any] = [:]
         properties["api_error"] = error.getErrorForTracking()
         properties["error_message"] = "Hubo un error".localized
-        trackScreen(path: TrackingPaths.Screens.getErrorPath(), properties: properties)
+        trackScreen(event: GeneralErrorTrackingEvents.error(properties))
     }
 }
