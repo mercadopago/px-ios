@@ -13,4 +13,5 @@ target 'ExampleSwift' do
 
   # Pods for ExampleSwift
   pod 'MercadoPagoSDKV4', :path => '../', :testspecs => ['MercadoPagoSDKTests']
+  pod 'MLCardDrawer', :git => 'https://github.com/mercadolibre/meli-card-drawer-ios', :branch => 'develop/generic-card'
 end

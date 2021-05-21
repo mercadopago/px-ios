@@ -162,6 +162,14 @@ extension PXOneTapViewModel {
                 let viewModelCard = PXCardSliderViewModel(paymentMethodId, targetNode.paymentTypeId, "", ConsumerCreditsCard(creditsViewModel, isDisabled: targetNode.status.isDisabled()), cardData, amountConfiguration.payerCosts ?? [], amountConfiguration.selectedPayerCost, PXPaymentTypes.CONSUMER_CREDITS.rawValue, true, amountConfiguration: amountConfiguration, creditsViewModel: creditsViewModel, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits, payerPaymentMethods: payerPaymentMethods, behaviours: targetNode.behaviours, displayInfo: targetNode.displayInfo)
 
                 sliderModel.append(viewModelCard)
+            } else if let offlineCard = targetNode.offlineTapCard,
+                      let paymentMethodId = targetNode.paymentMethodId {
+                let templateCard = getOfflineCardUI(oneTapCard: offlineCard)
+                let cardData = PXCardDataFactory().create(cardName: "", cardNumber: "", cardCode: "", cardExpiration: "")
+                
+                let viewModelCard = PXCardSliderViewModel(paymentMethodId, nil, "", templateCard, cardData, [], nil, nil, false, amountConfiguration: nil, creditsViewModel: nil, status: statusConfig, bottomMessage: nil, benefits: nil, payerPaymentMethods: nil, behaviours: nil, displayInfo: nil)
+                
+                sliderModel.append(viewModelCard)
             }
         }
         cardSliderViewModel = sliderModel
@@ -468,6 +476,21 @@ extension PXOneTapViewModel {
         }
         let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: oneTapCard.cardUI?.cardPattern)
         return cardData
+    }
+    
+    private func getOfflineCardUI(oneTapCard: PXOneTapOfflineCard) -> CardUI {
+        let template = TemplatePIX()
+        
+        template.cardBackgroundColor = oneTapCard.displayInfo?.color?.hexToUIColor() ?? .white
+        template.titleName = oneTapCard.displayInfo?.title?.message ?? ""
+        template.titleWeight = oneTapCard.displayInfo?.title?.weight ?? ""
+        template.titleTextColor = oneTapCard.displayInfo?.title?.textColor ?? ""
+        template.subtitleName = oneTapCard.displayInfo?.subtitle?.message ?? ""
+        template.subtitleWeight = oneTapCard.displayInfo?.title?.weight ?? ""
+        template.subtitleTextColor = oneTapCard.displayInfo?.subtitle?.textColor ?? ""
+        template.logoImageURL = oneTapCard.displayInfo?.paymentMethodImageUrl ?? ""
+        
+        return template
     }
     
     private func getCardUI(oneTapCard: PXOneTapCardDto) -> CardUI {

@@ -10,6 +10,7 @@ import Foundation
 open class PXOneTapDto: NSObject, Codable {
     open var paymentMethodId: String?
     open var paymentTypeId: String?
+    open var offlineTapCard: PXOneTapOfflineCard?
     open var oneTapCard: PXOneTapCardDto?
     open var oneTapCreditsInfo: PXOneTapCreditsDto?
     open var accountMoney: PXAccountMoneyDto?
@@ -37,6 +38,7 @@ open class PXOneTapDto: NSObject, Codable {
     public enum CodingKeys: String, CodingKey {
         case paymentMethodId = "payment_method_id"
         case paymentTypeId = "payment_type_id"
+        case offlineTapCard = "offline_method_card"
         case oneTapCard = "card"
         case oneTapCreditsInfo = "consumer_credits"
         case accountMoney = "account_money"
