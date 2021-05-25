@@ -158,11 +158,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
 
     //INSTRUCTIONS
     func hasInstructions() -> Bool {
-        return paymentCongrats.instructionsView != nil
+        return paymentCongrats.instructions != nil
     }
 
-    func getInstructionsView() -> UIView? {
-        return paymentCongrats.instructionsView
+    func getInstructions() -> PXInstruction? {
+        return paymentCongrats.instructions
     }
 
     // PAYMENT METHOD

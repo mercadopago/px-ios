@@ -94,13 +94,6 @@ internal class PXResultViewModel: NSObject {
         return nil
     }
 
-    func instructionsView() -> UIView? {
-        guard let bodyComponent = buildBodyComponent() as? PXBodyComponent, bodyComponent.hasInstructions() else {
-            return nil
-        }
-        return bodyComponent.render()
-    }
-
     private func getRemedyViewData() -> PXRemedyViewData? {
         if isPaymentResultRejectedWithRemedy(),
             let remedy = remedy {
@@ -430,7 +423,7 @@ extension PXResultViewModel {
             .withPrimaryButton(pointsAndDiscounts?.primaryButton)
             .withCrossSelling(pointsAndDiscounts?.crossSelling)
             .withCustomSorting(pointsAndDiscounts?.customOrder)
-            .withInstructionView(instructionsView())
+            .withInstructions(instructionsInfo?.getInstruction())
             .withFooterMainAction(getActionButton())
             .withFooterSecondaryAction(getActionLink())
             .withImportantView(nil)

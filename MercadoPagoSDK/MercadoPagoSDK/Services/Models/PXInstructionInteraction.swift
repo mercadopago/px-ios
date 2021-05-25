@@ -12,6 +12,10 @@ open class PXInstructionInteraction: NSObject, Codable {
     open var title: String?
     open var content: String?
     open var action: PXInstructionAction?
+    // TODO: replace this propertie for the one that will come from backend
+    open var isBoleto: Bool {
+        return content?.count ?? 0 <= 54
+    }
 
     public init(title: String?, content: String?, action: PXInstructionAction?) {
         self.title = title

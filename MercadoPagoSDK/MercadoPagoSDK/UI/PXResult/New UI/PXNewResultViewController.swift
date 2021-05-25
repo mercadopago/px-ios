@@ -17,6 +17,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     private let statusBarHeight = PXLayout.getStatusBarHeight()
     private var contentViewHeightConstraint: NSLayoutConstraint?
     let scrollView = UIScrollView()
+    let contentView = UIView()
     let viewModel: PXNewResultViewModelInterface
     private var finishButtonAnimation: (() -> Void)?
     private var touchpointView: MLBusinessTouchpointsView?
@@ -136,7 +137,6 @@ class PXNewResultViewController: MercadoPagoUIViewController {
 
     private func renderContentView() {
         //CONTENT VIEW
-        let contentView = UIView()
         contentView.backgroundColor = .white
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
@@ -270,12 +270,11 @@ extension PXNewResultViewController {
             return views
         }
 
-        //Instructions View
-        if let view = viewModel.getInstructionsView() {
-            views.append(ResultViewData(view: view))
+        //Top text box View
+        if let instruction = viewModel.getInstructions() {
+            views.append(ResultViewData(view: InstructionView(instruction: instruction, delegate: self)))
         }
 
-        //Top text box View
         if let topTextBoxView = buildTopTextBoxView() {
             views.append(ResultViewData(view: topTextBoxView, verticalMargin: PXLayout.ZERO_MARGIN, horizontalMargin: PXLayout.ZERO_MARGIN))
         }
@@ -636,9 +635,7 @@ extension PXNewResultViewController {
 
     ////TOP TEXT BOX
     func buildTopTextBoxView() -> UIView? {
-        guard let topTextBox = viewModel.getTopTextBox() else {
-            return nil
-        }
+        guard let topTextBox = viewModel.getTopTextBox() else { return nil }
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSeparatorLineToBottom(height: 1)
@@ -660,8 +657,8 @@ extension PXNewResultViewController {
     }
 
     //INSTRUCTIONS
-    func buildInstructionsView() -> UIView? {
-        return viewModel.getInstructionsView()
+    func getInstruction() -> PXInstruction? {
+        return viewModel.getInstructions()
     }
 
     //PAYMENT METHOD
@@ -766,5 +763,21 @@ extension PXNewResultViewController {
 extension PXNewResultViewController: MLBusinessTouchpointsUserInteractionHandler {
     func didTap(with selectedIndex: Int, deeplink: String, trackingId: String) {
         viewModel.didTapDiscount(index: selectedIndex, deepLink: deeplink, trackId: trackingId)
+    }
+}
+
+extension PXNewResultViewController: ActionViewDelegate {
+    func didTapOnActionButton(action: PXInstructionAction?) {
+        guard let action = action else { return }
+        switch action.tag {
+        case "copy":
+            UIPasteboard.general.string = action.content
+            FeedbackView.showFeedbackView(show: "payment_result_screen_congrats_copy_button".localized, in: scrollView)
+        case "link":
+            guard let urlString = action.url, let url = URL(string: urlString) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        default: return
+        }
+
     }
 }

@@ -33,5 +33,12 @@ open class PXInstructionAction: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXInstructionAction] {
         return try JSONDecoder().decode([PXInstructionAction].self, from: data)
     }
-
+    
+    init(label: String?, url: String?, tag: String?, content: String?) {
+        self.label = label
+        self.url = url
+        self.tag = tag
+        self.content = content
+    }
+    
 }

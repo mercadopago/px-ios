@@ -63,7 +63,7 @@ protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
     
     //INSTRUCTIONS
     func hasInstructions() -> Bool
-    func getInstructionsView() -> UIView?
+    func getInstructions() -> PXInstruction?
 
     //PAYMENT METHOD
     func shouldShowPaymentMethod() -> Bool

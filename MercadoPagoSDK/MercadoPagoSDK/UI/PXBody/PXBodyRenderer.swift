@@ -11,9 +11,7 @@ import UIKit
 class PXBodyRenderer: NSObject {
 
     func render(_ body: PXBodyComponent) -> UIView {
-        if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent() {
-            return instructionsComponent.render()
-        } else if body.hasBodyError() {
+        if body.hasBodyError() {
             return body.getBodyErrorComponent().render()
         }
         let bodyView = UIView()
@@ -22,5 +20,4 @@ class PXBodyRenderer: NSObject {
     }
 }
 
-class PXBodyView: PXComponentView {
-}
+class PXBodyView: PXComponentView { }

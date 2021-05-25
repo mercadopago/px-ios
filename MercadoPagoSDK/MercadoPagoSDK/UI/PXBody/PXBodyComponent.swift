@@ -19,15 +19,6 @@ internal class PXBodyComponent: PXComponentizable {
         return props.instruction != nil
     }
 
-    func getInstructionsComponent() -> PXInstructionsComponent? {
-        if let instruction = props.instruction {
-            let instructionsProps = PXInstructionsProps(instruction: instruction)
-            let instructionsComponent = PXInstructionsComponent(props: instructionsProps)
-            return instructionsComponent
-        }
-        return nil
-    }
-
     func hasBodyError() -> Bool {
         return isPendingWithBody() || isRejectedWithBody()
     }

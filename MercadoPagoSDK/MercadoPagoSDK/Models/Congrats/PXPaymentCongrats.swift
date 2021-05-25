@@ -44,7 +44,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var hasCustomSorting: Bool = false
 
     // Instructions
-    private(set) var instructionsView: UIView?
+    private(set) var instructions: PXInstruction?
 
     // Footer Buttons
     private(set) var mainAction: PXAction?
@@ -134,8 +134,8 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withInstructionView(_ view: UIView?) -> PXPaymentCongrats {
-        self.instructionsView = view
+    internal func withInstructions(_ instruction: PXInstruction?) -> PXPaymentCongrats {
+        self.instructions = instruction
         return self
     }
 
