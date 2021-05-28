@@ -47,16 +47,19 @@ struct PXInitFeatures: Codable {
     let oneTap: Bool
     let split: Bool
     let odr: Bool
+    let pix: Bool
 
-    init(oneTap: Bool = true, split: Bool, odr: Bool = true) {
+    init(oneTap: Bool = true, split: Bool, odr: Bool = true, pix: Bool = true) {
         self.oneTap = oneTap
         self.split = split
         self.odr = odr
+        self.pix = pix
     }
 
     enum CodingKeys: String, CodingKey {
         case oneTap = "one_tap"
         case split = "split"
         case odr
+        case pix
     }
 }
