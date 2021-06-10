@@ -1,5 +1,5 @@
-# v4.38.0
-🚀Private Release - 4.38.0 🚀
+# v4.39.0
+🚀Private Release - 4.39.0 🚀
 - Pix payment
 
 # v4.38.0
