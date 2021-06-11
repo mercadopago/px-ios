@@ -269,7 +269,6 @@
 				"${BUILT_PRODUCTS_DIR}/AndesUI/AndesUI.framework",
 				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
-				"${BUILT_PRODUCTS_DIR}/MLBusinessComponents/MLBusinessComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -277,7 +276,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AndesUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLBusinessComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

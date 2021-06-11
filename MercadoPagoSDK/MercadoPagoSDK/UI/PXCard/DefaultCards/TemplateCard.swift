@@ -27,6 +27,7 @@ class TemplateCard: NSObject, CreditCardUI {
 
 class TemplatePIX: NSObject, GenericCardUI {
     var securityCodeLocation = MLCardSecurityCodeLocation.none
+    var cardPattern = [4, 4, 4, 4]
     var titleName = ""
     var titleWeight = ""
     var titleTextColor = ""
