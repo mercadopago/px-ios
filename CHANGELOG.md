@@ -1,3 +1,7 @@
+# v4.39.1
+🚀Private Release - 4.39.1 🚀
+- Conforming with old CardDrawer protocol
+
 # v4.39.0
 🚀Private Release - 4.39.0 🚀
 - Pix payment
