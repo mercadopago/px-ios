@@ -92,27 +92,29 @@ extension MercadoPagoCheckout {
      - parameter lifeCycleProtocol: Instance of `PXLifeCycleProtocol` implementation. Provide this protocol in order to get notifications related to our checkout lifecycle. (`FinishCheckout` and `CancelCheckout`)
      */
     public func start(navigationController: UINavigationController, lifeCycleProtocol: PXLifeCycleProtocol?=nil) {
-        viewModel.lifecycleProtocol = lifeCycleProtocol
-        commonInit()
-        ThemeManager.shared.initialize()
-        viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
-        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
-        if initMode == .lazy {
-            if viewModel.initFlow?.getStatus() == .finished {
-                executeNextStep()
-            } else {
-                if viewModel.initFlow?.getStatus() == .running {
-                    return
-                } else {
-                    // Lazy with "ready" to run.
-                    viewModel.pxNavigationHandler.presentInitLoading()
-                    executeNextStep()
-                }
-            }
-        } else {
-            viewModel.pxNavigationHandler.presentInitLoading()
-            executeNextStep()
-        }
+        let coordinator = OneTapCoordinator(navigationController: navigationController)
+        coordinator.start()
+//        viewModel.lifecycleProtocol = lifeCycleProtocol
+//        commonInit()
+//        ThemeManager.shared.initialize()
+//        viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
+//        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+//        if initMode == .lazy {
+//            if viewModel.initFlow?.getStatus() == .finished {
+//                executeNextStep()
+//            } else {
+//                if viewModel.initFlow?.getStatus() == .running {
+//                    return
+//                } else {
+//                    // Lazy with "ready" to run.
+//                    viewModel.pxNavigationHandler.presentInitLoading()
+//                    executeNextStep()
+//                }
+//            }
+//        } else {
+//            viewModel.pxNavigationHandler.presentInitLoading()
+//            executeNextStep()
+//        }
     }
 
     /**

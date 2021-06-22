@@ -12,7 +12,6 @@ import MLUI
 import AndesUI
 
 final class PXOneTapViewController: PXComponentContainerViewController {
-
     // MARK: Definitions
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
@@ -903,11 +902,11 @@ extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
     }
 }
 
-extension PXOneTapViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if [fromVC, toVC].filter({$0 is MLCardFormViewController || $0 is PXSecurityCodeViewController}).count > 0 {
-            return PXOneTapViewControllerTransition()
-        }
-        return nil
-    }
-}
+//extension PXOneTapViewController: UINavigationControllerDelegate {
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        if [fromVC, toVC].filter({$0 is MLCardFormViewController || $0 is PXSecurityCodeViewController}).count > 0 {
+//            return PXOneTapViewControllerTransition()
+//        }
+//        return nil
+//    }
+//}
