@@ -19,6 +19,7 @@ open class MercadoPagoCheckout: NSObject {
         case lazy
     }
 
+    var navigationController: UINavigationController?
     internal var initMode: InitMode = .normal
     internal var initProtocol: PXLazyInitProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
@@ -92,29 +93,33 @@ extension MercadoPagoCheckout {
      - parameter lifeCycleProtocol: Instance of `PXLifeCycleProtocol` implementation. Provide this protocol in order to get notifications related to our checkout lifecycle. (`FinishCheckout` and `CancelCheckout`)
      */
     public func start(navigationController: UINavigationController, lifeCycleProtocol: PXLifeCycleProtocol?=nil) {
-        let coordinator = OneTapCoordinator(navigationController: navigationController)
-        coordinator.start()
-//        viewModel.lifecycleProtocol = lifeCycleProtocol
-//        commonInit()
-//        ThemeManager.shared.initialize()
-//        viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
-//        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
-//        if initMode == .lazy {
-//            if viewModel.initFlow?.getStatus() == .finished {
-//                executeNextStep()
-//            } else {
-//                if viewModel.initFlow?.getStatus() == .running {
-//                    return
-//                } else {
-//                    // Lazy with "ready" to run.
-//                    viewModel.pxNavigationHandler.presentInitLoading()
-//                    executeNextStep()
-//                }
-//            }
-//        } else {
-//            viewModel.pxNavigationHandler.presentInitLoading()
-//            executeNextStep()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//            let coordinator = OneTapCoordinator(navigationController: navigationController, info: self.viewModel.search!)
+//            coordinator.start()
 //        }
+        
+        self.navigationController = navigationController
+        viewModel.lifecycleProtocol = lifeCycleProtocol
+        commonInit()
+        ThemeManager.shared.initialize()
+        viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
+        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+        if initMode == .lazy {
+            if viewModel.initFlow?.getStatus() == .finished {
+                executeNextStep()
+            } else {
+                if viewModel.initFlow?.getStatus() == .running {
+                    return
+                } else {
+                    // Lazy with "ready" to run.
+                    viewModel.pxNavigationHandler.presentInitLoading()
+                    executeNextStep()
+                }
+            }
+        } else {
+            viewModel.pxNavigationHandler.presentInitLoading()
+            executeNextStep()
+        }
     }
 
     /**
@@ -172,7 +177,15 @@ extension MercadoPagoCheckout {
         case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
             self.showPaymentMethodPluginConfigScreen()
         case .FLOW_ONE_TAP:
-            self.startOneTapFlow()
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            viewModel.pxNavigationHandler.dismissLoading(animated: true) {
+                let coordinator = OneTapCoordinator(navigationController: self.navigationController!, info: self.viewModel.search!)
+                coordinator.start()
+            }
+                
+//            }
+            
+//            self.startOneTapFlow()
         }
     }
 

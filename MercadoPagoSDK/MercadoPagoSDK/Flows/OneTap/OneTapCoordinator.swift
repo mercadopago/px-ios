@@ -10,14 +10,12 @@ import UIKit
 final class OneTapCoordinator: BaseCoordinator {
     // MARK: - Private properties
     private let navigationController: UINavigationController
-    private let controller: UIViewController
+    private let controller: NewOneTapController
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
-//        super.init()
+    init(navigationController: UINavigationController, info: PXInitDTO) {
         self.navigationController = navigationController
-        self.controller = UIViewController()
-        controller.view.backgroundColor = .purple
+        self.controller = NewOneTapController(viewModel: NewOneTapViewModel(info: info))
     }
     
     // MARK: - Overrides
