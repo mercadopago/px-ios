@@ -125,6 +125,14 @@ internal class PXNavigationHandler: NSObject {
         }
         self.dismissLoading()
     }
+    
+    func coordinateToOneTap(info: PXInitDTO?) {
+        guard let info = info else { return }
+        dismissLoading(animated: true) {
+            let coordinator = OneTapCoordinator(navigationController: self.navigationController, info: info)
+            coordinator.start()
+        }
+    }
 
     func popViewController(animated: Bool = true) {
         navigationController.popViewController(animated: animated)
