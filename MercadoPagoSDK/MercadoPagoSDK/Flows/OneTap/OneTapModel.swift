@@ -26,7 +26,7 @@ struct OneTapModel {
     var splitPaymentSelectionByUser: Bool?
     
     // MARK: - Initialization
-    init(paymentInfos: PXInitDTO, publicKey: String, let privateKey: String?) {
+    init(paymentInfos: PXInitDTO, publicKey: String, privateKey: String?) {
         self.publicKey = publicKey
         self.privateKey = privateKey
         self.paymentMethods = paymentInfos.availablePaymentMethods
