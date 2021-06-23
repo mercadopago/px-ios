@@ -9,15 +9,23 @@ import Foundation
 
 final class NewOneTapViewModel {
     // MARK: - Private properties
-    private let info: PXInitDTO?
+    private let oneTapModel: OneTapModel
+    
+    // MARK: - Public properties
+    weak var coordinator: OneTapCoordinator?
+    
     
     // MARK: - Initialization
-    init(info: PXInitDTO) {
-        self.info = info
+    init(
+        oneTapModel: OneTapModel,
+        coordinator: OneTapCoordinator? = nil
+    ) {
+        self.oneTapModel = oneTapModel
+        self.coordinator = coordinator
     }
     
     // MARK: - Public methods
     func hasInfo() -> Bool {
-        return info != nil
+        return true
     }
 }
