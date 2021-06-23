@@ -16,7 +16,7 @@ final class OneTapCoordinator: BaseCoordinator {
     init(navigationController: UINavigationController, info: PXInitDTO) {
 //        super.init()
         self.navigationController = navigationController
-        self.controller = NewOneTapController(viewModel: NewOneTapViewModel(info: info))
+        self.controller = NewOneTapController(viewModel: NewOneTapViewModel(oneTapModel: OneTapModel(paymentInfos: info, publicKey: "TEST-a463d259-b561-45fe-9dcc-0ce320d1a42f", privateKey: "TEST-982391008451128-040514-b988271bf377ab11b0ace4f1ef338fe6-737303098")))
     }
     
     // MARK: - Overrides
