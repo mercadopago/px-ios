@@ -70,7 +70,17 @@ internal class PaymentResult {
         self.cardId = payment.card?.id
     }
 
-    init (status: String, statusDetail: String, paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, payerEmail: String?, paymentId: String?, statementDescription: String?, paymentMethodId: String? = nil, paymentMethodTypeId: String? = nil) {
+    init (
+        status: String,
+        statusDetail: String,
+        paymentData: PXPaymentData,
+        splitAccountMoney: PXPaymentData?,
+        payerEmail: String?,
+        paymentId: String?,
+        statementDescription: String?,
+        paymentMethodId: String? = nil,
+        paymentMethodTypeId: String? = nil
+    ) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData

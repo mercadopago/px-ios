@@ -14,12 +14,33 @@ final class OneTapCoordinator: BaseCoordinator {
     
     // MARK: - Initialization
     init(navigationController: UINavigationController, info: PXInitDTO) {
+//        super.init()
         self.navigationController = navigationController
         self.controller = NewOneTapController(viewModel: NewOneTapViewModel(info: info))
     }
     
     // MARK: - Overrides
     override func start() {
+        controller.coordinatorDelegate = self
         navigationController.pushViewController(controller, animated: true)
+    }
+}
+
+// MARK: - OneTapRedirects
+extension OneTapCoordinator: OneTapRedirects {
+    func goToCongrats() {
+        
+    }
+    
+    func goToBiometric() {
+        
+    }
+    
+    func goToCVV() {
+        
+    }
+    
+    func goToCardForm() {
+        
     }
 }
