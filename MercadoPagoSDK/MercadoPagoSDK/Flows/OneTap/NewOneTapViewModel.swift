@@ -33,11 +33,39 @@ final class NewOneTapViewModel {
     
     // MARK: - Public methods
     func hasInfo() -> Bool {
-        return true
+        return getDataSource().count > 1
     }
     
     // MARK: - Private methods
     private func getDataSource() -> [PXOneTapDto] {
-        return []
+        guard let expressData = oneTapModel.expressData else { return [] }
+        return rearrangeDisabledOption(expressData, disabledOption: oneTapModel.disabledOption)
     }
+    
+    private func rearrangeDisabledOption(_ oneTapNodes: [PXOneTapDto], disabledOption: PXDisabledOption?) -> [PXOneTapDto] {
+        guard let disabledOption = disabledOption else {return oneTapNodes}
+        var rearrangedNodes = [PXOneTapDto]()
+        var disabledNode: PXOneTapDto?
+        for node in oneTapNodes {
+            if disabledOption.isCardIdDisabled(cardId: node.oneTapCard?.cardId) || disabledOption.isPMDisabled(paymentMethodId: node.paymentMethodId) {
+                disabledNode = node
+            } else {
+                rearrangedNodes.append(node)
+            }
+        }
+
+        if let disabledNode = disabledNode {
+            rearrangedNodes.append(disabledNode)
+        }
+        return rearrangedNodes
+    }
+    
+    // MARK: - Public methods
+    func getNumberOfIntens() -> Int {
+        return getDataSource().count
+    }
+    
+//    func getSelectedCard(cardId: String?) -> PXOneTapDto {
+//        return oneTapModel.expressData?.filter { $0.ca }
+//    }
 }

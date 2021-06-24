@@ -19,7 +19,6 @@ struct OneTapModel {
     let modals: [String: PXModal]? //
     let payerPaymentMethods: [PXCustomOptionSearchItem] //
     let experiments: [PXExperiment]? //
-//    let applications: [PXOneTapApplication]
     let splitPaymentEnabled: Bool = false
     let additionalInfoSummary: PXAdditionalInfoSummary? //
     let disabledOption: PXDisabledOption?
