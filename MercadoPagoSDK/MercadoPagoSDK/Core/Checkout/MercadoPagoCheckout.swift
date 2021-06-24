@@ -170,9 +170,9 @@ extension MercadoPagoCheckout {
         case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
             self.showPaymentMethodPluginConfigScreen()
         case .FLOW_ONE_TAP:
-            viewModel.pxNavigationHandler.coordinateToOneTap(info: viewModel.search)
+//            viewModel.pxNavigationHandler.coordinateToOneTap(info: viewModel.search)
             
-//            self.startOneTapFlow()
+            self.startOneTapFlow()
         }
     }
 

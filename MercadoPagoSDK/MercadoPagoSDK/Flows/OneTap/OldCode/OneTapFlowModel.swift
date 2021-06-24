@@ -121,19 +121,20 @@ internal extension OneTapFlowModel {
         return PXSecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason, cardUI: cardUI, cardData: cardData, internetProtocol: mercadoPagoServices)
     }
 
-    func oneTapViewModel() -> PXOneTapViewModel {
-        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
-        viewModel.publicKey = publicKey
-        viewModel.privateKey = privateKey
-        viewModel.siteId = siteId
-        viewModel.excludedPaymentTypeIds = checkoutPreference.getExcludedPaymentTypesIds()
-        viewModel.expressData = search.oneTap
-        viewModel.payerCompliance = search.payerCompliance
-        viewModel.paymentMethods = search.availablePaymentMethods
-        viewModel.items = checkoutPreference.items
-        viewModel.additionalInfoSummary = checkoutPreference.pxAdditionalInfo?.pxSummary
-        viewModel.modals = search.modals
-        return viewModel
+    func oneTapViewModel() -> NewOneTapViewModel {
+        return NewOneTapViewModel(oneTapModel: OneTapModel(paymentInfos: search, disabledOption: disabledOption, excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(), publicKey: publicKey, privateKey: privateKey))
+//        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
+//        viewModel.publicKey = publicKey
+//        viewModel.privateKey = privateKey
+//        viewModel.siteId = siteId
+//        viewModel.excludedPaymentTypeIds = checkoutPreference.getExcludedPaymentTypesIds()
+//        viewModel.expressData = search.oneTap
+//        viewModel.payerCompliance = search.payerCompliance
+//        viewModel.paymentMethods = search.availablePaymentMethods
+//        viewModel.items = checkoutPreference.items
+//        viewModel.additionalInfoSummary = checkoutPreference.pxAdditionalInfo?.pxSummary
+//        viewModel.modals = search.modals
+//        return viewModel
     }
 }
 

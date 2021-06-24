@@ -39,17 +39,20 @@ extension OneTapFlow {
             self?.executeNextStep()
         }
         let viewModel = model.oneTapViewModel()
-        model.pxOneTapViewModel = viewModel
-        let viewController = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
-
-        pxNavigationHandler.pushViewController(viewController: viewController, animated: true)
+//        model.pxOneTapViewModel = viewModel
+        
+//        let viewController = NewOneTapController(viewModel: viewModel)
+        
+//        let viewController = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
+        pxNavigationHandler.coordinateToOneTap(info: model.search, disabledOption: model.disabledOption, excludedPaymentTypeIds: model.checkoutPreference.getExcludedPaymentTypesIds())
+//        pxNavigationHandler.navigationController.pushViewController(viewController, animated: true)
     }
 
     func updateOneTapViewModel(cardId: String) {
         if let oneTapViewController = pxNavigationHandler.navigationController.viewControllers.first(where: { $0 is PXOneTapViewController }) as? PXOneTapViewController {
             let viewModel = model.oneTapViewModel()
-            model.pxOneTapViewModel = viewModel
-            oneTapViewController.update(viewModel: viewModel, cardId: cardId)
+//            model.pxOneTapViewModel = viewModel
+//            oneTapViewController.update(viewModel: viewModel, cardId: cardId)
         }
     }
 

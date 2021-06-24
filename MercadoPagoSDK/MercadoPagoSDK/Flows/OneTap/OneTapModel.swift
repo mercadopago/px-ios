@@ -11,7 +11,7 @@ struct OneTapModel {
     let publicKey: String //
     let privateKey: String? //
     let siteId: String //
-//    let excludedPaymentTypeIds: [String]
+    let excludedPaymentTypeIds: [String]
     let expressData: [PXOneTapDto]? //
     let paymentMethods: [PXPaymentMethod] //
     let items: [PXItem] //
@@ -20,23 +20,25 @@ struct OneTapModel {
     let payerPaymentMethods: [PXCustomOptionSearchItem] //
     let experiments: [PXExperiment]? //
 //    let applications: [PXOneTapApplication]
-//    let splitPaymentEnabled: Bool
+    let splitPaymentEnabled: Bool = false
     let additionalInfoSummary: PXAdditionalInfoSummary? //
     let disabledOption: PXDisabledOption?
-//    var splitPaymentSelectionByUser: Bool?
+    var splitPaymentSelectionByUser: Bool? = false
     
     // MARK: - Initialization
-    init(paymentInfos: PXInitDTO, publicKey: String, privateKey: String?) {
+    init(paymentInfos: PXInitDTO, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String], publicKey: String, privateKey: String?) {
         self.publicKey = publicKey
         self.privateKey = privateKey
-        self.paymentMethods = paymentInfos.availablePaymentMethods
-        self.payerCompliance = paymentInfos.payerCompliance
-        self.experiments = paymentInfos.experiments
-        self.modals = paymentInfos.modals
-        self.items = paymentInfos.preference?.items ?? []
         self.siteId = paymentInfos.preference?.siteId ?? ""
+        self.excludedPaymentTypeIds = excludedPaymentTypeIds
         self.expressData = paymentInfos.oneTap
-        self.additionalInfoSummary = paymentInfos.preference?.pxAdditionalInfo?.pxSummary
+        self.paymentMethods = paymentInfos.availablePaymentMethods
+        self.items = paymentInfos.preference?.items ?? []
+        self.payerCompliance = paymentInfos.payerCompliance
+        self.modals = paymentInfos.modals
         self.payerPaymentMethods = paymentInfos.payerPaymentMethods
+        self.experiments = paymentInfos.experiments
+        self.additionalInfoSummary = paymentInfos.preference?.pxAdditionalInfo?.pxSummary
+        self.disabledOption = disabledOption
     }
 }

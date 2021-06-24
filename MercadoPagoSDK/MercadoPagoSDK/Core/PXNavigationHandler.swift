@@ -126,10 +126,10 @@ internal class PXNavigationHandler: NSObject {
         self.dismissLoading()
     }
     
-    func coordinateToOneTap(info: PXInitDTO?) {
+    func coordinateToOneTap(info: PXInitDTO?, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String]) {
         guard let info = info else { return }
         dismissLoading(animated: true) {
-            let coordinator = OneTapCoordinator(navigationController: self.navigationController, info: info)
+            let coordinator = OneTapCoordinator(navigationController: self.navigationController, info: info, disabledOption: disabledOption, excludedPaymentTypeIds: excludedPaymentTypeIds)
             coordinator.start()
         }
     }
