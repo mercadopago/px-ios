@@ -9,10 +9,10 @@ import UIKit
 
 final class NewOneTapController: BaseViewController {
     // MARK: - Private properties
-    private let viewModel: NewOneTapViewModel
+    private let viewModel: CardManagerViewModel
     
     // MARK: - Initialization
-    init(viewModel: NewOneTapViewModel) {
+    init(viewModel: CardManagerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -24,6 +24,5 @@ final class NewOneTapController: BaseViewController {
     // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = viewModel.hasInfo() ? .orange : .green
     }
 }

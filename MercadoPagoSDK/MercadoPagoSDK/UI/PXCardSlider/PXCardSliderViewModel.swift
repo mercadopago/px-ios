@@ -12,52 +12,11 @@ typealias PXApplicationId = String
 
 final class PXCardSliderViewModel {
     
-    let issuerId: String
-    var cardUI: CardUI?
-    var cardId: String?
-    var displayInfo: PXOneTapDisplayInfo?
-    var comboSwitch: ComboSwitchView?
+    private var cardModel: CardModel
+    private var accountMoneyBalance: Double?
     
-    var accountMoneyBalance: Double?
-    
-    let creditsViewModel: PXCreditsViewModel?
-    
-    var isCredits: Bool {
-        return self.selectedApplication?.paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue
-    }
-    
-    var applications : [PXApplicationId: PXCardSliderApplicationData]?
-    
-    var selectedApplicationId : PXApplicationId? {
-        didSet {
-            self.cardUI = self.selectedApplication?.cardUI
-        }
-    }
-    
-    var selectedApplication: PXCardSliderApplicationData? {
-        guard let applicationsData = applications, applicationsData.count > 0, let selectedApplicationId = selectedApplicationId else { return nil }
-        
-        return applicationsData[selectedApplicationId] ?? nil
-    }
-    
-    init(applications: [PXApplicationId: PXCardSliderApplicationData],
-        selectedApplicationId: String?,
-        issuerId: String,
-        cardId: String? = nil,
-        creditsViewModel: PXCreditsViewModel? = nil,
-        displayInfo: PXOneTapDisplayInfo?,
-        comboSwitch: ComboSwitchView?) {
-        self.issuerId = issuerId
-        self.cardId = cardId
-        self.creditsViewModel = creditsViewModel
-        self.displayInfo = displayInfo
-        self.comboSwitch = comboSwitch
-        self.applications = applications
-        self.selectedApplicationId = selectedApplicationId
-        
-        if let selectedApplicationId = selectedApplicationId {
-            self.cardUI = applications[selectedApplicationId]?.cardUI
-        }
+    init(cardModel: CardModel) {
+        self.cardModel = cardModel
     }
     
     // MARK: - Public methods
@@ -68,11 +27,11 @@ final class PXCardSliderViewModel {
 
 extension PXCardSliderViewModel: PaymentMethodOption {
     func getPaymentType() -> String {
-        return selectedApplication?.paymentTypeId ?? ""
+        return cardModel.selectedApplication?.paymentTypeId ?? ""
     }
 
     func getId() -> String {
-        return selectedApplication?.paymentMethodId ?? ""
+        return cardModel.selectedApplication?.paymentMethodId ?? ""
     }
 
     func hasChildren() -> Bool {
@@ -84,26 +43,66 @@ extension PXCardSliderViewModel: PaymentMethodOption {
     }
 
     func isCard() -> Bool {
-        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != selectedApplication?.paymentMethodId
+        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != cardModel.selectedApplication?.paymentMethodId
     }
 
     func isCustomerPaymentMethod() -> Bool {
-        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != selectedApplication?.paymentMethodId
+        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != cardModel.selectedApplication?.paymentMethodId
     }
 
     func shouldShowInstallmentsHeader() -> Bool {
-        guard let selectedApplication = selectedApplication else { return false }
+        guard let selectedApplication = cardModel.selectedApplication else { return false }
         return !selectedApplication.userDidSelectPayerCost && selectedApplication.status.isUsable()
     }
 
     func getReimbursement() -> PXInstallmentsConfiguration? {
-        guard let selectedApplication = selectedApplication else { return nil }
+        guard let selectedApplication = cardModel.selectedApplication else { return nil }
         return selectedApplication.benefits?.reimbursement
     }
 
     func getInterestFree() -> PXInstallmentsConfiguration? {
-        guard let selectedApplication = selectedApplication else { return nil }
+        guard let selectedApplication = cardModel.selectedApplication else { return nil }
         return selectedApplication.benefits?.interestFree
+    }
+    
+    func getCardUI() -> CardUI? {
+        return cardModel.cardUI
+    }
+    
+    func getCardData() -> CardData? {
+        return cardModel.selectedApplication?.cardData
+    }
+    
+    func getProgramId() -> String? {
+        return cardModel.selectedApplication?.paymentMethodId
+    }
+    
+    func getSelectedApplication() -> PXCardSliderApplicationData? {
+        return cardModel.selectedApplication
+    }
+    
+    func getCardId() -> String? {
+        return cardModel.cardId
+    }
+    
+    func getIssuerId() -> String {
+        return cardModel.issuerId
+    }
+    
+    func getCreditsViewModel() -> PXCreditsViewModel? {
+        return cardModel.creditsViewModel
+    }
+    
+    func getComboSwitch() -> ComboSwitchView? {
+        return cardModel.comboSwitch
+    }
+    
+    func setSelectedApplication(id: String) {
+        cardModel.selectedApplicationId = id
+    }
+    
+    func getDisplayInfo() -> PXOneTapDisplayInfo? {
+        return cardModel.displayInfo
     }
 }
 

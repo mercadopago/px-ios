@@ -12,10 +12,10 @@ protocol OneTapRedirects: AnyObject {
     func goToCardForm()
 }
 
-final class NewOneTapViewModel {
+final class CardManagerViewModel {
     // MARK: - Private properties
     private let oneTapModel: OneTapModel
-    private var dataSource: [PXOneTapDto] {
+    private var dataSource: [PXCardSliderViewModel] {
         return getDataSource()
     }
     
@@ -32,12 +32,10 @@ final class NewOneTapViewModel {
     }
     
     // MARK: - Public methods
-    func hasInfo() -> Bool {
-        return getDataSource().count > 1
-    }
+    
     
     // MARK: - Private methods
-    private func getDataSource() -> [PXOneTapDto] {
+    private func getDataSource() -> [PXCardSliderViewModel] {
         guard let expressData = oneTapModel.expressData else { return [] }
         return rearrangeDisabledOption(expressData, disabledOption: oneTapModel.disabledOption)
     }
@@ -64,8 +62,4 @@ final class NewOneTapViewModel {
     func getNumberOfIntens() -> Int {
         return getDataSource().count
     }
-    
-//    func getSelectedCard(cardId: String?) -> PXOneTapDto {
-//        return oneTapModel.expressData?.filter { $0.ca }
-//    }
 }

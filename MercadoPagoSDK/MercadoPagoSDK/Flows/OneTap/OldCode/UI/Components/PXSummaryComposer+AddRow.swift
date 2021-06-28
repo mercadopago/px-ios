@@ -51,7 +51,13 @@ extension PXSummaryComposer {
     }
 
     func totalToPayRow() -> PXOneTapSummaryRowData {
-        let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.getAmountToPayWithoutPayerCost(paymentOptionID: selectedCard?.cardId, paymentMethodId: selectedCard?.selectedApplication?.paymentMethodId, paymentTypeId: selectedCard?.selectedApplication?.paymentTypeId), forCurrency: currency)
+        let totalAmountToShow = Utils
+            .getAmountFormated(amount: amountHelper
+                                .getAmountToPayWithoutPayerCost(
+                                    paymentOptionID: selectedCard?.getCardId(),
+                                    paymentMethodId: selectedCard?.getSelectedApplication()?.paymentMethodId,
+                                    paymentTypeId: selectedCard?.getSelectedApplication()?.paymentTypeId),
+                               forCurrency: currency)
         let text = "total_row_title_default".localized
         let row = PXOneTapSummaryRowData(title: text,
                                           value: totalAmountToShow,

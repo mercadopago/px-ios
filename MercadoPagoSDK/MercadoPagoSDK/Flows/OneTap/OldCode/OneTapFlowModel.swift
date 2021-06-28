@@ -115,14 +115,14 @@ internal extension OneTapFlowModel {
 
         let reason = PXSecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason)
         let cardSliderViewModel = pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())
-        let cardUI = cardSliderViewModel?.cardUI ?? TemplateCard()
-        let cardData = cardSliderViewModel?.selectedApplication?.cardData  ?? PXCardDataFactory()
+        let cardUI = cardSliderViewModel?.getCardUI() ?? TemplateCard()
+        let cardData = cardSliderViewModel?.getCardData()  ?? PXCardDataFactory()
         
         return PXSecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason, cardUI: cardUI, cardData: cardData, internetProtocol: mercadoPagoServices)
     }
 
-    func oneTapViewModel() -> NewOneTapViewModel {
-        return NewOneTapViewModel(oneTapModel: OneTapModel(paymentInfos: search, disabledOption: disabledOption, excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(), publicKey: publicKey, privateKey: privateKey))
+    func oneTapViewModel() -> CardManagerViewModel {
+        return CardManagerViewModel(oneTapModel: OneTapModel(paymentInfos: search, disabledOption: disabledOption, excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(), publicKey: publicKey, privateKey: privateKey))
 //        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
 //        viewModel.publicKey = publicKey
 //        viewModel.privateKey = privateKey

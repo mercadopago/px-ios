@@ -84,7 +84,16 @@ extension PXOneTapViewModel {
                 
                 cardSliderApplications[""] = cardSliderApplication
                 
-                let viewModelCard = PXCardSliderViewModel(applications: cardSliderApplications, selectedApplicationId: "", issuerId: "", displayInfo: targetNode.displayInfo, comboSwitch: nil)
+                let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+                                                            applications: cardSliderApplications,
+                                                            selectedApplicationId: "",
+                                                            issuerId: "",
+                                                            cardId: nil,
+                                                            creditsViewModel: nil,
+                                                            displayInfo: targetNode.displayInfo,
+                                                            comboSwitch: nil)
+                )
+                
                 
                 sliderModel.append(viewModelCard)
 
@@ -121,8 +130,16 @@ extension PXOneTapViewModel {
                     
                     cardSliderApplications[targetNode.paymentTypeId ?? PXPaymentTypes.ACCOUNT_MONEY.rawValue] = cardSliderApplication
                     
-                    let viewModelCard = PXCardSliderViewModel(applications: cardSliderApplications, selectedApplicationId: targetNode.paymentTypeId ?? PXPaymentTypes.ACCOUNT_MONEY.rawValue, issuerId: "", cardId: accountMoney.getId(), displayInfo: targetNode.displayInfo, comboSwitch: nil)
-
+                    let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+                                                                applications: cardSliderApplications,
+                                                                selectedApplicationId: targetNode.paymentTypeId ?? PXPaymentTypes.ACCOUNT_MONEY.rawValue,
+                                                                issuerId: "",
+                                                                cardId: accountMoney.getId(),
+                                                                creditsViewModel: nil,
+                                                                displayInfo: targetNode.displayInfo,
+                                                                comboSwitch: nil)
+                    )
+                    
                     viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
 
                     sliderModel.append(viewModelCard)
@@ -154,8 +171,16 @@ extension PXOneTapViewModel {
                 var cardSliderApplications : [PXApplicationId:PXCardSliderApplicationData] = [:]
                 
                 cardSliderApplications[targetNode.paymentTypeId ?? PXPaymentTypes.CONSUMER_CREDITS.rawValue] = cardSliderApplication
-
-                let viewModelCard = PXCardSliderViewModel(applications: cardSliderApplications, selectedApplicationId: targetNode.paymentTypeId, issuerId: "", cardId: PXPaymentTypes.CONSUMER_CREDITS.rawValue, creditsViewModel: creditsViewModel, displayInfo: targetNode.displayInfo, comboSwitch: nil)
+                
+                let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+                                                            applications: cardSliderApplications,
+                                                            selectedApplicationId: targetNode.paymentTypeId,
+                                                            issuerId: "",
+                                                            cardId: PXPaymentTypes.CONSUMER_CREDITS.rawValue,
+                                                            creditsViewModel: creditsViewModel,
+                                                            displayInfo: targetNode.displayInfo,
+                                                            comboSwitch: nil)
+                )
 
 
                 sliderModel.append(viewModelCard)
@@ -167,14 +192,17 @@ extension PXOneTapViewModel {
                 let applicationName = targetNode.paymentTypeId ?? PXPaymentTypes.BANK_TRANSFER.rawValue
                 
                 cardSliderApplications[applicationName] = PXCardSliderApplicationData(paymentMethodId: paymentMethodId, paymentTypeId: targetNode.paymentTypeId, cardData: cardData, cardUI: templateCard, payerCost: [], selectedPayerCost: nil, shouldShowArrow: false, amountConfiguration: nil, status: statusConfig, bottomMessage: nil, benefits: targetNode.benefits, payerPaymentMethod: nil, behaviours: targetNode.behaviours, displayInfo: targetNode.displayInfo, displayMessage: nil)
+                
+                let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+                                                            applications: cardSliderApplications,
+                                                            selectedApplicationId: applicationName,
+                                                            issuerId: "",
+                                                            cardId: "",
+                                                            creditsViewModel: nil,
+                                                            displayInfo: nil,
+                                                            comboSwitch: nil)
+                )
 
-                let viewModelCard = PXCardSliderViewModel(applications: cardSliderApplications,
-                                                          selectedApplicationId: applicationName,
-                                                          issuerId: "",
-                                                          cardId: "",
-                                                          creditsViewModel: nil,
-                                                          displayInfo: nil,
-                                                          comboSwitch: nil)
                         
                 sliderModel.append(viewModelCard)
             }
@@ -186,7 +214,7 @@ extension PXOneTapViewModel {
         var model: [PXOneTapInstallmentInfoViewModel] = [PXOneTapInstallmentInfoViewModel]()
         let sliderViewModel = getCardSliderViewModel()
         for sliderNode in sliderViewModel {
-            guard let selectedApplication = sliderNode.selectedApplication else { return model }
+            guard let selectedApplication = sliderNode.getSelectedApplication() else { return model }
             
             let payerCost = selectedApplication.payerCost
             let selectedPayerCost = selectedApplication.selectedPayerCost
@@ -216,7 +244,7 @@ extension PXOneTapViewModel {
                     let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: selectedApplication.shouldShowArrow, status: selectedApplication.status, benefits: selectedApplication.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
                     model.append(installmentInfoModel)
                 } else {
-                    let isDigitalCurrency: Bool = sliderNode.creditsViewModel != nil
+                    let isDigitalCurrency: Bool = sliderNode.getCreditsViewModel() != nil
                     let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost, isDigitalCurrency, interestFreeConfig: selectedApplication.benefits?.interestFree), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: selectedApplication.shouldShowArrow, status: selectedApplication.status, benefits: selectedApplication.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
                     model.append(installmentInfoModel)
                 }
@@ -227,7 +255,7 @@ extension PXOneTapViewModel {
 
     func getHeaderViewModel(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderViewModel {
 
-        let splitConfiguration = selectedCard?.selectedApplication?.amountConfiguration?.splitConfiguration
+        let splitConfiguration = selectedCard?.getSelectedApplication()?.amountConfiguration?.splitConfiguration
         let composer = PXSummaryComposer(amountHelper: amountHelper,
                                            additionalInfoSummary: additionalInfoSummary,
                                            selectedCard: selectedCard,
@@ -292,12 +320,12 @@ extension PXOneTapViewModel {
     }
 
     func getCardSliderViewModel(cardId: String?) -> PXCardSliderViewModel? {
-        return cardSliderViewModel.first(where: { $0.cardId == cardId })
+        return cardSliderViewModel.first(where: { $0.getCardId() == cardId })
     }
 
     func updateCardSliderModel(at index: Int, bottomMessage: PXCardBottomMessage?) {
         if cardSliderViewModel.indices.contains(index) {
-            cardSliderViewModel[index].selectedApplication?.bottomMessage = bottomMessage
+            cardSliderViewModel[index].getSelectedApplication()?.bottomMessage = bottomMessage
         }
     }
 
@@ -309,7 +337,7 @@ extension PXOneTapViewModel {
 
     func updateCardSliderSplitPaymentPreference(splitPaymentEnabled: Bool, forIndex: Int) -> Bool {
         if cardSliderViewModel.indices.contains(forIndex) {
-            if splitPaymentEnabled, let selectedApplication = cardSliderViewModel[forIndex].selectedApplication {
+            if splitPaymentEnabled, let selectedApplication = cardSliderViewModel[forIndex].getSelectedApplication() {
                 selectedApplication.payerCost = selectedApplication.amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.payerCosts ?? []
                 selectedApplication.selectedPayerCost = selectedApplication.amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.selectedPayerCost
                 selectedApplication.amountConfiguration?.splitConfiguration?.splitEnabled = splitPaymentEnabled
@@ -321,7 +349,7 @@ extension PXOneTapViewModel {
                     selectedApplication.shouldShowArrow = false
                 }
                 return true
-            } else if let selectedApplication = cardSliderViewModel[forIndex].selectedApplication {
+            } else if let selectedApplication = cardSliderViewModel[forIndex].getSelectedApplication() {
                 selectedApplication.payerCost = selectedApplication.amountConfiguration?.payerCosts ?? []
                 selectedApplication.selectedPayerCost = selectedApplication.amountConfiguration?.selectedPayerCost
                 selectedApplication.amountConfiguration?.splitConfiguration?.splitEnabled = splitPaymentEnabled
@@ -340,7 +368,7 @@ extension PXOneTapViewModel {
     }
 
     func updateCardSliderViewModel(newPayerCost: PXPayerCost?, forIndex: Int) -> Bool {
-        if cardSliderViewModel.indices.contains(forIndex), let selectedApplication = cardSliderViewModel[forIndex].selectedApplication {
+        if cardSliderViewModel.indices.contains(forIndex), let selectedApplication = cardSliderViewModel[forIndex].getSelectedApplication() {
             selectedApplication.selectedPayerCost = newPayerCost
             selectedApplication.userDidSelectPayerCost = true
             return true
@@ -662,8 +690,16 @@ extension PXOneTapViewModel {
             comboSwitch?.setSwitchModel(switchInfo)
         }
         
-        let viewModelCard = PXCardSliderViewModel(applications: cardSliderApplications, selectedApplicationId: selectedApplicationId, issuerId: targetIssuerId, cardId: oneTapCard.cardId, displayInfo: targetNode.displayInfo, comboSwitch:  comboSwitch)
-        
+        let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+                                                    applications: cardSliderApplications,
+                                                    selectedApplicationId: selectedApplicationId,
+                                                    issuerId: targetIssuerId,
+                                                    cardId: oneTapCard.cardId,
+                                                    creditsViewModel: nil,
+                                                    displayInfo: targetNode.displayInfo,
+                                                    comboSwitch: comboSwitch)
+        )
+          
         return viewModelCard
     }
 }

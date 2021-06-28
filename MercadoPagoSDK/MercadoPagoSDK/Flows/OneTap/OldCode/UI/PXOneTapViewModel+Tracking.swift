@@ -57,7 +57,7 @@ extension PXOneTapViewModel {
         var properties: [String: Any] = [:]
         properties["payment_method_id"] = amountHelper.getPaymentData().paymentMethod?.id
         properties["payment_method_type"] = amountHelper.getPaymentData().paymentMethod?.paymentTypeId
-        properties["card_id"] =  selectedCard.cardId
+        properties["card_id"] =  selectedCard.getCardId()
         if let issuerId = amountHelper.getPaymentData().issuer?.id {
             properties["issuer_id"] = Int64(issuerId)
         }
@@ -82,8 +82,8 @@ extension PXOneTapViewModel {
             properties["payment_method_id"] = paymentMethod.id
             properties["review_type"] = "one_tap"
             var extraInfo: [String: Any] = [:]
-            extraInfo["card_id"] = selectedCard.cardId
-            extraInfo["has_esc"] = cardIdsEsc.contains(selectedCard.cardId ?? "")
+            extraInfo["card_id"] = selectedCard.getCardId
+            extraInfo["has_esc"] = cardIdsEsc.contains(selectedCard.getCardId() ?? "")
             extraInfo["selected_installment"] = amountHelper.getPaymentData().payerCost?.getPayerCostForTracking()
             if let issuerId = amountHelper.getPaymentData().issuer?.id {
                 extraInfo["issuer_id"] = Int64(issuerId)
