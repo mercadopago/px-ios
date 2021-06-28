@@ -35,7 +35,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
-    var pxOneTapViewModel: PXOneTapViewModel?
+//    var pxOneTapViewModel: PXOneTapViewModel?
     
     // MARK: - Private properties
     private var didCall3ds = false
@@ -122,7 +122,12 @@ internal extension OneTapFlowModel {
     }
 
     func oneTapViewModel() -> CardManagerViewModel {
-        return CardManagerViewModel(oneTapModel: OneTapModel(paymentInfos: search, disabledOption: disabledOption, excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(), publicKey: publicKey, privateKey: privateKey))
+        return CardManagerViewModel(oneTapModel: OneTapModel(paymentInfos: search,
+                                                             disabledOption: disabledOption,
+                                                             excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(),
+                                                             publicKey: publicKey,
+                                                             privateKey: privateKey)
+        )
 //        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
 //        viewModel.publicKey = publicKey
 //        viewModel.privateKey = privateKey

@@ -95,7 +95,7 @@ extension PXOneTapViewModel {
             properties["payment_method_id"] = paymentMethod.id
             properties["review_type"] = "one_tap"
             var extraInfo: [String: Any] = [:]
-            extraInfo["balance"] = selectedCard.accountMoneyBalance
+            extraInfo["balance"] = selectedCard.getAccountMoney()
             extraInfo["selected_installment"] = amountHelper.getPaymentData().payerCost?.getPayerCostForTracking(isDigitalCurrency: paymentMethod.isDigitalCurrency)
             properties["extra_info"] = extraInfo
         }

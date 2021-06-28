@@ -13,7 +13,6 @@ typealias PXApplicationId = String
 final class PXCardSliderViewModel {
     
     private var cardModel: CardModel
-    private var accountMoneyBalance: Double?
     
     init(cardModel: CardModel) {
         self.cardModel = cardModel
@@ -26,6 +25,27 @@ final class PXCardSliderViewModel {
 }
 
 extension PXCardSliderViewModel: PaymentMethodOption {
+    func isCard() -> Bool {
+        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != cardModel.selectedApplication?.paymentMethodId
+    }
+    
+    func isCreditCard() -> Bool {
+        return cardModel.isCredits
+    }
+    
+    func hasChildren() -> Bool {
+        return false
+    }
+    
+    func isCustomerPaymentMethod() -> Bool {
+        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != cardModel.selectedApplication?.paymentMethodId
+    }
+    
+    func shouldShowInstallmentsHeader() -> Bool {
+        guard let selectedApplication = cardModel.selectedApplication else { return false }
+        return !selectedApplication.userDidSelectPayerCost && selectedApplication.status.isUsable()
+    }
+    
     func getPaymentType() -> String {
         return cardModel.selectedApplication?.paymentTypeId ?? ""
     }
@@ -34,25 +54,8 @@ extension PXCardSliderViewModel: PaymentMethodOption {
         return cardModel.selectedApplication?.paymentMethodId ?? ""
     }
 
-    func hasChildren() -> Bool {
-        return false
-    }
-
     func getChildren() -> [PaymentMethodOption]? {
         return nil
-    }
-
-    func isCard() -> Bool {
-        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != cardModel.selectedApplication?.paymentMethodId
-    }
-
-    func isCustomerPaymentMethod() -> Bool {
-        return PXPaymentTypes.ACCOUNT_MONEY.rawValue != cardModel.selectedApplication?.paymentMethodId
-    }
-
-    func shouldShowInstallmentsHeader() -> Bool {
-        guard let selectedApplication = cardModel.selectedApplication else { return false }
-        return !selectedApplication.userDidSelectPayerCost && selectedApplication.status.isUsable()
     }
 
     func getReimbursement() -> PXInstallmentsConfiguration? {
@@ -97,18 +100,19 @@ extension PXCardSliderViewModel: PaymentMethodOption {
         return cardModel.comboSwitch
     }
     
+    func getDisplayInfo() -> PXOneTapDisplayInfo? {
+        return cardModel.displayInfo
+    }
+    
+    func getAccountMoney() -> Double? {
+        return cardModel.accountMoneyBalance
+    }
+    
     func setSelectedApplication(id: String) {
         cardModel.selectedApplicationId = id
     }
     
-    func getDisplayInfo() -> PXOneTapDisplayInfo? {
-        return cardModel.displayInfo
-    }
-}
-
-// MARK: Setters
-extension PXCardSliderViewModel {
     func setAccountMoney(accountMoneyBalance: Double) {
-        self.accountMoneyBalance = accountMoneyBalance
+        self.cardModel.accountMoneyBalance = accountMoneyBalance
     }
 }

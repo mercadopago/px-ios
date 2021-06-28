@@ -18,6 +18,7 @@ struct CardModel {
     
     // MARK: - Variables
     var cardUI: CardUI?
+    var accountMoneyBalance: Double?
     
     // MARK: - Stored properties
     var selectedApplicationId: String? {
@@ -33,6 +34,10 @@ struct CardModel {
         return applicationsData[selectedApplicationId] ?? nil
     }
     
+    var isCredits: Bool {
+        return self.selectedApplication?.paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue
+    }
+    
     init(
         applications: [PXApplicationId: PXCardSliderApplicationData],
         selectedApplicationId: String?,
@@ -40,7 +45,8 @@ struct CardModel {
         cardId: String? = nil,
         creditsViewModel: PXCreditsViewModel? = nil,
         displayInfo: PXOneTapDisplayInfo?,
-        comboSwitch: ComboSwitchView?
+        comboSwitch: ComboSwitchView?,
+        accountMoneyBalance: Double? = nil
     ) {
         self.issuerId = issuerId
         self.cardId = cardId
@@ -49,10 +55,10 @@ struct CardModel {
         self.comboSwitch = comboSwitch
         self.applications = applications
         self.selectedApplicationId = selectedApplicationId
+        self.accountMoneyBalance = accountMoneyBalance
         
         if let selectedApplicationId = selectedApplicationId {
             self.cardUI = applications[selectedApplicationId]?.cardUI
         }
     }
-
 }

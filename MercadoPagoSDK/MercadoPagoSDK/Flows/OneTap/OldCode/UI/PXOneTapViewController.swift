@@ -563,7 +563,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         installmentInfoRow?.update(model: viewModel.getInstallmentInfoViewModel())
 
         // Add card. - card o credits payment method selected
-        let validData = selectedApplication.cardData != nil || targetModel.isCredits
+        let validData = selectedApplication.cardData != nil || targetModel.isCreditCard()
         let shouldDisplay = validData && !selectedApplication.status.isDisabled()
         if shouldDisplay {
             displayCard(targetModel: targetModel)
