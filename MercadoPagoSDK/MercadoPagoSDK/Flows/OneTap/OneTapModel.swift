@@ -22,10 +22,11 @@ struct OneTapModel {
     let splitPaymentEnabled: Bool = false
     let additionalInfoSummary: PXAdditionalInfoSummary? //
     let disabledOption: PXDisabledOption?
+    let amountHelper: PXAmountHelper
     var splitPaymentSelectionByUser: Bool? = false
     
     // MARK: - Initialization
-    init(paymentInfos: PXInitDTO, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String], publicKey: String, privateKey: String?) {
+    init(amountHelper: PXAmountHelper, paymentInfos: PXInitDTO, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String], publicKey: String, privateKey: String?) {
         self.publicKey = publicKey
         self.privateKey = privateKey
         self.siteId = paymentInfos.preference?.siteId ?? ""
@@ -39,5 +40,6 @@ struct OneTapModel {
         self.experiments = paymentInfos.experiments
         self.additionalInfoSummary = paymentInfos.preference?.pxAdditionalInfo?.pxSummary
         self.disabledOption = disabledOption
+        self.amountHelper = amountHelper
     }
 }

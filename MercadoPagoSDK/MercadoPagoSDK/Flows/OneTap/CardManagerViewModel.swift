@@ -5,6 +5,8 @@
 //  Created by Matheus Leandro Martins on 22/06/21.
 //
 
+import MLCardDrawer
+
 protocol OneTapRedirects: AnyObject {
     func goToCongrats()
     func goToBiometric()
@@ -15,6 +17,7 @@ protocol OneTapRedirects: AnyObject {
 final class CardManagerViewModel {
     // MARK: - Private properties
     private let oneTapModel: OneTapModel
+    private let installmentsRowMessageFontSize = PXLayout.XS_FONT
     private var dataSource: [PXCardSliderViewModel] {
         return getDataSource()
     }
@@ -59,7 +62,7 @@ final class CardManagerViewModel {
             if let accountMoney = card.accountMoney, let paymentMethodId = card.paymentMethodId {
                 
                     sliderModel.append(viewModelCard)
-                }
+                
             } else if let oneTapCard = card.oneTapCard,
                       let cardData = getCardData(oneTapCard: oneTapCard) {
                 
@@ -223,6 +226,142 @@ final class CardManagerViewModel {
         })
         return filteredRules.first
     }
+    
+    func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
+        var amount: String = ""
+        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+
+        amount = Utils.getAmountFormated(amount: amountToPay, forCurrency: SiteManager.shared.getCurrency())
+        return NSAttributedString(string: amount, attributes: attributes)
+    }
+    
+    private func getCardData(oneTapCard: PXOneTapCardDto) -> CardData? {
+        guard let cardName = oneTapCard.cardUI?.name,
+              let cardNumber = oneTapCard.cardUI?.lastFourDigits,
+              let cardExpiration = oneTapCard.cardUI?.expiration else {
+            return nil
+        }
+        let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: oneTapCard.cardUI?.cardPattern)
+        return cardData
+    }
+    
+    private func getCardUI(oneTapCard: PXOneTapCardDto) -> CardUI {
+        let templateCard = TemplateCard()
+        guard let cardUI = oneTapCard.cardUI else {
+            return templateCard
+        }
+        if let cardPattern = cardUI.cardPattern {
+            templateCard.cardPattern = cardPattern
+        }
+        templateCard.securityCodeLocation = cardUI.securityCode?.cardLocation == "front" ? .front : .back
+        if let codeLength = cardUI.securityCode?.length {
+            templateCard.securityCodePattern = codeLength
+        }
+        if let cardBackgroundColor = cardUI.color {
+            templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
+        }
+        if let cardFontColor = cardUI.fontColor {
+            templateCard.cardFontColor = cardFontColor.hexToUIColor()
+        }
+        if let cardLogoImageUrl = cardUI.paymentMethodImageUrl {
+            templateCard.cardLogoImageUrl = cardLogoImageUrl
+        }
+        if let bankImageUrl = cardUI.issuerImageUrl {
+            templateCard.bankImageUrl = bankImageUrl
+        }
+        return templateCard
+    }
+    
+    func getCardSliderViewModelFor(targetNode: PXOneTapDto, oneTapCard: PXOneTapCardDto, cardData: CardData, applications: [PXOneTapApplication]) -> PXCardSliderViewModel {
+        
+//        self.applications.append(contentsOf: applications)
+        
+        let targetIssuerId = oneTapCard.cardUI?.issuerId ?? ""
+        
+        var cardSliderApplications : [PXApplicationId:PXCardSliderApplicationData] = [:]
+    
+        for application in applications {
+                
+            guard let paymentMethodId = application.paymentMethod.id else { continue }
+            
+            guard let paymentMethodType = application.paymentMethod.type else { continue }
+            
+            let paymentOptionConfiguration = oneTapModel.amountHelper.paymentConfigurationService.getPaymentOptionConfiguration(paymentOptionID: oneTapCard.cardId, paymentMethodId: paymentMethodId, paymentTypeId: paymentMethodType)
+            let amountConfiguration = paymentOptionConfiguration?.amountConfiguration
+            let splitEnabled = amountConfiguration?.splitConfiguration?.splitEnabled ?? false
+            let defaultPayerCost = [PXPayerCost]()
+            let payerCosts = splitEnabled ? amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.payerCosts : amountConfiguration?.payerCosts
+            let selectedPayerCost = splitEnabled ? amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.selectedPayerCost : amountConfiguration?.selectedPayerCost
+
+            var showArrow: Bool = true
+            var displayMessage: NSAttributedString?
+            
+            if paymentMethodType == PXPaymentTypes.DEBIT_CARD.rawValue {
+                showArrow = false
+                if let totalAmount = selectedPayerCost?.totalAmount {
+                    // If it's debit and has split, update split message
+                    displayMessage = getSplitMessageForDebit(amountToPay: totalAmount)
+                }
+            } else if payerCosts?.count == 1 {
+                showArrow = false
+            } else if payerCosts == nil {
+                showArrow = false
+            }
+            
+            
+            let statusConfig = getStatusConfig(currentStatus: application.status, cardId: targetNode.oneTapCard?.cardId, paymentMethodId: targetNode.paymentMethodId)
+
+            let chargeRuleMessage = getCardBottomMessage(paymentTypeId: paymentMethodType, benefits: targetNode.benefits, status: application.status, selectedPayerCost: selectedPayerCost, displayInfo: targetNode.displayInfo)
+            
+            let payerPaymentMethod = getPayerPaymentMethod(paymentMethodType, oneTapCard.cardId)
+            
+            var cardUI = getCardUI(oneTapCard: oneTapCard)
+            
+            if oneTapCard.cardUI?.displayType == .hybrid {
+                let cardLogoImageUrl = targetNode.oneTapCard?.cardUI?.issuerImageUrl
+                let paymentMethodImageUrl = targetNode.oneTapCard?.cardUI?.paymentMethodImageUrl
+                let color = targetNode.oneTapCard?.cardUI?.color
+                // TODO: Check gradient colors
+                let gradientColors : [String] = []//["#101820"]
+
+                if application.paymentMethod.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
+                    // If it's hybrid and account_money application
+                    cardUI = HybridAMCard(isDisabled: application.status.isDisabled(), cardLogoImageUrl: cardLogoImageUrl, paymentMethodImageUrl: nil, color: color, gradientColors: gradientColors)
+                } else {
+                    // If it's hybrid but credit_card application
+                    cardUI = HybridAMCard(isDisabled: application.status.isDisabled(), cardLogoImageUrl: paymentMethodImageUrl, paymentMethodImageUrl: cardLogoImageUrl, color: color, gradientColors: gradientColors)
+                }
+            }
+            
+            let behaviours = application.behaviours ?? targetNode.behaviours
+            
+            let cardSliderApplication = PXCardSliderApplicationData(paymentMethodId: paymentMethodId, paymentTypeId: paymentMethodType, cardData: cardData, cardUI: cardUI, payerCost: payerCosts ?? defaultPayerCost, selectedPayerCost: selectedPayerCost, shouldShowArrow: showArrow, amountConfiguration: amountConfiguration, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: PXPaymentTypes.CREDIT_CARD.rawValue == paymentMethodType ? targetNode.benefits : nil, payerPaymentMethod: payerPaymentMethod, behaviours: behaviours, displayInfo: targetNode.displayInfo, displayMessage: displayMessage)
+            
+            cardSliderApplications[paymentMethodType] = cardSliderApplication
+        }
+        
+        var selectedApplicationId = applications.first?.paymentMethod.type
+        var comboSwitch: ComboSwitchView?
+        
+        if let switchInfo = targetNode.displayInfo?.switchInfo {
+            comboSwitch = ComboSwitchView()
+            selectedApplicationId = switchInfo.defaultState
+            comboSwitch?.setSwitchModel(switchInfo)
+        }
+        
+        let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+                                                    applications: cardSliderApplications,
+                                                    selectedApplicationId: selectedApplicationId,
+                                                    issuerId: targetIssuerId,
+                                                    cardId: oneTapCard.cardId,
+                                                    creditsViewModel: nil,
+                                                    displayInfo: targetNode.displayInfo,
+                                                    comboSwitch: comboSwitch)
+        )
+          
+        return viewModelCard
+    }
+    
 }
 
 // MARK: - InitializationTypes
@@ -288,6 +427,7 @@ extension CardManagerViewModel {
             )
             
             viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
+        }
             
             return viewModelCard
 

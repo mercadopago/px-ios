@@ -122,7 +122,8 @@ internal extension OneTapFlowModel {
     }
 
     func oneTapViewModel() -> CardManagerViewModel {
-        return CardManagerViewModel(oneTapModel: OneTapModel(paymentInfos: search,
+        return CardManagerViewModel(oneTapModel: OneTapModel(amountHelper: amountHelper,
+                                                             paymentInfos: search,
                                                              disabledOption: disabledOption,
                                                              excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(),
                                                              publicKey: publicKey,

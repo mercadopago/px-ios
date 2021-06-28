@@ -6,8 +6,6 @@
 //  Copyright © 2018 MercadoPago. All rights reserved.
 //
 
-import UIKit
-
 class PXReviewViewModel: NSObject {
 
     static let ERROR_DELTA = 0.001
