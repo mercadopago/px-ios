@@ -15,7 +15,7 @@ final class InstallmentViewModel {
     // MARK: - Private properties
     private let installmentsRowMessageFontSize = PXLayout.XS_FONT
     private var cards: [PXCardSliderViewModel]
-    private var installMents: [PXOneTapInstallmentInfoViewModel] {
+    private var installments: [PXOneTapInstallmentInfoViewModel] {
         return feedInstallments()
     }
     
@@ -76,7 +76,6 @@ final class InstallmentViewModel {
             }
         }
         return model
-//        return []
     }
     
     private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?, _ isDigitalCurrency: Bool = false, interestFreeConfig: PXInstallmentsConfiguration?) -> NSMutableAttributedString {
