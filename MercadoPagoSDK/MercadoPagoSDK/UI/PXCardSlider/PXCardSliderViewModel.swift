@@ -12,9 +12,9 @@ typealias PXApplicationId = String
 
 final class PXCardSliderViewModel {
     
-    private var cardModel: CardModel
+    private var cardModel: OneTapCardModel
     
-    init(cardModel: CardModel) {
+    init(cardModel: OneTapCardModel) {
         self.cardModel = cardModel
     }
     

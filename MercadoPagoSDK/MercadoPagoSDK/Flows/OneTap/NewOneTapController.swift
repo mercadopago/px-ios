@@ -9,10 +9,10 @@ import UIKit
 
 final class NewOneTapController: BaseViewController {
     // MARK: - Private properties
-    private let viewModel: CardManagerViewModel
+    private let viewModel: CardViewModel
     
     // MARK: - Initialization
-    init(viewModel: CardManagerViewModel) {
+    init(viewModel: CardViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

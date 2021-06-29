@@ -7,7 +7,7 @@
 
 import MLCardDrawer
 
-struct CardModel {
+struct OneTapCardSliderModel {
     // MARK: - Constants
     let applications: [PXApplicationId: PXCardSliderApplicationData]?
     let issuerId: String

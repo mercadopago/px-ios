@@ -1,5 +1,5 @@
 //
-//  OneTapModel.swift
+//  OneTapCardDesignModel.swift
 //  MercadoPagoSDKV4
 //
 //  Created by Matheus Leandro Martins on 23/06/21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OneTapModel {
+struct OneTapCardDesignModel {
     let publicKey: String //
     let privateKey: String? //
     let siteId: String //

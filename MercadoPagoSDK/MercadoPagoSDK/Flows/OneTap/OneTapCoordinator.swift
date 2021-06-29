@@ -16,7 +16,7 @@ final class OneTapCoordinator: BaseCoordinator {
     init(navigationController: UINavigationController, info: PXInitDTO, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String]) {
 //        super.init()
         self.navigationController = navigationController
-        self.controller = NewOneTapController(viewModel: CardManagerViewModel(oneTapModel: OneTapModel(paymentInfos: info, disabledOption: disabledOption, excludedPaymentTypeIds: excludedPaymentTypeIds, publicKey: "TEST-a463d259-b561-45fe-9dcc-0ce320d1a42f", privateKey: "TEST-982391008451128-040514-b988271bf377ab11b0ace4f1ef338fe6-737303098")))
+        self.controller = NewOneTapController(viewModel: CardViewModel(oneTapModel: OneTapCardDesignModel(paymentInfos: info, disabledOption: disabledOption, excludedPaymentTypeIds: excludedPaymentTypeIds, publicKey: "TEST-a463d259-b561-45fe-9dcc-0ce320d1a42f", privateKey: "TEST-982391008451128-040514-b988271bf377ab11b0ace4f1ef338fe6-737303098")))
     }
     
     // MARK: - Overrides

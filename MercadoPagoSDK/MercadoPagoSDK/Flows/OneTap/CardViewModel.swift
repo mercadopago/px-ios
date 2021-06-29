@@ -7,31 +7,21 @@
 
 import MLCardDrawer
 
-protocol OneTapRedirects: AnyObject {
-    func goToCongrats()
-    func goToBiometric()
-    func goToCVV()
-    func goToCardForm()
+protocol CardDelegate: AnyObject {
+    func cardDidChange(card: CardViewModel)
 }
 
-final class CardManagerViewModel {
+final class CardViewModel {
     // MARK: - Private properties
-    private let oneTapModel: OneTapModel
+    private let oneTapModel: OneTapCardDesignModel
     private let installmentsRowMessageFontSize = PXLayout.XS_FONT
     private var dataSource: [PXCardSliderViewModel] {
         return getDataSource()
     }
     
-    // MARK: - Public properties
-    weak var coordinator: OneTapRedirects?
-    
     // MARK: - Initialization
-    init(
-        oneTapModel: OneTapModel,
-        coordinator: OneTapRedirects? = nil
-    ) {
+    init(oneTapModel: OneTapCardDesignModel) {
         self.oneTapModel = oneTapModel
-        self.coordinator = coordinator
     }
     
     // MARK: - Public methods
@@ -69,9 +59,6 @@ final class CardManagerViewModel {
             } else if let consumerCredits = card.oneTapCreditsInfo,
                       let paymentMethodId = card.paymentMethodId,
                       let amountConfiguration = oneTapModel.amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(paymentOptionID: paymentMethodId, paymentMethodId: paymentMethodId, paymentTypeId: card.paymentTypeId) {
-
-                
-
 
                 sliderModel.append(createMercadoCreditosCard(cardData: card,
                                                              consumerCredits: consumerCredits,
@@ -307,7 +294,7 @@ final class CardManagerViewModel {
             comboSwitch?.setSwitchModel(switchInfo)
         }
         
-        let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+        let viewModelCard = PXCardSliderViewModel(cardModel: OneTapCardSliderModel(
                                                     applications: cardSliderApplications,
                                                     selectedApplicationId: selectedApplicationId,
                                                     issuerId: targetIssuerId,
@@ -342,7 +329,7 @@ final class CardManagerViewModel {
 }
 
 // MARK: - InitializationTypes
-extension CardManagerViewModel {
+extension CardViewModel {
     private func createPixCard(cardData: PXOneTapDto, paymentMethodId: String) -> PXCardSliderViewModel {
         let statusConfig = getStatusConfig(
             currentStatus: cardData.status,
@@ -371,7 +358,7 @@ extension CardManagerViewModel {
             displayInfo: cardData.displayInfo,
             displayMessage: nil)
         
-        return PXCardSliderViewModel(cardModel: CardModel(
+        return PXCardSliderViewModel(cardModel: OneTapCardSliderModel(
                                                     applications: cardSliderApplications,
                                                     selectedApplicationId: applicationName,
                                                     issuerId: "",
@@ -438,7 +425,7 @@ extension CardManagerViewModel {
                 
                 cardSliderApplications[cardData.paymentTypeId ?? PXPaymentTypes.ACCOUNT_MONEY.rawValue] = cardSliderApplication
                 
-                let viewModelCard = PXCardSliderViewModel(cardModel: CardModel(
+                let viewModelCard = PXCardSliderViewModel(cardModel: OneTapCardSliderModel(
                                                             applications: cardSliderApplications,
                                                             selectedApplicationId: cardData.paymentTypeId ?? PXPaymentTypes.ACCOUNT_MONEY.rawValue,
                                                             issuerId: "",
@@ -454,10 +441,6 @@ extension CardManagerViewModel {
             }
 
     }
-//
-//    private func createCreditCard(cardData: PXOneTapDto) -> PXCardSliderViewModel {
-//
-//    }
     
     private func createMercadoCreditosCard(cardData: PXOneTapDto, consumerCredits: PXOneTapCreditsDto, paymentMethodId: String, amountConfiguration: PXAmountConfiguration) -> PXCardSliderViewModel {
         let chargeRuleMessage = getCardBottomMessage(paymentTypeId: cardData.paymentTypeId,
@@ -495,7 +478,7 @@ extension CardManagerViewModel {
         
         cardSliderApplications[cardData.paymentTypeId ?? PXPaymentTypes.CONSUMER_CREDITS.rawValue] = cardSliderApplication
         
-        return PXCardSliderViewModel(cardModel: CardModel(
+        return PXCardSliderViewModel(cardModel: OneTapCardSliderModel(
                                                     applications: cardSliderApplications,
                                                     selectedApplicationId: cardData.paymentTypeId,
                                                     issuerId: "",
@@ -548,7 +531,7 @@ extension CardManagerViewModel {
         
         cardSliderApplications[""] = cardSliderApplication
         
-        return PXCardSliderViewModel(cardModel: CardModel(
+        return PXCardSliderViewModel(cardModel: OneTapCardSliderModel(
                                                     applications: cardSliderApplications,
                                                     selectedApplicationId: "",
                                                     issuerId: "",
@@ -558,8 +541,4 @@ extension CardManagerViewModel {
                                                     comboSwitch: nil)
         )
     }
-    
-//    private func createAdNewCard(cardData: PXOneTapDto) -> PXCardSliderViewModel {
-//        
-//    }
 }

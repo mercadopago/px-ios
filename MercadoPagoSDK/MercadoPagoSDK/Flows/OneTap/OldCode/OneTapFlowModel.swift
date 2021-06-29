@@ -121,8 +121,8 @@ internal extension OneTapFlowModel {
         return PXSecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason, cardUI: cardUI, cardData: cardData, internetProtocol: mercadoPagoServices)
     }
 
-    func oneTapViewModel() -> CardManagerViewModel {
-        return CardManagerViewModel(oneTapModel: OneTapModel(amountHelper: amountHelper,
+    func oneTapViewModel() -> CardViewModel {
+        return CardViewModel(oneTapModel: OneTapCardDesignModel(amountHelper: amountHelper,
                                                              paymentInfos: search,
                                                              disabledOption: disabledOption,
                                                              excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(),
