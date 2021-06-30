@@ -93,7 +93,7 @@ final class CardViewModel {
         return rearrangedNodes
     }
     
-    func getCardBottomMessage(paymentTypeId: String?, benefits: PXBenefits?, status: PXStatus?, selectedPayerCost: PXPayerCost?, displayInfo: PXOneTapDisplayInfo?) -> PXCardBottomMessage? {
+    private func getCardBottomMessage(paymentTypeId: String?, benefits: PXBenefits?, status: PXStatus?, selectedPayerCost: PXPayerCost?, displayInfo: PXOneTapDisplayInfo?) -> PXCardBottomMessage? {
         let defaultTextColor = UIColor.white
         let defaultBackgroundColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
 
@@ -126,7 +126,7 @@ final class CardViewModel {
         return nil
     }
     
-    func getStatusConfig(currentStatus: PXStatus, cardId: String?, paymentMethodId: String?) -> PXStatus {
+    private func getStatusConfig(currentStatus: PXStatus, cardId: String?, paymentMethodId: String?) -> PXStatus {
         guard let disabledOption = oneTapModel.disabledOption else { return currentStatus }
 
         if disabledOption.isCardIdDisabled(cardId: cardId) || disabledOption.isPMDisabled(paymentMethodId: paymentMethodId) {
@@ -157,12 +157,12 @@ final class CardViewModel {
         return nil
     }
 
-    func getChargeRuleBottomMessage(_ paymentTypeId: String?) -> String? {
+    private func getChargeRuleBottomMessage(_ paymentTypeId: String?) -> String? {
         let chargeRule = getChargeRule(paymentTypeId: paymentTypeId)
         return chargeRule?.message
     }
 
-    func getChargeRule(paymentTypeId: String?) -> PXPaymentTypeChargeRule? {
+    private func getChargeRule(paymentTypeId: String?) -> PXPaymentTypeChargeRule? {
         guard let rules = oneTapModel.amountHelper.chargeRules, let paymentTypeId = paymentTypeId else {
             return nil
         }
@@ -172,7 +172,7 @@ final class CardViewModel {
         return filteredRules.first
     }
     
-    func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
+    private func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
         var amount: String = ""
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
 
@@ -217,7 +217,7 @@ final class CardViewModel {
         return templateCard
     }
     
-    func getCardSliderViewModelFor(targetNode: PXOneTapDto, oneTapCard: PXOneTapCardDto, cardData: CardData, applications: [PXOneTapApplication]) -> PXCardSliderViewModel {
+    private func getCardSliderViewModelFor(targetNode: PXOneTapDto, oneTapCard: PXOneTapCardDto, cardData: CardData, applications: [PXOneTapApplication]) -> PXCardSliderViewModel {
         
 //        self.applications.append(contentsOf: applications)
         
@@ -324,6 +324,11 @@ final class CardViewModel {
         template.logoImageURL = oneTap.offlineTapCard?.displayInfo?.paymentMethodImageUrl ?? ""
         
         return template
+    }
+    
+    // MARK: - Public methods
+    func amoutHelper() -> PXAmountHelper {
+        return oneTapModel.amountHelper
     }
     
 }

@@ -6,27 +6,48 @@
 //
 
 final class HeaderViewModel {
+    // MARK: - Private properties
+    private let selectedCard: PXCardSliderViewModel
+    private let amountHelper: PXAmountHelper
+    private let additionalInfoSummary: PXAdditionalInfoSummary
+    private let shouldDisplayChargesHelp: Bool
+    private let item: PXItem
     
-//    let selectedCard: PXCardSliderViewModel?
+    // MARK: - Initialization
+    init(
+        selectedCard: PXCardSliderViewModel,
+        amountHelper: PXAmountHelper,
+        additionalInfoSummary: PXAdditionalInfoSummary,
+        shouldDisplayChargesHelp: Bool,
+        item: PXItem
+    ) {
+        self.selectedCard = selectedCard
+        self.amountHelper = amountHelper
+        self.additionalInfoSummary = additionalInfoSummary
+        self.shouldDisplayChargesHelp = shouldDisplayChargesHelp
+        self.item = item
+    }
     
-    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderViewModel {
+    // MARK: - Public methods
+    func getHeaderViewModel() -> PXOneTapHeaderViewModel {
         
-        let splitConfiguration = selectedCard?.getSelectedApplication()?.amountConfiguration?.splitConfiguration
+        let splitConfiguration = selectedCard.getSelectedApplication()?.amountConfiguration?.splitConfiguration
         let composer = PXSummaryComposer(amountHelper: amountHelper,
                                          additionalInfoSummary: additionalInfoSummary,
                                          selectedCard: selectedCard,
-                                         shouldDisplayChargesHelp: shouldDisplayChargesHelp())
+                                         shouldDisplayChargesHelp: shouldDisplayChargesHelp)
         updatePaymentData(composer: composer)
         let summaryData = composer.summaryItems
         // Populate header display data. From SP pref AdditionalInfo or instore retrocompatibility.
-        let (headerTitle, headerSubtitle, headerImage) = getSummaryHeader(item: items.first, additionalInfoSummaryData: additionalInfoSummary)
+        let (headerTitle, headerSubtitle, headerImage) = getSummaryHeader(item: item, additionalInfoSummaryData: additionalInfoSummary)
         
         let headerVM = PXOneTapHeaderViewModel(icon: headerImage, title: headerTitle, subTitle: headerSubtitle, data: summaryData, splitConfiguration: splitConfiguration)
         
         return headerVM
     }
     
-    func updatePaymentData(composer: PXSummaryComposer) {
+    // MARK: - Private methods
+    private func updatePaymentData(composer: PXSummaryComposer) {
         if let discountData = composer.getDiscountData() {
             let discountConfiguration = discountData.discountConfiguration
             let campaign = discountData.campaign
@@ -38,7 +59,7 @@ final class HeaderViewModel {
         }
     }
     
-    func getSummaryHeader(item: PXItem?, additionalInfoSummaryData: PXAdditionalInfoSummary?) -> (title: String, subtitle: String?, image: UIImage) {
+    private func getSummaryHeader(item: PXItem?, additionalInfoSummaryData: PXAdditionalInfoSummary?) -> (title: String, subtitle: String?, image: UIImage) {
         var headerImage: UIImage = UIImage()
         var headerTitle: String = ""
         var headerSubtitle: String?

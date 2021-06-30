@@ -144,7 +144,7 @@ extension PXOneTapViewModel {
 
 extension PXOneTapViewModel: CardDelegate {
     func cardDidChange(card: CardViewModel) {
-        self.selectedCard = card
+//        self.selectedCard = card
     }
 }
 
