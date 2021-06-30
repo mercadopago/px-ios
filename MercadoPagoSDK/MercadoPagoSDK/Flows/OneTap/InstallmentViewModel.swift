@@ -112,4 +112,9 @@ final class InstallmentViewModel {
         amount = Utils.getAmountFormated(amount: amountToPay, forCurrency: SiteManager.shared.getCurrency())
         return NSAttributedString(string: amount, attributes: attributes)
     }
+    
+    // MARK: - Public methods
+    func getInstallments() -> [PXOneTapInstallmentInfoViewModel] {
+        return installments
+    }
 }

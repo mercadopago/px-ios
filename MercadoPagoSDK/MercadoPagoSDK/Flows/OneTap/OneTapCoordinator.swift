@@ -28,6 +28,14 @@ final class OneTapCoordinator: BaseCoordinator {
 
 // MARK: - OneTapRedirects
 extension OneTapCoordinator: OneTapRedirects {
+    func showOfflinePaymentSheet(offlineController: PXOfflineMethodsViewController) {
+        let sheet = PXOfflineMethodsSheetViewController(viewController: offlineController,
+                                                        offlineViewModel: offlineController.viewModel,
+                                                        whiteViewHeight: 250)
+        offlineController.eventsDelegate = self
+        navigationController.present(sheet, animated: true, completion: nil)
+    }
+    
     func goToCongrats() {
         
     }
@@ -43,4 +51,28 @@ extension OneTapCoordinator: OneTapRedirects {
     func goToCardForm() {
         
     }
+    
+    func showOfflinePaymentSheet(sheet: PXOfflineMethodsSheetViewController) {
+        navigationController.present(sheet, animated: true, completion: nil)
+    }
+}
+
+extension OneTapCoordinator: OfflineMethodsEventsDelegate {
+    func userDidConfirm(paymentData: PXPaymentData, isSplitPayment: Bool) {
+        <#code#>
+    }
+    
+    func didFinishCheckout() {
+        <#code#>
+    }
+    
+    func finishButtonAnimation() {
+        <#code#>
+    }
+    
+    func updatePaymentOption(paymentOption: PaymentMethodOption) {
+        <#code#>
+    }
+    
+    
 }

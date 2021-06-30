@@ -19,10 +19,10 @@ struct OneTapCardDesignModel {
     let modals: [String: PXModal]? //
     let payerPaymentMethods: [PXCustomOptionSearchItem] //
     let experiments: [PXExperiment]? //
-    let splitPaymentEnabled: Bool = false
     let additionalInfoSummary: PXAdditionalInfoSummary? //
     let disabledOption: PXDisabledOption?
     let amountHelper: PXAmountHelper
+    var splitPaymentEnabled: Bool = false
     var splitPaymentSelectionByUser: Bool? = false
     
     // MARK: - Initialization

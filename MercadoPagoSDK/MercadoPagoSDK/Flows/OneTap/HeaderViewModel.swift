@@ -9,17 +9,17 @@ final class HeaderViewModel {
     // MARK: - Private properties
     private let selectedCard: PXCardSliderViewModel
     private let amountHelper: PXAmountHelper
-    private let additionalInfoSummary: PXAdditionalInfoSummary
+    private let additionalInfoSummary: PXAdditionalInfoSummary?
     private let shouldDisplayChargesHelp: Bool
-    private let item: PXItem
+    private let item: PXItem?
     
     // MARK: - Initialization
     init(
         selectedCard: PXCardSliderViewModel,
         amountHelper: PXAmountHelper,
-        additionalInfoSummary: PXAdditionalInfoSummary,
+        additionalInfoSummary: PXAdditionalInfoSummary?,
         shouldDisplayChargesHelp: Bool,
-        item: PXItem
+        item: PXItem?
     ) {
         self.selectedCard = selectedCard
         self.amountHelper = amountHelper

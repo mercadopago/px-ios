@@ -108,6 +108,10 @@ extension PXCardSliderViewModel: PaymentMethodOption {
         return cardModel.accountMoneyBalance
     }
     
+    func getApplications() -> [PXApplicationId: PXCardSliderApplicationData]? {
+        return cardModel.applications
+    }
+    
     func setSelectedApplication(id: String) {
         cardModel.selectedApplicationId = id
     }

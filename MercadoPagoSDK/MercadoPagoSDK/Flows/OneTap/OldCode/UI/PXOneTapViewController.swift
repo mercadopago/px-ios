@@ -89,7 +89,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         slider.showBottomMessageIfNeeded(index: 0, targetIndex: 0)
         setupAutoDisplayOfflinePaymentMethods()
         UIAccessibility.post(notification: .layoutChanged, argument: headerView?.getMerchantView()?.getMerchantTitleLabel())
-        trackScreen(event: MercadoPagoUITrackingEvents.reviewOneTap(viewModel.getOneTapScreenProperties(oneTapApplication: viewModel.applications)))
+        trackScreen(event: MercadoPagoUITrackingEvents.reviewOneTap(viewModel.getOneTapScreenProperties(oneTapApplication: viewModel.getApplications())))
     }
 
     override func viewDidLayoutSubviews() {
@@ -104,15 +104,12 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXOneTapViewModel, cardId: String) {
         self.viewModel = viewModel
-
-        viewModel.createCardSliderViewModel()
-        let cardSliderViewModel = viewModel.getCardSliderViewModel()
-        slider.update(cardSliderViewModel)
-        installmentInfoRow?.update(model: viewModel.getInstallmentInfoViewModel())
+        slider.update(viewModel.getCards())
+        installmentInfoRow?.update(model: viewModel.getInstallments())
 
         DispatchQueue.main.async {
             // Trick to wait for the slider to finish the update
-            if let index = cardSliderViewModel.firstIndex(where: { $0.getCardId() == cardId }) {
+            if let index = viewModel.getCards().firstIndex(where: { $0.getCardId() == cardId }) {
                 self.selectCardInSliderAtIndex(index)
             } else {
                 //Select first item
@@ -153,11 +150,11 @@ extension PXOneTapViewController {
 
     private func setupUI() {
         if contentView.getSubviews().isEmpty {
-            viewModel.createCardSliderViewModel()
-            if let preSelectedCard = viewModel.getCardSliderViewModel().first {
+            if let preSelectedCard = viewModel.getCards().first {
                 selectedCard = preSelectedCard
-                viewModel.splitPaymentEnabled = preSelectedCard.getSelectedApplication()?.amountConfiguration?.splitConfiguration?.splitEnabled ?? false
-                viewModel.amountHelper.getPaymentData().payerCost = preSelectedCard.getSelectedApplication()?.selectedPayerCost
+                viewModel.setSplitPayment(isEnable: preSelectedCard.getSelectedApplication()?.amountConfiguration?.splitConfiguration?.splitEnabled ?? false)
+                     
+                viewModel.setPayerCost(value: preSelectedCard.getSelectedApplication()?.selectedPayerCost) 
             }
             renderViews()
         } else {
@@ -259,7 +256,7 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderView {
-        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(selectedCard: selectedCard), delegate: self)
+        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderView(), delegate: self)
         return headerView
     }
 
@@ -284,7 +281,7 @@ extension PXOneTapViewController {
 
     private func getInstallmentInfoView() -> PXOneTapInstallmentInfoView {
         installmentInfoRow = PXOneTapInstallmentInfoView()
-        installmentInfoRow?.update(model: viewModel.getInstallmentInfoViewModel())
+        installmentInfoRow?.update(model: viewModel.getInstallments())
         installmentInfoRow?.delegate = self
         if let targetView = installmentInfoRow {
             return targetView
@@ -296,7 +293,7 @@ extension PXOneTapViewController {
     private func addCardSlider(inContainerView: UIView) {
         slider.render(containerView: inContainerView, cardSliderProtocol: self)
         slider.termsAndCondDelegate = self
-        slider.update(viewModel.getCardSliderViewModel())
+        slider.update(viewModel.getCards())
     }
 
     private func setLoadingButtonState() {
@@ -313,19 +310,7 @@ extension PXOneTapViewController {
     }
 
     func shouldAddNewOfflineMethod() {
-        if let offlineMethods = viewModel.getOfflineMethods() {
-            let offlineViewModel = PXOfflineMethodsViewModel(offlinePaymentTypes: offlineMethods.paymentTypes, paymentMethods: viewModel.paymentMethods, amountHelper: viewModel.amountHelper, paymentOptionSelected: viewModel.paymentOptionSelected, advancedConfig: viewModel.advancedConfiguration, userLogged: viewModel.userLogged, disabledOption: viewModel.disabledOption, payerCompliance: viewModel.payerCompliance, displayInfo: offlineMethods.displayInfo)
-
-            let vc = PXOfflineMethodsViewController(viewModel: offlineViewModel, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, finishButtonAnimation: finishButtonAnimation) { [weak self] in
-                    self?.navigationController?.popViewController(animated: false)
-            }
-
-            let sheet = PXOfflineMethodsSheetViewController(viewController: vc,
-                                                            offlineViewModel: offlineViewModel,
-                                                            whiteViewHeight: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self))
-
-            self.present(sheet, animated: true, completion: nil)
-        }
+        viewModel.showOfflinePaymentOptions()
     }
 
     private func handleBehaviour(_ behaviour: PXBehaviour, isSplit: Bool) {
@@ -333,7 +318,7 @@ extension PXOneTapViewController {
             let properties = viewModel.getTargetBehaviourProperties(behaviour)
             trackEvent(event: OneTapTrackingEvents.didGetTargetBehaviour(properties))
             openKyCDeeplinkWithoutCallback(target)
-        } else if let modal = behaviour.modal, let modalConfig = viewModel.modals?[modal] {
+        } else if let modal = behaviour.modal, let modalConfig = viewModel.getModal(modalKey: modal) {
             let properties = viewModel.getDialogOpenProperties(behaviour, modalConfig)
             trackEvent(event: OneTapTrackingEvents.didOpenDialog(properties))
 

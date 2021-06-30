@@ -13,11 +13,10 @@ protocol CardDelegate: AnyObject {
 
 final class CardViewModel {
     // MARK: - Private properties
-    private let oneTapModel: OneTapCardDesignModel
+    private var oneTapModel: OneTapCardDesignModel
     private let installmentsRowMessageFontSize = PXLayout.XS_FONT
-    private var dataSource: [PXCardSliderViewModel] {
-        return getDataSource()
-    }
+    private lazy var dataSource: [PXCardSliderViewModel] = getDataSource()
+    private var applications: [PXOneTapApplication] = []
     
     // MARK: - Initialization
     init(oneTapModel: OneTapCardDesignModel) {
@@ -161,16 +160,6 @@ final class CardViewModel {
         let chargeRule = getChargeRule(paymentTypeId: paymentTypeId)
         return chargeRule?.message
     }
-
-    private func getChargeRule(paymentTypeId: String?) -> PXPaymentTypeChargeRule? {
-        guard let rules = oneTapModel.amountHelper.chargeRules, let paymentTypeId = paymentTypeId else {
-            return nil
-        }
-        let filteredRules = rules.filter({
-            $0.paymentTypeId == paymentTypeId
-        })
-        return filteredRules.first
-    }
     
     private func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
         var amount: String = ""
@@ -219,7 +208,7 @@ final class CardViewModel {
     
     private func getCardSliderViewModelFor(targetNode: PXOneTapDto, oneTapCard: PXOneTapCardDto, cardData: CardData, applications: [PXOneTapApplication]) -> PXCardSliderViewModel {
         
-//        self.applications.append(contentsOf: applications)
+        self.applications.append(contentsOf: applications)
         
         let targetIssuerId = oneTapCard.cardUI?.issuerId ?? ""
         
@@ -267,7 +256,7 @@ final class CardViewModel {
                 let paymentMethodImageUrl = targetNode.oneTapCard?.cardUI?.paymentMethodImageUrl
                 let color = targetNode.oneTapCard?.cardUI?.color
                 // TODO: Check gradient colors
-                let gradientColors : [String] = []//["#101820"]
+                let gradientColors : [String] = []
 
                 if application.paymentMethod.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
                     // If it's hybrid and account_money application
@@ -327,10 +316,75 @@ final class CardViewModel {
     }
     
     // MARK: - Public methods
-    func amoutHelper() -> PXAmountHelper {
+    func getCards() -> [PXCardSliderViewModel] {
+        return dataSource
+    }
+    
+    func getAmountHelper() -> PXAmountHelper {
         return oneTapModel.amountHelper
     }
     
+    func getItem() -> PXItem? {
+        return oneTapModel.items.first
+    }
+    
+    func getAdditionalInfoSummary() -> PXAdditionalInfoSummary? {
+        return oneTapModel.additionalInfoSummary
+    }
+    
+    func getChargeRule(paymentTypeId: String?) -> PXPaymentTypeChargeRule? {
+        guard let rules = oneTapModel.amountHelper.chargeRules, let paymentTypeId = paymentTypeId else {
+            return nil
+        }
+        let filteredRules = rules.filter({
+            $0.paymentTypeId == paymentTypeId
+        })
+        return filteredRules.first
+    }
+    
+    func getAmoutHelper() -> PXAmountHelper {
+        return oneTapModel.amountHelper
+    }
+    
+    func setDataSource(dataSource: [PXCardSliderViewModel]) {
+        self.dataSource = dataSource
+    }
+    
+    func getSelectedApplication(at index: Int) -> PXCardSliderApplicationData? {
+        return dataSource[index].getSelectedApplication()
+    }
+    
+    func getPaymentMethods() -> [PXPaymentMethod] {
+        return oneTapModel.paymentMethods
+    }
+    
+    func getExpressData() -> [PXOneTapDto]? {
+        return oneTapModel.expressData
+    }
+    
+    func setBottomMessage(at index: Int, bottomMessage: PXCardBottomMessage?) {
+        dataSource[index].getSelectedApplication()?.bottomMessage = bottomMessage
+    }
+    
+    func setSplitPayment(isEnable: Bool) {
+        oneTapModel.splitPaymentEnabled = isEnable
+    }
+    
+    func getApplications() -> [PXOneTapApplication] {
+        return applications
+    }
+    
+    func getDisabledOption() -> PXDisabledOption? {
+        return oneTapModel.disabledOption
+    }
+    
+    func getPayerCompliance() -> PXPayerCompliance? {
+        return oneTapModel.payerCompliance
+    }
+    
+    func getModal(modalKey: String) -> PXModal? {
+        return oneTapModel.modals?[modalKey]
+    }
 }
 
 // MARK: - InitializationTypes
