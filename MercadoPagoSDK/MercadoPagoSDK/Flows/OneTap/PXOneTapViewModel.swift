@@ -9,7 +9,12 @@
 import Foundation
 import MLCardDrawer
 
-protocol OneTapRedirects: AnyObject {
+protocol OneTapCoordinatorActions: AnyObject {
+    func didUpdateCard(selectedCard: PXCardSliderViewModel)
+    func userDidUpdateCardList(cardList: [PXCardSliderViewModel])
+    func refreseInitFlow(cardId: String)
+    func userDidCloseFlow()
+    func finishButtonAnimation()
     func goToCongrats()
     func goToBiometric()
     func goToCVV()
@@ -20,7 +25,11 @@ protocol OneTapRedirects: AnyObject {
 final class PXOneTapViewModel {
     // MARK: - Privates properties
     private let oneTapModel: OneTapModel
-    private var selectedCard: PXCardSliderViewModel
+    private var selectedCard: PXCardSliderViewModel {
+        didSet {
+            coordinator?.didUpdateCard(selectedCard: selectedCard)
+        }
+    }
     private var cardViewModel: CardViewModel
     private var installmentViewModel: InstallmentViewModel
     private lazy var headerViewModel: HeaderViewModel = HeaderViewModel(selectedCard: selectedCard,
@@ -30,7 +39,7 @@ final class PXOneTapViewModel {
                                                                         item: cardViewModel.getItem())
 
     // MARK: - Public properties
-    weak var coordinator: OneTapRedirects?
+    weak var coordinator: OneTapCoordinatorActions?
 
     init(oneTapModel: OneTapModel, oneTapCardDesignModel: OneTapCardDesignModel) {
         self.oneTapModel = oneTapModel
@@ -123,6 +132,21 @@ final class PXOneTapViewModel {
         coordinator?.showOfflinePaymentSheet(offlineController: offlineController)
     }
     
+    func closeFlow() {
+        coordinator?.userDidCloseFlow()
+    }
+    
+    func finishButtonAnimation() {
+        coordinator?.finishButtonAnimation()
+    }
+    
+    func cardDidChange(card: PXCardSliderViewModel) {
+        self.selectedCard = card
+    }
+    
+    func refreshInitFlow(cardId: String) {
+        coordinator?.refreseInitFlow(cardId: cardId)
+    }
 }
 
 // MARK: ViewModels Publics.
@@ -235,12 +259,6 @@ extension PXOneTapViewModel {
         return cardViewModel.getExpressData()?
             .compactMap { $0.offlineMethods }
             .first
-    }
-}
-
-extension PXOneTapViewModel: CardDelegate {
-    func cardDidChange(card: CardViewModel) {
-//        self.selectedCard = card
     }
 }
 

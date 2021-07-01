@@ -7,9 +7,9 @@
 
 import MLCardDrawer
 
-protocol CardDelegate: AnyObject {
-    func cardDidChange(card: CardViewModel)
-}
+//protocol CardDelegate: AnyObject {
+//    func cardDidChange(card: CardViewModel)
+//}
 
 final class CardViewModel {
     // MARK: - Private properties

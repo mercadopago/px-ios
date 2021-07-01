@@ -20,12 +20,12 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let slider = PXCardSlider()
 
     // MARK: Callbacks
-    var callbackPaymentData: ((PXPaymentData) -> Void)
-    var callbackConfirm: ((PXPaymentData, Bool) -> Void)
-    var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
-    var callbackRefreshInit: ((String) -> Void)
-    var callbackExit: (() -> Void)
-    var finishButtonAnimation: (() -> Void)
+//    var callbackPaymentData: ((PXPaymentData) -> Void)
+//    var callbackConfirm: ((PXPaymentData, Bool) -> Void)
+//    var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
+//    var callbackRefreshInit: ((String) -> Void)
+//    var callbackExit: (() -> Void)
+//    var finishButtonAnimation: (() -> Void)
 
     var loadingButtonComponent: PXAnimatedButton?
     var installmentInfoRow: PXOneTapInstallmentInfoView?
@@ -46,14 +46,23 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     private var andesBottomSheet: AndesBottomSheetViewController?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(
+        viewModel: PXOneTapViewModel,
+        timeOutPayButton: TimeInterval = 15
+//        callbackPaymentData : @escaping ((PXPaymentData) -> Void),
+//        callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void),
+//        callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void),
+//        callbackRefreshInit: @escaping ((String) -> Void),
+//        callbackExit: @escaping (() -> Void),
+//        finishButtonAnimation: @escaping (() -> Void)
+    ) {
         self.viewModel = viewModel
-        self.callbackPaymentData = callbackPaymentData
-        self.callbackConfirm = callbackConfirm
-        self.callbackRefreshInit = callbackRefreshInit
-        self.callbackExit = callbackExit
-        self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
-        self.finishButtonAnimation = finishButtonAnimation
+//        self.callbackPaymentData = callbackPaymentData
+//        self.callbackConfirm = callbackConfirm
+//        self.callbackRefreshInit = callbackRefreshInit
+//        self.callbackExit = callbackExit
+//        self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
+//        self.finishButtonAnimation = finishButtonAnimation
         self.timeOutPayButton = timeOutPayButton
         super.init(adjustInsets: false)
     }
@@ -427,7 +436,7 @@ extension PXOneTapViewController {
     }
 
     private func cancelPayment() {
-        self.callbackExit()
+        viewModel.closeFlow()
     }
 
     private func openKyCDeeplinkWithoutCallback(_ target: String) {
@@ -570,7 +579,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             currentPaymentData.payerCost = newPayerCost
             currentPaymentData.paymentMethod = newPaymentMethod
             currentPaymentData.issuer = selectedApplication.payerPaymentMethod?.issuer ?? PXIssuer(id: targetModel.getIssuerId(), name: nil)
-            callbackUpdatePaymentOption(targetModel)
+            viewModel.cardDidChange(card: targetModel)
             loadingButtonComponent?.setEnabled()
         } else {
             currentPaymentData.payerCost = nil
@@ -838,7 +847,7 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
     }
 
     func didFinishAnimation() {
-        self.finishButtonAnimation()
+        viewModel.finishButtonAnimation()
     }
 
     func progressButtonAnimationTimeOut() {
@@ -879,9 +888,10 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 
 extension PXOneTapViewController: MLCardFormLifeCycleDelegate {
     func didAddCard(cardID: String) {
-        callbackRefreshInit(cardID)
+        viewModel.refreshInitFlow(cardId: cardID)
     }
 
     func didFailAddCard() {
+        
     }
 }

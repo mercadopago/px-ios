@@ -7,17 +7,34 @@
 
 import UIKit
 
+protocol OneTapCoodinatorDelegate: AnyObject {
+    func didUpdateCard(selectedCard: PXCardSliderViewModel)
+    func userDidUpdateCardList(cardList: [PXCardSliderViewModel])
+    func refreshFlow(cardId: String)
+    func closeFlow()
+}
+
 final class OneTapCoordinator: BaseCoordinator {
     // MARK: - Private properties
     private let navigationController: UINavigationController
-    private let controller: NewOneTapController
+    private let controller: PXOneTapViewController
+    
+    // MARK: - Public properties
+    weak var delegate: OneTapCoodinatorDelegate?
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController, info: PXInitDTO, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String]) {
+    init(
+        navigationController: UINavigationController,
+        oneTapCardDesignModel: OneTapCardDesignModel,
+        oneTapModel: OneTapModel
+    ) {
 //        super.init()
         self.navigationController = navigationController
         //TODO: Initialize old controller
-        self.controller = NewOneTapController(viewModel: CardViewModel(oneTapModel: OneTapCardDesignModel(paymentInfos: info, disabledOption: disabledOption, excludedPaymentTypeIds: excludedPaymentTypeIds, publicKey: "TEST-a463d259-b561-45fe-9dcc-0ce320d1a42f", privateKey: "TEST-982391008451128-040514-b988271bf377ab11b0ace4f1ef338fe6-737303098")))
+        self.controller = PXOneTapViewController(viewModel: PXOneTapViewModel(
+                                                    oneTapModel: oneTapModel,
+                                                    oneTapCardDesignModel: oneTapCardDesignModel)
+        )
     }
     
     // MARK: - Overrides
@@ -28,7 +45,23 @@ final class OneTapCoordinator: BaseCoordinator {
 }
 
 // MARK: - OneTapRedirects
-extension OneTapCoordinator: OneTapRedirects {
+extension OneTapCoordinator: OneTapCoordinatorActions {
+    func didUpdateCard(selectedCard: PXCardSliderViewModel) {
+        
+    }
+    
+    func userDidUpdateCardList(cardList: [PXCardSliderViewModel]) {
+        
+    }
+    
+    func refreseInitFlow(cardId: String) {
+        
+    }
+    
+    func userDidCloseFlow() {
+        
+    }
+    
     func showOfflinePaymentSheet(offlineController: PXOfflineMethodsViewController) {
         let sheet = PXOfflineMethodsSheetViewController(viewController: offlineController,
                                                         offlineViewModel: offlineController.viewModel,
@@ -46,15 +79,11 @@ extension OneTapCoordinator: OneTapRedirects {
     }
     
     func goToCVV() {
-        
+
     }
     
     func goToCardForm() {
         
-    }
-    
-    func showOfflinePaymentSheet(sheet: PXOfflineMethodsSheetViewController) {
-        navigationController.present(sheet, animated: true, completion: nil)
     }
 }
 

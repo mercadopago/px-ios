@@ -213,7 +213,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         let reason = PXSecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason, isCallForAuth: isCallForAuth)
-        let cardSliderViewModel = onetapFlow?.model.pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())
+        let cardSliderViewModel = onetapFlow?.getSelectedCard()
         let cardUI = cardSliderViewModel?.getCardUI() ?? TemplateCard()
         let cardData = cardSliderViewModel?.getCardData() ?? PXCardDataFactory()
 
@@ -776,7 +776,7 @@ private extension MercadoPagoCheckoutViewModel {
     func updatePaymentData(_ suggestedPaymentMethod: PXSuggestedPaymentMethod) {
         if let alternativePaymentMethod = suggestedPaymentMethod.alternativePaymentMethod,
             let paymentResult = paymentResult,
-            let sliderViewModel = onetapFlow?.model.pxOneTapViewModel?.getCardSliderViewModel() {
+            let sliderViewModel = onetapFlow?.model.cardList {
 
             var cardId = alternativePaymentMethod.customOptionId ?? paymentResult.cardId
             let paymentMethodId = alternativePaymentMethod.paymentMethodId ?? paymentResult.paymentMethodId

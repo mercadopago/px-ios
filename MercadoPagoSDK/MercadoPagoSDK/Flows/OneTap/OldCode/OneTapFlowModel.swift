@@ -35,7 +35,8 @@ final internal class OneTapFlowModel: PXFlowModel {
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
-//    var pxOneTapViewModel: PXOneTapViewModel?
+    var selectedCard: PXCardSliderViewModel?
+    var cardList: [PXCardSliderViewModel] = []
     
     // MARK: - Private properties
     private var didCall3ds = false
@@ -114,33 +115,35 @@ internal extension OneTapFlowModel {
         }
 
         let reason = PXSecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason)
-        let cardSliderViewModel = pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())
+        let cardSliderViewModel = selectedCard
         let cardUI = cardSliderViewModel?.getCardUI() ?? TemplateCard()
         let cardData = cardSliderViewModel?.getCardData()  ?? PXCardDataFactory()
         
-        return PXSecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason, cardUI: cardUI, cardData: cardData, internetProtocol: mercadoPagoServices)
+        return PXSecurityCodeViewModel(paymentMethod: paymentMethod,
+                                       cardInfo: cardInformation,
+                                       reason: reason,
+                                       cardUI: cardUI,
+                                       cardData: cardData,
+                                       internetProtocol: mercadoPagoServices)
     }
 
-    func oneTapViewModel() -> CardViewModel {
-        return CardViewModel(oneTapModel: OneTapCardDesignModel(amountHelper: amountHelper,
-                                                             paymentInfos: search,
-                                                             disabledOption: disabledOption,
-                                                             excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(),
-                                                             publicKey: publicKey,
-                                                             privateKey: privateKey)
+    func getOneTapCardDesignModel() -> OneTapCardDesignModel {
+        return OneTapCardDesignModel(amountHelper: amountHelper,
+                                                   paymentInfos: search,
+                                                   disabledOption: disabledOption,
+                                                   excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(),
+                                                   publicKey: publicKey,
+                                                   privateKey: privateKey
         )
-//        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
-//        viewModel.publicKey = publicKey
-//        viewModel.privateKey = privateKey
-//        viewModel.siteId = siteId
-//        viewModel.excludedPaymentTypeIds = checkoutPreference.getExcludedPaymentTypesIds()
-//        viewModel.expressData = search.oneTap
-//        viewModel.payerCompliance = search.payerCompliance
-//        viewModel.paymentMethods = search.availablePaymentMethods
-//        viewModel.items = checkoutPreference.items
-//        viewModel.additionalInfoSummary = checkoutPreference.pxAdditionalInfo?.pxSummary
-//        viewModel.modals = search.modals
-//        return viewModel
+    }
+    
+    //Mega TODO check how to get userLogged propertie
+    func getOneTapModel() -> OneTapModel {
+        return OneTapModel(
+            advancedConfiguration: advancedConfiguration,
+            experimentsViewModel: PXExperimentsViewModel(search.experiments),
+            userLogged: true,
+            paymentOptionSelected: paymentOptionSelected)
     }
 }
 
@@ -296,7 +299,7 @@ internal extension OneTapFlowModel {
     }
     
     func getProgramValidation() -> String? {
-        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?.applications?.first(where: { $0.paymentMethod.id == pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())?.selectedApplication?.paymentMethodId})?.validationPrograms?.first?.id
+        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?.applications?.first(where: { $0.paymentMethod.id == selectedCard?.getSelectedApplication()?.paymentMethodId})?.validationPrograms?.first?.id
     }
     
     func getCardHolderName() -> String? {
@@ -354,4 +357,24 @@ internal extension OneTapFlowModel {
         let hasSecurityCode = cardInformation.getCardSecurityCode()?.length ?? 1 > 0
         return hasSecurityCode
     }
+}
+
+extension OneTapFlowModel: OneTapCoodinatorDelegate {
+    func refreshFlow(cardId: String) {
+        
+    }
+    
+    func didUpdateCard(selectedCard: PXCardSliderViewModel) {
+        self.selectedCard = selectedCard
+    }
+    
+    func userDidUpdateCardList(cardList: [PXCardSliderViewModel]) {
+        self.cardList = cardList
+    }
+    
+    func closeFlow() {
+        
+    }
+    
+    
 }

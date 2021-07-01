@@ -29,28 +29,23 @@ extension OneTapFlow {
                 self?.model.paymentOptionSelected = paymentMethodOption
             }
         }
-        let callbackRefreshInit: ((String) -> Void) = { [weak self] cardId in
-            self?.refreshInitFlow(cardId: cardId)
-        }
-        let callbackExit: (() -> Void) = { [weak self] in
-            self?.cancelFlow()
-        }
+
         let finishButtonAnimation: (() -> Void) = { [weak self] in
             self?.executeNextStep()
         }
-        let viewModel = model.oneTapViewModel()
 //        model.pxOneTapViewModel = viewModel
         
 //        let viewController = NewOneTapController(viewModel: viewModel)
         
 //        let viewController = PXOneTapViewController(viewModel: viewModel, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
-        pxNavigationHandler.coordinateToOneTap(info: model.search, disabledOption: model.disabledOption, excludedPaymentTypeIds: model.checkoutPreference.getExcludedPaymentTypesIds())
+        pxNavigationHandler.coordinateToOneTap(oneTapCardDesignModel: model.getOneTapCardDesignModel(),
+                                               oneTapModel: model.getOneTapModel(), coordinatorDelegate: self)
 //        pxNavigationHandler.navigationController.pushViewController(viewController, animated: true)
     }
 
     func updateOneTapViewModel(cardId: String) {
         if let oneTapViewController = pxNavigationHandler.navigationController.viewControllers.first(where: { $0 is PXOneTapViewController }) as? PXOneTapViewController {
-            let viewModel = model.oneTapViewModel()
+            let viewModel = model.getOneTapCardDesignModel()
 //            model.pxOneTapViewModel = viewModel
 //            oneTapViewController.update(viewModel: viewModel, cardId: cardId)
         }
@@ -70,5 +65,23 @@ extension OneTapFlow {
     func showKyCScreen() {
         MPXTracker.sharedInstance.trackEvent(event: OneTapTrackingEvents.didTapOnOfflineMethods)
         PXDeepLinkManager.open(model.getKyCDeepLink())
+    }
+}
+
+extension OneTapFlow: OneTapCoodinatorDelegate {
+    func refreshFlow(cardId: String) {
+        self.refreshInitFlow(cardId: cardId)
+    }
+    
+    func didUpdateCard(selectedCard: PXCardSliderViewModel) {
+        
+    }
+    
+    func userDidUpdateCardList(cardList: [PXCardSliderViewModel]) {
+        
+    }
+    
+    func closeFlow() {
+        self.cancelFlow()
     }
 }
