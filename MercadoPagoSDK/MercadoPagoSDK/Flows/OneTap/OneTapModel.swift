@@ -7,6 +7,7 @@
 
 struct OneTapModel {
     let advancedConfiguration: PXAdvancedConfiguration
+    let experimentsViewModel: PXExperimentsViewModel
     let userLogged: Bool
     var paymentOptionSelected: PaymentMethodOption?
 }

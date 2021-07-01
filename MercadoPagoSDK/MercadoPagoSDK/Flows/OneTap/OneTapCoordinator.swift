@@ -16,6 +16,7 @@ final class OneTapCoordinator: BaseCoordinator {
     init(navigationController: UINavigationController, info: PXInitDTO, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String]) {
 //        super.init()
         self.navigationController = navigationController
+        //TODO: Initialize old controller
         self.controller = NewOneTapController(viewModel: CardViewModel(oneTapModel: OneTapCardDesignModel(paymentInfos: info, disabledOption: disabledOption, excludedPaymentTypeIds: excludedPaymentTypeIds, publicKey: "TEST-a463d259-b561-45fe-9dcc-0ce320d1a42f", privateKey: "TEST-982391008451128-040514-b988271bf377ab11b0ace4f1ef338fe6-737303098")))
     }
     
@@ -59,19 +60,19 @@ extension OneTapCoordinator: OneTapRedirects {
 
 extension OneTapCoordinator: OfflineMethodsEventsDelegate {
     func userDidConfirm(paymentData: PXPaymentData, isSplitPayment: Bool) {
-        <#code#>
+        
     }
     
     func didFinishCheckout() {
-        <#code#>
+        
     }
     
     func finishButtonAnimation() {
-        <#code#>
+        
     }
     
     func updatePaymentOption(paymentOption: PaymentMethodOption) {
-        <#code#>
+        
     }
     
     

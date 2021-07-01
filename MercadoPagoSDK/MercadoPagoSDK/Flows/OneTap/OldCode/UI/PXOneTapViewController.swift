@@ -215,7 +215,7 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         let installmentRowWidth: CGFloat = slider.getItemSize(cardSliderContentView).width
-        installmentRow.render(installmentRowWidth, experiment: viewModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS))
+        installmentRow.render(installmentRowWidth, experiment: viewModel.getExperiment())
 
         view.layoutIfNeeded()
         refreshContentViewSize()
@@ -256,7 +256,7 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderView {
-        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderView(), delegate: self)
+        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(), delegate: self)
         return headerView
     }
 
@@ -409,15 +409,12 @@ extension PXOneTapViewController {
     private func doPayment() {
         subscribeLoadingButtonToNotifications()
         loadingButtonComponent?.startLoading(timeOut: timeOutPayButton)
-        if let selectedCardItem = selectedCard, let selectedApplication = selectedCardItem.getSelectedApplication() {
-            viewModel.amountHelper.getPaymentData().payerCost = selectedApplication.selectedPayerCost
-            let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem, selectedIndex: slider.getSelectedIndex())
-            trackEvent(event: OneTapTrackingEvents.didConfirmPayment(properties))
-        }
-        let splitPayment = viewModel.splitPaymentEnabled
+        // TODO: Todo errado, arrumar essa joça
+//        let properties = getConfirmEventProperties(selectedCard: viewModel.getSelectedCard(), selectedIndex: slider.getSelectedIndex())
+//        trackEvent(event: OneTapTrackingEvents.didConfirmPayment(properties))
         hideBackButton()
         hideNavBar()
-        callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
+        viewModel.doPayment()
     }
 
     func isUIEnabled(_ enabled: Bool) {
@@ -454,9 +451,10 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
             return
         }
 
-        viewModel.splitPaymentEnabled = isOn
+        //TODO: Check funtions of commented lines -- tracking
+//        viewModel.splitPaymentEnabled = isOn
         if isUserSelection {
-            self.viewModel.splitPaymentSelectionByUser = isOn
+//            self.viewModel.splitPaymentSelectionByUser = isOn
             //Update all models payer cost and selected payer cost
             viewModel.updateAllCardSliderModels(splitPaymentEnabled: isOn)
         }
@@ -466,10 +464,10 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
         }
 
         //Update installment row
-        installmentInfoRow?.update(model: viewModel.getInstallmentInfoViewModel())
+        installmentInfoRow?.update(model: viewModel.getInstallments())
 
-        if let infoRow = installmentInfoRow, viewModel.getCardSliderViewModel().indices.contains(infoRow.getActiveRowIndex()) {
-            let selectedCard = viewModel.getCardSliderViewModel()[infoRow.getActiveRowIndex()]
+        if let infoRow = installmentInfoRow, viewModel.getCards().indices.contains(infoRow.getActiveRowIndex()) {
+            let selectedCard = viewModel.getCards()[infoRow.getActiveRowIndex()]
             
             guard let selectedApplication = selectedCard.getSelectedApplication() else { return }
 
@@ -510,14 +508,14 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
         
         guard let selectedApplication = selectedCard?.getSelectedApplication() else { return }
         
-        if let discountConfiguration = viewModel.amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionID: selectedCard?.getCardId(), paymentMethodId: selectedApplication.paymentMethodId, paymentTypeId: selectedApplication.paymentTypeId),
+        if let discountConfiguration = viewModel.getAmountHelper().paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionID: selectedCard?.getCardId(), paymentMethodId: selectedApplication.paymentMethodId, paymentTypeId: selectedApplication.paymentTypeId),
             let description = discountConfiguration.getDiscountConfiguration().discountDescription {
             discountDescription = description
         }
 
         if let discountDescription = discountDescription {
-            let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper, discountDescription: PXDiscountDescriptionViewModel(discountDescription))
-            if viewModel.amountHelper.discount != nil {
+            let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.getAmountHelper(), discountDescription: PXDiscountDescriptionViewModel(discountDescription))
+            if viewModel.getAmountHelper().discount != nil {
                 PXComponentFactory.Modal.show(viewController: discountViewController, title: nil) {
                 self.setupNavigationBar()
                 }
@@ -545,7 +543,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         }
         
         // Update installment info row
-        installmentInfoRow?.update(model: viewModel.getInstallmentInfoViewModel())
+        installmentInfoRow?.update(model: viewModel.getInstallments())
 
         // Add card. - card o credits payment method selected
         let validData = selectedApplication.cardData != nil || targetModel.isCreditCard()
@@ -556,7 +554,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         } else {
             displayCard(targetModel: targetModel)
             loadingButtonComponent?.setDisabled()
-            headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: nil))
+            headerView?.updateModel(viewModel.getHeaderViewModel())
         }
     }
 
@@ -568,7 +566,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         let newPaymentMethodId: String = selectedApplication.payerPaymentMethod?.paymentMethodId ?? selectedApplication.paymentMethodId
         let newPayerCost: PXPayerCost? = selectedApplication.selectedPayerCost
 
-        let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
+        let currentPaymentData: PXPaymentData = viewModel.getAmountHelper().getPaymentData()
         
         if let newPaymentMethod = viewModel.getPaymentMethod(paymentMethodId: newPaymentMethodId) {
             currentPaymentData.payerCost = newPayerCost
@@ -582,7 +580,8 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             currentPaymentData.issuer = nil
             loadingButtonComponent?.setDisabled()
         }
-        headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
+        
+        headerView?.updateModel(viewModel.getHeaderViewModel())
 
         headerView?.updateSplitPaymentView(splitConfiguration: selectedApplication.amountConfiguration?.splitConfiguration)
         
@@ -599,7 +598,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     func selectCardInSliderAtIndex(_ index: Int) {
-        let cardSliderViewModel = viewModel.getCardSliderViewModel()
+        let cardSliderViewModel = viewModel.getCards()
         if (0 ... cardSliderViewModel.count - 1).contains(index) {
             do {
                 try slider.goToItemAt(index: index, animated: false)
@@ -636,26 +635,27 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     internal func addNewCardDidTap() {
-        if viewModel.shouldUseOldCardForm() {
-            callbackPaymentData(viewModel.getClearPaymentData())
-        } else {
-            if let newCard = viewModel.expressData?.compactMap({ $0.newCard }).first {
-                if newCard.sheetOptions != nil {
-                    // Present sheet to pick standard card form or webpay
-                    let sheet = buildBottomSheet(newCard: newCard)
-                    present(sheet, animated: true, completion: nil)
-                } else {
-                    // Add new card using card form based on init type
-                    // There might be cases when there's a different option besides standard type
-                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
-                    addNewCard(initType: newCard.cardFormInitType)
-                }
-            } else {
-                // This is a fallback. There should be always a newCard in expressData
-                // Add new card using standard card form
-                addNewCard()
-            }
-        }
+        //TODO: Use delegate
+//        if viewModel.shouldUseOldCardForm() {
+////            callbackPaymentData(viewModel.getClearPaymentData())
+//        } else {
+//            if let newCard = viewModel.expressData?.compactMap({ $0.newCard }).first {
+//                if newCard.sheetOptions != nil {
+//                    // Present sheet to pick standard card form or webpay
+//                    let sheet = buildBottomSheet(newCard: newCard)
+//                    present(sheet, animated: true, completion: nil)
+//                } else {
+//                    // Add new card using card form based on init type
+//                    // There might be cases when there's a different option besides standard type
+//                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
+//                    addNewCard(initType: newCard.cardFormInitType)
+//                }
+//            } else {
+//                // This is a fallback. There should be always a newCard in expressData
+//                // Add new card using standard card form
+//                addNewCard()
+//            }
+//        }
     }
 
     private func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
@@ -672,28 +672,29 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     private func addNewCard(initType: String? = "standard") {
-        let siteId = viewModel.siteId
-        let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
-        let builder: MLCardFormBuilder
-
-        if let privateKey = viewModel.privateKey {
-            builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-        } else {
-            builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-        }
-
-        builder.setLanguage(Localizator.sharedInstance.getLanguage())
-        builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
-        builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
-        var cardFormVC: UIViewController
-        switch initType {
-        case "webpay_tbk":
-            cardFormVC = MLCardForm(builder: builder).setupWebPayController()
-        default:
-            builder.setAnimated(true)
-            cardFormVC = MLCardForm(builder: builder).setupController()
-        }
-        navigationController?.pushViewController(cardFormVC, animated: true)
+        //TODO: Coordinator also
+//        let siteId = viewModel.siteId
+//        let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
+//        let builder: MLCardFormBuilder
+//
+//        if let privateKey = viewModel.privateKey {
+//            builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+//        } else {
+//            builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
+//        }
+//
+//        builder.setLanguage(Localizator.sharedInstance.getLanguage())
+//        builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
+//        builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
+//        var cardFormVC: UIViewController
+//        switch initType {
+//        case "webpay_tbk":
+//            cardFormVC = MLCardForm(builder: builder).setupWebPayController()
+//        default:
+//            builder.setAnimated(true)
+//            cardFormVC = MLCardForm(builder: builder).setupController()
+//        }
+//        navigationController?.pushViewController(cardFormVC, animated: true)
     }
 
     func addNewOfflineDidTap() {
@@ -732,16 +733,16 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         // Update cardSliderViewModel
         if let infoRow = installmentInfoRow, viewModel.updateCardSliderViewModel(newPayerCost: payerCost, forIndex: infoRow.getActiveRowIndex()) {
             // Update selected payer cost.
-            let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
+            let currentPaymentData: PXPaymentData = viewModel.getAmountHelper().getPaymentData()
             currentPaymentData.payerCost = payerCost
             // Update installmentInfoRow viewModel
-            installmentInfoRow?.update(model: viewModel.getInstallmentInfoViewModel())
+            installmentInfoRow?.update(model: viewModel.getInstallments())
             PXFeedbackGenerator.heavyImpactFeedback()
 
             //Update card bottom message
             let bottomMessage = viewModel.getCardBottomMessage(paymentTypeId: selectedCard?.getSelectedApplication()?.paymentTypeId, benefits: selectedCard?.getSelectedApplication()?.benefits, status: selectedCard?.getSelectedApplication()?.status, selectedPayerCost: payerCost, displayInfo: selectedCard?.getDisplayInfo())
             viewModel.updateCardSliderModel(at: selectedIndex, bottomMessage: bottomMessage)
-            slider.update(viewModel.getCardSliderViewModel())
+            slider.update(viewModel.getCards())
         }
         installmentInfoRow?.toggleInstallments(completion: { [weak self] (_) in
             self?.slider.showBottomMessageIfNeeded(index: selectedIndex, targetIndex: selectedIndex)

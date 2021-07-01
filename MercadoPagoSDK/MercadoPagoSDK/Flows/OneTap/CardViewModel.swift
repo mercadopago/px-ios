@@ -92,39 +92,6 @@ final class CardViewModel {
         return rearrangedNodes
     }
     
-    private func getCardBottomMessage(paymentTypeId: String?, benefits: PXBenefits?, status: PXStatus?, selectedPayerCost: PXPayerCost?, displayInfo: PXOneTapDisplayInfo?) -> PXCardBottomMessage? {
-        let defaultTextColor = UIColor.white
-        let defaultBackgroundColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
-
-        if let displayInfoMessage = displayInfo?.bottomDescription {
-            return PXCardBottomMessage(text: displayInfoMessage, fixed: true)
-        }
-
-        if let chargeRuleMessage = getChargeRuleBottomMessage(paymentTypeId), (status?.isUsable() ?? true) {
-            let text = PXText(message: chargeRuleMessage, backgroundColor: nil, textColor: nil, weight: nil)
-            text.defaultTextColor = defaultTextColor
-            text.defaultBackgroundColor = defaultBackgroundColor
-            return PXCardBottomMessage(text: text, fixed: false)
-        }
-
-        guard let selectedInstallments = selectedPayerCost?.installments else {
-            return nil
-        }
-
-        guard let reimbursementAppliedInstallments = benefits?.reimbursement?.appliedInstallments else {
-            return nil
-        }
-
-        if reimbursementAppliedInstallments.contains(selectedInstallments), (status?.isUsable() ?? true) {
-            let text = PXText(message: benefits?.reimbursement?.card?.message, backgroundColor: nil, textColor: nil, weight: nil)
-            text.defaultTextColor = defaultTextColor
-            text.defaultBackgroundColor = defaultBackgroundColor
-            return PXCardBottomMessage(text: text, fixed: false)
-        }
-
-        return nil
-    }
-    
     private func getStatusConfig(currentStatus: PXStatus, cardId: String?, paymentMethodId: String?) -> PXStatus {
         guard let disabledOption = oneTapModel.disabledOption else { return currentStatus }
 
@@ -159,14 +126,6 @@ final class CardViewModel {
     private func getChargeRuleBottomMessage(_ paymentTypeId: String?) -> String? {
         let chargeRule = getChargeRule(paymentTypeId: paymentTypeId)
         return chargeRule?.message
-    }
-    
-    private func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
-        var amount: String = ""
-        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
-
-        amount = Utils.getAmountFormated(amount: amountToPay, forCurrency: SiteManager.shared.getCurrency())
-        return NSAttributedString(string: amount, attributes: attributes)
     }
     
     private func getCardData(oneTapCard: PXOneTapCardDto) -> CardData? {
@@ -385,6 +344,52 @@ final class CardViewModel {
     func getModal(modalKey: String) -> PXModal? {
         return oneTapModel.modals?[modalKey]
     }
+    
+    func getIsSplitPaymentEnabled() -> Bool {
+        return oneTapModel.splitPaymentEnabled
+    }
+    
+    func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
+        var amount: String = ""
+        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+
+        amount = Utils.getAmountFormated(amount: amountToPay, forCurrency: SiteManager.shared.getCurrency())
+        return NSAttributedString(string: amount, attributes: attributes)
+    }
+    
+    func getCardBottomMessage(paymentTypeId: String?, benefits: PXBenefits?, status: PXStatus?, selectedPayerCost: PXPayerCost?, displayInfo: PXOneTapDisplayInfo?) -> PXCardBottomMessage? {
+        let defaultTextColor = UIColor.white
+        let defaultBackgroundColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+
+        if let displayInfoMessage = displayInfo?.bottomDescription {
+            return PXCardBottomMessage(text: displayInfoMessage, fixed: true)
+        }
+
+        if let chargeRuleMessage = getChargeRuleBottomMessage(paymentTypeId), (status?.isUsable() ?? true) {
+            let text = PXText(message: chargeRuleMessage, backgroundColor: nil, textColor: nil, weight: nil)
+            text.defaultTextColor = defaultTextColor
+            text.defaultBackgroundColor = defaultBackgroundColor
+            return PXCardBottomMessage(text: text, fixed: false)
+        }
+
+        guard let selectedInstallments = selectedPayerCost?.installments else {
+            return nil
+        }
+
+        guard let reimbursementAppliedInstallments = benefits?.reimbursement?.appliedInstallments else {
+            return nil
+        }
+
+        if reimbursementAppliedInstallments.contains(selectedInstallments), (status?.isUsable() ?? true) {
+            let text = PXText(message: benefits?.reimbursement?.card?.message, backgroundColor: nil, textColor: nil, weight: nil)
+            text.defaultTextColor = defaultTextColor
+            text.defaultBackgroundColor = defaultBackgroundColor
+            return PXCardBottomMessage(text: text, fixed: false)
+        }
+
+        return nil
+    }
+    
 }
 
 // MARK: - InitializationTypes
