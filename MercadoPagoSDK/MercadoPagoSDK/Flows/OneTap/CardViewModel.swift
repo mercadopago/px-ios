@@ -275,6 +275,22 @@ final class CardViewModel {
     }
     
     // MARK: - Public methods
+    func setBottomMessage(at index: Int, bottomMessage: PXCardBottomMessage?) {
+        dataSource[index].getSelectedApplication()?.bottomMessage = bottomMessage
+    }
+    
+    func setSplitPayment(isEnable: Bool) {
+        oneTapModel.splitPaymentEnabled = isEnable
+    }
+    
+    func setDataSource(dataSource: [PXCardSliderViewModel]) {
+        self.dataSource = dataSource
+    }
+    
+    func setSplitPaymentEnabled(isEnabled: Bool) {
+        oneTapModel.splitPaymentEnabled = isEnabled
+    }
+    
     func getCards() -> [PXCardSliderViewModel] {
         return dataSource
     }
@@ -305,10 +321,6 @@ final class CardViewModel {
         return oneTapModel.amountHelper
     }
     
-    func setDataSource(dataSource: [PXCardSliderViewModel]) {
-        self.dataSource = dataSource
-    }
-    
     func getSelectedApplication(at index: Int) -> PXCardSliderApplicationData? {
         return dataSource[index].getSelectedApplication()
     }
@@ -319,14 +331,6 @@ final class CardViewModel {
     
     func getExpressData() -> [PXOneTapDto]? {
         return oneTapModel.expressData
-    }
-    
-    func setBottomMessage(at index: Int, bottomMessage: PXCardBottomMessage?) {
-        dataSource[index].getSelectedApplication()?.bottomMessage = bottomMessage
-    }
-    
-    func setSplitPayment(isEnable: Bool) {
-        oneTapModel.splitPaymentEnabled = isEnable
     }
     
     func getApplications() -> [PXOneTapApplication] {

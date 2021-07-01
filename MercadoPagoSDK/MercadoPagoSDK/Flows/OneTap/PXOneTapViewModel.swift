@@ -23,7 +23,11 @@ final class PXOneTapViewModel {
     private var selectedCard: PXCardSliderViewModel
     private var cardViewModel: CardViewModel
     private var installmentViewModel: InstallmentViewModel
-    private var headerViewModel: HeaderViewModel
+    private lazy var headerViewModel: HeaderViewModel = HeaderViewModel(selectedCard: selectedCard,
+                                                                        amountHelper: cardViewModel.getAmountHelper(),
+                                                                        additionalInfoSummary: cardViewModel.getAdditionalInfoSummary(),
+                                                                        shouldDisplayChargesHelp: shouldDisplayChargesHelp(),
+                                                                        item: cardViewModel.getItem())
 
     // MARK: - Public properties
     weak var coordinator: OneTapRedirects?
@@ -32,11 +36,8 @@ final class PXOneTapViewModel {
         self.oneTapModel = oneTapModel
         self.cardViewModel = CardViewModel(oneTapModel: oneTapCardDesignModel)
         self.installmentViewModel = InstallmentViewModel(cards: cardViewModel.getCards())
-        self.headerViewModel = HeaderViewModel(selectedCard: selectedCard,
-                                               amountHelper: cardViewModel.getAmountHelper(),
-                                               additionalInfoSummary: cardViewModel.getAdditionalInfoSummary(),
-                                               shouldDisplayChargesHelp: shouldDisplayChargesHelp(),
-                                               item: cardViewModel.getItem())
+        //TODO: MEGA TODO REMOVER FORCE UNWRAPPED
+        self.selectedCard = cardViewModel.getCards().first!
     }
 
     func shouldValidateWithBiometric(withCardId: String? = nil) -> Bool {
@@ -51,6 +52,14 @@ final class PXOneTapViewModel {
     }
     
     // MARK: - Controller Methods
+    func setSplitPayment(isEnable: Bool) {
+        cardViewModel.setSplitPayment(isEnable: isEnable)
+    }
+    
+    func setPayerCost(value: PXPayerCost?) {
+        cardViewModel.getAmoutHelper().getPaymentData().payerCost = value
+    }
+    
     func getCards() -> [PXCardSliderViewModel] {
         return cardViewModel.getCards()
     }
@@ -114,13 +123,6 @@ final class PXOneTapViewModel {
         coordinator?.showOfflinePaymentSheet(offlineController: offlineController)
     }
     
-    func setSplitPayment(isEnable: Bool) {
-        cardViewModel.setSplitPayment(isEnable: isEnable)
-    }
-    
-    func setPayerCost(value: PXPayerCost?) {
-        cardViewModel.getAmoutHelper().getPaymentData().payerCost = value
-    }
 }
 
 // MARK: ViewModels Publics.
@@ -329,8 +331,7 @@ extension PXOneTapViewModel {
             if let issuerId = getAmountHelper().getPaymentData().issuer?.id {
                 extraInfo["issuer_id"] = Int64(issuerId)
             }
-            //TODO: Check funtions of commented lines -- tracking
-//            extraInfo["has_split"] = splitPaymentEnabled
+            extraInfo["has_split"] = cardViewModel.getIsSplitPaymentEnabled()
             properties["extra_info"] = extraInfo
         } else {
             properties["payment_method_type"] = paymentMethod.id

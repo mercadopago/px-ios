@@ -409,9 +409,8 @@ extension PXOneTapViewController {
     private func doPayment() {
         subscribeLoadingButtonToNotifications()
         loadingButtonComponent?.startLoading(timeOut: timeOutPayButton)
-        // TODO: Todo errado, arrumar essa joça
-//        let properties = getConfirmEventProperties(selectedCard: viewModel.getSelectedCard(), selectedIndex: slider.getSelectedIndex())
-//        trackEvent(event: OneTapTrackingEvents.didConfirmPayment(properties))
+        let properties = viewModel.getConfirmEventProperties(selectedCard: viewModel.getSelectedCard(), selectedIndex: slider.getSelectedIndex())
+        trackEvent(event: OneTapTrackingEvents.didConfirmPayment(properties))
         hideBackButton()
         hideNavBar()
         viewModel.doPayment()
@@ -451,10 +450,9 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
             return
         }
 
-        //TODO: Check funtions of commented lines -- tracking
-//        viewModel.splitPaymentEnabled = isOn
+        viewModel.setSplitPayment(isEnable: isOn)
+        
         if isUserSelection {
-//            self.viewModel.splitPaymentSelectionByUser = isOn
             //Update all models payer cost and selected payer cost
             viewModel.updateAllCardSliderModels(splitPaymentEnabled: isOn)
         }

@@ -8,22 +8,21 @@
 import Foundation
 
 struct OneTapCardDesignModel {
-    let publicKey: String //
-    let privateKey: String? //
-    let siteId: String //
+    let publicKey: String
+    let privateKey: String?
+    let siteId: String
     let excludedPaymentTypeIds: [String]
-    let expressData: [PXOneTapDto]? //
-    let paymentMethods: [PXPaymentMethod] //
-    let items: [PXItem] //
-    let payerCompliance: PXPayerCompliance? //
-    let modals: [String: PXModal]? //
-    let payerPaymentMethods: [PXCustomOptionSearchItem] //
-    let experiments: [PXExperiment]? //
-    let additionalInfoSummary: PXAdditionalInfoSummary? //
+    let expressData: [PXOneTapDto]?
+    let paymentMethods: [PXPaymentMethod]
+    let items: [PXItem]
+    let payerCompliance: PXPayerCompliance?
+    let modals: [String: PXModal]?
+    let payerPaymentMethods: [PXCustomOptionSearchItem]
+    let experiments: [PXExperiment]?
+    let additionalInfoSummary: PXAdditionalInfoSummary?
     let disabledOption: PXDisabledOption?
     let amountHelper: PXAmountHelper
     var splitPaymentEnabled: Bool = false
-    var splitPaymentSelectionByUser: Bool? = false
     
     // MARK: - Initialization
     init(amountHelper: PXAmountHelper, paymentInfos: PXInitDTO, disabledOption: PXDisabledOption?, excludedPaymentTypeIds: [String], publicKey: String, privateKey: String?) {
