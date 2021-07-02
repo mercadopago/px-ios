@@ -14,6 +14,7 @@ protocol OneTapCoodinatorDelegate: AnyObject {
     func userDidUpdateCardList(cardList: [PXCardSliderViewModel])
     func refreshFlow(cardId: String)
     func userDidConfirmPayment(paymentData: PXPaymentData, isSplitAccountPaymentEnable: Bool)
+    func updatePaymentOption(paymentMethodOption: PaymentMethodOption)
     func closeFlow()
     func clearPaymentData()
 }
@@ -118,7 +119,7 @@ extension OneTapCoordinator: OneTapCoordinatorActions {
 
 extension OneTapCoordinator: OfflineMethodsEventsDelegate {
     func userDidConfirm(paymentData: PXPaymentData, isSplitPayment: Bool) {
-        
+        delegate?.userDidConfirmPayment(paymentData: paymentData, isSplitAccountPaymentEnable: isSplitPayment)
     }
     
     func didFinishCheckout() {
@@ -130,7 +131,7 @@ extension OneTapCoordinator: OfflineMethodsEventsDelegate {
     }
     
     func updatePaymentOption(paymentOption: PaymentMethodOption) {
-        
+        delegate?.updatePaymentOption(paymentMethodOption: paymentOption)
     }
 }
 

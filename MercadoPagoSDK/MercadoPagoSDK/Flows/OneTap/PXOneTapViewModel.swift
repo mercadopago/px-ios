@@ -261,7 +261,6 @@ extension PXOneTapViewModel {
         }
         let splitPayment = cardViewModel.getIsSplitPaymentEnabled()
         coordinator?.userDidConfirmPayment(paymentData: cardViewModel.getAmoutHelper().getPaymentData(), isSplitAccountPaymentEnable: splitPayment)
-//        callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
     }
     
     

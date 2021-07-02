@@ -69,6 +69,17 @@ extension OneTapFlow {
 }
 
 extension OneTapFlow: OneTapCoodinatorDelegate {
+    func updatePaymentOption(paymentMethodOption: PaymentMethodOption) {
+        if let cardSliderViewModel = paymentMethodOption as? PXCardSliderViewModel,
+           let paymentMethodType = cardSliderViewModel.getSelectedApplication()?.paymentTypeId,
+           let customerPaymentMethodOption = getCustomerPaymentMethodOption(cardId: cardSliderViewModel.getCardId() ?? "", paymentMethodType: paymentMethodType) {
+            // Customer card.
+            model.paymentOptionSelected = customerPaymentMethodOption
+        } else {
+            model.paymentOptionSelected = paymentMethodOption
+        }
+    }
+    
     func refreshFlow(cardId: String) {
         self.refreshInitFlow(cardId: cardId)
     }
