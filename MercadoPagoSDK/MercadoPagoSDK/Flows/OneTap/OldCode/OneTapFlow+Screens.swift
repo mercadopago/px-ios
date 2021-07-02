@@ -74,11 +74,11 @@ extension OneTapFlow: OneTapCoodinatorDelegate {
     }
     
     func didUpdateCard(selectedCard: PXCardSliderViewModel) {
-        
+        self.model.selectedCard = selectedCard
     }
     
     func userDidUpdateCardList(cardList: [PXCardSliderViewModel]) {
-        
+        self.model.cardList = cardList
     }
     
     func closeFlow() {

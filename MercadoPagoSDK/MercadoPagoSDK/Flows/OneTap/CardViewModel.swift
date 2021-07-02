@@ -353,6 +353,10 @@ final class CardViewModel {
         return oneTapModel.splitPaymentEnabled
     }
     
+    func getCardFormParameters() -> CardFormParameters {
+        return CardFormParameters(privateKey: oneTapModel.privateKey, publicKey: oneTapModel.publicKey, siteId: oneTapModel.siteId, excludedPaymentTypeIds: oneTapModel.excludedPaymentTypeIds)
+    }
+    
     func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
         var amount: String = ""
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]

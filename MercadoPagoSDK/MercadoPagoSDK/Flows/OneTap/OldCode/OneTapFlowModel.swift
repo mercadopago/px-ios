@@ -358,23 +358,3 @@ internal extension OneTapFlowModel {
         return hasSecurityCode
     }
 }
-
-extension OneTapFlowModel: OneTapCoodinatorDelegate {
-    func refreshFlow(cardId: String) {
-        
-    }
-    
-    func didUpdateCard(selectedCard: PXCardSliderViewModel) {
-        self.selectedCard = selectedCard
-    }
-    
-    func userDidUpdateCardList(cardList: [PXCardSliderViewModel]) {
-        self.cardList = cardList
-    }
-    
-    func closeFlow() {
-        
-    }
-    
-    
-}

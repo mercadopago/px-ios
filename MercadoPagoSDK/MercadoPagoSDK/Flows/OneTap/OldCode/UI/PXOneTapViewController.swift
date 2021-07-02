@@ -642,7 +642,6 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     internal func addNewCardDidTap() {
-        //TODO: Use delegate
 //        if viewModel.shouldUseOldCardForm() {
 ////            callbackPaymentData(viewModel.getClearPaymentData())
 //        } else {
@@ -663,6 +662,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 //                addNewCard()
 //            }
 //        }
+        addNewCard()
     }
 
     private func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
@@ -678,30 +678,8 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         return sheet
     }
 
-    private func addNewCard(initType: String? = "standard") {
-        //TODO: Coordinator also
-//        let siteId = viewModel.siteId
-//        let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
-//        let builder: MLCardFormBuilder
-//
-//        if let privateKey = viewModel.privateKey {
-//            builder = MLCardFormBuilder(privateKey: privateKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-//        } else {
-//            builder = MLCardFormBuilder(publicKey: viewModel.publicKey, siteId: siteId, flowId: flowId, lifeCycleDelegate: self)
-//        }
-//
-//        builder.setLanguage(Localizator.sharedInstance.getLanguage())
-//        builder.setExcludedPaymentTypes(viewModel.excludedPaymentTypeIds)
-//        builder.setNavigationBarCustomColor(backgroundColor: ThemeManager.shared.navigationBar().backgroundColor, textColor: ThemeManager.shared.navigationBar().tintColor)
-//        var cardFormVC: UIViewController
-//        switch initType {
-//        case "webpay_tbk":
-//            cardFormVC = MLCardForm(builder: builder).setupWebPayController()
-//        default:
-//            builder.setAnimated(true)
-//            cardFormVC = MLCardForm(builder: builder).setupController()
-//        }
-//        navigationController?.pushViewController(cardFormVC, animated: true)
+    private func addNewCard(initType: String? = nil) {
+        viewModel.goToCardForm(initType: initType ?? "standard")
     }
 
     func addNewOfflineDidTap() {

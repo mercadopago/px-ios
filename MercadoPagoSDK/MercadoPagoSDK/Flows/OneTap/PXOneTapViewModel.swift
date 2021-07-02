@@ -15,10 +15,10 @@ protocol OneTapCoordinatorActions: AnyObject {
     func refreseInitFlow(cardId: String)
     func userDidCloseFlow()
     func finishButtonAnimation()
-    func goToCongrats()
-    func goToBiometric()
-    func goToCVV()
-    func goToCardForm()
+//    func goToCongrats()
+//    func goToBiometric()
+//    func goToCVV()
+    func goToCardForm(cardFormParameters: CardFormParameters, initType: String)
     func showOfflinePaymentSheet(offlineController: PXOfflineMethodsViewController)
 }
 
@@ -41,16 +41,15 @@ final class PXOneTapViewModel {
     // MARK: - Public properties
     weak var coordinator: OneTapCoordinatorActions?
 
-    init(oneTapModel: OneTapModel, oneTapCardDesignModel: OneTapCardDesignModel) {
+    init(oneTapModel: OneTapModel, cardViewModel: CardViewModel, selectedCard: PXCardSliderViewModel) {
         self.oneTapModel = oneTapModel
-        self.cardViewModel = CardViewModel(oneTapModel: oneTapCardDesignModel)
+        self.cardViewModel = cardViewModel
         self.installmentViewModel = InstallmentViewModel(cards: cardViewModel.getCards())
-        //TODO: MEGA TODO REMOVER FORCE UNWRAPPED
-        self.selectedCard = cardViewModel.getCards().first!
+        self.selectedCard = selectedCard
     }
 
     func shouldValidateWithBiometric(withCardId: String? = nil) -> Bool {
-        coordinator?.goToCVV()
+//        coordinator?.goToCVV()
         return true
     }
     
@@ -113,6 +112,22 @@ final class PXOneTapViewModel {
         return oneTapModel.experimentsViewModel.getExperiment(name: PXExperimentsViewModel.HIGHLIGHT_INSTALLMENTS)
     }
     
+    func closeFlow() {
+        coordinator?.userDidCloseFlow()
+    }
+    
+    func finishButtonAnimation() {
+        coordinator?.finishButtonAnimation()
+    }
+    
+    func cardDidChange(card: PXCardSliderViewModel) {
+        self.selectedCard = card
+    }
+    
+    func refreshInitFlow(cardId: String) {
+        coordinator?.refreseInitFlow(cardId: cardId)
+    }
+    
     func showOfflinePaymentOptions() {
         guard let offlinePaymentOptions = getOfflineMethods() else { return }
         let offlineViewModel = PXOfflineMethodsViewModel(
@@ -132,20 +147,8 @@ final class PXOneTapViewModel {
         coordinator?.showOfflinePaymentSheet(offlineController: offlineController)
     }
     
-    func closeFlow() {
-        coordinator?.userDidCloseFlow()
-    }
-    
-    func finishButtonAnimation() {
-        coordinator?.finishButtonAnimation()
-    }
-    
-    func cardDidChange(card: PXCardSliderViewModel) {
-        self.selectedCard = card
-    }
-    
-    func refreshInitFlow(cardId: String) {
-        coordinator?.refreseInitFlow(cardId: cardId)
+    func goToCardForm(initType: String) {
+        coordinator?.goToCardForm(cardFormParameters: cardViewModel.getCardFormParameters(), initType: initType)
     }
 }
 

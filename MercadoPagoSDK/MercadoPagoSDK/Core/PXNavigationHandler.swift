@@ -15,6 +15,7 @@ internal class PXNavigationHandler: NSObject {
     var viewControllerBase: UIViewController?
     private var currentLoadingView: UIViewController?
     private var rootViewController: UIViewController?
+    private var oneTapCoordinator: OneTapCoordinator?
 
     private var dynamicViews: [UIViewController] = []
 
@@ -129,14 +130,20 @@ internal class PXNavigationHandler: NSObject {
     func coordinateToOneTap(oneTapCardDesignModel: OneTapCardDesignModel, oneTapModel: OneTapModel, coordinatorDelegate: OneTapCoodinatorDelegate) {
         dismissLoading(animated: true) { [weak self] in
             guard let self = self else { return }
-            let coordinator = OneTapCoordinator(
+            let cardViewModel = CardViewModel(oneTapModel: oneTapCardDesignModel)
+            guard let selectedCard = cardViewModel.getCards().first else {
+                self.showErrorScreen(error: nil, callbackCancel: nil, errorCallback: nil)
+                return
+            }
+            self.oneTapCoordinator = OneTapCoordinator(
                 navigationController: self.navigationController,
-                oneTapCardDesignModel: oneTapCardDesignModel,
+                cardViewModel: cardViewModel,
+                selectedCard: selectedCard,
                 oneTapModel: oneTapModel
             )
             
-            coordinator.delegate = coordinatorDelegate
-            coordinator.start()
+            self.oneTapCoordinator?.delegate = coordinatorDelegate
+            self.oneTapCoordinator?.start()
         }
     }
 
