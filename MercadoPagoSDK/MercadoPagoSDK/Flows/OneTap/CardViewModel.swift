@@ -69,7 +69,7 @@ final class CardViewModel {
             }
         }
         
-        return []
+        return sliderModel
     }
     
     
