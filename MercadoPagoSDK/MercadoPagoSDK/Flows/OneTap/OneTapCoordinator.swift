@@ -7,12 +7,15 @@
 
 import UIKit
 import MLCardForm
+import AndesUI
 
 protocol OneTapCoodinatorDelegate: AnyObject {
     func didUpdateCard(selectedCard: PXCardSliderViewModel)
     func userDidUpdateCardList(cardList: [PXCardSliderViewModel])
     func refreshFlow(cardId: String)
+    func userDidConfirmPayment(paymentData: PXPaymentData, isSplitAccountPaymentEnable: Bool)
     func closeFlow()
+    func clearPaymentData()
 }
 
 final class OneTapCoordinator: BaseCoordinator {
@@ -69,6 +72,25 @@ extension OneTapCoordinator: OneTapCoordinatorActions {
         navigationController.pushViewController(cardFormVC, animated: true)
     }
     
+    func showOfflinePaymentSheet(offlineController: PXOfflineMethodsViewController) {
+        let sheet = PXOfflineMethodsSheetViewController(viewController: offlineController,
+                                                        offlineViewModel: offlineController.viewModel,
+                                                        whiteViewHeight: PXCardSliderSizeManager.getWhiteViewHeight(viewController: oneTapController))
+
+        offlineController.eventsDelegate = self
+        navigationController.present(sheet, animated: true, completion: nil)
+    }
+    
+    func showBottomSheet(newCard: PXOneTapNewCardDto) {
+        let viewController = PXOneTapSheetViewController(newCard: newCard)
+        viewController.delegate = self
+        let sheet = AndesBottomSheetViewController(rootViewController: viewController)
+        sheet.titleBar.text = newCard.label.message
+        sheet.titleBar.textAlignment = .center
+//        andesBottomSheet = sheet
+        navigationController.present(sheet, animated: true, completion: nil)
+    }
+    
     func didUpdateCard(selectedCard: PXCardSliderViewModel) {
         delegate?.didUpdateCard(selectedCard: selectedCard)
     }
@@ -85,13 +107,12 @@ extension OneTapCoordinator: OneTapCoordinatorActions {
         delegate?.closeFlow()
     }
     
-    func showOfflinePaymentSheet(offlineController: PXOfflineMethodsViewController) {
-        let sheet = PXOfflineMethodsSheetViewController(viewController: offlineController,
-                                                        offlineViewModel: offlineController.viewModel,
-                                                        whiteViewHeight: PXCardSliderSizeManager.getWhiteViewHeight(viewController: oneTapController))
-
-        offlineController.eventsDelegate = self
-        navigationController.present(sheet, animated: true, completion: nil)
+    func clearPaymentData() {
+        delegate?.clearPaymentData()
+    }
+    
+    func userDidConfirmPayment(paymentData: PXPaymentData, isSplitAccountPaymentEnable: Bool) {
+        delegate?.userDidConfirmPayment(paymentData: paymentData, isSplitAccountPaymentEnable: isSplitAccountPaymentEnable)
     }
 }
 
@@ -121,6 +142,10 @@ extension OneTapCoordinator: MLCardFormLifeCycleDelegate {
     func didFailAddCard() {
         
     }
-    
-    
+}
+
+extension OneTapCoordinator: PXOneTapSheetViewControllerProtocol {
+    func didTapOneTapSheetOption(sheetOption: PXOneTapSheetOptionsDto) {
+        
+    }
 }

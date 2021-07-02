@@ -13,12 +13,15 @@ protocol OneTapCoordinatorActions: AnyObject {
     func didUpdateCard(selectedCard: PXCardSliderViewModel)
     func userDidUpdateCardList(cardList: [PXCardSliderViewModel])
     func refreseInitFlow(cardId: String)
+    func userDidConfirmPayment(paymentData: PXPaymentData, isSplitAccountPaymentEnable: Bool)
     func userDidCloseFlow()
     func finishButtonAnimation()
 //    func goToCongrats()
 //    func goToBiometric()
 //    func goToCVV()
     func goToCardForm(cardFormParameters: CardFormParameters, initType: String)
+    func showBottomSheet(newCard: PXOneTapNewCardDto)
+    func clearPaymentData()
     func showOfflinePaymentSheet(offlineController: PXOfflineMethodsViewController)
 }
 
@@ -147,8 +150,26 @@ final class PXOneTapViewModel {
         coordinator?.showOfflinePaymentSheet(offlineController: offlineController)
     }
     
-    func goToCardForm(initType: String) {
-        coordinator?.goToCardForm(cardFormParameters: cardViewModel.getCardFormParameters(), initType: initType)
+    func goToCardForm() {
+        if shouldUseOldCardForm() {
+            coordinator?.clearPaymentData()
+        } else {
+            if let newCard = cardViewModel.getExpressData()?.compactMap({ $0.newCard }).first {
+                if newCard.sheetOptions != nil {
+                    // Present sheet to pick standard card form or webpay
+                    coordinator?.showBottomSheet(newCard: newCard)
+                }
+                    // Add new card using card form based on init type
+                    // There might be cases when there's a different option besides standard type
+                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
+                coordinator?.goToCardForm(cardFormParameters: cardViewModel.getCardFormParameters(), initType: newCard.cardFormInitType ?? "standard")
+            } else {
+                // This is a fallback. There should be always a newCard in expressData
+                // Add new card using standard card form
+                coordinator?.goToCardForm(cardFormParameters: cardViewModel.getCardFormParameters(), initType: "standard")
+            }
+        }
+        
     }
 }
 
@@ -228,13 +249,6 @@ extension PXOneTapViewModel {
         return vc
     }
 
-    func shouldUseOldCardForm() -> Bool {
-        if let newCardVersion = cardViewModel.getExpressData()?.filter({$0.newCard != nil}).first?.newCard?.version {
-            return newCardVersion == "v1"
-        }
-        return false
-    }
-
     func shouldAutoDisplayOfflinePaymentMethods() -> Bool {
         guard let enabledOneTapCards = (cardViewModel.getExpressData()?.filter { $0.status.enabled }) else { return false }
         let enabledPureOfflineCards = enabledOneTapCards.filter { ($0.offlineMethods != nil) && ($0.newCard == nil) }
@@ -246,7 +260,17 @@ extension PXOneTapViewModel {
             cardViewModel.getAmountHelper().getPaymentData().payerCost = selectedApplication.selectedPayerCost
         }
         let splitPayment = cardViewModel.getIsSplitPaymentEnabled()
+        coordinator?.userDidConfirmPayment(paymentData: cardViewModel.getAmoutHelper().getPaymentData(), isSplitAccountPaymentEnable: splitPayment)
 //        callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
+    }
+    
+    
+    
+    private func shouldUseOldCardForm() -> Bool {
+        if let newCardVersion = cardViewModel.getExpressData()?.filter({$0.newCard != nil}).first?.newCard?.version {
+            return newCardVersion == "v1"
+        }
+        return false
     }
 }
 

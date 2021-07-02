@@ -642,44 +642,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     internal func addNewCardDidTap() {
-//        if viewModel.shouldUseOldCardForm() {
-////            callbackPaymentData(viewModel.getClearPaymentData())
-//        } else {
-//            if let newCard = viewModel.expressData?.compactMap({ $0.newCard }).first {
-//                if newCard.sheetOptions != nil {
-//                    // Present sheet to pick standard card form or webpay
-//                    let sheet = buildBottomSheet(newCard: newCard)
-//                    present(sheet, animated: true, completion: nil)
-//                } else {
-//                    // Add new card using card form based on init type
-//                    // There might be cases when there's a different option besides standard type
-//                    // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
-//                    addNewCard(initType: newCard.cardFormInitType)
-//                }
-//            } else {
-//                // This is a fallback. There should be always a newCard in expressData
-//                // Add new card using standard card form
-//                addNewCard()
-//            }
-//        }
-        addNewCard()
-    }
-
-    private func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
-        if let andesBottomSheet = andesBottomSheet {
-            return andesBottomSheet
-        }
-        let viewController = PXOneTapSheetViewController(newCard: newCard)
-        viewController.delegate = self
-        let sheet = AndesBottomSheetViewController(rootViewController: viewController)
-        sheet.titleBar.text = newCard.label.message
-        sheet.titleBar.textAlignment = .center
-        andesBottomSheet = sheet
-        return sheet
-    }
-
-    private func addNewCard(initType: String? = nil) {
-        viewModel.goToCardForm(initType: initType ?? "standard")
+        viewModel.goToCardForm()
     }
 
     func addNewOfflineDidTap() {
@@ -702,7 +665,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 extension PXOneTapViewController: PXOneTapSheetViewControllerProtocol {
     func didTapOneTapSheetOption(sheetOption: PXOneTapSheetOptionsDto) {
         andesBottomSheet?.dismiss(animated: true, completion: { [weak self] in
-            self?.addNewCard(initType: sheetOption.cardFormInitType)
+            self?.addNewOfflineDidTap()
         })
     }
 }
@@ -836,9 +799,7 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
 // MARK: Notifications
 private extension PXOneTapViewController {
     func subscribeLoadingButtonToNotifications() {
-        guard let loadingButton = loadingButtonComponent else {
-            return
-        }
+        guard let loadingButton = loadingButtonComponent else { return }
         PXNotificationManager.SuscribeTo.animateButton(loadingButton, selector: #selector(loadingButton.animateFinish))
     }
 
