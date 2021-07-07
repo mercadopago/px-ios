@@ -14,6 +14,7 @@ protocol OneTapCoordinatorActions: AnyObject {
     func userDidUpdateCardList(cardList: [PXCardSliderViewModel])
     func refreseInitFlow(cardId: String)
     func userDidConfirmPayment(paymentData: PXPaymentData, isSplitAccountPaymentEnable: Bool)
+    func updatePaymentOption(paymentMethodOption: PaymentMethodOption)
     func userDidCloseFlow()
     func finishButtonAnimation()
 //    func goToCongrats()
@@ -31,6 +32,7 @@ final class PXOneTapViewModel {
     private var selectedCard: PXCardSliderViewModel {
         didSet {
             coordinator?.didUpdateCard(selectedCard: selectedCard)
+            coordinator?.updatePaymentOption(paymentMethodOption: selectedCard)
         }
     }
     private var cardViewModel: CardViewModel

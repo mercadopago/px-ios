@@ -22,7 +22,11 @@ final internal class OneTapFlowModel: PXFlowModel {
     internal var publicKey: String = ""
     internal var privateKey: String?
     internal var siteId: String = ""
-    var paymentData: PXPaymentData
+    var paymentData: PXPaymentData {
+        didSet {
+            print(paymentData)
+        }
+    }
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption?
     let search: PXInitDTO

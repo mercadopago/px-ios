@@ -49,6 +49,10 @@ final class OneTapCoordinator: BaseCoordinator {
 
 // MARK: - OneTapRedirects
 extension OneTapCoordinator: OneTapCoordinatorActions {
+    func updatePaymentOption(paymentMethodOption: PaymentMethodOption) {
+        delegate?.updatePaymentOption(paymentMethodOption: paymentMethodOption)
+    }
+    
     func goToCardForm(cardFormParameters: CardFormParameters, initType: String) {
         let flowId = MPXTracker.sharedInstance.getFlowName() ?? "unknown"
         let builder: MLCardFormBuilder
@@ -128,10 +132,6 @@ extension OneTapCoordinator: OfflineMethodsEventsDelegate {
     
     func finishButtonAnimation() {
         
-    }
-    
-    func updatePaymentOption(paymentOption: PaymentMethodOption) {
-        delegate?.updatePaymentOption(paymentMethodOption: paymentOption)
     }
 }
 
