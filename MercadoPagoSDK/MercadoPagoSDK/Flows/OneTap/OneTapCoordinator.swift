@@ -133,6 +133,10 @@ extension OneTapCoordinator: OfflineMethodsEventsDelegate {
     func finishButtonAnimation() {
         
     }
+    
+    func updatePaymentOption(paymentOption: PaymentMethodOption) {
+        
+    }
 }
 
 extension OneTapCoordinator: MLCardFormLifeCycleDelegate {

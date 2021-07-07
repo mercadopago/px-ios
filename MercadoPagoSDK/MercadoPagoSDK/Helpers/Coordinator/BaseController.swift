@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MLCardForm
 
 protocol BaseViewControllerDelegate: AnyObject {
     func didMoveFromNavigationStack(_ viewController: UIViewController)
@@ -29,6 +30,13 @@ extension BaseViewController: UINavigationControllerDelegate {
         super.didMove(toParent: parent)
         
         if parent == nil { coordinatorDelegate?.didMoveFromNavigationStack(self) }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if [fromVC, toVC].filter({$0 is MLCardFormViewController || $0 is PXSecurityCodeViewController}).count > 0 {
+            return PXOneTapViewControllerTransition()
+        }
+        return nil
     }
 }
 
