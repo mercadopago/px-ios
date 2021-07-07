@@ -15,6 +15,7 @@ protocol OneTapCoodinatorDelegate: AnyObject {
     func refreshFlow(cardId: String)
     func userDidConfirmPayment(paymentData: PXPaymentData, isSplitAccountPaymentEnable: Bool)
     func updatePaymentOption(paymentMethodOption: PaymentMethodOption)
+    func finishButtonAnimation()
     func closeFlow()
     func clearPaymentData()
 }
@@ -131,7 +132,7 @@ extension OneTapCoordinator: OfflineMethodsEventsDelegate {
     }
     
     func finishButtonAnimation() {
-        
+        delegate?.finishButtonAnimation()
     }
     
     func updatePaymentOption(paymentOption: PaymentMethodOption) {

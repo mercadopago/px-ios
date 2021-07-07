@@ -100,6 +100,10 @@ extension OneTapFlow: OneTapCoodinatorDelegate {
         cancelFlowForNewPaymentSelection()
     }
     
+    func finishButtonAnimation() {
+        executeNextStep()
+    }
+    
     func userDidConfirmPayment(paymentData: PXPaymentData, isSplitAccountPaymentEnable: Bool) {
         model.updateCheckoutModel(paymentData: paymentData, splitAccountMoneyEnabled: isSplitAccountPaymentEnable)
         // Deletes default one tap option in payment method search
