@@ -86,7 +86,6 @@ extension OneTapFlow: OneTapCoodinatorDelegate {
     
     func didUpdateCard(selectedCard: PXCardSliderViewModel) {
         self.model.selectedCard = selectedCard
-//        self.model.paymentOptionSelected = selectedCard
     }
     
     func userDidUpdateCardList(cardList: [PXCardSliderViewModel]) {

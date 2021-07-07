@@ -128,23 +128,23 @@ internal class PXNavigationHandler: NSObject {
     }
     
     func coordinateToOneTap(oneTapCardDesignModel: OneTapCardDesignModel, oneTapModel: OneTapModel, coordinatorDelegate: OneTapCoodinatorDelegate) {
-        dismissLoading(animated: true) { [weak self] in
-            guard let self = self else { return }
-            let cardViewModel = CardViewModel(oneTapModel: oneTapCardDesignModel)
-            guard let selectedCard = cardViewModel.getCards().first else {
-                self.showErrorScreen(error: nil, callbackCancel: nil, errorCallback: nil)
-                return
-            }
-            self.oneTapCoordinator = OneTapCoordinator(
-                navigationController: self.navigationController,
-                cardViewModel: cardViewModel,
-                selectedCard: selectedCard,
-                oneTapModel: oneTapModel
-            )
-            
-            self.oneTapCoordinator?.delegate = coordinatorDelegate
-            self.oneTapCoordinator?.start()
+        
+        let cardViewModel = CardViewModel(oneTapModel: oneTapCardDesignModel)
+        guard let selectedCard = cardViewModel.getCards().first else {
+            self.showErrorScreen(error: nil, callbackCancel: nil, errorCallback: nil)
+            return
         }
+        self.oneTapCoordinator = OneTapCoordinator(
+            navigationController: self.navigationController,
+            cardViewModel: cardViewModel,
+            selectedCard: selectedCard,
+            oneTapModel: oneTapModel
+        )
+        
+        self.oneTapCoordinator?.delegate = coordinatorDelegate
+        self.oneTapCoordinator?.start()
+        dismissLoading()
+
     }
 
     func popViewController(animated: Bool = true) {
