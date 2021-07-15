@@ -1,4 +1,4 @@
-# v4.39.5
+# v4.39.5 
 🚀Private Release - 4.39.5 🚀
 - Fix crashes caused because of mapToJSON() method on PaymentMethodSearchService class
 - Fix duplicate views on congrats after unlock phone
