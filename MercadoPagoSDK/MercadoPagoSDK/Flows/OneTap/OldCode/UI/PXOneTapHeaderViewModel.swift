@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PXOneTapHeaderViewModel {
+final class PXOneTapHeaderViewModel {
     let icon: UIImage
     let title: String
     let subTitle: String?

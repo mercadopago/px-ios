@@ -8,17 +8,24 @@
 import Foundation
 import MLUI
 
-protocol PXOfflineMethodsViewControllerDelegate: class {
+protocol PXOfflineMethodsViewControllerDelegate: AnyObject {
     func didEnableUI(enabled: Bool)
+}
+
+protocol OfflineMethodsEventsDelegate: AnyObject {
+    func userDidConfirm(paymentData: PXPaymentData, isSplitPayment: Bool)
+    func didFinishCheckout()
+    func finishButtonAnimation()
+    func updatePaymentOption(paymentOption: PaymentMethodOption)
 }
 
 final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
 
     let viewModel: PXOfflineMethodsViewModel
-    var callbackConfirm: ((PXPaymentData, Bool) -> Void)
-    let callbackFinishCheckout: (() -> Void)
-    var finishButtonAnimation: (() -> Void)
-    var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
+//    var callbackConfirm: ((PXPaymentData, Bool) -> Void)
+//    let callbackFinishCheckout: (() -> Void)
+//    var finishButtonAnimation: (() -> Void)
+//    var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
     let timeOutPayButton: TimeInterval
 
     let tableView = UITableView(frame: .zero, style: .grouped)
@@ -27,15 +34,22 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     var inactivityViewAnimationConstraint: NSLayoutConstraint?
 
     weak var delegate: PXOfflineMethodsViewControllerDelegate?
+    weak var eventsDelegate: OfflineMethodsEventsDelegate?
 
     var userDidScroll = false
 
-    init(viewModel: PXOfflineMethodsViewModel, callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), finishButtonAnimation: @escaping (() -> Void), callbackFinishCheckout: @escaping (() -> Void)) {
+    init(
+        viewModel: PXOfflineMethodsViewModel
+//        callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void),
+//        callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void),
+//        finishButtonAnimation: @escaping (() -> Void),
+//        callbackFinishCheckout: @escaping (() -> Void)
+    ) {
         self.viewModel = viewModel
-        self.callbackConfirm = callbackConfirm
-        self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
-        self.finishButtonAnimation = finishButtonAnimation
-        self.callbackFinishCheckout = callbackFinishCheckout
+//        self.callbackConfirm = callbackConfirm
+//        self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
+//        self.finishButtonAnimation = finishButtonAnimation
+//        self.callbackFinishCheckout = callbackFinishCheckout
         self.timeOutPayButton = 15
         super.init(nibName: nil, bundle: nil)
     }
@@ -124,7 +138,8 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         }
 
         if let selectedPaymentOption = viewModel.getSelectedOfflineMethod() {
-            callbackUpdatePaymentOption(selectedPaymentOption)
+            eventsDelegate?.updatePaymentOption(paymentOption: selectedPaymentOption)
+//            callbackUpdatePaymentOption(selectedPaymentOption)
         }
     }
 
@@ -390,7 +405,7 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
         self.dismiss(animated: true, completion: { [weak self] in
             self?.loadingButtonComponent?.animatedView?.removeFromSuperview()
         })
-        self.finishButtonAnimation()
+        eventsDelegate?.finishButtonAnimation()
     }
 
     func progressButtonAnimationTimeOut() {
@@ -437,11 +452,13 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
         let splitPayment = false
         hideBackButton()
         hideNavBar()
-        callbackConfirm(viewModel.amountHelper.getPaymentData(), splitPayment)
+        eventsDelegate?.userDidConfirm(paymentData: viewModel.amountHelper.getPaymentData(), isSplitPayment: splitPayment)
+//        callbackConfirm(, splitPayment)
 
         if shouldShowKyC() {
             dismiss(animated: false, completion: nil)
-            callbackFinishCheckout()
+            eventsDelegate?.didFinishCheckout()
+//            callbackFinishCheckout()
         }
     }
 

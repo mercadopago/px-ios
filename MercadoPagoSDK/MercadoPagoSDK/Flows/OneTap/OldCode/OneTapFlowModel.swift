@@ -22,7 +22,11 @@ final internal class OneTapFlowModel: PXFlowModel {
     internal var publicKey: String = ""
     internal var privateKey: String?
     internal var siteId: String = ""
-    var paymentData: PXPaymentData
+    var paymentData: PXPaymentData {
+        didSet {
+            print(paymentData)
+        }
+    }
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption?
     let search: PXInitDTO
@@ -35,7 +39,8 @@ final internal class OneTapFlowModel: PXFlowModel {
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
-    var pxOneTapViewModel: PXOneTapViewModel?
+    var selectedCard: PXCardSliderViewModel?
+    var cardList: [PXCardSliderViewModel] = []
     
     // MARK: - Private properties
     private var didCall3ds = false
@@ -114,26 +119,35 @@ internal extension OneTapFlowModel {
         }
 
         let reason = PXSecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason)
-        let cardSliderViewModel = pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())
-        let cardUI = cardSliderViewModel?.cardUI ?? TemplateCard()
-        let cardData = cardSliderViewModel?.selectedApplication?.cardData  ?? PXCardDataFactory()
+        let cardSliderViewModel = selectedCard
+        let cardUI = cardSliderViewModel?.getCardUI() ?? TemplateCard()
+        let cardData = cardSliderViewModel?.getCardData()  ?? PXCardDataFactory()
         
-        return PXSecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason, cardUI: cardUI, cardData: cardData, internetProtocol: mercadoPagoServices)
+        return PXSecurityCodeViewModel(paymentMethod: paymentMethod,
+                                       cardInfo: cardInformation,
+                                       reason: reason,
+                                       cardUI: cardUI,
+                                       cardData: cardData,
+                                       internetProtocol: mercadoPagoServices)
     }
 
-    func oneTapViewModel() -> PXOneTapViewModel {
-        let viewModel = PXOneTapViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false, disabledOption: disabledOption, currentFlow: oneTapFlow, payerPaymentMethods: search.payerPaymentMethods, experiments: search.experiments)
-        viewModel.publicKey = publicKey
-        viewModel.privateKey = privateKey
-        viewModel.siteId = siteId
-        viewModel.excludedPaymentTypeIds = checkoutPreference.getExcludedPaymentTypesIds()
-        viewModel.expressData = search.oneTap
-        viewModel.payerCompliance = search.payerCompliance
-        viewModel.paymentMethods = search.availablePaymentMethods
-        viewModel.items = checkoutPreference.items
-        viewModel.additionalInfoSummary = checkoutPreference.pxAdditionalInfo?.pxSummary
-        viewModel.modals = search.modals
-        return viewModel
+    func getOneTapCardDesignModel() -> OneTapCardDesignModel {
+        return OneTapCardDesignModel(amountHelper: amountHelper,
+                                                   paymentInfos: search,
+                                                   disabledOption: disabledOption,
+                                                   excludedPaymentTypeIds: checkoutPreference.getExcludedPaymentTypesIds(),
+                                                   publicKey: publicKey,
+                                                   privateKey: privateKey
+        )
+    }
+    
+    //Mega TODO check how to get userLogged propertie
+    func getOneTapModel() -> OneTapModel {
+        return OneTapModel(
+            advancedConfiguration: advancedConfiguration,
+            experimentsViewModel: PXExperimentsViewModel(search.experiments),
+            userLogged: true,
+            paymentOptionSelected: paymentOptionSelected)
     }
 }
 
@@ -289,7 +303,7 @@ internal extension OneTapFlowModel {
     }
     
     func getProgramValidation() -> String? {
-        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?.applications?.first(where: { $0.paymentMethod.id == pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())?.selectedApplication?.paymentMethodId})?.validationPrograms?.first?.id
+        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?.applications?.first(where: { $0.paymentMethod.id == selectedCard?.getSelectedApplication()?.paymentMethodId})?.validationPrograms?.first?.id
     }
     
     func getCardHolderName() -> String? {

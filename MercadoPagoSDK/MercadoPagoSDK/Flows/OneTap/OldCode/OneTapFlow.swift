@@ -35,6 +35,10 @@ final class OneTapFlow: NSObject, PXFlow {
         print("DEINIT FLOW - \(self)")
         #endif
     }
+    
+    func getSelectedCard() -> PXCardSliderViewModel? {
+        return model.selectedCard
+    }
 
     func setPaymentFlow(paymentFlow: PXPaymentFlow) {
         model.paymentFlow = paymentFlow

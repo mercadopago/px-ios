@@ -57,10 +57,10 @@ extension PXCardSliderPagerCell {
     }
     
     private func setupSwitchInfoView(model: PXCardSliderViewModel) {
-        if let comboSwitch = model.comboSwitch {
+        if let comboSwitch = model.getComboSwitch() {
             comboSwitch.setSwitchDidChangeCallback() { [weak self] selectedOption in
                 model.trackCard(state: selectedOption)
-                model.selectedApplicationId = selectedOption
+                model.setSelectedApplication(id: selectedOption)
                 self?.cardSliderPagerCellDelegate?.switchDidChange(selectedOption)
             }
             cardHeader?.setCustomView(comboSwitch)
@@ -69,7 +69,7 @@ extension PXCardSliderPagerCell {
     
     func render(model: PXCardSliderViewModel, cardSize: CGSize, accessibilityData: AccessibilityCardData, clearCardData: Bool = false, delegate: PXCardSliderPagerCellDelegate?) {
         
-        guard let selectedApplication = model.selectedApplication, let cardUI = model.cardUI else { return }
+        guard let selectedApplication = model.getSelectedApplication(), let cardUI = model.getCardUI() else { return }
         
         cardSliderPagerCellDelegate = delegate
         let cardData = clearCardData ? PXCardDataFactory() : selectedApplication.cardData ?? PXCardDataFactory()
@@ -160,8 +160,8 @@ extension PXCardSliderPagerCell {
     }
     
     func renderConsumerCreditsCard(model: PXCardSliderViewModel, cardSize: CGSize, accessibilityData: AccessibilityCardData) {
-        guard let selectedApplication = model.selectedApplication else { return }
-        guard let creditsViewModel = model.creditsViewModel else { return }
+        guard let selectedApplication = model.getSelectedApplication() else { return }
+        guard let creditsViewModel = model.getCreditsViewModel() else { return }
         let cardData = PXCardDataFactory()
         let isDisabled = selectedApplication.status.isDisabled()
         let bottomMessage = selectedApplication.bottomMessage
